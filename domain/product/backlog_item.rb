@@ -5,7 +5,7 @@ module Product
     attr_reader :id, :content
 
     def initialize(content)
-      @id = SecureRandom.uuid
+      @id = BacklogItemId.generate
       @content = content
     end
 
