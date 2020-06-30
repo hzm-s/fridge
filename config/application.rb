@@ -40,5 +40,7 @@ module Fridge
       g.request_specs false
       g.model_specs false
     end
+
+    config.autoload_paths << Rails.root + 'domain'
   end
 end
