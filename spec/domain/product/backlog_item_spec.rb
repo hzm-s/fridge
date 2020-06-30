@@ -3,9 +3,9 @@ require 'rails_helper'
 describe Product::BacklogItem do
   let(:content) { Product::BacklogItemContent.new('ABC') }
 
-  describe '.new' do
+  describe 'create' do
     it do
-      pbi = described_class.new(content)
+      pbi = described_class.create(content)
       
       aggregate_failures do
         expect(pbi.id).to_not be_nil
@@ -14,7 +14,7 @@ describe Product::BacklogItem do
     end
 
     it do
-      pbi = described_class.new(content)
+      pbi = described_class.create(content)
       expect(pbi.status).to eq Product::BacklogItemStatus::Preparation
     end
   end

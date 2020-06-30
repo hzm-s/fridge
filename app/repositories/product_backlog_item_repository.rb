@@ -10,6 +10,10 @@ module ProductBacklogItemRepository
 
       def find_by_id(id)
         r = Dao::ProductBacklogItem.find(id)
+        Product::BacklogItem.from_repository(
+          Product::BacklogItemId.from_repository(r.id),
+          r.content
+        )
       end
     end
   end
