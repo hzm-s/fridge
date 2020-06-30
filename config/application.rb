@@ -34,10 +34,11 @@ module Fridge
 
     config.generators do |g|
       g.helper false
+      g.assets false
       g.view_specs false
       g.controller_specs false
-      g.stylesheets false
-      g.javascripts false
+      g.request_specs false
+      g.model_specs false
     end
   end
 end
