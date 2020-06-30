@@ -31,5 +31,13 @@ module Fridge
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.generators do |g|
+      g.helper false
+      g.view_specs false
+      g.controller_specs false
+      g.stylesheets false
+      g.javascripts false
+    end
   end
 end
