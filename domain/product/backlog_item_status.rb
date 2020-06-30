@@ -1,3 +1,4 @@
+# typed: ignore
 module Product
   module BacklogItemStatus
     class Status < Struct.new(:kind)

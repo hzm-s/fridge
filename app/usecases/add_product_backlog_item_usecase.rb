@@ -9,7 +9,7 @@ class AddProductBacklogItemUsecase
     pbi = Product::BacklogItem.create(content)
 
     order = find_order(Product::ProductId.from_string(product_id))
-    order.append(pbi.id)
+    order.append(pbi)
 
     ApplicationRecord.transaction do
       @pbi_repository.add(pbi)

@@ -1,32 +1,46 @@
+# typed: strong
+
+require 'sorbet-runtime'
+
 module Product
   class BacklogItemOrder
+    extend T::Sig
+
     class << self
+      extend T::Sig
+
+      sig {params(product_id: ProductId).returns(BacklogItemOrder)}
       def create(product_id)
         new(product_id, [])
       end
 
-      def from_repository(product_id, product_backlog_item_ids)
-        new(product_id, product_backlog_item_ids)
+      sig {params(product_id: ProductId, pbi_ids: T::Array[BacklogItemId]).returns(BacklogItemOrder)}
+      def from_repository(product_id, pbi_ids)
+        new(product_id, pbi_ids)
       end
     end
 
-    private_class_method :new
-
+    sig {returns(ProductId)}
     attr_reader :product_id
 
-    def initialize(product_id, product_backlog_item_ids)
+    sig {params(product_id: ProductId, pbi_ids: T::Array[BacklogItemId]).void}
+    def initialize(product_id, pbi_ids)
       @product_id = product_id
-      @product_backlog_item_ids = product_backlog_item_ids
+      @product_backlog_item_ids = pbi_ids
+    end
+    private_class_method :new
+
+    sig {params(pbi: BacklogItem).void}
+    def append(pbi)
+      @product_backlog_item_ids << pbi.id
     end
 
-    def append(product_backlog_item)
-      @product_backlog_item_ids << product_backlog_item.id
+    sig {params(pbi_id: BacklogItemId).returns(T.nilable(Integer))}
+    def position(pbi_id)
+      @product_backlog_item_ids.index(pbi_id)
     end
 
-    def position(product_backlog_item_id)
-      @product_backlog_item_ids.index(product_backlog_item_id)
-    end
-
+    sig {returns(T::Array[BacklogItemId])}
     def to_a
       @product_backlog_item_ids
     end
