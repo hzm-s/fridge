@@ -8,5 +8,9 @@ module Product
       @id = SecureRandom.uuid
       @content = content
     end
+
+    def status
+      BacklogItemStatus::Preparation
+    end
   end
 end
