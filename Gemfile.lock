@@ -156,6 +156,10 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    sorbet (0.5.5790)
+      sorbet-static (= 0.5.5790)
+    sorbet-runtime (0.5.5790)
+    sorbet-static (0.5.5790-universal-darwin-14)
     spring (2.1.0)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -202,6 +206,8 @@ DEPENDENCIES
   rails (~> 6.0.3, >= 6.0.3.2)
   rspec-rails
   sass-rails (>= 6)
+  sorbet
+  sorbet-runtime
   spring
   spring-watcher-listen (~> 2.0.0)
   turbolinks (~> 5)
