@@ -1,5 +1,4 @@
-# typed: strong
-
+# typed: strict
 require 'sorbet-runtime'
 
 module Product
@@ -9,12 +8,12 @@ module Product
     class << self
       extend T::Sig
 
-      sig {params(product_id: ProductId).returns(BacklogItemOrder)}
+      sig {params(product_id: ProductId).returns(T.attached_class)}
       def create(product_id)
         new(product_id, [])
       end
 
-      sig {params(product_id: ProductId, pbi_ids: T::Array[BacklogItemId]).returns(BacklogItemOrder)}
+      sig {params(product_id: ProductId, pbi_ids: T::Array[BacklogItemId]).returns(T.attached_class)}
       def from_repository(product_id, pbi_ids)
         new(product_id, pbi_ids)
       end

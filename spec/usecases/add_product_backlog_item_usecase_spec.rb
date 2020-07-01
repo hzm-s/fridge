@@ -1,25 +1,30 @@
 require 'rails_helper'
 
 RSpec.describe 'Add product backlog item' do
+  let!(:product) { Product::Product.new('fridge') }
   let(:pbi_repo) { ProductBacklogItemRepository::AR }
   let(:order_repo) { ProductBacklogItemOrderRepository::AR }
-  let!(:product) { Product::Product.new('fridge') }
 
-  before do
-    ProductRepository::AR.add(product)
-  end
+  let(:uc) { AddProductBacklogItemUsecase.new }
 
-  it do
-    uc = AddProductBacklogItemUsecase.new(pbi_repo, order_repo)
+  before { ProductRepository::AR.add(product) }
 
-    pbi_a_id = uc.perform(product.id.to_s, 'aaa')
-    pbi_a = pbi_repo.find_by_id(Product::BacklogItemId.from_string(pbi_a_id))
+  context 'パラメータが正しい場合' do
+    it '追加したPBIが保存されていること' do
+      pbi_id = uc.perform(product.id, Product::BacklogItemContent.from_string('aaa'))
+      pbi = pbi_repo.find_by_id(pbi_id)
 
-    expect(pbi_a.content).to eq 'aaa'
+      expect(pbi).to_not be_nil
+      expect(pbi.content.to_s).to eq 'aaa'
+    end
 
-    pbi_b_id = uc.perform(product.id.to_s, 'bbb')
-    order = order_repo.find_by_product_id(product.id)
+    it '追加したPBIの優先順位は最低になっていること' do
+      uc.perform(product.id, Product::BacklogItemContent.from_string('aaa'))
 
-    expect(order.position(Product::BacklogItemId.from_string(pbi_b_id))).to eq 1
+      pbi_id = uc.perform(product.id, Product::BacklogItemContent.from_string('bbb'))
+      order = order_repo.find_by_product_id(product.id)
+
+      expect(order.position(pbi_id)).to eq 1
+    end
   end
 end

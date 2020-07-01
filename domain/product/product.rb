@@ -1,5 +1,4 @@
-# typed: strong
-
+# typed: strict
 require 'sorbet-runtime'
 
 module Product
@@ -17,7 +16,7 @@ module Product
 
     sig {params(name: String, description: T.nilable(String)).void}
     def initialize(name, description: nil)
-      @id = T.let(::Product::ProductId.generate, ::Product::ProductId)
+      @id = T.let(::Product::ProductId.create, ::Product::ProductId)
       @name = name
       @description = description
     end

@@ -1,12 +1,10 @@
-# typed: ignore
-module Product
-  module BacklogItemStatus
-    class Status < Struct.new(:kind)
-      def to_s
-        @_string ||= kind.to_s
-      end
-    end
+# typed: strict
+require 'sorbet-runtime'
 
-    Preparation = Status.new(:preparation)
+module Product
+  class BacklogItemStatus < T::Enum
+    enums do
+      Preparation = new
+    end
   end
 end
