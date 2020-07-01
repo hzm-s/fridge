@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-module Product
-  RSpec.describe BacklogItemOrder do
-    let(:product) { Product.new('fridge') }
+module Pbi
+  RSpec.describe Order do
+    let(:product) { Product::Product.new('fridge') }
 
-    let(:pbi_a) { BacklogItem.create(BacklogItemContent.from_string('A')) }
-    let(:pbi_b) { BacklogItem.create(BacklogItemContent.from_string('B')) }
-    let(:pbi_c) { BacklogItem.create(BacklogItemContent.from_string('C')) }
+    let(:pbi_a) { Pbi::Item.create(Pbi::Content.from_string('A')) }
+    let(:pbi_b) { Pbi::Item.create(Pbi::Content.from_string('B')) }
+    let(:pbi_c) { Pbi::Item.create(Pbi::Content.from_string('C')) }
 
     describe 'append and position' do
       it do

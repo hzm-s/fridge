@@ -1,43 +1,43 @@
 # typed: strict
 require 'sorbet-runtime'
 
-module Product
-  class BacklogItem
+module Pbi
+  class Item
     extend T::Sig
 
     class << self
       extend T::Sig
 
-      sig {params(content: BacklogItemContent).returns(T.attached_class)}
+      sig {params(content: Pbi::Content).returns(T.attached_class)}
       def create(content)
         new(
-          BacklogItemId.create,
+          Pbi::ItemId.create,
           content
         )
       end
 
-      sig {params(id: BacklogItemId, content: BacklogItemContent).returns(T.attached_class)}
+      sig {params(id: Pbi::ItemId, content: Pbi::Content).returns(T.attached_class)}
       def from_repository(id, content)
         new(id, content)
       end
     end
 
-    sig {returns(BacklogItemId)}
+    sig {returns(Pbi::ItemId)}
     attr_reader :id
 
-    sig {returns(BacklogItemContent)}
+    sig {returns(Pbi::Content)}
     attr_reader :content
 
-    sig {params(id: BacklogItemId, content: BacklogItemContent).void}
+    sig {params(id: Pbi::ItemId, content: Pbi::Content).void}
     def initialize(id, content)
       @id = id
       @content = content
     end
     private_class_method :new
 
-    sig {returns(BacklogItemStatus)}
+    sig {returns(Pbi::Status)}
     def status
-      BacklogItemStatus::Preparation
+      Pbi::Status::Preparation
     end
   end
 end

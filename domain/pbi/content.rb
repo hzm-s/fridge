@@ -1,8 +1,8 @@
 # typed: strict
 require 'sorbet-runtime'
 
-module Product
-  class BacklogItemContent
+module Pbi
+  class Content
     extend T::Sig
 
     class << self

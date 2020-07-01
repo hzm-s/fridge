@@ -5,9 +5,9 @@ module ProductBacklogItemRepository
   module AR
     class << self
       extend T::Sig
-      include Product::BacklogItemRepository
+      include Pbi::ItemRepository
 
-      sig {override.params(pbi: Product::BacklogItem).void}
+      sig {override.params(pbi: Pbi::Item).void}
       def add(pbi)
         Dao::ProductBacklogItem.create!(
           id: pbi.id.to_s,
@@ -15,12 +15,12 @@ module ProductBacklogItemRepository
         )
       end
 
-      sig {override.params(id: Product::BacklogItemId).returns(Product::BacklogItem)}
+      sig {override.params(id: Pbi::ItemId).returns(Pbi::Item)}
       def find_by_id(id)
         r = Dao::ProductBacklogItem.find(id)
-        Product::BacklogItem.from_repository(
-          Product::BacklogItemId.from_repository(r.id),
-          Product::BacklogItemContent.from_repository(r.content)
+        Pbi::Item.from_repository(
+          Pbi::ItemId.from_repository(r.id),
+          Pbi::Content.from_repository(r.content)
         )
       end
     end

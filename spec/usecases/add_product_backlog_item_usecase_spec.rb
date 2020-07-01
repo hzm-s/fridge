@@ -10,7 +10,7 @@ RSpec.describe 'Add product backlog item' do
   before { ProductRepository::AR.add(product) }
 
   it '追加したPBIが保存されていること' do
-    pbi_id = uc.perform(product.id, Product::BacklogItemContent.from_string('aaa'))
+    pbi_id = uc.perform(product.id, Pbi::Content.from_string('aaa'))
     pbi = pbi_repo.find_by_id(pbi_id)
 
     expect(pbi).to_not be_nil
@@ -18,9 +18,9 @@ RSpec.describe 'Add product backlog item' do
   end
 
   it '追加したPBIの優先順位は最低になっていること' do
-    uc.perform(product.id, Product::BacklogItemContent.from_string('aaa'))
+    uc.perform(product.id, Pbi::Content.from_string('aaa'))
 
-    pbi_id = uc.perform(product.id, Product::BacklogItemContent.from_string('bbb'))
+    pbi_id = uc.perform(product.id, Pbi::Content.from_string('bbb'))
     order = order_repo.find_by_product_id(product.id)
 
     expect(order.position(pbi_id)).to eq 1

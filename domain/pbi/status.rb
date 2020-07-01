@@ -1,8 +1,8 @@
 # typed: strict
 require 'sorbet-runtime'
 
-module Product
-  class BacklogItemStatus < T::Enum
+module Pbi
+  class Status < T::Enum
     enums do
       Preparation = new
     end
