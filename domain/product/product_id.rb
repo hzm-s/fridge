@@ -1,19 +1,7 @@
-require 'securerandom'
+# typed: strict
+require 'sorbet-runtime'
 
 module Product
-  class ProductId < Struct.new(:id)
-    class << self
-      def generate
-        SecureRandom.uuid
-      end
-
-      def from_string(string)
-        new(string)
-      end
-    end
-
-    def to_s
-      id
-    end
+  class ProductId < Shared::Identifier
   end
 end

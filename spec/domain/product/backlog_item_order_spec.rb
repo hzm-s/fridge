@@ -4,9 +4,9 @@ module Product
   RSpec.describe BacklogItemOrder do
     let(:product) { Product.new('fridge') }
 
-    let(:pbi_a) { BacklogItem.create('A') }
-    let(:pbi_b) { BacklogItem.create('B') }
-    let(:pbi_c) { BacklogItem.create('C') }
+    let(:pbi_a) { BacklogItem.create(BacklogItemContent.from_string('A')) }
+    let(:pbi_b) { BacklogItem.create(BacklogItemContent.from_string('B')) }
+    let(:pbi_c) { BacklogItem.create(BacklogItemContent.from_string('C')) }
 
     describe 'append and position' do
       it do

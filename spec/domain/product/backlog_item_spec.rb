@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Product::BacklogItem do
-  let(:content) { Product::BacklogItemContent.new('ABC') }
+  let(:content) { Product::BacklogItemContent.from_string('ABC') }
 
   describe 'create' do
     it do
