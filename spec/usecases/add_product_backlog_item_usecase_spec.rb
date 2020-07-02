@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Add product backlog item' do
-  let!(:product) { Product::Product.new('fridge') }
+  let!(:product) { Product::Product.create('fridge') }
   let(:pbi_repo) { ProductBacklogItemRepository::AR }
   let(:order_repo) { ProductBacklogItemOrderRepository::AR }
 
@@ -13,7 +13,6 @@ RSpec.describe 'Add product backlog item' do
     pbi_id = uc.perform(product.id, Pbi::Content.from_string('aaa'))
     pbi = pbi_repo.find_by_id(pbi_id)
 
-    expect(pbi).to_not be_nil
     expect(pbi.content.to_s).to eq 'aaa'
   end
 

@@ -15,6 +15,15 @@ module ProductRepository
           description: product.description.to_s
         )
       end
+
+      sig {override.params(id: Product::ProductId).returns(Product::Product)}
+      def find_by_id(id)
+        r = Dao::Product.find(id)
+        Product::Product.from_repository(
+          Product::ProductId.from_repository(r.id),
+          r.name
+        )
+      end
     end
   end
 end
