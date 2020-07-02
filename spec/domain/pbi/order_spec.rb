@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module Pbi
   RSpec.describe Order do
-    let(:product) { Product::Product.new('fridge') }
+    let(:product) { Product::Product.create('fridge') }
 
     let(:pbi_a) { Pbi::Item.create(Pbi::Content.from_string('A')) }
     let(:pbi_b) { Pbi::Item.create(Pbi::Content.from_string('B')) }
