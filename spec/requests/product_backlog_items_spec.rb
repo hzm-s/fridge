@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'product_backlog_items' do
-  let!(:product) { Product::Product.new('fridge') }
+  let!(:product) { create_product }
 
   describe '#create' do
     it do
@@ -14,7 +14,7 @@ RSpec.describe 'product_backlog_items' do
 
       post product_backlog_items_path(format: :js), params: params
 
-      get product_backlog_items_path
+      get product_backlog_items_path(product_id: product.id.to_s)
 
       expect(response.body).to include('ABC')
     end
