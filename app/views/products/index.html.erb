@@ -1,0 +1,7 @@
+<ul>
+  <% @products.each do |product| %>
+    <li>
+      <%= link_to product.name, product_backlog_items_path(product_id: product.id) %>
+    </li>
+  <% end -%>
+</ul>

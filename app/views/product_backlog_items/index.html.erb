@@ -1,3 +1,9 @@
+<ul>
 <% @product_backlog_items.each do |item| %>
-  <%= item.content %>
+  <li>
+    <%= item.content %>
+  </li>
 <% end -%>
+</ul>
+<hr>
+<%= link_to 'Add', new_product_backlog_item_path(product_id: params[:product_id]) %>
