@@ -1,0 +1,6 @@
+ja:
+  domain:
+    errors:
+      messages:
+        pbi:
+          content: 3~500文字で入力してください

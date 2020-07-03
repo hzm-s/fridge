@@ -10,6 +10,7 @@ module Pbi
 
       sig {params(content: String).returns(T.attached_class)}
       def from_repository(content)
+        raise ArgumentError unless (3..500).include?(content.size)
         new(content)
       end
       alias_method :from_string, :from_repository
