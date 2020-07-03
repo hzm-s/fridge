@@ -33,6 +33,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails'
   gem 'pry-rails'
+  gem 'pry-byebug'
 end
 
 group :development do
@@ -49,3 +50,4 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'sorbet-runtime'
+gem 'validates_domain_object_of', github: 'haazime/validates_domain_object_of'

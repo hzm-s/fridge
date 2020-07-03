@@ -1,5 +1,1 @@
-<%= form_with model: @form, scope: :form, url: product_backlog_items_path(product_id: @form.product_id) do |f| %>
-  <%= f.label :content %>
-  <%= f.text_field :content %>
-  <%= f.button :create %>
-<% end -%>
+<%= render partial: 'form', locals: { form: @form } %>
