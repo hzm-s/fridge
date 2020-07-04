@@ -1,11 +1,19 @@
-<%= link_to '#', class: 'pbi' do %>
-  <span class="pbi__grip">
+<div class="pbi-summary">
+  <span class="pbi-summary__grip">
     <i class="fas fa-grip-vertical"></i>
   </span>
-  <span class="pbi__content">
-    <%= simple_format(item.content) %>
-  </span>
-  <div class="pbi__point">
-    3
+  <%= link_to product_backlog_item_path(item.id), class: 'pbi-summary__content-outer' do %>
+    <%= simple_format(item.content, class: 'pbi-summary__content') %>
+  <% end %>
+  <div class="dropdown pbi-summary__point-outer">
+    <span href="#" id="dd-pbi-point-<%= item.id %>" class="pbi-summary__point" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+        3
+    </span>
+    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-pbi-point-<%= item.id %>">
+      <h6 class="dropdown-header"><%=t '.point_help' %></h6>
+      <% %w(0 1 2 3 5 8 ?).each do |point| %>
+        <%= link_to point, '#', class: 'dropdown-item' %>
+      <% end %>
+    </div>
   </div>
-<% end -%>
+</div>

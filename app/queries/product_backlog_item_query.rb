@@ -1,9 +1,14 @@
 module ProductBacklogItemQuery
+  class Dto < SimpleDelegator
+    def product_id
+      priority.dao_product_id
+    end
+  end
+
   class << self
-    def call(product_id)
-      Dao::ProductBacklogItem
-        .joins(:priority)
-        .where(dao_product_backlog_item_priorities: { dao_product_id: product_id })
+    def call(id)
+      pbi = Dao::ProductBacklogItem.includes(:priority).find(id)
+      Dto.new(pbi)
     end
   end
 end

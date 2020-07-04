@@ -11,7 +11,7 @@
   border-radius: $border-radius;
 }
 
-.pbi {
+.pbi-summary {
   display: flex;
   align-items: center;
 
@@ -27,29 +27,50 @@
   }
 }
 
-.pbi__grip {
+.pbi-summary__grip {
   margin-right: .75rem;
   color: $gray-500;
 }
 
-.pbi__content {
-  p {
-    margin-bottom: 0;
-    line-height: 1.2rem;
+.pbi-summary__content-outer {
+  color: $body-color;
+
+  &:hover {
+    color: $body-color;
+    text-decoration: none;
   }
 }
 
-.pbi__point {
+.pbi-summary__content {
+  margin-bottom: 0;
+  line-height: 1.2rem;
+}
+
+.pbi-summary__point-outer {
+  margin-left: auto;
+}
+
+.pbi-summary__point {
   display: flex;
   align-items: center;
   justify-content: center;
 
   margin-left: auto;
 
-  width: 1.3rem;
-  height: 1.3rem;
+  width: 1.5rem;
+  height: 1.5rem;
 
   color: $white;
   background-color: $cyan;
   border-radius: 1rem;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.pbi-detail__ac-list {
+  li {
+    font-size: .875rem;
+  }
 }

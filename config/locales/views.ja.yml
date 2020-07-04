@@ -8,5 +8,9 @@ ja:
     index:
       title: Product Backlog
       add: アイテムを追加する
+    item:
+      point_help: ポイントを選択してください
     form:
       add: アイテムを追加する
+    show:
+      back_to_list: Product Backlogへ戻る
