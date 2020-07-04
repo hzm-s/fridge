@@ -9,6 +9,8 @@ ja:
       title: Product Backlog
       add: アイテムを追加する
     item:
+      show_ac: 受け入れ基準を確認する
+      item_help: このアイテムを
       point_help: ポイントを選択してください
     form:
       add: アイテムを追加する

@@ -11,7 +11,7 @@
   border-radius: $border-radius;
 }
 
-.pbi-summary {
+.pbl-item {
   display: flex;
   align-items: center;
 
@@ -27,30 +27,27 @@
   }
 }
 
-.pbi-summary__grip {
+.pbl-item__grip {
   margin-right: .75rem;
   color: $gray-500;
 }
 
-.pbi-summary__content-outer {
-  color: $body-color;
-
+.pbl-item__content-outer {
   &:hover {
-    color: $body-color;
-    text-decoration: none;
+    cursor: pointer;
   }
 }
 
-.pbi-summary__content {
+.pbl-item__content {
   margin-bottom: 0;
   line-height: 1.2rem;
 }
 
-.pbi-summary__point-outer {
+.pbl-item__point-outer {
   margin-left: auto;
 }
 
-.pbi-summary__point {
+.pbl-item__point {
   display: flex;
   align-items: center;
   justify-content: center;
