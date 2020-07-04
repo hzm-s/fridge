@@ -13,6 +13,23 @@ body {
   border-radius: 1rem;
 }
 
+.navbar {
+  padding: 2px 20px;
+  background-color: rgba(255,255,255,0.9);
+}
+
+.navbar-brand {
+  color: $secondary;
+  opacity: .5;
+}
+
 .global-nav-product-toggle {
+  color: $secondary;
+  font-size: 1.25rem;
   font-weight: bold;
+
+  &:hover {
+    color: $secondary;
+    text-decoration: none;
+  }
 }
