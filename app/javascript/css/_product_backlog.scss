@@ -11,20 +11,22 @@
   border-radius: $border-radius;
 }
 
-.pbl-item {
-  display: flex;
-  align-items: center;
-
+.pbl-item-outer {
   padding: .75rem 1rem;
   border-bottom: 1px solid $gray-300;
-
-  color: $body-color;
 
   &:hover {
     color: $body-color;
     background-color: $gray-100;
     text-decoration: none;
   }
+}
+
+.pbl-item {
+  display: flex;
+  align-items: center;
+
+  color: $body-color;
 }
 
 .pbl-item__grip {
@@ -43,8 +45,20 @@
   line-height: 1.2rem;
 }
 
-.pbl-item__point-outer {
+.pbl-item__actions {
+  display: flex;
+  align-items: center;
+
   margin-left: auto;
+}
+
+.pbl-item__ac-trigger {
+  margin-right: 1rem;
+  color: $secondary;
+
+  &:hover {
+    color: $secondary;
+  }
 }
 
 .pbl-item__point {
@@ -66,8 +80,8 @@
   }
 }
 
-.pbi-detail__ac-list {
-  li {
-    font-size: .875rem;
-  }
+.pbl-item__ac {
+  font-size: .875rem;
+  padding-left: 2.5rem;
+  margin: 0.5rem 0 0;
 }
