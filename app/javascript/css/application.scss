@@ -1,2 +1,16 @@
 @import 'bs_vars';
 @import '~bootstrap/scss/bootstrap';
+
+body {
+  padding-top: 5rem;
+}
+
+.avatar {
+  width: 2.0rem;
+  height: 2.0rem;
+  border-radius: 1rem;
+}
+
+.global-nav-product-toggle {
+  font-weight: bold;
+}

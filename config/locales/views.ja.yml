@@ -1,0 +1,9 @@
+ja:
+  application:
+    global_nav:
+      new: プロダクトを作成する
+      product_list: プロダクト
+
+  product_backlog_items:
+    index:
+      title: Product Backlog
