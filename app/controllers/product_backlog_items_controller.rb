@@ -1,7 +1,7 @@
 class ProductBacklogItemsController < ApplicationController
 
   def index
-    @product_backlog_items = ProductBacklogItemQuery.call(params[:product_id])
+    @items = ProductBacklogItemQuery.call(params[:product_id])
   end
 
   def new

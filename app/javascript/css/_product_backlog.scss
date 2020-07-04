@@ -1,0 +1,36 @@
+.pbl {
+  border: 1px solid $gray-300;
+  border-radius: $border-radius;
+  background-color: #fff;
+}
+
+.pbi {
+  display: flex;
+  align-items: center;
+
+  padding: .5rem 1rem;
+  border-bottom: 1px solid $gray-300;
+
+  color: $body-color;
+
+  &:hover {
+    color: $body-color;
+    background-color: $gray-100;
+    text-decoration: none;
+  }
+}
+
+.pbi__point {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-left: auto;
+
+  width: 1.3rem;
+  height: 1.3rem;
+
+  color: $white;
+  background-color: $cyan;
+  border-radius: 1rem;
+}
