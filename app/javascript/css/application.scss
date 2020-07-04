@@ -4,7 +4,7 @@
 @import 'product_backlog';
 
 body {
-  padding-top: 5rem;
+  padding-top: 3.5rem;
 }
 
 .avatar {
@@ -15,12 +15,12 @@ body {
 
 .navbar {
   padding: 2px 20px;
-  background-color: rgba(255,255,255,0.9);
 }
 
 .navbar-brand {
   color: $secondary;
   opacity: .5;
+  margin-right: 0;
 }
 
 .global-nav-product-toggle {
@@ -32,4 +32,11 @@ body {
     color: $secondary;
     text-decoration: none;
   }
+}
+
+.sheet {
+  padding: 1.25rem 2rem 2.5rem;
+  background-color: #fff;
+  border-radius: .5rem;
+  box-shadow: 0 0 10px $gray-200;
 }

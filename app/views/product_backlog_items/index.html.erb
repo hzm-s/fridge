@@ -1,19 +1,12 @@
-<div class="row">
-  <div class="col">
-    <h5>
-      <%=t '.title' %>
-    </h3>
-  </div>
-</div>
-<div class="row">
-  <div class="col-lg-8">
+<div class="row d-flex justify-content-center">
+  <div class="col-lg-8 sheet">
+    <div class="d-flex justify-content-center">
+      <h5>
+        <%=t '.title' %>
+      </h3>
+    </div>
     <div class="pbl">
       <%= render partial: 'item', collection: @items %>
     </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col">
-  <%= link_to 'Add', new_product_backlog_item_path(product_id: params[:product_id]), class: 'btn btn-outline-primary' %>
   </div>
 </div>
