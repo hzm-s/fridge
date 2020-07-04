@@ -1,10 +1,11 @@
 @import 'bs_vars';
 @import '~bootstrap/scss/bootstrap';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
 
 @import 'product_backlog';
 
 body {
-  padding-top: 3.5rem;
+  padding-top: 3rem;
 }
 
 .avatar {
@@ -35,7 +36,7 @@ body {
 }
 
 .sheet {
-  padding: 1.25rem 2rem 2.5rem;
+  padding: 1.25rem 3rem 2.5rem;
   background-color: #fff;
   border-radius: .5rem;
   box-shadow: 0 0 10px $gray-200;
