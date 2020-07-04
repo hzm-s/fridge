@@ -1,12 +1,13 @@
-<div class="row">
-  <div class="col">
-    <%= form_with model: form, scope: :form, url: product_backlog_items_path, html: { id: 'js-new-pbi-form' } do |f| %>
-      <%= f.hidden_field :product_id %>
-      <div class="form-group">
-        <%= f.label :content %>
-        <%= f.text_field :content, class: 'form-control' %>
-      </div>
-      <%= f.button :create, class: 'btn btn-primary' %>
-    <% end -%>
-  </div>
-<div>
+<div id="js-new-pbi-form" class="pbl__form">
+  <%= form_with model: form, scope: :form, url: product_backlog_items_path do |f| %>
+    <%= f.hidden_field :product_id %>
+    <div class="form-group">
+      <%= f.label :content %>
+      <%= f.text_area :content, rows: 3, class: 'form-control' %>
+    </div>
+    <%= f.button class: 'btn btn-success' do %>
+      <i class="fas fa-plus"></i>
+      <%= t('.add') %>
+    <% end %>
+  <% end -%>
+</div>

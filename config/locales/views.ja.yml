@@ -7,3 +7,6 @@ ja:
   product_backlog_items:
     index:
       title: Product Backlog
+      add: アイテムを追加する
+    form:
+      add: アイテムを追加する

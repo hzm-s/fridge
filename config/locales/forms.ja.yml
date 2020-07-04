@@ -1,0 +1,6 @@
+ja:
+  activemodel:
+    attributes:
+
+      product_backlog_item_form:
+        content: アイテムの内容

@@ -1,11 +1,11 @@
 class ProductBacklogItemsController < ApplicationController
 
   def index
-    @product_backlog_items = ProductBacklogItemQuery.call(params[:product_id])
+    @items = ProductBacklogItemQuery.call(params[:product_id])
+    @form = ProductBacklogItemForm.new(product_id: params[:product_id])
   end
 
   def new
-    @form = ProductBacklogItemForm.new(product_id: params[:product_id])
   end
 
   def create

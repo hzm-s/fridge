@@ -1,8 +1,11 @@
 @import 'bs_vars';
 @import '~bootstrap/scss/bootstrap';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+
+@import 'product_backlog';
 
 body {
-  padding-top: 5rem;
+  padding: 3rem 0;
 }
 
 .avatar {
@@ -11,6 +14,48 @@ body {
   border-radius: 1rem;
 }
 
+.navbar {
+  padding: 2px 20px;
+  background-color: $body-bg;
+}
+
+.navbar-brand {
+  color: $secondary;
+  opacity: .5;
+  margin-right: 0;
+}
+
 .global-nav-product-toggle {
+  color: $secondary;
+  font-size: 1.25rem;
   font-weight: bold;
+
+  &:hover {
+    color: $secondary;
+    text-decoration: none;
+  }
+}
+
+.sheet {
+  padding: 1.25rem 3rem 1.5rem;
+  background-color: #fff;
+  border-radius: .5rem;
+  box-shadow: 0 0 10px $gray-200;
+}
+
+label {
+  font-size: .875rem;
+  color: $secondary;
+  font-weight: bold;
+}
+
+.field_with_errors {
+  .form-control {
+    border-color: theme-color('danger');
+  }
+
+  .invalid-feedback {
+    display: block;
+    color: theme-color('danger') !important;
+  }
 }
