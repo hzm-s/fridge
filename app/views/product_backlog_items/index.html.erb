@@ -1,9 +1,24 @@
-<ul>
-<% @product_backlog_items.each do |item| %>
-  <li>
-    <%= item.content %>
-  </li>
-<% end -%>
-</ul>
-<hr>
-<%= link_to 'Add', new_product_backlog_item_path(product_id: params[:product_id]) %>
+<div class="row">
+  <div class="col">
+    <h1>
+      Product Backlog
+    </h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <ul>
+    <% @product_backlog_items.each do |item| %>
+      <li>
+        <%= item.content %>
+      </li>
+    <% end -%>
+    </ul>
+  <hr>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+  <%= link_to 'Add', new_product_backlog_item_path(product_id: params[:product_id]), class: 'btn btn-outline-primary' %>
+  </div>
+</div>
