@@ -5,7 +5,7 @@
 @import 'product_backlog';
 
 body {
-  padding-top: 3rem;
+  padding: 3rem 0;
 }
 
 .avatar {
@@ -16,6 +16,7 @@ body {
 
 .navbar {
   padding: 2px 20px;
+  background-color: $body-bg;
 }
 
 .navbar-brand {
@@ -36,8 +37,14 @@ body {
 }
 
 .sheet {
-  padding: 1.25rem 3rem 2.5rem;
+  padding: 1.25rem 3rem 1.5rem;
   background-color: #fff;
   border-radius: .5rem;
   box-shadow: 0 0 10px $gray-200;
+}
+
+label {
+  font-size: .875rem;
+  color: $secondary;
+  font-weight: bold;
 }

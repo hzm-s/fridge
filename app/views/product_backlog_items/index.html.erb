@@ -6,13 +6,16 @@
       </h5>
     </div>
     <div class="d-flex justify-content-center mb-3">
-      <%= link_to '#', class: 'btn btn-outline-success' do %>
+      <%= link_to '#anchor-new-pbi', class: 'btn btn-outline-success', data: { controller: 'hello' } do %>
         <i class="fas fa-plus"></i>
-        アイテムを追加する
+        <%=t '.add' %>
       <% end %>
     </div>
     <div class="pbl">
       <%= render partial: 'item', collection: @items %>
+    </div>
+    <div id="anchor-new-pbi">
+      <%= render partial: 'form', locals: { form: @form } %>
     </div>
   </div>
 </div>
