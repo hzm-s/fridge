@@ -8,18 +8,7 @@
       <%= link_to "#clp-pbi-ac-#{item.id}", collapse_trigger_options(class: 'pbl-item__ac-trigger') do %>
         <i class="fas fa-list"></i>
       <% end %>
-      <div class="dropdown">
-        <%= content_tag :span, 3, dd_trigger_options(id: "dd-pbi-point-#{item.id}", class: 'pbl-item__point') %>
-        <div class="dropdown-menu dropdown-menu-right p-3 py-2">
-          <%= form_with scope: :form do |f| %>
-            <div class="form-group">
-              <%= f.label :point %>
-              <%= f.collection_select :point, %w(? 0 1 2 3 5 8), :to_s, :to_s, {}, { class: 'form-control' } %>
-            </div>
-            <%= f.button t('.estimate'), class: 'btn btn-success' %>
-          <% end %>
-        </div>
-      </div>
+      <%= render partial: 'point_form', locals: { item: item } %>
       <div class="dropdown">
         <%= link_to '#', dd_trigger_options(id: "dd-pbi-#{item.id}", class: 'pbl-item__menu') do %>
           <i class="fas fa-ellipsis-h"></i>

@@ -3,4 +3,5 @@ Rails.application.routes.draw do
 
   resources :products, only: [:index]
   resources :product_backlog_items, only: [:index, :create, :show]
+  resources :product_backlog_item_estimations, only: [:update]
 end

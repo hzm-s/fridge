@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 2020_06_30_081403) do
 
   create_table "dao_product_backlog_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "content", null: false
+    t.integer "size"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
