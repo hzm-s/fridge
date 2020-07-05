@@ -41,6 +41,13 @@ module Pbi
       @value
     end
 
+    sig {returns(String)}
+    def to_s
+      return '?' unless to_i
+
+      to_i.to_s
+    end
+
     sig {params(other: StoryPoint).returns(T::Boolean)}
     def ==(other)
       self.to_i == other.to_i
