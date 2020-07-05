@@ -36,10 +36,10 @@ RSpec.describe 'product_backlog_items' do
   describe '#show' do
     it do
       add_pbi(product.id, 'AAA')
-      pbi_id = add_pbi(product.id, 'BBB')
+      pbi = add_pbi(product.id, 'BBB')
       add_pbi(product.id, 'CCC')
 
-      get product_backlog_item_path(pbi_id.to_s)
+      get product_backlog_item_path(pbi.id.to_s)
 
       expect(response.body).to include('BBB')
     end
