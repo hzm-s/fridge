@@ -34,12 +34,6 @@
   color: $gray-500;
 }
 
-.pbl-item__content-outer {
-  &:hover {
-    cursor: pointer;
-  }
-}
-
 .pbl-item__content {
   margin-bottom: 0;
   line-height: 1.2rem;
@@ -53,7 +47,6 @@
 }
 
 .pbl-item__ac-trigger {
-  margin-right: 1rem;
   color: $secondary;
 
   &:hover {
@@ -66,7 +59,7 @@
   align-items: center;
   justify-content: center;
 
-  margin-left: auto;
+  margin-left: 1rem;
 
   width: 1.5rem;
   height: 1.5rem;
@@ -77,6 +70,16 @@
 
   &:hover {
     cursor: pointer;
+  }
+}
+
+.pbl-item__menu {
+  margin-left: 1rem;
+  color: $body-color;
+
+  &:hover {
+    color: $body-color;
+    text-decoration: none;
   }
 }
 
