@@ -4,8 +4,8 @@ module Pbi
   describe Item do
     let(:content) { Pbi::Content.from_string('ABC') }
 
-    describe 'create' do
-      it do
+    describe '.create' do
+      it 'idを持ち渡された内容を持つこと' do
         pbi = described_class.create(content)
 
         aggregate_failures do
@@ -14,9 +14,14 @@ module Pbi
         end
       end
 
-      it do
+      it '初期ステータスは準備中であること' do
         pbi = described_class.create(content)
         expect(pbi.status).to eq Pbi::Status::Preparation
+      end
+
+      it '初期サイズは不明であること' do
+        pbi = described_class.create(content)
+        expect(pbi.size).to eq Pbi::StoryPoint.unknown
       end
     end
   end
