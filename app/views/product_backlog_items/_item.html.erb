@@ -14,8 +14,14 @@
           <i class="fas fa-ellipsis-h"></i>
         <% end -%>
         <div class="dropdown-menu dropdown-menu-right">
-          <%= link_to t('navs.edit'), '#', class: 'dropdown-item' %>
-          <%= link_to t('navs.delete'), '#', class: 'dropdown-item link-danger' %>
+          <%= link_to '#', class: 'dropdown-item' do %>
+            <i class="fas fa-edit"></i>
+            <%=t 'navs.edit' %>
+          <% end %>
+          <%= link_to '#', class: 'dropdown-item text-danger' do %>
+            <i class="fas fa-trash-alt"></i>
+            <%=t 'navs.delete' %>
+          <% end %>
         </div>
       </div>
     </div>
