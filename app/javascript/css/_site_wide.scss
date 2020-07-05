@@ -5,6 +5,8 @@ label {
 }
 
 .field_with_errors {
+  @include nf;
+
   .form-control {
     border-color: theme-color('danger');
   }

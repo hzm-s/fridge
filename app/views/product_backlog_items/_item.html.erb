@@ -3,7 +3,7 @@
     <span class="pbl-item__grip">
       <i class="fas fa-grip-vertical"></i>
     </span>
-    <%= simple_format(item.content, class: 'pbl-item__content') %>
+    <%= simple_format(item.content, class: 'pbl-item__content nf') %>
     <div class="pbl-item__actions">
       <%= link_to "#clp-pbi-ac-#{item.id}", collapse_trigger_options(class: 'pbl-item__ac-trigger') do %>
         <i class="fas fa-list"></i>
@@ -27,7 +27,7 @@
     </div>
   </div>
   <div class="collapse" id="clp-pbi-ac-<%= item.id %>">
-    <ul class="pbl-item__ac">
+    <ul class="pbl-item__ac nf">
       <li>
         Googleアカウントでログインできること
       </li>
