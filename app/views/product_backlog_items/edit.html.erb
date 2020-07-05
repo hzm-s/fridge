@@ -1,11 +1,13 @@
 <div class="row d-flex justify-content-center">
-  <div class="col-lg-7 sheet">
+  <div class="col-lg-8 sheet">
     <div class="d-flex justify-content-center">
-      <h5>
+      <h1 class="page-title">
         <%=t '.title' %>
-      </h5>
+      </h1>
     </div>
     <%= render partial: 'form', locals: { form: @pbi_form, url: product_backlog_item_path(@pbi_id), method: :put, btn_label: t('navs.save') } %>
+    <hr>
+    <%= render partial: 'acceptance_criteria/list' %>
   </div>
 </div>
 <div class="row d-flex justify-content-center">

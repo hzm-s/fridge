@@ -80,7 +80,31 @@
 }
 
 .pbl-item__ac {
-  font-size: .875rem;
-  padding-left: 2.5rem;
-  margin: 0.5rem 0 0;
+  padding-left: 1.5rem;
+}
+
+.ac-list--small {
+  p {
+    font-size: .875rem;
+  }
+}
+
+.ac-list__item {
+  display: flex;
+  align-items: center;
+
+  margin-bottom: .25rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  p {
+    @include nf;
+    margin-bottom: 0;
+
+    &:before {
+      content: '\02022';
+    }
+  }
 }

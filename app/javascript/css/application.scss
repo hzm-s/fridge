@@ -45,3 +45,11 @@ body {
   font-size: 1.25rem;
   font-weight: bold;
 }
+
+.silent-danger {
+  color: $secondary;
+
+  &:hover {
+    color: $danger;
+  }
+}

@@ -6,9 +6,13 @@ ja:
 
   product_backlog_items:
     index:
-      title: Product Backlog
+      title: プロダクトバックログ
       add: アイテムを追加する
     point_form:
       point: アイテムの大きさ
     edit:
       title: アイテムの編集
+
+  acceptance_criteria:
+    list:
+      title: 受け入れ基準
