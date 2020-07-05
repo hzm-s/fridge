@@ -4,7 +4,7 @@
       <i class="fas fa-grip-vertical"></i>
     </span>
     <div class="dropdown pbl-item__content-outer">
-      <%= simple_format(item.content, id: "dd-pbi-#{item.id}", class: 'pbl-item__content', data: { toggle: 'dropdown', display: 'static' }, 'aria-haspopup' => 'true', 'aria-expanded' => 'false') %>
+      <%= simple_format(item.content, dd_trigger_options(id: "dd-pbi-#{item.id}", class: 'pbl-item__content')) %>
       <div class="dropdown-menu" aria-labelledby="dd-pbi-<%= item.id %>">
         <h6 class="dropdown-header">
           <%=t '.item_help' %>
@@ -18,9 +18,8 @@
         <i class="fas fa-list"></i>
       </a>
       <div class="dropdown">
-        <span href="#" id="dd-pbi-point-<%= item.id %>" class="pbl-item__point" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-            3
-        </span>
+        <%= content_tag :span, 3, dd_trigger_options(id: "dd-pbi-point-#{item.id}", class: 'pbl-item__point')
+      %>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-pbi-point-<%= item.id %>">
           <h6 class="dropdown-header">
             <%=t '.point_help' %>
