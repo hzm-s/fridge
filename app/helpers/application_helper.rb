@@ -16,4 +16,20 @@ module ApplicationHelper
     opts.merge!(class: dom_class) if dom_class
     opts
   end
+
+  def collapse_trigger_options(options)
+    target = options.delete(:target)
+    dom_class = options.delete(:class)
+
+    opts = {
+      data: {
+        toggle: 'collapse'
+      },
+      'aria-expanded' => 'false',
+      'aria-controls' => target
+    }
+
+    opts.merge!(class: dom_class) if dom_class
+    opts
+  end
 end

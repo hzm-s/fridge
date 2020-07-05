@@ -5,7 +5,7 @@
     </span>
     <div class="dropdown pbl-item__content-outer">
       <%= simple_format(item.content, dd_trigger_options(id: "dd-pbi-#{item.id}", class: 'pbl-item__content')) %>
-      <div class="dropdown-menu" aria-labelledby="dd-pbi-<%= item.id %>">
+      <div class="dropdown-menu">
         <h6 class="dropdown-header">
           <%=t '.item_help' %>
         </h6>
@@ -14,18 +14,18 @@
       </div>
     </div>
     <div class="pbl-item__actions">
-      <a data-toggle="collapse" class="pbl-item__ac-trigger" href="#clp-pbi-ac-<%= item.id %>" aria-expanded="false" aria-controls="clp-pbi-ac-<%= item.id %>">
+      <%= link_to "#clp-pbi-ac-#{item.id}", collapse_trigger_options(class: 'pbl-item__ac-trigger') do %>
         <i class="fas fa-list"></i>
-      </a>
+      <% end %>
       <div class="dropdown">
-        <%= content_tag :span, 3, dd_trigger_options(id: "dd-pbi-point-#{item.id}", class: 'pbl-item__point')
-      %>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-pbi-point-<%= item.id %>">
-          <h6 class="dropdown-header">
-            <%=t '.point_help' %>
-          </h6>
-          <% %w(0 1 2 3 5 8 ?).each do |point| %>
-            <%= link_to point, '#', class: 'dropdown-item' %>
+        <%= content_tag :span, 3, dd_trigger_options(id: "dd-pbi-point-#{item.id}", class: 'pbl-item__point') %>
+        <div class="dropdown-menu dropdown-menu-right p-3 py-2">
+          <%= form_with scope: :form do |f| %>
+            <div class="form-group">
+              <%= f.label :point %>
+              <%= f.collection_select :point, %w(? 0 1 2 3 5 8), :to_s, :to_s, {}, { class: 'form-control' } %>
+            </div>
+            <%= f.button t('.estimate'), class: 'btn btn-success' %>
           <% end %>
         </div>
       </div>

@@ -10,7 +10,7 @@ ja:
       add: アイテムを追加する
     item:
       item_help: このアイテムを
-      point_help: ポイントを選択してください
+      estimate: 見積もる
     form:
       add: アイテムを追加する
     show:
