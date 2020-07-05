@@ -8,10 +8,9 @@
     <a class="dropdown-toggle global-nav-product-toggle" href="#" id="dd-global-nav-products" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Refrigerator</a>
     <div class="dropdown-menu" aria-labelledby="dd-globak-nav-products">
       <h6 class="dropdown-header"><%=t '.product_list' %></h6>
-      <a class="dropdown-item" href="#">Kasugai</a>
-      <a class="dropdown-item" href="#">validates_domain_object_of</a>
-      <a class="dropdown-item" href="#">looper</a>
-      <a class="dropdown-item" href="/product_backlog_items?product_id=8533893d-93e7-451a-afc7-103eec71f8c0">fridge</a>
+      <% current_user_products.each do |p| %>
+        <%= link_to p.name, product_backlog_items_path(product_id: p.id), class: 'dropdown-item' %>
+      <% end %>
       <div class="dropdown-divider"></div>
       <a class="dropdown-item" href="#"><%=t '.new' %></a>
     </div>
