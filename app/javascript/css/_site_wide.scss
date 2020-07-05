@@ -1,0 +1,53 @@
+label {
+  font-size: .875rem;
+  color: $secondary;
+  font-weight: bold;
+}
+
+.field_with_errors {
+  .form-control {
+    border-color: theme-color('danger');
+  }
+
+  .invalid-feedback {
+    display: block;
+    color: theme-color('danger') !important;
+  }
+}
+
+.sheet {
+  padding: 1.5rem 3rem 1.5rem;
+  background-color: #fff;
+  border-radius: .5rem;
+  box-shadow: 0 0 10px $gray-200;
+}
+
+.avatar {
+  width: 2.0rem;
+  height: 2.0rem;
+  border-radius: 1rem;
+}
+
+.action-link {
+  font-size: .75rem;
+  color: $secondary;
+  &:hover {
+    color: $secondary;
+  }
+}
+
+.link-danger {
+  &:hover {
+    color: $danger;
+  }
+}
+
+.action-list {
+  a {
+    margin-right: 0.5rem;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

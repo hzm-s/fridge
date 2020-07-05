@@ -1,11 +1,47 @@
-<%= link_to '#', class: 'pbi' do %>
-  <span class="pbi__grip">
-    <i class="fas fa-grip-vertical"></i>
-  </span>
-  <span class="pbi__content">
-    <%= simple_format(item.content) %>
-  </span>
-  <div class="pbi__point">
-    3
+<div class="pbl-item-outer">
+  <div class="pbl-item">
+    <span class="pbl-item__grip">
+      <i class="fas fa-grip-vertical"></i>
+    </span>
+    <%= simple_format(item.content, class: 'pbl-item__content') %>
+    <div class="pbl-item__actions">
+      <%= link_to "#clp-pbi-ac-#{item.id}", collapse_trigger_options(class: 'pbl-item__ac-trigger') do %>
+        <i class="fas fa-list"></i>
+      <% end %>
+      <div class="dropdown">
+        <%= content_tag :span, 3, dd_trigger_options(id: "dd-pbi-point-#{item.id}", class: 'pbl-item__point') %>
+        <div class="dropdown-menu dropdown-menu-right p-3 py-2">
+          <%= form_with scope: :form do |f| %>
+            <div class="form-group">
+              <%= f.label :point %>
+              <%= f.collection_select :point, %w(? 0 1 2 3 5 8), :to_s, :to_s, {}, { class: 'form-control' } %>
+            </div>
+            <%= f.button t('.estimate'), class: 'btn btn-success' %>
+          <% end %>
+        </div>
+      </div>
+      <div class="dropdown">
+        <%= link_to '#', dd_trigger_options(id: "dd-pbi-#{item.id}", class: 'pbl-item__menu') do %>
+          <i class="fas fa-ellipsis-h"></i>
+        <% end -%>
+        <div class="dropdown-menu dropdown-menu-right">
+          <h6 class="dropdown-header">
+            <%=t '.item_help' %>
+          </h6>
+          <%= link_to t('navs.edit'), '#', class: 'dropdown-item' %>
+          <%= link_to t('navs.delete'), '#', class: 'dropdown-item link-danger' %>
+        </div>
+      </div>
+    </div>
   </div>
-<% end -%>
+  <div class="collapse" id="clp-pbi-ac-<%= item.id %>">
+    <ul class="pbl-item__ac">
+      <li>
+        Googleアカウントでログインできること
+      </li>
+      <li>
+        ログイン後の画面に名前が表示されていること
+      </li>
+    </ul>
+  </div>
+</div>

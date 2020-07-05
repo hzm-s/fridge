@@ -8,5 +8,10 @@ ja:
     index:
       title: Product Backlog
       add: アイテムを追加する
+    item:
+      item_help: このアイテムを
+      estimate: 見積もる
     form:
       add: アイテムを追加する
+    show:
+      back_to_list: Product Backlogへ戻る
