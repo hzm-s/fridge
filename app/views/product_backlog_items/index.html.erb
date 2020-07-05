@@ -14,8 +14,8 @@
     <div class="pbl">
       <%= render partial: 'item', collection: @items %>
     </div>
-    <div id="anchor-new-pbi">
-      <%= render partial: 'form', locals: { form: @form } %>
+    <div id="anchor-new-pbi" class="pbl__form">
+      <%= render partial: 'form', locals: { form: @form, url: product_backlog_items_path, method: :post, btn_label: t('.add') } %>
     </div>
   </div>
 </div>

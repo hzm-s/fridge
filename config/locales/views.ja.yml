@@ -10,7 +10,5 @@ ja:
       add: アイテムを追加する
     point_form:
       point: アイテムの大きさ
-    form:
-      add: アイテムを追加する
-    show:
-      back_to_list: Product Backlogへ戻る
+    edit:
+      title: アイテムの編集

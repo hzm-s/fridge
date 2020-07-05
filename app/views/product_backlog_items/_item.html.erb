@@ -14,7 +14,7 @@
           <i class="fas fa-ellipsis-h"></i>
         <% end -%>
         <div class="dropdown-menu dropdown-menu-right">
-          <%= link_to '#', class: 'dropdown-item' do %>
+          <%= link_to edit_product_backlog_item_path(item.id), class: 'dropdown-item' do %>
             <i class="fas fa-edit"></i>
             <%=t 'navs.edit' %>
           <% end %>

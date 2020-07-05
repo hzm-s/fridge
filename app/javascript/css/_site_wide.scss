@@ -15,6 +15,13 @@ label {
   }
 }
 
+.form-outer {
+  background-color: $gray-100;
+  padding: .75rem 1rem;
+  border: 1px solid $gray-200;
+  border-radius: $border-radius;
+}
+
 .sheet {
   padding: 1.5rem 3rem 1.5rem;
   background-color: #fff;
@@ -34,6 +41,14 @@ label {
   &:hover {
     color: $secondary;
   }
+}
+
+.text-md {
+  font-size: .875rem;
+}
+
+.text-sm {
+  font-size: .75rem;
 }
 
 .action-list {

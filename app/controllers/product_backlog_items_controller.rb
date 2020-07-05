@@ -6,22 +6,39 @@ class ProductBacklogItemsController < ApplicationController
   end
 
   def create
-    @form = ProductBacklogItemForm.new(create_params)
+    @form = ProductBacklogItemForm.new(permitted_params)
 
     if @form.valid?
       AddProductBacklogItemUsecase.new.perform(
         @form.domain_objects[:product_id],
         @form.domain_objects[:content]
       )
-      redirect_to product_backlog_items_path(product_id: create_params[:product_id])
+      redirect_to product_backlog_items_path(product_id: permitted_params[:product_id])
     else
       render :new
     end
   end
 
+  def edit
+    pbi = ProductBacklogItemQuery.call(params[:id])
+    @pbi_id = pbi.id
+    @pbi_form = ProductBacklogItemForm.new(product_id: pbi.product_id, content: pbi.content)
+  end
+
+  def update
+    @pbi_id = params[:id]
+    @pbi_form = ProductBacklogItemForm.new(permitted_params)
+
+    if @pbi_form.valid?
+      render
+    else
+      render :edit
+    end
+  end
+
   private
 
-  def create_params
+  def permitted_params
     params.require(:form).permit(:product_id, :content)
   end
 end

@@ -32,4 +32,14 @@ RSpec.describe 'product_backlog_items' do
       end
     end
   end
+
+  describe '#edit' do
+    it do
+      pbi = add_pbi(product.id, 'XYZ')
+
+      get edit_product_backlog_item_path(pbi.id.to_s)
+
+      expect(response.body).to include('XYZ')
+    end
+  end
 end
