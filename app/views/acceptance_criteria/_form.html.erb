@@ -1,0 +1,6 @@
+<%= form_with scope: :form, url: '', id: 'js-ac-form' do |f| %>
+  <div class="mt-2 mb-2">
+    <%= f.text_field :content, class: 'form-control' %>
+  </div>
+  <%= f.button t('.add'), class: 'btn btn-success' %>
+<% end %>

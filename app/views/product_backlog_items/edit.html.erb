@@ -1,3 +1,7 @@
+<% criteria = [
+  'Googleアカウントでログインできること',
+  'ログイン後の画面に名前が表示されていること',
+] %>
 <div class="row d-flex justify-content-center">
   <div class="col-lg-8 sheet">
     <div class="d-flex justify-content-center">
@@ -7,7 +11,19 @@
     </div>
     <%= render partial: 'form', locals: { form: @pbi_form, url: product_backlog_item_path(@pbi_id), method: :put, btn_label: t('navs.save') } %>
     <hr>
-    <%= render partial: 'acceptance_criteria/list' %>
+    <div>
+      <label>
+        <%= t '.title_ac' %>
+      </label>
+      <div class="ac-list">
+        <% criteria.each do |c| %>
+          <%= render partial: 'acceptance_criteria/item', locals: { criterion: c } %>
+        <% end %>
+      </div>
+    </div>
+    <div class="mt-2">
+      <%= render partial: 'acceptance_criteria/form' %>
+    </div>
   </div>
 </div>
 <div class="row d-flex justify-content-center">

@@ -12,7 +12,8 @@ ja:
       point: アイテムの大きさ
     edit:
       title: アイテムの編集
+      title_ac: 受け入れ基準
 
   acceptance_criteria:
-    list:
-      title: 受け入れ基準
+    form:
+      add: 追加する
