@@ -2,11 +2,18 @@
 @import '~bootstrap/scss/bootstrap';
 @import '~@fortawesome/fontawesome-free/scss/fontawesome';
 
+@mixin nf {
+  font-family: $font-family-normal;
+}
 @import 'site_wide';
 @import 'product_backlog';
 
 body {
   padding: 3rem 0;
+}
+
+.nf {
+  @include nf;
 }
 
 .navbar {
@@ -16,11 +23,14 @@ body {
 
 .navbar-brand {
   color: $secondary;
+  font-weight: 900;
   opacity: .5;
   margin-right: 0;
 }
 
 .global-nav-product-toggle {
+  @include nf;
+
   color: $secondary;
   font-size: 1.25rem;
   font-weight: bold;
@@ -31,8 +41,15 @@ body {
   }
 }
 
-.no-ul {
+.page-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.silent-danger {
+  color: $secondary;
+
   &:hover {
-    text-decoration: none;
+    color: $danger;
   }
 }

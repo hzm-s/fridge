@@ -4,7 +4,13 @@ label {
   font-weight: bold;
 }
 
+.btn:disabled {
+  opacity: 1 !important;
+}
+
 .field_with_errors {
+  @include nf;
+
   .form-control {
     border-color: theme-color('danger');
   }
@@ -13,6 +19,13 @@ label {
     display: block;
     color: theme-color('danger') !important;
   }
+}
+
+.form-outer {
+  background-color: $gray-100;
+  padding: .75rem 1rem;
+  border: 1px solid $gray-200;
+  border-radius: $border-radius;
 }
 
 .sheet {
@@ -36,10 +49,12 @@ label {
   }
 }
 
-.link-danger {
-  &:hover {
-    color: $danger;
-  }
+.text-md {
+  font-size: .875rem;
+}
+
+.text-sm {
+  font-size: .75rem;
 }
 
 .action-list {

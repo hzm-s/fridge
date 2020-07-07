@@ -3,7 +3,7 @@
     <span class="pbl-item__grip">
       <i class="fas fa-grip-vertical"></i>
     </span>
-    <%= simple_format(item.content, class: 'pbl-item__content') %>
+    <%= simple_format(item.content, class: 'pbl-item__content nf') %>
     <div class="pbl-item__actions">
       <%= link_to "#clp-pbi-ac-#{item.id}", collapse_trigger_options(class: 'pbl-item__ac-trigger') do %>
         <i class="fas fa-list"></i>
@@ -14,23 +14,31 @@
           <i class="fas fa-ellipsis-h"></i>
         <% end -%>
         <div class="dropdown-menu dropdown-menu-right">
-          <h6 class="dropdown-header">
-            <%=t '.item_help' %>
-          </h6>
-          <%= link_to t('navs.edit'), '#', class: 'dropdown-item' %>
-          <%= link_to t('navs.delete'), '#', class: 'dropdown-item link-danger' %>
+          <%= link_to edit_product_backlog_item_path(item.id), class: 'dropdown-item' do %>
+            <i class="fas fa-edit"></i>
+            <%=t 'navs.edit' %>
+          <% end %>
+          <%= link_to '#', class: 'dropdown-item text-danger' do %>
+            <i class="fas fa-trash-alt"></i>
+            <%=t 'navs.delete' %>
+          <% end %>
         </div>
       </div>
     </div>
   </div>
-  <div class="collapse" id="clp-pbi-ac-<%= item.id %>">
-    <ul class="pbl-item__ac">
-      <li>
-        Googleアカウントでログインできること
-      </li>
-      <li>
-        ログイン後の画面に名前が表示されていること
-      </li>
-    </ul>
+  <div class="collapse pbl-item__ac" id="clp-pbi-ac-<%= item.id %>">
+    <hr>
+    <div class="ac-list ac-list--small">
+      <div class="ac-list__item">
+        <p>
+          Googleアカウントでログインできること
+        </p>
+      </div>
+      <div class="ac-list__item">
+        <p>
+          ログイン後の画面に名前が表示されていること
+        </p>
+      </div>
+    </div>
   </div>
 </div>
