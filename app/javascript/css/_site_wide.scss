@@ -4,6 +4,10 @@ label {
   font-weight: bold;
 }
 
+.btn:disabled {
+  opacity: 1 !important;
+}
+
 .field_with_errors {
   @include nf;
 

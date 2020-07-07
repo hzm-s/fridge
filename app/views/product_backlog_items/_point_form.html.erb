@@ -6,7 +6,7 @@
         <%= f.label t '.point' %>
         <%= f.collection_select :point, all_story_points, :to_s, :to_s, { selected: present_story_point(item.size) }, { class: 'form-control' } %>
       </div>
-      <%= f.button t('navs.save'), class: 'btn btn-success' %>
+      <%= f.button t('navs.save'), class: 'btn btn-success', data: with_loader %>
     <% end %>
   </div>
 </div>
