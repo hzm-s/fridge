@@ -9,7 +9,7 @@
     <div class="dropdown-menu" aria-labelledby="dd-globak-nav-products">
       <h6 class="dropdown-header"><%=t '.product_list' %></h6>
       <% current_user_products.each do |p| %>
-        <%= link_to p.name, product_backlog_items_path(product_id: p.id), class: 'dropdown-item nf' %>
+        <%= link_to p.name, product_product_backlog_items_path(product_id: p.id), class: 'dropdown-item nf' %>
       <% end %>
       <div class="dropdown-divider"></div>
       <a class="dropdown-item" href="#"><%=t '.new' %></a>
