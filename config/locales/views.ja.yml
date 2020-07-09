@@ -4,6 +4,15 @@ ja:
       new: プロダクトを作成する
       product_list: プロダクト
 
+  products:
+    index:
+      title: プロダクト
+      create: プロダクトを作成する
+    product:
+      pbl: プロダクトバックログ
+      manage_team: チーム管理
+      setting: プロダクト設定
+
   product_backlog_items:
     index:
       title: プロダクトバックログ

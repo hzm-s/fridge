@@ -6,6 +6,7 @@
   font-family: $font-family-normal;
 }
 @import 'site_wide';
+@import 'product';
 @import 'product_backlog';
 
 body {
@@ -17,23 +18,29 @@ body {
 }
 
 .navbar {
-  padding: 2px 20px;
+  padding: 5px 20px;
   background-color: rgba(248,248,242, .7);
 }
 
 .navbar-brand {
   color: $secondary;
   font-weight: 900;
-  opacity: .5;
+  opacity: .6;
   margin-right: 0;
 }
 
-.global-nav-product-toggle {
+.gnav__product-name {
   @include nf;
+  font-size: 1rem;
+  padding: .125rem 1.5rem;
+  color: $white;
+  background-color: $gray-700;
+  border-radius: .5rem;
+}
 
+.gnav__toggle {
+  @include nf;
   color: $secondary;
-  font-size: 1.25rem;
-  font-weight: bold;
 
   &:hover {
     color: $secondary;
