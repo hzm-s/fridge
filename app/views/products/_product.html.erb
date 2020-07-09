@@ -1,0 +1,26 @@
+<div class="col-lg-9 sheet pl-item">
+  <div class="d-flex mt-1">
+    <div class="pl-item__head">
+      <h2 class="pl-item__name">
+        <%= product.name %>
+      </h2>
+      <p class="pl-item__desc">
+        <%= product.description %>
+      </p>
+    </div>
+    <div class="pl-item__tail">
+      <%= link_to product_product_backlog_items_path(product_id: product.id), class: 'pl-item__link' do %>
+        <i class="fas fa-list-alt"></i>
+        <%=t '.pbl' %>
+      <% end %>
+      <%= link_to '#', class: 'pl-item__link' do %>
+        <i class="fas fa-user-circle"></i>
+        <%=t '.manage_team' %>
+      <% end %>
+      <%= link_to '#', class: 'pl-item__link' do %>
+        <i class="fas fa-cog"></i>
+        <%=t '.setting' %>
+      <% end %>
+    </div>
+  </div>
+</div>

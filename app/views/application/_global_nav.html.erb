@@ -4,18 +4,18 @@
       fridge
     </a>
   </div>
-  <div class="dropdown">
-    <a class="dropdown-toggle global-nav-product-toggle" href="#" id="dd-global-nav-products" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Refrigerator</a>
-    <div class="dropdown-menu" aria-labelledby="dd-globak-nav-products">
-      <h6 class="dropdown-header"><%=t '.product_list' %></h6>
-      <% current_user_products.each do |p| %>
-        <%= link_to p.name, product_product_backlog_items_path(product_id: p.id), class: 'dropdown-item nf' %>
-      <% end %>
-      <div class="dropdown-divider"></div>
-      <a class="dropdown-item" href="#"><%=t '.new' %></a>
-    </div>
-  </div>
+  <% if product_name = content_for?(:product_name) ? yield(:product_name) : nil %>
+    <span class="gnav__product-name"><%= product_name %></span>
+  <% end %>
   <div style="width: 80px; text-align: right">
-    <%= image_tag 'avatar', class: 'avatar' %>
+    <a class="dropdown-toggle gnav__toggle" href="#" id="dd-global-nav-user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <%= image_tag 'avatar', class: 'avatar' %>
+    </a>
+    <div class="dropdown-menu dropdown-menu-right">
+      <a class="dropdown-item" href="#">
+        <i class="fas fa-sign-out-alt"></i>
+        <%=t '.sign_out' %>
+      </a>
+    </div>
   </div>
 </nav>

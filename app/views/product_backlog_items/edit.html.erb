@@ -1,3 +1,4 @@
+<% content_for(:product_name) { current_product(@pbi.product_id)&.name } %>
 <% criteria = [
   'Googleアカウントでログインできること',
   'ログイン後の画面に名前が表示されていること',

@@ -1,0 +1,35 @@
+.pl-item {
+  margin-bottom: 1rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.pl-item__name {
+  @include nf;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.pl-item__desc {
+  @include nf;
+  color: $gray-600;
+  font-size: .875rem;
+  margin-bottom: 0;
+}
+
+.pl-item__tail {
+  margin-left: auto;
+  padding-left: 1rem;
+  border-left: 1px solid $gray-200;
+}
+
+.pl-item__link {
+  display: block;
+  margin-bottom: .25rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
