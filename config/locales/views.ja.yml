@@ -12,6 +12,8 @@ ja:
       pbl: プロダクトバックログ
       manage_team: チーム管理
       setting: プロダクト設定
+    new:
+      title: 新しいプロダクト
 
   product_backlog_items:
     index:

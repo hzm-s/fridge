@@ -4,3 +4,7 @@ ja:
 
       product_backlog_item_form:
         content: アイテムの内容
+
+      product_form:
+        name: プロダクト名
+        description: 説明
