@@ -9,9 +9,9 @@ class CreateProductUsecase
     @repository = T.let(ProductRepository::AR, Product::ProductRepository)
   end
 
-  sig {params(name: String).returns(Product::ProductId)}
-  def perform(name)
-    product = Product::Product.create(name)
+  sig {params(name: String, description: T.nilable(String)).returns(Product::ProductId)}
+  def perform(name, description = nil)
+    product = Product::Product.create(name, description)
 
     @repository.add(product)
 

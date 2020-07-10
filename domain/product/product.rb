@@ -8,17 +8,18 @@ module Product
     class << self
       extend T::Sig
 
-      sig {params(name: String).returns(T.attached_class)}
-      def create(name)
+      sig {params(name: String, description: T.nilable(String)).returns(T.attached_class)}
+      def create(name, description = nil)
         new(
           ProductId.create,
-          name
+          name,
+          description
         )
       end
 
-      sig {params(id: ProductId, name: String).returns(T.attached_class)}
-      def from_repository(id, name)
-        new(id, name)
+      sig {params(id: ProductId, name: String, description: T.nilable(String)).returns(T.attached_class)}
+      def from_repository(id, name, description)
+        new(id, name, description)
       end
     end
 
@@ -32,7 +33,7 @@ module Product
     attr_reader :description
 
     sig {params(id: ProductId, name: String, description: T.nilable(String)).void}
-    def initialize(id, name, description: nil)
+    def initialize(id, name, description)
       @id = id
       @name = name
       @description = description
