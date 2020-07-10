@@ -207,6 +207,7 @@ ja:
     pm: 午後
   navs:
     save: 保存する
+    create: 作成する
     edit: 編集する
     delete: 削除する
     back: 戻る

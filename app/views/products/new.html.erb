@@ -1,0 +1,30 @@
+<div class="row d-flex justify-content-center">
+  <div class="col-lg-7 sheet">
+    <div class="d-flex justify-content-center">
+      <h1 class="page-title">
+        <%=t '.title' %>
+      </h1>
+    </div>
+    <div>
+      <%= form_with model: @form, scope: :form, url: products_path do |f| %>
+        <div class="form-group">
+          <%= f.label :name %>
+          <%= f.text_field :name, class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :description %>
+          <%= f.text_area :description, class: 'form-control' %>
+        </div>
+        <%= f.button t('navs.create'), class: 'btn btn-success' %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="row d-flex justify-content-center">
+  <div class="d-flex mt-2">
+    <%= link_to products_path, class: 'text-md' do %>
+      <i class="fas fa-reply"></i>
+      <%=t 'navs.back' %>
+    <% end %>
+  </div>
+</div>
