@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Add product backlog item' do
   let!(:product) { Product::Product.create('fridge') }
   let(:pbi_repo) { ProductBacklogItemRepository::AR }
-  let(:order_repo) { ProductBacklogItemOrderRepository::AR }
+  let(:order_repo) { ProductBacklogOrderRepository::AR }
 
   let(:uc) { AddProductBacklogItemUsecase.new }
 

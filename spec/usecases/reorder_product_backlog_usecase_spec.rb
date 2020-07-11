@@ -11,7 +11,7 @@ RSpec.describe 'Reorder product backlog' do
     uc = ReorderProductBacklogUsecase.new
     uc.perform(product.id, pbi_a.id, 3)
 
-    order = ProductBacklogItemOrderRepository::AR.find_by_product_id(product.id)
+    order = ProductBacklogOrderRepository::AR.find_by_product_id(product.id)
     expect(order.to_a).to eq [pbi_b, pbi_c, pbi_a].map(&:id)
   end
 end

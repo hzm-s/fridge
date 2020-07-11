@@ -6,7 +6,7 @@ class ReorderProductBacklogUsecase
 
   sig {void}
   def initialize
-    @repository = T.let(ProductBacklogItemOrderRepository::AR, Pbi::OrderRepository)
+    @repository = T.let(ProductBacklogOrderRepository::AR, Pbi::OrderRepository)
   end
 
   sig {params(product_id: Product::ProductId, pbi_id: Pbi::ItemId, to: Integer).void}
