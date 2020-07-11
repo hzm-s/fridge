@@ -21,7 +21,8 @@ module ProductRepository
         r = Dao::Product.find(id)
         Product::Product.from_repository(
           Product::ProductId.from_repository(r.id),
-          r.name
+          r.name,
+          r.description
         )
       end
     end
