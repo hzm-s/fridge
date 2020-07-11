@@ -36,16 +36,16 @@ module Pbi
 
     sig {params(src: Pbi::ItemId, dst: Pbi::ItemId).void}
     def move_item_to(src, dst)
-      map = @item_ids.map.with_index(1) { |id, i| [i, id] }.to_h
+      map = @item_ids.map.with_index(1) { |id, i| [i * 10, id] }.to_h
 
       src_key = map.key(src)
       dst_key = map.key(dst)
 
       map.delete(src_key)
-      if (dst_key - src_key).positive?
-        map[dst_key + 0.1] = src
+      if (src_key - dst_key).positive?
+        map[dst_key - 1] = src
       else
-        map[dst_key - 0.1] = src
+        map[dst_key + 1] = src
       end
 
       @item_ids = map.sort.map { |pair| pair[1] }
