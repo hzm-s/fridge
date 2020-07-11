@@ -22,6 +22,6 @@ RSpec.describe 'Add product backlog item' do
     pbi_id = uc.perform(product.id, Pbi::Content.from_string('bbb'))
     order = order_repo.find_by_product_id(product.id)
 
-    expect(order.position(pbi_id)).to eq 1
+    expect(order.to_a.index(pbi_id)).to eq 1
   end
 end

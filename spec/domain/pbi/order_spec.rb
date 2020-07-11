@@ -10,7 +10,7 @@ module Pbi
     let(:pbi_d) { Pbi::Item.create(product.id, Pbi::Content.from_string('DDD')) }
     let(:pbi_e) { Pbi::Item.create(product.id, Pbi::Content.from_string('EEE')) }
 
-    describe 'append and position' do
+    describe 'append and' do
       it do
         order = described_class.create(product.id)
 

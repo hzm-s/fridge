@@ -51,12 +51,6 @@ module Pbi
       @item_ids = pos2val.sort.map { |pair| pair[1] }
     end
 
-    # TODO: not use
-    sig {params(pbi_id: Pbi::ItemId).returns(T.nilable(Integer))}
-    def position(pbi_id)
-      @item_ids.index(pbi_id)
-    end
-
     sig {returns(T::Array[Pbi::ItemId])}
     def to_a
       @item_ids
