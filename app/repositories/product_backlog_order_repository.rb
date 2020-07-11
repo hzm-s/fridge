@@ -1,7 +1,7 @@
 # typed: strict
 require 'sorbet-runtime'
 
-module ProductBacklogItemOrderRepository
+module ProductBacklogOrderRepository
   module AR
     class << self
       extend T::Sig

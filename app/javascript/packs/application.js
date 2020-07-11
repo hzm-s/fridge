@@ -6,8 +6,9 @@
 require("@rails/ujs").start()
 require("turbolinks").start()
 // require("@rails/activestorage").start()
-require("channels")
+// require("channels")
 
+// Stimulus
 import 'controllers'
 
 // Uncomment to copy all static images under ../images to the output folder and reference
@@ -18,7 +19,6 @@ import 'controllers'
 // const imagePath = (name) => images(name, true)
 
 window.$ = $
-
 import 'bootstrap'
 import '@fortawesome/fontawesome-free/js/all'
 

@@ -1,4 +1,4 @@
-<div class="pbl-item-outer">
+<div class="pbl-item-outer" data-sortable-id="<%= item.id %>">
   <div class="pbl-item">
     <span class="pbl-item__grip">
       <i class="fas fa-grip-vertical"></i>
@@ -31,12 +31,7 @@
     <div class="ac-list ac-list--small">
       <div class="ac-list__item">
         <p>
-          Googleアカウントでログインできること
-        </p>
-      </div>
-      <div class="ac-list__item">
-        <p>
-          ログイン後の画面に名前が表示されていること
+          <%= truncate(item.content) %>
         </p>
       </div>
     </div>
