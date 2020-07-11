@@ -2,9 +2,7 @@
 @import '~bootstrap/scss/bootstrap';
 @import '~@fortawesome/fontawesome-free/scss/fontawesome';
 
-@mixin nf {
-  font-family: $font-family-normal;
-}
+@import 'mixins';
 @import 'site_wide';
 @import 'product';
 @import 'product_backlog';

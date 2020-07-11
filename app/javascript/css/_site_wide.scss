@@ -40,9 +40,7 @@ label {
 }
 
 .avatar {
-  width: 2.0rem;
-  height: 2.0rem;
-  border-radius: 1rem;
+  @include avatar(2.0rem);
 }
 
 .action-link {
