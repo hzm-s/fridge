@@ -9,10 +9,10 @@ RSpec.describe 'product_backlog_order' do
   describe '#update' do
     it do
       params = {
-        src: pbi_c.id.to_s,
-        dst: pbi_a.id.to_s
+        pbi_id: pbi_c.id.to_s,
+        to: 1
       }
-      put product_product_backlog_item_order_path(product_id: product.id.to_s, format: :js), params: params
+      put product_product_backlog_order_path(product_id: product.id.to_s, format: :json), params: params
 
       order = ProductBacklogItemOrderRepository::AR.find_by_product_id(product.id)
       expect(order.to_a).to eq [pbi_c, pbi_a, pbi_b].map(&:id)
