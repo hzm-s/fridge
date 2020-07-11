@@ -12,6 +12,7 @@ module ProductBacklogItemRepository
         r = Dao::ProductBacklogItem.find(id)
         Pbi::Item.from_repository(
           Pbi::ItemId.from_repository(r.id),
+          Product::ProductId.from_repository(r.dao_product_id),
           Pbi::Content.from_repository(r.content),
           Pbi::StoryPoint.from_repository(r.size)
         )
@@ -21,6 +22,7 @@ module ProductBacklogItemRepository
       def add(pbi)
         Dao::ProductBacklogItem.create!(
           id: pbi.id.to_s,
+          dao_product_id: pbi.product_id.to_s,
           content: pbi.content.to_s,
           size: pbi.size.to_i
         )
