@@ -11,8 +11,8 @@ module ProductBacklogItemOrderRepository
 
       sig {override.params(product_id: Product::ProductId).returns(T.nilable(Pbi::Order))}
       def find_by_product_id(product_id)
-        r = DAO.where(dao_product_id: product_id.to_s)
-        return nil if r.empty?
+        r = DAO.find_by(dao_product_id: product_id.to_s)
+        return nil unless r
 
         Pbi::Order.from_repository(
           product_id,

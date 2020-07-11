@@ -12,7 +12,7 @@ class AddProductBacklogItemUsecase
 
   sig {params(product_id: Product::ProductId, content: Pbi::Content).returns(Pbi::ItemId)}
   def perform(product_id, content)
-    pbi = Pbi::Item.create(content)
+    pbi = Pbi::Item.create(product_id, content)
 
     order = find_order(product_id)
     order.append(pbi)

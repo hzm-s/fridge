@@ -4,9 +4,9 @@ module Pbi
   RSpec.describe Order do
     let(:product) { Product::Product.create('fridge') }
 
-    let(:pbi_a) { Pbi::Item.create(Pbi::Content.from_string('AAA')) }
-    let(:pbi_b) { Pbi::Item.create(Pbi::Content.from_string('BBB')) }
-    let(:pbi_c) { Pbi::Item.create(Pbi::Content.from_string('CCC')) }
+    let(:pbi_a) { Pbi::Item.create(product.id, Pbi::Content.from_string('AAA')) }
+    let(:pbi_b) { Pbi::Item.create(product.id, Pbi::Content.from_string('BBB')) }
+    let(:pbi_c) { Pbi::Item.create(product.id, Pbi::Content.from_string('CCC')) }
 
     describe 'append and position' do
       it do
