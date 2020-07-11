@@ -25,23 +25,40 @@ module Pbi
     sig {params(product_id: Product::ProductId, pbi_ids: T::Array[Pbi::ItemId]).void}
     def initialize(product_id, pbi_ids)
       @product_id = product_id
-      @product_backlog_item_ids = pbi_ids
+      @item_ids = pbi_ids
     end
     private_class_method :new
 
     sig {params(pbi: Pbi::Item).void}
     def append(pbi)
-      @product_backlog_item_ids << pbi.id
+      @item_ids << pbi.id
+    end
+
+    sig {params(src: Pbi::ItemId, dst: Pbi::ItemId).void}
+    def move_item_to(src, dst)
+      map = @item_ids.map.with_index(1) { |id, i| [i, id] }.to_h
+
+      src_key = map.key(src)
+      dst_key = map.key(dst)
+
+      map.delete(src_key)
+      if (dst_key - src_key).positive?
+        map[dst_key + 0.1] = src
+      else
+        map[dst_key - 0.1] = src
+      end
+
+      @item_ids = map.sort.map { |pair| pair[1] }
     end
 
     sig {params(pbi_id: Pbi::ItemId).returns(T.nilable(Integer))}
     def position(pbi_id)
-      @product_backlog_item_ids.index(pbi_id)
+      @item_ids.index(pbi_id)
     end
 
     sig {returns(T::Array[Pbi::ItemId])}
     def to_a
-      @product_backlog_item_ids
+      @item_ids
     end
   end
 end
