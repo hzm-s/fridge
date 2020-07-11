@@ -9,12 +9,12 @@ class ReorderProductBacklogUsecase
     @repository = T.let(ProductBacklogItemOrderRepository::AR, Pbi::OrderRepository)
   end
 
-  sig {params(product_id: Product::ProductId, src: Pbi::ItemId, dst: Pbi::ItemId).void}
-  def perform(product_id, src, dst)
+  sig {params(product_id: Product::ProductId, pbi_id: Pbi::ItemId, to: Integer).void}
+  def perform(product_id, pbi_id, to)
     order = @repository.find_by_product_id(product_id)
     raise unless order
 
-    order.move_item_to(src, dst)
+    order.move_item_to(pbi_id, to)
     @repository.update(order)
   end
 end

@@ -7,7 +7,7 @@ RSpec.describe ProductBacklogItemListQuery do
     pbi_a = add_pbi(product.id, 'AAA')
     pbi_b = add_pbi(product.id, 'BBB')
     pbi_c = add_pbi(product.id, 'CCC')
-    ReorderProductBacklogUsecase.new.perform(product.id, pbi_c.id, pbi_b.id)
+    ReorderProductBacklogUsecase.new.perform(product.id, pbi_c.id, 2)
 
     item_ids = described_class.call(product.id.to_s).map(&:id)
     
