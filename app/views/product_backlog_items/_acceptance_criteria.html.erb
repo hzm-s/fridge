@@ -1,0 +1,16 @@
+<hr>
+<% if item.criteria.any? %>
+  <div class="ac-list ac-list--small">
+    <% item.criteria.each do |criterion| %>
+      <div class="ac-list__item">
+        <p>
+          <%= criterion.content %>
+        </p>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <span class="text-muted">
+    <%=t '.empty' %>
+  </span>
+<% end %>

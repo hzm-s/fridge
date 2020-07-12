@@ -6,7 +6,9 @@ Rails.application.routes.draw do
     resource :product_backlog_order, only: [:update]
   end
 
-  resources :product_backlog_items, only: [:edit, :update]
+  resources :product_backlog_items, only: [:edit, :update] do
+    resources :acceptance_criteria, only: [:create]
+  end
 
   resources :product_backlog_item_estimations, only: [:update]
 end

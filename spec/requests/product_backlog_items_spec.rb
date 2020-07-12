@@ -31,10 +31,14 @@ RSpec.describe 'product_backlog_items' do
   describe '#edit' do
     it do
       pbi = add_pbi(product.id, 'XYZ')
+      add_acceptance_criteria(pbi, %w(AC_123))
 
       get edit_product_backlog_item_path(pbi.id.to_s)
 
-      expect(response.body).to include('XYZ')
+      aggregate_failures do
+        expect(response.body).to include('XYZ')
+        expect(response.body).to include('AC_123')
+      end
     end
   end
 end
