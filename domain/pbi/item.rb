@@ -77,11 +77,6 @@ module Pbi
       @acceptance_criteria.remove(no)
     end
 
-    sig {params(no: Integer).returns(T.nilable(String))}
-    def acceptance_criterion(no)
-      @acceptance_criteria.get(no)
-    end
-
     sig {params(point: Pbi::StoryPoint).void}
     def estimate_size(point)
       @size = point

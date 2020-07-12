@@ -10,6 +10,6 @@ RSpec.describe 'Add acceptance criterion to PBI' do
 
     updated = ProductBacklogItemRepository::AR.find_by_id(pbi.id)
 
-    expect(updated.acceptance_criterion(1)).to eq 'ukeire_kijyun_ichi'
+    expect(updated.acceptance_criteria.to_a).to eq %w(ukeire_kijyun_ichi)
   end
 end
