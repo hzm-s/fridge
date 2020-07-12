@@ -1,8 +1,4 @@
 <% content_for(:product_name) { current_product(@pbi.product_id)&.name } %>
-<% criteria = [
-  'Googleアカウントでログインできること',
-  'ログイン後の画面に名前が表示されていること',
-] %>
 <div class="row d-flex justify-content-center">
   <div class="col-lg-8 sheet">
     <div class="d-flex justify-content-center">
@@ -17,13 +13,13 @@
         <%= t '.title_ac' %>
       </label>
       <div class="ac-list">
-        <% criteria.each do |c| %>
+        <% @pbi.criteria.each do |c| %>
           <%= render partial: 'acceptance_criteria/item', locals: { criterion: c } %>
         <% end %>
       </div>
     </div>
     <div class="mt-2">
-      <%= render partial: 'acceptance_criteria/form' %>
+      <%= render partial: 'acceptance_criteria/form', locals: { pbi: @pbi } %>
     </div>
   </div>
 </div>
