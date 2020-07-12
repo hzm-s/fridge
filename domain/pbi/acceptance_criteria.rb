@@ -30,6 +30,11 @@ module Pbi
       @criterion_list << content
     end
 
+    sig {params(no: Integer).void}
+    def remove(no)
+      @criterion_list.delete_at(no_to_index(no))
+    end
+
     sig {params(no: Integer).returns(T.nilable(String))}
     def get(no)
       @criterion_list[no_to_index(no)]
