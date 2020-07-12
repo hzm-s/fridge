@@ -2,7 +2,9 @@
   <p>
     <%= criterion.content %>
   </p>
-  <%= link_to '#', class: 'silent-danger ml-3' do %>
-    <i class="fas fa-trash-alt"></i>
+  <% if editable %>
+    <%= link_to '#', class: 'silent-danger ml-3' do %>
+      <i class="fas fa-trash-alt"></i>
+    <% end %>
   <% end %>
 </div>

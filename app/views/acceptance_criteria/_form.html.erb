@@ -1,5 +1,5 @@
 <%= form_with scope: :form, url: product_backlog_item_acceptance_criteria_path(product_backlog_item_id: pbi.id), id: 'js-ac-form' do |f| %>
-  <div class="mt-2 mb-2">
+  <div class="form-group">
     <%= f.text_field :content, class: 'form-control', autocomplete: 'off' %>
   </div>
   <%= f.button t('.add'), class: 'btn btn-success', data: with_loader %>

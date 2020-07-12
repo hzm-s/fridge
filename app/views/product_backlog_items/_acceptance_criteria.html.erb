@@ -1,16 +1,11 @@
-<hr>
 <% if item.criteria.any? %>
   <div class="ac-list ac-list--small">
     <% item.criteria.each do |criterion| %>
-      <div class="ac-list__item">
-        <p>
-          <%= criterion.content %>
-        </p>
-      </div>
+      <%= render partial: 'acceptance_criteria/item', locals: { criterion: criterion, editable: false } %>
     <% end %>
   </div>
 <% else %>
-  <span class="text-muted">
+  <span class="text-muted text-sm">
     <%=t '.empty' %>
   </span>
 <% end %>
