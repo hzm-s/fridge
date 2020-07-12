@@ -40,7 +40,8 @@ module Pbi
 
     sig {params(no: Integer).void}
     def remove(no)
-      @list.delete_at(no_to_index(no))
+      raise ArgumentError unless @list.find { |c| c.no == no }
+      @list.delete_if { |c| c.no == no }
     end
 
     sig {returns(T::Boolean)}
@@ -51,13 +52,6 @@ module Pbi
     sig {returns(T::Array[AcceptanceCriterion::Serialized])}
     def to_a
       @list.map(&:to_h)
-    end
-
-    private
-
-    sig {params(no: Integer).returns(Integer)}
-    def no_to_index(no)
-      no - 1
     end
   end
 end

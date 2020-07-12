@@ -18,7 +18,7 @@ RSpec.describe 'Remove acceptance criterion' do
     ]
   end
 
-  xit do
+  it do
     add_acceptance_criteria(pbi, %w(ac1 ac2 ac3))
     usecase.perform(pbi.id, 3)
     add_acceptance_criteria(pbi, %w(ac4))
