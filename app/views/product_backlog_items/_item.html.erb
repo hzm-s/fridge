@@ -27,15 +27,6 @@
     </div>
   </div>
   <div class="collapse pbl-item__ac" id="clp-pbi-ac-<%= item.id %>">
-    <hr>
-    <div class="ac-list ac-list--small">
-      <%= item.criteria.each do |criterion| %>
-        <div class="ac-list__item">
-          <p>
-            <%= criterion.content %>
-          </p>
-        </div>
-      <% end %>
-    </div>
+    <%= render partial: 'acceptance_criteria', locals: { item: item } %>
   </div>
 </div>
