@@ -18,19 +18,21 @@ ActiveRecord::Schema.define(version: 2020_07_12_015347) do
 
   create_table "dao_acceptance_criteria", force: :cascade do |t|
     t.uuid "dao_product_backlog_item_id"
+    t.integer "no", null: false
     t.string "content", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["dao_product_backlog_item_id"], name: "idx_pbi_id_on_ac"
+    t.index ["dao_product_backlog_item_id", "no"], name: "index_pbi_id_and_no_on_ac", unique: true
   end
 
   create_table "dao_product_backlog_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "dao_product_id"
     t.string "content", null: false
+    t.integer "next_acceptance_criterion_no", null: false
     t.integer "size"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["dao_product_id"], name: "idx_product_id"
+    t.index ["dao_product_id"], name: "idx_product_id_on_pbis"
   end
 
   create_table "dao_product_backlog_orders", force: :cascade do |t|

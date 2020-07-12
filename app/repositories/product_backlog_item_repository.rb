@@ -15,7 +15,10 @@ module ProductBacklogItemRepository
           Product::ProductId.from_repository(r.dao_product_id),
           Pbi::Content.from_repository(r.content),
           Pbi::StoryPoint.from_repository(r.size),
-          Pbi::AcceptanceCriteria.from_repository(r.criteria.map(&:content))
+          Pbi::AcceptanceCriteria.from_repository(
+            r.next_acceptance_criterion_no,
+            r.criteria.map { |c| Pbi::AcceptanceCriterion.from_repository(c.no, c.content) }
+          )
         )
       end
 
@@ -25,7 +28,8 @@ module ProductBacklogItemRepository
           id: pbi.id.to_s,
           dao_product_id: pbi.product_id.to_s,
           content: pbi.content.to_s,
-          size: pbi.size.to_i
+          size: pbi.size.to_i,
+          next_acceptance_criterion_no: pbi.acceptance_criteria.next_no
         )
       end
 
@@ -34,9 +38,12 @@ module ProductBacklogItemRepository
         r = Dao::ProductBacklogItem.find(pbi.id.to_s)
         r.content = pbi.content.to_s
         r.size = pbi.size.to_i
+        r.next_acceptance_criterion_no = pbi.acceptance_criteria.next_no
 
         r.criteria.clear
-        pbi.acceptance_criteria.to_a.each { |c| r.criteria.build(content: c) }
+        pbi.acceptance_criteria.list.each do |c|
+          r.criteria.build(no: c.no, content: c.content)
+        end
 
         r.save!
       end
