@@ -18,7 +18,7 @@ module ProductBacklogItemListQuery
     end
 
     def fetch_items(product_id)
-      Dao::ProductBacklogItem.where(dao_product_id: product_id).to_a
+      Dao::ProductBacklogItem.eager_load(:criteria).where(dao_product_id: product_id).to_a
     end
   end
 end
