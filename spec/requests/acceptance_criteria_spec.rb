@@ -13,6 +13,14 @@ RSpec.describe 'acceptance_criteria' do
         expect(response.body).to include 'ukeire_kijyun'
       end
     end
+
+    context 'given invalid params' do
+      it do
+        params = { form: { content: '' } }
+        post product_backlog_item_acceptance_criteria_path(product_backlog_item_id: pbi.id, format: :js), params: params
+        expect(response.body).to include I18n.t('errors.messages.blank')
+      end
+    end
   end
 
   describe '#destroy' do

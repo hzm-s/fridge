@@ -1,7 +1,7 @@
 <% if item.criteria.any? %>
   <div class="ac-list ac-list--small">
     <% item.criteria.each do |criterion| %>
-      <%= render partial: 'acceptance_criteria/item', locals: { pbi: item, criterion: criterion, editable: false } %>
+      <%= render partial: 'acceptance_criteria/item', locals: { pbi_id: item.id, criterion: criterion, editable: false } %>
     <% end %>
   </div>
 <% else %>
