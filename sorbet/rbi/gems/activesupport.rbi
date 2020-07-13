@@ -36,7 +36,7 @@ class Hash
   def reverse_merge!(other_hash); end
   def reverse_merge(other_hash); end
   def reverse_update(other_hash); end
-  def self.from_xml(xml, disallowed_types = nil); end
+  def self.from_trusted_xml(xml); end
   def self.try_convert(arg0); end
   def slice!(*keys); end
   def stringify_keys!; end
@@ -1868,21 +1868,6 @@ end
 class ActiveSupport::SafeBuffer::SafeConcatError < StandardError
   def initialize; end
 end
-class ActiveSupport::ParameterFilter
-  def compiled_filter; end
-  def filter(params); end
-  def filter_param(key, value); end
-  def initialize(filters = nil, mask: nil); end
-end
-class ActiveSupport::ParameterFilter::CompiledFilter
-  def blocks; end
-  def call(params, parents = nil, original_params = nil); end
-  def deep_regexps; end
-  def initialize(regexps, deep_regexps, blocks, mask:); end
-  def regexps; end
-  def self.compile(filters, mask:); end
-  def value_for_key(key, value, parents = nil, original_params = nil); end
-end
 module Benchmark
   def self.ms; end
 end
@@ -2011,6 +1996,24 @@ class ActiveSupport::Cache::Entry
   def value; end
   def version; end
 end
+module ActiveSupport::RangeWithFormat
+  def to_default_s(format = nil); end
+  def to_formatted_s(format = nil); end
+  def to_s(format = nil); end
+end
+module ActiveSupport::CompareWithRange
+  def ===(value); end
+  def cover?(value); end
+  def include?(value); end
+end
+module ActiveSupport::IncludeTimeWithZone
+  def include?(value); end
+end
+module ActiveSupport::EachTimeWithZone
+  def each(&block); end
+  def ensure_iteration_allowed; end
+  def step(n = nil, &block); end
+end
 class ActiveSupport::ExecutionWrapper
   def __callbacks; end
   def __callbacks?; end
@@ -2100,6 +2103,21 @@ class ActiveSupport::Reloader < ActiveSupport::ExecutionWrapper
   def self.to_prepare(*args, &block); end
   def self.wrap; end
 end
+class ActiveSupport::ParameterFilter
+  def compiled_filter; end
+  def filter(params); end
+  def filter_param(key, value); end
+  def initialize(filters = nil, mask: nil); end
+end
+class ActiveSupport::ParameterFilter::CompiledFilter
+  def blocks; end
+  def call(params, parents = nil, original_params = nil); end
+  def deep_regexps; end
+  def initialize(regexps, deep_regexps, blocks, mask:); end
+  def regexps; end
+  def self.compile(filters, mask:); end
+  def value_for_key(key, value, parents = nil, original_params = nil); end
+end
 class ActiveSupport::EventedFileUpdateChecker
   def boot!; end
   def changed(modified, added, removed); end
@@ -2129,7 +2147,7 @@ module Digest::UUID
   def self.uuid_v5(uuid_namespace, name); end
 end
 class File < IO
-  def self.atomic_write(file_name, temp_dir = nil); end
+  def self.empty?(arg0); end
   def self.probe_stat_in(dir); end
 end
 module ActiveSupport::MarshalWithAutoloading
@@ -2137,24 +2155,6 @@ module ActiveSupport::MarshalWithAutoloading
 end
 module ActiveSupport::NumericWithFormat
   def to_s(format = nil, options = nil); end
-end
-module ActiveSupport::RangeWithFormat
-  def to_default_s(format = nil); end
-  def to_formatted_s(format = nil); end
-  def to_s(format = nil); end
-end
-module ActiveSupport::CompareWithRange
-  def ===(value); end
-  def cover?(value); end
-  def include?(value); end
-end
-module ActiveSupport::IncludeTimeWithZone
-  def include?(value); end
-end
-module ActiveSupport::EachTimeWithZone
-  def each(&block); end
-  def ensure_iteration_allowed; end
-  def step(n = nil, &block); end
 end
 module SecureRandom
   def self.base36(n = nil); end
@@ -2303,39 +2303,6 @@ module ActiveSupport::Configurable::ClassMethods
   def config; end
   def config_accessor(*names, instance_reader: nil, instance_writer: nil, instance_accessor: nil); end
   def configure; end
-end
-class ActiveSupport::CurrentAttributes
-  def __callbacks; end
-  def __callbacks?; end
-  def _reset_callbacks; end
-  def _run_reset_callbacks(&block); end
-  def assign_attributes(new_attributes); end
-  def attributes; end
-  def attributes=(arg0); end
-  def compute_attributes(keys); end
-  def initialize; end
-  def reset; end
-  def self.__callbacks; end
-  def self.__callbacks=(val); end
-  def self.__callbacks?; end
-  def self._reset_callbacks; end
-  def self._reset_callbacks=(value); end
-  def self.after_reset(&block); end
-  def self.attribute(*names); end
-  def self.before_reset(&block); end
-  def self.clear_all; end
-  def self.current_instances; end
-  def self.generated_attribute_methods; end
-  def self.instance; end
-  def self.method_missing(name, *args, &block); end
-  def self.reset(*args, &block); end
-  def self.reset_all; end
-  def self.resets(&block); end
-  def self.set(*args, &block); end
-  def set(set_attributes); end
-  extend ActiveSupport::Callbacks::ClassMethods
-  extend ActiveSupport::DescendantsTracker
-  include ActiveSupport::Callbacks
 end
 module ActiveSupport::Testing
 end
@@ -2491,6 +2458,39 @@ class ActiveSupport::TestCase < Minitest::Test
   include ActiveSupport::Testing::FileFixtures
   include ActiveSupport::Testing::TaggedLogging
   include ActiveSupport::Testing::TimeHelpers
+end
+class ActiveSupport::CurrentAttributes
+  def __callbacks; end
+  def __callbacks?; end
+  def _reset_callbacks; end
+  def _run_reset_callbacks(&block); end
+  def assign_attributes(new_attributes); end
+  def attributes; end
+  def attributes=(arg0); end
+  def compute_attributes(keys); end
+  def initialize; end
+  def reset; end
+  def self.__callbacks; end
+  def self.__callbacks=(val); end
+  def self.__callbacks?; end
+  def self._reset_callbacks; end
+  def self._reset_callbacks=(value); end
+  def self.after_reset(&block); end
+  def self.attribute(*names); end
+  def self.before_reset(&block); end
+  def self.clear_all; end
+  def self.current_instances; end
+  def self.generated_attribute_methods; end
+  def self.instance; end
+  def self.method_missing(name, *args, &block); end
+  def self.reset(*args, &block); end
+  def self.reset_all; end
+  def self.resets(&block); end
+  def self.set(*args, &block); end
+  def set(set_attributes); end
+  extend ActiveSupport::Callbacks::ClassMethods
+  extend ActiveSupport::DescendantsTracker
+  include ActiveSupport::Callbacks
 end
 class ActiveSupport::Cache::FileStore < ActiveSupport::Cache::Store
   def cache_path; end

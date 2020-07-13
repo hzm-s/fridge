@@ -2165,232 +2165,6 @@ module ActiveRecord::Tasks
 end
 class ActiveRecord::Railtie < Rails::Railtie
 end
-module ActiveRecord::Reflection
-  def self.add_aggregate_reflection(ar, name, reflection); end
-  def self.add_reflection(ar, name, reflection); end
-  def self.create(macro, name, scope, options, ar); end
-  def self.reflection_class_for(macro); end
-  extend ActiveSupport::Concern
-end
-module ActiveRecord::Reflection::ClassMethods
-  def _reflect_on_association(association); end
-  def clear_reflections_cache; end
-  def reflect_on_aggregation(aggregation); end
-  def reflect_on_all_aggregations; end
-  def reflect_on_all_associations(macro = nil); end
-  def reflect_on_all_autosave_associations; end
-  def reflect_on_association(association); end
-  def reflections; end
-end
-class ActiveRecord::Reflection::AbstractReflection
-  def actual_source_reflection; end
-  def alias_candidate(name); end
-  def build_association(attributes, &block); end
-  def build_scope(table, predicate_builder = nil); end
-  def chain; end
-  def check_validity_of_inverse!; end
-  def class_name; end
-  def constraints; end
-  def counter_cache_column; end
-  def counter_must_be_updated_by_has_many?; end
-  def get_join_keys(association_klass); end
-  def has_cached_counter?; end
-  def inverse_of; end
-  def inverse_updates_counter_cache?; end
-  def inverse_updates_counter_in_memory?; end
-  def inverse_which_updates_counter_cache; end
-  def join_foreign_key; end
-  def join_keys; end
-  def join_primary_key(*arg0); end
-  def join_scope(table, foreign_table, foreign_klass); end
-  def join_scopes(table, predicate_builder); end
-  def klass_join_scope(table, predicate_builder); end
-  def predicate_builder(table); end
-  def primary_key(klass); end
-  def scopes; end
-  def table_name; end
-  def through_reflection?; end
-end
-class ActiveRecord::Reflection::AbstractReflection::JoinKeys < Struct
-  def foreign_key; end
-  def foreign_key=(_); end
-  def key; end
-  def key=(_); end
-  def self.[](*arg0); end
-  def self.inspect; end
-  def self.members; end
-  def self.new(*arg0); end
-end
-class ActiveRecord::Reflection::MacroReflection < ActiveRecord::Reflection::AbstractReflection
-  def ==(other_aggregation); end
-  def active_record; end
-  def autosave=(autosave); end
-  def compute_class(name); end
-  def derive_class_name; end
-  def initialize(name, scope, options, active_record); end
-  def klass; end
-  def name; end
-  def options; end
-  def plural_name; end
-  def scope; end
-  def scope_for(relation, owner = nil); end
-end
-class ActiveRecord::Reflection::AggregateReflection < ActiveRecord::Reflection::MacroReflection
-  def mapping; end
-end
-class ActiveRecord::Reflection::AssociationReflection < ActiveRecord::Reflection::MacroReflection
-  def active_record_primary_key; end
-  def add_as_polymorphic_through(reflection, seed); end
-  def add_as_source(seed); end
-  def add_as_through(seed); end
-  def association_class; end
-  def association_foreign_key; end
-  def association_primary_key(klass = nil); end
-  def association_scope_cache(conn, owner, &block); end
-  def automatic_inverse_of; end
-  def belongs_to?; end
-  def calculate_constructable(macro, options); end
-  def can_find_inverse_of_automatically?(reflection); end
-  def check_eager_loadable!; end
-  def check_preloadable!; end
-  def check_validity!; end
-  def clear_association_scope_cache; end
-  def collect_join_chain; end
-  def collection?; end
-  def compute_class(name); end
-  def constructable?; end
-  def derive_class_name; end
-  def derive_foreign_key; end
-  def derive_join_table; end
-  def extensions; end
-  def foreign_key; end
-  def foreign_type; end
-  def has_inverse?; end
-  def has_one?; end
-  def has_scope?; end
-  def initialize(name, scope, options, active_record); end
-  def inverse_name; end
-  def join_id_for(owner); end
-  def join_table; end
-  def macro; end
-  def nested?; end
-  def parent_reflection; end
-  def parent_reflection=(arg0); end
-  def polymorphic?; end
-  def polymorphic_inverse_of(associated_class); end
-  def source_reflection; end
-  def through_reflection; end
-  def type; end
-  def valid_inverse_reflection?(reflection); end
-  def validate?; end
-end
-class ActiveRecord::Reflection::HasManyReflection < ActiveRecord::Reflection::AssociationReflection
-  def association_class; end
-  def association_primary_key(klass = nil); end
-  def collection?; end
-  def macro; end
-end
-class ActiveRecord::Reflection::HasOneReflection < ActiveRecord::Reflection::AssociationReflection
-  def association_class; end
-  def calculate_constructable(macro, options); end
-  def has_one?; end
-  def macro; end
-end
-class ActiveRecord::Reflection::BelongsToReflection < ActiveRecord::Reflection::AssociationReflection
-  def association_class; end
-  def belongs_to?; end
-  def calculate_constructable(macro, options); end
-  def can_find_inverse_of_automatically?(_); end
-  def join_foreign_key; end
-  def join_primary_key(klass = nil); end
-  def macro; end
-end
-class ActiveRecord::Reflection::HasAndBelongsToManyReflection < ActiveRecord::Reflection::AssociationReflection
-  def collection?; end
-  def macro; end
-end
-class ActiveRecord::Reflection::ThroughReflection < ActiveRecord::Reflection::AbstractReflection
-  def active_record(*args, &block); end
-  def active_record_primary_key(*args, &block); end
-  def actual_source_reflection; end
-  def add_as_polymorphic_through(reflection, seed); end
-  def add_as_source(seed); end
-  def add_as_through(seed); end
-  def association_class(*args, &block); end
-  def association_foreign_key(*args, &block); end
-  def association_primary_key(klass = nil); end
-  def association_scope_cache(*args, &block); end
-  def autosave=(arg); end
-  def belongs_to?(*args, &block); end
-  def check_eager_loadable!(*args, &block); end
-  def check_preloadable!(*args, &block); end
-  def check_validity!; end
-  def clear_association_scope_cache; end
-  def collect_join_chain; end
-  def collect_join_reflections(seed); end
-  def collection?(*args, &block); end
-  def compute_class(*args, &block); end
-  def constraints; end
-  def constructable?(*args, &block); end
-  def delegate_reflection; end
-  def derive_class_name; end
-  def extensions(*args, &block); end
-  def foreign_key(*args, &block); end
-  def foreign_type(*args, &block); end
-  def get_join_keys(*args, &block); end
-  def has_inverse?(*args, &block); end
-  def has_one?(*args, &block); end
-  def has_scope?; end
-  def initialize(delegate_reflection); end
-  def inverse_name; end
-  def join_id_for(*args, &block); end
-  def join_scopes(table, predicate_builder); end
-  def join_table(*args, &block); end
-  def klass; end
-  def macro(*args, &block); end
-  def name(*args, &block); end
-  def nested?; end
-  def options(*args, &block); end
-  def parent_reflection(*args, &block); end
-  def parent_reflection=(arg); end
-  def plural_name(*args, &block); end
-  def polymorphic?(*args, &block); end
-  def polymorphic_inverse_of(*args, &block); end
-  def scope(*args, &block); end
-  def scope_for(*args, &block); end
-  def scopes; end
-  def source_options; end
-  def source_reflection; end
-  def source_reflection_name; end
-  def source_reflection_names; end
-  def through_options; end
-  def through_reflection; end
-  def through_reflection?; end
-  def type(*args, &block); end
-  def validate?(*args, &block); end
-end
-class ActiveRecord::Reflection::PolymorphicReflection < ActiveRecord::Reflection::AbstractReflection
-  def constraints; end
-  def get_join_keys(*args, &block); end
-  def initialize(reflection, previous_reflection); end
-  def join_scopes(table, predicate_builder); end
-  def klass(*args, &block); end
-  def plural_name(*args, &block); end
-  def scope(*args, &block); end
-  def scope_for(*args, &block); end
-  def source_type_scope; end
-  def type(*args, &block); end
-end
-class ActiveRecord::Reflection::RuntimeReflection < ActiveRecord::Reflection::AbstractReflection
-  def aliased_table; end
-  def all_includes; end
-  def constraints(*args, &block); end
-  def get_join_keys(*args, &block); end
-  def initialize(reflection, association); end
-  def klass; end
-  def scope(*args, &block); end
-  def type(*args, &block); end
-end
 class ActiveRecord::LogSubscriber < ActiveSupport::LogSubscriber
   def self.backtrace_cleaner; end
   def self.backtrace_cleaner=(val); end
@@ -3733,6 +3507,232 @@ end
 module ActiveRecord::NoTouching::ClassMethods
   def no_touching(&block); end
 end
+module ActiveRecord::Reflection
+  def self.add_aggregate_reflection(ar, name, reflection); end
+  def self.add_reflection(ar, name, reflection); end
+  def self.create(macro, name, scope, options, ar); end
+  def self.reflection_class_for(macro); end
+  extend ActiveSupport::Concern
+end
+module ActiveRecord::Reflection::ClassMethods
+  def _reflect_on_association(association); end
+  def clear_reflections_cache; end
+  def reflect_on_aggregation(aggregation); end
+  def reflect_on_all_aggregations; end
+  def reflect_on_all_associations(macro = nil); end
+  def reflect_on_all_autosave_associations; end
+  def reflect_on_association(association); end
+  def reflections; end
+end
+class ActiveRecord::Reflection::AbstractReflection
+  def actual_source_reflection; end
+  def alias_candidate(name); end
+  def build_association(attributes, &block); end
+  def build_scope(table, predicate_builder = nil); end
+  def chain; end
+  def check_validity_of_inverse!; end
+  def class_name; end
+  def constraints; end
+  def counter_cache_column; end
+  def counter_must_be_updated_by_has_many?; end
+  def get_join_keys(association_klass); end
+  def has_cached_counter?; end
+  def inverse_of; end
+  def inverse_updates_counter_cache?; end
+  def inverse_updates_counter_in_memory?; end
+  def inverse_which_updates_counter_cache; end
+  def join_foreign_key; end
+  def join_keys; end
+  def join_primary_key(*arg0); end
+  def join_scope(table, foreign_table, foreign_klass); end
+  def join_scopes(table, predicate_builder); end
+  def klass_join_scope(table, predicate_builder); end
+  def predicate_builder(table); end
+  def primary_key(klass); end
+  def scopes; end
+  def table_name; end
+  def through_reflection?; end
+end
+class ActiveRecord::Reflection::AbstractReflection::JoinKeys < Struct
+  def foreign_key; end
+  def foreign_key=(_); end
+  def key; end
+  def key=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class ActiveRecord::Reflection::MacroReflection < ActiveRecord::Reflection::AbstractReflection
+  def ==(other_aggregation); end
+  def active_record; end
+  def autosave=(autosave); end
+  def compute_class(name); end
+  def derive_class_name; end
+  def initialize(name, scope, options, active_record); end
+  def klass; end
+  def name; end
+  def options; end
+  def plural_name; end
+  def scope; end
+  def scope_for(relation, owner = nil); end
+end
+class ActiveRecord::Reflection::AggregateReflection < ActiveRecord::Reflection::MacroReflection
+  def mapping; end
+end
+class ActiveRecord::Reflection::AssociationReflection < ActiveRecord::Reflection::MacroReflection
+  def active_record_primary_key; end
+  def add_as_polymorphic_through(reflection, seed); end
+  def add_as_source(seed); end
+  def add_as_through(seed); end
+  def association_class; end
+  def association_foreign_key; end
+  def association_primary_key(klass = nil); end
+  def association_scope_cache(conn, owner, &block); end
+  def automatic_inverse_of; end
+  def belongs_to?; end
+  def calculate_constructable(macro, options); end
+  def can_find_inverse_of_automatically?(reflection); end
+  def check_eager_loadable!; end
+  def check_preloadable!; end
+  def check_validity!; end
+  def clear_association_scope_cache; end
+  def collect_join_chain; end
+  def collection?; end
+  def compute_class(name); end
+  def constructable?; end
+  def derive_class_name; end
+  def derive_foreign_key; end
+  def derive_join_table; end
+  def extensions; end
+  def foreign_key; end
+  def foreign_type; end
+  def has_inverse?; end
+  def has_one?; end
+  def has_scope?; end
+  def initialize(name, scope, options, active_record); end
+  def inverse_name; end
+  def join_id_for(owner); end
+  def join_table; end
+  def macro; end
+  def nested?; end
+  def parent_reflection; end
+  def parent_reflection=(arg0); end
+  def polymorphic?; end
+  def polymorphic_inverse_of(associated_class); end
+  def source_reflection; end
+  def through_reflection; end
+  def type; end
+  def valid_inverse_reflection?(reflection); end
+  def validate?; end
+end
+class ActiveRecord::Reflection::HasManyReflection < ActiveRecord::Reflection::AssociationReflection
+  def association_class; end
+  def association_primary_key(klass = nil); end
+  def collection?; end
+  def macro; end
+end
+class ActiveRecord::Reflection::HasOneReflection < ActiveRecord::Reflection::AssociationReflection
+  def association_class; end
+  def calculate_constructable(macro, options); end
+  def has_one?; end
+  def macro; end
+end
+class ActiveRecord::Reflection::BelongsToReflection < ActiveRecord::Reflection::AssociationReflection
+  def association_class; end
+  def belongs_to?; end
+  def calculate_constructable(macro, options); end
+  def can_find_inverse_of_automatically?(_); end
+  def join_foreign_key; end
+  def join_primary_key(klass = nil); end
+  def macro; end
+end
+class ActiveRecord::Reflection::HasAndBelongsToManyReflection < ActiveRecord::Reflection::AssociationReflection
+  def collection?; end
+  def macro; end
+end
+class ActiveRecord::Reflection::ThroughReflection < ActiveRecord::Reflection::AbstractReflection
+  def active_record(*args, &block); end
+  def active_record_primary_key(*args, &block); end
+  def actual_source_reflection; end
+  def add_as_polymorphic_through(reflection, seed); end
+  def add_as_source(seed); end
+  def add_as_through(seed); end
+  def association_class(*args, &block); end
+  def association_foreign_key(*args, &block); end
+  def association_primary_key(klass = nil); end
+  def association_scope_cache(*args, &block); end
+  def autosave=(arg); end
+  def belongs_to?(*args, &block); end
+  def check_eager_loadable!(*args, &block); end
+  def check_preloadable!(*args, &block); end
+  def check_validity!; end
+  def clear_association_scope_cache; end
+  def collect_join_chain; end
+  def collect_join_reflections(seed); end
+  def collection?(*args, &block); end
+  def compute_class(*args, &block); end
+  def constraints; end
+  def constructable?(*args, &block); end
+  def delegate_reflection; end
+  def derive_class_name; end
+  def extensions(*args, &block); end
+  def foreign_key(*args, &block); end
+  def foreign_type(*args, &block); end
+  def get_join_keys(*args, &block); end
+  def has_inverse?(*args, &block); end
+  def has_one?(*args, &block); end
+  def has_scope?; end
+  def initialize(delegate_reflection); end
+  def inverse_name; end
+  def join_id_for(*args, &block); end
+  def join_scopes(table, predicate_builder); end
+  def join_table(*args, &block); end
+  def klass; end
+  def macro(*args, &block); end
+  def name(*args, &block); end
+  def nested?; end
+  def options(*args, &block); end
+  def parent_reflection(*args, &block); end
+  def parent_reflection=(arg); end
+  def plural_name(*args, &block); end
+  def polymorphic?(*args, &block); end
+  def polymorphic_inverse_of(*args, &block); end
+  def scope(*args, &block); end
+  def scope_for(*args, &block); end
+  def scopes; end
+  def source_options; end
+  def source_reflection; end
+  def source_reflection_name; end
+  def source_reflection_names; end
+  def through_options; end
+  def through_reflection; end
+  def through_reflection?; end
+  def type(*args, &block); end
+  def validate?(*args, &block); end
+end
+class ActiveRecord::Reflection::PolymorphicReflection < ActiveRecord::Reflection::AbstractReflection
+  def constraints; end
+  def get_join_keys(*args, &block); end
+  def initialize(reflection, previous_reflection); end
+  def join_scopes(table, predicate_builder); end
+  def klass(*args, &block); end
+  def plural_name(*args, &block); end
+  def scope(*args, &block); end
+  def scope_for(*args, &block); end
+  def source_type_scope; end
+  def type(*args, &block); end
+end
+class ActiveRecord::Reflection::RuntimeReflection < ActiveRecord::Reflection::AbstractReflection
+  def aliased_table; end
+  def all_includes; end
+  def constraints(*args, &block); end
+  def get_join_keys(*args, &block); end
+  def initialize(reflection, association); end
+  def klass; end
+  def scope(*args, &block); end
+  def type(*args, &block); end
+end
 module ActiveRecord::Serialization
   def serializable_hash(options = nil); end
   extend ActiveSupport::Concern
@@ -4624,8 +4624,6 @@ class ActiveRecord::Base
   def aggregate_reflections; end
   def aggregate_reflections?; end
   def allow_unsafe_raw_sql; end
-  def attachment_reflections; end
-  def attachment_reflections?; end
   def attribute_aliases; end
   def attribute_aliases?; end
   def attribute_method_matchers; end
@@ -4723,9 +4721,6 @@ class ActiveRecord::Base
   def self.around_destroy(*args, **options, &block); end
   def self.around_save(*args, **options, &block); end
   def self.around_update(*args, **options, &block); end
-  def self.attachment_reflections; end
-  def self.attachment_reflections=(val); end
-  def self.attachment_reflections?; end
   def self.attribute_aliases; end
   def self.attribute_aliases=(val); end
   def self.attribute_aliases?; end
@@ -4860,7 +4855,6 @@ class ActiveRecord::Base
   def validation_context=(arg0); end
   def verbose_query_logs; end
   def warn_on_records_fetched_greater_than; end
-  extend ActionText::Attribute::ClassMethods
   extend ActiveModel::AttributeMethods::ClassMethods
   extend ActiveModel::Callbacks
   extend ActiveModel::Conversion::ClassMethods
@@ -4913,13 +4907,10 @@ class ActiveRecord::Base
   extend ActiveRecord::Transactions::ClassMethods
   extend ActiveRecord::Translation
   extend ActiveRecord::Validations::ClassMethods
-  extend ActiveStorage::Attached::Model::ClassMethods
-  extend ActiveStorage::Reflection::ActiveRecordExtensions::ClassMethods
   extend ActiveSupport::Benchmarkable
   extend ActiveSupport::Callbacks::ClassMethods
   extend ActiveSupport::DescendantsTracker
   extend ActiveSupport::DescendantsTracker
-  include ActionText::Attribute
   include ActiveModel::AttributeMethods
   include ActiveModel::AttributeMethods
   include ActiveModel::Conversion
@@ -4971,8 +4962,6 @@ class ActiveRecord::Base
   include ActiveRecord::TouchLater
   include ActiveRecord::Transactions
   include ActiveRecord::Validations
-  include ActiveStorage::Attached::Model
-  include ActiveStorage::Reflection::ActiveRecordExtensions
   include ActiveSupport::Callbacks
   include ActiveSupport::Callbacks
   include GlobalID::Identification
@@ -5548,23 +5537,6 @@ class ActiveRecord::AssociationRelation < ActiveRecord::Relation
   def new(attributes = nil, &block); end
   def proxy_association; end
 end
-class ActiveRecord::Associations::Builder::SingularAssociation < ActiveRecord::Associations::Builder::Association
-  def self.define_accessors(model, reflection); end
-  def self.define_constructors(mixin, name); end
-  def self.valid_options(options); end
-end
-class ActiveRecord::Associations::Builder::BelongsTo < ActiveRecord::Associations::Builder::SingularAssociation
-  def self.add_counter_cache_callbacks(model, reflection); end
-  def self.add_default_callbacks(model, reflection); end
-  def self.add_destroy_callbacks(model, reflection); end
-  def self.add_touch_callbacks(model, reflection); end
-  def self.define_callbacks(model, reflection); end
-  def self.define_validations(model, reflection); end
-  def self.macro; end
-  def self.touch_record(o, changes, foreign_key, name, touch, touch_method); end
-  def self.valid_dependent_options; end
-  def self.valid_options(options); end
-end
 class ActiveRecord::Associations::Builder::CollectionAssociation < ActiveRecord::Associations::Builder::Association
   def self.define_callback(model, callback_name, name, options); end
   def self.define_callbacks(model, reflection); end
@@ -5577,20 +5549,6 @@ class ActiveRecord::Associations::Builder::HasMany < ActiveRecord::Associations:
   def self.macro; end
   def self.valid_dependent_options; end
   def self.valid_options(options); end
-end
-class ActiveRecord::Associations::Builder::HasOne < ActiveRecord::Associations::Builder::SingularAssociation
-  def self.add_destroy_callbacks(model, reflection); end
-  def self.add_touch_callbacks(model, reflection); end
-  def self.define_callbacks(model, reflection); end
-  def self.define_validations(model, reflection); end
-  def self.macro; end
-  def self.touch_record(o, name, touch); end
-  def self.valid_dependent_options; end
-  def self.valid_options(options); end
-end
-class ActiveRecord::Coders::JSON
-  def self.dump(obj); end
-  def self.load(json); end
 end
 class ActiveRecord::Schema < ActiveRecord::Migration::Current
   def define(info, &block); end

@@ -178,6 +178,86 @@ module ActionController::Railties::Helpers
 end
 class ActionController::Railtie < Rails::Railtie
 end
+module Mime
+  def self.[](type); end
+  def self.fetch(type); end
+end
+class Mime::Mimes
+  def <<(type); end
+  def delete_if; end
+  def each; end
+  def initialize; end
+  def symbols; end
+  include Enumerable
+end
+class Mime::Type
+  def ==(mime_type); end
+  def ===(list); end
+  def =~(mime_type); end
+  def all?; end
+  def eql?(other); end
+  def hash; end
+  def html?; end
+  def initialize(string, symbol = nil, synonyms = nil); end
+  def method_missing(method, *args); end
+  def ref; end
+  def respond_to_missing?(method, include_private = nil); end
+  def self.lookup(string); end
+  def self.lookup_by_extension(extension); end
+  def self.parse(accept_header); end
+  def self.parse_data_with_trailing_star(type); end
+  def self.parse_trailing_star(accept_header); end
+  def self.register(string, symbol, mime_type_synonyms = nil, extension_synonyms = nil, skip_lookup = nil); end
+  def self.register_alias(string, symbol, extension_synonyms = nil); end
+  def self.register_callback(&block); end
+  def self.unregister(symbol); end
+  def string; end
+  def symbol; end
+  def synonyms; end
+  def to_a; end
+  def to_ary; end
+  def to_s; end
+  def to_str; end
+  def to_sym; end
+end
+class Mime::Type::AcceptItem
+  def <=>(item); end
+  def index; end
+  def index=(arg0); end
+  def initialize(index, name, q = nil); end
+  def name; end
+  def name=(arg0); end
+  def q; end
+  def q=(arg0); end
+  def to_s; end
+end
+class Mime::Type::AcceptList
+  def self.find_item_by_name(array, name); end
+  def self.sort!(list); end
+end
+class Mime::Type::InvalidMimeType < StandardError
+end
+class Mime::AllType < Mime::Type
+  def all?; end
+  def html?; end
+  def initialize; end
+  def self.allocate; end
+  def self.instance; end
+  def self.new(*arg0); end
+  extend Singleton::SingletonClassMethods
+  include Singleton
+end
+class Mime::NullType
+  def method_missing(method, *args); end
+  def nil?; end
+  def ref; end
+  def respond_to_missing?(method, _); end
+  def self.allocate; end
+  def self.instance; end
+  def self.new(*arg0); end
+  extend Singleton::SingletonClassMethods
+  include Singleton
+end
 module ActionDispatch::Routing
   extend ActiveSupport::Autoload
 end
@@ -737,86 +817,6 @@ module ActionDispatch::Http::Cache::Response
   def strong_etag?; end
   def weak_etag=(weak_validators); end
   def weak_etag?; end
-end
-module Mime
-  def self.[](type); end
-  def self.fetch(type); end
-end
-class Mime::Mimes
-  def <<(type); end
-  def delete_if; end
-  def each; end
-  def initialize; end
-  def symbols; end
-  include Enumerable
-end
-class Mime::Type
-  def ==(mime_type); end
-  def ===(list); end
-  def =~(mime_type); end
-  def all?; end
-  def eql?(other); end
-  def hash; end
-  def html?; end
-  def initialize(string, symbol = nil, synonyms = nil); end
-  def method_missing(method, *args); end
-  def ref; end
-  def respond_to_missing?(method, include_private = nil); end
-  def self.lookup(string); end
-  def self.lookup_by_extension(extension); end
-  def self.parse(accept_header); end
-  def self.parse_data_with_trailing_star(type); end
-  def self.parse_trailing_star(accept_header); end
-  def self.register(string, symbol, mime_type_synonyms = nil, extension_synonyms = nil, skip_lookup = nil); end
-  def self.register_alias(string, symbol, extension_synonyms = nil); end
-  def self.register_callback(&block); end
-  def self.unregister(symbol); end
-  def string; end
-  def symbol; end
-  def synonyms; end
-  def to_a; end
-  def to_ary; end
-  def to_s; end
-  def to_str; end
-  def to_sym; end
-end
-class Mime::Type::AcceptItem
-  def <=>(item); end
-  def index; end
-  def index=(arg0); end
-  def initialize(index, name, q = nil); end
-  def name; end
-  def name=(arg0); end
-  def q; end
-  def q=(arg0); end
-  def to_s; end
-end
-class Mime::Type::AcceptList
-  def self.find_item_by_name(array, name); end
-  def self.sort!(list); end
-end
-class Mime::Type::InvalidMimeType < StandardError
-end
-class Mime::AllType < Mime::Type
-  def all?; end
-  def html?; end
-  def initialize; end
-  def self.allocate; end
-  def self.instance; end
-  def self.new(*arg0); end
-  extend Singleton::SingletonClassMethods
-  include Singleton
-end
-class Mime::NullType
-  def method_missing(method, *args); end
-  def nil?; end
-  def ref; end
-  def respond_to_missing?(method, _); end
-  def self.allocate; end
-  def self.instance; end
-  def self.new(*arg0); end
-  extend Singleton::SingletonClassMethods
-  include Singleton
 end
 module ActionDispatch::Http::Parameters
   def binary_params_for?(controller, action); end

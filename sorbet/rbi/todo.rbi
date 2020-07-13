@@ -10,9 +10,12 @@ module ::Anonymous_Delegator_17; end
 module ::Anonymous_Delegator_18; end
 module ::Anonymous_Delegator_19; end
 module ::Anonymous_Delegator_2; end
-module ::Anonymous_Delegator_38; end
+module ::Anonymous_Delegator_29; end
 module ::Anonymous_Delegator_4; end
 module ::Anonymous_Delegator_7; end
+module ActiveStorage::Blob::Analyzable; end
+module ActiveStorage::Blob::Identifiable; end
+module ActiveStorage::Variant; end
 module Anonymous_Module_20::Anonymous_Module_21; end
 module Anonymous_Module_20::Anonymous_Module_22; end
 module T::InterfaceWrapper::Helpers; end
