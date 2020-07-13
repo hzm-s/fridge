@@ -14,4 +14,15 @@ RSpec.describe 'acceptance_criteria' do
       end
     end
   end
+
+  describe '#destroy' do
+    it do
+      add_acceptance_criteria(pbi, %w(ukeire_kijyun))
+
+      delete product_backlog_item_acceptance_criterion_path(product_backlog_item_id: pbi.id, no: 1)
+      follow_redirect!
+
+      expect(response.body).to_not include 'ukeire_kijyun'
+    end
+  end
 end

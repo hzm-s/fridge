@@ -72,9 +72,9 @@ module Pbi
       @acceptance_criteria.add(content)
     end
 
-    sig {params(no: Integer).returns(T.nilable(String))}
-    def acceptance_criterion(no)
-      @acceptance_criteria.get(no)
+    sig {params(no: Integer).void}
+    def remove_acceptance_criterion(no)
+      @acceptance_criteria.remove(no)
     end
 
     sig {params(point: Pbi::StoryPoint).void}

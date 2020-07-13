@@ -31,15 +31,5 @@ module Pbi
         expect(pbi.acceptance_criteria).to be_empty
       end
     end
-
-    describe '#add_acceptance_criterion' do
-      it do
-        pbi = described_class.create(product_id, content)
-
-        pbi.add_acceptance_criterion('AC_1')
-
-        expect(pbi.acceptance_criterion(1)).to eq 'AC_1'
-      end
-    end
   end
 end

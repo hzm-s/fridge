@@ -25,7 +25,7 @@ ja:
       title: アイテムの編集
       title_ac: 受け入れ基準
     acceptance_criteria:
-      empty: 受け入れ基準がありません
+      empty: 受け入れ基準はありません
 
   acceptance_criteria:
     form:
