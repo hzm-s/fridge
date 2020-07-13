@@ -14,7 +14,7 @@
       </label>
       <div class="ac-list mt-1">
         <% @pbi.criteria.each do |c| %>
-          <%= render partial: 'acceptance_criteria/item', locals: { criterion: c, editable: true } %>
+          <%= render partial: 'acceptance_criteria/item', locals: { pbi: @pbi, criterion: c, editable: true } %>
         <% end %>
       </div>
     </div>

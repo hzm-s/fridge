@@ -3,7 +3,7 @@
     <%= criterion.content %>
   </p>
   <% if editable %>
-    <%= link_to '#', class: 'silent-danger ml-3' do %>
+    <%= link_to product_backlog_item_acceptance_criterion_path(product_backlog_item_id: pbi.id, no: criterion.no), method: :delete, class: 'silent-danger ml-3', data: { confirm: t('navs.confirm_delete') } do %>
       <i class="fas fa-trash-alt"></i>
     <% end %>
   <% end %>
