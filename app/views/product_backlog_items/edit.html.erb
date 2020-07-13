@@ -14,12 +14,12 @@
       </label>
       <div class="ac-list mt-1">
         <% @pbi.criteria.each do |c| %>
-          <%= render partial: 'acceptance_criteria/item', locals: { pbi: @pbi, criterion: c, editable: true } %>
+          <%= render partial: 'acceptance_criteria/item', locals: { pbi_id: @pbi.id, criterion: c, editable: true } %>
         <% end %>
       </div>
     </div>
     <div class="mt-3">
-      <%= render partial: 'acceptance_criteria/form', locals: { pbi: @pbi } %>
+      <%= render partial: 'acceptance_criteria/form', locals: { pbi_id: @pbi.id } %>
     </div>
   </div>
 </div>
