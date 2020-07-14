@@ -11,7 +11,7 @@ module Pbi
       sig {params(product_id: Product::ProductId, content: Content).returns(T.attached_class)}
       def create(product_id, content)
         new(
-          Pbi::ItemId.create,
+          Pbi::Id.create,
           product_id,
           content,
           Pbi::StoryPoint.unknown,
@@ -20,7 +20,7 @@ module Pbi
       end
 
       sig {params(
-        id: ItemId,
+        id: Id,
         product_id: Product::ProductId,
         content: Content,
         size: StoryPoint,
@@ -31,7 +31,7 @@ module Pbi
       end
     end
 
-    sig {returns(ItemId)}
+    sig {returns(Id)}
     attr_reader :id
 
     sig {returns(Product::ProductId)}
@@ -47,7 +47,7 @@ module Pbi
     attr_reader :acceptance_criteria
 
     sig {params(
-      id: ItemId,
+      id: Id,
       product_id: Product::ProductId,
       content: Content,
       point: StoryPoint,

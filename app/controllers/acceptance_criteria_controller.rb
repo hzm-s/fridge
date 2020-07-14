@@ -19,7 +19,7 @@ class AcceptanceCriteriaController < ApplicationController
   private
 
   def pbi_id
-    @__pbi_id ||= Pbi::ItemId.from_string(params[:product_backlog_item_id])
+    @__pbi_id ||= Pbi::Id.from_string(params[:product_backlog_item_id])
   end
 
   def permitted_params

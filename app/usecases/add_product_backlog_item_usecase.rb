@@ -10,7 +10,7 @@ class AddProductBacklogItemUsecase
     @order_repository = T.let(ProductBacklogOrderRepository::AR, Pbi::OrderRepository)
   end
 
-  sig {params(product_id: Product::ProductId, content: Pbi::Content).returns(Pbi::ItemId)}
+  sig {params(product_id: Product::ProductId, content: Pbi::Content).returns(Pbi::Id)}
   def perform(product_id, content)
     pbi = Pbi::Item.create(product_id, content)
 

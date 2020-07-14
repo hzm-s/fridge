@@ -7,11 +7,11 @@ module ProductBacklogItemRepository
       extend T::Sig
       include Pbi::ItemRepository
 
-      sig {override.params(id: Pbi::ItemId).returns(Pbi::Item)}
+      sig {override.params(id: Pbi::Id).returns(Pbi::Item)}
       def find_by_id(id)
         r = Dao::ProductBacklogItem.eager_load(:criteria).find(id)
         Pbi::Item.from_repository(
-          Pbi::ItemId.from_repository(r.id),
+          Pbi::Id.from_repository(r.id),
           Product::ProductId.from_repository(r.dao_product_id),
           Pbi::Content.from_repository(r.content),
           Pbi::StoryPoint.from_repository(r.size),

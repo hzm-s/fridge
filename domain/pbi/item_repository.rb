@@ -7,7 +7,7 @@ module Pbi
     extend T::Helpers
     interface!
 
-    sig {abstract.params(id: ItemId).returns(Pbi::Item)}
+    sig {abstract.params(id: Id).returns(Pbi::Item)}
     def find_by_id(id); end
 
     sig {abstract.params(pbi: Item).void}

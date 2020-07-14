@@ -9,7 +9,7 @@ class RemoveAcceptanceCriterionUsecase
     @repository = T.let(ProductBacklogItemRepository::AR, Pbi::ItemRepository)
   end
 
-  sig {params(pbi_id: Pbi::ItemId, no: Integer).void}
+  sig {params(pbi_id: Pbi::Id, no: Integer).void}
   def perform(pbi_id, no)
     pbi = @repository.find_by_id(pbi_id)
     pbi.remove_acceptance_criterion(no)

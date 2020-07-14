@@ -10,7 +10,7 @@ class ProductBacklogItemEstimationsController < ApplicationController
   private
 
   def build_pbi_id(id)
-    Pbi::ItemId.from_string(id)
+    Pbi::Id.from_string(id)
   end
 
   def build_point(point)

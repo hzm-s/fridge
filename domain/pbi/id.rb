@@ -2,6 +2,6 @@
 require 'sorbet-runtime'
 
 module Pbi
-  class ItemId < Shared::Identifier
+  class Id < Shared::Identifier
   end
 end
