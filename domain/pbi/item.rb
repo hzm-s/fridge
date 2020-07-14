@@ -8,7 +8,7 @@ module Pbi
     class << self
       extend T::Sig
 
-      sig {params(product_id: Product::ProductId, content: Pbi::Content).returns(T.attached_class)}
+      sig {params(product_id: Product::ProductId, content: Content).returns(T.attached_class)}
       def create(product_id, content)
         new(
           Pbi::ItemId.create,
@@ -20,10 +20,10 @@ module Pbi
       end
 
       sig {params(
-        id: Pbi::ItemId,
+        id: ItemId,
         product_id: Product::ProductId,
-        content: Pbi::Content,
-        size: Pbi::StoryPoint,
+        content: Content,
+        size: StoryPoint,
         acceptance_criteria: AcceptanceCriteria
       ).returns(T.attached_class)}
       def from_repository(id, product_id, content, size, acceptance_criteria)
@@ -31,26 +31,26 @@ module Pbi
       end
     end
 
-    sig {returns(Pbi::ItemId)}
+    sig {returns(ItemId)}
     attr_reader :id
 
     sig {returns(Product::ProductId)}
     attr_reader :product_id
 
-    sig {returns(Pbi::Content)}
+    sig {returns(Content)}
     attr_reader :content
 
-    sig {returns(Pbi::StoryPoint)}
+    sig {returns(StoryPoint)}
     attr_reader :size
 
     sig {returns(AcceptanceCriteria)}
     attr_reader :acceptance_criteria
 
     sig {params(
-      id: Pbi::ItemId,
+      id: ItemId,
       product_id: Product::ProductId,
-      content: Pbi::Content,
-      point: Pbi::StoryPoint,
+      content: Content,
+      point: StoryPoint,
       acceptance_criteria: AcceptanceCriteria
     ).void}
     def initialize(id, product_id, content, point, acceptance_criteria)
@@ -62,9 +62,9 @@ module Pbi
     end
     private_class_method :new
 
-    sig {returns(Pbi::Status)}
+    sig {returns(Status)}
     def status
-      Pbi::Status::Preparation
+      Status::Preparation
     end
 
     sig {params(content: String).void}
@@ -77,7 +77,7 @@ module Pbi
       @acceptance_criteria.remove(no)
     end
 
-    sig {params(point: Pbi::StoryPoint).void}
+    sig {params(point: StoryPoint).void}
     def estimate_size(point)
       @size = point
     end

@@ -13,7 +13,7 @@ module Pbi
         new(product_id, [])
       end
 
-      sig {params(product_id: Product::ProductId, pbi_ids: T::Array[Pbi::ItemId]).returns(T.attached_class)}
+      sig {params(product_id: Product::ProductId, pbi_ids: T::Array[ItemId]).returns(T.attached_class)}
       def from_repository(product_id, pbi_ids)
         new(product_id, pbi_ids)
       end
@@ -22,19 +22,19 @@ module Pbi
     sig {returns(Product::ProductId)}
     attr_reader :product_id
 
-    sig {params(product_id: Product::ProductId, pbi_ids: T::Array[Pbi::ItemId]).void}
+    sig {params(product_id: Product::ProductId, pbi_ids: T::Array[ItemId]).void}
     def initialize(product_id, pbi_ids)
       @product_id = product_id
       @item_ids = pbi_ids
     end
     private_class_method :new
 
-    sig {params(pbi: Pbi::Item).void}
+    sig {params(pbi: Item).void}
     def append(pbi)
       @item_ids << pbi.id
     end
 
-    sig {params(pbi_id: Pbi::ItemId, to: Integer).void}
+    sig {params(pbi_id: ItemId, to: Integer).void}
     def move_item_to(pbi_id, to)
       pos2val = @item_ids.map.with_index(1) { |id, i| [i * 10, id] }.to_h
 
@@ -51,7 +51,7 @@ module Pbi
       @item_ids = pos2val.sort.map { |pair| pair[1] }
     end
 
-    sig {returns(T::Array[Pbi::ItemId])}
+    sig {returns(T::Array[ItemId])}
     def to_a
       @item_ids
     end
