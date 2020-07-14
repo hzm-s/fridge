@@ -10,7 +10,7 @@ class ProductBacklogItemsController < ApplicationController
     @form = ProductBacklogItemForm.new(permitted_params)
 
     if @form.valid?
-      AddProductBacklogItemUsecase.new.perform(
+      AddProductBacklogItemUsecase.perform(
         Product::ProductId.from_string(params[:product_id]),
         @form.domain_objects[:content]
       )

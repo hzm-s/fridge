@@ -1,7 +1,7 @@
 # typed: strict
 require 'sorbet-runtime'
 
-class ReorderProductBacklogUsecase
+class ReorderProductBacklogUsecase < UsecaseBase
   extend T::Sig
 
   sig {void}

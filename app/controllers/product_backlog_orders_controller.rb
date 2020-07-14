@@ -3,6 +3,6 @@ class ProductBacklogOrdersController < ApplicationController
     product_id = Product::ProductId.from_string(params[:product_id])
     pbi_id = Pbi::Id.from_string(params[:pbi_id])
     to = params[:to].to_i
-    ReorderProductBacklogUsecase.new.perform(product_id, pbi_id, to)
+    ReorderProductBacklogUsecase.perform(product_id, pbi_id, to)
   end
 end

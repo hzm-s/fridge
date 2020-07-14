@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Reorder product backlog' do
+RSpec.describe ReorderProductBacklogUsecase do
   it do
     product = create_product
 
@@ -8,8 +8,7 @@ RSpec.describe 'Reorder product backlog' do
     pbi_b = add_pbi(product.id, 'BBB')
     pbi_c = add_pbi(product.id, 'CCC')
 
-    uc = ReorderProductBacklogUsecase.new
-    uc.perform(product.id, pbi_a.id, 3)
+    described_class.perform(product.id, pbi_a.id, 3)
 
     order = ProductBacklogOrderRepository::AR.find_by_product_id(product.id)
     expect(order.to_a).to eq [pbi_b, pbi_c, pbi_a].map(&:id)

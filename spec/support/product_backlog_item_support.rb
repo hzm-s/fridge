@@ -1,7 +1,7 @@
 module ProductBacklogItemSupport
   def add_pbi(product_id, content = 'fridge helps scrum')
     Pbi::Content.from_string(content)
-      .yield_self { |c| AddProductBacklogItemUsecase.new.perform(product_id, c) }
+      .yield_self { |c| AddProductBacklogItemUsecase.perform(product_id, c) }
       .yield_self { |id| ProductBacklogItemRepository::AR.find_by_id(id) }
   end
 

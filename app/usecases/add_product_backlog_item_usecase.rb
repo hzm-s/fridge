@@ -1,7 +1,7 @@
 # typed: strict
 require 'sorbet-runtime'
 
-class AddProductBacklogItemUsecase
+class AddProductBacklogItemUsecase < UsecaseBase
   extend T::Sig
 
   sig {void}
@@ -17,7 +17,7 @@ class AddProductBacklogItemUsecase
     order = find_order(product_id)
     order.append(pbi)
 
-    ApplicationRecord.transaction do
+    transaction do
       @pbi_repository.add(pbi)
       @order_repository.update(order)
     end

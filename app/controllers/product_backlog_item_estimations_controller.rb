@@ -2,7 +2,7 @@ class ProductBacklogItemEstimationsController < ApplicationController
   def update
     pbi_id = build_pbi_id(params[:id])
     point = build_point(params[:form][:point])
-    EstimateProductBacklogItemSizeUsecase.new.perform(pbi_id, point)
+    EstimateProductBacklogItemSizeUsecase.perform(pbi_id, point)
 
     @item = ProductBacklogItemQuery.call(pbi_id)
   end

@@ -1,7 +1,7 @@
 # typed: strict
 require 'sorbet-runtime'
 
-class CreateProductUsecase
+class CreateProductUsecase < UsecaseBase
   extend T::Sig
 
   sig {void}

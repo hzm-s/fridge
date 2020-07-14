@@ -1,10 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe 'Create product' do
+RSpec.describe CreateProductUsecase do
   it do
-    uc = CreateProductUsecase.new
-
-    product_id = uc.perform('fridge', 'DESC')
+    product_id = described_class.perform('fridge', 'DESC')
     product = ProductRepository::AR.find_by_id(product_id)
 
     aggregate_failures do

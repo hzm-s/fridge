@@ -1,12 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe 'Add acceptance criterion to PBI' do
+RSpec.describe AddAcceptanceCriterionUsecase do
   let!(:product) { create_product }
   let!(:pbi) { add_pbi(product.id) }
 
   it do
-    uc = AddAcceptanceCriterionUsecase.new
-    uc.perform(pbi.id, 'ukeire_kijyun_ichi')
+    described_class.perform(pbi.id, 'ukeire_kijyun_ichi')
 
     updated = ProductBacklogItemRepository::AR.find_by_id(pbi.id)
 
