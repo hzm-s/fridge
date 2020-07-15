@@ -30,7 +30,11 @@ class ProductBacklogItemsController < ApplicationController
     @pbi_form = ProductBacklogItemForm.new(permitted_params)
 
     if @pbi_form.valid?
-      render
+      UpdateProductBacklogItemUsecase.perform(
+        Pbi::Id.from_string(@pbi_id),
+        @pbi_form.domain_objects[:content]
+      )
+      redirect_to edit_product_backlog_item_path(@pbi_id)
     else
       render :edit
     end
