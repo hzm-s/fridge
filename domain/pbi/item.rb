@@ -81,5 +81,10 @@ module Pbi
     def estimate_size(point)
       @size = point
     end
+
+    sig {params(content: Content).void}
+    def update_content(content)
+      @content = content
+    end
   end
 end
