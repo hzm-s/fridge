@@ -31,5 +31,16 @@ module Pbi
         expect(pbi.acceptance_criteria).to be_empty
       end
     end
+
+    describe '#update_content' do
+      it do
+        pbi = described_class.create(product_id, content)
+
+        new_content = Content.from_string('NEW_CONTENT')
+        pbi.update_content(new_content)
+
+        expect(pbi.content).to eq(new_content)
+      end
+    end
   end
 end

@@ -41,4 +41,30 @@ RSpec.describe 'product_backlog_items' do
       end
     end
   end
+
+  describe '#update' do
+    let!(:pbi) { add_pbi(product.id, 'ABC') }
+
+    let(:valid_params) do
+      { form: { content: 'XYZ' } }
+    end
+
+    context '入力内容が正しい場合' do
+      it do
+        patch product_backlog_item_path(pbi.id, format: :js), params: valid_params
+        follow_redirect!
+
+        expect(response.body).to include('XYZ')
+      end
+    end
+
+    context '入力内容が正しくない場合' do
+      it do
+        params = valid_params.deep_merge(form: { content: '' })
+        patch product_backlog_item_path(pbi.id, format: :js), params: params
+
+        expect(response.body).to include(I18n.t('errors.messages.blank'))
+      end
+    end
+  end
 end
