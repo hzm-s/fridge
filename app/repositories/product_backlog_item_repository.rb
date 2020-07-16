@@ -20,7 +20,7 @@ module ProductBacklogItemRepository
             r.criteria.map { |c| Pbi::AcceptanceCriterion.from_repository(c.no, c.content) }
           )
         )
-      rescue => e
+      rescue ActiveRecord::RecordNotFound => e
         raise Shared::DomainError.new(e)
       end
 
