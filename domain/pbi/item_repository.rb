@@ -15,5 +15,8 @@ module Pbi
 
     sig {abstract.params(pbi: Item).void}
     def update(pbi); end
+
+    sig {abstract.params(id: Id).void}
+    def delete(id); end
   end
 end
