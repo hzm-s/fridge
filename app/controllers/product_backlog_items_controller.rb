@@ -40,6 +40,12 @@ class ProductBacklogItemsController < ApplicationController
     end
   end
 
+  def destroy
+    pbi = ProductBacklogItemRepository::AR.find_by_id(Pbi::Id.from_string(params[:id]))
+    RemoveProductBacklogItemUsecase.perform(pbi.id)
+    redirect_to product_product_backlog_items_path(product_id: pbi.product_id)
+  end
+
   private
 
   def permitted_params
