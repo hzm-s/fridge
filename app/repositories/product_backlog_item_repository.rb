@@ -20,6 +20,8 @@ module ProductBacklogItemRepository
             r.criteria.map { |c| Pbi::AcceptanceCriterion.from_repository(c.no, c.content) }
           )
         )
+      rescue ActiveRecord::RecordNotFound => e
+        raise Shared::DomainError.new(e)
       end
 
       sig {override.params(pbi: Pbi::Item).void}
@@ -46,6 +48,11 @@ module ProductBacklogItemRepository
         end
 
         r.save!
+      end
+
+      sig {override.params(id: Pbi::Id).void}
+      def delete(id)
+        Dao::ProductBacklogItem.destroy(id.to_s)
       end
     end
   end

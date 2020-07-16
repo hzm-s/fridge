@@ -51,6 +51,11 @@ module Pbi
       @item_ids = pos2val.sort.map { |pair| pair[1] }
     end
 
+    sig {params(pbi_id: Id).void}
+    def delete(pbi_id)
+      @item_ids.delete(pbi_id)
+    end
+
     sig {returns(T::Array[Id])}
     def to_a
       @item_ids

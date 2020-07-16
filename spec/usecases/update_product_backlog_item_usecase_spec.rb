@@ -9,6 +9,6 @@ RSpec.describe UpdateProductBacklogItemUsecase do
     described_class.perform(pbi.id, Pbi::Content.from_string('UPDATED_CONTENT'))
 
     updated = ProductBacklogItemRepository::AR.find_by_id(pbi.id)
-    expect(updated.content.to_s).to eq 'UPDATED_CONTENT' 
+    expect(updated.content.to_s).to eq 'UPDATED_CONTENT'
   end
 end

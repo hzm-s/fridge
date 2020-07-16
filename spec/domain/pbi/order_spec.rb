@@ -10,7 +10,7 @@ module Pbi
     let(:pbi_d) { Pbi::Item.create(product.id, Pbi::Content.from_string('DDD')) }
     let(:pbi_e) { Pbi::Item.create(product.id, Pbi::Content.from_string('EEE')) }
 
-    describe 'append and' do
+    describe 'append an item' do
       it do
         order = described_class.create(product.id)
 
@@ -19,6 +19,20 @@ module Pbi
         order.append(pbi_c)
 
         expect(order.to_a).to eq [pbi_a, pbi_b, pbi_c].map(&:id)
+      end
+    end
+
+    describe 'delete an item' do
+      it do
+        order = described_class.create(product.id)
+
+        order.append(pbi_a)
+        order.append(pbi_b)
+        order.append(pbi_c)
+
+        order.delete(pbi_b.id)
+
+        expect(order.to_a).to eq [pbi_a, pbi_c].map(&:id)
       end
     end
 

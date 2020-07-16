@@ -67,4 +67,15 @@ RSpec.describe 'product_backlog_items' do
       end
     end
   end
+
+  describe '#destroy' do
+    it do
+      pbi = add_pbi(product.id, 'YOHKYU')
+
+      delete product_backlog_item_path(pbi.id)
+      follow_redirect!
+
+      expect(response.body).to_not include 'YOHKYU'
+    end
+  end
 end
