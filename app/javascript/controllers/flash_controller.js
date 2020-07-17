@@ -7,6 +7,7 @@ export default class extends Controller {
     Toastify({
       text: message,
       close: true,
+      duration: 5000,
       className: 'toast-success'
     }).showToast();
   }

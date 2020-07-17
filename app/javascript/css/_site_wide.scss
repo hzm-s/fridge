@@ -76,9 +76,9 @@ label {
 .toastify.on.toast-success {
   @include nf;
 
-  font-size: .875rem;
+  font-size: .75rem;
   border-radius: .5rem;
-  border: 2px solid $success;
+  border: 1px solid $success;
   background: $gray-100;
   color: $success;
 }
