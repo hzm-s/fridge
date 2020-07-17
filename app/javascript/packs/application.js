@@ -25,3 +25,8 @@ import '@fortawesome/fontawesome-free/js/all'
 
 // css
 import '../css/application.scss'
+
+$(document).on('turbolinks:before-cache', function () {
+  $('.toastify').remove();
+  $('#js-flash').remove();
+});

@@ -3,12 +3,16 @@ import Toastify from 'toastify-js'
 
 export default class extends Controller {
   connect() {
+    this.showToast()
+  }
+
+  showToast() {
     const message = this.data.get('message')
     Toastify({
       text: message,
       close: true,
       duration: 5000,
       className: 'toast-success'
-    }).showToast();
+    }).showToast()
   }
 }
