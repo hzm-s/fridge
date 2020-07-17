@@ -78,7 +78,7 @@ label {
 
   font-size: .875rem;
   border-radius: .5rem;
-  border: 1px solid darken($success, 15%);
+  border: 2px solid $success;
   background: $gray-100;
   color: $success;
 }
