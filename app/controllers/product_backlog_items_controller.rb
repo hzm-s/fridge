@@ -14,7 +14,7 @@ class ProductBacklogItemsController < ApplicationController
         Product::ProductId.from_string(params[:product_id]),
         @form.domain_objects[:content]
       )
-      redirect_to product_product_backlog_items_path(product_id: params[:product_id])
+      redirect_to product_product_backlog_items_path(product_id: params[:product_id]), flash: flash_success('pbi.create')
     else
       render :new
     end
@@ -34,7 +34,7 @@ class ProductBacklogItemsController < ApplicationController
         Pbi::Id.from_string(@pbi_id),
         @pbi_form.domain_objects[:content]
       )
-      redirect_to edit_product_backlog_item_path(@pbi_id)
+      redirect_to edit_product_backlog_item_path(@pbi_id), flash: flash_success('pbi.update')
     else
       render :edit
     end
@@ -43,7 +43,7 @@ class ProductBacklogItemsController < ApplicationController
   def destroy
     pbi = ProductBacklogItemRepository::AR.find_by_id(Pbi::Id.from_string(params[:id]))
     RemoveProductBacklogItemUsecase.perform(pbi.id)
-    redirect_to product_product_backlog_items_path(product_id: pbi.product_id)
+    redirect_to product_product_backlog_items_path(product_id: pbi.product_id), flash: flash_success('pbi.destroy')
   end
 
   private

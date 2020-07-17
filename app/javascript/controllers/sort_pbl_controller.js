@@ -1,4 +1,4 @@
-import { Controller } from 'stimulus'; 
+import { Controller } from 'stimulus';
 import Sortable, { AutoScroll } from 'sortablejs/modular/sortable.core.esm.js'
 
 export default class extends Controller {
