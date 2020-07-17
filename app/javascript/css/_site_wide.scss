@@ -72,3 +72,13 @@ label {
 .sortable-ghost {
   opacity: 0.7;
 }
+
+.toastify.on.toast-success {
+  @include nf;
+
+  font-size: .875rem;
+  border-radius: .5rem;
+  border: 1px solid darken($success, 15%);
+  background: $gray-100;
+  color: $success;
+}

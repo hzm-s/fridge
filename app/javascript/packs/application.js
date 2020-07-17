@@ -18,8 +18,10 @@ import 'controllers'
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
+// Bootstrap & font-awesome
 window.$ = $
 import 'bootstrap'
 import '@fortawesome/fontawesome-free/js/all'
 
+// css
 import '../css/application.scss'
