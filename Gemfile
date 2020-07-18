@@ -46,8 +46,15 @@ group :development do
   gem 'sorbet'
 end
 
+group :test do
+  gem 'omniauth_test_helper', github: 'haazime/omniauth_test_helper'
+end
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'sorbet-runtime'
 gem 'validates_domain_object_of', github: 'haazime/validates_domain_object_of'
+
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
