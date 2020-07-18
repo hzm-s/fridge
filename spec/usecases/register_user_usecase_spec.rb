@@ -30,14 +30,15 @@ RSpec.describe RegisterUserUsecase do
       described_class.perform(name, email, oauth_account)
 
       expect { described_class.perform('Other User', email, { provider: 'google_oauth2', uid: 'other_uid' }) }
-        .to change { Dao::User.count }.by(0)
+        .to raise_error(ActiveRecord::RecordNotUnique)
+        .and change { Dao::User.count }.by(0)
         .and change { App::OauthAccount.count }.by(0)
     end
   end
 
   context '同じOauthアカウントを持つユーザーが登録済みの場合' do
     before do
-      described_class.perform(name, email, oauth_account)
+      @user_id = described_class.perform(name, email, oauth_account)[:user_id]
     end
 
     it '登録済であることを返すこと' do
@@ -45,7 +46,7 @@ RSpec.describe RegisterUserUsecase do
 
       aggregate_failures do
         expect(result[:is_registered]).to be false
-        expect(result[:user_id]).to be nil
+        expect(result[:user_id]).to eq @user_id
       end
     end
 

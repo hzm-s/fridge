@@ -9,8 +9,6 @@ class UsecaseBase
   def transaction
     ApplicationRecord.transaction do
       yield
-    rescue => e
-      rollback
     end
   end
 

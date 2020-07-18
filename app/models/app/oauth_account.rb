@@ -7,6 +7,13 @@ class App::OauthAccount < ApplicationRecord
       create!(dao_user_id: user_id, provider: provider, uid: uid)
     end
 
+    def find_user_by_account(provider:, uid:)
+      account = find_by(provider: provider, uid: uid)
+      return nil unless account
+
+      account.dao_user_id
+    end
+
     def find_by_user_id(user_id)
       joins(:dao_user).find_by(dao_users: { id: user_id })
     end
