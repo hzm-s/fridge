@@ -1,3 +1,4 @@
+# typed: false
 class AcceptanceCriterionForm
   include ActiveModel::Model
 

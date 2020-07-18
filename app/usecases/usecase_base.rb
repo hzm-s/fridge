@@ -1,3 +1,4 @@
+# typed: false
 class UsecaseBase
   class << self
     def perform(*args)
@@ -5,7 +6,13 @@ class UsecaseBase
     end
   end
 
-  def transaction(&block)
-    ApplicationRecord.transaction(&block)
+  def transaction
+    ApplicationRecord.transaction do
+      yield
+    end
+  end
+
+  def rollback
+    raise ActiveRecord::Rollback
   end
 end

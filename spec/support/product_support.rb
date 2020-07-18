@@ -1,3 +1,4 @@
+# typed: true
 module ProductSpport
 
   def create_product(name: 'example')

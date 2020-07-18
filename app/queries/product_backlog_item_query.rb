@@ -1,3 +1,4 @@
+# typed: true
 module ProductBacklogItemQuery
   class << self
     def call(id)

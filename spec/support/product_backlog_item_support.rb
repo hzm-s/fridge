@@ -1,3 +1,4 @@
+# typed: true
 module ProductBacklogItemSupport
   def add_pbi(product_id, content = 'fridge helps scrum', acceptance_criteria: nil)
     pbi =

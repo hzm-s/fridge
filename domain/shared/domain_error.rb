@@ -1,3 +1,4 @@
+# typed: true
 module Shared
   class DomainError < StandardError
     def initialize(origin)

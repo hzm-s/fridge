@@ -1,3 +1,4 @@
+# typed: false
 class ProductBacklogOrdersController < ApplicationController
   def update
     product_id = Product::ProductId.from_string(params[:product_id])

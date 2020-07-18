@@ -1,5 +1,7 @@
 ja:
   feedbacks:
+    signed_up: ユーザー登録が完了しました
+    signed_in: ログインしました
     pbi:
       create: プロダクトバックログアイテムを追加しました
       update: プロダクトバックログアイテムを更新しました

@@ -34,6 +34,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'pry-rails'
   gem 'pry-byebug'
+  gem 'omniauth_test_helper', github: 'haazime/omniauth_test_helper'
 end
 
 group :development do
@@ -51,3 +52,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'sorbet-runtime'
 gem 'validates_domain_object_of', github: 'haazime/validates_domain_object_of'
+
+gem 'omniauth-google-oauth2'

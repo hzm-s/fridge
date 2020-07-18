@@ -1,3 +1,4 @@
+# typed: true
 module BootstrapHelper
   def dd_trigger_options(options)
     dom_id = options.delete(:id)

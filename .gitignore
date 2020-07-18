@@ -37,3 +37,7 @@ yarn-debug.log*
 
 # sorbet
 sorbet/rbi/hidden-definitions/errors.txt
+
+/config/credentials/development.key
+
+/config/credentials/test.key

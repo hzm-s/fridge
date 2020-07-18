@@ -249,6 +249,21 @@ class Rack::BodyProxy
   def method_missing(method_name, *args, &block); end
   def respond_to_missing?(method_name, include_all = nil); end
 end
+class Rack::Builder
+  def call(env); end
+  def freeze_app; end
+  def generate_map(default_app, mapping); end
+  def initialize(default_app = nil, &block); end
+  def map(path, &block); end
+  def run(app); end
+  def self.app(default_app = nil, &block); end
+  def self.load_file(path, opts = nil); end
+  def self.new_from_string(builder_script, file = nil); end
+  def self.parse_file(config, opts = nil); end
+  def to_app; end
+  def use(middleware, *args, &block); end
+  def warmup(prc = nil, &block); end
+end
 class Rack::Sendfile
   def call(env); end
   def initialize(app, variation = nil, mappings = nil); end

@@ -1,3 +1,4 @@
+# typed: ignore
 class CreateDaoProductBacklogOrders < ActiveRecord::Migration[6.0]
   def change
     create_table :dao_product_backlog_orders do |t|
