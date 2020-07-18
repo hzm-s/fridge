@@ -1,4 +1,4 @@
-# typed: ignore
+# typed: true
 require 'sorbet-runtime'
 
 class RegisterUserUsecase < UsecaseBase
