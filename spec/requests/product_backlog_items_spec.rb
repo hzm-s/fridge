@@ -8,7 +8,7 @@ RSpec.describe 'product_backlog_items' do
       { form: { content: 'ABC' } }
     end
 
-    context '入力内容が正しい場合' do
+    context 'given valid params' do
       it do
         post product_product_backlog_items_path(product_id: product.id.to_s, format: :js), params: valid_params
 
@@ -18,7 +18,7 @@ RSpec.describe 'product_backlog_items' do
       end
     end
 
-    context '入力内容が正しくない場合' do
+    context 'given invalid params' do
       it do
         params = valid_params.deep_merge(form: { content: '' })
         post product_product_backlog_items_path(product_id: product.id.to_s, format: :js), params: params
