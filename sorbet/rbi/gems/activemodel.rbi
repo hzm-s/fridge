@@ -592,9 +592,9 @@ class ActiveModel::Type::Date < ActiveModel::Type::Value
   def type_cast_for_schema(value); end
   def value_from_multiparameter_assignment(*arg0); end
   include ActiveModel::Type::Helpers::Timezone
-  include Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_8
+  include Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_10
 end
-module Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_8
+module Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_10
   def assert_valid_value(value); end
   def cast(value); end
   def serialize(value); end
@@ -609,9 +609,9 @@ class ActiveModel::Type::DateTime < ActiveModel::Type::Value
   def value_from_multiparameter_assignment(values_hash); end
   include ActiveModel::Type::Helpers::TimeValue
   include ActiveModel::Type::Helpers::Timezone
-  include Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_9
+  include Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_11
 end
-module Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_9
+module Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_11
   def assert_valid_value(value); end
   def cast(value); end
   def serialize(value); end
@@ -648,9 +648,9 @@ class ActiveModel::Type::Time < ActiveModel::Type::Value
   def user_input_in_time_zone(value); end
   include ActiveModel::Type::Helpers::TimeValue
   include ActiveModel::Type::Helpers::Timezone
-  include Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_10
+  include Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_12
 end
-module Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_10
+module Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_12
   def assert_valid_value(value); end
   def cast(value); end
   def serialize(value); end
