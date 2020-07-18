@@ -12,13 +12,14 @@ module UserRepository
         r = Dao::User.find(id)
 
         avatar = User::Avatar.from_repository(r.initials, r.avatar_bg, r.avatar_fg)
-        User::User.from_repository(r.id, r.name, avatar)
+        User::User.from_repository(r.id, r.email, r.name, avatar)
       end
 
       sig {override.params(user: User::User).void}
       def add(user)
         Dao::User.create!(
           id: user.id,
+          email: user.email,
           name: user.name,
           initials: user.avatar.initials,
           avatar_bg: user.avatar.bg,

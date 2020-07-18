@@ -5,7 +5,15 @@ class UsecaseBase
     end
   end
 
-  def transaction(&block)
-    ApplicationRecord.transaction(&block)
+  def transaction
+    ApplicationRecord.transaction do
+      yield
+    rescue => e
+      rollback
+    end
+  end
+
+  def rollback
+    raise ActiveRecord::Rollback
   end
 end
