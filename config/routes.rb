@@ -2,6 +2,7 @@
 Rails.application.routes.draw do
   root to: 'products#index'
 
+  get 'sign_in', to: 'sign_in#index', as: :sign_in
   get 'auth/:provider/callback', to: 'oauth_callbacks#create', as: :oauth_callback
 
   resources :products, only: [:new, :create, :index] do

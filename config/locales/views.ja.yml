@@ -12,6 +12,13 @@ ja:
       new: プロダクトを作成する
       product_list: プロダクト
 
+  sign_in:
+    index:
+      title: fridge
+      sign_in: Googleアカウントでログイン
+      sign_up: Googleアカウントでユーザー登録
+      or: または
+
   products:
     index:
       title: プロダクト
