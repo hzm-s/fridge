@@ -10,6 +10,7 @@ module OauthSupport
 end
 
 RSpec.configure do |c|
+  c.include OmniAuthTestHelper
   c.include OauthSupport::Common
 end
 

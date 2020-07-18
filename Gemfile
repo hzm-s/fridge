@@ -34,6 +34,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'pry-rails'
   gem 'pry-byebug'
+  gem 'omniauth_test_helper', github: 'haazime/omniauth_test_helper'
 end
 
 group :development do
@@ -44,10 +45,6 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'sorbet'
-end
-
-group :test do
-  gem 'omniauth_test_helper', github: 'haazime/omniauth_test_helper'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
