@@ -10,11 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_18_011542) do
+ActiveRecord::Schema.define(version: 2020_07_18_044054) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "app_oauth_accounts", force: :cascade do |t|
+    t.uuid "dao_user_id"
+    t.string "provider", null: false
+    t.string "uid", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["dao_user_id"], name: "index_app_oauth_accounts_on_dao_user_id", unique: true
+  end
 
   create_table "dao_acceptance_criteria", force: :cascade do |t|
     t.uuid "dao_product_backlog_item_id"
@@ -52,13 +61,16 @@ ActiveRecord::Schema.define(version: 2020_07_18_011542) do
 
   create_table "dao_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
+    t.string "email", null: false
     t.string "initials", null: false
     t.string "avatar_bg", null: false
     t.string "avatar_fg", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_dao_users_on_email", unique: true
   end
 
+  add_foreign_key "app_oauth_accounts", "dao_users"
   add_foreign_key "dao_acceptance_criteria", "dao_product_backlog_items"
   add_foreign_key "dao_product_backlog_items", "dao_products"
   add_foreign_key "dao_product_backlog_orders", "dao_products"
