@@ -56,5 +56,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'sorbet-runtime'
 gem 'validates_domain_object_of', github: 'haazime/validates_domain_object_of'
 
-gem 'omniauth'
 gem 'omniauth-google-oauth2'
