@@ -1,3 +1,4 @@
+# typed: false
 class ProductBacklogItemEstimationsController < ApplicationController
   def update
     pbi_id = build_pbi_id(params[:id])

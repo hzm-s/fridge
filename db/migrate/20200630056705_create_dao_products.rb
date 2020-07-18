@@ -1,3 +1,4 @@
+# typed: ignore
 class CreateDaoProducts < ActiveRecord::Migration[6.0]
   def change
     create_table :dao_products, id: :uuid do |t|

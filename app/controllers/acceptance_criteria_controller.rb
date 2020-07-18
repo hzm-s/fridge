@@ -1,3 +1,4 @@
+# typed: false
 class AcceptanceCriteriaController < ApplicationController
   helper_method :pbi_id
 

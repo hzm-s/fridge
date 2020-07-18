@@ -184,3 +184,13 @@ class OmniAuth::AuthHash::InfoHash < OmniAuth::KeyStore
   def to_hash; end
   def valid?; end
 end
+class OmniAuth::Builder < Rack::Builder
+  def before_callback_phase(&block); end
+  def before_options_phase(&block); end
+  def before_request_phase(&block); end
+  def call(env); end
+  def configure(&block); end
+  def on_failure(&block); end
+  def options(options = nil); end
+  def provider(klass, *args, &block); end
+end

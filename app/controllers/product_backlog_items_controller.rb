@@ -1,3 +1,4 @@
+# typed: false
 class ProductBacklogItemsController < ApplicationController
   helper_method :current_product
 

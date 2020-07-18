@@ -1,3 +1,4 @@
+# typed: true
 require 'omniauth_test_helper'
 require 'securerandom'
 

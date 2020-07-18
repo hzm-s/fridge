@@ -1,3 +1,4 @@
+# typed: ignore
 module UserSupport
   def sign_up_with_auth_auth(auth_hash)
     RegisterUserUsecase.perform(

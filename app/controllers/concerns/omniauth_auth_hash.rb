@@ -1,3 +1,4 @@
+# typed: false
 class OmniauthAuthHash < SimpleDelegator
   def name
     self['info']['name']

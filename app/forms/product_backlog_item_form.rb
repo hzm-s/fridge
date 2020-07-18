@@ -1,3 +1,4 @@
+# typed: false
 class ProductBacklogItemForm
   include ActiveModel::Model
 

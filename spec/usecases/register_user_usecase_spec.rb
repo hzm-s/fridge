@@ -1,3 +1,4 @@
+# typed: ignore
 require 'rails_helper'
 
 RSpec.describe RegisterUserUsecase do

@@ -1,4 +1,4 @@
-# typed: false
+# typed: true
 class App::OauthAccount < ApplicationRecord
   belongs_to :dao_user, class_name: 'Dao::User', foreign_key: :dao_user_id
 

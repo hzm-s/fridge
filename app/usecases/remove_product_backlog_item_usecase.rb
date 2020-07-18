@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 require 'sorbet-runtime'
 
 class RemoveProductBacklogItemUsecase < UsecaseBase

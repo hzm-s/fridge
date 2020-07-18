@@ -1,3 +1,4 @@
+# typed: false
 require 'rails_helper'
 
 RSpec.describe 'product_backlog_estimation' do

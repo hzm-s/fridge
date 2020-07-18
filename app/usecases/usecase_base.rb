@@ -1,3 +1,4 @@
+# typed: false
 class UsecaseBase
   class << self
     def perform(*args)

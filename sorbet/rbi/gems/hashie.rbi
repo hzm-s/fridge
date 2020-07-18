@@ -145,20 +145,3 @@ class Hashie::Mash < Hashie::Hash
   include Hashie::Extensions::PrettyInspect
   include Hashie::Extensions::RubyVersionCheck
 end
-module Hashie::Extensions::SymbolizeKeys
-  def symbolize_keys!; end
-  def symbolize_keys; end
-end
-module Hashie::Extensions::SymbolizeKeys::ClassMethods
-  def symbolize_keys!(hash); end
-  def symbolize_keys(hash); end
-  def symbolize_keys_recursively!(object); end
-end
-class Hashie::Railtie < Rails::Railtie
-end
-module Hashie::Extensions::Parsers
-end
-module Hashie::Extensions::Dash
-end
-module Hashie::Extensions::Mash
-end
