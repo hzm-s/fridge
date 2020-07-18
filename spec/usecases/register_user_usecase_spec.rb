@@ -7,52 +7,30 @@ RSpec.describe RegisterUserUsecase do
   let(:email) { 'user@example.com' }
 
   it do
-    result = described_class.perform(name, email, oauth_account)
-    user_id = result[:user_id]
+    user_id = described_class.perform(name, email, oauth_account)
+
     user = UserRepository::AR.find_by_id(user_id)
-    account = App::OauthAccount.find_by_user_id(user_id)
+    account = App::OauthAccount.find_by(oauth_account)
 
     aggregate_failures do
-      expect(result[:is_registered]).to be true
-
       expect(user.name).to eq name
       expect(user.avatar.initials).to eq 'US'
       expect(user.avatar.bg).to_not be_nil
       expect(user.avatar.fg).to_not be_nil
 
+      expect(account.dao_user_id).to eq user.id
       expect(account.provider).to eq oauth_account[:provider]
       expect(account.uid).to eq oauth_account[:uid]
     end
   end
 
   context '同じメールアドレスを持つユーザーが登録済みの場合' do
-    it '登録できないこと' do
+    it '登録しないこと' do
       described_class.perform(name, email, oauth_account)
 
       expect { described_class.perform('Other User', email, { provider: 'google_oauth2', uid: 'other_uid' }) }
         .to raise_error(ActiveRecord::RecordNotUnique)
         .and change { Dao::User.count }.by(0)
-        .and change { App::OauthAccount.count }.by(0)
-    end
-  end
-
-  context '同じOauthアカウントを持つユーザーが登録済みの場合' do
-    before do
-      @user_id = described_class.perform(name, email, oauth_account)[:user_id]
-    end
-
-    it '登録済であることを返すこと' do
-      result = described_class.perform(name, email, oauth_account)
-
-      aggregate_failures do
-        expect(result[:is_registered]).to be false
-        expect(result[:user_id]).to eq @user_id
-      end
-    end
-
-    it '登録しないこと' do
-      expect { described_class.perform(name, email, oauth_account) }
-        .to change { Dao::User.count }.by(0)
         .and change { App::OauthAccount.count }.by(0)
     end
   end

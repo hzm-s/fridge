@@ -10,7 +10,6 @@ module UserSupport
 
   def register_user(name, email, oauth_account)
     RegisterUserUsecase.perform(name, email, oauth_account)
-      .yield_self { |r| r[:user_id] }
       .yield_self { |user_id| UserRepository::AR.find_by_id(user_id) }
   end
 end
