@@ -2,11 +2,11 @@
 class OauthCallbacksController < ApplicationController
 
   def create
-    result = RegisterUserUsecase.perform(auth_hash.name, auth_hash.email, auth_hash.account)
+    result = RegisterOrFindUserUsecase.perform(auth_hash.name, auth_hash.email, auth_hash.account)
 
     sign_in(result[:user_id])
 
-    if result[:is_registered]
+    if result[:is_register]
       redirect_to root_path, flash: flash_success('signed_up')
     else
       redirect_to root_path, flash: flash_success('signed_in')
