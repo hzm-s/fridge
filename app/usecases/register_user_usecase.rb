@@ -1,4 +1,4 @@
-# typed: strict
+# typed: ignore
 require 'sorbet-runtime'
 
 class RegisterUserUsecase < UsecaseBase
@@ -9,10 +9,15 @@ class RegisterUserUsecase < UsecaseBase
     @repository = T.let(UserRepository::AR, User::UserRepository)
   end
 
-  sig {params(name: String, initials: String).returns(String)}
-  def perform(name, initials)
-    user = User::User.create(name, initials)
-    @repository.add(user)
+  sig {params(name: String, email: String, oauth_account: T::Hash[Symbol, String]).returns(String)}
+  def perform(name, email, oauth_account)
+    user = User::User.create(name, email)
+
+    transaction do
+      @repository.add(user)
+      App::OauthAccount.create_with_user(user.id, oauth_account)
+    end
+
     user.id
   end
 end

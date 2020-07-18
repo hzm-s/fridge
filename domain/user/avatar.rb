@@ -1,4 +1,4 @@
-# typed: strict
+# typed: false
 require 'sorbet-runtime'
 
 module User
@@ -8,14 +8,25 @@ module User
     class << self
       extend T::Sig
 
-      sig {params(initials: String).returns(T.attached_class)}
-      def create(initials)
+      sig {params(email: String).returns(T.attached_class)}
+      def create(email)
+        initials = extract_initials(email).upcase
         new(initials, '#ccc', '#555')
       end
 
       sig {params(initials: String, bg: String, fg: String).returns(T.attached_class)}
       def from_repository(initials, bg, fg)
         new(initials, bg, fg)
+      end
+
+      private
+
+      sig {params(email: String).returns(String)}
+      def extract_initials(email)
+        account = email.split('@').first
+        raise ArgumentError if account.size == 0
+        return account[0, 2] if account.size >= 2
+        account[0] * 2
       end
     end
 
