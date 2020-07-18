@@ -1,11 +1,15 @@
 # typed: true
 class ApplicationController < ActionController::Base
-  helper_method :current_user
+  helper_method :current_user, :signed_in?
 
   protected
 
   def flash_success(key)
     { success: I18n.t(key, scope: 'feedbacks') }
+  end
+
+  def signed_in?
+    !!current_user
   end
 
   def current_user
