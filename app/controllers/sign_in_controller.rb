@@ -1,2 +1,0 @@
-class SignInController < ApplicationController
-end

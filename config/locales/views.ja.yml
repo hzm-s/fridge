@@ -9,13 +9,11 @@ ja:
       destroy: プロダクトバックログアイテムを削除しました
 
   application:
-    global_nav:
-      new: プロダクトを作成する
-      product_list: プロダクト
+    user_menu:
+      sign_out: ログアウト
 
-  sign_in:
-    index:
-      title: fridge
+  sessions:
+    new:
       sign_in: Googleアカウントでログイン
       sign_up: Googleアカウントでユーザー登録
       or: または
