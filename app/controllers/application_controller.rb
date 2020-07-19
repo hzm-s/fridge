@@ -18,9 +18,19 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def flush_current_user
+    @__current_user = nil
+  end
+
   def fetch_current_user
     return nil unless user_id = session[:user_id]
     UserRepository::AR.find_by_id(user_id)
+  end
+
+  def require_user
+    unless signed_in?
+      redirect_to root_path, flash: flash_success('require_sign_in')
+    end
   end
 
   def require_guest

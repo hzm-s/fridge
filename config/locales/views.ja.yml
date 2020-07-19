@@ -2,6 +2,7 @@ ja:
   feedbacks:
     signed_up: ユーザー登録が完了しました
     signed_in: ログインしました
+    require_sign_in: ログインしてください
     already_signed_in: ログインしています
     pbi:
       create: プロダクトバックログアイテムを追加しました

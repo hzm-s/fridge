@@ -4,23 +4,48 @@ require 'rails_helper'
 RSpec.describe 'sessions' do
   let(:user) { sign_up }
 
-  context 'when NOT signed in' do
-    it do
-      get sign_in_path
-      expect(response.body).to include '/auth/google_oauth2'
+  describe '#new' do
+    context 'when NOT signed in' do
+      it do
+        get sign_in_path
+        expect(response.body).to include '/auth/google_oauth2'
+      end
+    end
+
+    context 'when signed in' do
+      before do
+        sign_in(user)
+      end
+
+      it do
+        get sign_in_path
+        follow_redirect!
+
+        expect(response.body).to include I18n.t('feedbacks.already_signed_in')
+      end
     end
   end
 
-  context 'when signed in' do
-    before do
-      sign_in(user)
+  describe '#destroy' do
+    context 'when signed in' do
+      before do
+        sign_in(user)
+      end
+
+      it do
+        delete sign_out_path
+
+        expect(session[:user_id]).to be_nil
+      end
     end
 
-    it do
-      get sign_in_path
-      follow_redirect!
+    context 'when NOT signed in' do
+      it do
+        delete sign_out_path
+        follow_redirect!
 
-      expect(response.body).to include I18n.t('feedbacks.already_signed_in')
+        expect(response.body).to include I18n.t('feedbacks.require_sign_in')
+      end
     end
   end
 end
