@@ -1,4 +1,4 @@
-# typed: true
+# typed: false
 class ApplicationController < ActionController::Base
   helper_method :current_user, :signed_in?
 
