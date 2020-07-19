@@ -3,16 +3,26 @@ require 'omniauth_test_helper'
 require 'securerandom'
 
 module OauthSupport
-  module Common
-    def set_auth_hash(auth_hash)
-      OmniAuth.config.add_mock(auth_hash['provider'].to_sym, auth_hash)
-    end
+
+  def set_auth_hash(auth_hash)
+    OmniAuth.config.add_mock(auth_hash['provider'].to_sym, auth_hash)
+  end
+
+  def auth_hash_from_user(user)
+    {
+      'provider' => user.oauth_account.provider,
+      'uid' => user.oauth_account.uid,
+      'info' => {
+        'name' => user.name,
+        'email' => user.email,
+      }
+    }
   end
 end
 
 RSpec.configure do |c|
   c.include OmniAuthTestHelper
-  c.include OauthSupport::Common
+  c.include OauthSupport
 end
 
 OmniAuth.config.test_mode = true

@@ -2,15 +2,23 @@ ja:
   feedbacks:
     signed_up: ユーザー登録が完了しました
     signed_in: ログインしました
+    signed_out: ログアウトしました
+    require_sign_in: ログインしてください
+    already_signed_in: ログインしています
     pbi:
       create: プロダクトバックログアイテムを追加しました
       update: プロダクトバックログアイテムを更新しました
       destroy: プロダクトバックログアイテムを削除しました
 
   application:
-    global_nav:
-      new: プロダクトを作成する
-      product_list: プロダクト
+    user_menu:
+      sign_out: ログアウト
+
+  sessions:
+    new:
+      sign_in: Googleアカウントでログイン
+      sign_up: Googleアカウントでユーザー登録
+      or: または
 
   products:
     index:

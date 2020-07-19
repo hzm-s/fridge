@@ -1,0 +1,11 @@
+<a class="dropdown-toggle gnav__toggle" href="#" id="dd-global-nav-user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <span class="avatar">
+    <%= avatar.initials %>
+  </span>
+</a>
+<div class="dropdown-menu dropdown-menu-right">
+  <%= link_to sign_out_path, method: :delete, class: 'dropdown-item' do %>
+    <i class="fas fa-sign-out-alt"></i>
+    <%=t '.sign_out' %>
+  <% end %>
+</div>

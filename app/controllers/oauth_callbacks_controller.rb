@@ -1,16 +1,11 @@
 # typed: ignore
 class OauthCallbacksController < ApplicationController
+  before_action :require_guest
 
   def create
     result = RegisterOrFindUserUsecase.perform(auth_hash.name, auth_hash.email, auth_hash.account)
-
     sign_in(result[:user_id])
-
-    if result[:is_register]
-      redirect_to root_path, flash: flash_success('signed_up')
-    else
-      redirect_to root_path, flash: flash_success('signed_in')
-    end
+    redirect(result[:is_register])
   end
 
   private
@@ -22,5 +17,10 @@ class OauthCallbacksController < ApplicationController
 
   def auth_hash
     @__auth_hash ||= OmniauthAuthHash.new(request.env['omniauth.auth'])
+  end
+
+  def redirect(is_register)
+    message = is_register ? 'signed_up' : 'signed_in'
+    redirect_to root_path, flash: flash_success(message)
   end
 end
