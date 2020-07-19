@@ -22,4 +22,10 @@ class ApplicationController < ActionController::Base
     return nil unless user_id = session[:user_id]
     UserRepository::AR.find_by_id(user_id)
   end
+
+  def require_guest
+    if signed_in?
+      redirect_to root_path, flash: flash_success('already_signed_in')
+    end
+  end
 end

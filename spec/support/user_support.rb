@@ -1,19 +1,31 @@
 # typed: ignore
 module UserSupport
-  def sign_up_with_auth_auth(auth_hash)
-    register_user(
-      auth_hash['info']['name'],
-      auth_hash['info']['email'],
-      { provider: auth_hash['provider'], uid: auth_hash['uid'] }
-    )
+  module Common
+    def register_user(name, email, oauth_account)
+      RegisterUserUsecase.perform(name, email, oauth_account)
+        .yield_self { |user_id| UserRepository::AR.find_by_id(user_id) }
+    end
   end
 
-  def register_user(name, email, oauth_account)
-    RegisterUserUsecase.perform(name, email, oauth_account)
-      .yield_self { |user_id| UserRepository::AR.find_by_id(user_id) }
+  module Requests
+    def sign_up_with_auth_auth(auth_hash = mock_auth_hash)
+      name = auth_hash['info']['name']
+      email = auth_hash['info']['email']
+      oauth_account = { provider: auth_hash['provider'], uid: auth_hash['uid'] }
+      RegisterUserUsecase.perform(name, email, oauth_account)
+        .yield_self { |user_id| Dao::User.eager_load(:oauth_account).find(user_id) }
+    end
+    alias_method :sign_up, :sign_up_with_auth_auth
+
+    def sign_in(user)
+      auth_hash = auth_hash_from_user(user)
+      set_auth_hash(auth_hash)
+      get oauth_callback_path(provider: auth_hash['provider'])
+    end
   end
 end
 
 RSpec.configure do |c|
-  c.include UserSupport
+  c.include UserSupport::Common
+  c.include UserSupport::Requests, type: :request
 end

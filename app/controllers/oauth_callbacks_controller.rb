@@ -1,5 +1,6 @@
 # typed: ignore
 class OauthCallbacksController < ApplicationController
+  before_action :require_guest
 
   def create
     result = RegisterOrFindUserUsecase.perform(auth_hash.name, auth_hash.email, auth_hash.account)

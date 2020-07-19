@@ -44,4 +44,19 @@ RSpec.describe 'sign_up' do
       expect(response.body).to_not include I18n.t('feedbacks.signed_up')
     end
   end
+
+  context 'when signed in' do
+    let(:user) { sign_up }
+
+    before do
+      sign_in(user)
+    end
+
+    it do
+      get oauth_callback_path(provider: user.oauth_account.provider)
+      follow_redirect!
+
+      expect(response.body).to include I18n.t('feedbacks.already_signed_in')
+    end
+  end
 end
