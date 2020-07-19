@@ -32,10 +32,17 @@ RSpec.describe 'sessions' do
         sign_in(user)
       end
 
-      it do
+      it 'ログイン情報を削除すること' do
         delete sign_out_path
 
         expect(session[:user_id]).to be_nil
+      end
+
+      it do
+        delete sign_out_path
+        follow_redirect!
+
+        expect(response.body).to include I18n.t('feedbacks.signed_out')
       end
     end
 
