@@ -10,11 +10,6 @@ class OauthCallbacksController < ApplicationController
 
   private
 
-  def sign_in(user_id)
-    reset_session
-    session[:user_id] = user_id
-  end
-
   def auth_hash
     @__auth_hash ||= OmniauthAuthHash.new(request.env['omniauth.auth'])
   end
