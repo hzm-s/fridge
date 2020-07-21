@@ -16,7 +16,7 @@ RSpec.describe RegisterOrFindUserUsecase do
 
   context 'when registered' do
     before do
-      @user = register_user(name, email, oauth_account)
+      @user = register_user(name: name, email: email, oauth_account: oauth_account)
     end
 
     it do
