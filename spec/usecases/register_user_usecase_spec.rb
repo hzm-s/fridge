@@ -18,7 +18,7 @@ RSpec.describe RegisterUserUsecase do
       expect(user.avatar.bg).to_not be_nil
       expect(user.avatar.fg).to_not be_nil
 
-      expect(account.dao_user_id).to eq user.id
+      expect(account.dao_user_id).to eq user.id.to_s
       expect(account.provider).to eq oauth_account[:provider]
       expect(account.uid).to eq oauth_account[:uid]
     end

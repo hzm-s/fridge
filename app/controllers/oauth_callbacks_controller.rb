@@ -4,7 +4,7 @@ class OauthCallbacksController < ApplicationController
 
   def create
     result = RegisterOrFindUserUsecase.perform(auth_hash.name, auth_hash.email, auth_hash.account)
-    sign_in(result[:user_id])
+    sign_in(result[:user_id].to_s)
     redirect(result[:is_register])
   end
 

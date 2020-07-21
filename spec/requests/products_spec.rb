@@ -2,6 +2,11 @@
 require 'rails_helper'
 
 RSpec.describe 'products' do
+  before do
+    user = sign_up
+    sign_in(user)
+  end
+
   describe '#create' do
     context 'given valid params' do
       it do

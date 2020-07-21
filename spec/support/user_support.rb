@@ -27,7 +27,7 @@ module UserSupport
       email = auth_hash['info']['email']
       oauth_account = { provider: auth_hash['provider'], uid: auth_hash['uid'] }
       RegisterUserUsecase.perform(name, email, oauth_account)
-        .yield_self { |user_id| Dao::User.eager_load(:oauth_account).find(user_id) }
+        .yield_self { |user_id| Dao::User.eager_load(:oauth_account).find(user_id.to_s) }
     end
     alias_method :sign_up, :sign_up_with_auth_auth
 

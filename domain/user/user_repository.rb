@@ -7,7 +7,7 @@ module User
     extend T::Helpers
     interface!
 
-    sig {abstract.params(id: String).returns(User)}
+    sig {abstract.params(id: Id).returns(User)}
     def find_by_id(id); end
 
     sig {abstract.params(user: User).void}
