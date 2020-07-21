@@ -9,7 +9,7 @@ class RegisterUserUsecase < UsecaseBase
     @repository = T.let(UserRepository::AR, User::UserRepository)
   end
 
-  sig {params(name: String, email: String, oauth_account: T::Hash[Symbol, String]).returns(String)}
+  sig {params(name: String, email: String, oauth_account: T::Hash[Symbol, String]).returns(User::Id)}
   def perform(name, email, oauth_account)
     user = User::User.create(name, email)
 

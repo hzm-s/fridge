@@ -11,20 +11,20 @@ module User
       sig {params(name: String, email: String).returns(T.attached_class)}
       def create(name, email)
         new(
-          SecureRandom.uuid,
+          Id.create,
           email,
           name,
           Avatar.create(email)
         )
       end
 
-      sig {params(id: String, email: String, name: String, avatar: Avatar).returns(T.attached_class)}
+      sig {params(id: Id, email: String, name: String, avatar: Avatar).returns(T.attached_class)}
       def from_repository(id, email, name, avatar)
         new(id, email, name, avatar)
       end
     end
 
-    sig {returns(String)}
+    sig {returns(Id)}
     attr_reader :id
 
     sig {returns(String)}
@@ -36,7 +36,7 @@ module User
     sig {returns(Avatar)}
     attr_reader :avatar
 
-    sig {params(id: String, email: String, name: String, avatar: Avatar).void}
+    sig {params(id: Id, email: String, name: String, avatar: Avatar).void}
     def initialize(id, email, name, avatar)
       @id = id
       @email = email

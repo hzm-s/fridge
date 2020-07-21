@@ -22,7 +22,7 @@ module SessionHelper
 
   def fetch_current_user
     return nil unless user_id = session[:user_id]
-    UserRepository::AR.find_by_id(user_id)
+    UserRepository::AR.find_by_id(User::Id.from_string(user_id))
   end
 
   def flush_current_user

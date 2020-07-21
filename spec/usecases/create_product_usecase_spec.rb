@@ -2,8 +2,10 @@
 require 'rails_helper'
 
 RSpec.describe CreateProductUsecase do
+  let(:user) { register_user }
+
   it do
-    product_id = described_class.perform('fridge', 'DESC')
+    product_id = described_class.perform(user.id, 'fridge', 'DESC')
     product = ProductRepository::AR.find_by_id(product_id)
 
     aggregate_failures do

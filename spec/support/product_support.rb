@@ -1,9 +1,9 @@
 # typed: true
 module ProductSpport
 
-  def create_product(name: 'example')
+  def create_product(user_id: User::Id.create, name: 'example', description: 'desc example product')
     CreateProductUsecase.new
-      .perform(name)
+      .perform(user_id, name, description)
       .yield_self { |id| ProductRepository::AR.find_by_id(id) }
   end
 end

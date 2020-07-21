@@ -9,8 +9,8 @@ class CreateProductUsecase < UsecaseBase
     @repository = T.let(ProductRepository::AR, Product::ProductRepository)
   end
 
-  sig {params(name: String, description: T.nilable(String)).returns(Product::ProductId)}
-  def perform(name, description = nil)
+  sig {params(user_id: User::Id, name: String, description: T.nilable(String)).returns(Product::ProductId)}
+  def perform(user_id, name, description = nil)
     product = Product::Product.create(name, description)
 
     @repository.add(product)
