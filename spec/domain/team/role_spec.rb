@@ -7,6 +7,7 @@ module Team
       it do
         role = Role::ProductOwner
         expect(role.available_actions_for_pbi).to match_array [:reorder, :add, :update, :remove, :add_acceptance_criteria, :remove_acceptance_criteria]
+        expect(role.to_s).to eq 'product_owner'
       end
     end
 

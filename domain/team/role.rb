@@ -6,9 +6,9 @@ module Team
     extend T::Sig
 
     enums do
-      ProductOwner = new(:po)
-      Developer = new(:dev)
-      ScrumMaster = new(:sm)
+      ProductOwner = new('product_owner')
+      Developer = new('developer')
+      ScrumMaster = new('scrum_master')
     end
 
     sig {returns(T::Array[Symbol])}
@@ -23,6 +23,11 @@ module Team
       else
         T.absurd(self)
       end
+    end
+
+    sig {returns(String)}
+    def to_s
+      serialize
     end
   end
 end
