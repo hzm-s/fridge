@@ -38,5 +38,9 @@ module Product
       @name = name
       @description = description
     end
+
+    sig {params(user_id: User::Id).returns(Team::Member)}
+    def member(user_id)
+    end
   end
 end
