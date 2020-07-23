@@ -16,7 +16,7 @@ module ProductBacklogOrderRepository
 
         Pbi::Order.from_repository(
           product_id,
-          r.product_backlog_item_ids.map { |id| Pbi::Id.from_repository(id) }
+          r.product_backlog_item_ids.map { |id| Pbi::Id.from_string(id) }
         )
       end
 

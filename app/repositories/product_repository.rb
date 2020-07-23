@@ -29,7 +29,7 @@ module ProductRepository
         end
 
         Product::Product.from_repository(
-          Product::ProductId.from_repository(r.id),
+          Product::ProductId.from_string(r.id),
           r.name,
           members,
           r.description

@@ -1,5 +1,4 @@
 # typed: strict
-
 require 'sorbet-runtime'
 require 'securerandom'
 
@@ -19,7 +18,6 @@ module Shared
       def from_string(str)
         new(str)
       end
-      alias_method :from_repository, :from_string
     end
 
     sig {params(id: String).void}
