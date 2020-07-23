@@ -20,7 +20,7 @@ module ProductRepository
         end
       end
 
-      sig {override.params(id: Product::ProductId).returns(Product::Product)}
+      sig {override.params(id: Product::Id).returns(Product::Product)}
       def find_by_id(id)
         r = Dao::Product.find(id)
 
@@ -29,7 +29,7 @@ module ProductRepository
         end
 
         Product::Product.from_repository(
-          Product::ProductId.from_string(r.id),
+          Product::Id.from_string(r.id),
           r.name,
           members,
           r.description

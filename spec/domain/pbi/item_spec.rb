@@ -3,11 +3,11 @@ require 'rails_helper'
 
 module Pbi
   describe Item do
-    let!(:product_id) { Product::ProductId.create }
+    let!(:product_id) { Product::Id.create }
     let!(:content) { Pbi::Content.new('ABC') }
 
     describe '.create' do
-      it 'id,ProductId,内容を持つこと' do
+      it 'id,product_id,内容を持つこと' do
         pbi = described_class.create(product_id, content)
 
         aggregate_failures do

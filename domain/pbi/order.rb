@@ -8,21 +8,21 @@ module Pbi
     class << self
       extend T::Sig
 
-      sig {params(product_id: Product::ProductId).returns(T.attached_class)}
+      sig {params(product_id: Product::Id).returns(T.attached_class)}
       def create(product_id)
         new(product_id, [])
       end
 
-      sig {params(product_id: Product::ProductId, pbi_ids: T::Array[Id]).returns(T.attached_class)}
+      sig {params(product_id: Product::Id, pbi_ids: T::Array[Id]).returns(T.attached_class)}
       def from_repository(product_id, pbi_ids)
         new(product_id, pbi_ids)
       end
     end
 
-    sig {returns(Product::ProductId)}
+    sig {returns(Product::Id)}
     attr_reader :product_id
 
-    sig {params(product_id: Product::ProductId, pbi_ids: T::Array[Id]).void}
+    sig {params(product_id: Product::Id, pbi_ids: T::Array[Id]).void}
     def initialize(product_id, pbi_ids)
       @product_id = product_id
       @item_ids = pbi_ids

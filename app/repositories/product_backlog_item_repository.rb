@@ -12,7 +12,7 @@ module ProductBacklogItemRepository
         r = Dao::ProductBacklogItem.eager_load(:criteria).find(id)
         Pbi::Item.from_repository(
           Pbi::Id.from_string(r.id),
-          Product::ProductId.from_string(r.dao_product_id),
+          Product::Id.from_string(r.dao_product_id),
           Pbi::Content.new(r.content),
           Pbi::StoryPoint.new(r.size),
           Pbi::AcceptanceCriteria.from_repository(

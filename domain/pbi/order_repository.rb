@@ -7,7 +7,7 @@ module Pbi
     extend T::Helpers
     interface!
 
-    sig {abstract.params(product_id: Product::ProductId).returns(T.nilable(Order))}
+    sig {abstract.params(product_id: Product::Id).returns(T.nilable(Order))}
     def find_by_product_id(product_id); end
 
     sig {abstract.params(order: Order).void}

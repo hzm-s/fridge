@@ -11,20 +11,20 @@ module Product
       sig {params(name: String, member: Team::Member, description: T.nilable(String)).returns(T.attached_class)}
       def create(name, member, description = nil)
         new(
-          ProductId.create,
+          Id.create,
           name,
           [member],
           description
         )
       end
 
-      sig {params(id: ProductId, name: String, members: T::Array[Team::Member], description: T.nilable(String)).returns(T.attached_class)}
+      sig {params(id: Id, name: String, members: T::Array[Team::Member], description: T.nilable(String)).returns(T.attached_class)}
       def from_repository(id, name, members, description)
         new(id, name, members, description)
       end
     end
 
-    sig {returns(::Product::ProductId)}
+    sig {returns(Id)}
     attr_reader :id
 
     sig {returns(String)}
@@ -36,7 +36,7 @@ module Product
     sig {returns(T::Array[Team::Member])}
     attr_reader :members
 
-    sig {params(id: ProductId, name: String, members: T::Array[Team::Member], description: T.nilable(String)).void}
+    sig {params(id: Id, name: String, members: T::Array[Team::Member], description: T.nilable(String)).void}
     def initialize(id, name, members, description)
       @id = id
       @name = name
