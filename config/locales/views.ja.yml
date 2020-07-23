@@ -9,6 +9,8 @@ ja:
       create: プロダクトバックログアイテムを追加しました
       update: プロダクトバックログアイテムを更新しました
       destroy: プロダクトバックログアイテムを削除しました
+    product:
+      create: プロダクトを作成しました
 
   application:
     user_menu:

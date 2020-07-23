@@ -1,5 +1,11 @@
 ja:
   domain:
+    team:
+      role:
+        product_owner: プロダクトオーナー
+        developer: 開発者
+        scrum_master: スクラムマスター
+
     errors:
       messages:
         pbi:

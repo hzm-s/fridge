@@ -14,5 +14,5 @@ class ProductForm
 
   validates :member_role,
     presence: true,
-    domain_object: { object_class: Team::Role, by: -> (k, v) { k.from_string(v) } }
+    domain_object: { object_class: Team::Role, by: -> (k, v) { k.from_string(v) }, message: I18n.t('errors.messages.inclusion'), allow_blank: true }
 end
