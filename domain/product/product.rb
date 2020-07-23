@@ -44,7 +44,7 @@ module Product
       @description = description
     end
 
-    sig {params(user_id: User::Id).returns(Team::Member)}
+    sig {params(user_id: User::Id).returns(T.nilable(Team::Member))}
     def member(user_id)
       @members.find { |member| member.user_id == user_id }
     end

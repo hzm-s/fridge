@@ -15,7 +15,7 @@ module ProductRepository
           description: product.description.to_s
         ) do |p|
           member = product.members.first
-          p.members.build(dao_user_id: member.user_id.to_s, role: member.role.to_s)
+          p.members.build(dao_user_id: member.user_id.to_s, role: member.role.to_s) if member
           p.save!
         end
       end
