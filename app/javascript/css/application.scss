@@ -5,6 +5,7 @@
 
 @import 'mixins';
 @import 'site_wide';
+@import 'nav';
 @import 'product';
 @import 'product_backlog';
 
@@ -26,30 +27,6 @@ body {
   font-weight: 900;
   opacity: .6;
   margin-right: 0;
-}
-
-.gnav__product-name {
-  @include nf;
-  font-size: 1rem;
-  padding: .125rem 1.5rem;
-  color: $white;
-  background-color: $gray-700;
-  border-radius: .5rem;
-}
-
-.gnav__toggle {
-  @include nf;
-  color: $secondary;
-
-  &:hover {
-    color: $secondary;
-    text-decoration: none;
-  }
-}
-
-.page-title {
-  font-size: 1.25rem;
-  font-weight: bold;
 }
 
 .silent-danger {

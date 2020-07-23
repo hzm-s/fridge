@@ -1,13 +1,14 @@
 <nav class="navbar navbar-light mb-3">
-  <div style="width: 80px">
-    <a class="navbar-brand" href="/">
-      fridge
-    </a>
+  <div class="gnav__head">
+    <a class="navbar-brand" href="/">fridge</a>
   </div>
   <% if product_name = content_for?(:product_name) ? yield(:product_name) : nil %>
     <span class="gnav__product-name"><%= product_name %></span>
   <% end %>
-  <div style="width: 80px; text-align: right">
+  <div class="gnav__tail d-flex align-items-center">
+    <% if member_role = content_for?(:member_role) ? yield(:member_role): nil %>
+      <span class="gnav-tail__child gnav__member-role"><%=t member_role, scope: 'domain.team.member.short_name' %></span>
+    <% end %>
     <% if signed_in? %>
       <%= render partial: 'user_menu', locals: { avatar: current_user.avatar } %>
     <% end -%>

@@ -1,4 +1,5 @@
-<% content_for(:product_name) { current_product(@pbi.product_id)&.name } %>
+<% content_for(:product_name) { current_product.name } %>
+<% content_for(:member_role) { current_team_member.role } %>
 <div class="row d-flex justify-content-center">
   <div class="col-lg-8 sheet">
     <div class="d-flex justify-content-center">

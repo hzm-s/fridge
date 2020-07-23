@@ -1,0 +1,44 @@
+.gnav__product-name {
+  @include nf;
+  font-size: 1rem;
+  padding: .125rem 1.5rem;
+  color: $white;
+  background-color: $gray-700;
+  border-radius: .5rem;
+}
+
+.gnav__toggle {
+  @include nf;
+  color: $secondary;
+
+  &:hover {
+    color: $secondary;
+    text-decoration: none;
+  }
+}
+
+.gnav__head {
+  width: 120px;
+}
+
+.gnav__tail {
+  width: 120px;
+}
+
+.gnav-tail__child:first-child {
+  margin-left: auto;
+}
+
+.gnav__member-role {
+  margin-right: .5rem;
+  padding: 0 .5rem;
+  font-size: .75rem;
+  color: $gray-100;
+  background-color: $gray-700;
+  border-radius: .65rem;
+}
+
+.page-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
