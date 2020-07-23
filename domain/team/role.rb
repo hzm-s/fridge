@@ -5,6 +5,17 @@ module Team
   class Role < T::Enum
     extend T::Sig
 
+    class << self
+      extend T::Sig
+
+      sig {params(str: String).returns(T.attached_class)}
+      def from_string(str)
+        deserialize(str)
+      rescue KeyError => e
+        raise ArgumentError.new(e.message)
+      end
+    end
+
     enums do
       ProductOwner = new('product_owner')
       Developer = new('developer')

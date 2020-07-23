@@ -10,7 +10,7 @@ RSpec.describe 'products' do
   describe '#create' do
     context 'given valid params' do
       it do
-        params = { form: { name: 'fridge', description: 'setsumei_of_product' } }
+        params = { form: { name: 'fridge', description: 'setsumei_of_product', member_role: 'developer' } }
         post products_path(format: :js), params: params
         get products_path
 
