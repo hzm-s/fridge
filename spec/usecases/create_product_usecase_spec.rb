@@ -5,7 +5,7 @@ RSpec.describe CreateProductUsecase do
   let(:user) { register_user }
 
   it do
-    product_id = described_class.perform(user.id, Team::Role.product_owner, 'fridge', 'DESC')
+    product_id = described_class.perform(user.id, Team::Role::ProductOwner, 'fridge', 'DESC')
     product = ProductRepository::AR.find_by_id(product_id)
     member = product.member(user.id)
 

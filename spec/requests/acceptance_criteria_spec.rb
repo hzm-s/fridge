@@ -2,7 +2,8 @@
 require 'rails_helper'
 
 RSpec.describe 'acceptance_criteria' do
-  let!(:product) { create_product }
+  let!(:user) { sign_up }
+  let!(:product) { create_product(user_id: User::Id.from_string(user.id)) }
   let!(:pbi) { add_pbi(product.id) }
 
   describe '#create' do

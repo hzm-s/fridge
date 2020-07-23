@@ -2,7 +2,8 @@
 require 'rails_helper'
 
 RSpec.describe AddAcceptanceCriterionUsecase do
-  let!(:product) { create_product }
+  let!(:user) { register_user }
+  let!(:product) { create_product(user_id: user.id) }
   let!(:pbi) { add_pbi(product.id) }
 
   it do

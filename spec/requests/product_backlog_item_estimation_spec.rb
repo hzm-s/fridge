@@ -2,7 +2,8 @@
 require 'rails_helper'
 
 RSpec.describe 'product_backlog_estimation' do
-  let!(:product) { create_product }
+  let!(:user) { sign_up }
+  let!(:product) { create_product(user_id: User::Id.from_string(user.id)) }
   let!(:pbi) { add_pbi(product.id) }
 
   describe '#update' do

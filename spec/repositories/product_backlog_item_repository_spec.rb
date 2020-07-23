@@ -2,7 +2,8 @@
 require 'rails_helper'
 
 RSpec.describe ProductBacklogItemRepository::AR do
-  let!(:product) { create_product }
+  let!(:user) { register_user }
+  let!(:product) { create_product(user_id: user.id) }
 
   describe '#create' do
     it do
