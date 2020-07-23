@@ -14,7 +14,7 @@ class ProductBacklogItemsController < ApplicationController
 
     if @form.valid?
       AddProductBacklogItemUsecase.perform(
-        Product::ProductId.from_string(params[:product_id]),
+        Product::Id.from_string(params[:product_id]),
         @form.domain_objects[:content]
       )
       redirect_to product_product_backlog_items_path(product_id: params[:product_id]), flash: flash_success('pbi.create')

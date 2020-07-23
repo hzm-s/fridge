@@ -7,11 +7,11 @@ module Pbi
     let(:member) { Team::Member.new(user.id, Team::Role::ProductOwner) }
     let(:product) { Product::Product.create('fridge', member) }
 
-    let(:pbi_a) { Pbi::Item.create(product.id, Pbi::Content.from_string('AAA')) }
-    let(:pbi_b) { Pbi::Item.create(product.id, Pbi::Content.from_string('BBB')) }
-    let(:pbi_c) { Pbi::Item.create(product.id, Pbi::Content.from_string('CCC')) }
-    let(:pbi_d) { Pbi::Item.create(product.id, Pbi::Content.from_string('DDD')) }
-    let(:pbi_e) { Pbi::Item.create(product.id, Pbi::Content.from_string('EEE')) }
+    let(:pbi_a) { Pbi::Item.create(product.id, Pbi::Content.new('AAA')) }
+    let(:pbi_b) { Pbi::Item.create(product.id, Pbi::Content.new('BBB')) }
+    let(:pbi_c) { Pbi::Item.create(product.id, Pbi::Content.new('CCC')) }
+    let(:pbi_d) { Pbi::Item.create(product.id, Pbi::Content.new('DDD')) }
+    let(:pbi_e) { Pbi::Item.create(product.id, Pbi::Content.new('EEE')) }
 
     describe 'append an item' do
       it do

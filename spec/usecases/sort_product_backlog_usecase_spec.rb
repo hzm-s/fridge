@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe ReorderProductBacklogUsecase do
+RSpec.describe SortProductBacklogUsecase do
   let!(:user) { register_user }
   let!(:product) { create_product(user_id: user.id) }
 

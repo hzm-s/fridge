@@ -16,6 +16,6 @@ class ProductBacklogItemEstimationsController < ApplicationController
 
   def build_point(point)
     point_as_i = point == '?' ? nil : point.to_i
-    Pbi::StoryPoint.from_integer(point_as_i)
+    Pbi::StoryPoint.new(point_as_i)
   end
 end

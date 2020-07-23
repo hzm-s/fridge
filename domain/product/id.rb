@@ -2,6 +2,6 @@
 require 'sorbet-runtime'
 
 module Product
-  class ProductId < Shared::Identifier
+  class Id < Shared::Identifier
   end
 end

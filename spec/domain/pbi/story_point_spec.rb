@@ -9,17 +9,17 @@ module Pbi
     end
 
     it do
-      point = described_class.from_integer(nil)
+      point = described_class.new(nil)
       expect(point).to eq StoryPoint.unknown
     end
 
     it do
-      point = described_class.from_integer(0)
+      point = described_class.new(0)
       expect(point.to_i).to eq 0
     end
 
     it do
-      expect { described_class.from_integer(21) }.to raise_error(ArgumentError)
+      expect { described_class.new(21) }.to raise_error(ArgumentError)
     end
   end
 end

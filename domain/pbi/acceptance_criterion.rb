@@ -7,16 +7,6 @@ module Pbi
 
     Serialized = T.type_alias {T::Hash[Symbol, T.any(Integer, String)]}
 
-    class << self
-      extend T::Sig
-
-      sig {params(no: Integer, content: String).returns(T.attached_class)}
-      def create(no, content)
-        new(no, content)
-      end
-      alias_method :from_repository, :create
-    end
-
     sig {returns(Integer)}
     attr_reader :no
 
@@ -28,7 +18,6 @@ module Pbi
       @no = no
       @content = content
     end
-    private_class_method :new
 
     sig {returns(Serialized)}
     def to_h

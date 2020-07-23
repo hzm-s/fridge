@@ -10,7 +10,7 @@ class AddProductBacklogItemUsecase < UsecaseBase
     @order_repository = T.let(ProductBacklogOrderRepository::AR, Pbi::OrderRepository)
   end
 
-  sig {params(product_id: Product::ProductId, content: Pbi::Content).returns(Pbi::Id)}
+  sig {params(product_id: Product::Id, content: Pbi::Content).returns(Pbi::Id)}
   def perform(product_id, content)
     pbi = Pbi::Item.create(product_id, content)
 
@@ -27,7 +27,7 @@ class AddProductBacklogItemUsecase < UsecaseBase
 
   private
 
-  sig {params(product_id: Product::ProductId).returns(Pbi::Order)}
+  sig {params(product_id: Product::Id).returns(Pbi::Order)}
   def find_order(product_id)
     order = @order_repository.find_by_product_id(product_id)
     return Pbi::Order.create(product_id) unless order

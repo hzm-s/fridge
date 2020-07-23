@@ -7,7 +7,7 @@ RSpec.describe ProductBacklogItemRepository::AR do
 
   describe '#create' do
     it do
-      pbi = Pbi::Item.create(product.id, Pbi::Content.from_string('ABC'))
+      pbi = Pbi::Item.create(product.id, Pbi::Content.new('ABC'))
       expect { described_class.add(pbi) }
         .to change { Dao::ProductBacklogItem.count }.by(1)
     end

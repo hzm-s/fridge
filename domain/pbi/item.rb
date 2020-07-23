@@ -8,7 +8,7 @@ module Pbi
     class << self
       extend T::Sig
 
-      sig {params(product_id: Product::ProductId, content: Content).returns(T.attached_class)}
+      sig {params(product_id: Product::Id, content: Content).returns(T.attached_class)}
       def create(product_id, content)
         new(
           Pbi::Id.create,
@@ -21,7 +21,7 @@ module Pbi
 
       sig {params(
         id: Id,
-        product_id: Product::ProductId,
+        product_id: Product::Id,
         content: Content,
         size: StoryPoint,
         acceptance_criteria: AcceptanceCriteria
@@ -34,7 +34,7 @@ module Pbi
     sig {returns(Id)}
     attr_reader :id
 
-    sig {returns(Product::ProductId)}
+    sig {returns(Product::Id)}
     attr_reader :product_id
 
     sig {returns(Content)}
@@ -48,7 +48,7 @@ module Pbi
 
     sig {params(
       id: Id,
-      product_id: Product::ProductId,
+      product_id: Product::Id,
       content: Content,
       point: StoryPoint,
       acceptance_criteria: AcceptanceCriteria
