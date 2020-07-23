@@ -14,7 +14,7 @@ module ProductBacklogItemRepository
           Pbi::Id.from_string(r.id),
           Product::ProductId.from_string(r.dao_product_id),
           Pbi::Content.new(r.content),
-          Pbi::StoryPoint.from_repository(r.size),
+          Pbi::StoryPoint.new(r.size),
           Pbi::AcceptanceCriteria.from_repository(
             r.next_acceptance_criterion_no,
             r.criteria.map { |c| Pbi::AcceptanceCriterion.new(c.no, c.content) }

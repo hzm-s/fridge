@@ -8,7 +8,7 @@ RSpec.describe EstimateProductBacklogItemSizeUsecase do
   it do
     pbi = add_pbi(product.id, 'ABC')
 
-    point = Pbi::StoryPoint.from_integer(8)
+    point = Pbi::StoryPoint.new(8)
     id = described_class.perform(pbi.id, point)
 
     pbi = ProductBacklogItemRepository::AR.find_by_id(id)

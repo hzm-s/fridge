@@ -1,7 +1,7 @@
 # typed: true
 module PbiHelper
   def present_story_point(point)
-    Pbi::StoryPoint.from_integer(point).to_s
+    Pbi::StoryPoint.new(point).to_s
   end
 
   def all_story_points

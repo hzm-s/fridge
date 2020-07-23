@@ -12,27 +12,18 @@ module Pbi
 
       sig {returns(T::Array[T.attached_class])}
       def all
-        AVAILABLE_VALUES.map { |v| from_integer(v) } + [unknown]
+        AVAILABLE_VALUES.map { |v| new(v) } + [unknown]
       end
 
       sig {returns(T.attached_class)}
       def unknown
         new(nil)
       end
-
-      sig {params(int: T.nilable(Integer)).returns(T.attached_class)}
-      def from_integer(int)
-        return unknown unless int
-
-        raise ArgumentError unless AVAILABLE_VALUES.include?(int)
-
-        new(int)
-      end
-      alias_method :from_repository, :from_integer
     end
 
     sig {params(value: T.nilable(Integer)).void}
     def initialize(value)
+      raise ArgumentError if value && !AVAILABLE_VALUES.include?(value)
       @value = value
     end
 
