@@ -1,6 +1,6 @@
 # typed: false
 class ProductBacklogItemsController < ApplicationController
-  helper_method :current_product
+  include ProductHelper
 
   def index
     @items = ProductBacklogItemListQuery.call(params[:product_id])
@@ -53,7 +53,10 @@ class ProductBacklogItemsController < ApplicationController
     params.require(:form).permit(:content)
   end
 
-  def current_product(product_id)
-    Dao::Product.find_by(id: product_id)
+  def current_product_id
+    product_id = params[:product_id]
+    return product_id if product_id
+
+    Dao::ProductBacklogItem.find(params[:id]).product_id
   end
 end

@@ -18,7 +18,7 @@ class ProductsController < ApplicationController
         @form.name,
         @form.description
       )
-      redirect_to products_path
+      redirect_to products_path, flash: flash_success('product.create')
     else
       render :new
     end

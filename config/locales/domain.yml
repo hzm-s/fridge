@@ -1,5 +1,16 @@
 ja:
   domain:
+    team:
+      role:
+        product_owner: プロダクトオーナー
+        developer: 開発者
+        scrum_master: スクラムマスター
+      member:
+        short_name:
+          product_owner: PO
+          developer: Dev
+          scrum_master: SM
+
     errors:
       messages:
         pbi:
