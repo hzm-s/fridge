@@ -7,5 +7,5 @@ class ProductBacklogItemForm
 
   validates :content,
     presence: true,
-    domain_object: { object_class: Pbi::Content, method: :from_string, message: I18n.t('domain.errors.messages.pbi.content'), allow_blank: true }
+    domain_object: { object_class: Pbi::Content, message: I18n.t('domain.errors.messages.pbi.content'), allow_blank: true }
 end
