@@ -1,4 +1,3 @@
-# typed: false
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_18_044054) do
+ActiveRecord::Schema.define(version: 2020_07_22_123744) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -60,6 +59,15 @@ ActiveRecord::Schema.define(version: 2020_07_18_044054) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "dao_team_members", force: :cascade do |t|
+    t.uuid "dao_product_id"
+    t.uuid "dao_user_id"
+    t.string "role", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["dao_product_id", "dao_user_id"], name: "index_dao_team_members_on_dao_product_id_and_dao_user_id", unique: true
+  end
+
   create_table "dao_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
@@ -75,4 +83,6 @@ ActiveRecord::Schema.define(version: 2020_07_18_044054) do
   add_foreign_key "dao_acceptance_criteria", "dao_product_backlog_items"
   add_foreign_key "dao_product_backlog_items", "dao_products"
   add_foreign_key "dao_product_backlog_orders", "dao_products"
+  add_foreign_key "dao_team_members", "dao_products"
+  add_foreign_key "dao_team_members", "dao_users"
 end

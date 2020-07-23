@@ -3,7 +3,9 @@ require 'rails_helper'
 
 module Pbi
   RSpec.describe Order do
-    let(:product) { Product::Product.create('fridge') }
+    let(:user) { register_user }
+    let(:member) { Team::Member.new(user.id, Team::Role::ProductOwner) }
+    let(:product) { Product::Product.create('fridge', member) }
 
     let(:pbi_a) { Pbi::Item.create(product.id, Pbi::Content.from_string('AAA')) }
     let(:pbi_b) { Pbi::Item.create(product.id, Pbi::Content.from_string('BBB')) }

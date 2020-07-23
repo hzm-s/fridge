@@ -12,7 +12,12 @@ class ProductsController < ApplicationController
   def create
     @form = ProductForm.new(permitted_params)
     if @form.valid?
-      CreateProductUsecase.perform(current_user.id, @form.name, @form.description)
+      CreateProductUsecase.perform(
+        current_user.id,
+        @form.domain_objects[:member_role],
+        @form.name,
+        @form.description
+      )
       redirect_to products_path
     else
       render :new
@@ -22,6 +27,6 @@ class ProductsController < ApplicationController
   private
 
   def permitted_params
-    params.require(:form).permit(:name, :description)
+    params.require(:form).permit(:name, :description, :member_role)
   end
 end

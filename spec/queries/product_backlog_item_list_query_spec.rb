@@ -2,7 +2,8 @@
 require 'rails_helper'
 
 RSpec.describe ProductBacklogItemListQuery do
-  let(:product) { create_product }
+  let(:user) { register_user }
+  let(:product) { create_product(user_id: user.id) }
 
   it '優先順位順になっていること' do
     pbi_a = add_pbi(product.id, 'AAA')

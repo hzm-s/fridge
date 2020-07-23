@@ -2,8 +2,10 @@
 require 'rails_helper'
 
 RSpec.describe EstimateProductBacklogItemSizeUsecase do
+  let!(:user) { register_user }
+  let!(:product) { create_product(user_id: user.id) }
+
   it do
-    product = create_product
     pbi = add_pbi(product.id, 'ABC')
 
     point = Pbi::StoryPoint.from_integer(8)

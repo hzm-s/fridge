@@ -2,11 +2,10 @@
 require 'rails_helper'
 
 RSpec.describe AddProductBacklogItemUsecase do
-  let!(:product) { Product::Product.create('fridge') }
+  let!(:user) { register_user }
+  let!(:product) { create_product(user_id: user.id) }
   let(:pbi_repo) { ProductBacklogItemRepository::AR }
   let(:order_repo) { ProductBacklogOrderRepository::AR }
-
-  before { ProductRepository::AR.add(product) }
 
   it '追加したPBIが保存されていること' do
     pbi_id = described_class.perform(product.id, Pbi::Content.from_string('aaa'))
