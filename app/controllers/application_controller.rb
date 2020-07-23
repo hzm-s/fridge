@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
 
   def require_user
     unless signed_in?
-      redirect_to root_path, flash: flash_success('require_sign_in')
+      redirect_to sign_in_path, flash: flash_success('require_sign_in')
     end
   end
 
