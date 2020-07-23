@@ -34,7 +34,7 @@ module Pbi
 
     sig {params(content: String).void}
     def add(content)
-      @list << AcceptanceCriterion.create(@next_no, content)
+      @list << AcceptanceCriterion.new(@next_no, content)
       @next_no += 1
     end
 

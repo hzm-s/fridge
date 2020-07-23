@@ -17,7 +17,7 @@ module ProductBacklogItemRepository
           Pbi::StoryPoint.from_repository(r.size),
           Pbi::AcceptanceCriteria.from_repository(
             r.next_acceptance_criterion_no,
-            r.criteria.map { |c| Pbi::AcceptanceCriterion.from_repository(c.no, c.content) }
+            r.criteria.map { |c| Pbi::AcceptanceCriterion.new(c.no, c.content) }
           )
         )
       rescue ActiveRecord::RecordNotFound => e
