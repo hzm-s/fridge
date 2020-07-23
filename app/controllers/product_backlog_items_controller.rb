@@ -2,6 +2,8 @@
 class ProductBacklogItemsController < ApplicationController
   include ProductHelper
 
+  before_action :require_user
+
   def index
     @items = ProductBacklogItemListQuery.call(params[:product_id])
     @form = ProductBacklogItemForm.new

@@ -6,6 +6,10 @@ RSpec.describe 'acceptance_criteria' do
   let!(:product) { create_product(user_id: User::Id.from_string(user.id)) }
   let!(:pbi) { add_pbi(product.id) }
 
+  before do
+    sign_in(user)
+  end
+
   describe '#create' do
     context 'given valid params' do
       it do

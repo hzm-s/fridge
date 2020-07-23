@@ -5,6 +5,10 @@ RSpec.describe 'product_backlog_items' do
   let!(:user) { sign_up }
   let!(:product) { create_product(user_id: User::Id.from_string(user.id)) }
 
+  before do
+    sign_in(user)
+  end
+
   describe '#create' do
     let(:valid_params) do
       { form: { content: 'ABC' } }
