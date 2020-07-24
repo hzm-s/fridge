@@ -1,6 +1,11 @@
 class TeamMembersController < ApplicationController
   include ProductHelper
 
+  def index
+    @form = TeamMemberForm.new
+    @candidate_users = UsersForNewTeamMemberQuery.call(current_product_id)
+  end
+
   def create
     user_id = User::Id.from_string(permitted_params[:user_id])
     role = Team::Role.from_string(permitted_params[:role])

@@ -28,7 +28,7 @@ ja:
       create: プロダクトを作成する
     product:
       pbl: プロダクトバックログ
-      manage_team: チーム管理
+      team: チーム
       setting: プロダクト設定
     new:
       title: 新しいプロダクト
@@ -48,3 +48,8 @@ ja:
   acceptance_criteria:
     form:
       add: 追加する
+
+  team_members:
+    index:
+      title: チーム
+      title_add: 新しいメンバー

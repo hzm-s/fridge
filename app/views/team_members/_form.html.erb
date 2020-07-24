@@ -1,0 +1,13 @@
+<%= form_with scope: :form, model: form, url: product_team_members_path(product_id: product.id), id: 'js-new-member-form' do |f| %>
+  <div class="form-row">
+    <div class="col-lg-8">
+      <%= f.label :user_id %>
+      <%= f.collection_select :user_id, @candidate_users, :id, :name, { prompt: true }, class: 'form-control' %>
+    </div>
+    <div class="col-lg-4">
+      <%= f.label :role %>
+      <%= f.collection_select :member_role, Team::Role.values, :to_s, -> (v) { t(v, scope: 'domain.team.role') }, { prompt: true }, class: 'form-control' %>
+    </div>
+  </div>
+  <%= f.button t('.add'), class: 'btn btn-success mt-3', data: with_loader %>
+<% end %>

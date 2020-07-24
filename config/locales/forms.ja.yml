@@ -9,3 +9,7 @@ ja:
         name: プロダクト名
         description: 説明
         member_role: チームでの役割
+
+      team_member_form:
+        user_id: ユーザー
+        role: 役割
