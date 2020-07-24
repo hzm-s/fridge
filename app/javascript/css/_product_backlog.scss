@@ -8,7 +8,7 @@
 }
 
 .pbl-item-outer {
-  padding: .75rem 1rem;
+  padding: .5rem 1rem;
   border-bottom: 1px solid $gray-300;
   background-color: $white;
 }
@@ -16,8 +16,6 @@
 .pbl-item {
   display: flex;
   align-items: center;
-
-  color: $body-color;
 }
 
 .pbl-item__grip {
@@ -30,7 +28,9 @@
 }
 
 .pbl-item__content {
+  padding-right: .5rem;
   margin-bottom: 0;
+  font-size: .875rem;
   line-height: 1.2rem;
 }
 
@@ -84,7 +84,7 @@
 
 .ac-list--small {
   p {
-    font-size: .875rem;
+    font-size: .75rem;
   }
 }
 
