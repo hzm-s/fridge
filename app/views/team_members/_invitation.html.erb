@@ -1,0 +1,12 @@
+<div>
+  <label>
+    <%=t '.title' %>
+  </label>
+  <div>
+    <%= form_with do |f| %>
+      <div class="form-group">
+        <%= text_field_tag :url, invitation_url(invitation.id), class: 'form-control' %>
+      </div>
+    <% end %>
+  </div>
+</div>

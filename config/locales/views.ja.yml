@@ -52,4 +52,5 @@ ja:
   team_members:
     index:
       title: チーム
-      title_add: 新しいメンバー
+    invitation:
+      title: 新しいメンバーの招待URL

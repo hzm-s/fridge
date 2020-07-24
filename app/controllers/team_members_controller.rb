@@ -2,8 +2,7 @@ class TeamMembersController < ApplicationController
   include ProductHelper
 
   def index
-    @form = TeamMemberForm.new
-    @candidate_users = UsersForNewTeamMemberQuery.call(current_product_id)
+    @invitation = App::TeamMemberInvitation.create_for_product(current_product_id)
   end
 
   def create

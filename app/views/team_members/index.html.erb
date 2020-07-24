@@ -8,14 +8,7 @@
       </h1>
     </div>
     <hr>
-    <div>
-      <label>
-        <%=t '.title_add' %>
-      </label>
-      <div>
-        <%= render partial: 'form', locals: { form: @form, product: current_product } %>
-      </div>
-    </div>
+    <%= render partial: 'invitation', locals: { invitation: @invitation } %>
   </div>
 </div>
 <div class="row d-flex justify-content-center">
