@@ -1,6 +1,5 @@
-# typed: true
+# typed: false
 module ProductSpport
-
   def create_product(user_id: nil, role: Team::Role::ProductOwner, name: 'example', description: 'desc example')
     user_id ||= register_user.id
     CreateProductUsecase.new

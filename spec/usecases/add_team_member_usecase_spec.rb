@@ -1,10 +1,16 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.xdescribe AddTeamMemberUsecase do
-  let!(:product) { create_product }
+RSpec.describe AddTeamMemberUsecase do
+  let!(:product_id) { create_product(role: Team::Role::Developer).id }
 
   it do
-    expect(1).to eq 1
+    new_user = register_user
+    described_class.perform(product_id, new_user.id, Team::Role::ProductOwner)
+
+    product = ProductRepository::AR.find_by_id(product_id)
+    new_member = product.member(new_user.id)
+
+    expect(new_member.role).to eq Team::Role::ProductOwner
   end
 end
