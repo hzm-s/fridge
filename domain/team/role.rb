@@ -23,14 +23,14 @@ module Team
     end
 
     sig {returns(T::Array[Symbol])}
-    def available_actions_for_pbi
+    def unavailable_actions_for_pbi
       case self
       when ProductOwner
-        [:reorder, :add, :update, :remove, :add_acceptance_criteria, :remove_acceptance_criteria]
+        [:estimate_size]
       when Developer
-        [:add, :update, :add_acceptance_criteria, :remove_acceptance_criteria]
+        [:sort]
       when ScrumMaster
-        [:reorder, :add, :update, :remove, :add_acceptance_criteria, :remove_acceptance_criteria]
+        [:estimate_size]
       else
         T.absurd(self)
       end
