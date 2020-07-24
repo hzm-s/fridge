@@ -2,20 +2,20 @@
 require 'rails_helper'
 
 RSpec.describe 'team_members' do
-  let!(:user) { sign_up }
-  let!(:product) { create_product(user_id: User::Id.from_string(user.id), role: Team::Role::Developer) }
-
-  before { sign_in(user) }
+  let!(:founder) { sign_up }
+  let!(:new_member) { sign_up }
+  let!(:product) { create_product(user_id: User::Id.from_string(founder.id), role: Team::Role::Developer) }
 
   describe '#create' do
-    it do
-      other_user = register_user
-      params = { form: { user_id: other_user.id, role: 'product_owner' } }
+    before { sign_in(new_member) }
 
-      expect {
-        post product_team_members_path(product_id: product.id, format: :js), params: params
-      }
-        .to change { Dao::TeamMember.count }.by(1)
+    it do
+      params = { role: 'product_owner' }
+
+      post product_team_members_path(product_id: product.id), params: params
+
+      member = Dao::TeamMember.find_by(dao_user_id: new_member.id)
+      expect(member.role).to eq 'product_owner'
     end
   end
 end
