@@ -2,8 +2,7 @@
 require 'rails_helper'
 
 RSpec.describe AddProductBacklogItemUsecase do
-  let!(:user) { register_user }
-  let!(:product) { create_product(user_id: user.id) }
+  let!(:product) { create_product }
   let(:pbi_repo) { ProductBacklogItemRepository::AR }
   let(:order_repo) { ProductBacklogOrderRepository::AR }
 

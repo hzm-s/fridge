@@ -2,8 +2,7 @@
 require 'rails_helper'
 
 RSpec.describe UpdateProductBacklogItemUsecase do
-  let!(:user) { register_user }
-  let!(:product) { create_product(user_id: user.id) }
+  let!(:product) { create_product }
 
   it do
     pbi = add_pbi(product.id, 'ORIGINAL_CONTENT')
