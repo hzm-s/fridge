@@ -8,12 +8,12 @@ module Product
     class << self
       extend T::Sig
 
-      sig {params(name: String, member: Team::Member, description: T.nilable(String)).returns(T.attached_class)}
-      def create(name, member, description = nil)
+      sig {params(name: String, description: T.nilable(String)).returns(T.attached_class)}
+      def create(name, description = nil)
         new(
           Id.create,
           name,
-          [member],
+          [],
           description
         )
       end
@@ -42,6 +42,11 @@ module Product
       @name = name
       @members = members
       @description = description
+    end
+
+    sig {params(member: Team::Member).void}
+    def add_member(member)
+      @members << member
     end
 
     sig {params(user_id: User::Id).returns(T.nilable(Team::Member))}
