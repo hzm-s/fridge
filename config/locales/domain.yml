@@ -18,3 +18,4 @@ ja:
         duplicated_product_owner: すでにプロダクトオーナーがいます
         duplicated_scrum_master: すでにスクラムマスターがいます
         too_large_development_team: 開発者が多すぎます
+        already_joined: すでに参加しています

@@ -13,6 +13,7 @@ module Team
 
     sig {params(member: Member).returns(Team)}
     def add_member(member)
+      raise AlreadyJoined if self.member(member.user_id)
       self.class.new(@members + [member])
     end
 

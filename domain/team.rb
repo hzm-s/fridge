@@ -4,4 +4,5 @@ module Team
   class DuplicatedProductOwner < InvalidNewMember; end
   class DuplicatedScrumMaster < InvalidNewMember; end
   class TooLargeDevelopmentTeam < InvalidNewMember; end
+  class AlreadyJoined < InvalidNewMember; end
 end
