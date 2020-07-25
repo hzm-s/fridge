@@ -1,6 +1,6 @@
 # typed: false
 module Team
-  class DuplicateProductOwnerError < StandardError; end
-  class DuplicateScrumMasterError < StandardError; end
-  class LargeDevelopmentTeamError < StandardError; end
+  class DuplicatedProductOwner < StandardError; end
+  class DuplicatedScrumMaster < StandardError; end
+  class TooLargeDevelopmentTeam < StandardError; end
 end

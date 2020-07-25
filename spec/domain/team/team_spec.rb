@@ -20,17 +20,17 @@ module Team
 
       it '2人目のプロダクトオーナーはエラーになること' do
         expect { @team.add_member(po_member(new_member.id)) }
-          .to raise_error(DuplicateProductOwnerError)
+          .to raise_error(DuplicatedProductOwner)
       end
 
       it '2人目のスクラムマスターはエラーになること' do
         expect { @team.add_member(sm_member(new_member.id)) }
-          .to raise_error(DuplicateScrumMasterError)
+          .to raise_error(DuplicatedScrumMaster)
       end
 
       it '10人目の開発者はエラーになること' do
         expect { @team.add_member(dev_member(new_member.id)) }
-          .to raise_error(LargeDevelopmentTeamError)
+          .to raise_error(TooLargeDevelopmentTeam)
       end
     end
   end

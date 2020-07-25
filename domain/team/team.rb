@@ -30,9 +30,9 @@ module Team
 
     sig {void}
     def check_member_role!
-      raise DuplicateProductOwnerError if count_of_role(Role::ProductOwner) > 1
-      raise DuplicateScrumMasterError if count_of_role(Role::ScrumMaster) > 1
-      raise LargeDevelopmentTeamError if count_of_role(Role::Developer) > 9
+      raise DuplicatedProductOwner if count_of_role(Role::ProductOwner) > 1
+      raise DuplicatedScrumMaster if count_of_role(Role::ScrumMaster) > 1
+      raise TooLargeDevelopmentTeam if count_of_role(Role::Developer) > 9
     end
 
     sig {params(role: Role).returns(Integer)}
