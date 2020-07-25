@@ -7,10 +7,13 @@
       </h1>
     </div>
     <div class="mt-2">
-      <%= form_with url: product_team_members_path(product_id: current_product.id), remote: false do |f| %>
+      <%= form_with url: product_team_members_path(product_id: current_product.id), local: true do |f| %>
         <div class="form-group">
-          <%= select_tag 'role', options_from_collection_for_select(Team::Role.values, :to_s, -> (v) { t(v, scope: 'domain.team.role') }), class: 'form-control' %>
+          <%= select_tag 'role', options_from_collection_for_select(available_team_roles, :to_s, -> (v) { t(v, scope: 'domain.team.role') }), class: 'form-control' %>
         </div>
+        <% if @error %>
+          <p class="invalid-feedback" style="display: block;"><%= @error %></p>
+        <% end %>
         <%= button_tag t('.join'), class: 'btn btn-success' %>
       <% end %>
     </div>

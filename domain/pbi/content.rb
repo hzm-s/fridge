@@ -7,7 +7,7 @@ module Pbi
 
     sig {params(value: String).void}
     def initialize(value)
-      raise ArgumentError unless (3..500).include?(value.size)
+      raise InvalidContent unless (3..500).include?(value.size)
       @value = value
     end
 

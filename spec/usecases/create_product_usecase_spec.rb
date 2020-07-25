@@ -7,7 +7,7 @@ RSpec.describe CreateProductUsecase do
   it do
     product_id = described_class.perform(user.id, Team::Role::ProductOwner, 'fridge', 'DESC')
     product = ProductRepository::AR.find_by_id(product_id)
-    member = product.member(user.id)
+    member = product.team_member(user.id)
 
     aggregate_failures do
       expect(product.name).to eq 'fridge'

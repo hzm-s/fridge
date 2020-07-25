@@ -12,6 +12,10 @@ ja:
           scrum_master: SM
 
     errors:
-      messages:
-        pbi:
-          content: 3~500文字で入力してください
+      pbi:
+        content: 3~500文字で入力してください
+      team:
+        duplicated_product_owner: すでにプロダクトオーナーがいます
+        duplicated_scrum_master: すでにスクラムマスターがいます
+        too_large_development_team: 開発者が多すぎます
+        already_joined: すでに参加しています

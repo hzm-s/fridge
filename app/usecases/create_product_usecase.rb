@@ -14,7 +14,7 @@ class CreateProductUsecase < UsecaseBase
     product = Product::Product.create(name, description)
 
     member = Team::Member.new(user_id, role)
-    product.add_member(member)
+    product.add_team_member(member)
 
     @repository.add(product)
 

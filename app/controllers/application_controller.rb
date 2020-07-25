@@ -1,5 +1,6 @@
 # typed: false
 class ApplicationController < ActionController::Base
+  include I18nHelper
   include SessionHelper
 
   helper_method :current_user, :signed_in?
