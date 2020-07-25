@@ -5,8 +5,6 @@ class CreateDaoUsers < ActiveRecord::Migration[6.0]
       t.string :name, null: false
       t.string :email, null: false
       t.string :initials, null: false
-      t.string :avatar_bg, null: false
-      t.string :avatar_fg, null: false
 
       t.timestamps
     end

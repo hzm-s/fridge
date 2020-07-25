@@ -16,6 +16,15 @@ ActiveRecord::Schema.define(version: 2020_07_22_123744) do
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
+  create_table "app_avatars", force: :cascade do |t|
+    t.uuid "dao_user_id"
+    t.string "avatar_bg", null: false
+    t.string "avatar_fg", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["dao_user_id"], name: "index_app_avatars_on_dao_user_id", unique: true
+  end
+
   create_table "app_oauth_accounts", force: :cascade do |t|
     t.uuid "dao_user_id"
     t.string "provider", null: false
@@ -72,13 +81,12 @@ ActiveRecord::Schema.define(version: 2020_07_22_123744) do
     t.string "name", null: false
     t.string "email", null: false
     t.string "initials", null: false
-    t.string "avatar_bg", null: false
-    t.string "avatar_fg", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_dao_users_on_email", unique: true
   end
 
+  add_foreign_key "app_avatars", "dao_users"
   add_foreign_key "app_oauth_accounts", "dao_users"
   add_foreign_key "dao_acceptance_criteria", "dao_product_backlog_items"
   add_foreign_key "dao_product_backlog_items", "dao_products"
