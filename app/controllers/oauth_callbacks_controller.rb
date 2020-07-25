@@ -16,6 +16,11 @@ class OauthCallbacksController < ApplicationController
 
   def redirect(is_register)
     message = is_register ? 'signed_up' : 'signed_in'
-    redirect_to root_path, flash: flash_success(message)
+    redirect_to redirect_path, flash: flash_success(message)
+  end
+
+  def redirect_path
+    return root_path unless session[:referer]
+    session.delete(:referer)
   end
 end

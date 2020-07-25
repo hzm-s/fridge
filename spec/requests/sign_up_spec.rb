@@ -27,7 +27,7 @@ RSpec.describe 'sign_up' do
     let(:auth_hash) { mock_auth_hash }
 
     before do
-      sign_up_with_auth_auth(auth_hash)
+      sign_up_with_auth_hash(auth_hash)
       set_auth_hash(auth_hash)
     end
 

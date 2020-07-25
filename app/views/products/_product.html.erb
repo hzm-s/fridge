@@ -13,9 +13,9 @@
         <i class="fas fa-list-alt"></i>
         <%=t '.pbl' %>
       <% end %>
-      <%= link_to '#', class: 'pl-item__link' do %>
-        <i class="fas fa-user-circle"></i>
-        <%=t '.manage_team' %>
+      <%= link_to product_team_members_path(product_id: product.id), class: 'pl-item__link' do %>
+        <i class="fas fa-users"></i>
+        <%=t '.team' %>
       <% end %>
       <%= link_to '#', class: 'pl-item__link' do %>
         <i class="fas fa-cog"></i>

@@ -22,7 +22,7 @@ module UserSupport
   end
 
   module Requests
-    def sign_up_with_auth_auth(auth_hash = mock_auth_hash)
+    def sign_up_with_auth_hash(auth_hash = mock_auth_hash)
       name = auth_hash['info']['name']
       email = auth_hash['info']['email']
       oauth_account = { provider: auth_hash['provider'], uid: auth_hash['uid'] }

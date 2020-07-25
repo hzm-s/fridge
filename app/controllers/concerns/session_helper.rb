@@ -1,8 +1,10 @@
 # typed: false
 module SessionHelper
   def sign_in(user_id)
+    referer = session[:referer]
     reset_session
     session[:user_id] = user_id
+    session[:referer] = referer if referer
   end
 
   def sign_out

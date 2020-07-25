@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :products, only: [:new, :create, :index] do
     resources :product_backlog_items, only: [:index, :create]
     resource :product_backlog_order, only: [:update]
+    resources :team_members, only: [:index, :new, :create]
   end
 
   resources :product_backlog_items, only: [:edit, :update, :destroy] do

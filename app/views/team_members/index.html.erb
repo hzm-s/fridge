@@ -1,0 +1,21 @@
+<% content_for(:product_name) { current_product.name } %>
+<% content_for(:member_role) { current_team_member.role } %>
+<div class="row d-flex justify-content-center">
+  <div class="col-lg-8 sheet">
+    <div class="d-flex justify-content-center">
+      <h1 class="page-title">
+        <%=t '.title' %>
+      </h1>
+    </div>
+    <hr>
+    <%= render partial: 'invitation', locals: { product: current_product } %>
+  </div>
+</div>
+<div class="row d-flex justify-content-center">
+  <div class="d-flex mt-2">
+    <%= link_to products_path, class: 'text-md' do %>
+      <i class="fas fa-reply"></i>
+      <%=t 'navs.back' %>
+    <% end %>
+  </div>
+</div>
