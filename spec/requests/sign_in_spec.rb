@@ -6,12 +6,12 @@ RSpec.describe 'sign_in' do
   let(:other_user_auth_hash) { mock_auth_hash }
 
   before do
-    sign_up_with_auth_auth(other_user_auth_hash)
+    sign_up_with_auth_hash(other_user_auth_hash)
   end
 
   context 'when signed up' do
     before do
-      @user = sign_up_with_auth_auth(user_auth_hash)
+      @user = sign_up_with_auth_hash(user_auth_hash)
       set_auth_hash(user_auth_hash)
     end
 
