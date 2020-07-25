@@ -13,7 +13,6 @@ RSpec.describe 'team_members' do
       it do
         get new_product_team_member_path(product_id: product.id)
 
-        expect(response.body).to include 'product_owner'
         expect(response.body).to include 'developer'
         expect(response.body).to include 'scrum_master'
       end
@@ -25,7 +24,6 @@ RSpec.describe 'team_members' do
         sign_in(new_member)
         follow_redirect!
 
-        expect(response.body).to include 'product_owner'
         expect(response.body).to include 'developer'
         expect(response.body).to include 'scrum_master'
       end

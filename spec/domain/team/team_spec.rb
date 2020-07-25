@@ -41,5 +41,27 @@ module Team
           .to raise_error(TooLargeDevelopmentTeam)
       end
     end
+
+    describe '#available_roles' do
+      it do
+        team = described_class.new([dev_member(register_user.id)])
+
+        expect(team.available_roles).to match_array [Role::ProductOwner, Role::Developer, Role::ScrumMaster]
+
+        team = team.add_member(po_member(register_user.id))
+        expect(team.available_roles).to match_array [Role::Developer, Role::ScrumMaster]
+
+        team = team.add_member(sm_member(register_user.id))
+        expect(team.available_roles).to match_array [Role::Developer]
+
+        7.times do
+          team = team.add_member(dev_member(register_user.id))
+        end
+        expect(team.available_roles).to match_array [Role::Developer]
+
+        team = team.add_member(dev_member(register_user.id))
+        expect(team.available_roles).to be_empty
+      end
+    end
   end
 end

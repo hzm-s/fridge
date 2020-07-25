@@ -22,6 +22,15 @@ module Team
       @members.find { |member| member.user_id == user_id }
     end
 
+    sig {returns(T::Array[Role])}
+    def available_roles
+      roles = []
+      roles << Role::ProductOwner if count_of_role(Role::ProductOwner) == 0
+      roles << Role::ScrumMaster if count_of_role(Role::ScrumMaster) == 0
+      roles << Role::Developer if count_of_role(Role::Developer) <= 8
+      roles
+    end
+
     sig {returns(T::Array[Member])}
     def to_a
       @members
