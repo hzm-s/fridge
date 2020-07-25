@@ -1,7 +1,7 @@
 # typed: true
 module Shared
   class DomainError < StandardError
-    def initialize(origin)
+    def initialize(origin = nil)
       super()
       @origin = origin
     end

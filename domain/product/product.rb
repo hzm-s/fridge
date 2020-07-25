@@ -46,6 +46,9 @@ module Product
 
     sig {params(member: Team::Member).void}
     def add_team_member(member)
+      raise Team::DuplicateProductOwnerError if member.role == Team::Role::ProductOwner && @members.detect { |m| m.role == Team::Role::ProductOwner }
+      raise Team::DuplicateScrumMasterError if member.role == Team::Role::ScrumMaster && @members.detect { |m| m.role == Team::Role::ScrumMaster }
+      raise Team::LargeDevelopmentTeamError if member.role == Team::Role::Developer && @members.select { |m| m.role == Team::Role::Developer }.size >= 9
       @members << member
     end
 

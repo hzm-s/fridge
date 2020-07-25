@@ -6,6 +6,18 @@ module ProductSpport
       .perform(user_id, role, name, description)
       .yield_self { |id| ProductRepository::AR.find_by_id(id) }
   end
+
+  def po_member(user_id)
+    Team::Member.new(user_id, Team::Role::ProductOwner)
+  end
+
+  def dev_member(user_id)
+    Team::Member.new(user_id, Team::Role::Developer)
+  end
+
+  def sm_member(user_id)
+    Team::Member.new(user_id, Team::Role::ScrumMaster)
+  end
 end
 
 RSpec.configure do |c|
