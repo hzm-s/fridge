@@ -15,4 +15,8 @@ module ApplicationHelper
   def with_loader
     { disable_with: LOADING_ICON.html_safe }
   end
+
+  def avatar_style(bg, fg)
+    %(style="background-color: #{bg}; color: #{fg}").html_safe
+  end
 end

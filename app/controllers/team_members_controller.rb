@@ -6,6 +6,10 @@ class TeamMembersController < ApplicationController
 
   helper_method :available_team_roles
 
+  def index
+    @team = TeamQuery.call(current_product_id)
+  end
+
   def create
     product_id = Product::Id.from_string(current_product_id)
     role = Team::Role.from_string(params[:role])

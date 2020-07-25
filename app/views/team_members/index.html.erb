@@ -1,12 +1,13 @@
 <% content_for(:product_name) { current_product.name } %>
 <% content_for(:member_role) { current_team_member.role } %>
 <div class="row d-flex justify-content-center">
-  <div class="col-lg-8 sheet">
+  <div class="col-lg-7 sheet">
     <div class="d-flex justify-content-center">
-      <h1 class="page-title">
+      <h1 class="page-title mb-0">
         <%=t '.title' %>
       </h1>
     </div>
+    <%= render partial: 'list', locals: { team: @team } %>
     <hr>
     <%= render partial: 'invitation', locals: { product: current_product } %>
   </div>

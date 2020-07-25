@@ -55,5 +55,7 @@ ja:
     new:
       title: チームへ参加
       join: として参加する
+    list:
+      title: メンバー
     invitation:
-      title: 新しいメンバーの招待URL
+      title: チーム参加リンク

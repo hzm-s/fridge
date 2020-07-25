@@ -43,6 +43,15 @@ label {
   @include avatar(2.0rem);
 }
 
+.team-member-role {
+  margin-right: .5rem;
+  padding: 0 .5rem;
+  font-size: .75rem;
+  color: $gray-100;
+  background-color: $gray-700;
+  border-radius: .65rem;
+}
+
 .action-link {
   font-size: .75rem;
   color: $secondary;

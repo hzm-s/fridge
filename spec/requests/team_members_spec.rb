@@ -6,6 +6,15 @@ RSpec.describe 'team_members' do
   let!(:new_member) { sign_up }
   let!(:product) { create_product(user_id: User::Id.from_string(founder.id), role: Team::Role::ProductOwner) }
 
+  describe '#index' do
+    before { sign_in(founder) }
+
+    it do
+      get product_team_members_path(product_id: product.id.to_s)
+      expect(response.body).to include founder.name
+    end
+  end
+
   describe '#new' do
     context 'when signed in' do
       before { sign_in(new_member) }
