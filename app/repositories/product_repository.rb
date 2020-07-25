@@ -18,7 +18,7 @@ module ProductRepository
         Product::Product.from_repository(
           Product::Id.from_string(r.id),
           r.name,
-          members,
+          Team::Team.new(members),
           r.description
         )
       end
@@ -30,7 +30,7 @@ module ProductRepository
           name: product.name.to_s,
           description: product.description.to_s
         ) do |p|
-          member = product.members.first
+          member = product.team.to_a.first
           p.members.build(dao_user_id: member.user_id.to_s, role: member.role.to_s) if member
           p.save!
         end
@@ -47,7 +47,7 @@ module ProductRepository
 
       sig {params(product: Product::Product).returns(T::Array[Dao::TeamMember])}
       def build_new_members(product)
-        product.members.map do |m|
+        product.team.to_a.map do |m|
           Dao::TeamMember.new(dao_product_id: product.id.to_s, dao_user_id: m.user_id.to_s, role: m.role.to_s)
         end
       end

@@ -13,14 +13,14 @@ module Product
         new(
           Id.create,
           name,
-          [],
+          Team::Team.new([]),
           description
         )
       end
 
-      sig {params(id: Id, name: String, members: T::Array[Team::Member], description: T.nilable(String)).returns(T.attached_class)}
-      def from_repository(id, name, members, description)
-        new(id, name, members, description)
+      sig {params(id: Id, name: String, team: Team::Team, description: T.nilable(String)).returns(T.attached_class)}
+      def from_repository(id, name, team, description)
+        new(id, name, team, description)
       end
     end
 
@@ -30,18 +30,17 @@ module Product
     sig {returns(String)}
     attr_reader :name
 
+    sig {returns(Team::Team)}
+    attr_reader :team
+
     sig {returns(T.nilable(String))}
     attr_reader :description
 
-    sig {returns(T::Array[Team::Member])}
-    attr_reader :members
-
-    sig {params(id: Id, name: String, members: T::Array[Team::Member], description: T.nilable(String)).void}
-    def initialize(id, name, members, description)
+    sig {params(id: Id, name: String, team: Team::Team, description: T.nilable(String)).void}
+    def initialize(id, name, team, description)
       @id = id
       @name = name
-      @members = members
-      @team = Team::Team.new(members)
+      @team = team
       @description = description
     end
 

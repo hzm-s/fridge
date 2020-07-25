@@ -8,19 +8,36 @@ module Team
     sig {params(members: T::Array[Member]).void}
     def initialize(members)
       @members = members
+      check_member_role!
     end
 
     sig {params(member: Member).returns(Team)}
     def add_member(member)
-      raise DuplicateProductOwnerError if member.role == Role::ProductOwner && @members.detect { |m| m.role == Role::ProductOwner }
-      raise DuplicateScrumMasterError if member.role == Role::ScrumMaster && @members.detect { |m| m.role == Role::ScrumMaster }
-      raise LargeDevelopmentTeamError if member.role == Role::Developer && @members.select { |m| m.role == Role::Developer }.size >= 9
       self.class.new(@members + [member])
     end
 
     sig {params(user_id: User::Id).returns(T.nilable(Member))}
     def member(user_id)
       @members.find { |member| member.user_id == user_id }
+    end
+
+    sig {returns(T::Array[Member])}
+    def to_a
+      @members
+    end
+
+    private
+
+    sig {void}
+    def check_member_role!
+      raise DuplicateProductOwnerError if count_of_role(Role::ProductOwner) > 1
+      raise DuplicateScrumMasterError if count_of_role(Role::ScrumMaster) > 1
+      raise LargeDevelopmentTeamError if count_of_role(Role::Developer) > 9
+    end
+
+    sig {params(role: Role).returns(Integer)}
+    def count_of_role(role)
+      @members.select { |member| member.role == role }.size
     end
   end
 end
