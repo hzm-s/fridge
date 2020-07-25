@@ -18,8 +18,8 @@ ActiveRecord::Schema.define(version: 2020_07_22_123744) do
 
   create_table "app_avatars", force: :cascade do |t|
     t.uuid "dao_user_id"
-    t.string "avatar_bg", null: false
-    t.string "avatar_fg", null: false
+    t.string "bg", null: false
+    t.string "fg", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["dao_user_id"], name: "index_app_avatars_on_dao_user_id", unique: true
