@@ -45,12 +45,12 @@ module Product
     end
 
     sig {params(member: Team::Member).void}
-    def add_member(member)
+    def add_team_member(member)
       @members << member
     end
 
     sig {params(user_id: User::Id).returns(T.nilable(Team::Member))}
-    def member(user_id)
+    def team_member(user_id)
       @members.find { |member| member.user_id == user_id }
     end
   end

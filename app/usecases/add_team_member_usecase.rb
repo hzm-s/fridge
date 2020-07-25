@@ -14,7 +14,7 @@ class AddTeamMemberUsecase < UsecaseBase
     product = @repository.find_by_id(product_id)
 
     member = Team::Member.new(user_id, role)
-    product.add_member(member)
+    product.add_team_member(member)
 
     @repository.update(product)
   end
