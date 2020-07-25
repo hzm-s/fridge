@@ -13,7 +13,7 @@ class ProductsController < ApplicationController
     @form = ProductForm.new(permitted_params)
     if @form.valid?
       CreateProductUsecase.perform(
-        current_user.id,
+        current_user.id_as_domain,
         @form.domain_objects[:member_role],
         @form.name,
         @form.description

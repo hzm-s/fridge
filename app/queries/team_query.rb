@@ -14,11 +14,11 @@ module TeamQuery
     end
 
     def avatar_fg
-      user.avatar_fg
+      user.avatar.fg
     end
 
     def avatar_bg
-      user.avatar_bg
+      user.avatar.bg
     end
   end
 
@@ -45,7 +45,7 @@ module TeamQuery
 
   class << self
     def call(product_id)
-      members = Dao::TeamMember.eager_load(:user).where(dao_product_id: product_id).order(:id)
+      members = Dao::TeamMember.eager_load(user: :avatar).where(dao_product_id: product_id).order(:id)
       Team.new(product_id, members.map { |m| Member.new(m) })
     end
   end
