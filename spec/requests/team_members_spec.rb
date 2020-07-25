@@ -38,7 +38,6 @@ RSpec.describe 'team_members' do
     context 'when valid params' do
       it do
         params = { role: 'developer' }
-
         post product_team_members_path(product_id: product.id), params: params
 
         member = Dao::TeamMember.find_by(dao_user_id: new_member.id)
@@ -47,12 +46,11 @@ RSpec.describe 'team_members' do
     end
 
     context 'when invalid params' do
-      xit do
+      it do
         params = { role: 'product_owner' }
-
         post product_team_members_path(product_id: product.id), params: params
 
-        expect(response.body).to include I18n.t('domain.errors.team.dupulicate_product_owner_error')
+        expect(response.body).to include I18n.t('domain.errors.team.duplicated_product_owner')
       end
     end
   end
