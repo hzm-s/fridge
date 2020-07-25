@@ -29,7 +29,7 @@ module UserSupport
       RegisterUserUsecase.perform(name, email, oauth_account)
         .yield_self { |user_id| Dao::User.eager_load(:oauth_account).find(user_id.to_s) }
     end
-    alias_method :sign_up, :sign_up_with_auth_auth
+    alias_method :sign_up, :sign_up_with_auth_hash
 
     def sign_in(user)
       auth_hash = auth_hash_from_user(user)
