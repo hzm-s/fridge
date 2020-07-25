@@ -15,7 +15,8 @@ class RegisterUserUsecase < UsecaseBase
 
     transaction do
       @repository.add(user)
-      App::OauthAccount.create_with_user(user.id, oauth_account)
+      App::OauthAccount.create_for_user(user.id, oauth_account)
+      App::Avatar.create_for_user(user.id)
     end
 
     user.id
