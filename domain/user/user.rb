@@ -14,13 +14,24 @@ module User
           Id.create,
           email,
           name,
-          Avatar.create(email)
+          extract_initials(email).upcase
         )
       end
 
-      sig {params(id: Id, email: String, name: String, avatar: Avatar).returns(T.attached_class)}
-      def from_repository(id, email, name, avatar)
-        new(id, email, name, avatar)
+      sig {params(id: Id, email: String, name: String, initials: String).returns(T.attached_class)}
+      def from_repository(id, email, name, initials)
+        new(id, email, name, initials)
+      end
+
+      private
+
+      sig {params(email: String).returns(String)}
+      def extract_initials(email)
+        account = email.split('@').first
+        raise ArgumentError if account.size == 0
+
+        return account[0, 2] if account.size >= 2
+        account[0] * 2
       end
     end
 
@@ -33,15 +44,15 @@ module User
     sig {returns(String)}
     attr_reader :name
 
-    sig {returns(Avatar)}
-    attr_reader :avatar
+    sig {returns(String)}
+    attr_reader :initials
 
-    sig {params(id: Id, email: String, name: String, avatar: Avatar).void}
-    def initialize(id, email, name, avatar)
+    sig {params(id: Id, email: String, name: String, initials: String).void}
+    def initialize(id, email, name, initials)
       @id = id
       @email = email
       @name = name
-      @avatar = avatar
+      @initials = initials
     end
     private_class_method :new
   end

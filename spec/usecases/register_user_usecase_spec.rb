@@ -11,16 +11,20 @@ RSpec.describe RegisterUserUsecase do
 
     user = UserRepository::AR.find_by_id(user_id)
     account = App::OauthAccount.find_by(oauth_account)
+    app_user = UserQuery.call(user_id.to_s)
 
     aggregate_failures do
       expect(user.name).to eq name
-      expect(user.avatar.initials).to eq 'US'
-      expect(user.avatar.bg).to_not be_nil
-      expect(user.avatar.fg).to_not be_nil
+      expect(user.initials).to eq 'US'
 
       expect(account.dao_user_id).to eq user.id.to_s
       expect(account.provider).to eq oauth_account[:provider]
       expect(account.uid).to eq oauth_account[:uid]
+
+      expect(app_user.name).to eq user.name
+      expect(app_user.initials).to eq user.initials
+      expect(app_user.avatar_bg).to_not be_nil
+      expect(app_user.avatar_fg).to_not be_nil
     end
   end
 

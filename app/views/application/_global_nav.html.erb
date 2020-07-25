@@ -10,7 +10,7 @@
       <span class="gnav-tail__child team-member-role"><%=t member_role, scope: 'domain.team.role_short' %></span>
     <% end %>
     <% if signed_in? %>
-      <%= render partial: 'user_menu', locals: { avatar: current_user.avatar } %>
+      <%= render partial: 'user_menu', locals: { user: current_user } %>
     <% end -%>
   </div>
 </nav>

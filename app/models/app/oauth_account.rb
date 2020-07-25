@@ -3,7 +3,7 @@ class App::OauthAccount < ApplicationRecord
   belongs_to :dao_user, class_name: 'Dao::User', foreign_key: :dao_user_id
 
   class << self
-    def create_with_user(user_id, account)
+    def create_for_user(user_id, account)
       create!(dao_user_id: user_id, provider: account[:provider], uid: account[:uid])
     end
 
