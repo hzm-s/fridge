@@ -1,0 +1,18 @@
+<% content_for(:product_name) { current_product.name } %>
+<div class="row d-flex justify-content-center">
+  <div class="col-lg-5 sheet">
+    <div class="d-flex justify-content-center">
+      <h1 class="page-title">
+        <%=t '.title' %>
+      </h1>
+    </div>
+    <div class="mt-2">
+      <%= form_with url: product_team_members_path(product_id: current_product.id), remote: false do |f| %>
+        <div class="form-group">
+          <%= select_tag 'role', options_from_collection_for_select(Team::Role.values, :to_s, -> (v) { t(v, scope: 'domain.team.role') }), class: 'form-control' %>
+        </div>
+        <%= button_tag t('.join'), class: 'btn btn-success' %>
+      <% end %>
+    </div>
+  </div>
+</div>

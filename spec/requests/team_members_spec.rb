@@ -6,6 +6,32 @@ RSpec.describe 'team_members' do
   let!(:new_member) { sign_up }
   let!(:product) { create_product(user_id: User::Id.from_string(founder.id), role: Team::Role::Developer) }
 
+  describe '#new' do
+    context 'when signed in' do
+      before { sign_in(new_member) }
+
+      it do
+        get new_product_team_member_path(product_id: product.id)
+
+        expect(response.body).to include 'product_owner'
+        expect(response.body).to include 'developer'
+        expect(response.body).to include 'scrum_master'
+      end
+    end
+
+    context 'when NOT signed in' do
+      it do
+        get new_product_team_member_path(product_id: product.id)
+        sign_in(new_member)
+        follow_redirect!
+
+        expect(response.body).to include 'product_owner'
+        expect(response.body).to include 'developer'
+        expect(response.body).to include 'scrum_master'
+      end
+    end
+  end
+
   describe '#create' do
     before { sign_in(new_member) }
 

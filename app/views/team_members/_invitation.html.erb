@@ -5,7 +5,7 @@
   <div>
     <%= form_with do |f| %>
       <div class="form-group">
-        <%= text_field_tag :url, invitation_url(invitation.id), class: 'form-control' %>
+        <%= text_field_tag :url, new_product_team_member_url(product_id: product.id), class: 'form-control' %>
       </div>
     <% end %>
   </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_24_105606) do
+ActiveRecord::Schema.define(version: 2020_07_22_123744) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -23,12 +23,6 @@ ActiveRecord::Schema.define(version: 2020_07_24_105606) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["dao_user_id"], name: "index_app_oauth_accounts_on_dao_user_id", unique: true
-  end
-
-  create_table "app_team_member_invitations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "dao_product_id"
-    t.datetime "created_at", null: false
-    t.index ["dao_product_id"], name: "index_app_team_member_invitations_on_dao_product_id"
   end
 
   create_table "dao_acceptance_criteria", force: :cascade do |t|
@@ -86,7 +80,6 @@ ActiveRecord::Schema.define(version: 2020_07_24_105606) do
   end
 
   add_foreign_key "app_oauth_accounts", "dao_users"
-  add_foreign_key "app_team_member_invitations", "dao_products"
   add_foreign_key "dao_acceptance_criteria", "dao_product_backlog_items"
   add_foreign_key "dao_product_backlog_items", "dao_products"
   add_foreign_key "dao_product_backlog_orders", "dao_products"
