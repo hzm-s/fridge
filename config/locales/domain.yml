@@ -12,6 +12,7 @@ ja:
           scrum_master: SM
 
     errors:
-      messages:
-        pbi:
-          content: 3~500文字で入力してください
+      pbi:
+        content: 3~500文字で入力してください
+      team:
+        dupulicate_product_owner_error: すでにプロダクトオーナーが所属しています

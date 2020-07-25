@@ -4,7 +4,7 @@ require 'rails_helper'
 RSpec.describe 'team_members' do
   let!(:founder) { sign_up }
   let!(:new_member) { sign_up }
-  let!(:product) { create_product(user_id: User::Id.from_string(founder.id), role: Team::Role::Developer) }
+  let!(:product) { create_product(user_id: User::Id.from_string(founder.id), role: Team::Role::ProductOwner) }
 
   describe '#new' do
     context 'when signed in' do
@@ -35,13 +35,25 @@ RSpec.describe 'team_members' do
   describe '#create' do
     before { sign_in(new_member) }
 
-    it do
-      params = { role: 'product_owner' }
+    context 'when valid params' do
+      it do
+        params = { role: 'developer' }
 
-      post product_team_members_path(product_id: product.id), params: params
+        post product_team_members_path(product_id: product.id), params: params
 
-      member = Dao::TeamMember.find_by(dao_user_id: new_member.id)
-      expect(member.role).to eq 'product_owner'
+        member = Dao::TeamMember.find_by(dao_user_id: new_member.id)
+        expect(member.role).to eq 'developer'
+      end
+    end
+
+    context 'when invalid params' do
+      xit do
+        params = { role: 'product_owner' }
+
+        post product_team_members_path(product_id: product.id), params: params
+
+        expect(response.body).to include I18n.t('domain.errors.team.dupulicate_product_owner_error')
+      end
     end
   end
 end

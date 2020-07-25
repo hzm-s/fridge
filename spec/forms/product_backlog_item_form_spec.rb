@@ -23,7 +23,7 @@ RSpec.describe ProductBacklogItemForm do
     form = described_class.new(valid.merge(content: 'a' * 1000))
     aggregate_failures do
       expect(form).to_not be_valid
-      expect(form.errors[:content]).to include(I18n.t('domain.errors.messages.pbi.content'))
+      expect(form.errors[:content]).to include(I18n.t('domain.errors.pbi.content'))
     end
   end
 end
