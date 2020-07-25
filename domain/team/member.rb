@@ -8,7 +8,7 @@ module Team
     sig {returns(User::Id)}
     attr_reader :user_id
 
-    sig {returns(Team::Role)}
+    sig {returns(Role)}
     attr_reader :role
 
     sig {params(user_id: User::Id, role: Role).void}

@@ -41,20 +41,18 @@ module Product
       @id = id
       @name = name
       @members = members
+      @team = Team::Team.new(members)
       @description = description
     end
 
     sig {params(member: Team::Member).void}
     def add_team_member(member)
-      raise Team::DuplicateProductOwnerError if member.role == Team::Role::ProductOwner && @members.detect { |m| m.role == Team::Role::ProductOwner }
-      raise Team::DuplicateScrumMasterError if member.role == Team::Role::ScrumMaster && @members.detect { |m| m.role == Team::Role::ScrumMaster }
-      raise Team::LargeDevelopmentTeamError if member.role == Team::Role::Developer && @members.select { |m| m.role == Team::Role::Developer }.size >= 9
-      @members << member
+      @team = @team.add_member(member)
     end
 
     sig {params(user_id: User::Id).returns(T.nilable(Team::Member))}
     def team_member(user_id)
-      @members.find { |member| member.user_id == user_id }
+      @team.member(user_id)
     end
   end
 end
