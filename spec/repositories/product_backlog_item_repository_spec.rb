@@ -31,6 +31,16 @@ RSpec.describe ProductBacklogItemRepository::AR do
         .to change { Dao::ProductBacklogItem.count }.by(0)
         .and change { Dao::AcceptanceCriterion.count }.by(-1)
     end
+
+    it do
+      pbi = add_pbi(product.id, acceptance_criteria: %w(ac1))
+      pbi.estimate_size(Pbi::StoryPoint.new(5))
+
+      described_class.update(pbi)
+      updated = described_class.find_by_id(pbi.id)
+
+      expect(updated.status).to eq pbi.status
+    end
   end
 
   describe '#delete' do
