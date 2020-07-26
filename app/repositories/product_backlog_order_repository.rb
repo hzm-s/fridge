@@ -7,7 +7,7 @@ module ProductBacklogOrderRepository
       extend T::Sig
       include Pbi::OrderRepository
 
-      DAO = Dao::ProductBacklogOrder
+      DAO = Dao::ProductBacklog
 
       sig {override.params(product_id: Product::Id).returns(T.nilable(Pbi::Order))}
       def find_by_product_id(product_id)

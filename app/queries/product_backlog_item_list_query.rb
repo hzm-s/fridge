@@ -15,7 +15,7 @@ module ProductBacklogItemListQuery
     private
 
     def fetch_order(product_id)
-      Dao::ProductBacklogOrder.find_by(dao_product_id: product_id)
+      Dao::ProductBacklog.find_by(dao_product_id: product_id)
     end
 
     def fetch_items(product_id)

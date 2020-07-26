@@ -27,6 +27,7 @@ module ProductBacklogItemRepository
         Dao::ProductBacklogItem.create!(
           id: pbi.id.to_s,
           dao_product_id: pbi.product_id.to_s,
+          status: pbi.status.to_s,
           content: pbi.content.to_s,
           size: pbi.size.to_i,
           next_acceptance_criterion_no: pbi.acceptance_criteria.next_no
