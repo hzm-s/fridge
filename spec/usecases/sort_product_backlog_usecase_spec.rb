@@ -11,7 +11,7 @@ RSpec.describe SortProductBacklogUsecase do
 
     described_class.perform(product.id, pbi_a.id, 3)
 
-    order = ProductBacklogOrderRepository::AR.find_by_product_id(product.id)
+    order = ProductBacklogItemOrderRepository::AR.find_by_product_id(product.id)
     expect(order.to_a).to eq [pbi_b, pbi_c, pbi_a].map(&:id)
   end
 end

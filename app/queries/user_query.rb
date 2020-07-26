@@ -1,4 +1,4 @@
-# typed: false
+# typed: ignore
 module UserQuery
   class User < Struct.new(:id, :name, :initials, :avatar)
     def id_as_domain

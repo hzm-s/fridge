@@ -1,5 +1,5 @@
 # typed: false
-class ProductBacklogOrdersController < ApplicationController
+class ProductBacklogItemOrdersController < ApplicationController
   def update
     product_id = Product::Id.from_string(params[:product_id])
     pbi_id = Pbi::Id.from_string(params[:pbi_id])

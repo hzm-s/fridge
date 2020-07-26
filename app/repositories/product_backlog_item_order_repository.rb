@@ -1,13 +1,13 @@
 # typed: strict
 require 'sorbet-runtime'
 
-module ProductBacklogOrderRepository
+module ProductBacklogItemOrderRepository
   module AR
     class << self
       extend T::Sig
       include Pbi::OrderRepository
 
-      DAO = Dao::ProductBacklogOrder
+      DAO = Dao::ProductBacklog
 
       sig {override.params(product_id: Product::Id).returns(T.nilable(Pbi::Order))}
       def find_by_product_id(product_id)

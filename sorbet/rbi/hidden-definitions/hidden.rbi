@@ -1728,13 +1728,6 @@ class ActiveRecord::Associations::Builder::Association
   VALID_OPTIONS = ::T.let(nil, ::T.untyped)
 end
 
-class ActiveRecord::Associations::Builder::BelongsTo
-end
-
-class ActiveRecord::Associations::Builder::BelongsTo
-  def self.touch_record(o, changes, foreign_key, name, touch, touch_method); end
-end
-
 class ActiveRecord::Associations::Builder::CollectionAssociation
   CALLBACKS = ::T.let(nil, ::T.untyped)
 end
@@ -1754,19 +1747,6 @@ class ActiveRecord::Associations::Builder::HasAndBelongsToMany
 end
 
 class ActiveRecord::Associations::Builder::HasAndBelongsToMany
-end
-
-class ActiveRecord::Associations::Builder::HasOne
-end
-
-class ActiveRecord::Associations::Builder::HasOne
-  def self.touch_record(o, name, touch); end
-end
-
-class ActiveRecord::Associations::Builder::SingularAssociation
-end
-
-class ActiveRecord::Associations::Builder::SingularAssociation
 end
 
 class ActiveRecord::Associations::CollectionAssociation
@@ -2544,6 +2524,84 @@ end
 class ActiveRecord::Migration::CommandRecorder
 end
 
+class ActiveRecord::Migration::Compatibility::V4_2
+  def index_exists?(table_name, column_name, options=T.unsafe(nil)); end
+
+  def remove_index(table_name, options=T.unsafe(nil)); end
+end
+
+module ActiveRecord::Migration::Compatibility::V4_2::TableDefinition
+  def belongs_to(*_, **options); end
+
+  def references(*_, **options); end
+
+  def timestamps(**options); end
+end
+
+module ActiveRecord::Migration::Compatibility::V4_2::TableDefinition
+end
+
+class ActiveRecord::Migration::Compatibility::V4_2
+end
+
+class ActiveRecord::Migration::Compatibility::V5_0
+  def add_belongs_to(table_name, ref_name, **options); end
+
+  def add_column(table_name, column_name, type, **options); end
+
+  def add_reference(table_name, ref_name, **options); end
+
+  def create_join_table(table_1, table_2, column_options: T.unsafe(nil), **options); end
+end
+
+module ActiveRecord::Migration::Compatibility::V5_0::TableDefinition
+  def belongs_to(*args, **options); end
+
+  def primary_key(name, type=T.unsafe(nil), **options); end
+
+  def references(*args, **options); end
+end
+
+module ActiveRecord::Migration::Compatibility::V5_0::TableDefinition
+end
+
+class ActiveRecord::Migration::Compatibility::V5_0
+end
+
+class ActiveRecord::Migration::Compatibility::V5_1
+  def change_column(table_name, column_name, type, options=T.unsafe(nil)); end
+end
+
+class ActiveRecord::Migration::Compatibility::V5_2
+  def add_timestamps(table_name, **options); end
+
+  def change_table(table_name, **options); end
+
+  def create_join_table(table_1, table_2, **options); end
+end
+
+module ActiveRecord::Migration::Compatibility::V5_2::CommandRecorder
+  def invert_change_column_comment(args); end
+
+  def invert_change_table_comment(args); end
+
+  def invert_transaction(args, &block); end
+end
+
+module ActiveRecord::Migration::Compatibility::V5_2::CommandRecorder
+end
+
+module ActiveRecord::Migration::Compatibility::V5_2::TableDefinition
+  def timestamps(**options); end
+end
+
+module ActiveRecord::Migration::Compatibility::V5_2::TableDefinition
+end
+
+module ActiveRecord::Migration::Compatibility
+  def self.find(version); end
+end
+
 class ActiveRecord::Migrator
   MIGRATOR_SALT = ::T.let(nil, ::T.untyped)
 end
@@ -2585,112 +2643,6 @@ module ActiveRecord::NullRelation
 end
 
 module ActiveRecord::NullRelation
-end
-
-class ActiveRecord::PredicateBuilder
-  def build(attribute, value); end
-
-  def build_bind_attribute(column_name, value); end
-
-  def build_from_hash(attributes); end
-
-  def expand_from_hash(attributes); end
-
-  def initialize(table); end
-
-  def register_handler(klass, handler); end
-
-  def resolve_column_aliases(*args, &block); end
-end
-
-class ActiveRecord::PredicateBuilder::ArrayHandler
-  def call(attribute, value); end
-
-  def initialize(predicate_builder); end
-end
-
-module ActiveRecord::PredicateBuilder::ArrayHandler::NullPredicate
-end
-
-module ActiveRecord::PredicateBuilder::ArrayHandler::NullPredicate
-  def self.or(other); end
-end
-
-class ActiveRecord::PredicateBuilder::ArrayHandler
-end
-
-class ActiveRecord::PredicateBuilder::AssociationQueryValue
-  def initialize(associated_table, value); end
-
-  def queries(); end
-end
-
-class ActiveRecord::PredicateBuilder::AssociationQueryValue
-end
-
-class ActiveRecord::PredicateBuilder::BaseHandler
-  def call(attribute, value); end
-
-  def initialize(predicate_builder); end
-end
-
-class ActiveRecord::PredicateBuilder::BaseHandler
-end
-
-class ActiveRecord::PredicateBuilder::BasicObjectHandler
-  def call(attribute, value); end
-
-  def initialize(predicate_builder); end
-end
-
-class ActiveRecord::PredicateBuilder::BasicObjectHandler
-end
-
-class ActiveRecord::PredicateBuilder::PolymorphicArrayValue
-  def initialize(associated_table, values); end
-
-  def queries(); end
-end
-
-class ActiveRecord::PredicateBuilder::PolymorphicArrayValue
-end
-
-class ActiveRecord::PredicateBuilder::RangeHandler
-  def call(attribute, value); end
-
-  def initialize(predicate_builder); end
-end
-
-class ActiveRecord::PredicateBuilder::RangeHandler::RangeWithBinds
-  def begin(); end
-
-  def begin=(_); end
-
-  def end(); end
-
-  def end=(_); end
-
-  def exclude_end?(); end
-end
-
-class ActiveRecord::PredicateBuilder::RangeHandler::RangeWithBinds
-  def self.[](*_); end
-
-  def self.members(); end
-end
-
-class ActiveRecord::PredicateBuilder::RangeHandler
-end
-
-class ActiveRecord::PredicateBuilder::RelationHandler
-  def call(attribute, value); end
-end
-
-class ActiveRecord::PredicateBuilder::RelationHandler
-end
-
-class ActiveRecord::PredicateBuilder
-  def self.references(attributes); end
 end
 
 module ActiveRecord::QueryMethods
@@ -2827,10 +2779,6 @@ class ActiveRecord::Scoping::ScopeRegistry
   VALID_SCOPE_TYPES = ::T.let(nil, ::T.untyped)
 end
 
-class ActiveRecord::Scoping::ScopeRegistry
-  def self.value_for(*args, &block); end
-end
-
 class ActiveRecord::StatementCache
   def execute(params, connection, &block); end
 
@@ -2896,43 +2844,6 @@ class ActiveRecord::StatementCache
   def self.query(sql); end
 
   def self.unsupported_value?(value); end
-end
-
-class ActiveRecord::TableMetadata
-  def aggregated_with?(aggregation_name); end
-
-  def arel_attribute(column_name); end
-
-  def associated_predicate_builder(table_name); end
-
-  def associated_table(table_name); end
-
-  def associated_with?(association_name); end
-
-  def association_foreign_key(*args, &block); end
-
-  def association_foreign_type(*args, &block); end
-
-  def association_join_foreign_key(*args, &block); end
-
-  def association_join_primary_key(*args, &block); end
-
-  def has_column?(column_name); end
-
-  def initialize(klass, arel_table, association=T.unsafe(nil), types=T.unsafe(nil)); end
-
-  def polymorphic_association?(); end
-
-  def predicate_builder(); end
-
-  def reflect_on_aggregation(aggregation_name); end
-
-  def resolve_column_aliases(hash); end
-
-  def type(column_name); end
-end
-
-class ActiveRecord::TableMetadata
 end
 
 module ActiveRecord::Tasks::DatabaseTasks
@@ -3459,8 +3370,61 @@ class AddProductBacklogItemUsecase
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
+class AddTeamMemberUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class Addrinfo
   def connect_internal(local_addrinfo, timeout=T.unsafe(nil)); end
+end
+
+class App::Avatar
+  include ::App::Avatar::GeneratedAttributeMethods
+  include ::App::Avatar::GeneratedAssociationMethods
+end
+
+module App::Avatar::GeneratedAssociationMethods
+end
+
+module App::Avatar::GeneratedAssociationMethods
+end
+
+module App::Avatar::GeneratedAttributeMethods
+end
+
+module App::Avatar::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+class App::OauthAccount
+  include ::App::OauthAccount::GeneratedAttributeMethods
+  include ::App::OauthAccount::GeneratedAssociationMethods
+  def autosave_associated_records_for_dao_user(*args); end
+end
+
+module App::OauthAccount::GeneratedAssociationMethods
+  def build_dao_user(*args, &block); end
+
+  def create_dao_user(*args, &block); end
+
+  def create_dao_user!(*args, &block); end
+
+  def dao_user(); end
+
+  def dao_user=(value); end
+
+  def reload_dao_user(); end
+end
+
+module App::OauthAccount::GeneratedAssociationMethods
+end
+
+module App::OauthAccount::GeneratedAttributeMethods
+end
+
+module App::OauthAccount::GeneratedAttributeMethods
+  extend ::Mutex_m
 end
 
 class ApplicationRecord
@@ -6585,9 +6549,93 @@ end
 class Dao::Product
   include ::Dao::Product::GeneratedAttributeMethods
   include ::Dao::Product::GeneratedAssociationMethods
+  def after_add_for_backlog_items(); end
+
+  def after_add_for_backlog_items=(val); end
+
+  def after_add_for_backlog_items?(); end
+
+  def after_add_for_members(); end
+
+  def after_add_for_members=(val); end
+
+  def after_add_for_members?(); end
+
+  def after_remove_for_backlog_items(); end
+
+  def after_remove_for_backlog_items=(val); end
+
+  def after_remove_for_backlog_items?(); end
+
+  def after_remove_for_members(); end
+
+  def after_remove_for_members=(val); end
+
+  def after_remove_for_members?(); end
+
+  def autosave_associated_records_for_backlog_items(*args); end
+
+  def autosave_associated_records_for_members(*args); end
+
+  def autosave_associated_records_for_order(); end
+
+  def before_add_for_backlog_items(); end
+
+  def before_add_for_backlog_items=(val); end
+
+  def before_add_for_backlog_items?(); end
+
+  def before_add_for_members(); end
+
+  def before_add_for_members=(val); end
+
+  def before_add_for_members?(); end
+
+  def before_remove_for_backlog_items(); end
+
+  def before_remove_for_backlog_items=(val); end
+
+  def before_remove_for_backlog_items?(); end
+
+  def before_remove_for_members(); end
+
+  def before_remove_for_members=(val); end
+
+  def before_remove_for_members?(); end
+
+  def validate_associated_records_for_backlog_items(*args); end
+
+  def validate_associated_records_for_members(*args); end
 end
 
 module Dao::Product::GeneratedAssociationMethods
+  def backlog_item_ids(); end
+
+  def backlog_item_ids=(ids); end
+
+  def backlog_items(); end
+
+  def backlog_items=(value); end
+
+  def build_order(*args, &block); end
+
+  def create_order(*args, &block); end
+
+  def create_order!(*args, &block); end
+
+  def member_ids(); end
+
+  def member_ids=(ids); end
+
+  def members(); end
+
+  def members=(value); end
+
+  def order(); end
+
+  def order=(value); end
+
+  def reload_order(); end
 end
 
 module Dao::Product::GeneratedAssociationMethods
@@ -6597,6 +6645,74 @@ module Dao::Product::GeneratedAttributeMethods
 end
 
 module Dao::Product::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+class Dao::Product
+  def self.after_add_for_backlog_items(); end
+
+  def self.after_add_for_backlog_items=(val); end
+
+  def self.after_add_for_backlog_items?(); end
+
+  def self.after_add_for_members(); end
+
+  def self.after_add_for_members=(val); end
+
+  def self.after_add_for_members?(); end
+
+  def self.after_remove_for_backlog_items(); end
+
+  def self.after_remove_for_backlog_items=(val); end
+
+  def self.after_remove_for_backlog_items?(); end
+
+  def self.after_remove_for_members(); end
+
+  def self.after_remove_for_members=(val); end
+
+  def self.after_remove_for_members?(); end
+
+  def self.before_add_for_backlog_items(); end
+
+  def self.before_add_for_backlog_items=(val); end
+
+  def self.before_add_for_backlog_items?(); end
+
+  def self.before_add_for_members(); end
+
+  def self.before_add_for_members=(val); end
+
+  def self.before_add_for_members?(); end
+
+  def self.before_remove_for_backlog_items(); end
+
+  def self.before_remove_for_backlog_items=(val); end
+
+  def self.before_remove_for_backlog_items?(); end
+
+  def self.before_remove_for_members(); end
+
+  def self.before_remove_for_members=(val); end
+
+  def self.before_remove_for_members?(); end
+end
+
+class Dao::ProductBacklog
+  include ::Dao::ProductBacklog::GeneratedAttributeMethods
+  include ::Dao::ProductBacklog::GeneratedAssociationMethods
+end
+
+module Dao::ProductBacklog::GeneratedAssociationMethods
+end
+
+module Dao::ProductBacklog::GeneratedAssociationMethods
+end
+
+module Dao::ProductBacklog::GeneratedAttributeMethods
+end
+
+module Dao::ProductBacklog::GeneratedAttributeMethods
   extend ::Mutex_m
 end
 
@@ -6678,22 +6794,140 @@ class Dao::ProductBacklogItem
   def self.before_remove_for_criteria?(); end
 end
 
-class Dao::ProductBacklogOrder
-  include ::Dao::ProductBacklogOrder::GeneratedAttributeMethods
-  include ::Dao::ProductBacklogOrder::GeneratedAssociationMethods
+class Dao::TeamMember
+  include ::Dao::TeamMember::GeneratedAttributeMethods
+  include ::Dao::TeamMember::GeneratedAssociationMethods
+  def autosave_associated_records_for_user(*args); end
 end
 
-module Dao::ProductBacklogOrder::GeneratedAssociationMethods
+module Dao::TeamMember::GeneratedAssociationMethods
+  def build_user(*args, &block); end
+
+  def create_user(*args, &block); end
+
+  def create_user!(*args, &block); end
+
+  def reload_user(); end
+
+  def user(); end
+
+  def user=(value); end
 end
 
-module Dao::ProductBacklogOrder::GeneratedAssociationMethods
+module Dao::TeamMember::GeneratedAssociationMethods
 end
 
-module Dao::ProductBacklogOrder::GeneratedAttributeMethods
+module Dao::TeamMember::GeneratedAttributeMethods
 end
 
-module Dao::ProductBacklogOrder::GeneratedAttributeMethods
+module Dao::TeamMember::GeneratedAttributeMethods
   extend ::Mutex_m
+end
+
+class Dao::User
+  include ::Dao::User::GeneratedAttributeMethods
+  include ::Dao::User::GeneratedAssociationMethods
+  def after_add_for_team_members(); end
+
+  def after_add_for_team_members=(val); end
+
+  def after_add_for_team_members?(); end
+
+  def after_remove_for_team_members(); end
+
+  def after_remove_for_team_members=(val); end
+
+  def after_remove_for_team_members?(); end
+
+  def autosave_associated_records_for_avatar(); end
+
+  def autosave_associated_records_for_oauth_account(); end
+
+  def autosave_associated_records_for_team_members(*args); end
+
+  def before_add_for_team_members(); end
+
+  def before_add_for_team_members=(val); end
+
+  def before_add_for_team_members?(); end
+
+  def before_remove_for_team_members(); end
+
+  def before_remove_for_team_members=(val); end
+
+  def before_remove_for_team_members?(); end
+
+  def validate_associated_records_for_team_members(*args); end
+end
+
+module Dao::User::GeneratedAssociationMethods
+  def avatar(); end
+
+  def avatar=(value); end
+
+  def build_avatar(*args, &block); end
+
+  def build_oauth_account(*args, &block); end
+
+  def create_avatar(*args, &block); end
+
+  def create_avatar!(*args, &block); end
+
+  def create_oauth_account(*args, &block); end
+
+  def create_oauth_account!(*args, &block); end
+
+  def oauth_account(); end
+
+  def oauth_account=(value); end
+
+  def reload_avatar(); end
+
+  def reload_oauth_account(); end
+
+  def team_member_ids(); end
+
+  def team_member_ids=(ids); end
+
+  def team_members(); end
+
+  def team_members=(value); end
+end
+
+module Dao::User::GeneratedAssociationMethods
+end
+
+module Dao::User::GeneratedAttributeMethods
+end
+
+module Dao::User::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+class Dao::User
+  def self.after_add_for_team_members(); end
+
+  def self.after_add_for_team_members=(val); end
+
+  def self.after_add_for_team_members?(); end
+
+  def self.after_remove_for_team_members(); end
+
+  def self.after_remove_for_team_members=(val); end
+
+  def self.after_remove_for_team_members?(); end
+
+  def self.before_add_for_team_members(); end
+
+  def self.before_add_for_team_members=(val); end
+
+  def self.before_add_for_team_members?(); end
+
+  def self.before_remove_for_team_members(); end
+
+  def self.before_remove_for_team_members=(val); end
+
+  def self.before_remove_for_team_members?(); end
 end
 
 class Date
@@ -7387,6 +7621,364 @@ class FalseClass
   include ::JSON::Ext::Generator::GeneratorMethods::FalseClass
 end
 
+module Faraday
+  METHODS_WITH_BODY = ::T.let(nil, ::T.untyped)
+  METHODS_WITH_QUERY = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Adapter
+  CONTENT_LENGTH = ::T.let(nil, ::T.untyped)
+  TIMEOUT_KEYS = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Adapter::EMHttp
+  include ::Faraday::Adapter::EMHttp::Options
+  def create_request(env); end
+
+  def error_message(client); end
+
+  def parallel?(env); end
+
+  def perform_request(env); end
+
+  def perform_single_request(env); end
+
+  def raise_error(msg); end
+
+  def timeout_message?(msg); end
+end
+
+class Faraday::Adapter::EMHttp::Manager
+  def add(&block); end
+
+  def check_finished(); end
+
+  def perform_request(); end
+
+  def reset(); end
+
+  def run(); end
+
+  def running?(); end
+end
+
+class Faraday::Adapter::EMHttp::Manager
+end
+
+module Faraday::Adapter::EMHttp::Options
+  def configure_compression(options, env); end
+
+  def configure_proxy(options, env); end
+
+  def configure_socket(options, env); end
+
+  def configure_ssl(options, env); end
+
+  def configure_timeout(options, env); end
+
+  def connection_config(env); end
+
+  def read_body(env); end
+
+  def request_config(env); end
+
+  def request_options(env); end
+end
+
+module Faraday::Adapter::EMHttp::Options
+end
+
+class Faraday::Adapter::EMHttp
+  def self.setup_parallel_manager(_options=T.unsafe(nil)); end
+end
+
+class Faraday::Adapter::EMSynchrony
+  include ::Faraday::Adapter::EMHttp::Options
+  def create_request(env); end
+end
+
+class Faraday::Adapter::EMSynchrony::ParallelManager
+  def add(request, method, *args, &block); end
+
+  def run(); end
+end
+
+class Faraday::Adapter::EMSynchrony::ParallelManager
+end
+
+class Faraday::Adapter::EMSynchrony
+  def self.setup_parallel_manager(_options=T.unsafe(nil)); end
+end
+
+class Faraday::Adapter::Excon
+  def build_connection(env); end
+
+  def read_body(env); end
+  OPTS_KEYS = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Adapter::Excon
+end
+
+class Faraday::Adapter::HTTPClient
+  def build_connection(env); end
+
+  def configure_client(client); end
+
+  def configure_proxy(client, proxy); end
+
+  def configure_socket(client, bind); end
+
+  def configure_ssl(client, ssl); end
+
+  def configure_timeouts(client, req); end
+
+  def ssl_cert_store(ssl); end
+
+  def ssl_verify_mode(ssl); end
+end
+
+class Faraday::Adapter::HTTPClient
+end
+
+class Faraday::Adapter::NetHttp
+  def build_connection(env); end
+
+  def initialize(app=T.unsafe(nil), opts=T.unsafe(nil), &block); end
+
+  def net_http_connection(env); end
+  NET_HTTP_EXCEPTIONS = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Adapter::NetHttp
+end
+
+class Faraday::Adapter::NetHttpPersistent
+  SSL_CONFIGURATIONS = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Adapter::NetHttpPersistent
+end
+
+class Faraday::Adapter::Patron
+  def build_connection(env); end
+
+  def configure_proxy(session, proxy); end
+
+  def configure_ssl(session, ssl); end
+
+  def configure_timeouts(session, req); end
+  CURL_TIMEOUT_MESSAGES = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Adapter::Patron
+end
+
+class Faraday::Adapter::Rack
+  def initialize(faraday_app, rack_app); end
+  SPECIAL_HEADERS = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Adapter::Rack
+end
+
+class Faraday::Adapter::Test
+  def configure(); end
+
+  def initialize(app, stubs=T.unsafe(nil), &block); end
+
+  def stubs(); end
+
+  def stubs=(stubs); end
+end
+
+class Faraday::Adapter::Test::Stub
+  def headers_match?(request_headers); end
+
+  def initialize(host, full, headers, body, block); end
+
+  def matches?(request_host, request_uri, request_headers, request_body); end
+
+  def params_match?(request_params); end
+
+  def path_match?(request_path, meta); end
+end
+
+class Faraday::Adapter::Test::Stub
+end
+
+class Faraday::Adapter::Test::Stubs
+  def delete(path, headers=T.unsafe(nil), &block); end
+
+  def empty?(); end
+
+  def get(path, headers=T.unsafe(nil), &block); end
+
+  def head(path, headers=T.unsafe(nil), &block); end
+
+  def match(request_method, host, path, headers, body); end
+
+  def matches?(stack, host, path, headers, body); end
+
+  def new_stub(request_method, path, headers=T.unsafe(nil), body=T.unsafe(nil), &block); end
+
+  def options(path, headers=T.unsafe(nil), &block); end
+
+  def patch(path, body=T.unsafe(nil), headers=T.unsafe(nil), &block); end
+
+  def post(path, body=T.unsafe(nil), headers=T.unsafe(nil), &block); end
+
+  def put(path, body=T.unsafe(nil), headers=T.unsafe(nil), &block); end
+
+  def verify_stubbed_calls(); end
+end
+
+class Faraday::Adapter::Test::Stubs::NotFound
+end
+
+class Faraday::Adapter::Test::Stubs::NotFound
+end
+
+class Faraday::Adapter::Test::Stubs
+end
+
+class Faraday::Adapter::Test
+end
+
+class Faraday::Adapter::Typhoeus
+  def call(); end
+end
+
+class Faraday::Adapter::Typhoeus
+end
+
+class Faraday::Connection
+  METHODS = ::T.let(nil, ::T.untyped)
+end
+
+module Faraday::DecodeMethods
+  SUBKEYS_REGEX = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Env
+  ContentLength = ::T.let(nil, ::T.untyped)
+  MethodsWithBodies = ::T.let(nil, ::T.untyped)
+  StatusesWithoutBody = ::T.let(nil, ::T.untyped)
+  SuccessfulStatuses = ::T.let(nil, ::T.untyped)
+end
+
+Faraday::FilePart = UploadIO
+
+Faraday::Parts = Parts
+
+class Faraday::RackBuilder
+  LOCK_ERR = ::T.let(nil, ::T.untyped)
+  NO_ARGUMENT = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::RackBuilder::Handler
+  REGISTRY = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Request::Authorization
+  def call(env); end
+
+  def initialize(app, type, token); end
+  KEY = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Request::Authorization
+  def self.build_hash(type, hash); end
+
+  def self.header(type, token); end
+end
+
+class Faraday::Request::BasicAuthentication
+end
+
+class Faraday::Request::BasicAuthentication
+  def self.header(login, pass); end
+end
+
+class Faraday::Request::Instrumentation
+  def call(env); end
+
+  def initialize(app, options=T.unsafe(nil)); end
+end
+
+class Faraday::Request::Instrumentation::Options
+end
+
+class Faraday::Request::Instrumentation::Options
+end
+
+class Faraday::Request::Instrumentation
+end
+
+class Faraday::Request::Multipart
+  DEFAULT_BOUNDARY_PREFIX = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Request::Retry
+  def build_exception_matcher(exceptions); end
+
+  def calculate_sleep_amount(retries, env); end
+
+  def call(env); end
+
+  def initialize(app, options=T.unsafe(nil)); end
+  DEFAULT_EXCEPTIONS = ::T.let(nil, ::T.untyped)
+  IDEMPOTENT_METHODS = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Request::Retry::Options
+  DEFAULT_CHECK = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Request::Retry::Options
+end
+
+class Faraday::Request::Retry
+end
+
+class Faraday::Request::TokenAuthentication
+  def initialize(app, token, options=T.unsafe(nil)); end
+end
+
+class Faraday::Request::TokenAuthentication
+  def self.header(token, options=T.unsafe(nil)); end
+end
+
+class Faraday::Request::UrlEncoded
+  CONTENT_TYPE = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Response::Logger
+  def initialize(app, logger=T.unsafe(nil), options=T.unsafe(nil)); end
+end
+
+class Faraday::Response::Logger
+end
+
+class Faraday::Response::RaiseError
+  ClientErrorStatuses = ::T.let(nil, ::T.untyped)
+  ServerErrorStatuses = ::T.let(nil, ::T.untyped)
+end
+
+Faraday::Timer = Timeout
+
+Faraday::UploadIO = UploadIO
+
+module Faraday::Utils
+  DEFAULT_SEP = ::T.let(nil, ::T.untyped)
+  ESCAPE_RE = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Utils::Headers
+  KeyMap = ::T.let(nil, ::T.untyped)
+end
+
 class Fiber
   def transfer(*_); end
 end
@@ -7396,9 +7988,9 @@ class Fiber
 end
 
 class File
-  def self.atomic_write(file_name, temp_dir=T.unsafe(nil)); end
-
   def self.exists?(_); end
+
+  def self.probe_stat_in(dir); end
 end
 
 module FileUtils
@@ -8118,6 +8710,18 @@ class Hash
 end
 
 HashWithIndifferentAccess = ActiveSupport::HashWithIndifferentAccess
+
+module Hashie
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module Hashie::Extensions::StringifyKeys
+  extend ::Hashie::Extensions::StringifyKeys::ClassMethods
+end
+
+class Hashie::Mash
+  ALLOWED_SUFFIXES = ::T.let(nil, ::T.untyped)
+end
 
 module I18n
   DEFAULT_INTERPOLATION_PATTERNS = ::T.let(nil, ::T.untyped)
@@ -8930,6 +9534,61 @@ JSON::Parser = JSON::Ext::Parser
 JSON::State = JSON::Ext::Generator::State
 
 JSON::UnparserError = JSON::GeneratorError
+
+module JWT::Algos::Ecdsa
+  NAMED_CURVES = ::T.let(nil, ::T.untyped)
+  SUPPORTED = ::T.let(nil, ::T.untyped)
+end
+
+module JWT::Algos::Eddsa
+  SUPPORTED = ::T.let(nil, ::T.untyped)
+end
+
+module JWT::Algos::Hmac
+  SUPPORTED = ::T.let(nil, ::T.untyped)
+end
+
+module JWT::Algos::Ps
+  SUPPORTED = ::T.let(nil, ::T.untyped)
+end
+
+module JWT::Algos::Rsa
+  SUPPORTED = ::T.let(nil, ::T.untyped)
+end
+
+module JWT::Algos::Unsupported
+  SUPPORTED = ::T.let(nil, ::T.untyped)
+end
+
+class JWT::ClaimsValidator
+  INTEGER_CLAIMS = ::T.let(nil, ::T.untyped)
+end
+
+module JWT::DefaultOptions
+  DEFAULT_OPTIONS = ::T.let(nil, ::T.untyped)
+end
+
+class JWT::Encode
+  ALG_KEY = ::T.let(nil, ::T.untyped)
+  ALG_NONE = ::T.let(nil, ::T.untyped)
+end
+
+module JWT::JWK
+  MAPPINGS = ::T.let(nil, ::T.untyped)
+end
+
+class JWT::JWK::RSA
+  BINARY = ::T.let(nil, ::T.untyped)
+  KTY = ::T.let(nil, ::T.untyped)
+end
+
+module JWT::Signature
+  ALGOS = ::T.let(nil, ::T.untyped)
+end
+
+class JWT::Verify
+  DEFAULTS = ::T.let(nil, ::T.untyped)
+end
 
 class Jbuilder
   BLANK = ::T.let(nil, ::T.untyped)
@@ -9748,6 +10407,36 @@ class MonitorMixin::ConditionVariable
   def initialize(monitor); end
 end
 
+module MultiJson
+  ALIASES = ::T.let(nil, ::T.untyped)
+  REQUIREMENT_MAP = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+MultiJson::DecodeError = MultiJson::ParseError
+
+MultiJson::LoadError = MultiJson::ParseError
+
+module MultiJson::OptionsCache
+  MAX_CACHE_SIZE = ::T.let(nil, ::T.untyped)
+end
+
+class MultiJson::Version
+  MAJOR = ::T.let(nil, ::T.untyped)
+  MINOR = ::T.let(nil, ::T.untyped)
+  PATCH = ::T.let(nil, ::T.untyped)
+  PRE = ::T.let(nil, ::T.untyped)
+end
+
+module MultiXml
+  CONTENT_ROOT = ::T.let(nil, ::T.untyped)
+  DEFAULT_OPTIONS = ::T.let(nil, ::T.untyped)
+  DISALLOWED_XML_TYPES = ::T.let(nil, ::T.untyped)
+  PARSING = ::T.let(nil, ::T.untyped)
+  REQUIREMENT_MAP = ::T.let(nil, ::T.untyped)
+  TYPE_NAMES = ::T.let(nil, ::T.untyped)
+end
+
 module Mutex_m
   VERSION = ::T.let(nil, ::T.untyped)
 end
@@ -10417,6 +11106,13 @@ module Nokogiri::XML::Searchable
   LOOKS_LIKE_XPATH = ::T.let(nil, ::T.untyped)
 end
 
+class OauthCallbacksController
+  def create(); end
+end
+
+class OauthCallbacksController
+end
+
 class Object
   include ::JSON::Ext::Generator::GeneratorMethods::Object
   include ::PP::ObjectMixin
@@ -10444,6 +11140,86 @@ end
 
 class Object
   def self.yaml_tag(url); end
+end
+
+class OmniAuth::Form
+  DEFAULT_CSS = ::T.let(nil, ::T.untyped)
+end
+
+module OmniAuth::OAuth2
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class OmniAuth::Strategies::Developer
+  include ::OmniAuth::Strategy
+end
+
+class OmniAuth::Strategies::Developer
+  extend ::OmniAuth::Strategy::ClassMethods
+end
+
+class OmniAuth::Strategies::GoogleOauth2
+  ALLOWED_ISSUERS = ::T.let(nil, ::T.untyped)
+  BASE_SCOPES = ::T.let(nil, ::T.untyped)
+  BASE_SCOPE_URL = ::T.let(nil, ::T.untyped)
+  DEFAULT_SCOPE = ::T.let(nil, ::T.untyped)
+  USER_INFO_URL = ::T.let(nil, ::T.untyped)
+end
+
+module OmniAuth::Strategy
+  CURRENT_PATH_REGEX = ::T.let(nil, ::T.untyped)
+  EMPTY_STRING = ::T.let(nil, ::T.untyped)
+end
+
+module OmniAuth::Test
+end
+
+class OmniAuth::Test::PhonySession
+  def call(env); end
+
+  def initialize(app); end
+end
+
+class OmniAuth::Test::PhonySession
+end
+
+module OmniAuth::Test::StrategyMacros
+  def sets_an_auth_hash(); end
+
+  def sets_provider_to(provider); end
+
+  def sets_uid_to(uid); end
+
+  def sets_user_info_to(user_info); end
+end
+
+module OmniAuth::Test::StrategyMacros
+end
+
+module OmniAuth::Test::StrategyTestCase
+  def app(); end
+
+  def app_response(); end
+
+  def session(); end
+
+  def strategy(); end
+end
+
+module OmniAuth::Test::StrategyTestCase
+end
+
+module OmniAuth::Test
+end
+
+module OmniAuthTestHelper
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class OmniAuthTestHelper::AuthHashBuilder
+  INFO_KEYS = ::T.let(nil, ::T.untyped)
+  INFO_KEY_SET = ::T.let(nil, ::T.untyped)
+  NOT_EXTRA_KEY_SET = ::T.let(nil, ::T.untyped)
 end
 
 class OpenSSL::ASN1::ASN1Data
@@ -12476,13 +13252,13 @@ class Pbi::AcceptanceCriteria
 end
 
 class Pbi::AcceptanceCriterion
-  extend ::T::Private::Methods::SingletonMethodHooks
   extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 class Pbi::Content
-  extend ::T::Private::Methods::SingletonMethodHooks
   extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 class Pbi::Item
@@ -13393,32 +14169,7 @@ class Rack::Auth::Digest::Request
 end
 
 class Rack::Builder
-  def call(env); end
-
-  def freeze_app(); end
-
-  def initialize(default_app=T.unsafe(nil), &block); end
-
-  def map(path, &block); end
-
-  def run(app); end
-
-  def to_app(); end
-
-  def use(middleware, *args, &block); end
-
-  def warmup(prc=T.unsafe(nil), &block); end
   UTF_8_BOM = ::T.let(nil, ::T.untyped)
-end
-
-class Rack::Builder
-  def self.app(default_app=T.unsafe(nil), &block); end
-
-  def self.load_file(path, opts=T.unsafe(nil)); end
-
-  def self.new_from_string(builder_script, file=T.unsafe(nil)); end
-
-  def self.parse_file(config, opts=T.unsafe(nil)); end
 end
 
 class Rack::Cascade
@@ -14509,12 +15260,22 @@ module Readline
   def self.completion_quote_character(); end
 end
 
+class RegisterOrFindUserUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class RegisterUserUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class RemoveAcceptanceCriterionUsecase
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
-class ReorderProductBacklogUsecase
+class RemoveProductBacklogItemUsecase
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
 end
@@ -15576,6 +16337,13 @@ module SecureRandom
   BASE58_ALPHABET = ::T.let(nil, ::T.untyped)
 end
 
+class SessionsController
+  def destroy(); end
+end
+
+class SessionsController
+end
+
 class Set
   def ==(other); end
 
@@ -15806,6 +16574,11 @@ module Socket::Constants
   SO_WANTOOBFLAG = ::T.let(nil, ::T.untyped)
   TCP_NOOPT = ::T.let(nil, ::T.untyped)
   TCP_NOPUSH = ::T.let(nil, ::T.untyped)
+end
+
+class SortProductBacklogUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 class SortedSet
@@ -16104,6 +16877,16 @@ class TZInfo::ZoneinfoTimezoneInfo
   MIN_TIMESTAMP = ::T.let(nil, ::T.untyped)
 end
 
+class Team::Member
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class Team::Team
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class Tempfile
   def _close(); end
 
@@ -16117,225 +16900,6 @@ class Tempfile::Remover
 end
 
 class Tempfile::Remover
-end
-
-class Thor
-  HELP_MAPPINGS = ::T.let(nil, ::T.untyped)
-  TEMPLATE_EXTNAME = ::T.let(nil, ::T.untyped)
-  THOR_RESERVED_WORDS = ::T.let(nil, ::T.untyped)
-end
-
-module Thor::Actions
-  WARNINGS = ::T.let(nil, ::T.untyped)
-end
-
-Thor::AmbiguousTaskError = Thor::AmbiguousCommandError
-
-class Thor::Argument
-  VALID_TYPES = ::T.let(nil, ::T.untyped)
-end
-
-class Thor::Arguments
-  NUMERIC = ::T.let(nil, ::T.untyped)
-end
-
-class Thor::Command
-  FILE_REGEXP = ::T.let(nil, ::T.untyped)
-end
-
-Thor::Correctable = DidYouMean::Correctable
-
-Thor::DynamicTask = Thor::DynamicCommand
-
-Thor::HiddenTask = Thor::HiddenCommand
-
-class Thor::Option
-  VALID_TYPES = ::T.let(nil, ::T.untyped)
-end
-
-class Thor::Options
-  EQ_RE = ::T.let(nil, ::T.untyped)
-  LONG_RE = ::T.let(nil, ::T.untyped)
-  OPTS_END = ::T.let(nil, ::T.untyped)
-  SHORT_NUM = ::T.let(nil, ::T.untyped)
-  SHORT_RE = ::T.let(nil, ::T.untyped)
-  SHORT_SQ_RE = ::T.let(nil, ::T.untyped)
-end
-
-module Thor::RakeCompat
-  include ::Rake::DSL
-  include ::Rake::FileUtilsExt
-  include ::FileUtils
-  include ::FileUtils::StreamUtils_
-end
-
-module Thor::RakeCompat
-  def self.included(base); end
-
-  def self.rake_classes(); end
-end
-
-module Thor::Shell
-  SHELL_DELEGATED_METHODS = ::T.let(nil, ::T.untyped)
-end
-
-class Thor::Shell::Basic
-  def answer_match(possibilities, answer, case_insensitive); end
-
-  def as_unicode(); end
-
-  def ask(statement, *args); end
-
-  def ask_filtered(statement, color, options); end
-
-  def ask_simply(statement, color, options); end
-
-  def base(); end
-
-  def base=(base); end
-
-  def can_display_colors?(); end
-
-  def dynamic_width(); end
-
-  def dynamic_width_stty(); end
-
-  def dynamic_width_tput(); end
-
-  def error(statement); end
-
-  def file_collision(destination); end
-
-  def file_collision_help(); end
-
-  def git_merge_tool(); end
-
-  def indent(count=T.unsafe(nil)); end
-
-  def is?(value); end
-
-  def lookup_color(color); end
-
-  def merge(destination, content); end
-
-  def merge_tool(); end
-
-  def mute(); end
-
-  def mute?(); end
-
-  def no?(statement, color=T.unsafe(nil)); end
-
-  def padding(); end
-
-  def padding=(value); end
-
-  def prepare_message(message, *color); end
-
-  def print_in_columns(array); end
-
-  def print_table(array, options=T.unsafe(nil)); end
-
-  def print_wrapped(message, options=T.unsafe(nil)); end
-
-  def quiet?(); end
-
-  def say(message=T.unsafe(nil), color=T.unsafe(nil), force_new_line=T.unsafe(nil)); end
-
-  def say_status(status, message, log_status=T.unsafe(nil)); end
-
-  def set_color(string, *_); end
-
-  def show_diff(destination, content); end
-
-  def stderr(); end
-
-  def stdout(); end
-
-  def terminal_width(); end
-
-  def truncate(string, width); end
-
-  def unix?(); end
-
-  def yes?(statement, color=T.unsafe(nil)); end
-  DEFAULT_TERMINAL_WIDTH = ::T.let(nil, ::T.untyped)
-end
-
-class Thor::Shell::Basic
-end
-
-class Thor::Shell::Color
-  def are_colors_disabled?(); end
-
-  def diff_lcs_loaded?(); end
-
-  def output_diff_line(diff); end
-
-  def set_color(string, *colors); end
-  BLACK = ::T.let(nil, ::T.untyped)
-  BLUE = ::T.let(nil, ::T.untyped)
-  BOLD = ::T.let(nil, ::T.untyped)
-  CLEAR = ::T.let(nil, ::T.untyped)
-  CYAN = ::T.let(nil, ::T.untyped)
-  GREEN = ::T.let(nil, ::T.untyped)
-  MAGENTA = ::T.let(nil, ::T.untyped)
-  ON_BLACK = ::T.let(nil, ::T.untyped)
-  ON_BLUE = ::T.let(nil, ::T.untyped)
-  ON_CYAN = ::T.let(nil, ::T.untyped)
-  ON_GREEN = ::T.let(nil, ::T.untyped)
-  ON_MAGENTA = ::T.let(nil, ::T.untyped)
-  ON_RED = ::T.let(nil, ::T.untyped)
-  ON_WHITE = ::T.let(nil, ::T.untyped)
-  ON_YELLOW = ::T.let(nil, ::T.untyped)
-  RED = ::T.let(nil, ::T.untyped)
-  WHITE = ::T.let(nil, ::T.untyped)
-  YELLOW = ::T.let(nil, ::T.untyped)
-end
-
-class Thor::Shell::Color
-end
-
-class Thor::Shell::HTML
-  def ask(statement, color=T.unsafe(nil)); end
-
-  def diff_lcs_loaded?(); end
-
-  def output_diff_line(diff); end
-
-  def set_color(string, *colors); end
-  BLACK = ::T.let(nil, ::T.untyped)
-  BLUE = ::T.let(nil, ::T.untyped)
-  BOLD = ::T.let(nil, ::T.untyped)
-  CYAN = ::T.let(nil, ::T.untyped)
-  GREEN = ::T.let(nil, ::T.untyped)
-  MAGENTA = ::T.let(nil, ::T.untyped)
-  ON_BLACK = ::T.let(nil, ::T.untyped)
-  ON_BLUE = ::T.let(nil, ::T.untyped)
-  ON_CYAN = ::T.let(nil, ::T.untyped)
-  ON_GREEN = ::T.let(nil, ::T.untyped)
-  ON_MAGENTA = ::T.let(nil, ::T.untyped)
-  ON_RED = ::T.let(nil, ::T.untyped)
-  ON_WHITE = ::T.let(nil, ::T.untyped)
-  ON_YELLOW = ::T.let(nil, ::T.untyped)
-  RED = ::T.let(nil, ::T.untyped)
-  WHITE = ::T.let(nil, ::T.untyped)
-  YELLOW = ::T.let(nil, ::T.untyped)
-end
-
-class Thor::Shell::HTML
-end
-
-Thor::Task = Thor::Command
-
-class Thor::UndefinedCommandError
-  include ::DidYouMean::Correctable
-end
-
-Thor::UndefinedTaskError = Thor::UndefinedCommandError
-
-class Thor::UnknownArgumentError
-  include ::DidYouMean::Correctable
 end
 
 module ThreadSafe
@@ -16848,6 +17412,27 @@ module UnicodeNormalize
 end
 
 module UnicodeNormalize
+end
+
+class UpdateProductBacklogItemUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class User::User
+  extend ::T::Private::Methods::SingletonMethodHooks
+  extend ::T::Private::Methods::MethodHooks
+end
+
+module User::UserRepository
+  extend ::T::Private::Abstract::Hooks
+  extend ::T::InterfaceWrapper::Helpers
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+module UserRepository::AR
+  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 module ValidatesDomainObjectOf

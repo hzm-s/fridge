@@ -1,3 +1,4 @@
+# typed: ignore
 class CreateAppAvatars < ActiveRecord::Migration[6.0]
   def change
     create_table :app_avatars do |t|
