@@ -1,3 +1,4 @@
+# typed: false
 class TeamMembersController < ApplicationController
   include ProductHelper
 
