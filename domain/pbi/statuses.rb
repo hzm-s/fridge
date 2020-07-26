@@ -14,7 +14,7 @@ module Pbi
       sig {params(str: String).returns(Status)}
       def from_string(str)
         raise ArgumentError unless MAP.key?(str)
-        MAP[str]
+        T.cast(MAP[str], Status)
       end
     end
   end
