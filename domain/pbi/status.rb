@@ -15,6 +15,7 @@ module Pbi
     end
 
     enums do
+      Draft = new
       Preparation = new
     end
 
