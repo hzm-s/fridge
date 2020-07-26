@@ -36,9 +36,6 @@ module Team
       end
     end
 
-    sig {returns(String)}
-    def to_s
-      serialize
-    end
+    alias_method :to_s, :serialize
   end
 end
