@@ -11,10 +11,11 @@ module Pbi
       sig {params(product_id: Product::Id, content: Content).returns(T.attached_class)}
       def create(product_id, content)
         new(
-          Pbi::Id.create,
+          Id.create,
           product_id,
+          Status::Preparation,
           content,
-          Pbi::StoryPoint.unknown,
+          StoryPoint.unknown,
           AcceptanceCriteria.create
         )
       end
@@ -22,12 +23,13 @@ module Pbi
       sig {params(
         id: Id,
         product_id: Product::Id,
+        status: Status,
         content: Content,
         size: StoryPoint,
         acceptance_criteria: AcceptanceCriteria
       ).returns(T.attached_class)}
-      def from_repository(id, product_id, content, size, acceptance_criteria)
-        new(id, product_id, content, size, acceptance_criteria)
+      def from_repository(id, product_id, status, content, size, acceptance_criteria)
+        new(id, product_id, status, content, size, acceptance_criteria)
       end
     end
 
@@ -36,6 +38,9 @@ module Pbi
 
     sig {returns(Product::Id)}
     attr_reader :product_id
+
+    sig {returns(Status)}
+    attr_reader :status
 
     sig {returns(Content)}
     attr_reader :content
@@ -49,23 +54,20 @@ module Pbi
     sig {params(
       id: Id,
       product_id: Product::Id,
+      status: Status,
       content: Content,
       point: StoryPoint,
       acceptance_criteria: AcceptanceCriteria
     ).void}
-    def initialize(id, product_id, content, point, acceptance_criteria)
+    def initialize(id, product_id, status, content, point, acceptance_criteria)
       @id = id
       @product_id = product_id
+      @status = status
       @content = content
       @size = point
       @acceptance_criteria = acceptance_criteria
     end
     private_class_method :new
-
-    sig {returns(Status)}
-    def status
-      Status::Preparation
-    end
 
     sig {params(content: String).void}
     def add_acceptance_criterion(content)
