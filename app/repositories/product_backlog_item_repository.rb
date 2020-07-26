@@ -13,7 +13,7 @@ module ProductBacklogItemRepository
         Pbi::Item.from_repository(
           Pbi::Id.from_string(r.id),
           Product::Id.from_string(r.dao_product_id),
-          Pbi::Status.from_string(r.status),
+          Pbi::Statuses.from_string(r.status),
           Pbi::Content.new(r.content),
           Pbi::StoryPoint.new(r.size),
           Pbi::AcceptanceCriteria.from_repository(

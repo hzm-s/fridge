@@ -2,25 +2,15 @@
 require 'sorbet-runtime'
 
 module Pbi
-  class Status < T::Enum
+  module Status
     extend T::Sig
+    extend T::Helpers
+    interface!
 
-    class << self
-      extend T::Sig
+    sig {abstract.params(pbi: Item).returns(Status)}
+    def update_by(pbi); end
 
-      sig {params(str: String).returns(T.attached_class)}
-      def from_string(str)
-        deserialize(str)
-      end
-    end
-
-    enums do
-      Preparation = new
-    end
-
-    sig {returns(String)}
-    def to_s
-      serialize
-    end
+    sig {abstract.returns(String)}
+    def to_s; end
   end
 end
