@@ -19,18 +19,6 @@ body {
   @include nf;
 }
 
-.navbar {
-  padding: 5px 20px;
-  background-color: rgba(248,248,242, .7);
-}
-
-.navbar-brand {
-  color: $secondary;
-  font-weight: 900;
-  opacity: .6;
-  margin-right: 0;
-}
-
 .silent-danger {
   color: $secondary;
 

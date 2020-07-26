@@ -1,3 +1,14 @@
+.navbar {
+  padding: 5px 20px;
+  background-color: rgba(248,248,242, .7);
+}
+
+.navbar-brand {
+  color: #8D8E8F !important;
+  font-weight: 900;
+  margin-right: 0;
+}
+
 .gnav__product-name {
   @include nf;
   font-size: 1rem;

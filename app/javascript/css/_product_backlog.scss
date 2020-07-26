@@ -1,4 +1,27 @@
-.pbl {
+.pbl__actions {
+  position: absolute;
+  left: 3rem;
+}
+
+.pbl__filters {
+  text-align: center;
+  margin: .25rem 0 1rem;
+}
+
+.pbl__filter {
+  @include nf;
+  padding: .25rem .75rem;
+  font-size: .675rem;
+}
+
+.pbl__status {
+  &--draft { color: $gray-500; }
+  &--preparation { color: $blue; }
+  &--ready { color: $green; }
+  &--wip { color: $orange; }
+}
+
+.pbl__list {
   border-top: 1px solid $gray-300;
   background-color: #fff;
 }
