@@ -38,6 +38,7 @@ module ProductBacklogItemRepository
       sig {override.params(pbi: Pbi::Item).void}
       def update(pbi)
         r = Dao::ProductBacklogItem.find(pbi.id.to_s)
+        r.status = pbi.status.to_s
         r.content = pbi.content.to_s
         r.size = pbi.size.to_i
         r.next_acceptance_criterion_no = pbi.acceptance_criteria.next_no
