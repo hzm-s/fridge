@@ -13,7 +13,7 @@ module Pbi
         new(
           Id.create,
           product_id,
-          Status::Draft,
+          Statuses::Draft,
           content,
           StoryPoint.unknown,
           AcceptanceCriteria.create
@@ -72,6 +72,7 @@ module Pbi
     sig {params(content: String).void}
     def add_acceptance_criterion(content)
       @acceptance_criteria.add(content)
+      @status = Statuses::Preparation
     end
 
     sig {params(no: Integer).void}

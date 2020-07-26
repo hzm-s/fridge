@@ -39,26 +39,33 @@ module Pbi
     end
 
     describe 'status' do
+      let(:pbi) { described_class.create(product_id, content) }
+
       context '新規作成時' do
-        it 'ステータスは準備中であること' do
-          pbi = described_class.create(product_id, content)
-          expect(pbi.status).to eq Status::Draft
+        it '下書きであること' do
+          expect(pbi.status).to eq Statuses::Draft
         end
       end
 
       context '内容を更新した場合' do
-        it 'ステータスが変わらないこと' do
-          pbi = described_class.create(product_id, content)
-
+        it '変わらないこと' do
           expect { pbi.update_content(Content.new('NEW')) }
             .to_not change { pbi.status }
         end
       end
 
-      context '受け入れ基準が1つ以上になった場合' do
-        it 'ステータスが変わらないこと' do
-          pbi = described_class.create(product_id, content)
+      context '受け入れ基準が1つになった場合' do
+        it '準備中になること' do
           pbi.add_acceptance_criterion('AC')
+          expect(pbi.status).to eq Statuses::Preparation
+        end
+      end
+
+      context '受け入れ基準が2つ以上になった場合' do
+        it '準備中から変わらないこと' do
+          pbi.add_acceptance_criterion('AC1')
+          pbi.add_acceptance_criterion('AC2')
+          expect(pbi.status).to eq Statuses::Preparation
         end
       end
     end
