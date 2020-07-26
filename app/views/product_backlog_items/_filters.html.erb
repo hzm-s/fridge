@@ -1,23 +1,13 @@
 <div class="pbl__filters">
   <div class="btn-group" role="group">
-    <a href="#" class="btn btn-secondary pbl__filter">
+    <a href="<%= product_product_backlog_items_path(product_id: product_id) %>" class="<%= pbl_status_filter_classes(current: current, filter: '') %>">
       すべて
     </a>
-    <a href="#" class="btn btn-outline-secondary pbl__filter">
-      <i class="fas fa-square pbi__status--draft"></i>
-      下書き
-    </a>
-    <a href="#" class="btn btn-outline-secondary pbl__filter">
-      <i class="fas fa-square pbi__status--preparation"></i>
-      準備中
-    </a>
-    <a href="#" class="btn btn-outline-secondary pbl__filter">
-      <i class="fas fa-square pbi__status--ready"></i>
-      準備完了
-    </a>
-    <a href="#" class="btn btn-outline-secondary pbl__filter">
-      <i class="fas fa-square pbi__status--wip"></i>
-      着手中
-    </a>
+    <% all_pbi_statuses.each do |status| %>
+      <a href="<%= product_product_backlog_items_path(product_id: product_id, status: status) %>" class="<%= pbl_status_filter_classes(current: current, filter: status) %>">
+        <i class="fas fa-square pbi__status--<%= status %>"></i>
+        <%=t status, scope: 'domain.pbi.statuses' %>
+      </a>
+    <% end %>
   </div>
 </div>
