@@ -9,7 +9,8 @@ module Pbi
         include Status
 
         sig {override.params(pbi: Item).returns(Status)}
-        def change(pbi)
+        def update_by(pbi)
+          return Preparation if pbi.have_acceptance_criteria? && pbi.size_estimated?
           self
         end
 

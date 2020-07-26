@@ -8,7 +8,7 @@ module Pbi
     interface!
 
     sig {abstract.params(pbi: Item).returns(Status)}
-    def change(pbi); end
+    def update_by(pbi); end
 
     sig {abstract.returns(String)}
     def to_s; end

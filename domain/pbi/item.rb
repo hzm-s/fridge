@@ -72,22 +72,34 @@ module Pbi
     sig {params(content: String).void}
     def add_acceptance_criterion(content)
       @acceptance_criteria.add(content)
-      @status = Statuses::Preparation
+      @status = @status.update_by(self)
     end
 
     sig {params(no: Integer).void}
     def remove_acceptance_criterion(no)
       @acceptance_criteria.remove(no)
+      @status = @status.update_by(self)
     end
 
     sig {params(point: StoryPoint).void}
     def estimate_size(point)
       @size = point
+      @status = @status.update_by(self)
     end
 
     sig {params(content: Content).void}
     def update_content(content)
       @content = content
+    end
+
+    sig {returns(T::Boolean)}
+    def have_acceptance_criteria?
+      !@acceptance_criteria.empty?
+    end
+
+    sig {returns(T::Boolean)}
+    def size_estimated?
+      @size != StoryPoint.unknown
     end
   end
 end
