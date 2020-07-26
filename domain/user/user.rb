@@ -28,10 +28,10 @@ module User
       sig {params(email: String).returns(String)}
       def extract_initials(email)
         account = email.split('@').first
-        raise ArgumentError if account.size == 0
+        raise ArgumentError unless account && account.size > 0
 
         return account[0, 2] if account.size >= 2
-        account[0] * 2
+        T.must(account[0]) * 2
       end
     end
 
