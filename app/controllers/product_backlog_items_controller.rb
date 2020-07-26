@@ -3,6 +3,9 @@ class ProductBacklogItemsController < ApplicationController
   include ProductHelper
 
   before_action :require_user
+  before_action :sanitize_status_filter, only: [:index]
+
+  helper_method :current_product_id, :current_filter_status
 
   def index
     @items = ProductBacklogItemListQuery.call(params[:product_id])
@@ -53,6 +56,12 @@ class ProductBacklogItemsController < ApplicationController
 
   def permitted_params
     params.require(:form).permit(:content)
+  end
+
+  def sanitize_status_filter
+    params[:status] && Pbi::Statuses.from_string(params[:status].to_s)
+  rescue
+    redirect_to product_product_backlog_items_path(product_id: params[:product_id])
   end
 
   def current_product_id

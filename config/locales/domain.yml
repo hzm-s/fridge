@@ -1,5 +1,12 @@
 ja:
   domain:
+    pbi:
+      statuses:
+        draft: 下書き
+        preparation: 準備中
+        ready: 準備完了
+        wip: 着手中
+
     team:
       role:
         product_owner: プロダクトオーナー
