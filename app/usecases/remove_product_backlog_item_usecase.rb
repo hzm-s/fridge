@@ -7,7 +7,7 @@ class RemoveProductBacklogItemUsecase < UsecaseBase
   sig {void}
   def initialize
     @pbi_repository = T.let(ProductBacklogItemRepository::AR, Pbi::ItemRepository)
-    @order_repository = T.let(ProductBacklogOrderRepository::AR, Pbi::OrderRepository)
+    @order_repository = T.let(ProductBacklogItemOrderRepository::AR, Pbi::OrderRepository)
   end
 
   sig {params(pbi_id: Pbi::Id).void}

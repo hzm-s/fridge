@@ -12,7 +12,7 @@ RSpec.describe RemoveProductBacklogItemUsecase do
     expect { ProductBacklogItemRepository::AR.find_by_id(pbi.id) }
       .to raise_error(ActiveRecord::RecordNotFound)
 
-    order = ProductBacklogOrderRepository::AR.find_by_product_id(pbi.product_id)
+    order = ProductBacklogItemOrderRepository::AR.find_by_product_id(pbi.product_id)
     expect(order.to_a).to match_array [ex_pbi.id]
   end
 end
