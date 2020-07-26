@@ -36,7 +36,7 @@ ja:
   product_backlog_items:
     index:
       title: プロダクトバックログ
-      add: アイテムを追加する
+      add: 追加する
     point_form:
       point: アイテムの大きさ
     edit:
