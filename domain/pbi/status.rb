@@ -6,13 +6,21 @@ module Pbi
     extend T::Sig
 
     class << self
-      alias_method :from_string, :deserialize
+      extend T::Sig
+
+      sig {params(str: String).returns(T.attached_class)}
+      def from_string(str)
+        deserialize(str)
+      end
     end
 
     enums do
       Preparation = new
     end
 
-    alias_method :to_s, :serialize
+    sig {returns(String)}
+    def to_s
+      serialize
+    end
   end
 end
