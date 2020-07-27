@@ -42,25 +42,7 @@ module Pbi
       let(:pbi) { described_class.create(product_id, content) }
 
       it do
-        expect(pbi.status).to eq Statuses::Draft
-
-        pbi.update_content(Content.new('new content'))
-        expect(pbi.status).to eq Statuses::Draft
-
-        pbi.add_acceptance_criterion('ac1')
-        expect(pbi.status).to eq Statuses::Draft
-
-        pbi.estimate_size(StoryPoint.new(5))
         expect(pbi.status).to eq Statuses::Preparation
-
-        pbi.remove_acceptance_criterion(1)
-        expect(pbi.status).to eq Statuses::Draft
-
-        pbi.add_acceptance_criterion('ac2')
-        expect(pbi.status).to eq Statuses::Preparation
-
-        pbi.estimate_size(StoryPoint.unknown)
-        expect(pbi.status).to eq Statuses::Draft
       end
     end
   end

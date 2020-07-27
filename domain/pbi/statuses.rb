@@ -7,7 +7,6 @@ module Pbi
       extend T::Sig
 
       MAP = T.let({
-        'draft' => Draft,
         'preparation' => Preparation,
         'ready' => Ready,
         'wip' => Wip,
