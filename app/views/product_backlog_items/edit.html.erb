@@ -6,6 +6,11 @@
       <h1 class="page-title">
         <%=t '.title' %>
       </h1>
+      <div class="pbi-edit__status">
+        <span class="pbi__status-label pbi__status-label--<%= @pbi.status %>">
+          <%=t @pbi.status, scope: 'domain.pbi.statuses' %>
+        <span>
+      </div>
     </div>
     <%= render partial: 'form', locals: { form: @pbi_form, url: product_backlog_item_path(@pbi.id), method: :put, btn_label: t('navs.save') } %>
     <hr>

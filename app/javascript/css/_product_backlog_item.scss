@@ -8,107 +8,31 @@ $pbi-status-color-wip: darken($yellow, 5%);
   &--wip { color: $pbi-status-color-wip; }
 }
 
-.pbl-item-outer {
-  padding: .5rem 1rem;
-  background-color: $white;
-  border-bottom: 1px solid $gray-300;
+.pbi-edit__status {
+  position: absolute;
+  right: 3rem;
+  color: $body-color;
 }
 
-.pbl-item-outer--preparation {
-  border-left: 3px solid $pbi-status-color-preparation;
-}
-
-.pbl-item {
-  display: flex;
-  align-items: center;
-}
-
-.pbl-item__grip {
-  margin-right: .75rem;
-  color: $gray-500;
-
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-.pbl-item__content {
-  padding-right: .5rem;
-  margin-bottom: 0;
-  font-size: .875rem;
-  line-height: 1.2rem;
-}
-
-.pbl-item__actions {
-  display: flex;
-  align-items: center;
-
-  margin-left: auto;
-}
-
-.pbl-item__ac-trigger {
+.pbi__status-label {
+  @include nf;
+  padding: .25rem .75rem;
+  font-size: .75rem;
+  font-weight: bold;
+  border-radius: 1rem;
+  border: 1px solid transparent;
   color: $secondary;
 
-  &:hover {
-    color: $secondary;
+  &--preparation {
+    border-color: $pbi-status-color-preparation;
+    background-color: $gray-100;
   }
-}
-
-.pbl-item__point {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  margin-left: 1rem;
-
-  width: 1.5rem;
-  height: 1.5rem;
-
-  color: $white;
-  background-color: $cyan;
-  border-radius: 1rem;
-
-  &:hover {
-    cursor: pointer;
+  &--ready {
+    border-color: $pbi-status-color-ready;
+    background-color: $gray-100;
   }
-}
-
-.pbl-item__menu {
-  margin-left: 1rem;
-  color: $body-color;
-
-  &:hover {
-    color: $body-color;
-    text-decoration: none;
-  }
-}
-
-.pbl-item__ac {
-  padding-left: 1.5rem;
-}
-
-.ac-list--small {
-  p {
-    font-size: .75rem;
-  }
-}
-
-.ac-list__item {
-  display: flex;
-  align-items: center;
-
-  margin-bottom: .25rem;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-
-  p {
-    @include nf;
-    margin-bottom: 0;
-
-    &:before {
-      content: '\02022';
-    }
+  &--wip {
+    border-color: $pbi-status-color-wip;
+    background-color: lighten($pbi-status-color-wip, 45%);
   }
 }
