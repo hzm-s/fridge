@@ -1,10 +1,8 @@
-$pbi-status-color-draft: $gray-500;
 $pbi-status-color-preparation: $blue;
 $pbi-status-color-ready: $green;
 $pbi-status-color-wip: $orange;
 
 .pbi__status {
-  &--draft { color: $pbi-status-color-draft; }
   &--preparation { color: $pbi-status-color-preparation; }
   &--ready { color: $pbi-status-color-ready; }
   &--wip { color: $pbi-status-color-wip; }
@@ -14,10 +12,6 @@ $pbi-status-color-wip: $orange;
   padding: .5rem 1rem;
   background-color: $white;
   border-bottom: 1px solid $gray-300;
-}
-
-.pbl-item-outer--draft {
-  border-left: 3px solid $pbi-status-color-draft;
 }
 
 .pbl-item-outer--preparation {

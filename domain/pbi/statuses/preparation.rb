@@ -10,7 +10,6 @@ module Pbi
 
         sig {override.params(pbi: Item).returns(Status)}
         def update_by(pbi)
-          return Draft unless pbi.size_estimated? && pbi.have_acceptance_criteria?
           self
         end
 
