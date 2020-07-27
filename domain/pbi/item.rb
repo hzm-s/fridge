@@ -13,7 +13,7 @@ module Pbi
         new(
           Id.create,
           product_id,
-          Statuses::Draft,
+          Statuses::Preparation,
           content,
           StoryPoint.unknown,
           AcceptanceCriteria.create
