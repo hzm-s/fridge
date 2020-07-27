@@ -1,6 +1,6 @@
 $pbi-status-color-preparation: $gray-300;
 $pbi-status-color-ready: darken($green, 5%);
-$pbi-status-color-wip: darken($orange, 5%);
+$pbi-status-color-wip: darken($yellow, 5%);
 
 .pbi__status {
   &--preparation { color: $pbi-status-color-preparation; }
