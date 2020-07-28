@@ -19,7 +19,7 @@ ja:
 
     errors:
       pbi:
-        content: 3~500文字で入力してください
+        invalid_content: 3~500文字で入力してください
       team:
         duplicated_product_owner: すでにプロダクトオーナーがいます
         duplicated_scrum_master: すでにスクラムマスターがいます
