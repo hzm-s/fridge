@@ -14,10 +14,10 @@ class AddProductBacklogItemUsecase < UsecaseBase
   def perform(product_id, content)
     pbi = Pbi::Item.create(product_id, content)
 
-    order = find_order(product_id)
-    order.append(pbi)
-
     transaction do
+      order = find_order(product_id)
+      sleep 15
+      order.append(pbi)
       @pbi_repository.add(pbi)
       @order_repository.update(order)
     end
