@@ -16,7 +16,6 @@ class AddProductBacklogItemUsecase < UsecaseBase
 
     transaction do
       order = find_order(product_id)
-      sleep 15
       order.append(pbi)
       @pbi_repository.add(pbi)
       @order_repository.update(order)
