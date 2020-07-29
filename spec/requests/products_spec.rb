@@ -2,8 +2,9 @@
 require 'rails_helper'
 
 RSpec.describe 'products' do
+  let(:user) { sign_up }
+
   before do
-    user = sign_up
     sign_in(user)
   end
 
@@ -28,6 +29,13 @@ RSpec.describe 'products' do
 
         expect(response.body).to include(I18n.t('errors.messages.blank'))
       end
+    end
+  end
+
+  describe '#index' do
+    it do
+      expect(ProductQuery).to receive(:call).with(user.id)
+      get products_path
     end
   end
 end

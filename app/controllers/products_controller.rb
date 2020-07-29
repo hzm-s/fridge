@@ -2,7 +2,7 @@
 class ProductsController < ApplicationController
 
   def index
-    @products = Dao::Product.all
+    @products = ProductQuery.call(current_user.id)
   end
 
   def new
