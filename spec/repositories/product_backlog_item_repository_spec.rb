@@ -15,8 +15,8 @@ RSpec.describe ProductBacklogItemRepository::AR do
   describe '#update' do
     it do
       pbi = add_pbi(product.id)
-      pbi.add_acceptance_criterion('ac1')
-      pbi.add_acceptance_criterion('ac2')
+      pbi.add_acceptance_criterion(Pbi::AcceptanceCriterion.new('ac1'))
+      pbi.add_acceptance_criterion(Pbi::AcceptanceCriterion.new('ac2'))
 
       expect { described_class.update(pbi) }
         .to change { Dao::ProductBacklogItem.count }.by(0)
@@ -25,7 +25,7 @@ RSpec.describe ProductBacklogItemRepository::AR do
 
     it do
       pbi = add_pbi(product.id, acceptance_criteria: %w(ac1 ac2 ac3 ac4))
-      pbi.remove_acceptance_criterion(4)
+      pbi.remove_acceptance_criterion(Pbi::AcceptanceCriterion.new('ac4'))
 
       expect { described_class.update(pbi) }
         .to change { Dao::ProductBacklogItem.count }.by(0)

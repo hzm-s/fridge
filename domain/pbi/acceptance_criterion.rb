@@ -5,23 +5,19 @@ module Pbi
   class AcceptanceCriterion
     extend T::Sig
 
-    Serialized = T.type_alias {T::Hash[Symbol, T.any(Integer, String)]}
-
-    sig {returns(Integer)}
-    attr_reader :no
-
-    sig {returns(String)}
-    attr_reader :content
-
-    sig {params(no: Integer, content: String).void}
-    def initialize(no, content)
-      @no = no
+    sig {params(content: String).void}
+    def initialize(content)
       @content = content
     end
 
-    sig {returns(Serialized)}
-    def to_h
-      { no: @no, content: @content }
+    sig {returns(String)}
+    def to_s
+      @content
+    end
+
+    sig {params(other: T.self_type).returns(T::Boolean)}
+    def ==(other)
+      self.to_s == other.to_s
     end
   end
 end

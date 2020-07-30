@@ -6,10 +6,14 @@ RSpec.describe AddAcceptanceCriterionUsecase do
   let!(:pbi) { add_pbi(product.id) }
 
   it do
-    described_class.perform(pbi.id, 'ukeire_kijyun_ichi')
-
+    ac1 = Pbi::AcceptanceCriterion.new('AC1')
+    described_class.perform(pbi.id, ac1)
     updated = ProductBacklogItemRepository::AR.find_by_id(pbi.id)
+    expect(updated.acceptance_criteria).to eq [ac1]
 
-    expect(updated.acceptance_criteria.to_a).to eq [{no: 1, content: 'ukeire_kijyun_ichi'}]
+    ac2 = Pbi::AcceptanceCriterion.new('AC2')
+    described_class.perform(pbi.id, ac2)
+    updated = ProductBacklogItemRepository::AR.find_by_id(pbi.id)
+    expect(updated.acceptance_criteria).to eq [ac1, ac2]
   end
 end

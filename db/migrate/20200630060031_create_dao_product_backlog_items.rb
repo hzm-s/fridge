@@ -6,7 +6,6 @@ class CreateDaoProductBacklogItems < ActiveRecord::Migration[6.0]
       t.string :status, null: false
       t.string :content, null: false
       t.integer :size
-      t.integer :next_acceptance_criterion_no, null: false
 
       t.timestamps
     end
