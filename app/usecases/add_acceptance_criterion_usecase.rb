@@ -9,10 +9,10 @@ class AddAcceptanceCriterionUsecase < UsecaseBase
     @repository = T.let(ProductBacklogItemRepository::AR, Pbi::ItemRepository)
   end
 
-  sig {params(pbi_id: Pbi::Id, content: String).void}
-  def perform(pbi_id, content)
+  sig {params(pbi_id: Pbi::Id, criterion: Pbi::AcceptanceCriterion).void}
+  def perform(pbi_id, criterion)
     pbi = @repository.find_by_id(pbi_id)
-    pbi.add_acceptance_criterion(content)
+    pbi.add_acceptance_criterion(criterion)
     @repository.update(pbi)
   end
 end

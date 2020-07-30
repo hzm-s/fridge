@@ -16,10 +16,7 @@ module ProductBacklogItemRepository
           Pbi::Statuses.from_string(r.status),
           Pbi::Content.new(r.content),
           Pbi::StoryPoint.new(r.size),
-          Pbi::AcceptanceCriteria.from_repository(
-            r.next_acceptance_criterion_no,
-            r.criteria.map { |c| Pbi::AcceptanceCriterion.new(c.no, c.content) }
-          )
+          r.criteria.map { |c| Pbi::AcceptanceCriterion.new(c.content) }
         )
       end
 
@@ -31,7 +28,6 @@ module ProductBacklogItemRepository
           status: pbi.status.to_s,
           content: pbi.content.to_s,
           size: pbi.size.to_i,
-          next_acceptance_criterion_no: pbi.acceptance_criteria.next_no
         )
       end
 
@@ -41,11 +37,10 @@ module ProductBacklogItemRepository
         r.status = pbi.status.to_s
         r.content = pbi.content.to_s
         r.size = pbi.size.to_i
-        r.next_acceptance_criterion_no = pbi.acceptance_criteria.next_no
 
         r.criteria.clear
-        pbi.acceptance_criteria.list.each do |c|
-          r.criteria.build(no: c.no, content: c.content)
+        pbi.acceptance_criteria.each do |ac|
+          r.criteria.build(content: ac.to_s)
         end
 
         r.save!

@@ -12,9 +12,12 @@ module ProductBacklogItemSupport
     ProductBacklogItemRepository::AR.find_by_id(pbi.id)
   end
 
-  def add_acceptance_criteria(pbi, contents)
-    contents.each do |content|
-      AddAcceptanceCriterionUsecase.new.perform(pbi.id, content)
+  def add_acceptance_criteria(pbi, contents_or_criteria)
+    criteria = contents_or_criteria.map do |cc|
+      cc.is_a?(String)? Pbi::AcceptanceCriterion.new(cc) : cc
+    end
+    criteria.each do |ac|
+      AddAcceptanceCriterionUsecase.new.perform(pbi.id, ac)
     end
   end
 end
