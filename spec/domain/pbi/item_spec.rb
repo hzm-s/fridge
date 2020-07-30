@@ -29,8 +29,9 @@ module Pbi
     end
 
     describe '#update_content' do
+      let(:pbi) { described_class.create(product_id, content) }
+
       it do
-        pbi = described_class.create(product_id, content)
         new_content = Content.new('NEW_CONTENT')
         pbi.update_content(new_content)
 
@@ -38,7 +39,25 @@ module Pbi
       end
     end
 
-    describe 'status' do
+    describe 'Acceptance Criteria' do
+      let(:pbi) { described_class.create(product_id, content) }
+
+      it do
+        ac1 = Pbi::AcceptanceCriterion.new('Criterion1')
+        ac2 = Pbi::AcceptanceCriterion.new('Criterion2')
+        ac3 = Pbi::AcceptanceCriterion.new('Criterion3')
+
+        pbi.add_acceptance_criterion(ac1)
+        pbi.add_acceptance_criterion(ac2)
+        pbi.add_acceptance_criterion(ac3)
+        expect(pbi.acceptance_criteria).to eq [ac1, ac2, ac3]
+
+        pbi.remove_acceptance_criterion(ac2)
+        expect(pbi.acceptance_criteria).to eq [ac1, ac3]
+      end
+    end
+
+    describe 'Status' do
       let(:pbi) { described_class.create(product_id, content) }
 
       it do
