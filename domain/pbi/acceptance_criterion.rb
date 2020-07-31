@@ -7,6 +7,7 @@ module Pbi
 
     sig {params(content: String).void}
     def initialize(content)
+      raise ArgumentError unless content.size >= 3 && content.size < 100
       @content = content
     end
 
@@ -15,7 +16,7 @@ module Pbi
       @content
     end
 
-    sig {params(other: T.self_type).returns(T::Boolean)}
+    sig {params(other: AcceptanceCriterion).returns(T::Boolean)}
     def ==(other)
       self.to_s == other.to_s
     end
