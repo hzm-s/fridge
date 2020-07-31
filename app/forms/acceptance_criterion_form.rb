@@ -3,8 +3,9 @@ class AcceptanceCriterionForm
   include ActiveModel::Model
 
   attr_accessor :content
+  attr_accessor :domain_objects
 
   validates :content,
     presence: true,
-    length: { in: 3..100, allow_blank: true }
+    domain_object: { object_class: Pbi::AcceptanceCriterion, allow_blank: true }
 end

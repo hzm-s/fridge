@@ -13,8 +13,9 @@ Rails.application.routes.draw do
   end
 
   resources :product_backlog_items, only: [:edit, :update, :destroy] do
-    resources :acceptance_criteria, param: :no, only: [:create, :destroy]
+    resources :acceptance_criteria, param: :no, only: [:create]
   end
+  resources :acceptance_criteria, only: [:destroy]
 
   resources :product_backlog_item_estimations, only: [:update]
 end
