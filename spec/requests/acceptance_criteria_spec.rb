@@ -31,9 +31,10 @@ RSpec.describe 'acceptance_criteria' do
 
   describe '#destroy' do
     it do
-      add_acceptance_criteria(pbi, %w(ukeire_kijyun))
+      add_acceptance_criteria(pbi, %w(ac_head ukeire_kijyun ac_tail))
 
-      delete product_backlog_item_acceptance_criterion_path(product_backlog_item_id: pbi.id, no: 1)
+      target = Dao::AcceptanceCriterion.find_by(content: 'ukeire_kijyun')
+      delete acceptance_criterion_path(target.id)
       follow_redirect!
 
       expect(response.body).to_not include 'ukeire_kijyun'
