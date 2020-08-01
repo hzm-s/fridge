@@ -10,7 +10,11 @@ module Pbi
 
         sig {override.params(pbi: Item).returns(Status)}
         def update_by(pbi)
-          self
+          if pbi.acceptance_criteria.size >= 1 && pbi.size_estimated?
+            self
+          else
+            Preparation
+          end
         end
 
         sig {override.returns(String)}
