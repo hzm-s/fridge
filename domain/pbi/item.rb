@@ -16,7 +16,7 @@ module Pbi
           Statuses::Preparation,
           content,
           StoryPoint.unknown,
-          []
+          AcceptanceCriteria.new([])
         )
       end
 
@@ -26,7 +26,7 @@ module Pbi
         status: Status,
         content: Content,
         size: StoryPoint,
-        acceptance_criteria: T::Array[AcceptanceCriterion]
+        acceptance_criteria: AcceptanceCriteria
       ).returns(T.attached_class)}
       def from_repository(id, product_id, status, content, size, acceptance_criteria)
         new(id, product_id, status, content, size, acceptance_criteria)
@@ -48,7 +48,7 @@ module Pbi
     sig {returns(StoryPoint)}
     attr_reader :size
 
-    sig {returns(T::Array[AcceptanceCriterion])}
+    sig {returns(AcceptanceCriteria)}
     attr_reader :acceptance_criteria
 
     sig {params(
@@ -57,7 +57,7 @@ module Pbi
       status: Status,
       content: Content,
       point: StoryPoint,
-      acceptance_criteria: T::Array[AcceptanceCriterion]
+      acceptance_criteria: AcceptanceCriteria
     ).void}
     def initialize(id, product_id, status, content, point, acceptance_criteria)
       @id = id
@@ -69,16 +69,9 @@ module Pbi
     end
     private_class_method :new
 
-    sig {params(criterion: AcceptanceCriterion).void}
-    def add_acceptance_criterion(criterion)
-      @acceptance_criteria += [criterion]
-      @status = @status.update_by(self)
-    end
-
-    sig {params(criterion: AcceptanceCriterion).void}
-    def remove_acceptance_criterion(criterion)
-      @acceptance_criteria = @acceptance_criteria.reject { |c| c == criterion }
-      @status = @status.update_by(self)
+    sig {params(criteria: AcceptanceCriteria).void}
+    def update_acceptance_criteria(criteria)
+      @acceptance_criteria = criteria
     end
 
     sig {params(point: StoryPoint).void}
