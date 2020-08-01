@@ -8,8 +8,8 @@ module Pbi
         extend T::Sig
         include Status
 
-        sig {override.params(pbi: Item).returns(Status)}
-        def update_by_prepartion(pbi)
+        sig {override.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
+        def update_by_prepartion(criteria, size)
           self
         end
 
