@@ -33,6 +33,14 @@
   border-left: 3px solid $pbi-status-color-preparation;
 }
 
+.pbl-item-outer--ready {
+  border-left: 3px solid $pbi-status-color-ready;
+}
+
+.pbl-item-outer--wip {
+  border-left: 3px solid $pbi-status-color-wip;
+}
+
 .pbl-item {
   display: flex;
   align-items: center;

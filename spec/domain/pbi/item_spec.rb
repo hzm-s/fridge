@@ -43,9 +43,9 @@ module Pbi
       let(:pbi) { described_class.create(product_id, content) }
 
       it do
-        ac1 = Pbi::AcceptanceCriterion.new('Criterion1')
-        ac2 = Pbi::AcceptanceCriterion.new('Criterion2')
-        ac3 = Pbi::AcceptanceCriterion.new('Criterion3')
+        ac1 = AcceptanceCriterion.new('Criterion1')
+        ac2 = AcceptanceCriterion.new('Criterion2')
+        ac3 = AcceptanceCriterion.new('Criterion3')
 
         pbi.add_acceptance_criterion(ac1)
         pbi.add_acceptance_criterion(ac2)
@@ -61,6 +61,24 @@ module Pbi
       let(:pbi) { described_class.create(product_id, content) }
 
       it do
+        expect(pbi.status).to eq Statuses::Preparation
+
+        pbi.update_content(Content.new('NEW CONTENT'))
+        expect(pbi.status).to eq Statuses::Preparation
+
+        pbi.add_acceptance_criterion(AcceptanceCriterion.new('AC1'))
+        expect(pbi.status).to eq Statuses::Preparation
+
+        pbi.estimate_size(StoryPoint.new(3))
+        expect(pbi.status).to eq Statuses::Ready
+
+        pbi.add_acceptance_criterion(AcceptanceCriterion.new('AC2'))
+        expect(pbi.status).to eq Statuses::Ready
+
+        pbi.remove_acceptance_criterion(AcceptanceCriterion.new('AC2'))
+        expect(pbi.status).to eq Statuses::Ready
+
+        pbi.remove_acceptance_criterion(AcceptanceCriterion.new('AC1'))
         expect(pbi.status).to eq Statuses::Preparation
       end
     end
