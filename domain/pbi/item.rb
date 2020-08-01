@@ -72,17 +72,19 @@ module Pbi
     sig {params(criterion: AcceptanceCriterion).void}
     def add_acceptance_criterion(criterion)
       @acceptance_criteria += [criterion]
+      @status = @status.update_by(self)
     end
 
     sig {params(criterion: AcceptanceCriterion).void}
     def remove_acceptance_criterion(criterion)
       @acceptance_criteria = @acceptance_criteria.reject { |c| c == criterion }
+      @status = @status.update_by(self)
     end
 
     sig {params(point: StoryPoint).void}
     def estimate_size(point)
       @size = point
-      @status = Statuses::Ready
+      @status = @status.update_by(self)
     end
 
     sig {params(content: Content).void}
