@@ -82,6 +82,7 @@ module Pbi
     sig {params(point: StoryPoint).void}
     def estimate_size(point)
       @size = point
+      @status = Statuses::Ready
     end
 
     sig {params(content: Content).void}

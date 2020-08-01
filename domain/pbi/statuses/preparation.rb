@@ -10,7 +10,11 @@ module Pbi
 
         sig {override.params(pbi: Item).returns(Status)}
         def update_by(pbi)
-          self
+          if pbi.acceptance_criteria.size > 0 && pbi.size != StoryPoint.unknown
+            Ready
+          else
+            self
+          end
         end
 
         sig {override.returns(String)}
