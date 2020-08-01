@@ -69,30 +69,21 @@ module Pbi
     end
     private_class_method :new
 
-    sig {params(criteria: AcceptanceCriteria).void}
-    def update_acceptance_criteria(criteria)
-      @acceptance_criteria = criteria
-    end
-
-    sig {params(point: StoryPoint).void}
-    def estimate_size(point)
-      @size = point
-      @status = @status.update_by(self)
-    end
-
     sig {params(content: Content).void}
     def update_content(content)
       @content = content
     end
 
-    sig {returns(T::Boolean)}
-    def have_acceptance_criteria?
-      !@acceptance_criteria.empty?
+    sig {params(criteria: AcceptanceCriteria).void}
+    def update_acceptance_criteria(criteria)
+      @acceptance_criteria = criteria
+      @status = @status.update_by_prepartion(self)
     end
 
-    sig {returns(T::Boolean)}
-    def size_estimated?
-      @size != StoryPoint.unknown
+    sig {params(point: StoryPoint).void}
+    def estimate_size(point)
+      @size = point
+      @status = @status.update_by_prepartion(self)
     end
   end
 end

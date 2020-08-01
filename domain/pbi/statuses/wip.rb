@@ -9,7 +9,7 @@ module Pbi
         include Status
 
         sig {override.params(pbi: Item).returns(Status)}
-        def update_by(pbi)
+        def update_by_prepartion(pbi)
           self
         end
 

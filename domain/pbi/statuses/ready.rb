@@ -9,8 +9,8 @@ module Pbi
         include Status
 
         sig {override.params(pbi: Item).returns(Status)}
-        def update_by(pbi)
-          if pbi.acceptance_criteria.size >= 1 && pbi.size_estimated?
+        def update_by_prepartion(pbi)
+          if pbi.acceptance_criteria.size >= 1 && pbi.size != StoryPoint.unknown
             self
           else
             Preparation
