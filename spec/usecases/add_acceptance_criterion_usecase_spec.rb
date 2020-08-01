@@ -15,15 +15,4 @@ RSpec.describe AddAcceptanceCriterionUsecase do
     updated = ProductBacklogItemRepository::AR.find_by_id(pbi.id)
     expect(updated.acceptance_criteria).to eq acceptance_criteria(%w(AC1 AC2 AC3))
   end
-
-  private
-
-  def acceptance_criterion(content)
-    Pbi::AcceptanceCriterion.new(content)
-  end
-
-  def acceptance_criteria(contents)
-    contents.map { |c| acceptance_criterion(c) }
-      .yield_self { |criteria| Pbi::AcceptanceCriteria.new(criteria) }
-  end
 end

@@ -7,14 +7,11 @@ RSpec.describe RemoveAcceptanceCriterionUsecase do
   let(:repository) { ProductBacklogItemRepository::AR }
 
   it do
-    ac1 = Pbi::AcceptanceCriterion.new('AC1')
-    ac2 = Pbi::AcceptanceCriterion.new('AC2')
-    ac3 = Pbi::AcceptanceCriterion.new('AC3')
-    add_acceptance_criteria(pbi, [ac1, ac2, ac3])
+    add_acceptance_criteria(pbi, %w(AC1 AC2 AC3))
 
-    described_class.perform(pbi.id, ac2)
+    described_class.perform(pbi.id, acceptance_criterion('AC2'))
     updated = repository.find_by_id(pbi.id)
 
-    expect(updated.acceptance_criteria).to eq [ac1, ac3]
+    expect(updated.acceptance_criteria).to eq acceptance_criteria(%w(AC1 AC3))
   end
 end

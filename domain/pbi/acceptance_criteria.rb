@@ -15,6 +15,11 @@ module Pbi
       self.class.new(@criteria + [criterion])
     end
 
+    sig {params(criterion: AcceptanceCriterion).returns(AcceptanceCriteria)}
+    def remove(criterion)
+      self.class.new(@criteria.reject { |c| c == criterion })
+    end
+
     sig {returns(T::Array[String])}
     def to_a
       @criteria.map(&:to_s)

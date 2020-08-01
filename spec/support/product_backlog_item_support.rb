@@ -14,11 +14,20 @@ module ProductBacklogItemSupport
 
   def add_acceptance_criteria(pbi, contents_or_criteria)
     criteria = contents_or_criteria.map do |cc|
-      cc.is_a?(String)? Pbi::AcceptanceCriterion.new(cc) : cc
+      cc.is_a?(String)? acceptance_criterion(cc) : cc
     end
     criteria.each do |ac|
       AddAcceptanceCriterionUsecase.perform(pbi.id, ac)
     end
+  end
+
+  def acceptance_criterion(content)
+    Pbi::AcceptanceCriterion.new(content)
+  end
+
+  def acceptance_criteria(contents)
+    contents.map { |c| acceptance_criterion(c) }
+      .yield_self { |criteria| Pbi::AcceptanceCriteria.new(criteria) }
   end
 end
 
