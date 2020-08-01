@@ -7,9 +7,9 @@ module Pbi
     let!(:content) { Content.new('ABC') }
 
     describe '.create' do
-      it 'id,product_id,内容を持つこと' do
-        pbi = described_class.create(product_id, content)
+      let(:pbi) { described_class.create(product_id, content) }
 
+      it 'id,product_id,内容を持つこと' do
         aggregate_failures do
           expect(pbi.id).to_not be_nil
           expect(pbi.product_id).to eq product_id
@@ -18,12 +18,10 @@ module Pbi
       end
 
       it 'サイズは不明であること' do
-        pbi = described_class.create(product_id, content)
         expect(pbi.size).to eq StoryPoint.unknown
       end
 
       it '受け入れ基準は空であること' do
-        pbi = described_class.create(product_id, content)
         expect(pbi.acceptance_criteria).to be_empty
       end
     end
@@ -39,24 +37,6 @@ module Pbi
       end
     end
 
-    describe 'Acceptance Criteria' do
-      let(:pbi) { described_class.create(product_id, content) }
-
-      it do
-        ac1 = AcceptanceCriterion.new('Criterion1')
-        ac2 = AcceptanceCriterion.new('Criterion2')
-        ac3 = AcceptanceCriterion.new('Criterion3')
-
-        pbi.add_acceptance_criterion(ac1)
-        pbi.add_acceptance_criterion(ac2)
-        pbi.add_acceptance_criterion(ac3)
-        expect(pbi.acceptance_criteria).to eq [ac1, ac2, ac3]
-
-        pbi.remove_acceptance_criterion(ac2)
-        expect(pbi.acceptance_criteria).to eq [ac1, ac3]
-      end
-    end
-
     describe 'Status' do
       let(:pbi) { described_class.create(product_id, content) }
 
@@ -66,20 +46,14 @@ module Pbi
         pbi.update_content(Content.new('NEW CONTENT'))
         expect(pbi.status).to eq Statuses::Preparation
 
-        pbi.add_acceptance_criterion(AcceptanceCriterion.new('AC1'))
+        pbi.update_acceptance_criteria(acceptance_criteria(%w(AC1)))
         expect(pbi.status).to eq Statuses::Preparation
 
         pbi.estimate_size(StoryPoint.new(3))
         expect(pbi.status).to eq Statuses::Ready
 
-        pbi.add_acceptance_criterion(AcceptanceCriterion.new('AC2'))
+        pbi.update_acceptance_criteria(acceptance_criteria(%w(AC1)))
         expect(pbi.status).to eq Statuses::Ready
-
-        pbi.remove_acceptance_criterion(AcceptanceCriterion.new('AC2'))
-        expect(pbi.status).to eq Statuses::Ready
-
-        pbi.remove_acceptance_criterion(AcceptanceCriterion.new('AC1'))
-        expect(pbi.status).to eq Statuses::Preparation
       end
     end
   end

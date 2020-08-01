@@ -20,6 +20,16 @@ module Pbi
       self.class.new(@criteria.reject { |c| c == criterion })
     end
 
+    sig {returns(T::Boolean)}
+    def empty?
+      @criteria.empty?
+    end
+
+    sig {returns(Integer)}
+    def size
+      @criteria.size
+    end
+
     sig {returns(T::Array[String])}
     def to_a
       @criteria.map(&:to_s)
