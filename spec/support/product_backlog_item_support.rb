@@ -17,7 +17,7 @@ module ProductBacklogItemSupport
       cc.is_a?(String)? Pbi::AcceptanceCriterion.new(cc) : cc
     end
     criteria.each do |ac|
-      AddAcceptanceCriterionUsecase.new.perform(pbi.id, ac)
+      AddAcceptanceCriterionUsecase.perform(pbi.id, ac)
     end
   end
 end
