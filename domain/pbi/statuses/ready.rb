@@ -8,9 +8,9 @@ module Pbi
         extend T::Sig
         include Status
 
-        sig {override.params(pbi: Item).returns(Status)}
-        def update_by(pbi)
-          if pbi.acceptance_criteria.size >= 1 && pbi.size_estimated?
+        sig {override.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
+        def update_by_prepartion(criteria, size)
+          if Preparation.update_by_prepartion(criteria, size) == self
             self
           else
             Preparation

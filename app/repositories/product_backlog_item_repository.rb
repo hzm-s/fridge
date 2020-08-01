@@ -11,12 +11,12 @@ module ProductBacklogItemRepository
       def find_by_id(id)
         r = Dao::ProductBacklogItem.eager_load(:criteria).find(id)
         Pbi::Item.from_repository(
-          Pbi::Id.from_string(r.id),
-          Product::Id.from_string(r.dao_product_id),
-          Pbi::Statuses.from_string(r.status),
-          Pbi::Content.new(r.content),
-          Pbi::StoryPoint.new(r.size),
-          r.criteria.map { |c| Pbi::AcceptanceCriterion.new(c.content) }
+          r.pbi_id_as_do,
+          r.product_id_as_do,
+          r.status_as_do,
+          r.content_as_do,
+          r.story_point_as_do,
+          r.acceptance_criteria_as_do
         )
       end
 
@@ -39,7 +39,7 @@ module ProductBacklogItemRepository
         r.size = pbi.size.to_i
 
         r.criteria.clear
-        pbi.acceptance_criteria.each do |ac|
+        pbi.acceptance_criteria.to_a.each do |ac|
           r.criteria.build(content: ac.to_s)
         end
 

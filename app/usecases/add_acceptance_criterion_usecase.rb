@@ -12,7 +12,10 @@ class AddAcceptanceCriterionUsecase < UsecaseBase
   sig {params(pbi_id: Pbi::Id, criterion: Pbi::AcceptanceCriterion).void}
   def perform(pbi_id, criterion)
     pbi = @repository.find_by_id(pbi_id)
-    pbi.add_acceptance_criterion(criterion)
+
+    criteria = pbi.acceptance_criteria.append(criterion)
+    pbi.update_acceptance_criteria(criteria)
+
     @repository.update(pbi)
   end
 end

@@ -16,7 +16,7 @@ module Pbi
           Statuses::Preparation,
           content,
           StoryPoint.unknown,
-          []
+          AcceptanceCriteria.new([])
         )
       end
 
@@ -26,7 +26,7 @@ module Pbi
         status: Status,
         content: Content,
         size: StoryPoint,
-        acceptance_criteria: T::Array[AcceptanceCriterion]
+        acceptance_criteria: AcceptanceCriteria
       ).returns(T.attached_class)}
       def from_repository(id, product_id, status, content, size, acceptance_criteria)
         new(id, product_id, status, content, size, acceptance_criteria)
@@ -48,7 +48,7 @@ module Pbi
     sig {returns(StoryPoint)}
     attr_reader :size
 
-    sig {returns(T::Array[AcceptanceCriterion])}
+    sig {returns(AcceptanceCriteria)}
     attr_reader :acceptance_criteria
 
     sig {params(
@@ -57,7 +57,7 @@ module Pbi
       status: Status,
       content: Content,
       point: StoryPoint,
-      acceptance_criteria: T::Array[AcceptanceCriterion]
+      acceptance_criteria: AcceptanceCriteria
     ).void}
     def initialize(id, product_id, status, content, point, acceptance_criteria)
       @id = id
@@ -69,37 +69,27 @@ module Pbi
     end
     private_class_method :new
 
-    sig {params(criterion: AcceptanceCriterion).void}
-    def add_acceptance_criterion(criterion)
-      @acceptance_criteria += [criterion]
-      @status = @status.update_by(self)
-    end
-
-    sig {params(criterion: AcceptanceCriterion).void}
-    def remove_acceptance_criterion(criterion)
-      @acceptance_criteria = @acceptance_criteria.reject { |c| c == criterion }
-      @status = @status.update_by(self)
-    end
-
-    sig {params(point: StoryPoint).void}
-    def estimate_size(point)
-      @size = point
-      @status = @status.update_by(self)
-    end
-
     sig {params(content: Content).void}
     def update_content(content)
       @content = content
     end
 
-    sig {returns(T::Boolean)}
-    def have_acceptance_criteria?
-      !@acceptance_criteria.empty?
+    sig {params(criteria: AcceptanceCriteria).void}
+    def update_acceptance_criteria(criteria)
+      @acceptance_criteria = criteria
+      update_by_prepartion
     end
 
-    sig {returns(T::Boolean)}
-    def size_estimated?
-      @size != StoryPoint.unknown
+    sig {params(point: StoryPoint).void}
+    def estimate_size(point)
+      @size = point
+      update_by_prepartion
+    end
+
+    private
+
+    def update_by_prepartion
+      @status = @status.update_by_prepartion(acceptance_criteria, size)
     end
   end
 end
