@@ -19,7 +19,7 @@
     <% end %>
     <% if item.status.can_cancel_assignment? %>
       <div class="dropdown-divider"></div>
-      <%= link_to '#', remote: true, class: 'dropdown-item' do %>
+      <%= link_to product_backlog_item_assignment_path(item.id), method: :delete, remote: true, class: 'dropdown-item' do %>
         <%=t 'domain.pbi.cancel_assignment' %>
       <% end %>
     <% end %>
