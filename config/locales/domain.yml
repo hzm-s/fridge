@@ -6,6 +6,7 @@ ja:
         preparation: 準備中
         ready: 準備完了
         todo: 作業予定
+      assign: 作業予定にする
 
     team:
       role:

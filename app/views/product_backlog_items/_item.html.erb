@@ -14,6 +14,12 @@
           <i class="fas fa-ellipsis-h"></i>
         <% end -%>
         <div class="dropdown-menu dropdown-menu-right">
+          <% if item.status.can_assign? %>
+            <%= link_to '#', class: 'dropdown-item' do %>
+              <%=t 'domain.pbi.assign' %>
+            <% end %>
+            <div class="dropdown-divider"></div>
+          <% end %>
           <%= link_to edit_product_backlog_item_path(item.id), class: 'dropdown-item' do %>
             <i class="fas fa-edit"></i>
             <%=t 'navs.edit' %>
