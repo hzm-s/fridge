@@ -8,14 +8,19 @@ module Pbi
         extend T::Sig
         include Status
 
+        sig {override.returns(T::Boolean)}
+        def can_assign?
+          false
+        end
+
         sig {override.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
         def update_by_prepartion(criteria, size)
           self
         end
 
-        sig {override.returns(T::Boolean)}
-        def can_assign?
-          false
+        sig {override.returns(Status)}
+        def update_to_todo
+          raise AssignProductBacklogItemNotAllowed
         end
 
         sig {override.returns(String)}

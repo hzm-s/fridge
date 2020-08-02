@@ -13,6 +13,9 @@ module Pbi
     sig {abstract.returns(T::Boolean)}
     def can_assign?; end
 
+    sig {abstract.returns(Status)}
+    def update_to_todo; end
+
     sig {abstract.returns(String)}
     def to_s; end
   end

@@ -41,6 +41,13 @@ module Pbi
           end
         end
       end
+
+      describe '#update_to_todo' do
+        it do
+          expect { described_class.update_to_todo }
+            .to raise_error AssignProductBacklogItemNotAllowed
+        end
+      end
     end
   end
 end

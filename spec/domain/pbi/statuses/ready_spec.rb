@@ -41,6 +41,13 @@ module Pbi
           end
         end
       end
+
+      describe '#update_to_todo' do
+        it do
+          status = described_class.update_to_todo
+          expect(status).to eq Todo
+        end
+      end
     end
   end
 end
