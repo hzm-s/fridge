@@ -13,7 +13,7 @@
     <% end %>
     <% if item.status.can_assign? %>
       <div class="dropdown-divider"></div>
-      <%= link_to product_backlog_item_assignments_path(product_backlog_item_id: item.id), method: :post, remote: true, class: 'dropdown-item' do %>
+      <%= link_to product_backlog_item_assignments_path(id: item.id), method: :post, remote: true, class: 'dropdown-item' do %>
         <%=t 'domain.pbi.assign' %>
       <% end %>
     <% end %>

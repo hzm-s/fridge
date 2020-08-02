@@ -1,3 +1,5 @@
-<% flash.each do |type, msg| %>
-  <div id="js-flash" data-controller="flash" data-flash-type="<%= type %>" data-flash-message="<%= msg %>"></div>
-<% end %>
+<div id="js-flash-container">
+  <% flash.each do |type, msg| %>
+    <div id="js-flash" data-controller="flash" data-flash-type="<%= type %>" data-flash-message="<%= msg %>"></div>
+  <% end %>
+</div>

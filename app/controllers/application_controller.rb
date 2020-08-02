@@ -8,7 +8,11 @@ class ApplicationController < ActionController::Base
   protected
 
   def flash_success(key)
-    { success: I18n.t(key, scope: 'feedbacks') }
+    { success: feedback_message(key) }
+  end
+
+  def feedback_message(key)
+    I18n.t(key, scope: 'feedbacks')
   end
 
   private

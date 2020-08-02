@@ -8,7 +8,7 @@ RSpec.describe 'product_backlog_item_assignment' do
   describe '#create' do
     it do
       expect {
-        post product_backlog_item_assignments_path(product_backlog_item_id: pbi.id.to_s, format: :js)
+        post product_backlog_item_assignments_path(id: pbi.id.to_s, format: :js)
       }
         .to change { Dao::ProductBacklogItem.find(pbi.id.to_s).status }
         .from(Pbi::Statuses::Ready.to_s)
@@ -16,7 +16,7 @@ RSpec.describe 'product_backlog_item_assignment' do
     end
 
     it do
-      post product_backlog_item_assignments_path(product_backlog_item_id: pbi.id.to_s, format: :js)
+      post product_backlog_item_assignments_path(id: pbi.id.to_s, format: :js)
       expect(response.body).to include 'todo'
     end
   end
