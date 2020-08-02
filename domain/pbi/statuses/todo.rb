@@ -3,7 +3,7 @@ require 'sorbet-runtime'
 
 module Pbi
   module Statuses
-    module Wip
+    module Todo
       class << self
         extend T::Sig
         include Status
@@ -15,7 +15,7 @@ module Pbi
 
         sig {override.returns(String)}
         def to_s
-          'wip'
+          'todo'
         end
       end
     end

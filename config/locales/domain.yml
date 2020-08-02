@@ -5,7 +5,7 @@ ja:
         draft: 下書き
         preparation: 準備中
         ready: 準備完了
-        wip: 着手中
+        todo: 作業予定
 
     team:
       role:
