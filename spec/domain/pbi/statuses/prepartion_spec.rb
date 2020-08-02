@@ -4,6 +4,12 @@ require 'rails_helper'
 module Pbi
   module Statuses
     RSpec.describe Preparation do
+      describe '#can_assign?' do
+        it do
+          expect(described_class).to_not be_can_assign
+        end
+      end
+
       describe '#update_by_prepartion' do
         context 'AcceptanceCriteria >= 1 and size == unknown' do
           it do
@@ -33,6 +39,13 @@ module Pbi
             )
             expect(status).to eq Preparation
           end
+        end
+      end
+
+      describe '#update_to_todo' do
+        it do
+          expect { described_class.update_to_todo }
+            .to raise_error AssignProductBacklogItemNotAllowed
         end
       end
     end

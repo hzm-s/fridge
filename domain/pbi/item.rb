@@ -77,19 +77,24 @@ module Pbi
     sig {params(criteria: AcceptanceCriteria).void}
     def update_acceptance_criteria(criteria)
       @acceptance_criteria = criteria
-      update_by_prepartion
+      update_status_by_prepartion
     end
 
     sig {params(point: StoryPoint).void}
     def estimate_size(point)
       @size = point
-      update_by_prepartion
+      update_status_by_prepartion
+    end
+
+    sig {void}
+    def assign
+      @status = @status.update_to_todo
     end
 
     private
 
     sig {returns(Status)}
-    def update_by_prepartion
+    def update_status_by_prepartion
       @status = @status.update_by_prepartion(acceptance_criteria, size)
     end
   end

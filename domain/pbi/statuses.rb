@@ -9,7 +9,7 @@ module Pbi
       MAP = T.let({
         'preparation' => Preparation,
         'ready' => Ready,
-        'wip' => Wip,
+        'todo' => Todo,
       }, T::Hash[String, Status])
 
       sig {params(str: String).returns(Status)}

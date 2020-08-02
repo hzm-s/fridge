@@ -54,6 +54,9 @@ module Pbi
 
         pbi.update_acceptance_criteria(acceptance_criteria(%w(AC1)))
         expect(pbi.status).to eq Statuses::Ready
+
+        pbi.assign
+        expect(pbi.status).to eq Statuses::Todo
       end
     end
   end
