@@ -88,6 +88,7 @@ module Pbi
 
     private
 
+    sig {returns(Status)}
     def update_by_prepartion
       @status = @status.update_by_prepartion(acceptance_criteria, size)
     end
