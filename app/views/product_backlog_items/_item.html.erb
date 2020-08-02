@@ -9,27 +9,7 @@
         <i class="fas fa-list"></i>
       <% end %>
       <%= render partial: 'product_backlog_items/point_form', locals: { item: item } %>
-      <div class="dropdown">
-        <%= link_to '#', dd_trigger_options(id: "dd-pbi-#{item.id}", class: 'pbl-item__menu') do %>
-          <i class="fas fa-ellipsis-h"></i>
-        <% end -%>
-        <div class="dropdown-menu dropdown-menu-right">
-          <%= link_to edit_product_backlog_item_path(item.id), class: 'dropdown-item' do %>
-            <i class="fas fa-edit"></i>
-            <%=t 'navs.edit' %>
-          <% end %>
-          <%= link_to product_backlog_item_path(item.id), method: :delete, class: 'dropdown-item text-danger', data: { confirm: t('navs.confirm_delete') } do %>
-            <i class="fas fa-trash-alt"></i>
-            <%=t 'navs.delete' %>
-          <% end %>
-          <% if item.status.can_assign? %>
-            <div class="dropdown-divider"></div>
-            <%= link_to product_backlog_item_assignments_path(product_backlog_item_id: item.id), method: :post, remote: true, class: 'dropdown-item' do %>
-              <%=t 'domain.pbi.assign' %>
-            <% end %>
-          <% end %>
-        </div>
-      </div>
+      <%= render partial: 'product_backlog_items/item_menu', locals: { item: item } %>
     </div>
   </div>
   <div class="collapse pbl-item__ac" id="clp-pbi-ac-<%= item.id %>">
