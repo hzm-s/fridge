@@ -10,6 +10,12 @@ module Pbi
         end
       end
 
+      describe '#can_cancel_assignment?' do
+        it do
+          expect(described_class).to_not be_can_cancel_assignment
+        end
+      end
+
       describe '#update_by_prepartion' do
         context 'AcceptanceCriteria >= 1 and size == unknown' do
           it do
@@ -46,6 +52,13 @@ module Pbi
         it do
           status = described_class.update_to_todo
           expect(status).to eq Todo
+        end
+      end
+
+      describe '#update_by_cancel_assignment' do
+        it do
+          expect { described_class.update_by_cancel_assignment }
+            .to raise_error ProductBacklogItemIsNotAssigned
         end
       end
     end

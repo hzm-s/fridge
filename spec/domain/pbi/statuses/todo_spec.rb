@@ -10,10 +10,23 @@ module Pbi
         end
       end
 
+      describe '#can_cancel_assignment?' do
+        it do
+          expect(described_class).to be_can_cancel_assignment
+        end
+      end
+
       describe '#update_to_todo' do
         it do
           expect { described_class.update_to_todo }
             .to raise_error AssignProductBacklogItemNotAllowed
+        end
+      end
+
+      describe '#update_by_cancel_assignment' do
+        it do
+          status = described_class.update_by_cancel_assignment
+          expect(status).to eq Ready
         end
       end
     end

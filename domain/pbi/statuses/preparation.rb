@@ -13,6 +13,11 @@ module Pbi
           false
         end
 
+        sig {override.returns(T::Boolean)}
+        def can_cancel_assignment?
+          false
+        end
+
         sig {override.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
         def update_by_prepartion(criteria, size)
           if criteria.size > 0 && size != StoryPoint.unknown
@@ -25,6 +30,11 @@ module Pbi
         sig {override.returns(Status)}
         def update_to_todo
           raise AssignProductBacklogItemNotAllowed
+        end
+
+        sig {override.returns(Status)}
+        def update_by_cancel_assignment
+          raise ProductBacklogItemIsNotAssigned
         end
 
         sig {override.returns(String)}
