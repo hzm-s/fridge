@@ -4,6 +4,12 @@ require 'rails_helper'
 module Pbi
   module Statuses
     RSpec.describe Preparation do
+      describe '#can_assign?' do
+        it do
+          expect(described_class).to_not be_can_assign
+        end
+      end
+
       describe '#update_by_prepartion' do
         context 'AcceptanceCriteria >= 1 and size == unknown' do
           it do

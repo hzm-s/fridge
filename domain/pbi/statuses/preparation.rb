@@ -17,6 +17,11 @@ module Pbi
           end
         end
 
+        sig {override.returns(T::Boolean)}
+        def can_assign?
+          false
+        end
+
         sig {override.returns(String)}
         def to_s
           'preparation'

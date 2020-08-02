@@ -10,6 +10,9 @@ module Pbi
     sig {abstract.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
     def update_by_prepartion(criteria, size); end
 
+    sig {abstract.returns(T::Boolean)}
+    def can_assign?; end
+
     sig {abstract.returns(String)}
     def to_s; end
   end
