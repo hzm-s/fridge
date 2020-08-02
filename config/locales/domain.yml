@@ -7,6 +7,7 @@ ja:
         ready: 準備完了
         todo: 作業予定
       assign: 作業予定にする
+      cancel_assignment: 作業予定を取り消す
 
     team:
       role:

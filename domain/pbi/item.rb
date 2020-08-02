@@ -91,6 +91,11 @@ module Pbi
       @status = @status.update_to_todo
     end
 
+    sig {void}
+    def cancel_assignment
+      @status = @status.update_by_cancel_assignment
+    end
+
     private
 
     sig {returns(Status)}

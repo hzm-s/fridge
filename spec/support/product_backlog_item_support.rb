@@ -7,7 +7,7 @@ module ProductBacklogItemSupport
     add_acceptance_criteria(pbi, acceptance_criteria)
 
     return pbi unless size
-    estimate_size(pbi, size)
+    estimate_size(pbi.id, size)
 
     ProductBacklogItemRepository::AR.find_by_id(pbi.id)
   end
@@ -30,8 +30,12 @@ module ProductBacklogItemSupport
       .yield_self { |criteria| Pbi::AcceptanceCriteria.new(criteria) }
   end
 
-  def estimate_size(pbi, size)
-    EstimateProductBacklogItemSizeUsecase.perform(pbi.id, Pbi::StoryPoint.new(size))
+  def estimate_size(pbi_id, size)
+    EstimateProductBacklogItemSizeUsecase.perform(pbi_id, Pbi::StoryPoint.new(size))
+  end
+
+  def assign_pbi(pbi_id)
+    AssignProductBacklogItemUsecase.perform(pbi_id)
   end
 
   private

@@ -57,6 +57,9 @@ module Pbi
 
         pbi.assign
         expect(pbi.status).to eq Statuses::Todo
+
+        pbi.cancel_assignment
+        expect(pbi.status).to eq Statuses::Ready
       end
     end
   end

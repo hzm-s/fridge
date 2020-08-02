@@ -9,6 +9,8 @@ ja:
       create: プロダクトバックログアイテムを追加しました
       update: プロダクトバックログアイテムを更新しました
       destroy: プロダクトバックログアイテムを削除しました
+      assigned: 作業予定にしました
+      cancel_assignment: 作業予定を取り消しました
     product:
       create: プロダクトを作成しました
 
