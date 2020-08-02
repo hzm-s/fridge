@@ -10,4 +10,12 @@ RSpec.describe ProductBacklogItemQuery do
     item = described_class.call(pbi.id.to_s)
     expect(item.status).to be_can_assign
   end
+
+  it '作業予定の取り下げができるかを返すこと' do
+    pbi = add_pbi(product.id, acceptance_criteria: %w(ac1), size: 1)
+    assign_pbi(pbi.id)
+
+    item = described_class.call(pbi.id.to_s)
+    expect(item.status).to be_can_cancel_assignment
+  end
 end
