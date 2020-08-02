@@ -1,5 +1,11 @@
 # typed: true
 module ProductBacklogItemListQuery
+  class Item < SimpleDelegator
+    def status
+      Pbi::Statuses.from_string(super)
+    end
+  end
+
   class << self
     def call(product_id)
       order = fetch_order(product_id)
@@ -19,7 +25,8 @@ module ProductBacklogItemListQuery
     end
 
     def fetch_items(product_id)
-      Dao::ProductBacklogItem.eager_load(:criteria).where(dao_product_id: product_id).to_a
+      rel = Dao::ProductBacklogItem.eager_load(:criteria).where(dao_product_id: product_id)
+      rel.map { |r| Item.new(r) }
     end
   end
 end

@@ -21,10 +21,16 @@ RSpec.describe ProductBacklogItemListQuery do
   end
 
   it '受け入れ基準がある場合は受け入れ基準を含むこと' do
-    pbi = add_pbi(product.id)
-    add_acceptance_criteria(pbi, ['ac1'])
+    pbi = add_pbi(product.id, acceptance_criteria: %w(ac1 ac2 ac3))
 
-    item = described_class.call(product.id.to_s)[0]
-    expect(item.criteria.map(&:content)).to match_array ['ac1']
+    item = described_class.call(product.id.to_s).first
+    expect(item.criteria.map(&:content)).to eq %w(ac1 ac2 ac3) 
+  end
+
+  it '作業予定にできるかを返すこと' do
+    pbi = add_pbi(product.id, acceptance_criteria: %w(ac1), size: 1)
+
+    item = described_class.call(product.id.to_s).first
+    expect(item.status).to be_can_assign
   end
 end

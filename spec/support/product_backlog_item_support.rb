@@ -1,14 +1,14 @@
 # typed: true
 module ProductBacklogItemSupport
-  def add_pbi(product_id, content = 'fridge helps scrum', acceptance_criteria: nil)
-    pbi =
-      Pbi::Content.new(content)
-        .yield_self { |c| AddProductBacklogItemUsecase.perform(product_id, c) }
-        .yield_self { |id| ProductBacklogItemRepository::AR.find_by_id(id) }
+  def add_pbi(product_id, content = 'fridge helps scrum', acceptance_criteria: nil, size: nil)
+    pbi = perform_to_add_pbi(product_id, content)
 
     return pbi unless acceptance_criteria
-
     add_acceptance_criteria(pbi, acceptance_criteria)
+
+    return pbi unless size
+    estimate_size(pbi, size)
+
     ProductBacklogItemRepository::AR.find_by_id(pbi.id)
   end
 
@@ -28,6 +28,18 @@ module ProductBacklogItemSupport
   def acceptance_criteria(contents)
     contents.map { |c| acceptance_criterion(c) }
       .yield_self { |criteria| Pbi::AcceptanceCriteria.new(criteria) }
+  end
+
+  def estimate_size(pbi, size)
+    EstimateProductBacklogItemSizeUsecase.perform(pbi.id, Pbi::StoryPoint.new(size))
+  end
+
+  private
+
+  def perform_to_add_pbi(product_id, content)
+    Pbi::Content.new(content)
+      .yield_self { |c| AddProductBacklogItemUsecase.perform(product_id, c) }
+      .yield_self { |id| ProductBacklogItemRepository::AR.find_by_id(id) }
   end
 end
 
