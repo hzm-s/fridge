@@ -33,4 +33,22 @@ RSpec.describe ProductBacklogItemListQuery do
     item = described_class.call(product.id.to_s).first
     expect(item.status).to be_can_assign
   end
+
+  it '指定されたステータスのアイテムのみを返すこと' do
+    pbi_a = add_pbi(product.id, acceptance_criteria: %w(criterion))
+    pbi_b = add_pbi(product.id, acceptance_criteria: %w(ac9), size: 1, assigned: true)
+    pbi_c = add_pbi(product.id, acceptance_criteria: %w(ac1 ac2), size: 5)
+    pbi_d = add_pbi(product.id, acceptance_criteria: %w(ac6 ac7 ac8), size: 2, assigned: true)
+    pbi_e = add_pbi(product.id, size: 3)
+    pbi_f = add_pbi(product.id, acceptance_criteria: %w(ac3 ac4 ac5), size: 3)
+
+    preparation = described_class.call(product.id.to_s, status: 'preparation')
+    expect(preparation.map(&:id)).to eq [pbi_a, pbi_e].map(&:id).map(&:to_s)
+
+    ready = described_class.call(product.id.to_s, status: 'ready')
+    expect(ready.map(&:id)).to eq [pbi_c, pbi_f].map(&:id).map(&:to_s)
+
+    todo = described_class.call(product.id.to_s, status: 'todo')
+    expect(todo.map(&:id)).to eq [pbi_b, pbi_d].map(&:id).map(&:to_s)
+  end
 end

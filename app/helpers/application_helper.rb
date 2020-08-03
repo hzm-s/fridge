@@ -1,8 +1,5 @@
 # typed: false
 module ApplicationHelper
-  include BootstrapHelper
-  include PbiHelper
-
   WEB_FONT_URL = 'https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css'.freeze
 
   def web_font_link_tag

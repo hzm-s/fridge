@@ -48,10 +48,19 @@
 
 .pbl-item__grip {
   margin-right: .75rem;
-  color: $gray-500;
+  color: $secondary;
 
   &:hover {
     cursor: pointer;
+  }
+}
+
+.pbl-item__grip--disabled {
+  margin-right: .75rem;
+  color: $gray-200;
+
+  &:hover {
+    cursor: not-allowed;
   }
 }
 

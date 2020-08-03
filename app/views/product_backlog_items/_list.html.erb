@@ -1,0 +1,3 @@
+<%= content_tag :div, class: 'pbl__list', data: is_sortable ? sortable_pbl_options(product_id) : {} do %>
+  <%= render partial: 'item', collection: items, locals: { is_sortable: is_sortable } %>
+<% end %>

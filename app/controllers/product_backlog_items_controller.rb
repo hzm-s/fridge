@@ -5,10 +5,10 @@ class ProductBacklogItemsController < ApplicationController
   before_action :require_user
   before_action :sanitize_status_filter, only: [:index]
 
-  helper_method :current_product_id, :current_filter_status
+  helper_method :current_product_id, :current_filter_status, :show_all?
 
   def index
-    @items = ProductBacklogItemListQuery.call(params[:product_id])
+    @items = ProductBacklogItemListQuery.call(params[:product_id], status: params[:status])
     @form = ProductBacklogItemForm.new
   end
 
@@ -69,5 +69,9 @@ class ProductBacklogItemsController < ApplicationController
     return product_id if product_id
 
     Dao::ProductBacklogItem.find(params[:id]).product_id
+  end
+
+  def show_all?
+    params[:status].blank?
   end
 end
