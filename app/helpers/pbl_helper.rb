@@ -1,4 +1,4 @@
-# typed: true
+# typed: false
 module PblHelper
   STATUS_FILTER_CLASSES_BASE = 'pbl__filter btn'.freeze
 
