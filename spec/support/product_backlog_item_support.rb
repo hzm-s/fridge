@@ -1,6 +1,6 @@
 # typed: true
 module ProductBacklogItemSupport
-  def add_pbi(product_id, content = 'fridge helps scrum', acceptance_criteria: nil, size: nil)
+  def add_pbi(product_id, content = 'fridge helps scrum', acceptance_criteria: nil, size: nil, assigned: false)
     pbi = perform_to_add_pbi(product_id, content)
 
     return pbi unless acceptance_criteria
@@ -8,6 +8,9 @@ module ProductBacklogItemSupport
 
     return pbi unless size
     estimate_size(pbi.id, size)
+
+    return pbi unless assigned
+    assign_pbi(pbi.id)
 
     ProductBacklogItemRepository::AR.find_by_id(pbi.id)
   end

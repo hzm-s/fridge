@@ -1,2 +1,2 @@
-$('#js-pbl-item-<%= @item.id %>').replaceWith('<%=j render partial: 'product_backlog_items/item', locals: { item: @item } %>')
+$('#js-pbl-item-<%= @item.id %>').replaceWith('<%=j render partial: 'product_backlog_items/item', locals: { is_sortable: true, item: @item } %>')
 $('#js-flash-container').replaceWith('<%=j render partial: 'application/flash' %>')
