@@ -14,9 +14,7 @@
       </h1>
     </div>
     <%= render partial: 'filters', locals: { product_id: current_product_id, current: params[:status].to_s } %>
-    <div class="pbl__list" data-controller="sort-pbl" data-sort-pbl-handle=".pbl-item__grip" data-sort-pbl-url="<%= product_product_backlog_item_order_path(product_id: params[:product_id]) %>">
-      <%= render partial: 'item', collection: @items %>
-    </div>
+    <%= render partial: 'list', locals: { product_id: current_product_id, items: @items } %>
     <div id="anchor-new-pbi" class="pbl__form form-outer">
       <%= render partial: 'form', locals: { form: @form, url: product_product_backlog_items_path(params[:product_id]), method: :post, btn_label: t('.add') } %>
     </div>
