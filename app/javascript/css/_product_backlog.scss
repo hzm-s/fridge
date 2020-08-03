@@ -55,6 +55,15 @@
   }
 }
 
+.pbl-item__grip--disabled {
+  margin-right: .75rem;
+  color: $gray-200;
+
+  &:hover {
+    cursor: not-allowed;
+  }
+}
+
 .pbl-item__content {
   padding-right: .5rem;
   margin-bottom: 0;
