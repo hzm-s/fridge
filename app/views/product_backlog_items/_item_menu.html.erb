@@ -7,9 +7,11 @@
       <i class="fas fa-edit"></i>
       <%=t 'navs.edit' %>
     <% end %>
-    <%= link_to product_backlog_item_path(item.id), method: :delete, class: 'dropdown-item text-danger', data: { confirm: t('navs.confirm_delete') } do %>
-      <i class="fas fa-trash-alt"></i>
-      <%=t 'navs.delete' %>
+    <% if item.status.can_remove? %>
+      <%= link_to product_backlog_item_path(item.id), method: :delete, class: 'dropdown-item text-danger', data: { confirm: t('navs.confirm_delete') } do %>
+        <i class="fas fa-trash-alt"></i>
+        <%=t 'navs.delete' %>
+      <% end %>
     <% end %>
     <% if item.status.can_assign? %>
       <div class="dropdown-divider"></div>
