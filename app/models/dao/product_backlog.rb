@@ -1,4 +1,4 @@
-# typed: strict
+# typed: false
 class Dao::ProductBacklog < ApplicationRecord
   def product_id_as_do
     Product::Id.from_string(dao_product_id)
