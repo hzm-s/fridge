@@ -16,6 +16,12 @@ module Pbi
         end
       end
 
+      describe '#can_remove?' do
+        it do
+          expect(described_class).to be_can_remove
+        end
+      end
+
       describe '#update_by_prepartion' do
         context 'AcceptanceCriteria >= 1 and size == unknown' do
           it do

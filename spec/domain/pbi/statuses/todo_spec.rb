@@ -16,6 +16,12 @@ module Pbi
         end
       end
 
+      describe '#can_remove?' do
+        it do
+          expect(described_class).to_not be_can_remove
+        end
+      end
+
       describe '#update_to_todo' do
         it do
           expect { described_class.update_to_todo }

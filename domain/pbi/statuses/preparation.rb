@@ -18,6 +18,11 @@ module Pbi
           false
         end
 
+        sig {override.returns(T::Boolean)}
+        def can_remove?
+          true
+        end
+
         sig {override.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
         def update_by_prepartion(criteria, size)
           if criteria.size > 0 && size != StoryPoint.unknown
