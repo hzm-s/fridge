@@ -11,7 +11,7 @@ module UserRepository
       def find_by_id(id)
         r = Dao::User.find(id)
         User::User.from_repository(
-          User::Id.from_string(r.id),
+          r.user_id_as_do,
           r.email,
           r.name,
           r.initials

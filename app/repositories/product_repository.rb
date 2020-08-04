@@ -10,15 +10,10 @@ module ProductRepository
       sig {override.params(id: Product::Id).returns(Product::Product)}
       def find_by_id(id)
         r = Dao::Product.find(id)
-
-        members = r.members.map do |m|
-          Team::Member.new(User::Id.from_string(m.dao_user_id), Team::Role.deserialize(m.role))
-        end
-
         Product::Product.from_repository(
-          Product::Id.from_string(r.id),
+          r.product_id_as_do,
           r.name,
-          Team::Team.new(members),
+          r.team_as_do,
           r.description
         )
       end

@@ -15,8 +15,8 @@ module ProductBacklogItemOrderRepository
         return nil unless r
 
         Pbi::Order.from_repository(
-          product_id,
-          r.product_backlog_item_ids.map { |id| Pbi::Id.from_string(id) }
+          r.product_id_as_do,
+          r.product_backlog_item_ids_as_do
         )
       end
 
