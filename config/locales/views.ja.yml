@@ -46,6 +46,8 @@ ja:
       title_ac: 受け入れ基準
     acceptance_criteria:
       empty: 受け入れ基準はありません
+    item_menu:
+      confirm_cancel_assignment: 本当に作業予定を取り消しますか？
 
   acceptance_criteria:
     form:
