@@ -5,4 +5,8 @@ module Team
   class DuplicatedScrumMaster < InvalidNewMember; end
   class TooLargeDevelopmentTeam < InvalidNewMember; end
   class AlreadyJoined < InvalidNewMember; end
+
+  autoload :Member, 'team/member'
+  autoload :Role, 'team/role'
+  autoload :Team, 'team/team'
 end
