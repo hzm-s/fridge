@@ -13,6 +13,7 @@ class RemoveProductBacklogItemUsecase < UsecaseBase
   sig {params(pbi_id: Pbi::Id).void}
   def perform(pbi_id)
     pbi = @pbi_repository.find_by_id(pbi_id)
+    raise Pbi::ItemCanNotRemove unless pbi.status.can_remove?
 
     order = @order_repository.find_by_product_id(pbi.product_id)
     return unless order

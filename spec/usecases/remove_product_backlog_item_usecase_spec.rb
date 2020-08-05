@@ -3,10 +3,10 @@ require 'rails_helper'
 
 RSpec.describe RemoveProductBacklogItemUsecase do
   let!(:product) { create_product }
-  let!(:pbi) { add_pbi(product.id) }
   let!(:ex_pbi) { add_pbi(product.id) }
 
   it do
+    pbi = add_pbi(product.id)
     described_class.perform(pbi.id)
 
     expect { ProductBacklogItemRepository::AR.find_by_id(pbi.id) }
@@ -14,5 +14,12 @@ RSpec.describe RemoveProductBacklogItemUsecase do
 
     order = ProductBacklogItemOrderRepository::AR.find_by_product_id(pbi.product_id)
     expect(order.to_a).to match_array [ex_pbi.id]
+  end
+
+  it do
+    assigned_pbi = add_pbi(product.id, acceptance_criteria: %w(criterion), size: 8, assigned: true)
+
+    expect { described_class.perform(assigned_pbi.id) }
+      .to raise_error(Pbi::ItemCanNotRemove)
   end
 end
