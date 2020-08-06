@@ -1,5 +1,9 @@
 # typed: true
+require_relative '../domain_support/pbi_domain_support'
+
 module ProductBacklogItemSupport
+  include PbiDomainSupport
+
   def add_pbi(product_id, content = 'fridge helps scrum', acceptance_criteria: nil, size: nil, assigned: false)
     pbi = perform_to_add_pbi(product_id, content)
 
@@ -22,15 +26,6 @@ module ProductBacklogItemSupport
     criteria.each do |ac|
       AddAcceptanceCriterionUsecase.perform(pbi.id, ac)
     end
-  end
-
-  def acceptance_criterion(content)
-    Pbi::AcceptanceCriterion.new(content)
-  end
-
-  def acceptance_criteria(contents)
-    contents.map { |c| acceptance_criterion(c) }
-      .yield_self { |criteria| Pbi::AcceptanceCriteria.new(criteria) }
   end
 
   def estimate_size(pbi_id, size)

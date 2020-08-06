@@ -3,6 +3,10 @@ require 'sorbet-runtime'
 
 module Pbi
   module Statuses
+    autoload :Preparation, 'pbi/statuses/preparation'
+    autoload :Ready, 'pbi/statuses/ready'
+    autoload :Todo, 'pbi/statuses/todo'
+
     class << self
       extend T::Sig
 

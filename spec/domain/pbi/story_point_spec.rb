@@ -1,5 +1,5 @@
 # typed: false
-require 'rails_helper'
+require 'domain_helper'
 
 module Pbi
   RSpec.describe StoryPoint do
