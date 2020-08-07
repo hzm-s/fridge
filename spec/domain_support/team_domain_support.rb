@@ -1,5 +1,9 @@
 # typed: false
 module TeamDomainSupport
+  def register_user(name: 'User Name', email: 'us@example.com')
+    User::User.create(name, email)
+  end
+
   def po_member(user_id)
     Team::Member.new(user_id, Team::Role::ProductOwner)
   end
