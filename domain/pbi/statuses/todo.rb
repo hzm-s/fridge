@@ -23,6 +23,11 @@ module Pbi
           false
         end
 
+        sig {override.returns(T::Boolean)}
+        def can_change_size?
+          false
+        end
+
         sig {override.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
         def update_by_prepartion(criteria, size)
           self

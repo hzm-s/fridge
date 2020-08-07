@@ -5,21 +5,19 @@ module Pbi
   module Statuses
     RSpec.describe Ready do
       describe '#can_assign?' do
-        it do
-          expect(described_class).to be_can_assign
-        end
+        it { expect(described_class).to be_can_assign }
       end
 
       describe '#can_cancel_assignment?' do
-        it do
-          expect(described_class).to_not be_can_cancel_assignment
-        end
+        it { expect(described_class).to_not be_can_cancel_assignment }
       end
 
       describe '#can_remove?' do
-        it do
-          expect(described_class).to be_can_remove
-        end
+        it { expect(described_class).to be_can_remove }
+      end
+
+      describe '#can_change_size?' do
+        it { expect(described_class).to be_can_change_size }
       end
 
       describe '#update_by_prepartion' do

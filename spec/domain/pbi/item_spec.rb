@@ -58,6 +58,9 @@ module Pbi
         pbi.assign
         expect(pbi.status).to eq Statuses::Todo
 
+        pbi.estimate_size(StoryPoint.new(5))
+        expect(pbi.size).to eq StoryPoint.new(3)
+
         pbi.cancel_assignment
         expect(pbi.status).to eq Statuses::Ready
       end
