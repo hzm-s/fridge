@@ -16,6 +16,9 @@ module Pbi
     sig {abstract.returns(T::Boolean)}
     def can_remove?; end
 
+    sig {abstract.returns(T::Boolean)}
+    def can_change_size?; end
+
     sig {abstract.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
     def update_by_prepartion(criteria, size); end
 
