@@ -1,5 +1,6 @@
 <div class="dropdown">
-  <%= content_tag :span, present_story_point(item.size), dd_trigger_options(id: "dd-pbi-point-#{item.id}", class: 'pbl-item__point') %>
+  <% opt = item.status.can_estimate_size? ? dd_trigger_options(id: "dd-pbi-point-#{item.id}", class: 'pbl-item__point') : { class: 'pbl-item__point' } %>
+  <%= content_tag :span, present_story_point(item.size), opt %>
   <div class="dropdown-menu dropdown-menu-right p-3 py-2">
     <%= form_with scope: :form, url: product_backlog_item_estimation_path(item.id, is_sortable: is_sortable), method: :put do |f| %>
       <div class="form-group">
