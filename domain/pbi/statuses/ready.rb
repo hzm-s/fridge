@@ -24,7 +24,7 @@ module Pbi
         end
 
         sig {override.returns(T::Boolean)}
-        def can_change_size?
+        def can_estimate_size?
           true
         end
 

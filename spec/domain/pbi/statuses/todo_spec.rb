@@ -16,8 +16,8 @@ module Pbi
         it { expect(described_class).to_not be_can_remove }
       end
 
-      describe '#can_change_size?' do
-        it { expect(described_class).to_not be_can_change_size }
+      describe '#can_estimate_size?' do
+        it { expect(described_class).to_not be_can_estimate_size }
       end
 
       describe '#update_to_todo' do

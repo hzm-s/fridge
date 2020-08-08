@@ -27,7 +27,7 @@ RSpec.describe ProductBacklogItemListQuery do
     expect(item.criteria.map(&:content)).to eq %w(ac1 ac2 ac3) 
   end
 
-  it '各種操作が可能かを返すこと' do
+  it '各操作が可能かを返すこと' do
     pbi = add_pbi(product.id, acceptance_criteria: %w(ac1), size: 1)
 
     item = described_class.call(product.id.to_s).first
@@ -36,6 +36,7 @@ RSpec.describe ProductBacklogItemListQuery do
       expect(item.status).to be_can_assign
       expect(item.status).to_not be_can_cancel_assignment
       expect(item.status).to be_can_remove
+      expect(item.status).to be_can_estimate_size
     end
   end
 
