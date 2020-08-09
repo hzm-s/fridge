@@ -10,9 +10,9 @@ module Plan
       @items = items
     end
 
-    sig {params(pbi_id: Pbi::Id).void}
+    sig {params(pbi_id: Pbi::Id).returns(Release)}
     def add(pbi_id)
-      @items << pbi_id
+      self.class.new(to_a + [pbi_id])
     end
 
     sig {params(pbi_id: Pbi::Id, to: Integer).void}
