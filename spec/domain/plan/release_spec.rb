@@ -13,7 +13,18 @@ module Plan
       it do
         release = described_class.new
         release = release.add(pbi_a)
-        expect(release.to_a).to eq [pbi_a]
+        expect(release.items).to eq [pbi_a]
+      end
+    end
+
+    describe 'remove' do
+      it do
+        release = described_class.new
+        release = release.add(pbi_a)
+        release = release.add(pbi_b)
+        release = release.add(pbi_c)
+        release = release.remove(pbi_b)
+        expect(release.items).to eq [pbi_a, pbi_c]
       end
     end
 
@@ -28,38 +39,38 @@ module Plan
       end
 
       it do
-        @release.move_item_to(pbi_a, 1)
-        expect(@release.to_a).to eq [pbi_a, pbi_b, pbi_c, pbi_d, pbi_e]
+        @release = @release.move_to(pbi_a, 1)
+        expect(@release.items).to eq [pbi_a, pbi_b, pbi_c, pbi_d, pbi_e]
       end
 
       it do
-        @release.move_item_to(pbi_e, 5)
-        expect(@release.to_a).to eq [pbi_a, pbi_b, pbi_c, pbi_d, pbi_e]
+        @release = @release.move_to(pbi_e, 5)
+        expect(@release.items).to eq [pbi_a, pbi_b, pbi_c, pbi_d, pbi_e]
       end
 
       it do
-        @release.move_item_to(pbi_c, 3)
-        expect(@release.to_a).to eq [pbi_a, pbi_b, pbi_c, pbi_d, pbi_e]
+        @release = @release.move_to(pbi_c, 3)
+        expect(@release.items).to eq [pbi_a, pbi_b, pbi_c, pbi_d, pbi_e]
       end
 
       it do
-        @release.move_item_to(pbi_a, 5)
-        expect(@release.to_a).to eq [pbi_b, pbi_c, pbi_d, pbi_e, pbi_a]
+        @release = @release.move_to(pbi_a, 5)
+        expect(@release.items).to eq [pbi_b, pbi_c, pbi_d, pbi_e, pbi_a]
       end
 
       it do
-        @release.move_item_to(pbi_e, 1)
-        expect(@release.to_a).to eq [pbi_e, pbi_a, pbi_b, pbi_c, pbi_d]
+        @release = @release.move_to(pbi_e, 1)
+        expect(@release.items).to eq [pbi_e, pbi_a, pbi_b, pbi_c, pbi_d]
       end
 
       it do
-        @release.move_item_to(pbi_b, 4)
-        expect(@release.to_a).to eq [pbi_a, pbi_c, pbi_d, pbi_b, pbi_e]
+        @release = @release.move_to(pbi_b, 4)
+        expect(@release.items).to eq [pbi_a, pbi_c, pbi_d, pbi_b, pbi_e]
       end
 
       it do
-        @release.move_item_to(pbi_d, 2)
-        expect(@release.to_a).to eq [pbi_a, pbi_d, pbi_b, pbi_c, pbi_e]
+        @release = @release.move_to(pbi_d, 2)
+        expect(@release.items).to eq [pbi_a, pbi_d, pbi_b, pbi_c, pbi_e]
       end
     end
   end
