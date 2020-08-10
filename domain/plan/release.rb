@@ -47,9 +47,9 @@ module Plan
       self.class.new(@title, new_items)
     end
 
-    sig {returns(T::Hash[String, Items])}
+    sig {returns(T::Hash[Symbol, T.any(String, T::Array[String])])}
     def to_h
-      { title: @title, items: items }
+      { title: @title, items: items.map(&:to_s) }
     end
 
     sig {params(other: Release).returns(T::Boolean)}

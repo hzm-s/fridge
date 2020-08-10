@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_22_123744) do
+ActiveRecord::Schema.define(version: 2020_08_10_050340) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -42,6 +42,14 @@ ActiveRecord::Schema.define(version: 2020_07_22_123744) do
     t.index ["dao_product_backlog_item_id"], name: "index_dao_acceptance_criteria_on_dao_product_backlog_item_id"
   end
 
+  create_table "dao_plans", force: :cascade do |t|
+    t.uuid "dao_product_id"
+    t.json "releases"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["dao_product_id"], name: "index_dao_plans_on_dao_product_id"
+  end
+
   create_table "dao_product_backlog_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "dao_product_id"
     t.string "status", null: false
@@ -50,14 +58,6 @@ ActiveRecord::Schema.define(version: 2020_07_22_123744) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["dao_product_id"], name: "idx_product_id_on_pbis"
-  end
-
-  create_table "dao_product_backlogs", force: :cascade do |t|
-    t.uuid "dao_product_id"
-    t.uuid "product_backlog_item_ids", array: true
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["dao_product_id"], name: "idx_product_id_on_blo"
   end
 
   create_table "dao_products", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -88,8 +88,8 @@ ActiveRecord::Schema.define(version: 2020_07_22_123744) do
   add_foreign_key "app_avatars", "dao_users"
   add_foreign_key "app_oauth_accounts", "dao_users"
   add_foreign_key "dao_acceptance_criteria", "dao_product_backlog_items"
+  add_foreign_key "dao_plans", "dao_products"
   add_foreign_key "dao_product_backlog_items", "dao_products"
-  add_foreign_key "dao_product_backlogs", "dao_products"
   add_foreign_key "dao_team_members", "dao_products"
   add_foreign_key "dao_team_members", "dao_users"
 end

@@ -7,7 +7,7 @@ class AddProductBacklogItemUsecase < UsecaseBase
   sig {void}
   def initialize
     @pbi_repository = T.let(ProductBacklogItemRepository::AR, Pbi::ItemRepository)
-    @order_repository = T.let(ProductBacklogItemOrderRepository::AR, Pbi::OrderRepository)
+    @plan_repository = T.let(PlanRepository::AR, Plan::PlanRepository)
   end
 
   sig {params(product_id: Product::Id, content: Pbi::Content).returns(Pbi::Id)}
@@ -15,10 +15,10 @@ class AddProductBacklogItemUsecase < UsecaseBase
     pbi = Pbi::Item.create(product_id, content)
 
     transaction do
-      order = find_order(product_id)
-      order.append(pbi)
+      plan = find_plan(product_id)
+      plan.add_item(pbi.id)
       @pbi_repository.add(pbi)
-      @order_repository.update(order)
+      @plan_repository.update(plan)
     end
 
     pbi.id
@@ -26,11 +26,11 @@ class AddProductBacklogItemUsecase < UsecaseBase
 
   private
 
-  sig {params(product_id: Product::Id).returns(Pbi::Order)}
-  def find_order(product_id)
-    order = @order_repository.find_by_product_id(product_id)
-    return Pbi::Order.create(product_id) unless order
+  sig {params(product_id: Product::Id).returns(Plan::Plan)}
+  def find_plan(product_id)
+    plan = @plan_repository.find_by_product_id(product_id)
+    return Plan::Plan.create(product_id) unless plan
 
-    order
+    plan
   end
 end

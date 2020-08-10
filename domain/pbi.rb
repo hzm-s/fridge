@@ -5,8 +5,6 @@ module Pbi
   class ProductBacklogItemIsNotAssigned < StandardError; end
   class ItemCanNotRemove < StandardError; end
 
-  autoload :Order, 'pbi/order'
-
   autoload :Id, 'pbi/id'
   autoload :Item, 'pbi/item'
   autoload :Content, 'pbi/content'
