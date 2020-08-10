@@ -26,6 +26,17 @@
   background-color: #fff;
 }
 
+.pbl__release {
+  @include nf;
+  background-color: $gray-200;
+  padding: .25rem 1rem;
+  font-size: .875rem;
+}
+
+.pbl-release__title {
+  font-weight: bold;
+}
+
 .pbl__form {
   margin: 1.5rem 3rem 0;
 }

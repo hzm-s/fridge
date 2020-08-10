@@ -1,6 +1,10 @@
 # typed: ignore
+require_relative '../domain_support/user_domain_support'
+
 module UserSupport
   module Common
+    include UserDomainSupport
+
     def register_user(attrs = default_user_registration_attrs)
       RegisterUserUsecase.perform(attrs[:name], attrs[:email], attrs[:oauth_account])
         .yield_self { |user_id| UserRepository::AR.find_by_id(user_id) }
