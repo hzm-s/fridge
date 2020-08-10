@@ -35,10 +35,15 @@ ja:
     new:
       title: 新しいプロダクト
 
+  releases:
+    new:
+      title: 新しいリリース
+
   product_backlog_items:
     index:
       title: プロダクトバックログ
-      add: 追加する
+      add: アイテムを追加する
+      add_release: リリースを追加する
     point_form:
       point: アイテムの大きさ
     edit:

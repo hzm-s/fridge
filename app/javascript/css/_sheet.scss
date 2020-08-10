@@ -1,0 +1,20 @@
+.sheet {
+  padding: 1.5rem 3rem 1.5rem;
+  background-color: #fff;
+  border-radius: .5rem;
+  box-shadow: 0 0 10px $gray-200;
+}
+
+.sheet-sm {
+  padding: 1rem 2rem .75rem;
+}
+
+.sheet__left {
+  position: absolute;
+  left: 3rem;
+}
+
+.sheet__right {
+  position: absolute;
+  right: 3rem;
+}

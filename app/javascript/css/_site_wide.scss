@@ -32,17 +32,6 @@ label {
   border-radius: $border-radius;
 }
 
-.sheet {
-  padding: 1.5rem 3rem 1.5rem;
-  background-color: #fff;
-  border-radius: .5rem;
-  box-shadow: 0 0 10px $gray-200;
-}
-
-.sheet-sm {
-  padding: 1rem 2rem .75rem;
-}
-
 .avatar {
   @include avatar(2.0rem);
 }

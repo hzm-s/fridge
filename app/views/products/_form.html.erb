@@ -11,5 +11,5 @@
     <%= f.label :member_role %>
     <%= f.collection_select :member_role, Team::Role.values, :to_s, -> (v) { t(v, scope: 'domain.team.role') }, { prompt: true }, class: 'form-control' %>
   </div>
-  <%= f.button t('navs.create'), class: 'btn btn-success' %>
+  <%= f.button t('navs.create'), class: 'btn btn-success', data: with_loader %>
 <% end %>
