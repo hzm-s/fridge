@@ -3,7 +3,7 @@ require 'rails_helper'
 
 RSpec.describe 'product_backlog_item_order' do
   let!(:user) { sign_up }
-  let!(:product) { create_product(user_id: User::Id.from_string(user.id)) }
+  let!(:product) { create_product(user_id: user_id(user.id)) }
   let!(:pbi_a) { add_pbi(product.id, 'AAA') }
   let!(:pbi_b) { add_pbi(product.id, 'BBB') }
   let!(:pbi_c) { add_pbi(product.id, 'CCC') }

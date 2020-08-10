@@ -14,9 +14,9 @@
       </h1>
     </div>
     <%= render partial: 'legend' %>
-    <%= render partial: 'list', locals: { product_id: current_product_id, items: @items } %>
+    <%= render partial: 'release', collection: @releases, locals: { product_id: current_product_id } %>
     <div id="anchor-new-pbi" class="pbl__form form-outer">
-      <%= render partial: 'form', locals: { form: @form, url: product_product_backlog_items_path(params[:product_id]), method: :post, btn_label: t('.add') } %>
+      <%= render partial: 'form', locals: { form: @form, url: product_product_backlog_items_path(current_product_id), method: :post, btn_label: t('.add') } %>
     </div>
   </div>
 </div>

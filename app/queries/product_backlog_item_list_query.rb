@@ -1,19 +1,32 @@
 # typed: true
+require 'sorbet-runtime'
+
 module ProductBacklogItemListQuery
   class Item < SimpleDelegator
     def status
-      Pbi::Statuses.from_string(super)
+      @__status ||= Pbi::Statuses.from_string(super)
+    end
+  end
+
+  class Release < T::Struct
+    prop :title, String
+    prop :items, T::Array[Item]
+
+    def self.build(title, ids, all)
+      new(
+        title: title,
+        items: ids.map { |id| all.find { |item| item.id == id } }
+      )
     end
   end
 
   class << self
-    def call(product_id, status: nil)
+    def call(product_id)
       plan = fetch_plan(product_id)
       return [] unless plan
 
-      items = fetch_items(product_id, status: status)
-
-      ordered_items(plan, items)
+      all = fetch_items(product_id)
+      plan.releases.map { |r| Release.build(r['title'], r['items'], all) }
     end
 
     private
@@ -22,19 +35,11 @@ module ProductBacklogItemListQuery
       Dao::Plan.find_by(dao_product_id: product_id)
     end
 
-    def fetch_items(product_id, status: nil)
-      rel = Dao::ProductBacklogItem.eager_load(:criteria).where(dao_product_id: product_id)
-      rel = rel.where(status: status) if status
-      rel.map { |r| Item.new(r) }
-    end
-
-    def ordered_items(plan, items)
-      plan
-        .releases
-        .map { |r| r['items'] }
-        .flatten
-        .map { |id| items.find { |i| i.id == id } }
-        .compact
+    def fetch_items(product_id)
+      Dao::ProductBacklogItem
+        .eager_load(:criteria)
+        .where(dao_product_id: product_id)
+        .map { |r| Item.new(r) }
     end
   end
 end

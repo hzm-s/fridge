@@ -7,7 +7,7 @@ class ProductBacklogItemsController < ApplicationController
   helper_method :current_product_id
 
   def index
-    @items = ProductBacklogItemListQuery.call(params[:product_id])
+    @releases = ProductBacklogItemListQuery.call(params[:product_id])
     @form = ProductBacklogItemForm.new
   end
 

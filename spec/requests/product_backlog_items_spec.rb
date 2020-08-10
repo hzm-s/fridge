@@ -21,6 +21,7 @@ RSpec.describe 'product_backlog_items' do
         get product_product_backlog_items_path(product_id: product.id.to_s)
 
         expect(response.body).to include('ABC')
+        expect(response.body).to include('Untitled')
       end
     end
 
