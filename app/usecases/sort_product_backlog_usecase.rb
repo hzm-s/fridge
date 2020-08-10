@@ -9,12 +9,12 @@ class SortProductBacklogUsecase < UsecaseBase
     @repository = T.let(PlanRepository::AR, Plan::PlanRepository)
   end
 
-  sig {params(product_id: Product::Id, item_id: Pbi::Id, position: Integer).void}
-  def perform(product_id, item_id, position)
+  sig {params(product_id: Product::Id, item_id: Pbi::Id, release: Integer, position: Integer).void}
+  def perform(product_id, item_id, release, position)
     plan = @repository.find_by_product_id(product_id)
     raise unless plan
 
-    plan.move_item(item_id, 1, position)
+    plan.move_item(item_id, release, position)
     @repository.update(plan)
   end
 end
