@@ -1,6 +1,6 @@
-<div id="js-pbl-item-<%= item.id %>" class="pbl-item-outer pbl-item-outer--<%= item.status %>" data-sortable-id="<%= item.id %>">
+<div id="js-pbl-item-<%= item.id %>" class="pbl-item-outer pbl-item-outer--<%= item.status %>" data-pbi-id="<%= item.id %>">
   <div class="pbl-item">
-    <span class="pbl-item__grip<%= is_sortable ? '' : '--disabled' %>">
+    <span class="pbl-item__grip<%= is_sortable ? '' : '--disabled' %> js-sortable-handle">
       <i class="fas fa-grip-vertical"></i>
     </span>
     <%= simple_format(item.content, class: 'pbl-item__content nf') %>
