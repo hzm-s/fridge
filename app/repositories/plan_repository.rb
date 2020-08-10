@@ -7,7 +7,7 @@ module PlanRepository
       extend T::Sig
       include Plan::PlanRepository
 
-      sig {params(product_id: Product::Id).returns(Plan::Plan)}
+      sig {override.params(product_id: Product::Id).returns(Plan::Plan)}
       def find_by_product_id(product_id)
         r = Dao::Plan.find_by(dao_product_id: product_id.to_s)
         Plan::Plan.from_repository(
@@ -19,9 +19,16 @@ module PlanRepository
         )
       end
 
-      sig {params(plan: Plan::Plan).void}
+      sig {override.params(plan: Plan::Plan).void}
       def add(plan)
         r = Dao::Plan.new(dao_product_id: plan.product_id.to_s)
+        r.releases = plan.releases.map(&:to_h)
+        r.save!
+      end
+
+      sig {override.params(plan: Plan::Plan).void}
+      def update(plan)
+        r = Dao::Plan.find_by(dao_product_id: plan.product_id.to_s)
         r.releases = plan.releases.map(&:to_h)
         r.save!
       end

@@ -7,10 +7,13 @@ module Plan
     extend T::Helpers
     interface!
 
-    sig {params(id: Product::Id).returns(Plan)}
+    sig {abstract.params(id: Product::Id).returns(Plan)}
     def find_by_product_id(id); end
 
-    sig {params(plan: Plan).void}
+    sig {abstract.params(plan: Plan).void}
     def add(plan); end
+
+    sig {abstract.params(plan: Plan).void}
+    def update(plan); end
   end
 end
