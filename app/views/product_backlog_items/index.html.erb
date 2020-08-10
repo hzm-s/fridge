@@ -4,23 +4,19 @@
   <div class="col-lg-10 sheet">
     <div class="row d-flex justify-content-center">
       <div class="pbl__actions">
-        <% if show_all? %>
-          <%= link_to '#anchor-new-pbi', class: 'btn btn-outline-success btn-lean', data: { controller: 'hello' } do %>
-            <i class="fas fa-plus"></i>
-            <%=t '.add' %>
-          <% end %>
+        <%= link_to '#anchor-new-pbi', class: 'btn btn-outline-success btn-lean', data: { controller: 'hello' } do %>
+          <i class="fas fa-plus"></i>
+          <%=t '.add' %>
         <% end %>
       </div>
       <h1 class="page-title">
         <%=t '.title' %>
       </h1>
     </div>
-    <%= render partial: 'filters', locals: { product_id: current_product_id, current: params[:status].to_s } %>
-    <%= render partial: 'list', locals: { product_id: current_product_id, items: @items, is_sortable: show_all? } %>
-    <% if show_all? %>
-      <div id="anchor-new-pbi" class="pbl__form form-outer">
-        <%= render partial: 'form', locals: { form: @form, url: product_product_backlog_items_path(params[:product_id]), method: :post, btn_label: t('.add') } %>
-      </div>
-    <% end %>
+    <%= render partial: 'legend' %>
+    <%= render partial: 'list', locals: { product_id: current_product_id, items: @items } %>
+    <div id="anchor-new-pbi" class="pbl__form form-outer">
+      <%= render partial: 'form', locals: { form: @form, url: product_product_backlog_items_path(params[:product_id]), method: :post, btn_label: t('.add') } %>
+    </div>
   </div>
 </div>

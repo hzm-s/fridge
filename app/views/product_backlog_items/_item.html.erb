@@ -1,6 +1,6 @@
 <div id="js-pbl-item-<%= item.id %>" class="pbl-item-outer pbl-item-outer--<%= item.status %>" data-pbi-id="<%= item.id %>">
   <div class="pbl-item">
-    <span class="pbl-item__grip<%= is_sortable ? '' : '--disabled' %> js-sortable-handle">
+    <span class="pbl-item__grip js-sortable-handle">
       <i class="fas fa-grip-vertical"></i>
     </span>
     <%= simple_format(item.content, class: 'pbl-item__content nf') %>
@@ -8,8 +8,8 @@
       <%= link_to "#clp-pbi-ac-#{item.id}", collapse_trigger_options(class: 'pbl-item__ac-trigger') do %>
         <i class="fas fa-list"></i>
       <% end %>
-      <%= render partial: 'product_backlog_items/point_form', locals: { item: item, is_sortable: is_sortable } %>
-      <%= render partial: 'product_backlog_items/item_menu', locals: { item: item, is_sortable: is_sortable } %>
+      <%= render partial: 'product_backlog_items/point_form', locals: { item: item } %>
+      <%= render partial: 'product_backlog_items/item_menu', locals: { item: item } %>
     </div>
   </div>
   <div class="collapse pbl-item__ac" id="clp-pbi-ac-<%= item.id %>">

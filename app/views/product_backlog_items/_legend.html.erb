@@ -1,0 +1,10 @@
+<div class="d-flex justify-content-center">
+  <div class="pbl__status-legend">
+    <% all_pbi_statuses.each do |status| %>
+      <span class="pbl-status-legend__item">
+        <i class="fas fa-square pbi__status--<%= status %>"></i>
+        <%=t status, scope: 'domain.pbi.statuses' %>
+      </span>
+    <% end %>
+  </div>
+</div>
