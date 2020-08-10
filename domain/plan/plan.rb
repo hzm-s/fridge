@@ -12,7 +12,18 @@ module Plan
       def create(product_id)
         new(product_id, [Release.new])
       end
+
+      sig {params(product_id: Product::Id, releases: T::Array[Release]).returns(T.attached_class)}
+      def from_repository(product_id, releases)
+        new(product_id, releases)
+      end
     end
+
+    sig {returns(Product::Id)}
+    attr_reader :product_id
+
+    sig {returns(T::Array[Release])}
+    attr_reader :releases
 
     sig {params(product_id: Product::Id, releases: T::Array[Release]).void}
     def initialize(product_id, releases)
