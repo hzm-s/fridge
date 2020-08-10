@@ -16,8 +16,8 @@ RSpec.describe 'product_backlog_item_order' do
       }
       put product_product_backlog_item_order_path(product_id: product.id.to_s, format: :json), params: params
 
-      order = ProductBacklogItemOrderRepository::AR.find_by_product_id(product.id)
-      expect(order.to_a).to eq [pbi_c, pbi_a, pbi_b].map(&:id)
+      plan = PlanRepository::AR.find_by_product_id(product.id)
+      expect(plan.items.flatten).to eq [pbi_c, pbi_a, pbi_b].map(&:id)
     end
   end
 end

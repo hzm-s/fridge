@@ -7,7 +7,7 @@ class RemoveProductBacklogItemUsecase < UsecaseBase
   sig {void}
   def initialize
     @pbi_repository = T.let(ProductBacklogItemRepository::AR, Pbi::ItemRepository)
-    @order_repository = T.let(ProductBacklogItemOrderRepository::AR, Pbi::OrderRepository)
+    @plan_repository = T.let(PlanRepository::AR, Plan::PlanRepository)
   end
 
   sig {params(pbi_id: Pbi::Id).void}
@@ -15,14 +15,14 @@ class RemoveProductBacklogItemUsecase < UsecaseBase
     pbi = @pbi_repository.find_by_id(pbi_id)
     raise Pbi::ItemCanNotRemove unless pbi.status.can_remove?
 
-    order = @order_repository.find_by_product_id(pbi.product_id)
-    return unless order
+    plan = @plan_repository.find_by_product_id(pbi.product_id)
+    return unless plan
 
-    order.delete(pbi.id)
+    plan.remove_item(pbi.id)
 
     transaction do
       @pbi_repository.delete(pbi_id)
-      @order_repository.update(order)
+      @plan_repository.update(plan)
     end
   end
 end

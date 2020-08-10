@@ -8,18 +8,18 @@ module ProductBacklogItemListQuery
 
   class << self
     def call(product_id, status: nil)
-      order = fetch_order(product_id)
-      return [] unless order
+      plan = fetch_plan(product_id)
+      return [] unless plan
 
       items = fetch_items(product_id, status: status)
 
-      ordered_items(order, items)
+      ordered_items(plan, items)
     end
 
     private
 
-    def fetch_order(product_id)
-      Dao::ProductBacklog.find_by(dao_product_id: product_id)
+    def fetch_plan(product_id)
+      Dao::Plan.find_by(dao_product_id: product_id)
     end
 
     def fetch_items(product_id, status: nil)
@@ -28,12 +28,13 @@ module ProductBacklogItemListQuery
       rel.map { |r| Item.new(r) }
     end
 
-    def ordered_items(order, items)
-      ordered =
-        order.product_backlog_item_ids.map do |pbi_id|
-          items.find { |item| item.id == pbi_id }
-        end
-      ordered.compact
+    def ordered_items(plan, items)
+      plan
+        .releases
+        .map { |r| r['items'] }
+        .flatten
+        .map { |id| items.find { |i| i.id == id } }
+        .compact
     end
   end
 end
