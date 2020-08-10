@@ -1,7 +1,7 @@
 # typed: true
 require 'sorbet-runtime'
 
-module ProductBacklogItemListQuery
+module ProductBacklogQuery
   class Item < SimpleDelegator
     def status
       @__status ||= Pbi::Statuses.from_string(super)

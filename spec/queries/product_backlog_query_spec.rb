@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe ProductBacklogItemListQuery do
+RSpec.describe ProductBacklogQuery do
   let!(:product) { create_product }
 
   it '優先順位順になっていること' do

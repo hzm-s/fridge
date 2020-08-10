@@ -11,13 +11,13 @@ RSpec.describe 'plan' do
   describe '#update' do
     it do
       params = {
-        pbi_id: pbi_c.id.to_s,
-        to: 1
+        item_id: pbi_c.id.to_s,
+        position: 2
       }
       put product_plan_path(product_id: product.id.to_s, format: :json), params: params
 
       plan = PlanRepository::AR.find_by_product_id(product.id)
-      expect(plan.items.flatten).to eq [pbi_c, pbi_a, pbi_b].map(&:id)
+      expect(plan.items.flatten).to eq [pbi_a, pbi_c, pbi_b].map(&:id)
     end
   end
 end
