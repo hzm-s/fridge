@@ -23,9 +23,13 @@
 
 .pbl__release {
   @include nf;
-  background-color: $gray-200;
-  padding: .25rem 1rem;
+  background-color: $gray-100;
+  padding: .5rem 1rem;
   font-size: .875rem;
+
+  &:first-child {
+    border-top: 1px solid $gray-300;
+  }
 }
 
 .pbl-release__title {
