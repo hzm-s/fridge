@@ -11,7 +11,7 @@ class AddReleaseUsecase < UsecaseBase
 
   sig {params(product_id: Product::Id, title: String).void}
   def perform(product_id, title)
-    plan = @repository.find_by_product_id(product_id)
+    plan = T.must(@repository.find_by_product_id(product_id))
     plan.add_release(title)
     @repository.update(plan)
   end
