@@ -10,6 +10,9 @@ ja:
         description: 説明
         member_role: チームでの役割
 
+      release_form:
+        title: タイトル
+
       team_member_form:
         user_id: ユーザー
         role: 役割
