@@ -5,6 +5,8 @@ module Plan
   class Release
     extend T::Sig
 
+    DEFAULT_TITLE = T.let('Minimum'.freeze, String)
+
     Item = T.type_alias {Pbi::Id}
     Items = T.type_alias {T::Array[Item]}
 
@@ -15,7 +17,7 @@ module Plan
     attr_reader :items
 
     sig {params(title: String, items: Items).void}
-    def initialize(title = 'Untitled', items = [])
+    def initialize(title = DEFAULT_TITLE, items = [])
       @title = title
       @items = items
     end

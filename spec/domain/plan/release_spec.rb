@@ -9,6 +9,12 @@ module Plan
     let(:pbi_d) { Pbi::Id.create }
     let(:pbi_e) { Pbi::Id.create }
 
+    it do
+      release = described_class.new
+      expect(release.title).to eq 'Minimum'
+      expect(release.items).to be_empty
+    end
+
     describe 'add' do
       it do
         release = described_class.new
