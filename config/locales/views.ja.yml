@@ -38,6 +38,12 @@ ja:
   releases:
     new:
       title: 新しいリリース
+    edit:
+      title: リリースの編集
+    form:
+      submit:
+        post: 追加する
+        patch: 保存する
 
   product_backlog_items:
     index:
