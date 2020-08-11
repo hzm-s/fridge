@@ -83,8 +83,13 @@ module Plan
     describe 'change title' do
       it do
         release = described_class.new
+        release = release.add(pbi_a)
+        release = release.add(pbi_b)
+        release = release.add(pbi_c)
         release = release.change_title('NEW_TITLE')
+
         expect(release.title).to eq 'NEW_TITLE'
+        expect(release.items).to eq [pbi_a, pbi_b, pbi_c]
       end
     end
   end
