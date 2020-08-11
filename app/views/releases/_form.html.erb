@@ -1,7 +1,7 @@
-<%= form_with model: @form, scope: :form, url: product_releases_path(product_id: params[:product_id]), local: true do |f| %>
+<%= form_with model: @form, scope: :form, url: url, method: method, local: true do |f| %>
   <div class="form-group">
     <%= f.label :title %>
     <%= f.text_field :title, class: 'form-control', autocomplete: 'off' %>
   </div>
-  <%= f.button t('navs.add'), class: 'btn btn-success', data: with_loader %>
+  <%= f.button t(".submit.#{method}"), class: 'btn btn-success', data: with_loader %>
 <% end %>

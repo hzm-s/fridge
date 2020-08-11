@@ -2,6 +2,9 @@
   <span class="pbl-release__title">
     <%= release.title %>
   </span>
+  <div class="pbl-release__actions">
+    <%= link_to t('navs.edit'), edit_product_release_path(product_id: product_id, no: release_counter + 1), class: 'action-link' %>
+  </div>
 </div>
 <%= content_tag :div, id: "release#{release_counter}", class: 'pbl__list', data: sortable_pbl_options(product_id, release_counter) do %>
   <%= render partial: 'item', collection: release.items %>

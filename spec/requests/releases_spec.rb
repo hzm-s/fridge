@@ -20,7 +20,20 @@ RSpec.describe 'releases' do
 
     it do
       post product_releases_path(product_id: product.id.to_s), params: { form: { title: '' } }
+      expect(response.body).to include I18n.t('errors.messages.blank')
+    end
+  end
 
+  describe '#update' do
+    it do
+      patch product_release_path(product_id: product.id.to_s, no: 1), params: { form: { title: 'MVP' } }
+      follow_redirect!
+
+      expect(response.body).to include 'MVP'
+    end
+
+    it do
+      patch product_release_path(product_id: product.id.to_s, no: 1), params: { form: { title: '' } }
       expect(response.body).to include I18n.t('errors.messages.blank')
     end
   end
