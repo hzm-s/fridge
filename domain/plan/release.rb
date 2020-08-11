@@ -8,6 +8,9 @@ module Plan
     Item = T.type_alias {Pbi::Id}
     Items = T.type_alias {T::Array[Item]}
 
+    sig {returns(String)}
+    attr_reader :title
+
     sig {returns(Items)}
     attr_reader :items
 
@@ -45,6 +48,11 @@ module Plan
 
       new_items = pos_to_items.sort.map { |pos, item| item }
       self.class.new(@title, new_items)
+    end
+
+    sig {params(title: String).returns(Release)}
+    def change_title(title)
+      self.class.new(title, items)
     end
 
     sig {returns(T::Hash[Symbol, T.any(String, T::Array[String])])}
