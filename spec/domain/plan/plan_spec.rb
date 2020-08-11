@@ -61,5 +61,16 @@ module Plan
         expect(plan.items).to eq [[pbi_a, pbi_d, pbi_b, pbi_e, pbi_c], []]
       end
     end
+
+    describe 'change release title' do
+      it do
+        plan.add_release('R2')
+        plan.add_release('R3')
+
+        plan.change_release_title(1, 'MVP')
+
+        expect(plan.releases[0].title).to eq 'MVP'
+      end
+    end
   end
 end

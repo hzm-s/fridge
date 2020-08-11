@@ -21,7 +21,7 @@ RSpec.describe ProductBacklogQuery do
 
     release = described_class.call(product.id.to_s).first
 
-    expect(release.title).to eq 'Untitled'
+    expect(release.title).to eq Plan::Release::DEFAULT_TITLE
   end
 
   it 'アイテムがまだない場合は空配列を返すこと' do

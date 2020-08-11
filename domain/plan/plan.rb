@@ -61,6 +61,12 @@ module Plan
       @releases << Release.new(title)
     end
 
+    sig {params(release: Integer, title: String).void}
+    def change_release_title(release, title)
+      i = release - 1
+      @releases[i] = T.must(@releases[i]).change_title(title)
+    end
+
     sig {returns(T::Array[Release::Items])}
     def items
       @releases.map(&:items)

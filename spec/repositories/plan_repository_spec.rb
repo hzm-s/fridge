@@ -24,7 +24,7 @@ RSpec.describe PlanRepository::AR do
     expect(saved.product_id).to eq product.id
     expect(saved.releases.map(&:to_h)).to eq [
       {
-        title: 'Untitled',
+        title: Plan::Release::DEFAULT_TITLE,
         items: [item_a, item_b].map(&:to_s)
       },
       {
