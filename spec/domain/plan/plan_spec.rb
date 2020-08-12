@@ -69,7 +69,7 @@ module Plan
 
         plan.change_release_title(1, 'MVP')
 
-        expect(plan.releases[0].title).to eq 'MVP'
+        expect(plan.release(1).title).to eq 'MVP'
       end
     end
   end
