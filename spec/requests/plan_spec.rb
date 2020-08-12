@@ -12,7 +12,7 @@ RSpec.describe 'plan' do
     it do
       params = {
         item_id: pbi_c.to_s,
-        release: 1,
+        no: 1,
         position: 2
       }
       put product_plan_path(product_id: product.id.to_s, format: :json), params: params

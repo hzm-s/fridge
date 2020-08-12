@@ -11,6 +11,6 @@ RSpec.describe ChangeReleaseTitleUsecase do
   it do
     described_class.perform(product.id, 1, 'NEW_TITLE')
     plan = PlanRepository::AR.find_by_product_id(product.id)
-    expect(plan.releases[0].title).to eq 'NEW_TITLE'
+    expect(plan.release(1).title).to eq 'NEW_TITLE'
   end
 end
