@@ -72,5 +72,22 @@ module Plan
         expect(plan.release(1).title).to eq 'MVP'
       end
     end
+
+    describe 'remove release' do
+      it do
+        plan.add_item(pbi_a)
+        plan.add_release('R2')
+        plan.add_item(pbi_b)
+
+        expect { plan.remove_release(2) }.to raise_error(ReleaseContainsItem)
+
+        plan.remove_item(pbi_b)
+        plan.remove_release(2)
+        expect(plan.items).to eq [[pbi_a]]
+
+        plan.remove_item(pbi_a)
+        expect { plan.remove_release(1) }.to raise_error(AtLeastOneReleaseIsRequired)
+      end
+    end
   end
 end
