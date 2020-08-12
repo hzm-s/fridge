@@ -62,6 +62,15 @@ module Plan
       @releases << Release.new(title)
     end
 
+    sig {params(no: Integer).void}
+    def remove_release(no)
+      raise ReleaseContainsItem if release(no).items.any?
+
+      raise AtLeastOneReleaseIsRequired if @releases.size == 1
+
+      @releases.delete_at(no - 1)
+    end
+
     sig {params(no: Integer, title: String).void}
     def change_release_title(no, title)
       @releases[no - 1] = release(no).change_title(title)
