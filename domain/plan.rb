@@ -1,6 +1,6 @@
 # typed: strict
 module Plan
-  class ReleaseContainsItem < StandardError; end
+  class CanNotRemoveRelease < StandardError; end
   class AtLeastOneReleaseIsRequired < StandardError; end
 
   autoload :Plan, 'plan/plan'

@@ -64,9 +64,9 @@ module Plan
 
     sig {params(no: Integer).void}
     def remove_release(no)
-      raise ReleaseContainsItem if release(no).items.any?
+      raise CanNotRemoveRelease unless release(no).can_remove?
 
-      raise AtLeastOneReleaseIsRequired if @releases.size == 1
+      raise AtLeastOneReleaseIsRequired unless can_remove_release?
 
       @releases.delete_at(no - 1)
     end
@@ -79,6 +79,11 @@ module Plan
     sig {params(no: Integer).returns(Release)}
     def release(no)
       T.must(@releases[no - 1])
+    end
+
+    sig {returns(T::Boolean)}
+    def can_remove_release?
+      @releases.size > 1
     end
 
     sig {returns(T::Array[Release::Items])}

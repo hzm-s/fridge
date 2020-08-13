@@ -15,24 +15,38 @@ module ProductBacklogQuery
     def self.build(title, ids, all)
       new(
         title: title,
-        items: ids.map { |id| all.find { |item| item.id == id } }
+        items: ids.map { |id| all.find { |item| item.id == id.to_s } }
       )
+    end
+  end
+
+  class Plan < SimpleDelegator
+    def initialize(releases, plan = nil)
+      super(releases)
+      @plan = plan
+    end
+
+    def can_remove_release?
+      return false unless @plan
+      @plan.can_remove_release?
     end
   end
 
   class << self
     def call(product_id)
       plan = fetch_plan(product_id)
-      return [] unless plan
+      return Plan.new([], nil) unless plan
 
       all = fetch_items(product_id)
-      plan.releases.map { |r| Release.build(r['title'], r['items'], all) }
+      releases = plan.releases.map { |r| Release.build(r.title, r.items, all) }
+
+      Plan.new(releases, plan)
     end
 
     private
 
     def fetch_plan(product_id)
-      Dao::Plan.find_by(dao_product_id: product_id)
+      PlanRepository::AR.find_by_product_id(Product::Id.from_string(product_id))
     end
 
     def fetch_items(product_id)

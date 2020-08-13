@@ -79,7 +79,7 @@ module Plan
         plan.add_release('R2')
         plan.add_item(pbi_b)
 
-        expect { plan.remove_release(2) }.to raise_error(ReleaseContainsItem)
+        expect { plan.remove_release(2) }.to raise_error(CanNotRemoveRelease)
 
         plan.remove_item(pbi_b)
         plan.remove_release(2)
@@ -87,6 +87,17 @@ module Plan
 
         plan.remove_item(pbi_a)
         expect { plan.remove_release(1) }.to raise_error(AtLeastOneReleaseIsRequired)
+      end
+    end
+
+    describe 'release remove availability' do
+      it do
+        expect(plan).to_not be_can_remove_release
+      end
+
+      it do
+        plan.add_release('R2')
+        expect(plan).to be_can_remove_release
       end
     end
   end
