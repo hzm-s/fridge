@@ -92,5 +92,18 @@ module Plan
         expect(release.items).to eq [pbi_a, pbi_b, pbi_c]
       end
     end
+
+    describe 'remove availability' do
+      it do
+        release = described_class.new
+        expect(release).to be_can_remove
+      end
+
+      it do
+        release = described_class.new
+        release = release.add(pbi_a)
+        expect(release).to_not be_can_remove
+      end
+    end
   end
 end
