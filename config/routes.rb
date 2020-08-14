@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :products, only: [:new, :create, :index] do
     resources :product_backlog_items, only: [:index, :create]
     resource :plan, only: [:update]
-    resources :releases, param: :no, only: [:new, :create, :edit, :update]
+    resources :releases, param: :no, only: [:new, :create, :edit, :update, :destroy]
     resources :team_members, only: [:index, :new, :create]
   end
 
