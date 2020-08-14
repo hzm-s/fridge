@@ -13,6 +13,10 @@ ja:
       cancel_assignment: 作業予定を取り消しました
     product:
       create: プロダクトを作成しました
+    release:
+      create: リリースを追加しました
+      update: リリースのタイトルを保存しました
+      destroy: リリースを削除しました
 
   application:
     user_menu:

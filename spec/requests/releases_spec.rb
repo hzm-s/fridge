@@ -37,4 +37,33 @@ RSpec.describe 'releases' do
       expect(response.body).to include I18n.t('errors.messages.blank')
     end
   end
+
+  describe '#destroy' do
+    it do
+      add_release(product.id, 'EXTRA_RELEASE')
+
+      delete product_release_path(product_id: product.id.to_s, no: 2)
+      follow_redirect!
+
+      expect(response.body).to_not include 'EXTRA_RELEASE'
+    end
+
+    it do
+      add_pbi(product.id)
+
+      delete product_release_path(product_id: product.id.to_s, no: 1)
+      follow_redirect!
+
+      expect(response.body).to include I18n.t('domain.errors.plan.can_not_remove_release')
+    end
+
+    it do
+      remove_pbi(pbi.id)
+
+      delete product_release_path(product_id: product.id.to_s, no: 1)
+      follow_redirect!
+
+      expect(response.body).to include I18n.t('domain.errors.plan.at_least_one_release_is_required')
+    end
+  end
 end
