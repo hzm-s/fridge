@@ -36,6 +36,10 @@ module ProductBacklogItemSupport
     AssignProductBacklogItemUsecase.perform(pbi_id)
   end
 
+  def add_release(product_id, title = 'Release2')
+    AddReleaseUsecase.perform(product_id, title)
+  end
+
   private
 
   def perform_to_add_pbi(product_id, content)
