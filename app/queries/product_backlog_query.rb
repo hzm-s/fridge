@@ -8,15 +8,14 @@ module ProductBacklogQuery
     end
   end
 
-  class Release < T::Struct
-    prop :title, String
-    prop :items, T::Array[Item]
+  class Release < SimpleDelegator
+    def initialize(release, all)
+      super(release)
+      @all = all
+    end
 
-    def self.build(title, ids, all)
-      new(
-        title: title,
-        items: ids.map { |id| all.find { |item| item.id == id.to_s } }
-      )
+    def items
+      @__items ||= super.map { |id| @all.find { |item| item.id == id.to_s } }
     end
   end
 
@@ -38,7 +37,7 @@ module ProductBacklogQuery
       return Plan.new([], nil) unless plan
 
       all = fetch_items(product_id)
-      releases = plan.releases.map { |r| Release.build(r.title, r.items, all) }
+      releases = plan.releases.map { |r| Release.new(r, all) }
 
       Plan.new(releases, plan)
     end

@@ -31,6 +31,7 @@ RSpec.describe ProductBacklogQuery do
     add_pbi(product.id, 'AAA')
     items = described_class.call(product.id.to_s)
     expect(items).to_not be_can_remove_release
+    expect(items.first).to_not be_can_remove
   end
 
   it 'アイテムがまだない場合は空配列を返すこと' do
