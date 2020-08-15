@@ -43,7 +43,7 @@ module ReleaseRepository
         Dao::Release.destroy(id)
       end
 
-      sig {params(release: Release::Release).void}
+      sig {override.params(release: Release::Release).void}
       def save(release)
         update(release)
       rescue ActiveRecord::RecordNotFound

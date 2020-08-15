@@ -19,6 +19,9 @@ module Release
     sig {abstract.params(release: Release).void}
     def update(release); end
 
+    sig {abstract.params(release: Release).void}
+    def save(release); end
+
     sig {abstract.params(id: Id).void}
     def remove(id); end
   end

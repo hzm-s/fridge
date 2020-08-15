@@ -18,7 +18,7 @@ class RemoveProductBacklogItemUsecase < UsecaseBase
     plan = @release_repository.find_plan_by_product_id(pbi.product_id)
     return if plan.empty?
 
-    release = plan.find { |release| release.items.include?(pbi_id) }
+    release = T.must(plan.find { |release| release.items.include?(pbi_id) })
     release.remove_item(pbi.id)
 
     transaction do

@@ -19,9 +19,8 @@ class ReleasesController < ApplicationController
   end
 
   def edit
-    product_id = Product::Id.from_string(current_product_id)
-    plan = PlanRepository::AR.find_by_product_id(product_id)
-    release = plan.release(params[:no].to_i)
+    release_id = Release::Id.from_string(params[:id])
+    release = ReleaseRepository::AR.find_by_id(release_id)
     @form = ReleaseForm.new(title: release.title)
   end
 
