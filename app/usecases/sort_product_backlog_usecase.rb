@@ -6,15 +6,21 @@ class SortProductBacklogUsecase < UsecaseBase
 
   sig {void}
   def initialize
-    @repository = T.let(PlanRepository::AR, Plan::PlanRepository)
+    @repository = T.let(ReleaseRepository::AR, Release::ReleaseRepository)
   end
 
-  sig {params(product_id: Product::Id, item_id: Pbi::Id, no: Integer, position: Integer).void}
-  def perform(product_id, item_id, no, position)
-    plan = @repository.find_by_product_id(product_id)
-    raise unless plan
+  sig {params(from_id: Release::Id, item_id: Pbi::Id, to_id: Release::Id, position: Integer).void}
+  def perform(from_id, item_id, to_id, position)
+    from = @repository.find_by_id(from_id)
+    to = @repository.find_by_id(to_id)
 
-    plan.move_item(item_id, no, position)
-    @repository.update(plan)
+    sorter = Release::ItemSorter.new(from, item_id, to, position)
+    releases = sorter.sort
+
+    transaction do
+      releases.each do |release|
+        @repository.update(release)
+      end
+    end
   end
 end
