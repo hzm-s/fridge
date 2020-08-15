@@ -5,4 +5,6 @@ module Release
 
   autoload :Id, 'release/id'
   autoload :Release, 'release/release'
+
+  autoload :ItemSorter, 'release/item_sorter'
 end
