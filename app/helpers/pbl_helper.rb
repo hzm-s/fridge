@@ -1,10 +1,10 @@
 # typed: false
 module PblHelper
-  def sortable_pbl_options(product_id, release_index)
+  def sortable_pbl_options(release)
     {
       controller: 'sort-pbl',
-      sort_pbl_url: product_plan_path(product_id: product_id),
-      release: release_index + 1
+      sort_pbl_url: product_plan_path(product_id: release.product_id.to_s),
+      release_id: release.id.to_s,
     }
   end
 end

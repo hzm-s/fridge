@@ -9,6 +9,6 @@
     <% end %>
   </div>
 </div>
-<%= content_tag :div, id: "release#{release_counter}", class: 'pbl__list', data: sortable_pbl_options(product_id, release_counter) do %>
+<%= content_tag :div, id: "release#{release_counter}", class: 'pbl__list', data: sortable_pbl_options(release) do %>
   <%= render partial: 'item', collection: release.items %>
 <% end %>
