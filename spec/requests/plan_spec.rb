@@ -10,15 +10,17 @@ RSpec.describe 'plan' do
 
   describe '#update' do
     it do
+      release = ReleaseRepository::AR.find_plan_by_product_id(product.id)[0]
       params = {
+        from_id: release.id,
         item_id: pbi_c.to_s,
-        no: 1,
-        position: 2
+        to_id: release.id,
+        position: 2,
       }
       put product_plan_path(product_id: product.id.to_s, format: :json), params: params
 
-      plan = PlanRepository::AR.find_by_product_id(product.id)
-      expect(plan.items).to eq [[pbi_a, pbi_c, pbi_b]]
+      updated = ReleaseRepository::AR.find_by_id(release.id)
+      expect(updated.items).to eq [pbi_a, pbi_c, pbi_b]
     end
   end
 end

@@ -3,14 +3,11 @@ require 'rails_helper'
 
 RSpec.describe ChangeReleaseTitleUsecase do
   let!(:product) { create_product }
-
-  before do
-    add_pbi(product.id)
-  end
+  let(:release) { add_release(product.id, 'OLD_TITLE') }
 
   it do
-    described_class.perform(product.id, 1, 'NEW_TITLE')
-    plan = PlanRepository::AR.find_by_product_id(product.id)
-    expect(plan.release(1).title).to eq 'NEW_TITLE'
+    described_class.perform(release.id, 'NEW_TITLE')
+    stored = ReleaseRepository::AR.find_by_id(release.id)
+    expect(stored.title).to eq 'NEW_TITLE'
   end
 end

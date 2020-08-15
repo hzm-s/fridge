@@ -19,33 +19,19 @@ module ProductBacklogQuery
     end
   end
 
-  class Plan < SimpleDelegator
-    def initialize(releases, plan = nil)
-      super(releases)
-      @plan = plan
-    end
-
-    def can_remove_release?
-      return false unless @plan
-      @plan.can_remove_release?
-    end
-  end
-
   class << self
     def call(product_id)
-      plan = fetch_plan(product_id)
-      return Plan.new([], nil) unless plan
+      releases = fetch_plan(product_id)
+      return releases if releases.empty?
 
-      all = fetch_items(product_id)
-      releases = plan.releases.map { |r| Release.new(r, all) }
-
-      Plan.new(releases, plan)
+      items = fetch_items(product_id)
+      releases.map { |r| Release.new(r, items) }
     end
 
     private
 
     def fetch_plan(product_id)
-      PlanRepository::AR.find_by_product_id(Product::Id.from_string(product_id))
+      ReleaseRepository::AR.find_plan_by_product_id(Product::Id.from_string(product_id))
     end
 
     def fetch_items(product_id)

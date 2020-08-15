@@ -5,6 +5,7 @@ RSpec.describe 'releases' do
   let!(:user) { sign_up }
   let!(:product) { create_product(user_id: user_id(user.id)) }
   let!(:pbi) { add_pbi(product.id) }
+  let!(:release) { ReleaseRepository::AR.find_plan_by_product_id(product.id)[0] }
 
   before do
     sign_in(user)
@@ -26,44 +27,45 @@ RSpec.describe 'releases' do
 
   describe '#update' do
     it do
-      patch product_release_path(product_id: product.id.to_s, no: 1), params: { form: { title: 'MVP' } }
+      patch release_path(id: release.id.to_s), params: { form: { title: 'MVP' } }
       follow_redirect!
 
       expect(response.body).to include 'MVP'
     end
 
     it do
-      patch product_release_path(product_id: product.id.to_s, no: 1), params: { form: { title: '' } }
+      patch release_path(id: release.id.to_s), params: { form: { title: '' } }
       expect(response.body).to include I18n.t('errors.messages.blank')
     end
   end
 
   describe '#destroy' do
     it do
-      add_release(product.id, 'EXTRA_RELEASE')
+      target = add_release(product.id, 'EXTRA_RELEASE')
 
-      delete product_release_path(product_id: product.id.to_s, no: 2)
+      delete release_path(id: target.id.to_s)
       follow_redirect!
 
       expect(response.body).to_not include 'EXTRA_RELEASE'
     end
 
     it do
+      target = add_release(product.id, 'EXTRA_RELEASE')
       add_pbi(product.id)
 
-      delete product_release_path(product_id: product.id.to_s, no: 1)
+      delete release_path(target.id)
       follow_redirect!
 
-      expect(response.body).to include I18n.t('domain.errors.plan.can_not_remove_release')
+      expect(response.body).to include I18n.t('domain.errors.release.can_not_remove_release')
     end
 
-    it do
+    xit do
       remove_pbi(pbi.id)
 
-      delete product_release_path(product_id: product.id.to_s, no: 1)
+      delete release_path(release.id)
       follow_redirect!
 
-      expect(response.body).to include I18n.t('domain.errors.plan.at_least_one_release_is_required')
+      expect(response.body).to include I18n.t('domain.errors.release.at_least_one_release_is_required')
     end
   end
 end

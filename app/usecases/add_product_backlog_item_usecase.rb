@@ -7,7 +7,7 @@ class AddProductBacklogItemUsecase < UsecaseBase
   sig {void}
   def initialize
     @pbi_repository = T.let(ProductBacklogItemRepository::AR, Pbi::ItemRepository)
-    @plan_repository = T.let(PlanRepository::AR, Plan::PlanRepository)
+    @release_repository = T.let(ReleaseRepository::AR, Release::ReleaseRepository)
   end
 
   sig {params(product_id: Product::Id, content: Pbi::Content).returns(Pbi::Id)}
@@ -15,10 +15,10 @@ class AddProductBacklogItemUsecase < UsecaseBase
     pbi = Pbi::Item.create(product_id, content)
 
     transaction do
-      plan = find_plan(product_id)
-      plan.add_item(pbi.id)
+      release = fetch_release(product_id)
+      release.add_item(pbi.id)
       @pbi_repository.add(pbi)
-      @plan_repository.update(plan)
+      @release_repository.save(release)
     end
 
     pbi.id
@@ -26,11 +26,11 @@ class AddProductBacklogItemUsecase < UsecaseBase
 
   private
 
-  sig {params(product_id: Product::Id).returns(Plan::Plan)}
-  def find_plan(product_id)
-    plan = @plan_repository.find_by_product_id(product_id)
-    return Plan::Plan.create(product_id) unless plan
+  sig {params(product_id: Product::Id).returns(Release::Release)}
+  def fetch_release(product_id)
+    plan = @release_repository.find_plan_by_product_id(product_id)
+    return Release::Release.create_default(product_id) if plan.empty?
 
-    plan
+    plan.last
   end
 end

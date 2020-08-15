@@ -27,10 +27,12 @@ export default class extends Controller {
       },
       onEnd: function(e) {
         const payload = {
-          item_id: e.item.dataset.pbiId,
-          no: e.to.dataset.release,
+          from_id: e.from.dataset.releaseId,
+          item_id: e.item.dataset.itemId,
+          to_id: e.to.dataset.releaseId,
           position: e.newIndex + 1
         }
+        console.log(payload)
         $.ajax({ type: 'PATCH', url: url, dataType: 'json', data: payload })
       }
     })

@@ -6,12 +6,20 @@ RSpec.describe RemoveReleaseUsecase do
 
   before do
     add_pbi(product.id)
-    add_release(product.id)
+    @release = add_release(product.id)
   end
 
   it do
-    described_class.perform(product.id, 2)
-    plan = PlanRepository::AR.find_by_product_id(product.id)
-    expect(plan.releases.size).to eq 1
+    described_class.perform(@release.id)
+
+    expect { ReleaseRepository::AR.find_by_id(@release.id) }
+      .to raise_error(ActiveRecord::RecordNotFound)
+  end
+
+  it do
+    add_pbi(product.id)
+
+    expect { described_class.perform(@release.id) }
+      .to raise_error(Release::CanNotRemoveRelease)
   end
 end

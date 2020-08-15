@@ -29,6 +29,6 @@ ja:
         duplicated_scrum_master: すでにスクラムマスターがいます
         too_large_development_team: 開発者が多すぎます
         already_joined: すでに参加しています
-      plan:
+      release:
         can_not_remove_release: リリースを削除できません
         at_lease_one_release_is_required: 最低1つリリースが必要です

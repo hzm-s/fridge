@@ -21,22 +21,20 @@ RSpec.describe ProductBacklogQuery do
 
     release = described_class.call(product.id.to_s).first
 
-    expect(release.title).to eq Plan::Release::DEFAULT_TITLE
+    expect(release.title).to eq Release::Release::DEFAULT_TITLE
   end
 
   it 'リリースの削除可否を返すこと' do
-    items = described_class.call(product.id.to_s)
-    expect(items).to_not be_can_remove_release
-
     add_pbi(product.id, 'AAA')
-    items = described_class.call(product.id.to_s)
-    expect(items).to_not be_can_remove_release
-    expect(items.first).to_not be_can_remove
+
+    releases = described_class.call(product.id.to_s)
+
+    expect(releases.first).to_not be_can_remove
   end
 
   it 'アイテムがまだない場合は空配列を返すこと' do
-    items = described_class.call(product.id.to_s)
-    expect(items).to be_empty
+    releases = described_class.call(product.id.to_s)
+    expect(releases).to be_empty
   end
 
   it '受け入れ基準がある場合は受け入れ基準を含むこと' do
