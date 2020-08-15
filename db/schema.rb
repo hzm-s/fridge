@@ -42,14 +42,6 @@ ActiveRecord::Schema.define(version: 2020_08_10_050340) do
     t.index ["dao_product_backlog_item_id"], name: "index_dao_acceptance_criteria_on_dao_product_backlog_item_id"
   end
 
-  create_table "dao_plans", force: :cascade do |t|
-    t.uuid "dao_product_id"
-    t.json "releases"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["dao_product_id"], name: "index_dao_plans_on_dao_product_id"
-  end
-
   create_table "dao_product_backlog_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "dao_product_id"
     t.string "status", null: false
@@ -65,6 +57,15 @@ ActiveRecord::Schema.define(version: 2020_08_10_050340) do
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "dao_releases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "dao_product_id"
+    t.string "title", null: false
+    t.uuid "items", array: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["dao_product_id"], name: "index_dao_releases_on_dao_product_id"
   end
 
   create_table "dao_team_members", force: :cascade do |t|
@@ -88,8 +89,8 @@ ActiveRecord::Schema.define(version: 2020_08_10_050340) do
   add_foreign_key "app_avatars", "dao_users"
   add_foreign_key "app_oauth_accounts", "dao_users"
   add_foreign_key "dao_acceptance_criteria", "dao_product_backlog_items"
-  add_foreign_key "dao_plans", "dao_products"
   add_foreign_key "dao_product_backlog_items", "dao_products"
+  add_foreign_key "dao_releases", "dao_products"
   add_foreign_key "dao_team_members", "dao_products"
   add_foreign_key "dao_team_members", "dao_users"
 end

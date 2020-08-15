@@ -3,23 +3,19 @@ require 'domain_helper'
 
 module Release
   RSpec.describe Release do
+    let(:product_id) { Product::Id.create }
     let(:pbi_a) { Pbi::Id.create }
     let(:pbi_b) { Pbi::Id.create }
     let(:pbi_c) { Pbi::Id.create }
     let(:pbi_d) { Pbi::Id.create }
     let(:pbi_e) { Pbi::Id.create }
 
-    let(:repository) do
-      double(:repository, next_no: 1).tap { |r| r.extend ReleaseRepository }
-    end
-
-    let(:release) { described_class.create(repository, 'Icebox') }
+    let(:release) { described_class.create(product_id, 'Icebox') }
 
     describe 'create' do
       it do
-        release = described_class.create(repository, 'MVP')
+        release = described_class.create(product_id, 'MVP')
 
-        expect(release.no).to eq 1
         expect(release.title).to eq 'MVP'
         expect(release.items).to be_empty
       end
