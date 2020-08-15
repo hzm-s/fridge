@@ -18,11 +18,12 @@ class RemoveProductBacklogItemUsecase < UsecaseBase
     plan = @release_repository.find_plan_by_product_id(pbi.product_id)
     return if plan.empty?
 
-    plan.remove_item(pbi.id)
+    release = plan.find { |release| release.items.include?(pbi_id) }
+    release.remove_item(pbi.id)
 
     transaction do
       @pbi_repository.delete(pbi_id)
-      @plan_repository.update(plan)
+      @release_repository.update(release)
     end
   end
 end
