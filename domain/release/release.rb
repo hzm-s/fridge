@@ -13,12 +13,7 @@ module Release
 
       sig {params(product_id: Product::Id, title: String).returns(T.attached_class)}
       def create(product_id, title)
-        new(
-          Id.create,
-          product_id,
-          title,
-          []
-        )
+        new(Id.create, product_id, title, [])
       end
 
       sig {params(id: Id, product_id: Product::Id, title: String, items: Items).returns(T.attached_class)}

@@ -10,13 +10,13 @@ module ReleaseRepository
       sig {override.params(id: Release::Id).returns(Release::Release)}
       def find_by_id(id)
         r = Dao::Release.find(id.to_s)
+        build_release(r)
+      end
 
-        Release::Release.from_repository(
-          Release::Id.from_string(r.id),
-          Product::Id.from_string(r.dao_product_id),
-          r.title,
-          r.items.map { |i| Pbi::Id.from_string(i) }
-        )
+      sig {override.params(product_id: Product::Id).returns(T::Array[Release::Release])}
+      def find_plan_by_product_id(product_id)
+        rs = Dao::Release.where(dao_product_id: product_id.to_s)
+        rs.map { |r| build_release(r) }
       end
 
       sig {override.params(release: Release::Release).void}
@@ -36,6 +36,30 @@ module ReleaseRepository
         r.title = release.title
         r.items = release.items.map(&:to_s)
         r.save!
+      end
+
+      sig {override.params(id: Release::Id).void}
+      def remove(id)
+        Dao::Release.destroy(id)
+      end
+
+      sig {params(release: Release::Release).void}
+      def save(release)
+        update(release)
+      rescue ActiveRecord::RecordNotFound
+        add(release)
+      end
+
+      private
+
+      sig {params(rel: T.untyped).returns(Release::Release)}
+      def build_release(rel)
+        Release::Release.from_repository(
+          Release::Id.from_string(rel.id),
+          Product::Id.from_string(rel.dao_product_id),
+          rel.title,
+          rel.items.map { |i| Pbi::Id.from_string(i) }
+        )
       end
     end
   end
