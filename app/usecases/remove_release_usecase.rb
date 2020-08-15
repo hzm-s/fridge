@@ -12,6 +12,8 @@ class RemoveReleaseUsecase < UsecaseBase
   sig {params(product_id: Product::Id, no: Integer).void}
   def perform(product_id, no)
     plan = @repository.find_by_product_id(product_id)
+    return unless plan
+
     plan.remove_release(no)
     @repository.update(plan)
   end
