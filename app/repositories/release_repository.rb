@@ -7,16 +7,16 @@ module ReleaseRepository
       extend T::Sig
       include Release::ReleaseRepository
 
+      sig {override.params(product_id: Product::Id).returns(T::Array[Release::Release])}
+      def all_by_product_id(product_id)
+        rs = relations_by_product_id(product_id)
+        rs.map { |r| build_release(r) }
+      end
+
       sig {override.params(id: Release::Id).returns(Release::Release)}
       def find_by_id(id)
         r = Dao::Release.find(id.to_s)
         build_release(r)
-      end
-
-      sig {override.params(product_id: Product::Id).returns(T::Array[Release::Release])}
-      def find_plan_by_product_id(product_id)
-        rs = relations_by_product_id(product_id)
-        rs.map { |r| build_release(r) }
       end
 
       sig {override.params(product_id: Product::Id).returns(T.nilable(Release::Release))}

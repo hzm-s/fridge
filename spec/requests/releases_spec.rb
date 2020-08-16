@@ -5,7 +5,7 @@ RSpec.describe 'releases' do
   let!(:user) { sign_up }
   let!(:product) { create_product(user_id: user_id(user.id)) }
   let!(:pbi) { add_pbi(product.id) }
-  let!(:release) { ReleaseRepository::AR.find_plan_by_product_id(product.id)[0] }
+  let!(:release) { ReleaseRepository::AR.find_last_by_product_id(product.id) }
 
   before do
     sign_in(user)

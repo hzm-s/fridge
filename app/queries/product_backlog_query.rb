@@ -21,7 +21,7 @@ module ProductBacklogQuery
 
   class << self
     def call(product_id)
-      releases = fetch_plan(product_id)
+      releases = fetch_all(product_id)
       return releases if releases.empty?
 
       items = fetch_items(product_id)
@@ -30,8 +30,8 @@ module ProductBacklogQuery
 
     private
 
-    def fetch_plan(product_id)
-      ReleaseRepository::AR.find_plan_by_product_id(Product::Id.from_string(product_id))
+    def fetch_all(product_id)
+      ReleaseRepository::AR.all_by_product_id(Product::Id.from_string(product_id))
     end
 
     def fetch_items(product_id)

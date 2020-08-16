@@ -15,10 +15,10 @@ class RemoveProductBacklogItemUsecase < UsecaseBase
     pbi = @pbi_repository.find_by_id(pbi_id)
     raise Pbi::ItemCanNotRemove unless pbi.status.can_remove?
 
-    plan = @release_repository.find_plan_by_product_id(pbi.product_id)
-    return if plan.empty?
+    all = @release_repository.all_by_product_id(pbi.product_id)
+    return if all.empty?
 
-    release = T.must(plan.find { |release| release.items.include?(pbi_id) })
+    release = T.must(all.find { |r| r.items.include?(pbi_id) })
     release.remove_item(pbi.id)
 
     transaction do

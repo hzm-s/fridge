@@ -13,8 +13,8 @@ RSpec.describe ReleaseRepository::AR do
       r3 = Release::Release.create(product.id, 'R3')
       described_class.add(r3)
 
-      plan = described_class.find_plan_by_product_id(product.id)
-      expect(plan.map(&:id)).to eq [r1, r2, r3].map(&:id)
+      all = described_class.all_by_product_id(product.id)
+      expect(all.map(&:id)).to eq [r1, r2, r3].map(&:id)
     end
 
     it do

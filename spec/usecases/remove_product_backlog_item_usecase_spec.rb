@@ -12,8 +12,8 @@ RSpec.describe RemoveProductBacklogItemUsecase do
     expect { ProductBacklogItemRepository::AR.find_by_id(pbi.id) }
       .to raise_error(ActiveRecord::RecordNotFound)
 
-    plan = ReleaseRepository::AR.find_plan_by_product_id(pbi.product_id)
-    expect(plan[0].items).to match_array [ex_pbi.id]
+    release = ReleaseRepository::AR.find_last_by_product_id(pbi.product_id)
+    expect(release.items).to match_array [ex_pbi.id]
   end
 
   it do
