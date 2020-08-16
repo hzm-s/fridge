@@ -31,4 +31,3 @@ ja:
         already_joined: すでに参加しています
       release:
         can_not_remove_release: リリースを削除できません
-        at_lease_one_release_is_required: 最低1つリリースが必要です

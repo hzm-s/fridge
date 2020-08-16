@@ -58,14 +58,5 @@ RSpec.describe 'releases' do
 
       expect(response.body).to include I18n.t('domain.errors.release.can_not_remove_release')
     end
-
-    xit do
-      remove_pbi(pbi.id)
-
-      delete release_path(release.id)
-      follow_redirect!
-
-      expect(response.body).to include I18n.t('domain.errors.release.at_least_one_release_is_required')
-    end
   end
 end

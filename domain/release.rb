@@ -2,7 +2,6 @@
 
 module Release
   class CanNotRemoveRelease < StandardError; end
-  class AtLeastOneReleaseIsRequired < StandardError; end
 
   autoload :ReleaseRepository, 'release/release_repository'
 
