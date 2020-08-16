@@ -38,8 +38,8 @@ module Pbi
         end
 
         sig {override.returns(Status)}
-        def update_to_todo
-          Todo
+        def update_to_wip
+          Wip
         end
 
         sig {override.returns(Status)}

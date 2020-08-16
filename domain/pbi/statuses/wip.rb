@@ -3,7 +3,7 @@ require 'sorbet-runtime'
 
 module Pbi
   module Statuses
-    module Todo
+    module Wip
       class << self
         extend T::Sig
         include Status
@@ -34,7 +34,7 @@ module Pbi
         end
 
         sig {override.returns(Status)}
-        def update_to_todo
+        def update_to_wip
           raise AssignProductBacklogItemNotAllowed
         end
 
@@ -45,7 +45,7 @@ module Pbi
 
         sig {override.returns(String)}
         def to_s
-          'todo'
+          'wip'
         end
       end
     end

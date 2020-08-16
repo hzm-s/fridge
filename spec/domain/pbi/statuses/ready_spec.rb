@@ -52,10 +52,10 @@ module Pbi
         end
       end
 
-      describe '#update_to_todo' do
+      describe '#update_to_wip' do
         it do
-          status = described_class.update_to_todo
-          expect(status).to eq Todo
+          status = described_class.update_to_wip
+          expect(status).to eq Wip
         end
       end
 

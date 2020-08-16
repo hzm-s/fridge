@@ -12,12 +12,12 @@ RSpec.describe 'product_backlog_item_assignment' do
       }
         .to change { Dao::ProductBacklogItem.find(pbi.id.to_s).status }
         .from(Pbi::Statuses::Ready.to_s)
-        .to(Pbi::Statuses::Todo.to_s)
+        .to(Pbi::Statuses::Wip.to_s)
     end
 
     it do
       post product_backlog_item_assignments_path(id: pbi.id.to_s, format: :js)
-      expect(response.body).to include 'todo'
+      expect(response.body).to include 'wip'
     end
   end
 
@@ -31,7 +31,7 @@ RSpec.describe 'product_backlog_item_assignment' do
         delete product_backlog_item_assignment_path(pbi.id.to_s, format: :js)
       }
         .to change { Dao::ProductBacklogItem.find(pbi.id.to_s).status }
-        .from(Pbi::Statuses::Todo.to_s)
+        .from(Pbi::Statuses::Wip.to_s)
         .to(Pbi::Statuses::Ready.to_s)
     end
 

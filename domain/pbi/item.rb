@@ -90,7 +90,7 @@ module Pbi
 
     sig {void}
     def assign
-      @status = @status.update_to_todo
+      @status = @status.update_to_wip
     end
 
     sig {void}

@@ -1,11 +1,11 @@
 $pbi-status-color-preparation: $gray-300;
 $pbi-status-color-ready: darken($green, 5%);
-$pbi-status-color-todo: darken($yellow, 5%);
+$pbi-status-color-wip: darken($yellow, 5%);
 
 .pbi__status {
   &--preparation { color: $pbi-status-color-preparation; }
   &--ready { color: $pbi-status-color-ready; }
-  &--todo { color: $pbi-status-color-todo; }
+  &--wip { color: $pbi-status-color-wip; }
 }
 
 .pbi-edit__status {
@@ -31,8 +31,8 @@ $pbi-status-color-todo: darken($yellow, 5%);
     border-color: $pbi-status-color-ready;
     background-color: $gray-100;
   }
-  &--todo {
-    border-color: $pbi-status-color-todo;
-    background-color: lighten($pbi-status-color-todo, 45%);
+  &--wip {
+    border-color: $pbi-status-color-wip;
+    background-color: lighten($pbi-status-color-wip, 45%);
   }
 }

@@ -5,9 +5,9 @@ ja:
         draft: 下書き
         preparation: 準備中
         ready: 準備完了
-        todo: 作業予定
-      assign: 作業予定にする
-      cancel_assignment: 作業予定を取り消す
+        wip: 着手中
+      assign: 着手する
+      cancel_assignment: 着手を取り消す
 
     team:
       role:
