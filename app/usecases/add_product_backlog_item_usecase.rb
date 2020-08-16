@@ -28,9 +28,9 @@ class AddProductBacklogItemUsecase < UsecaseBase
 
   sig {params(product_id: Product::Id).returns(Release::Release)}
   def fetch_release(product_id)
-    plan = @release_repository.find_plan_by_product_id(product_id)
-    return Release::Release.create_default(product_id) if plan.empty?
+    release = @release_repository.find_last_by_product_id(product_id)
+    return release if release
 
-    plan.last
+    Release::Release.create_default(product_id)
   end
 end

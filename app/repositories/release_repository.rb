@@ -15,8 +15,16 @@ module ReleaseRepository
 
       sig {override.params(product_id: Product::Id).returns(T::Array[Release::Release])}
       def find_plan_by_product_id(product_id)
-        rs = Dao::Release.where(dao_product_id: product_id.to_s)
+        rs = relations_by_product_id(product_id)
         rs.map { |r| build_release(r) }
+      end
+
+      sig {override.params(product_id: Product::Id).returns(T.nilable(Release::Release))}
+      def find_last_by_product_id(product_id)
+        r = relations_by_product_id(product_id).last
+        return nil unless r
+
+        build_release(r)
       end
 
       sig {override.params(release: Release::Release).void}
@@ -51,6 +59,11 @@ module ReleaseRepository
       end
 
       private
+
+      sig {params(product_id: Product::Id).returns(T.untyped)}
+      def relations_by_product_id(product_id)
+        Dao::Release.where(dao_product_id: product_id.to_s).order(:created_at)
+      end
 
       sig {params(rel: T.untyped).returns(Release::Release)}
       def build_release(rel)

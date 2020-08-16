@@ -13,6 +13,9 @@ module Release
     sig {abstract.params(product_id: Product::Id).returns(T::Array[Release])}
     def find_plan_by_product_id(product_id); end
 
+    sig {abstract.params(product_id: Product::Id).returns(T.nilable(Release))}
+    def find_last_by_product_id(product_id); end
+
     sig {abstract.params(release: Release).void}
     def add(release); end
 

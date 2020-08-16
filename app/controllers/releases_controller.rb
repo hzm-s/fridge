@@ -40,7 +40,7 @@ class ReleasesController < ApplicationController
     release = current_release
     RemoveReleaseUsecase.perform(release.id)
     flash = flash_success('release.destroy')
-  rescue Release::CanNotRemoveRelease, Release::AtLeastOneReleaseIsRequired => e
+  rescue Release::CanNotRemoveRelease => e
     flash = { notice: t_domain_error(e) }
   ensure
     redirect_to product_product_backlog_items_path(product_id: release.product_id.to_s), flash: flash
