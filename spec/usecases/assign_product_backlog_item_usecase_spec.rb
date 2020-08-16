@@ -8,6 +8,6 @@ RSpec.describe AssignProductBacklogItemUsecase do
   it do
     described_class.perform(pbi.id)
     updated = ProductBacklogItemRepository::AR.find_by_id(pbi.id)
-    expect(updated.status).to eq Pbi::Statuses::Todo
+    expect(updated.status).to eq Pbi::Statuses::Wip
   end
 end

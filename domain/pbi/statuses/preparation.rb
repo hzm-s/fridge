@@ -38,7 +38,7 @@ module Pbi
         end
 
         sig {override.returns(Status)}
-        def update_to_todo
+        def update_to_wip
           raise AssignProductBacklogItemNotAllowed
         end
 

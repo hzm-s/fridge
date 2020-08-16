@@ -5,7 +5,7 @@ module Pbi
   module Statuses
     autoload :Preparation, 'pbi/statuses/preparation'
     autoload :Ready, 'pbi/statuses/ready'
-    autoload :Todo, 'pbi/statuses/todo'
+    autoload :Wip, 'pbi/statuses/wip'
 
     class << self
       extend T::Sig
@@ -13,7 +13,7 @@ module Pbi
       MAP = T.let({
         'preparation' => Preparation,
         'ready' => Ready,
-        'todo' => Todo,
+        'wip' => Wip,
       }, T::Hash[String, Status])
 
       sig {params(str: String).returns(Status)}

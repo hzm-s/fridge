@@ -23,7 +23,7 @@ module Pbi
     def update_by_prepartion(criteria, size); end
 
     sig {abstract.returns(Status)}
-    def update_to_todo; end
+    def update_to_wip; end
 
     sig {abstract.returns(Status)}
     def update_by_cancel_assignment; end
