@@ -23,8 +23,8 @@ RSpec.describe AddProductBacklogItemUsecase do
     described_class.perform(product.id, Pbi::Content.new('aaa'))
 
     pbi_id = described_class.perform(product.id, Pbi::Content.new('bbb'))
-    plan = release_repo.find_plan_by_product_id(product.id)
+    release = release_repo.find_last_by_product_id(product.id)
 
-    expect(plan[0].items.index(pbi_id)).to eq 1
+    expect(release.items.index(pbi_id)).to eq 1
   end
 end

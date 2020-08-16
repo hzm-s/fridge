@@ -5,7 +5,7 @@ RSpec.describe 'releases' do
   let!(:user) { sign_up }
   let!(:product) { create_product(user_id: user_id(user.id)) }
   let!(:pbi) { add_pbi(product.id) }
-  let!(:release) { ReleaseRepository::AR.find_plan_by_product_id(product.id)[0] }
+  let!(:release) { ReleaseRepository::AR.find_last_by_product_id(product.id) }
 
   before do
     sign_in(user)
@@ -57,15 +57,6 @@ RSpec.describe 'releases' do
       follow_redirect!
 
       expect(response.body).to include I18n.t('domain.errors.release.can_not_remove_release')
-    end
-
-    xit do
-      remove_pbi(pbi.id)
-
-      delete release_path(release.id)
-      follow_redirect!
-
-      expect(response.body).to include I18n.t('domain.errors.release.at_least_one_release_is_required')
     end
   end
 end

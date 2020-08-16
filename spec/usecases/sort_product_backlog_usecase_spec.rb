@@ -9,9 +9,9 @@ RSpec.describe SortProductBacklogUsecase do
 
   context 'same release' do
     it do
-      release = ReleaseRepository::AR.find_plan_by_product_id(product.id)[0]
+      release = ReleaseRepository::AR.find_last_by_product_id(product.id)
 
-      described_class.perform(release.id, pbi_a, release.id, 3)
+      described_class.perform(product.id, release.id, pbi_a, release.id, 3)
 
       stored = ReleaseRepository::AR.find_by_id(release.id)
       expect(stored.items).to eq [pbi_b, pbi_c, pbi_a]
@@ -20,10 +20,10 @@ RSpec.describe SortProductBacklogUsecase do
 
   context 'another release' do
     it do
-      from = ReleaseRepository::AR.find_plan_by_product_id(product.id)[0]
+      from = ReleaseRepository::AR.find_last_by_product_id(product.id)
       to = add_release(product.id, 'R2')
 
-      described_class.perform(from.id, pbi_b, to.id, 1)
+      described_class.perform(product.id, from.id, pbi_b, to.id, 1)
 
       stored_from = ReleaseRepository::AR.find_by_id(from.id)
       stored_to = ReleaseRepository::AR.find_by_id(to.id)

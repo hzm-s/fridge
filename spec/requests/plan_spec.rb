@@ -10,7 +10,7 @@ RSpec.describe 'plan' do
 
   describe '#update' do
     it do
-      release = ReleaseRepository::AR.find_plan_by_product_id(product.id)[0]
+      release = ReleaseRepository::AR.find_last_by_product_id(product.id)
       params = {
         from_id: release.id,
         item_id: pbi_c.to_s,

@@ -9,10 +9,11 @@ class SortProductBacklogUsecase < UsecaseBase
     @repository = T.let(ReleaseRepository::AR, Release::ReleaseRepository)
   end
 
-  sig {params(from_id: Release::Id, item_id: Pbi::Id, to_id: Release::Id, position: Integer).void}
-  def perform(from_id, item_id, to_id, position)
-    from = @repository.find_by_id(from_id)
-    to = @repository.find_by_id(to_id)
+  sig {params(product_id: Product::Id, from_id: Release::Id, item_id: Pbi::Id, to_id: Release::Id, position: Integer).void}
+  def perform(product_id, from_id, item_id, to_id, position)
+    all = @repository.all_by_product_id(product_id)
+    from = T.must(all.find { |r| r.id == from_id })
+    to = T.must(all.find { |r| r.id == to_id })
 
     sorter = Release::ItemSorter.new(from, item_id, to, position)
     releases = sorter.sort
