@@ -1,6 +1,6 @@
 .navbar {
   padding: 5px 20px;
-  background-color: rgba(248,248,242, .7);
+  margin-bottom: 1rem;
 }
 
 .navbar-brand {
@@ -9,13 +9,23 @@
   margin-right: 0;
 }
 
+.gnav__product {
+  background-color: $gray-700;
+  border-radius: .5rem;
+}
+
 .gnav__product-name {
   @include nf;
   font-size: 1rem;
-  padding: .125rem 1.5rem;
+  padding: .5rem 1rem .5rem 1.25rem;
   color: $white;
   background-color: $gray-700;
   border-radius: .5rem;
+
+  &:hover {
+    color: $white;
+    text-decoration: none;
+  }
 }
 
 .gnav__toggle {

@@ -3,7 +3,11 @@ class ApplicationController < ActionController::Base
   include I18nHelper
   include SessionHelper
 
-  helper_method :current_user, :signed_in?
+  helper_method :current_user, :signed_in?, :current_product
+
+  def current_product
+    nil
+  end
 
   protected
 

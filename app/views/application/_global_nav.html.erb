@@ -2,8 +2,8 @@
   <div class="gnav__head">
     <a class="navbar-brand" href="/">fridge</a>
   </div>
-  <% if product_name = content_for?(:product_name) ? yield(:product_name) : nil %>
-    <span class="gnav__product-name"><%= product_name %></span>
+  <% if current_product %>
+    <%= render partial: 'product_menu', locals: { product: current_product } %>
   <% end %>
   <div class="gnav__tail d-flex align-items-center">
     <% if member_role = content_for?(:member_role) ? yield(:member_role): nil %>
