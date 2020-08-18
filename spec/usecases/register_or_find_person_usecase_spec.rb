@@ -10,19 +10,19 @@ RSpec.describe RegisterOrFindPersonUsecase do
     it do
       result = described_class.perform(name, email, oauth_info)
       expect(result[:is_register]).to be true
-      expect(result[:person_id]).to_not be_nil
+      expect(result[:user_account_id]).to_not be_nil
     end
   end
 
   context 'when registered' do
     before do
-      @person = register_person(name: name, email: email, oauth_info: oauth_info)
+      @user = register_person(name: name, email: email, oauth_info: oauth_info)
     end
 
     it do
       result = described_class.perform(name, email, oauth_info)
       expect(result[:is_register]).to be false
-      expect(result[:person_id]).to eq @person.id
+      expect(result[:user_account_id]).to eq @user.user_account_id
     end
   end
 end

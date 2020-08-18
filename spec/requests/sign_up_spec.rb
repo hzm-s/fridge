@@ -9,13 +9,13 @@ RSpec.describe 'sign_up' do
       set_auth_hash(auth_hash)
     end
 
-    it 'ユーザー登録すること' do
+    it 'ユーザーアカウントを登録すること' do
       expect { get oauth_callback_path(provider: auth_hash['provider']) }
-        .to change { Dao::User.count }.by(1)
-        .and change { App::OauthAccount.count }.by(1)
+        .to change { Dao::Person.count }.by(1)
+        .and change { App::UserAccount.count }.by(1)
     end
 
-    it 'ユーザー登録完了メッセージを表示すること' do
+    it 'ユーザーアカウント登録完了メッセージを表示すること' do
       get oauth_callback_path(provider: auth_hash['provider'])
       follow_redirect!
 
@@ -31,13 +31,13 @@ RSpec.describe 'sign_up' do
       set_auth_hash(auth_hash)
     end
 
-    it 'ユーザー登録しないこと' do
+    it 'ユーザーアカウントを登録しないこと' do
       expect { get oauth_callback_path(provider: auth_hash['provider']) }
-        .to change { Dao::User.count }.by(0)
-        .and change { App::OauthAccount.count }.by(0)
+        .to change { Dao::Person.count }.by(0)
+        .and change { App::UerAccount.count }.by(0)
     end
 
-    it 'ユーザー登録完了メッセージを表示しないこと' do
+    it 'ユーザーアカウント登録完了メッセージを表示しないこと' do
       get oauth_callback_path(provider: auth_hash['provider'])
       follow_redirect!
 
@@ -46,14 +46,14 @@ RSpec.describe 'sign_up' do
   end
 
   context 'when signed in' do
-    let(:user) { sign_up }
+    let(:user_account) { sign_up }
 
     before do
-      sign_in(user)
+      sign_in(user_account)
     end
 
     it do
-      get oauth_callback_path(provider: user.oauth_account.provider)
+      get oauth_callback_path(provider: user_account.provider)
       follow_redirect!
 
       expect(response.body).to include I18n.t('feedbacks.already_signed_in')

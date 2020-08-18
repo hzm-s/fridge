@@ -3,8 +3,10 @@ class OauthCallbacksController < ApplicationController
   before_action :require_guest
 
   def create
-    result = RegisterOrFindUserUsecase.perform(auth_hash.name, auth_hash.email, auth_hash.account)
-    sign_in(result[:user_id].to_s)
+    oauth_info = auth_hash.account.merge(image: auth_hash.image)
+    result = RegisterOrFindPersonUsecase.perform(auth_hash.name, auth_hash.email, oauth_info)
+
+    sign_in(result[:person_id].to_s)
     redirect(result[:is_register])
   end
 
