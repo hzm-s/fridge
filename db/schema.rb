@@ -16,22 +16,14 @@ ActiveRecord::Schema.define(version: 2020_08_10_050340) do
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "app_avatars", force: :cascade do |t|
-    t.uuid "dao_user_id"
-    t.string "bg", null: false
-    t.string "fg", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["dao_user_id"], name: "index_app_avatars_on_dao_user_id", unique: true
-  end
-
-  create_table "app_oauth_accounts", force: :cascade do |t|
-    t.uuid "dao_user_id"
+  create_table "app_user_accounts", force: :cascade do |t|
+    t.uuid "dao_person_id"
     t.string "provider", null: false
     t.string "uid", null: false
+    t.string "image"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["dao_user_id"], name: "index_app_oauth_accounts_on_dao_user_id", unique: true
+    t.index ["dao_person_id"], name: "index_app_user_accounts_on_dao_person_id", unique: true
   end
 
   create_table "dao_acceptance_criteria", force: :cascade do |t|
@@ -40,6 +32,14 @@ ActiveRecord::Schema.define(version: 2020_08_10_050340) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["dao_product_backlog_item_id"], name: "index_dao_acceptance_criteria_on_dao_product_backlog_item_id"
+  end
+
+  create_table "dao_people", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.string "email", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_dao_people_on_email", unique: true
   end
 
   create_table "dao_product_backlog_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -70,27 +70,16 @@ ActiveRecord::Schema.define(version: 2020_08_10_050340) do
 
   create_table "dao_team_members", force: :cascade do |t|
     t.uuid "dao_product_id"
-    t.uuid "dao_user_id"
+    t.uuid "dao_person_id"
     t.string "role", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["dao_product_id", "dao_user_id"], name: "index_dao_team_members_on_dao_product_id_and_dao_user_id", unique: true
+    t.index ["dao_product_id", "dao_person_id"], name: "index_dao_team_members_on_dao_product_id_and_dao_person_id", unique: true
   end
 
-  create_table "dao_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name", null: false
-    t.string "email", null: false
-    t.string "initials", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["email"], name: "index_dao_users_on_email", unique: true
-  end
-
-  add_foreign_key "app_avatars", "dao_users"
-  add_foreign_key "app_oauth_accounts", "dao_users"
+  add_foreign_key "app_user_accounts", "dao_people"
   add_foreign_key "dao_acceptance_criteria", "dao_product_backlog_items"
   add_foreign_key "dao_product_backlog_items", "dao_products"
   add_foreign_key "dao_releases", "dao_products"
   add_foreign_key "dao_team_members", "dao_products"
-  add_foreign_key "dao_team_members", "dao_users"
 end

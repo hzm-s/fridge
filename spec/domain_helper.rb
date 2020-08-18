@@ -7,6 +7,6 @@ require 'product'
 require 'release'
 require 'pbi'
 require 'team'
-require 'user'
+require 'person'
 
 Dir[File.join(File.expand_path('./domain_support', __dir__), '**', '*.rb')].sort.each { |f| require f }
