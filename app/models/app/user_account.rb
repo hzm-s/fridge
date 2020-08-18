@@ -3,8 +3,8 @@ class App::UserAccount < ApplicationRecord
   belongs_to :dao_person, class_name: 'Dao::Person', foreign_key: :dao_person_id
 
   class << self
-    def create_for_user(user_id, account)
-      create!(dao_user_id: user_id, provider: account[:provider], uid: account[:uid])
+    def create_for_person(person_id, provider:, uid:, image:)
+      create!(dao_person_id: person_id, provider: provider, uid: uid, image: image)
     end
 
     def find_user_id_by_account(account)
