@@ -15,7 +15,7 @@ RSpec.describe 'sign_up' do
         .and change { App::UserAccount.count }.by(1)
     end
 
-    it 'ユーザーアカウント登録完了メッセージを表示すること' do
+    xit 'ユーザーアカウント登録完了メッセージを表示すること' do
       get oauth_callback_path(provider: auth_hash['provider'])
       follow_redirect!
 
@@ -34,10 +34,10 @@ RSpec.describe 'sign_up' do
     it 'ユーザーアカウントを登録しないこと' do
       expect { get oauth_callback_path(provider: auth_hash['provider']) }
         .to change { Dao::Person.count }.by(0)
-        .and change { App::UerAccount.count }.by(0)
+        .and change { App::UserAccount.count }.by(0)
     end
 
-    it 'ユーザーアカウント登録完了メッセージを表示しないこと' do
+    xit 'ユーザーアカウント登録完了メッセージを表示しないこと' do
       get oauth_callback_path(provider: auth_hash['provider'])
       follow_redirect!
 
@@ -52,7 +52,7 @@ RSpec.describe 'sign_up' do
       sign_in(user_account)
     end
 
-    it do
+    xit do
       get oauth_callback_path(provider: user_account.provider)
       follow_redirect!
 

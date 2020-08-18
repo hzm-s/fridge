@@ -8,13 +8,14 @@ module OauthSupport
     OmniAuth.config.add_mock(auth_hash['provider'].to_sym, auth_hash)
   end
 
-  def auth_hash_from_user_account(user_account)
+  def auth_hash_from_user(user_account)
     {
       'provider' => user_account.provider,
       'uid' => user_account.uid,
       'info' => {
         'name' => user_account.person.name,
         'email' => user_account.person.email,
+        'image' => user_account.image
       }
     }
   end

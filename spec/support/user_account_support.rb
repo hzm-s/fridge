@@ -33,10 +33,10 @@ module UserAccountSupport
       oauth_info = {
         provider: auth_hash['provider'],
         uid: auth_hash['uid'],
-        image: auth_hash['image']
+        image: auth_hash['info']['image']
       }
       RegisterPersonUsecase.perform(name, email, oauth_info)
-        .yield_self { |person_id| App::UserAccount.find_by(dao_person_id: person_id.to_s) }
+        .yield_self { |user_account_id| App::UserAccount.eager_load(:person).find(user_account_id) }
     end
     alias_method :sign_up, :sign_up_with_auth_hash
 

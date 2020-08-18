@@ -2,7 +2,7 @@
 class ProductsController < ApplicationController
 
   def index
-    @products = ProductQuery.call(current_user.id)
+    @products = ProductQuery.call(current_user.person_id)
   end
 
   def new

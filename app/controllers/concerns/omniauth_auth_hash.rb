@@ -13,6 +13,13 @@ class OmniauthAuthHash < SimpleDelegator
   end
 
   def account
-    { provider: self['provider'], uid: self['uid'] }
+    {
+      provider: self['provider'],
+      uid: self['uid']
+    }
+  end
+
+  def info
+    account.merge(image: image)
   end
 end
