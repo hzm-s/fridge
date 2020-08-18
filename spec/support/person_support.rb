@@ -1,25 +1,26 @@
 # typed: ignore
-require_relative '../domain_support/user_domain_support'
+require_relative '../domain_support/person_domain_support'
 
-module UserSupport
+module PersonSupport
   module Common
-    include UserDomainSupport
+    include PersonDomainSupport
 
-    def register_user(attrs = default_user_registration_attrs)
-      RegisterUserUsecase.perform(attrs[:name], attrs[:email], attrs[:oauth_account])
-        .yield_self { |user_id| UserRepository::AR.find_by_id(user_id) }
+    def register_person(attrs = default_person_registration_attrs)
+      RegisterPersonUsecase.perform(attrs[:name], attrs[:email], attrs[:oauth_info])
+        .yield_self { |person_id| PersonRepository::AR.find_by_id(person_id) }
     end
 
     private
 
-    def default_user_registration_attrs
+    def default_person_registration_attrs
       auth_hash = mock_auth_hash
       {
         name: auth_hash['info']['name'],
         email: auth_hash['info']['email'],
-        oauth_account: {
+        oauth_info: {
           provider: auth_hash['provider'],
-          uid: auth_hash['uid']
+          uid: auth_hash['uid'],
+          image: 'https://ima.ge/123'
         }
       }
     end
@@ -44,6 +45,6 @@ module UserSupport
 end
 
 RSpec.configure do |c|
-  c.include UserSupport::Common
-  c.include UserSupport::Requests, type: :request
+  c.include PersonSupport::Common
+  c.include PersonSupport::Requests, type: :request
 end

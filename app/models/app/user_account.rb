@@ -7,8 +7,8 @@ class App::UserAccount < ApplicationRecord
       create!(dao_person_id: person_id, provider: provider, uid: uid, image: image)
     end
 
-    def find_user_id_by_account(account)
-      find_by(provider: account[:provider], uid: account[:uid])&.dao_user_id
+    def find_person_id_by_oauth_account(provider:, uid:)
+      find_by(provider: provider, uid: uid)&.dao_person_id
     end
   end
 end
