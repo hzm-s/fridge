@@ -6,7 +6,7 @@ module Team
     describe '#add_member' do
       let(:po) { User::User.create('po', 'po@e.mail') }
       let(:sm) { User::User.create('sm', 'sm@e.mail') }
-      let(:new_member) { User::User.create('new member', 'new.member@e.mail') } 
+      let(:new_member) { User::User.create('new member', 'new.member@e.mail') }
 
       before do
         @team = described_class.new([])
