@@ -1,6 +1,6 @@
 # typed: true
-class App::OauthAccount < ApplicationRecord
-  belongs_to :dao_user, class_name: 'Dao::User', foreign_key: :dao_user_id
+class App::UserAccount < ApplicationRecord
+  belongs_to :dao_person, class_name: 'Dao::Person', foreign_key: :dao_person_id
 
   class << self
     def create_for_user(user_id, account)
