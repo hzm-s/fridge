@@ -8,13 +8,14 @@ module OauthSupport
     OmniAuth.config.add_mock(auth_hash['provider'].to_sym, auth_hash)
   end
 
-  def auth_hash_from_user(user)
+  def auth_hash_from_user(user_account)
     {
-      'provider' => user.oauth_account.provider,
-      'uid' => user.oauth_account.uid,
+      'provider' => user_account.provider,
+      'uid' => user_account.uid,
       'info' => {
-        'name' => user.name,
-        'email' => user.email,
+        'name' => user_account.person.name,
+        'email' => user_account.person.email,
+        'image' => user_account.image
       }
     }
   end
@@ -31,4 +32,5 @@ OmniAuthTestHelper.register_generator do |g|
   g.for(:uid) { SecureRandom.base64(14) }
   g.for(:name) { |h| "ユーザー #{h[:uid][0, 5]}"  }
   g.for(:email) { |h| "#{h[:uid]}@gmail.com" }
+  g.for(:image) { |h| "https://ima.ge/#{h[:uid]}" }
 end

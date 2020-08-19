@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2020_08_10_050340) do
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "app_user_accounts", force: :cascade do |t|
+  create_table "app_user_accounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "dao_person_id"
     t.string "provider", null: false
     t.string "uid", null: false

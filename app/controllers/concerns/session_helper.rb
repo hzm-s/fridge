@@ -1,9 +1,10 @@
 # typed: false
 module SessionHelper
-  def sign_in(user_id)
+  def sign_in(user_account_id)
     referer = session[:referer]
     reset_session
-    session[:user_id] = user_id
+
+    session[:user_account_id] = user_account_id
     session[:referer] = referer if referer
   end
 
@@ -23,8 +24,8 @@ module SessionHelper
   private
 
   def fetch_current_user
-    return nil unless user_id = session[:user_id]
-    UserQuery.call(user_id)
+    return nil unless user_account_id = session[:user_account_id]
+    UserQuery.call(user_account_id)
   end
 
   def flush_current_user

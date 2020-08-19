@@ -7,19 +7,19 @@ RSpec.describe RegisterPersonUsecase do
   let(:email) { 'user@example.com' }
 
   it do
-    person_id = described_class.perform(name, email, oauth_info)
+    user_account_id = described_class.perform(name, email, oauth_info)
 
-    person = PersonRepository::AR.find_by_id(person_id)
-    account = App::UserAccount.find_by(provider: oauth_info[:provider], uid: oauth_info[:uid])
+    user_account = App::UserAccount.find(user_account_id)
+    person = PersonRepository::AR.find_by_id(Person::Id.from_string(user_account.dao_person_id))
 
     aggregate_failures do
       expect(person.name).to eq name
       expect(person.email).to eq email
 
-      expect(account.dao_person_id).to eq person.id.to_s
-      expect(account.provider).to eq oauth_info[:provider]
-      expect(account.uid).to eq oauth_info[:uid]
-      expect(account.image).to eq oauth_info[:image]
+      expect(user_account.dao_person_id).to eq person.id.to_s
+      expect(user_account.provider).to eq oauth_info[:provider]
+      expect(user_account.uid).to eq oauth_info[:uid]
+      expect(user_account.image).to eq oauth_info[:image]
     end
   end
 
