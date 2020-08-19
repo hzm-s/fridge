@@ -15,6 +15,6 @@ module ProductHelper
   end
 
   def current_team_member
-    Dao::TeamMember.find_by(dao_user_id: current_user.id, dao_product_id: current_product_id)
+    Dao::TeamMember.find_by(dao_person_id: current_user.person_id.to_s, dao_product_id: current_product_id)
   end
 end

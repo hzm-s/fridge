@@ -2,7 +2,7 @@
 class ProductsController < ApplicationController
 
   def index
-    @products = ProductQuery.call(current_user.person_id)
+    @products = ProductQuery.call(current_user.person_id.to_s)
   end
 
   def new
@@ -13,7 +13,7 @@ class ProductsController < ApplicationController
     @form = ProductForm.new(permitted_params)
     if @form.valid?
       CreateProductUsecase.perform(
-        current_user.id_as_domain,
+        current_user.person_id,
         @form.domain_objects[:member_role],
         @form.name,
         @form.description
