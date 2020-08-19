@@ -13,13 +13,13 @@ module Team
 
     sig {params(member: Member).returns(Team)}
     def add_member(member)
-      raise AlreadyJoined if self.member(member.user_id)
+      raise AlreadyJoined if self.member(member.person_id)
       self.class.new(@members + [member])
     end
 
-    sig {params(user_id: User::Id).returns(T.nilable(Member))}
-    def member(user_id)
-      @members.find { |member| member.user_id == user_id }
+    sig {params(person_id: Person::Id).returns(T.nilable(Member))}
+    def member(person_id)
+      @members.find { |member| member.person_id == person_id }
     end
 
     sig {returns(T::Array[Role])}
