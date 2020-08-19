@@ -1,4 +1,4 @@
 # typed: strict
 class Dao::TeamMember < ApplicationRecord
-  belongs_to :user, class_name: 'Dao::User', foreign_key: :dao_user_id
+  belongs_to :person, class_name: 'Dao::Person', foreign_key: :dao_person_id
 end
