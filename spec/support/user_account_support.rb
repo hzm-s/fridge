@@ -40,8 +40,8 @@ module UserAccountSupport
     end
     alias_method :sign_up, :sign_up_with_auth_hash
 
-    def sign_in(user)
-      auth_hash = auth_hash_from_user(user)
+    def sign_in(user_account)
+      auth_hash = auth_hash_from_user(user_account)
       set_auth_hash(auth_hash)
       get oauth_callback_path(provider: auth_hash['provider'])
     end
