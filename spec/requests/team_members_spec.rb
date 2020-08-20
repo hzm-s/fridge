@@ -4,14 +4,14 @@ require 'rails_helper'
 RSpec.describe 'team_members' do
   let!(:founder) { sign_up }
   let!(:new_member) { sign_up }
-  let!(:product) { create_product(user_id: User::Id.from_string(founder.id), role: Team::Role::ProductOwner) }
+  let!(:product) { create_product(person_id: Person::Id.from_string(founder.person.id), role: Team::Role::ProductOwner) }
 
   describe '#index' do
     before { sign_in(founder) }
 
     it do
       get product_team_members_path(product_id: product.id.to_s)
-      expect(response.body).to include founder.name
+      expect(response.body).to include founder.person.name
     end
   end
 
@@ -47,7 +47,7 @@ RSpec.describe 'team_members' do
         params = { role: 'developer' }
         post product_team_members_path(product_id: product.id), params: params
 
-        member = Dao::TeamMember.find_by(dao_user_id: new_member.id)
+        member = Dao::TeamMember.find_by(dao_person_id: new_member.person.id)
         expect(member.role).to eq 'developer'
       end
     end
