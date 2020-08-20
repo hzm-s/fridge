@@ -2,13 +2,13 @@
 require 'rails_helper'
 
 RSpec.describe 'releases' do
-  let!(:user) { sign_up }
-  let!(:product) { create_product(user_id: user_id(user.id)) }
+  let!(:user_account) { sign_up }
+  let!(:product) { create_product(person_id: user_account.person_id) }
   let!(:pbi) { add_pbi(product.id) }
   let!(:release) { ReleaseRepository::AR.find_last_by_product_id(product.id) }
 
   before do
-    sign_in(user)
+    sign_in(user_account)
   end
 
   describe '#create' do

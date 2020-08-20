@@ -2,12 +2,12 @@
 require 'rails_helper'
 
 RSpec.describe 'acceptance_criteria' do
-  let!(:user) { sign_up }
-  let!(:product) { create_product(user_id: User::Id.from_string(user.id)) }
+  let!(:user_account) { sign_up }
+  let!(:product) { create_product(person_id: user_account.person_id) }
   let!(:pbi) { add_pbi(product.id) }
 
   before do
-    sign_in(user)
+    sign_in(user_account)
   end
 
   describe '#create' do

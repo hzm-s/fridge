@@ -1,6 +1,16 @@
 # typed: ignore
 
 module UserAccountSupport
+  class Wrapper < SimpleDelegator
+    def self.load(user_account_id)
+      new(App::UserAccount.eager_load(:person).find(user_account_id))
+    end
+
+    def person_id
+      Person::Id.from_string(person.id)
+    end
+  end
+
   module Requests
     def sign_up_with_auth_hash(auth_hash = mock_auth_hash)
       name = auth_hash['info']['name']
@@ -11,7 +21,7 @@ module UserAccountSupport
         image: auth_hash['info']['image']
       }
       RegisterPersonUsecase.perform(name, email, oauth_info)
-        .yield_self { |user_account_id| App::UserAccount.eager_load(:person).find(user_account_id) }
+        .yield_self { |user_account_id| Wrapper.load(user_account_id) }
     end
     alias_method :sign_up, :sign_up_with_auth_hash
 

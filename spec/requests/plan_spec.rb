@@ -2,8 +2,8 @@
 require 'rails_helper'
 
 RSpec.describe 'plan' do
-  let!(:user) { sign_up }
-  let!(:product) { create_product(user_id: user_id(user.id)) }
+  let!(:user_account) { sign_up }
+  let!(:product) { create_product(person_id: user_account.person_id) }
   let!(:pbi_a) { add_pbi(product.id).id }
   let!(:pbi_b) { add_pbi(product.id).id }
   let!(:pbi_c) { add_pbi(product.id).id }
