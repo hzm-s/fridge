@@ -2,10 +2,10 @@
 require 'rails_helper'
 
 RSpec.describe 'products' do
-  let(:user) { sign_up }
+  let(:user_account) { sign_up }
 
   before do
-    sign_in(user)
+    sign_in(user_account)
   end
 
   describe '#create' do
@@ -34,7 +34,7 @@ RSpec.describe 'products' do
 
   describe '#index' do
     it do
-      expect(ProductQuery).to receive(:call).with(user.id)
+      expect(ProductQuery).to receive(:call).with(user_account.person.id)
       get products_path
     end
   end

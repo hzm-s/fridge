@@ -49,9 +49,9 @@ module Product
       @team = @team.add_member(member)
     end
 
-    sig {params(user_id: User::Id).returns(T.nilable(Team::Member))}
-    def team_member(user_id)
-      @team.member(user_id)
+    sig {params(person_id: Person::Id).returns(T.nilable(Team::Member))}
+    def team_member(person_id)
+      @team.member(person_id)
     end
   end
 end

@@ -4,7 +4,7 @@ module UserQuery
     def self.build(user_account)
       new(
         user_account.id,
-        user_account.person.id,
+        Person::Id.from_string(user_account.person.id),
         user_account.person.name,
         user_account.image
       )

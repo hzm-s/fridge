@@ -1,8 +1,6 @@
 <% if member %>
   <div class="team-member-item d-flex align-items-center">
-    <span class="avatar" <%= avatar_style(member.avatar_bg, member.avatar_fg) %>>
-      <%= member.initials %>
-    </span>
+    <img src="<%= member.image %>">
     <span class="team-member-item__name">
       <%= member.name %>
     </span>

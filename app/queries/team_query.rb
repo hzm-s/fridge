@@ -1,24 +1,16 @@
 # typed: false
 module TeamQuery
   class Member < SimpleDelegator
-    def user_id
-      dao_user_id
+    def person_id
+      dao_person_id
     end
 
     def name
-      user.name
+      person.name
     end
 
-    def initials
-      user.initials
-    end
-
-    def avatar_fg
-      user.avatar.fg
-    end
-
-    def avatar_bg
-      user.avatar.bg
+    def image
+      person.user_account.image
     end
   end
 
@@ -45,7 +37,7 @@ module TeamQuery
 
   class << self
     def call(product_id)
-      members = Dao::TeamMember.eager_load(user: :avatar).where(dao_product_id: product_id).order(:id)
+      members = Dao::TeamMember.eager_load(person: :user_account).where(dao_product_id: product_id).order(:id)
       Team.new(product_id, members.map { |m| Member.new(m) })
     end
   end

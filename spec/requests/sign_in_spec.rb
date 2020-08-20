@@ -26,7 +26,7 @@ RSpec.describe 'sign_in' do
         sign_in(@user_account)
       end
 
-      xit do
+      it do
         get oauth_callback_path(provider: user_auth_hash['provider'])
         follow_redirect!
 

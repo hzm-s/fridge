@@ -1,6 +1,8 @@
 # typed: false
+require 'securerandom'
+
 module PersonDomainSupport
-  def register_person(name: 'User Name', email: 'us@example.com')
+  def register_person(name: 'User Name', email: "#{SecureRandom.hex}@example.com")
     Person::Person.create(name, email)
   end
 

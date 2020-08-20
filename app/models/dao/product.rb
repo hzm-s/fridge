@@ -14,7 +14,7 @@ class Dao::Product < ApplicationRecord
 
   def team_members_as_do
     members.map do |m|
-      Team::Member.new(User::Id.from_string(m.dao_user_id), Team::Role.deserialize(m.role))
+      Team::Member.new(Person::Id.from_string(m.dao_person_id), Team::Role.deserialize(m.role))
     end
   end
 end
