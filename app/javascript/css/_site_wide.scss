@@ -32,8 +32,8 @@ label {
   border-radius: $border-radius;
 }
 
-.avatar {
-  @include avatar(2.0rem);
+.user-picture {
+  border-radius: 50%;
 }
 
 .team-member-role {

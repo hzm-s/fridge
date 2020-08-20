@@ -1,6 +1,6 @@
 <% if member %>
   <div class="team-member-item d-flex align-items-center">
-    <img src="<%= member.image %>">
+    <%= image_tag member.image, size: '35', class: 'user-picture' %>
     <span class="team-member-item__name">
       <%= member.name %>
     </span>
