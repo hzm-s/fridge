@@ -1,7 +1,8 @@
 # typed: false
+require_relative '../domain_support/person_domain_support'
 
 module PersonSupport
-  def register_person(attrs = default_attrs)
+  def sign_up_as_person(attrs = default_attrs)
     RegisterPersonUsecase.perform(attrs[:name], attrs[:email], attrs[:oauth_info])
       .yield_self { |id| App::UserAccount.find(id) }
       .yield_self { |ua| Person::Id.from_string(ua.dao_person_id) }

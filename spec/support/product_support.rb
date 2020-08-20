@@ -5,7 +5,7 @@ module ProductSpport
   include TeamDomainSupport
 
   def create_product(person_id: nil, role: Team::Role::ProductOwner, name: 'example', description: 'desc example')
-    person_id ||= register_person.id
+    person_id ||= sign_up_as_person.id
     CreateProductUsecase.new
       .perform(person_id, role, name, description)
       .yield_self { |id| ProductRepository::AR.find_by_id(id) }

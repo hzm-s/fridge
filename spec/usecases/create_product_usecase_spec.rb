@@ -2,7 +2,7 @@
 require 'rails_helper'
 
 RSpec.describe CreateProductUsecase do
-  let(:person) { register_person }
+  let(:person) { sign_up_as_person }
 
   it do
     product_id = described_class.perform(person.id, Team::Role::ProductOwner, 'fridge', 'DESC')

@@ -16,7 +16,7 @@ RSpec.describe RegisterOrFindPersonUsecase do
 
   context 'when registered' do
     before do
-      person = register_person(name: name, email: email, oauth_info: oauth_info)
+      person = sign_up_as_person(name: name, email: email, oauth_info: oauth_info)
       @user_account = App::UserAccount.find_by(dao_person_id: person.id.to_s)
     end
 
