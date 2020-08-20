@@ -16,13 +16,14 @@ RSpec.describe RegisterOrFindPersonUsecase do
 
   context 'when registered' do
     before do
-      @user = register_person(name: name, email: email, oauth_info: oauth_info)
+      person = register_person(name: name, email: email, oauth_info: oauth_info)
+      @user_account = App::UserAccount.find_by(dao_person_id: person.id.to_s)
     end
 
     it do
       result = described_class.perform(name, email, oauth_info)
       expect(result[:is_register]).to be false
-      expect(result[:user_account_id]).to eq @user.user_account_id
+      expect(result[:user_account_id]).to eq @user_account.id
     end
   end
 end

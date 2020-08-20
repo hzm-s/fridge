@@ -6,10 +6,10 @@ RSpec.describe AddTeamMemberUsecase do
 
   it do
     new_person = register_person
-    described_class.perform(product_id, new_person.person_id, Team::Role::ProductOwner)
+    described_class.perform(product_id, new_person.id, Team::Role::ProductOwner)
 
     product = ProductRepository::AR.find_by_id(product_id)
-    new_member = product.team_member(new_person.person_id)
+    new_member = product.team_member(new_person.id)
 
     expect(new_member.role).to eq Team::Role::ProductOwner
   end
