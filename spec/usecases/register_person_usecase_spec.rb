@@ -2,7 +2,7 @@
 require 'rails_helper'
 
 RSpec.describe RegisterPersonUsecase do
-  let(:oauth_info) { { provider: 'google_oauth2', uid: '123456789', image: 'https://ima.ge/123' } }
+  let(:oauth_info) { { provider: 'google_oauth2', uid: '123456789' } }
   let(:name) { 'User Name' }
   let(:email) { 'user@example.com' }
 
@@ -19,7 +19,10 @@ RSpec.describe RegisterPersonUsecase do
       expect(user_account.dao_person_id).to eq person.id.to_s
       expect(user_account.provider).to eq oauth_info[:provider]
       expect(user_account.uid).to eq oauth_info[:uid]
-      expect(user_account.image).to eq oauth_info[:image]
+
+      expect(user_account.initials).to_not be_nil
+      expect(user_account.fgcolor).to_not be_nil
+      expect(user_account.bgcolor).to_not be_nil
     end
   end
 
@@ -28,7 +31,7 @@ RSpec.describe RegisterPersonUsecase do
       described_class.perform(name, email, oauth_info)
 
       expect {
-        described_class.perform('Other User', email, { provider: 'google_oauth2', uid: 'other_uid', image: 'other.image' })
+        described_class.perform('Other User', email, { provider: 'google_oauth2', uid: 'other_uid' })
       }
         .to raise_error(Person::EmailNotUnique)
         .and change { Dao::Person.count }.by(0)

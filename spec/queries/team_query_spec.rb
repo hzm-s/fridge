@@ -42,7 +42,7 @@ RSpec.describe TeamQuery do
     aggregate_failures do
       expect(member.role).to_not be_nil
       expect(member.name).to_not be_nil
-      expect(member.image).to_not be_nil
+      expect(member.avatar).to_not be_nil
     end
   end
 end

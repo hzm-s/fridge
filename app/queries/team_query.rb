@@ -9,8 +9,12 @@ module TeamQuery
       person.name
     end
 
-    def image
-      person.user_account.image
+    def avatar
+      {
+        initials: person.user_account.initials,
+        fgcolor: person.user_account.fgcolor,
+        bgcolor: person.user_account.bgcolor,
+      }
     end
   end
 
@@ -37,7 +41,7 @@ module TeamQuery
 
   class << self
     def call(product_id)
-      members = Dao::TeamMember.eager_load(person: :user_account).where(dao_product_id: product_id).order(:id)
+      members = Dao::TeamMember.eager_load(person: { user_account: :profile }).where(dao_product_id: product_id).order(:id)
       Team.new(product_id, members.map { |m| Member.new(m) })
     end
   end

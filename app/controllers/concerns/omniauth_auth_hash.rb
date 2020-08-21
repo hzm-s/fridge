@@ -8,18 +8,10 @@ class OmniauthAuthHash < SimpleDelegator
     self['info']['email']
   end
 
-  def image
-    self['info']['image']
-  end
-
   def account
     {
       provider: self['provider'],
       uid: self['uid']
     }
-  end
-
-  def info
-    account.merge(image: image)
   end
 end

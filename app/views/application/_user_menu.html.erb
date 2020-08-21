@@ -1,5 +1,5 @@
 <a class="dropdown-toggle gnav-tail__child gnav__toggle" href="#" id="dd-global-nav-user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-  <img src="<%= user.image %>">
+  <%= user_avatar(user.avatar) %>
 </a>
 <div class="dropdown-menu dropdown-menu-right">
   <%= link_to sign_out_path, method: :delete, class: 'dropdown-item' do %>
