@@ -20,10 +20,19 @@ ActiveRecord::Schema.define(version: 2020_08_10_050340) do
     t.uuid "dao_person_id"
     t.string "provider", null: false
     t.string "uid", null: false
-    t.string "image"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["dao_person_id"], name: "index_app_user_accounts_on_dao_person_id", unique: true
+  end
+
+  create_table "app_user_profiles", force: :cascade do |t|
+    t.uuid "app_user_account_id"
+    t.string "initials", null: false
+    t.string "fgcolor", null: false
+    t.string "bgcolor", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["app_user_account_id"], name: "index_app_user_profiles_on_app_user_account_id"
   end
 
   create_table "dao_acceptance_criteria", force: :cascade do |t|
@@ -78,6 +87,7 @@ ActiveRecord::Schema.define(version: 2020_08_10_050340) do
   end
 
   add_foreign_key "app_user_accounts", "dao_people"
+  add_foreign_key "app_user_profiles", "app_user_accounts"
   add_foreign_key "dao_acceptance_criteria", "dao_product_backlog_items"
   add_foreign_key "dao_product_backlog_items", "dao_products"
   add_foreign_key "dao_releases", "dao_products"

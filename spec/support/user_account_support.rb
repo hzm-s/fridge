@@ -15,12 +15,11 @@ module UserAccountSupport
     def sign_up_with_auth_hash(auth_hash = mock_auth_hash)
       name = auth_hash['info']['name']
       email = auth_hash['info']['email']
-      oauth_info = {
+      oauth_account = {
         provider: auth_hash['provider'],
         uid: auth_hash['uid'],
-        image: auth_hash['info']['image']
       }
-      RegisterPersonUsecase.perform(name, email, oauth_info)
+      RegisterPersonUsecase.perform(name, email, oauth_account)
         .yield_self { |user_account_id| Wrapper.load(user_account_id) }
     end
     alias_method :sign_up, :sign_up_with_auth_hash

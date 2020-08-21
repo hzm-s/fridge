@@ -6,16 +6,15 @@ class RegisterOrFindPersonUsecase < UsecaseBase
 
   Result = T.type_alias {T::Hash[Symbol, T.any(T::Boolean, T.nilable(String))]}
 
-  sig {params(name: String, email: String, oauth_info: RegisterPersonUsecase::OauthInfo).returns(Result)}
-  def perform(name, email, oauth_info)
-    user_account_id =
-      App::UserAccount.find_id_by_oauth_account(
-        provider: oauth_info[:provider],
-        uid: oauth_info[:uid]
-      )
+  sig {params(name: String, email: String, oauth_account: RegisterPersonUsecase::OauthAccount).returns(Result)}
+  def perform(name, email, oauth_account)
+    user_account_id = App::UserAccount.find_id_by_oauth_account(
+      provider: oauth_account[:provider],
+      uid: oauth_account[:uid]
+    )
     return found(user_account_id) if user_account_id
 
-    registered(::RegisterPersonUsecase.perform(name, email, oauth_info))
+    registered(::RegisterPersonUsecase.perform(name, email, oauth_account))
   end
 
   private

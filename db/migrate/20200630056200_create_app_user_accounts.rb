@@ -5,7 +5,6 @@ class CreateAppUserAccounts < ActiveRecord::Migration[6.0]
       t.references :dao_person, type: :uuid, foreign_key: true, index: false
       t.string :provider, null: false
       t.string :uid, null: false
-      t.string :image
 
       t.timestamps
     end
