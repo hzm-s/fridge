@@ -14,6 +14,6 @@ module ApplicationHelper
   end
 
   def user_avatar(initials:, fgcolor:, bgcolor:)
-    content_tag(:span, initials, style: "background-color: #{bgcolor}; color: #{fgcolor}").html_safe
+    content_tag(:span, initials, class: 'avatar', style: "background-color: #{bgcolor}; color: #{fgcolor}").html_safe
   end
 end

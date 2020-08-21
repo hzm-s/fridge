@@ -35,8 +35,8 @@ class App::UserProfile < ApplicationRecord
       new(
         app_user_account_id: user_account_id,
         initials: initials,
-        fgcolor: BG_COLORS.shuffle.sample,
-        bgcolor: 'snow',
+        bgcolor: BG_COLORS.shuffle.sample,
+        fgcolor: 'snow',
       )
     end
   end
