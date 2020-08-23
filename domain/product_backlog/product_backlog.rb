@@ -14,7 +14,7 @@ module ProductBacklog
       end
     end
 
-    Items = T.type_alias {T::Array[Item]}
+    Items = T.type_alias {T::Array[Feature::Id]}
 
     sig {returns(Product::Id)}
     attr_reader :product_id
@@ -28,14 +28,14 @@ module ProductBacklog
       @items = T.let([], Items)
     end
 
-    sig {params(feature_id: Feature::Id).void}
-    def add_item(feature_id)
-      @items << Item.new(feature_id)
+    sig {params(item: Feature::Id).void}
+    def add_item(item)
+      @items << item
     end
 
-    sig {params(feature_id: Feature::Id).void}
-    def remove_item(feature_id)
-      @items.reject! { |item| item.id == feature_id }
+    sig {params(item: Feature::Id).void}
+    def remove_item(item)
+      @items.delete(item)
     end
 
     sig {params(target: Feature::Id, to: Feature::Id).void}
@@ -52,16 +52,16 @@ module ProductBacklog
 
     private
 
-    sig {params(feature_id: Feature::Id, to: Feature::Id).void}
-    def insert_item_before(feature_id, to)
-      index = @items.find_index { |item| item.id == to }
-      @items.insert(index, Item.new(feature_id))
+    sig {params(item: Feature::Id, to: Feature::Id).void}
+    def insert_item_before(item, to)
+      index = @items.index(to)
+      @items.insert(index, item)
     end
 
-    sig {params(feature_id: Feature::Id, to: Feature::Id).void}
-    def insert_item_after(feature_id, to)
-      index = @items.find_index { |item| item.id == to }
-      @items.insert(0 - index, Item.new(feature_id))
+    sig {params(item: Feature::Id, to: Feature::Id).void}
+    def insert_item_after(item, to)
+      index = @items.index(to)
+      @items.insert(0 - index, item)
     end
   end
 end
