@@ -3,7 +3,7 @@
   <div class="col-lg-10 sheet">
     <div class="row d-flex justify-content-center">
       <div class="sheet__left">
-        <%= link_to '#anchor-new-pbi', class: 'btn btn-sm btn-outline-success btn-lean', data: { controller: 'hello' } do %>
+        <%= link_to '#anchor-new-pbi', class: 'btn btn-sm btn-outline-success' do %>
           <i class="fas fa-plus"></i>
           <%=t '.add' %>
         <% end %>
@@ -22,7 +22,7 @@
       <%= render partial: 'release', collection: @releases %>
     </div>
     <div id="anchor-new-pbi" class="pbl__form form-outer">
-      <%= render partial: 'form', locals: { form: @form, url: product_pbis_path(current_product_id), method: :post, btn_label: t('.add') } %>
+      <%= render partial: 'features/form', locals: { form: @form, url: product_pbis_path(current_product_id), method: :post, btn_label: t('.add') } %>
     </div>
   </div>
 </div>

@@ -1,1 +1,1 @@
-$('#js-pbi-form').replaceWith('<%=j render partial: 'form', locals: { form: @form, url: product_pbis_path(params[:product_id]), method: :post, btn_label: I18n.t('pbis.index.add') } %>')
+$('#js-pbi-form').replaceWith('<%=j render partial: 'features/form', locals: { form: @form, url: product_pbis_path(current_product_id), method: :post, btn_label: I18n.t('pbis.index.add') } %>')
