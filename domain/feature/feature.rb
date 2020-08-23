@@ -73,12 +73,12 @@ module Feature
     end
 
     sig {void}
-    def assign
+    def start_development
       @status = @status.update_to_wip
     end
 
     sig {void}
-    def cancel_assignment
+    def abort_development
       @status = @status.update_by_cancel_assignment
     end
 

@@ -5,7 +5,7 @@ module Feature
 
   class AssignProductBacklogItemNotAllowed < StandardError; end
   class ProductBacklogItemIsNotAssigned < StandardError; end
-  class ItemCanNotRemove < StandardError; end
+  class CanNotRemove < StandardError; end
 
   autoload :Id, 'feature/id'
   autoload :Feature, 'feature/feature'
