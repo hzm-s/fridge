@@ -48,13 +48,12 @@ RSpec.describe FeatureRepository::AR do
     end
   end
 
-  xdescribe '#delete' do
+  describe '#delete' do
     it do
-      feature = add_feature(product.id)
-      add_acceptance_criteria(feature, %w(ac1 ac2 ac3))
+      feature = add_feature(product.id, acceptance_criteria: %w(ac1 ac2 ac3))
 
       expect { described_class.delete(feature.id) }
-        .to change { Dao::ProductBacklogItem.count }.by(-1)
+        .to change { Dao::Feature.count }.by(-1)
         .and change { Dao::AcceptanceCriterion.count }.by(-3)
     end
   end

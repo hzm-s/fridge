@@ -6,9 +6,9 @@ ja:
     require_sign_in: ログインしてください
     already_signed_in: ログインしています
     feature:
-      create: プロダクトバックログアイテムを追加しました
-      update: プロダクトバックログアイテムを更新しました
-      destroy: プロダクトバックログアイテムを削除しました
+      create: フィーチャーをプロダクトバックログに追加しました
+      update: フィーチャーを更新しました
+      destroy: フィーチャーを削除しました
       start_development: 着手予定にしました
       abort_development: 着手予定を取り消しました
     product:
