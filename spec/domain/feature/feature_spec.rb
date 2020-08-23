@@ -61,13 +61,13 @@ module Feature
         feature.estimate(StoryPoint.new(3))
         expect(feature.status).to eq Statuses::Ready
 
-        feature.assign
+        feature.start_development
         expect(feature.status).to eq Statuses::Wip
 
         feature.estimate(StoryPoint.new(5))
         expect(feature.size).to eq StoryPoint.new(3)
 
-        feature.cancel_assignment
+        feature.abort_development
         expect(feature.status).to eq Statuses::Ready
       end
     end

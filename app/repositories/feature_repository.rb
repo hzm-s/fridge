@@ -48,7 +48,7 @@ module FeatureRepository
 
       sig {override.params(id: Feature::Id).void}
       def delete(id)
-        Dao::ProductBacklogItem.destroy(id.to_s)
+        Dao::Feature.destroy(id.to_s)
       end
     end
   end

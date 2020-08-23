@@ -4,17 +4,17 @@ require_relative '../domain_support/feature_domain_support'
 module FeatureSupport
   include FeatureDomainSupport
 
-  def add_feature(product_id, description = 'fridge helps scrum', acceptance_criteria: [], size: nil, assigned: false)
+  def add_feature(product_id, description = 'fridge helps scrum', acceptance_criteria: [], size: nil, wip: false)
     feature = perform_add_feature(product_id, description)
 
     return feature unless acceptance_criteria
     add_acceptance_criteria(feature, acceptance_criteria)
 
     return feature unless size
-    estimate_size(feature.id, size)
+    estimate_feature(feature.id, size)
 
-    return feature unless assigned
-    assign_feature(feature.id)
+    return feature unless wip
+    start_feature_development(feature.id)
 
     FeatureRepository::AR.find_by_id(feature.id)
   end
@@ -28,12 +28,12 @@ module FeatureSupport
     end
   end
 
-  def estimate_size(feature_id, size)
-    EstimateProductBacklogItemSizeUsecase.perform(feature_id, Feature::StoryPoint.new(size))
+  def estimate_feature(feature_id, size)
+    EstimateFeatureUsecase.perform(feature_id, Feature::StoryPoint.new(size))
   end
 
-  def assign_feature(feature_id)
-    AssignProductBacklogItemUsecase.perform(feature_id)
+  def start_feature_development(feature_id)
+    StartFeatureDevelopmentUsecase.perform(feature_id)
   end
 
   def remove_feature(feature_id)

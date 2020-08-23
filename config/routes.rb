@@ -21,5 +21,5 @@ Rails.application.routes.draw do
   resources :acceptance_criteria, only: [:destroy]
 
   resources :feature_estimations, only: [:update]
-  resources :product_backlog_item_assignments, only: [:create, :destroy]
+  resources :feature_developments, only: [:create, :destroy]
 end

@@ -8,10 +8,10 @@ module Feature
     interface!
 
     sig {abstract.returns(T::Boolean)}
-    def can_assign?; end
+    def can_start_development?; end
 
     sig {abstract.returns(T::Boolean)}
-    def can_cancel_assignment?; end
+    def can_abort_development?; end
 
     sig {abstract.returns(T::Boolean)}
     def can_remove?; end
@@ -26,7 +26,7 @@ module Feature
     def update_to_wip; end
 
     sig {abstract.returns(Status)}
-    def update_by_cancel_assignment; end
+    def update_by_abort_development; end
 
     sig {abstract.returns(String)}
     def to_s; end

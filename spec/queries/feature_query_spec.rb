@@ -8,14 +8,14 @@ RSpec.describe FeatureQuery do
     feature = add_feature(product.id, acceptance_criteria: %w(ac1), size: 1)
 
     stored = described_class.call(feature.id.to_s)
-    expect(stored.status).to be_can_assign
+    expect(stored.status).to be_can_start_development
   end
 
   xit '着手取り下げ可否を返すこと' do
     feature = add_feature(product.id, acceptance_criteria: %w(ac1), size: 1)
-    assign_feature(feature.id)
+    start_feature_development(feature.id)
 
     stored = described_class.call(feature.id.to_s)
-    expect(stored.status).to be_can_cancel_assignment
+    expect(stored.status).to be_can_abort_development
   end
 end
