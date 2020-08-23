@@ -28,12 +28,12 @@ RSpec.describe 'pbis' do
     end
   end
 
-  xdescribe '#edit' do
+  describe '#edit' do
     it do
       feature = add_feature(product.id, 'XYZ')
       add_acceptance_criteria(feature, %w(AC_123))
 
-      get edit_pbi_path(feature.id.to_s)
+      get edit_feature_path(feature.id.to_s)
 
       aggregate_failures do
         expect(response.body).to include('XYZ')
@@ -42,12 +42,12 @@ RSpec.describe 'pbis' do
     end
   end
 
-  xdescribe '#update' do
+  describe '#update' do
     let!(:feature) { add_feature(product.id, 'ABC') }
 
     context '入力内容が正しい場合' do
       it do
-        patch pbi_path(feature.id, format: :js), params: { form: { description: 'XYZ' } }
+        patch feature_path(feature.id, format: :js), params: { form: { description: 'XYZ' } }
         follow_redirect!
 
         expect(response.body).to include('XYZ')
@@ -56,7 +56,7 @@ RSpec.describe 'pbis' do
 
     context '入力内容が正しくない場合' do
       it do
-        patch pbi_path(feature.id, format: :js), params: { form: { description: '' } }
+        patch feature_path(feature.id, format: :js), params: { form: { description: '' } }
         expect(response.body).to include(I18n.t('errors.messages.blank'))
       end
     end

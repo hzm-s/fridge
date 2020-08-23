@@ -15,10 +15,10 @@ class FeaturesController < ApplicationController
     @feature_id = params[:id]
     @form = FeatureForm.new(permitted_params)
 
-    if @feature_form.valid?
-      UpdateProductBacklogItemUsecase.perform(
-        Pbi::Id.from_string(@feature_id),
-        @feature_form.domain_objects[:content]
+    if @form.valid?
+      ModifyFeatureUsecase.perform(
+        Feature::Id.from_string(@feature_id),
+        @form.domain_objects[:description]
       )
       redirect_to edit_feature_path(@feature_id), flash: flash_success('feature.update')
     else
