@@ -11,7 +11,7 @@ module FeatureSupport
     add_acceptance_criteria(feature, acceptance_criteria)
 
     return feature unless size
-    estimate_size(feature.id, size)
+    estimate_feature(feature.id, size)
 
     return feature unless assigned
     assign_feature(feature.id)
@@ -28,8 +28,8 @@ module FeatureSupport
     end
   end
 
-  def estimate_size(feature_id, size)
-    EstimateProductBacklogItemSizeUsecase.perform(feature_id, Feature::StoryPoint.new(size))
+  def estimate_feature(feature_id, size)
+    EstimateFeatureUsecase.perform(feature_id, Feature::StoryPoint.new(size))
   end
 
   def assign_feature(feature_id)
