@@ -1,5 +1,9 @@
 # typed: false
 module FeatureDomainSupport
+  def feature_description(desc)
+    Feature::Description.new(desc)
+  end
+
   def acceptance_criterion(content)
     Feature::AcceptanceCriterion.new(content)
   end
