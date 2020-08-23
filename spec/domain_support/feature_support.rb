@@ -1,7 +1,12 @@
 # typed: false
 module FeatureDomainSupport
-  def _acceptance_criterion(content)
+  def acceptance_criterion(content)
     Feature::AcceptanceCriterion.new(content)
+  end
+
+  def acceptance_criteria(contents)
+    contents.map { |c| acceptance_criterion(c) }
+      .yield_self { |contents| Feature::AcceptanceCriteria.new(contents) }
   end
 end
 

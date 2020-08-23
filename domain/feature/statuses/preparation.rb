@@ -1,9 +1,9 @@
 # typed: strict
 require 'sorbet-runtime'
 
-module Pbi
+module Feature
   module Statuses
-    module Wip
+    module Preparation
       class << self
         extend T::Sig
         include Status
@@ -15,22 +15,26 @@ module Pbi
 
         sig {override.returns(T::Boolean)}
         def can_cancel_assignment?
-          true
+          false
         end
 
         sig {override.returns(T::Boolean)}
         def can_remove?
-          false
+          true
         end
 
         sig {override.returns(T::Boolean)}
         def can_estimate_size?
-          false
+          true
         end
 
         sig {override.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
         def update_by_prepartion(criteria, size)
-          self
+          if criteria.size > 0 && size != StoryPoint.unknown
+            Ready
+          else
+            self
+          end
         end
 
         sig {override.returns(Status)}
@@ -40,12 +44,12 @@ module Pbi
 
         sig {override.returns(Status)}
         def update_by_cancel_assignment
-          Ready
+          raise ProductBacklogItemIsNotAssigned
         end
 
         sig {override.returns(String)}
         def to_s
-          'wip'
+          'preparation'
         end
       end
     end

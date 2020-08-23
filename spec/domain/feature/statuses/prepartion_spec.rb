@@ -1,11 +1,11 @@
 # typed: false
 require 'domain_helper'
 
-module Pbi
+module Feature
   module Statuses
-    RSpec.describe Ready do
+    RSpec.describe Preparation do
       describe '#can_assign?' do
-        it { expect(described_class).to be_can_assign }
+        it { expect(described_class).to_not be_can_assign }
       end
 
       describe '#can_cancel_assignment?' do
@@ -54,8 +54,8 @@ module Pbi
 
       describe '#update_to_wip' do
         it do
-          status = described_class.update_to_wip
-          expect(status).to eq Wip
+          expect { described_class.update_to_wip }
+            .to raise_error AssignProductBacklogItemNotAllowed
         end
       end
 

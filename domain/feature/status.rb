@@ -1,7 +1,7 @@
 # typed: strict
 require 'sorbet-runtime'
 
-module Pbi
+module Feature
   module Status
     extend T::Sig
     extend T::Helpers
