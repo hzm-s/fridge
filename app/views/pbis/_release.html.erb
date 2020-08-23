@@ -1,0 +1,14 @@
+<div class="pbl__release">
+  <span class="pbl-release__title">
+    <%= 'Icebox' %>
+  </span>
+  <div class="pbl-release__actions">
+    <%#= link_to t('navs.edit'), edit_release_path(release.id), class: 'action-link' %>
+    <%# if release.can_remove? %>
+      <%#= link_to t('navs.delete'), release_path(release.id), method: :delete, class: 'action-link silent-danger', data: { confirm: t('navs.confirm_delete') } %>
+    <#% end %>
+  </div>
+</div>
+<%= content_tag :div, id: "release#{release_counter}", class: 'pbl__list', data: sortable_pbl_options(release) do %>
+  <%= render partial: 'item', collection: release.items %>
+<% end %>
