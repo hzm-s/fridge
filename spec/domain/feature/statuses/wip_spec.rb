@@ -16,8 +16,8 @@ module Feature
         it { expect(described_class).to_not be_can_remove }
       end
 
-      describe '#can_estimate_size?' do
-        it { expect(described_class).to_not be_can_estimate_size }
+      describe '#can_estimate?' do
+        it { expect(described_class).to_not be_can_estimate }
       end
 
       describe '#update_to_wip' do

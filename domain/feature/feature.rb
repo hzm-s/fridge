@@ -65,8 +65,8 @@ module Feature
     end
 
     sig {params(size: StoryPoint).void}
-    def estimate_size(size)
-      return unless @status.can_estimate_size?
+    def estimate(size)
+      return unless @status.can_estimate?
 
       @size = size
       update_status_by_preparation

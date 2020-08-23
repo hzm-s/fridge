@@ -58,13 +58,13 @@ module Feature
         feature.update_acceptance_criteria(acceptance_criteria(%w(AC1)))
         expect(feature.status).to eq Statuses::Preparation
 
-        feature.estimate_size(StoryPoint.new(3))
+        feature.estimate(StoryPoint.new(3))
         expect(feature.status).to eq Statuses::Ready
 
         feature.assign
         expect(feature.status).to eq Statuses::Wip
 
-        feature.estimate_size(StoryPoint.new(5))
+        feature.estimate(StoryPoint.new(5))
         expect(feature.size).to eq StoryPoint.new(3)
 
         feature.cancel_assignment

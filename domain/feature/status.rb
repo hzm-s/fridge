@@ -17,7 +17,7 @@ module Feature
     def can_remove?; end
 
     sig {abstract.returns(T::Boolean)}
-    def can_estimate_size?; end
+    def can_estimate?; end
 
     sig {abstract.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
     def update_by_prepartion(criteria, size); end

@@ -53,7 +53,7 @@ RSpec.describe ProductBacklogQuery do
       expect(item.status).to be_can_assign
       expect(item.status).to_not be_can_cancel_assignment
       expect(item.status).to be_can_remove
-      expect(item.status).to be_can_estimate_size
+      expect(item.status).to be_can_estimate
     end
   end
 end
