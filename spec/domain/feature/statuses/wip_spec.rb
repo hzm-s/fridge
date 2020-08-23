@@ -1,7 +1,7 @@
 # typed: false
 require 'domain_helper'
 
-module Pbi
+module Feature
   module Statuses
     RSpec.describe Wip do
       describe '#can_assign?' do
