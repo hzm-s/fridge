@@ -39,7 +39,7 @@ module FeatureRepository
         r.size = feature.size.to_i
 
         r.criteria.clear
-        pbi.acceptance_criteria.to_a.each do |ac|
+        feature.acceptance_criteria.to_a.each do |ac|
           r.criteria.build(content: ac.to_s)
         end
 
