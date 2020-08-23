@@ -6,14 +6,18 @@ module Feature
     let(:product_id) { Product::Id.create }
 
     describe 'create' do
+      let(:feature) { described_class.create(product_id, 'A user story') }
+
       it do
-        feature = described_class.create(product_id, 'A user story')
-        
         aggregate_failures do
           expect(feature.product_id).to eq product_id
           expect(feature.id).to_not be_nil
           expect(feature.description).to eq 'A user story'
         end
+      end
+
+      it do
+        expect(feature.size).to eq StoryPoint.unknown
       end
     end
 

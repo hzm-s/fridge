@@ -13,7 +13,8 @@ module Feature
         new(
           Id.create,
           product_id,
-          description
+          description,
+          StoryPoint.unknown,
         )
       end
     end
@@ -27,14 +28,18 @@ module Feature
     sig {returns(String)}
     attr_reader :description
 
+    sig {returns(StoryPoint)}
+    attr_reader :size
+
     sig {returns(AcceptanceCriteria)}
     attr_reader :acceptance_criteria
 
-    sig {params(id: Id, product_id: Product::Id, description: String).void}
-    def initialize(id, product_id, description)
+    sig {params(id: Id, product_id: Product::Id, description: String, size: StoryPoint).void}
+    def initialize(id, product_id, description, size)
       @id = id
       @product_id = product_id
       @description = description
+      @size = size
       @acceptance_criteria = T.let([], AcceptanceCriteria)
     end
 
