@@ -5,16 +5,21 @@ module ProductBacklog
   class ProductBacklog
     extend T::Sig
 
+    Items = T.type_alias {T::Array[Feature::Id]}
+
     class << self
       extend T::Sig
 
       sig {params(product_id: Product::Id).returns(T.attached_class)}
       def create(product_id)
-        new(product_id)
+        new(product_id, [])
+      end
+
+      sig {params(product_id: Product::Id, items: Items).returns(T.attached_class)}
+      def from_repository(product_id, items)
+        new(product_id, items)
       end
     end
-
-    Items = T.type_alias {T::Array[Feature::Id]}
 
     sig {returns(Product::Id)}
     attr_reader :product_id
@@ -22,10 +27,10 @@ module ProductBacklog
     sig {returns(Items)}
     attr_reader :items
 
-    sig {params(product_id: Product::Id).void}
-    def initialize(product_id)
+    sig {params(product_id: Product::Id, items: Items).void}
+    def initialize(product_id, items)
       @product_id = product_id
-      @items = T.let([], Items)
+      @items = items
     end
 
     sig {params(item: Feature::Id).void}

@@ -13,4 +13,5 @@ module Feature
   autoload :StoryPoint, 'feature/story_point'
   autoload :Status, 'feature/status'
   autoload :Statuses, 'feature/statuses'
+  autoload :FeatureRepository, 'feature/feature_repository'
 end

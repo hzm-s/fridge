@@ -8,7 +8,7 @@ module Feature
     class << self
       extend T::Sig
 
-      sig {params(product_id: Product::Id, description: String).returns(T.attached_class)}
+      sig {params(product_id: Product::Id, description: Description).returns(T.attached_class)}
       def create(product_id, description)
         new(
           Id.create,
@@ -18,6 +18,11 @@ module Feature
           StoryPoint.unknown,
           AcceptanceCriteria.new([]),
         )
+      end
+
+      sig {params(id: Id, product_id: Product::Id, status: Status, description: Description, size: StoryPoint, acceptance_criteria: AcceptanceCriteria).returns(T.attached_class)}
+      def from_repository(id, product_id, status, description, size, acceptance_criteria)
+        new(id, product_id, status, description, size, acceptance_criteria)
       end
     end
 
@@ -30,7 +35,7 @@ module Feature
     sig {returns(Status)}
     attr_reader :status
 
-    sig {returns(String)}
+    sig {returns(Description)}
     attr_reader :description
 
     sig {returns(StoryPoint)}
@@ -39,7 +44,7 @@ module Feature
     sig {returns(AcceptanceCriteria)}
     attr_reader :acceptance_criteria
 
-    sig {params(id: Id, product_id: Product::Id, status: Status, description: String, size: StoryPoint, acceptance_criteria: AcceptanceCriteria).void}
+    sig {params(id: Id, product_id: Product::Id, status: Status, description: Description, size: StoryPoint, acceptance_criteria: AcceptanceCriteria).void}
     def initialize(id, product_id, status, description, size, acceptance_criteria)
       @id = id
       @product_id = product_id
@@ -49,7 +54,7 @@ module Feature
       @acceptance_criteria = acceptance_criteria
     end
 
-    sig {params(description: String).void}
+    sig {params(description: Description).void}
     def modify_description(description)
       @description = description
     end
