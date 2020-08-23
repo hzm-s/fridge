@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe 'pbis' do
+RSpec.describe 'features' do
   let!(:user_account) { sign_up }
   let!(:product) { create_product(person_id: user_account.person_id) }
 
@@ -9,10 +9,10 @@ RSpec.describe 'pbis' do
     sign_in(user_account)
   end
 
-  describe '#create' do
+  describe 'create' do
     context 'given valid params' do
       it do
-        post product_pbis_path(product_id: product.id.to_s, format: :js), params: { form: { description: 'ABC' } }
+        post product_features_path(product_id: product.id.to_s, format: :js), params: { form: { description: 'ABC' } }
         get product_pbis_path(product_id: product.id.to_s)
 
         expect(response.body).to include 'ABC'
@@ -21,14 +21,14 @@ RSpec.describe 'pbis' do
 
     context 'given invalid params' do
       it do
-        post product_pbis_path(product_id: product.id.to_s, format: :js), params: { form: { description: '' } }
+        post product_features_path(product_id: product.id.to_s, format: :js), params: { form: { description: '' } }
 
         expect(response.body).to include(I18n.t('errors.messages.blank'))
       end
     end
   end
 
-  describe '#edit' do
+  describe 'edit' do
     it do
       feature = add_feature(product.id, 'XYZ')
       add_acceptance_criteria(feature, %w(AC_123))
@@ -42,7 +42,7 @@ RSpec.describe 'pbis' do
     end
   end
 
-  describe '#update' do
+  describe 'update' do
     let!(:feature) { add_feature(product.id, 'ABC') }
 
     context '入力内容が正しい場合' do
@@ -62,11 +62,11 @@ RSpec.describe 'pbis' do
     end
   end
 
-  xdescribe '#destroy' do
+  describe 'destroy' do
     it do
       feature = add_feature(product.id, 'YOHKYU')
 
-      delete pbi_path(feature.id)
+      delete feature_path(feature.id)
       follow_redirect!
 
       expect(response.body).to_not include 'YOHKYU'

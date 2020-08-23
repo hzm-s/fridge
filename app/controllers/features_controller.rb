@@ -6,6 +6,20 @@ class FeaturesController < ApplicationController
 
   helper_method :current_product_id
 
+  def create
+    @form = FeatureForm.new(permitted_params)
+
+    if @form.valid?
+      AddFeatureUsecase.perform(
+        Product::Id.from_string(params[:product_id]),
+        @form.domain_objects[:description]
+      )
+      redirect_to product_pbis_path(product_id: params[:product_id]), flash: flash_success('pbi.create')
+    else
+      render :new
+    end
+  end
+
   def edit
     @feature = FeatureQuery.call(params[:id])
     @form = FeatureForm.new(description: @feature.description)
@@ -27,9 +41,9 @@ class FeaturesController < ApplicationController
   end
 
   def destroy
-    pbi = ProductBacklogItemRepository::AR.find_by_id(Pbi::Id.from_string(params[:id]))
-    RemoveProductBacklogItemUsecase.perform(pbi.id)
-    redirect_to product_product_backlog_items_path(product_id: pbi.product_id), flash: flash_success('pbi.destroy')
+    feature = FeatureRepository::AR.find_by_id(Feature::Id.from_string(params[:id]))
+    RemoveFeatureUsecase.perform(feature.id)
+    redirect_to product_pbis_path(product_id: feature.product_id), flash: flash_success('feature.destroy')
   end
 
   private
