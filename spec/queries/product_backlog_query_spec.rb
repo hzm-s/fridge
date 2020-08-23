@@ -51,7 +51,7 @@ RSpec.describe ProductBacklogQuery do
 
     aggregate_failures do
       expect(item.status).to be_can_start_development
-      expect(item.status).to_not be_can_cancel_assignment
+      expect(item.status).to_not be_can_abort_development
       expect(item.status).to be_can_remove
       expect(item.status).to be_can_estimate
     end

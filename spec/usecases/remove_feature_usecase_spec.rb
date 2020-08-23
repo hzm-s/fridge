@@ -17,7 +17,7 @@ RSpec.describe RemoveFeatureUsecase do
   end
 
   it '着手アイテムは削除できないこと' do
-    wip = add_feature(product.id, acceptance_criteria: %w(criterion), size: 8, assigned: true)
+    wip = add_feature(product.id, acceptance_criteria: %w(criterion), size: 8, wip: true)
 
     expect { described_class.perform(wip.id) }.to raise_error(Feature::CanNotRemove)
   end

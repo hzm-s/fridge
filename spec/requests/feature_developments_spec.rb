@@ -21,7 +21,7 @@ RSpec.describe 'feature_developments' do
     end
   end
 
-  xdescribe '#destroy' do
+  describe '#destroy' do
     before do
       start_feature_development(feature.id)
     end

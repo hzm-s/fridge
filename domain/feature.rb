@@ -3,8 +3,8 @@ module Feature
   class InvalidDescription < ArgumentError; end
   class InvalidAcceptanceCriterion < ArgumentError; end
 
-  class AssignProductBacklogItemNotAllowed < StandardError; end
-  class ProductBacklogItemIsNotAssigned < StandardError; end
+  class CanNotStartDevelopment < StandardError; end
+  class NotDevelopmentStarted < StandardError; end
   class CanNotRemove < StandardError; end
 
   autoload :Id, 'feature/id'

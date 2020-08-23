@@ -6,8 +6,8 @@ ja:
         preparation: 準備中
         ready: 準備完了
         wip: 着手中
-      assign: 着手する
-      cancel_assignment: 着手を取り消す
+      start_development: 着手する
+      abort_development: 着手を取り消す
 
     team:
       role:

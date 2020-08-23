@@ -4,15 +4,15 @@ class FeatureDevelopmentsController < ApplicationController
     StartFeatureDevelopmentUsecase.perform(feature_id)
 
     @feature = FeatureQuery.call(feature_id.to_s)
-    flash.now[:notice] = feedback_message('feature.assigned')
+    flash.now[:notice] = feedback_message('feature.start_development')
     render :show
   end
 
   def destroy
-    CancelProductBacklogItemAssignmentUsecase.perform(pbi_id)
+    AbortFeatureDevelopmentUsecase.perform(feature_id)
 
-    @item = ProductBacklogItemQuery.call(pbi_id.to_s)
-    flash.now[:notice] = feedback_message('pbi.cancel_assignment')
+    @feature = FeatureQuery.call(feature_id.to_s)
+    flash.now[:notice] = feedback_message('feature.abort_development')
     render :show
   end
 

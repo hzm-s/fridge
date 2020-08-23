@@ -14,7 +14,7 @@ module Feature
         end
 
         sig {override.returns(T::Boolean)}
-        def can_cancel_assignment?
+        def can_abort_development?
           false
         end
 
@@ -39,12 +39,12 @@ module Feature
 
         sig {override.returns(Status)}
         def update_to_wip
-          raise AssignProductBacklogItemNotAllowed
+          raise CanNotStartDevelopment
         end
 
         sig {override.returns(Status)}
-        def update_by_cancel_assignment
-          raise ProductBacklogItemIsNotAssigned
+        def update_by_abort_development
+          raise NotDevelopmentStarted
         end
 
         sig {override.returns(String)}

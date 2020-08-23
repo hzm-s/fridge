@@ -79,7 +79,7 @@ module Feature
 
     sig {void}
     def abort_development
-      @status = @status.update_by_cancel_assignment
+      @status = @status.update_by_abort_development
     end
 
     private

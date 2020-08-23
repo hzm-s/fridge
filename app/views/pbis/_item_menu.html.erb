@@ -16,13 +16,13 @@
     <% if item.status.can_start_development? %>
       <div class="dropdown-divider"></div>
       <%= link_to feature_developments_path(id: item.id), method: :post, remote: true, class: 'dropdown-item' do %>
-        <%=t 'domain.pbi.assign' %>
+        <%=t 'domain.pbi.start_development' %>
       <% end %>
     <% end %>
-    <% if item.status.can_cancel_assignment? %>
+    <% if item.status.can_abort_development? %>
       <div class="dropdown-divider"></div>
-      <%= link_to feature_development_path(item.id), method: :delete, remote: true, data: { confirm: t('.confirm_cancel_assignment') }, class: 'dropdown-item' do %>
-        <%=t 'domain.pbi.cancel_assignment' %>
+      <%= link_to feature_development_path(item.id), method: :delete, remote: true, data: { confirm: t('.confirm_abort_development') }, class: 'dropdown-item' do %>
+        <%=t 'domain.pbi.abort_development' %>
       <% end %>
     <% end %>
   </div>
