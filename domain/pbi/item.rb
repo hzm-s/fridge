@@ -81,8 +81,8 @@ module Pbi
     end
 
     sig {params(point: StoryPoint).void}
-    def estimate_size(point)
-      return unless @status.can_estimate_size?
+    def estimate(point)
+      return unless @status.can_estimate?
 
       @size = point
       update_status_by_prepartion
