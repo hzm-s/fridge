@@ -7,6 +7,8 @@ module Feature
 
     sig {params(content: String).void}
     def initialize(content)
+      raise ArgumentError unless content.size >= 3 && content.size < 100
+
       @content = content
     end
 

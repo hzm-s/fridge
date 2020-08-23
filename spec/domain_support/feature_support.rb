@@ -6,6 +6,7 @@ module FeatureDomainSupport
 
   def acceptance_criteria(contents)
     contents.map { |c| acceptance_criterion(c) }
+      .yield_self { |contents| Feature::AcceptanceCriteria.new(contents) }
   end
 end
 

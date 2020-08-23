@@ -19,27 +19,54 @@ module Feature
       it do
         expect(feature.size).to eq StoryPoint.unknown
       end
+
+      it do
+        expect(feature.acceptance_criteria).to be_empty
+      end
+    end
+
+    describe 'Modify description' do
+      let(:feature) { described_class.create(product_id, 'Origin') }
+
+      it do
+        feature.modify_description('Modified')
+        expect(feature.description).to eq 'Modified'
+      end
     end
 
     describe 'Acceptance criteria' do
       let(:feature) { described_class.create(product_id, 'A user story') }
 
       it do
-        feature.add_acceptance_criterion(acceptance_criterion('AC1'))
-        expect(feature.acceptance_criteria).to eq [acceptance_criterion('AC1')]
+        criteria = acceptance_criteria(%w(AC1 AC2 AC3))
+        feature.update_acceptance_criteria(criteria)
+        expect(feature.acceptance_criteria).to eq criteria
       end
+    end
+
+    describe 'Update Status' do
+      let(:feature) { described_class.create(product_id, 'A user story') }
 
       it do
-        feature.add_acceptance_criterion(acceptance_criterion('AC1'))
-        feature.add_acceptance_criterion(acceptance_criterion('AC2'))
-        feature.add_acceptance_criterion(acceptance_criterion('AC3'))
+        expect(feature.status).to eq Statuses::Preparation
 
-        feature.remove_acceptance_criterion(acceptance_criterion('AC2'))
+        feature.modify_description('NEW user story')
+        expect(feature.status).to eq Statuses::Preparation
 
-        expect(feature.acceptance_criteria).to eq [
-          acceptance_criterion('AC1'),
-          acceptance_criterion('AC3')
-        ]
+        feature.update_acceptance_criteria(acceptance_criteria(%w(AC1)))
+        expect(feature.status).to eq Statuses::Preparation
+
+        feature.estimate_size(StoryPoint.new(3))
+        expect(feature.status).to eq Statuses::Ready
+
+        feature.assign
+        expect(feature.status).to eq Statuses::Wip
+
+        feature.estimate_size(StoryPoint.new(5))
+        expect(feature.size).to eq StoryPoint.new(3)
+
+        feature.cancel_assignment
+        expect(feature.status).to eq Statuses::Ready
       end
     end
   end
