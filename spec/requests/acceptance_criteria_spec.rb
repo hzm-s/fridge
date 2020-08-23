@@ -28,7 +28,7 @@ RSpec.describe 'acceptance_criteria' do
     end
   end
 
-  xdescribe '#destroy' do
+  describe '#destroy' do
     it do
       add_acceptance_criteria(feature, %w(ac_head ukeire_kijyun ac_tail))
 

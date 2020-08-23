@@ -15,10 +15,10 @@ class AcceptanceCriteriaController < ApplicationController
   def destroy
     dao = Dao::AcceptanceCriterion.find(params[:id])
     RemoveAcceptanceCriterionUsecase.perform(
-      Pbi::Id.from_string(dao.dao_product_backlog_item_id),
-      Pbi::AcceptanceCriterion.new(dao.content)
+      Feature::Id.from_string(dao.dao_feature_id),
+      Feature::AcceptanceCriterion.new(dao.content)
     )
-    redirect_to edit_product_backlog_item_path(id: dao.dao_product_backlog_item_id)
+    redirect_to edit_feature_path(id: dao.dao_feature_id)
   end
 
   private
