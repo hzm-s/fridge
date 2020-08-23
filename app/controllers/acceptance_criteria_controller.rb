@@ -1,12 +1,12 @@
 # typed: false
 class AcceptanceCriteriaController < ApplicationController
-  helper_method :pbi_id
+  helper_method :feature_id
 
   def create
     @form = AcceptanceCriterionForm.new(permitted_params)
     if @form.valid?
-      AddAcceptanceCriterionUsecase.perform(pbi_id, @form.domain_objects[:content])
-      redirect_to edit_product_backlog_item_path(id: pbi_id.to_s)
+      AddAcceptanceCriterionUsecase.perform(feature_id, @form.domain_objects[:content])
+      redirect_to edit_feature_path(id: feature_id.to_s)
     else
       render :new
     end
@@ -23,8 +23,8 @@ class AcceptanceCriteriaController < ApplicationController
 
   private
 
-  def pbi_id
-    @__pbi_id ||= Pbi::Id.from_string(params[:product_backlog_item_id])
+  def feature_id
+    @__feature_id ||= Feature::Id.from_string(params[:feature_id])
   end
 
   def permitted_params

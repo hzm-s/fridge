@@ -22,8 +22,7 @@ ja:
     errors:
       feature:
         invalid_description: 3~500文字で入力してください
-      acceptance_criterion:
-        invalid_content: 3~100文字で入力してください
+        invalid_acceptance_criterion: 3~100文字で入力してください
       team:
         duplicated_product_owner: すでにプロダクトオーナーがいます
         duplicated_scrum_master: すでにスクラムマスターがいます
