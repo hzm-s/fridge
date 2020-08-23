@@ -15,13 +15,13 @@
     <% end %>
     <% if item.status.can_assign? %>
       <div class="dropdown-divider"></div>
-      <%= link_to product_backlog_item_assignments_path(id: item.id), method: :post, remote: true, class: 'dropdown-item' do %>
+      <%= link_to feature_developments_path(id: item.id), method: :post, remote: true, class: 'dropdown-item' do %>
         <%=t 'domain.pbi.assign' %>
       <% end %>
     <% end %>
     <% if item.status.can_cancel_assignment? %>
       <div class="dropdown-divider"></div>
-      <%= link_to product_backlog_item_assignment_path(item.id), method: :delete, remote: true, data: { confirm: t('.confirm_cancel_assignment') }, class: 'dropdown-item' do %>
+      <%= link_to feature_development_path(item.id), method: :delete, remote: true, data: { confirm: t('.confirm_cancel_assignment') }, class: 'dropdown-item' do %>
         <%=t 'domain.pbi.cancel_assignment' %>
       <% end %>
     <% end %>

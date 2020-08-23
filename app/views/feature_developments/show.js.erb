@@ -1,0 +1,2 @@
+$('#js-pbl-item-<%= @feature.id %>').replaceWith('<%=j render partial: 'pbis/item', locals: { item: @feature } %>')
+$('#js-flash-container').replaceWith('<%=j render partial: 'application/flash' %>')
