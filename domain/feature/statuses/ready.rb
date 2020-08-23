@@ -9,7 +9,7 @@ module Feature
         include Status
 
         sig {override.returns(T::Boolean)}
-        def can_assign?
+        def can_start_development?
           true
         end
 

@@ -3,10 +3,10 @@ require 'rails_helper'
 
 RSpec.describe CancelProductBacklogItemAssignmentUsecase do
   let(:product) { create_product }
-  let!(:pbi) { add_pbi(product.id, acceptance_criteria: %w(ac1), size: 8) }
+  let!(:feature) { add_feature(product.id, acceptance_criteria: %w(ac1), size: 8) }
 
   it do
-    assign_pbi(pbi.id)
+    start_feature_development(feature.id)
 
     described_class.perform(pbi.id)
     updated = ProductBacklogItemRepository::AR.find_by_id(pbi.id)

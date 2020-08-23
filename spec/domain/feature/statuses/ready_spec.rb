@@ -4,8 +4,8 @@ require 'domain_helper'
 module Feature
   module Statuses
     RSpec.describe Ready do
-      describe '#can_assign?' do
-        it { expect(described_class).to be_can_assign }
+      describe '#can_start_development?' do
+        it { expect(described_class).to be_can_start_development }
       end
 
       describe '#can_cancel_assignment?' do

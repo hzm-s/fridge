@@ -8,7 +8,7 @@ module Feature
     interface!
 
     sig {abstract.returns(T::Boolean)}
-    def can_assign?; end
+    def can_start_development?; end
 
     sig {abstract.returns(T::Boolean)}
     def can_cancel_assignment?; end
