@@ -37,14 +37,14 @@ RSpec.describe ProductBacklogQuery do
     expect(pbl).to be_empty
   end
 
-  xit '受け入れ基準がある場合は受け入れ基準を含むこと' do
+  it '受け入れ基準がある場合は受け入れ基準を含むこと' do
     feature = add_feature(product.id, acceptance_criteria: %w(ac1 ac2 ac3))
 
     item = described_class.call(product.id.to_s)[0].items.first
     expect(item.criteria.map(&:content)).to eq %w(ac1 ac2 ac3) 
   end
 
-  xit '各操作の可否を返すこと' do
+  it '各操作の可否を返すこと' do
     feature = add_feature(product.id, acceptance_criteria: %w(ac1), size: 1)
 
     item = described_class.call(product.id.to_s)[0].items.first
