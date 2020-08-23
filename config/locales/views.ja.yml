@@ -49,7 +49,7 @@ ja:
         post: 追加する
         patch: 保存する
 
-  product_backlog_items:
+  pbis:
     index:
       title: プロダクトバックログ
       add: アイテムを追加する

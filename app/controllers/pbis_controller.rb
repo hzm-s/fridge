@@ -1,5 +1,5 @@
 # typed: false
-class ProductBacklogItemsController < ApplicationController
+class PbisController < ApplicationController
   include ProductHelper
 
   before_action :require_user
@@ -8,18 +8,18 @@ class ProductBacklogItemsController < ApplicationController
 
   def index
     @releases = ProductBacklogQuery.call(params[:product_id])
-    @form = ProductBacklogItemForm.new
+    @form = FeatureForm.new
   end
 
   def create
-    @form = ProductBacklogItemForm.new(permitted_params)
+    @form = FeatureForm.new(permitted_params)
 
     if @form.valid?
-      AddProductBacklogItemUsecase.perform(
+      AddFeatureUsecase.perform(
         Product::Id.from_string(params[:product_id]),
-        @form.domain_objects[:content]
+        @form.domain_objects[:description]
       )
-      redirect_to product_product_backlog_items_path(product_id: params[:product_id]), flash: flash_success('pbi.create')
+      redirect_to product_pbis_path(product_id: params[:product_id]), flash: flash_success('pbi.create')
     else
       render :new
     end
@@ -54,7 +54,7 @@ class ProductBacklogItemsController < ApplicationController
   private
 
   def permitted_params
-    params.require(:form).permit(:content)
+    params.require(:form).permit(:description)
   end
 
   def current_product_id

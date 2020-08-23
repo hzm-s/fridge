@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   delete 'sign_out', to: 'sessions#destroy', as: :sign_out
 
   resources :products, only: [:new, :create, :index] do
-    resources :product_backlog_items, only: [:index, :create]
+    resources :pbis, only: [:index, :create]
     resource :plan, only: [:update]
     resources :releases, only: [:new, :create]
     resources :team_members, only: [:index, :new, :create]
@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   resources :releases, only: [:edit, :update, :destroy]
 
-  resources :product_backlog_items, only: [:edit, :update, :destroy] do
+  resources :pbis, only: [:edit, :update, :destroy] do
     resources :acceptance_criteria, only: [:create]
   end
   resources :acceptance_criteria, only: [:destroy]

@@ -4,38 +4,38 @@ require 'sorbet-runtime'
 module ProductBacklogQuery
   class Item < SimpleDelegator
     def status
-      @__status ||= Pbi::Statuses.from_string(super)
+      @__status ||= Feature::Statuses.from_string(super)
     end
   end
 
-  class Release < SimpleDelegator
-    def initialize(release, all)
-      super(release)
+  class Release
+    def initialize(pbl, all)
+      @pbl = pbl
       @all = all
     end
 
     def items
-      @__items ||= super.map { |id| @all.find { |item| item.id == id.to_s } }
+      @__items ||= @pbl.items.map { |item| @all.find { |f| f.id == item.to_s } }
     end
   end
 
   class << self
     def call(product_id)
-      releases = fetch_all(product_id)
-      return releases if releases.empty?
+      pbl = fetch_product_backlog(product_id)
+      return [] unless pbl
 
-      items = fetch_items(product_id)
-      releases.map { |r| Release.new(r, items) }
+      features = fetch_features(product_id)
+      [Release.new(pbl, features)]
     end
 
     private
 
-    def fetch_all(product_id)
-      ReleaseRepository::AR.all_by_product_id(Product::Id.from_string(product_id))
+    def fetch_product_backlog(product_id)
+      ProductBacklogRepository::AR.find_by_product_id(Product::Id.from_string(product_id))
     end
 
-    def fetch_items(product_id)
-      Dao::ProductBacklogItem
+    def fetch_features(product_id)
+      Dao::Feature
         .eager_load(:criteria)
         .where(dao_product_id: product_id)
         .map { |r| Item.new(r) }
