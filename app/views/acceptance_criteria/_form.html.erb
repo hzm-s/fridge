@@ -1,4 +1,4 @@
-<%= form_with scope: :form, url: product_backlog_item_acceptance_criteria_path(product_backlog_item_id: pbi_id), id: 'js-ac-form' do |f| %>
+<%= form_with scope: :form, url: feature_acceptance_criteria_path(feature_id: feature_id), id: 'js-ac-form' do |f| %>
   <div class="form-group">
     <%= f.text_field :content, class: 'form-control', autocomplete: 'off' %>
   </div>

@@ -1,6 +1,8 @@
 # typed: strict
 module Feature
   class InvalidDescription < ArgumentError; end
+  class InvalidAcceptanceCriterion < ArgumentError; end
+
   class AssignProductBacklogItemNotAllowed < StandardError; end
   class ProductBacklogItemIsNotAssigned < StandardError; end
   class ItemCanNotRemove < StandardError; end

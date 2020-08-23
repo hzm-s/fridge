@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   resources :releases, only: [:edit, :update, :destroy]
 
-  resources :pbis, only: [:edit, :update, :destroy] do
+  resources :features, only: [:edit, :update, :destroy] do
     resources :acceptance_criteria, only: [:create]
   end
   resources :acceptance_criteria, only: [:destroy]
