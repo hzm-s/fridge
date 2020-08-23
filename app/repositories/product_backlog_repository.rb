@@ -1,5 +1,5 @@
 # typed: strict
-require 'rails_helper'
+require 'sorbet-runtime'
 
 module ProductBacklogRepository
   module AR
