@@ -56,13 +56,15 @@ ja:
       add_release: リリースを追加する
     point_form:
       point: アイテムの大きさ
+    item_menu:
+      confirm_abort_development: 本当に着手予定を取り消しますか？
+
+  features:
     edit:
-      title: アイテムの編集
+      title: フィーチャーの編集
       title_ac: 受け入れ基準
     acceptance_criteria:
       empty: 受け入れ基準はありません
-    item_menu:
-      confirm_abort_development: 本当に着手予定を取り消しますか？
 
   acceptance_criteria:
     form:

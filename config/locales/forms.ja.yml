@@ -2,8 +2,8 @@ ja:
   activemodel:
     attributes:
 
-      product_backlog_item_form:
-        content: アイテムの内容
+      feature_form:
+        description: フィーチャーの説明
 
       product_form:
         name: プロダクト名
