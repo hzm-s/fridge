@@ -19,7 +19,7 @@ module Feature
     sig {abstract.returns(T::Boolean)}
     def can_estimate_size?; end
 
-    sig {abstract.params(criteria: Feature::AcceptanceCriteria, size: StoryPoint).returns(Status)}
+    sig {abstract.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
     def update_by_prepartion(criteria, size); end
 
     sig {abstract.returns(Status)}
