@@ -20,9 +20,9 @@ RSpec.describe ReleaseRepository::AR do
     it do
       release = Release::Release.create(product.id, 'Icebox')
 
-      item_a = Pbi::Id.create
-      item_b = Pbi::Id.create
-      item_c = Pbi::Id.create
+      item_a = Feature::Id.create
+      item_b = Feature::Id.create
+      item_c = Feature::Id.create
 
       release.add_item(item_a)
       release.add_item(item_b)
@@ -33,22 +33,7 @@ RSpec.describe ReleaseRepository::AR do
 
       stored = described_class.find_by_id(release.id)
 
-      expect(stored.items).to eq [item_a, item_b, item_c]
-    end
-  end
-
-  describe 'find_last_by_product_id' do
-    it do
-      release = described_class.find_last_by_product_id(product.id)
-      expect(release).to be_nil
-    end
-
-    it do
-      add_release(product.id, 'R2')
-      last = add_release(product.id, 'R3')
-
-      release = described_class.find_last_by_product_id(product.id)
-      expect(release.id).to eq last.id
+      expect(stored.items).to match_array [item_a, item_b, item_c]
     end
   end
 end
