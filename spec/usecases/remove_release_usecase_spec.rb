@@ -4,22 +4,21 @@ require 'rails_helper'
 RSpec.describe RemoveReleaseUsecase do
   let(:product) { create_product }
 
-  before do
-    add_pbi(product.id)
-    @release = add_release(product.id)
-  end
-
   it do
-    described_class.perform(@release.id)
+    release = add_release(product.id)
 
-    expect { ReleaseRepository::AR.find_by_id(@release.id) }
+    described_class.perform(release.id)
+
+    expect { ReleaseRepository::AR.find_by_id(release.id) }
       .to raise_error(ActiveRecord::RecordNotFound)
   end
 
-  it do
-    add_pbi(product.id)
+  xit do
+    release = add_release(product.id)
 
-    expect { described_class.perform(@release.id) }
+    add_feature(product.id, release: release.id)
+
+    expect { described_class.perform(release.id) }
       .to raise_error(Release::CanNotRemoveRelease)
   end
 end

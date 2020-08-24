@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe ChangeReleaseTitleUsecase do
+RSpec.describe ModifyReleaseTitleUsecase do
   let!(:product) { create_product }
   let(:release) { add_release(product.id, 'OLD_TITLE') }
 
