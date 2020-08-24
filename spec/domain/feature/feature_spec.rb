@@ -61,6 +61,10 @@ module Feature
         feature.estimate(StoryPoint.new(3))
         expect(feature.status).to eq Statuses::Ready
 
+        feature.update_acceptance_criteria(acceptance_criteria([]))
+        expect(feature.status).to eq Statuses::Preparation
+
+        feature.update_acceptance_criteria(acceptance_criteria(%w(AC1 AC2 AC3)))
         feature.start_development
         expect(feature.status).to eq Statuses::Wip
 
