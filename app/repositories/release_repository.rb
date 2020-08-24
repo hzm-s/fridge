@@ -51,13 +51,6 @@ module ReleaseRepository
         Dao::Release.destroy(id)
       end
 
-      sig {override.params(release: Release::Release).void}
-      def save(release)
-        update(release)
-      rescue ActiveRecord::RecordNotFound
-        add(release)
-      end
-
       private
 
       sig {params(product_id: Product::Id).returns(T.untyped)}
@@ -71,7 +64,7 @@ module ReleaseRepository
           Release::Id.from_string(rel.id),
           Product::Id.from_string(rel.dao_product_id),
           rel.title,
-          rel.items.map { |i| Pbi::Id.from_string(i) }
+          rel.items.map { |i| Feature::Id.from_string(i) }
         )
       end
     end
