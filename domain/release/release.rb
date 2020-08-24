@@ -5,18 +5,11 @@ module Release
   class Release
     extend T::Sig
 
-    DEFAULT_TITLE = T.let('Icebox'.freeze, String)
-
     Item = T.type_alias {Feature::Id}
     Items = T.type_alias {T::Array[Item]}
 
     class << self
       extend T::Sig
-
-      sig {params(product_id: Product::Id).returns(T.attached_class)}
-      def create_default(product_id)
-        create(product_id, DEFAULT_TITLE)
-      end
 
       sig {params(product_id: Product::Id, title: String).returns(T.attached_class)}
       def create(product_id, title)
@@ -61,7 +54,7 @@ module Release
     end
 
     sig {params(title: String).void}
-    def change_title(title)
+    def modify_title(title)
       @title = title
     end
   end

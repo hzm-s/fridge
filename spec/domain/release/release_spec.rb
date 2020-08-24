@@ -22,7 +22,7 @@ module Release
     describe 'add_item' do
       it do
         release.add_item(item_a)
-        expect(release.items).to eq [item_a]
+        expect(release.items).to match_array [item_a]
       end
     end
 
@@ -34,20 +34,20 @@ module Release
 
         release.remove_item(item_b)
 
-        expect(release.items).to eq [item_a, item_c]
+        expect(release.items).to match_array [item_a, item_c]
       end
     end
 
-    describe 'change title' do
+    describe 'modify title' do
       it do
         release.add_item(item_a)
         release.add_item(item_b)
         release.add_item(item_c)
 
-        release.change_title('NEW_TITLE')
+        release.modify_title('NEW_TITLE')
 
         expect(release.title).to eq 'NEW_TITLE'
-        expect(release.items).to eq [item_a, item_b, item_c]
+        expect(release.items).to match_array [item_a, item_b, item_c]
       end
     end
   end
