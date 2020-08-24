@@ -1,7 +1,7 @@
 # typed: strict
 require 'sorbet-runtime'
 
-class ChangeReleaseTitleUsecase < UsecaseBase
+class ModifyReleaseTitleUsecase < UsecaseBase
   extend T::Sig
 
   sig {void}
@@ -12,7 +12,7 @@ class ChangeReleaseTitleUsecase < UsecaseBase
   sig {params(id: Release::Id, title: String).void}
   def perform(id, title)
     release = @repository.find_by_id(id)
-    release.change_title(title)
+    release.modify_title(title)
     @repository.update(release)
   end
 end
