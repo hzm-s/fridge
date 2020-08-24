@@ -14,7 +14,7 @@ class FeaturesController < ApplicationController
         Product::Id.from_string(params[:product_id]),
         @form.domain_objects[:description]
       )
-      redirect_to product_pbis_path(product_id: params[:product_id]), flash: flash_success('pbi.create')
+      redirect_to product_pbis_path(product_id: params[:product_id]), flash: flash_success('feature.create')
     else
       render :new
     end

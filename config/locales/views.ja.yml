@@ -6,9 +6,9 @@ ja:
     require_sign_in: ログインしてください
     already_signed_in: ログインしています
     feature:
-      create: フィーチャーをプロダクトバックログに追加しました
+      create: アイテムをプロダクトバックログに追加しました
       update: フィーチャーを更新しました
-      destroy: フィーチャーを削除しました
+      destroy: アイテムを削除しました
       start_development: 着手予定にしました
       abort_development: 着手予定を取り消しました
     product:
@@ -54,6 +54,8 @@ ja:
       title: プロダクトバックログ
       add: アイテムを追加する
       add_release: リリースを追加する
+    acceptance_criteria:
+      empty: 受け入れ基準はありません
     point_form:
       point: アイテムの大きさ
     item_menu:
@@ -63,8 +65,6 @@ ja:
     edit:
       title: フィーチャーの編集
       title_ac: 受け入れ基準
-    acceptance_criteria:
-      empty: 受け入れ基準はありません
 
   acceptance_criteria:
     form:
