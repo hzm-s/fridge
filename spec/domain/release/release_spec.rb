@@ -50,5 +50,16 @@ module Release
         expect(release.items).to match_array [item_a, item_b, item_c]
       end
     end
+
+    describe 'can_remove?' do
+      it do
+        expect(release).to be_can_remove
+      end
+
+      it do
+        release.add_item(item_a)
+        expect(release).to_not be_can_remove
+      end
+    end
   end
 end
