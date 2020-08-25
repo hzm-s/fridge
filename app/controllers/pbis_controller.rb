@@ -7,7 +7,7 @@ class PbisController < ApplicationController
   helper_method :current_product_id
 
   def index
-    @releases = ProductBacklogQuery.call(params[:product_id])
+    @pbl = ProductBacklogQuery.call(params[:product_id])
     @form = FeatureForm.new
   end
 
