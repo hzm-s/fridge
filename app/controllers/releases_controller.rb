@@ -12,7 +12,7 @@ class ReleasesController < ApplicationController
     if @form.valid?
       product_id = Product::Id.from_string(params[:product_id])
       AddReleaseUsecase.perform(product_id, @form.title)
-      redirect_to product_product_backlog_items_path(product_id: params[:product_id]), flash: flash_success('release.create')
+      redirect_to product_pbis_path(product_id: params[:product_id]), flash: flash_success('release.create')
     else
       render :new
     end

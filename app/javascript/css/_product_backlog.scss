@@ -59,6 +59,10 @@
   padding: .5rem 1rem;
   background-color: $white;
   border-bottom: 1px solid $gray-300;
+
+  &:first-child {
+    border-top: 1px solid $gray-300;
+  }
 }
 
 .pbl-item-outer--preparation {

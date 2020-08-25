@@ -4,8 +4,6 @@ require 'rails_helper'
 RSpec.describe 'releases' do
   let!(:user_account) { sign_up }
   let!(:product) { create_product(person_id: user_account.person_id) }
-  let!(:pbi) { add_pbi(product.id) }
-  let!(:release) { ReleaseRepository::AR.find_last_by_product_id(product.id) }
 
   before do
     sign_in(user_account)
@@ -13,10 +11,10 @@ RSpec.describe 'releases' do
 
   describe '#create' do
     it do
-      post product_releases_path(product_id: product.id.to_s), params: { form: { title: 'SLICE2' } }
+      post product_releases_path(product_id: product.id.to_s), params: { form: { title: 'Icebox' } }
       follow_redirect!
 
-      expect(response.body).to include 'SLICE2'
+      expect(response.body).to include 'Icebox'
     end
 
     it do
@@ -26,11 +24,13 @@ RSpec.describe 'releases' do
   end
 
   describe '#update' do
+    let(:release) { add_release(product.id, 'FURUI_TITLE') }
+
     it do
-      patch release_path(id: release.id.to_s), params: { form: { title: 'MVP' } }
+      patch release_path(id: release.id.to_s), params: { form: { title: 'SHIN_TITLE' } }
       follow_redirect!
 
-      expect(response.body).to include 'MVP'
+      expect(response.body).to include 'SHIN_TITLE'
     end
 
     it do
@@ -49,7 +49,7 @@ RSpec.describe 'releases' do
       expect(response.body).to_not include 'EXTRA_RELEASE'
     end
 
-    it do
+    xit do
       target = add_release(product.id, 'EXTRA_RELEASE')
       add_pbi(product.id)
 
