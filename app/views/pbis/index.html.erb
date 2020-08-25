@@ -20,7 +20,9 @@
     </div>
     <div class="mt-3">
       <%= render partial: 'release', collection: @pbl.releases %>
-      <%= render partial: 'item', collection: @pbl.items %>
+      <div class="pbl__list">
+        <%= render partial: 'item', collection: @pbl.items %>
+      </div>
     </div>
     <div id="anchor-new-pbi" class="pbl__form form-outer">
       <%= render partial: 'features/form', locals: { form: @form, url: product_features_path(current_product_id), method: :post, btn_label: t('.add') } %>

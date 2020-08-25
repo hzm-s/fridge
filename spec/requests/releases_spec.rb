@@ -15,6 +15,7 @@ RSpec.describe 'releases' do
       follow_redirect!
 
       expect(response.body).to include 'Icebox'
+      expect(response.body).to include 'フィーチャーはありません'
     end
 
     it do

@@ -1,4 +1,4 @@
-# typed: true
+# typed: false
 require 'sorbet-runtime'
 
 module ProductBacklogQuery
@@ -14,7 +14,7 @@ module ProductBacklogQuery
     private
 
     def fetch_ordered_item_ids(product_id)
-      Dao::ProductBacklog.find_by(dao_product_id: product_id).items
+      Dao::ProductBacklog.find_by(dao_product_id: product_id)&.items || []
     end
 
     def fetch_features(product_id)

@@ -29,8 +29,8 @@ class ReleasesController < ApplicationController
 
     if @form.valid?
       release = current_release
-      ChangeReleaseTitleUsecase.perform(release.id, @form.title)
-      redirect_to product_product_backlog_items_path(product_id: release.product_id.to_s), flash: flash_success('release.update')
+      ModifyReleaseTitleUsecase.perform(release.id, @form.title)
+      redirect_to product_pbis_path(product_id: release.product_id.to_s), flash: flash_success('release.update')
     else
       render :edit
     end
@@ -43,7 +43,7 @@ class ReleasesController < ApplicationController
   rescue Release::CanNotRemoveRelease => e
     flash = { notice: t_domain_error(e) }
   ensure
-    redirect_to product_product_backlog_items_path(product_id: release.product_id.to_s), flash: flash
+    redirect_to product_pbis_path(product_id: release.product_id.to_s), flash: flash
   end
 
   private
