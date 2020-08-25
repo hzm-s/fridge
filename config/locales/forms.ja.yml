@@ -3,7 +3,7 @@ ja:
     attributes:
 
       feature_form:
-        description: フィーチャーの説明
+        description: 説明
 
       product_form:
         name: プロダクト名
