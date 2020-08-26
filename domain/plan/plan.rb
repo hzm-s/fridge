@@ -10,7 +10,7 @@ module Plan
 
       sig {params(product_id: Product::Id).returns(T.attached_class)}
       def create(product_id)
-        new(product_id, [Release.create('Minimum')])
+        new(product_id, [])
       end
     end
 
@@ -29,6 +29,11 @@ module Plan
     sig {params(release: Release).void}
     def add_release(release)
       @releases << release
+    end
+
+    sig {params(title: String).void}
+    def remove_release(title)
+      @releases.reject! { |release| release.title == title }
     end
 
     sig {params(title: String).returns(Release)}

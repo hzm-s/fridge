@@ -13,17 +13,27 @@ module Plan
       end
     end
 
-    describe 'Add Release' do
+    describe 'Add & Remove Release' do
       let(:plan) { described_class.create(product.id) }
 
-      it do
+      before do
+        release1 = Release.create('Phase1')
         release2 = Release.create('Phase2')
         release3 = Release.create('Phase3')
 
+        plan.add_release(release1)
         plan.add_release(release2)
         plan.add_release(release3)
+      end
 
-        expect(plan.releases.map(&:title)).to eq %w(Minimum Phase2 Phase3)
+      it do
+        expect(plan.releases.map(&:title)).to eq %w(Phase1 Phase2 Phase3)
+      end
+
+      it do
+        plan.remove_release('Phase2')
+
+        expect(plan.releases.map(&:title)).to eq %w(Phase1 Phase3)
       end
     end
   end
