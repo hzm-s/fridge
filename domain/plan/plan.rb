@@ -20,11 +20,16 @@ module Plan
     sig {params(product_id: Product::Id, releases: T::Array[Release]).void}
     def initialize(product_id, releases)
       @product_id = product_id
-      @releases = releases.map { |r| [r.title, r] }.to_h
+      @releases = releases
     end
 
+    sig {params(release: Release).void}
+    def add_release(release)
+    end
+
+    sig {params(title: String).returns(Release)}
     def release(title)
-      @releases[title]
+      @releases.find { |release| release.title == title }
     end
   end
 end
