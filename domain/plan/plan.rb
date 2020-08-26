@@ -32,14 +32,19 @@ module Plan
       @releases << release
     end
 
-    sig {params(title: String).void}
-    def remove_release(title)
-      @releases.reject! { |release| release.title == title }
+    sig {params(no: Integer).void}
+    def remove_release(no)
+      @releases.delete_at(no - 1)
     end
 
-    sig {params(title: String).returns(Release)}
-    def release(title)
-      @releases.find { |release| release.title == title }
+    sig {params(no: Integer, release: Release).void}
+    def replace_release(no, release)
+      @releases[no - 1] = release
+    end
+
+    sig {params(no: Integer).returns(Release)}
+    def release(no)
+      @releases[no - 1]
     end
   end
 end

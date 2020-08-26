@@ -13,7 +13,7 @@ module Plan
       end
     end
 
-    describe 'Add & Remove Release' do
+    describe 'Add & Remove release' do
       let(:plan) { described_class.create(product.id) }
 
       before do
@@ -27,13 +27,36 @@ module Plan
       end
 
       it do
-        expect(plan.releases.map(&:title)).to eq %w(Phase1 Phase2 Phase3)
+        expect(plan.release(1).title).to eq 'Phase1'
+        expect(plan.release(2).title).to eq 'Phase2'
+        expect(plan.release(3).title).to eq 'Phase3'
       end
 
       it do
-        plan.remove_release('Phase2')
+        plan.remove_release(2)
 
-        expect(plan.releases.map(&:title)).to eq %w(Phase1 Phase3)
+        expect(plan.release(1).title).to eq 'Phase1'
+        expect(plan.release(2).title).to eq 'Phase3'
+      end
+    end
+
+    describe 'Replace release' do
+      let(:plan) { described_class.create(product.id) }
+
+      it do
+        release1 = Release.create('Phase1')
+        release2 = Release.create('Phase2')
+        release3 = Release.create('Phase3')
+
+        plan.add_release(release1)
+        plan.add_release(release2)
+        plan.add_release(release3)
+
+        release1.modify_title('MVP')
+        plan.replace_release(1, release1)
+        expect(plan.release(1).title).to eq 'MVP'
+        expect(plan.release(2).title).to eq 'Phase2'
+        expect(plan.release(3).title).to eq 'Phase3'
       end
     end
   end
