@@ -17,6 +17,9 @@ module Plan
     sig {returns(Product::Id)}
     attr_reader :product_id
 
+    sig {returns(T::Array[Release])}
+    attr_reader :releases
+
     sig {params(product_id: Product::Id, releases: T::Array[Release]).void}
     def initialize(product_id, releases)
       @product_id = product_id
@@ -25,6 +28,7 @@ module Plan
 
     sig {params(release: Release).void}
     def add_release(release)
+      @releases << release
     end
 
     sig {params(title: String).returns(Release)}

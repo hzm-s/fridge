@@ -9,7 +9,7 @@ module Plan
       it do
         plan = described_class.create(product.id)
 
-        expect(plan.release('Minimum').items).to be_empty
+        expect(plan.releases).to be_empty
       end
     end
 
