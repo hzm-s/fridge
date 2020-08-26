@@ -25,6 +25,7 @@ module Plan
       @product_id = product_id
       @releases = releases
     end
+    private_class_method :new
 
     sig {params(release: Release).void}
     def add_release(release)

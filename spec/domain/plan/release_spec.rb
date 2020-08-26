@@ -1,30 +1,33 @@
 # typed: false
 require 'domain_helper'
 
-module Release
+module Plan
   RSpec.describe Release do
     let(:product_id) { Product::Id.create }
     let(:item_a) { Feature::Id.create }
     let(:item_b) { Feature::Id.create }
     let(:item_c) { Feature::Id.create }
 
-    let(:release) { described_class.create(product_id, 'Icebox') }
-
-    describe 'create' do
+    describe 'Create' do
       it do
-        release = described_class.create(product_id, 'MVP')
+        release = described_class.create('MVP')
 
         expect(release.title).to eq 'MVP'
         expect(release.items).to be_empty
       end
     end
 
-    describe 'add_item' do
+    describe 'Add & Remove item' do
+      let(:release) { described_class.create('Icebox') }
+
       it do
         release.add_item(item_a)
         expect(release.items).to match_array [item_a]
       end
     end
+  end
+end
+__END__
 
     describe 'remove_item' do
       it do
