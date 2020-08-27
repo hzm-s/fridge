@@ -15,6 +15,11 @@ module Plan
       def create(title)
         new(title, [])
       end
+
+      sig {params(title: String, items: Items).returns(T.attached_class)}
+      def from_repository(title, items)
+        new(title, items)
+      end
     end
 
     sig {returns(String)}
