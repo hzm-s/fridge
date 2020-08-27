@@ -12,6 +12,11 @@ module Plan
       def create(product_id)
         new(product_id, [])
       end
+
+      sig {params(product_id: Product::Id, releases: T::Array[Release]).returns(T.attached_class)}
+      def from_repository(product_id, releases)
+        new(product_id, releases)
+      end
     end
 
     sig {returns(Product::Id)}
