@@ -49,5 +49,30 @@ module Plan
     def can_remove?
       @items.empty?
     end
+
+    sig {params(from: Item, to: Item).void}
+    def swap_priorities(from, to)
+      if @items.index(from) > @items.index(to)
+        remove_item(from)
+        insert_item_after(from, to)
+      else
+        remove_item(from)
+        insert_item_before(from, to)
+      end
+    end
+
+    private
+
+    sig {params(item: Item, to: Item).void}
+    def insert_item_after(item, to)
+      index = @items.index(to)
+      @items.insert(index, item)
+    end
+
+    sig {params(item: Item, to: Item).void}
+    def insert_item_before(item, to)
+      index = @items.index(to)
+      @items.insert(0 - index, item)
+    end
   end
 end

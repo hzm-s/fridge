@@ -7,6 +7,8 @@ module Plan
     let(:item_a) { Feature::Id.create }
     let(:item_b) { Feature::Id.create }
     let(:item_c) { Feature::Id.create }
+    let(:item_d) { Feature::Id.create }
+    let(:item_e) { Feature::Id.create }
 
     describe 'Create' do
       it do
@@ -27,13 +29,13 @@ module Plan
       end
 
       it do
-        expect(release.items).to match_array [item_a, item_b, item_c]
+        expect(release.items).to eq [item_a, item_b, item_c]
       end
 
       it do
         release.remove_item(item_b)
 
-        expect(release.items).to match_array [item_a, item_c]
+        expect(release.items).to eq [item_a, item_c]
       end
     end
 
@@ -48,7 +50,7 @@ module Plan
         release.modify_title('NEW_TITLE')
 
         expect(release.title).to eq 'NEW_TITLE'
-        expect(release.items).to match_array [item_a, item_b, item_c]
+        expect(release.items).to eq [item_a, item_b, item_c]
       end
     end
 
@@ -63,6 +65,38 @@ module Plan
         release.add_item(item_a)
 
         expect(release).to_not be_can_remove
+      end
+    end
+
+    describe 'Swap priorities' do
+      let(:release) { described_class.create('Icebox') }
+
+      before do
+        release.add_item(item_a)
+        release.add_item(item_b)
+        release.add_item(item_c)
+        release.add_item(item_d)
+        release.add_item(item_e)
+      end
+
+      it do
+        release.swap_priorities(item_c, item_b)
+        expect(release.items).to eq [item_a, item_c, item_b, item_d, item_e]
+      end
+
+      it do
+        release.swap_priorities(item_e, item_a)
+        expect(release.items).to eq [item_e, item_a, item_b, item_c, item_d]
+      end
+
+      it do
+        release.swap_priorities(item_c, item_d)
+        expect(release.items).to eq [item_a, item_b, item_d, item_c, item_e]
+      end
+
+      it do
+        release.swap_priorities(item_e, item_a)
+        expect(release.items).to eq [item_e, item_a, item_b, item_c, item_d]
       end
     end
   end

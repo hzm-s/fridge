@@ -36,5 +36,10 @@ module Shared
       self.instance_of?(other.class) &&
         self.to_s == other.to_s
     end
+
+    sig {returns(String)}
+    def inspect
+      "#<#{self.class}:#{to_s.split('-').first}>"
+    end
   end
 end
