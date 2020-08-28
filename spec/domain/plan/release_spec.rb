@@ -4,11 +4,11 @@ require 'domain_helper'
 module Plan
   RSpec.describe Release do
     let(:product_id) { Product::Id.create }
-    let(:item_a) { Feature::Id.create }
-    let(:item_b) { Feature::Id.create }
-    let(:item_c) { Feature::Id.create }
-    let(:item_d) { Feature::Id.create }
-    let(:item_e) { Feature::Id.create }
+    let(:item_a) { Pbi::Id.create }
+    let(:item_b) { Pbi::Id.create }
+    let(:item_c) { Pbi::Id.create }
+    let(:item_d) { Pbi::Id.create }
+    let(:item_e) { Pbi::Id.create }
 
     describe 'Create' do
       it do

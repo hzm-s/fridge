@@ -5,7 +5,7 @@ module Plan
   class Release
     extend T::Sig
 
-    Item = T.type_alias {Feature::Id}
+    Item = T.type_alias {Pbi::Id}
     Items = T.type_alias {T::Array[Item]}
 
     class << self
