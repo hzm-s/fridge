@@ -36,21 +36,21 @@ ActiveRecord::Schema.define(version: 2020_08_10_050340) do
   end
 
   create_table "dao_acceptance_criteria", force: :cascade do |t|
-    t.uuid "dao_feature_id"
+    t.uuid "dao_pbi_id"
     t.string "content", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["dao_feature_id"], name: "index_dao_acceptance_criteria_on_dao_feature_id"
+    t.index ["dao_pbi_id"], name: "index_dao_acceptance_criteria_on_dao_pbi_id"
   end
 
-  create_table "dao_features", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "dao_pbis", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "dao_product_id"
     t.string "status", null: false
     t.string "description", null: false
     t.integer "size"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["dao_product_id"], name: "idx_product_id_on_features"
+    t.index ["dao_product_id"], name: "idx_product_id_on_pbis"
   end
 
   create_table "dao_people", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -88,8 +88,8 @@ ActiveRecord::Schema.define(version: 2020_08_10_050340) do
 
   add_foreign_key "app_user_accounts", "dao_people"
   add_foreign_key "app_user_profiles", "app_user_accounts"
-  add_foreign_key "dao_acceptance_criteria", "dao_features"
-  add_foreign_key "dao_features", "dao_products"
+  add_foreign_key "dao_acceptance_criteria", "dao_pbis"
+  add_foreign_key "dao_pbis", "dao_products"
   add_foreign_key "dao_releases", "dao_products"
   add_foreign_key "dao_team_members", "dao_products"
 end

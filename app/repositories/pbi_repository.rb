@@ -1,16 +1,16 @@
 # typed: strict
 require 'sorbet-runtime'
 
-module FeatureRepository
+module PbiRepository
   module AR
     class << self
       extend T::Sig
-      include Feature::FeatureRepository
+      include Pbi::PbiRepository
 
-      sig {override.params(id: Feature::Id).returns(Feature::Feature)}
+      sig {override.params(id: Pbi::Id).returns(Pbi::Pbi)}
       def find_by_id(id)
-        r = Dao::Feature.eager_load(:criteria).find(id)
-        Feature::Feature.from_repository(
+        r = Dao::Pbi.eager_load(:criteria).find(id)
+        Pbi::Pbi.from_repository(
           r.feature_id_as_do,
           r.product_id_as_do,
           r.status_as_do,
@@ -20,9 +20,9 @@ module FeatureRepository
         )
       end
 
-      sig {override.params(feature: Feature::Feature).void}
+      sig {override.params(feature: Pbi::Pbi).void}
       def add(feature)
-        Dao::Feature.create!(
+        Dao::Pbi.create!(
           id: feature.id.to_s,
           dao_product_id: feature.product_id.to_s,
           status: feature.status.to_s,
@@ -31,9 +31,9 @@ module FeatureRepository
         )
       end
 
-      sig {override.params(feature: Feature::Feature).void}
+      sig {override.params(feature: Pbi::Pbi).void}
       def update(feature)
-        r = Dao::Feature.find(feature.id.to_s)
+        r = Dao::Pbi.find(feature.id.to_s)
         r.status = feature.status.to_s
         r.description = feature.description.to_s
         r.size = feature.size.to_i
@@ -46,9 +46,9 @@ module FeatureRepository
         r.save!
       end
 
-      sig {override.params(id: Feature::Id).void}
+      sig {override.params(id: Pbi::Id).void}
       def delete(id)
-        Dao::Feature.destroy(id.to_s)
+        Dao::Pbi.destroy(id.to_s)
       end
     end
   end
