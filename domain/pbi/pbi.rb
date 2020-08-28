@@ -1,8 +1,8 @@
 # typed: strict
 require 'sorbet-runtime'
 
-module Feature
-  class Feature
+module Pbi
+  class Pbi
     extend T::Sig
 
     class << self

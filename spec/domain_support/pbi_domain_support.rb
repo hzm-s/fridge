@@ -1,19 +1,19 @@
 # typed: false
-module FeatureDomainSupport
+module PbiDomainSupport
   def feature_description(desc)
-    Feature::Description.new(desc)
+    Pbi::Description.new(desc)
   end
 
   def acceptance_criterion(content)
-    Feature::AcceptanceCriterion.new(content)
+    Pbi::AcceptanceCriterion.new(content)
   end
 
   def acceptance_criteria(contents)
     contents.map { |c| acceptance_criterion(c) }
-      .yield_self { |contents| Feature::AcceptanceCriteria.new(contents) }
+      .yield_self { |contents| Pbi::AcceptanceCriteria.new(contents) }
   end
 end
 
 RSpec.configure do |c|
-  c.include FeatureDomainSupport
+  c.include PbiDomainSupport
 end

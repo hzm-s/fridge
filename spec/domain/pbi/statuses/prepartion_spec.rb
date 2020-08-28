@@ -1,11 +1,11 @@
 # typed: false
 require 'domain_helper'
 
-module Feature
+module Pbi
   module Statuses
-    RSpec.describe Ready do
+    RSpec.describe Preparation do
       describe '#can_start_development?' do
-        it { expect(described_class).to be_can_start_development }
+        it { expect(described_class).to_not be_can_start_development }
       end
 
       describe '#can_abort_development?' do
@@ -54,8 +54,8 @@ module Feature
 
       describe '#update_to_wip' do
         it do
-          status = described_class.update_to_wip
-          expect(status).to eq Wip
+          expect { described_class.update_to_wip }
+            .to raise_error CanNotStartDevelopment
         end
       end
 

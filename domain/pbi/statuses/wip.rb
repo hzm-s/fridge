@@ -1,7 +1,7 @@
 # typed: strict
 require 'sorbet-runtime'
 
-module Feature
+module Pbi
   module Statuses
     module Wip
       class << self

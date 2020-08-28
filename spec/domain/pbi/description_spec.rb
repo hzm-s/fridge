@@ -1,7 +1,7 @@
 # typed: false
 require 'domain_helper'
 
-module Feature
+module Pbi
   RSpec.describe Description do
     it do
       aggregate_failures do
