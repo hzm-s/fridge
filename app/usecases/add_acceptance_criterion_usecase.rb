@@ -6,16 +6,16 @@ class AddAcceptanceCriterionUsecase < UsecaseBase
 
   sig {void}
   def initialize
-    @repository = T.let(FeatureRepository::AR, Feature::FeatureRepository)
+    @repository = T.let(PbiRepository::AR, Pbi::PbiRepository)
   end
 
-  sig {params(feature_id: Feature::Id, criterion: Feature::AcceptanceCriterion).void}
-  def perform(feature_id, criterion)
-    feature = @repository.find_by_id(feature_id)
+  sig {params(pbi_id: Pbi::Id, criterion: Pbi::AcceptanceCriterion).void}
+  def perform(pbi_id, criterion)
+    pbi = @repository.find_by_id(pbi_id)
 
-    criteria = feature.acceptance_criteria.append(criterion)
-    feature.update_acceptance_criteria(criteria)
+    criteria = pbi.acceptance_criteria.append(criterion)
+    pbi.update_acceptance_criteria(criteria)
 
-    @repository.update(feature)
+    @repository.update(pbi)
   end
 end
