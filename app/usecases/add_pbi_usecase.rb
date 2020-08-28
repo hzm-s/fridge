@@ -1,28 +1,28 @@
 # typed: strict
 require 'sorbet-runtime'
 
-class AddFeatureUsecase < UsecaseBase
+class AddPbiUsecase < UsecaseBase
   extend T::Sig
 
   sig {void}
   def initialize
-    @feature_repository = T.let(FeatureRepository::AR, Feature::FeatureRepository)
+    @pbi_repository = T.let(PbiRepository::AR, Pbi::PbiRepository)
     @product_backlog_repository = T.let(ProductBacklogRepository::AR, ProductBacklog::ProductBacklogRepository)
   end
 
-  sig {params(product_id: Product::Id, description: Feature::Description).returns(Feature::Id)}
+  sig {params(product_id: Product::Id, description: Pbi::Description).returns(Pbi::Id)}
   def perform(product_id, description)
-    feature = Feature::Feature.create(product_id, description)
+    pbi = Pbi::Pbi.create(product_id, description)
 
     product_backlog = fetch_product_backlog(product_id)
-    product_backlog.add_item(feature.id)
+    product_backlog.add_item(pbi.id)
 
     transaction do
-      @feature_repository.add(feature)
+      @pbi_repository.add(pbi)
       @product_backlog_repository.update(product_backlog)
     end
 
-    feature.id
+    pbi.id
   end
 
   private

@@ -1,6 +1,6 @@
 # typed: false
 module PbiDomainSupport
-  def feature_description(desc)
+  def pbi_description(desc)
     Pbi::Description.new(desc)
   end
 
