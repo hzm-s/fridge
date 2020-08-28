@@ -1,8 +1,8 @@
 # typed: false
 require 'domain_helper'
 
-module Feature
-  RSpec.describe Feature do
+module Pbi
+  RSpec.describe Pbi do
     let(:product_id) { Product::Id.create }
     let(:description) { feature_description('A user story') }
 

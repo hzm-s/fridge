@@ -1,11 +1,11 @@
 # typed: strict
 require 'sorbet-runtime'
 
-module Feature
+module Pbi
   module Statuses
-    autoload :Preparation, 'feature/statuses/preparation'
-    autoload :Ready, 'feature/statuses/ready'
-    autoload :Wip, 'feature/statuses/wip'
+    autoload :Preparation, 'pbi/statuses/preparation'
+    autoload :Ready, 'pbi/statuses/ready'
+    autoload :Wip, 'pbi/statuses/wip'
 
     class << self
       extend T::Sig

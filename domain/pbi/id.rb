@@ -1,7 +1,7 @@
 # typed: strict
 require 'sorbet-runtime'
 
-module Feature
+module Pbi
   class Id < Shared::Identifier
   end
 end
