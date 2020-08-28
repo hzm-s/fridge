@@ -4,9 +4,9 @@ require 'rails_helper'
 RSpec.describe AddPbiUsecase do
   let!(:product) { create_product }
   let(:pbi_repo) { PbiRepository::AR }
-  let(:pbl_repo) { ProductBacklogRepository::AR }
+  let(:plan_repo) { PlanRepository::AR }
 
-  it '追加したフィーチャーが保存されていること' do
+  it '追加したアイテムが保存されていること' do
     description = pbi_description('ABC')
     pbi_id = described_class.perform(product.id, description)
     pbi = pbi_repo.find_by_id(pbi_id)
@@ -24,8 +24,8 @@ RSpec.describe AddPbiUsecase do
     base_item = described_class.perform(product.id, pbi_description('aaa'))
 
     new_item = described_class.perform(product.id, pbi_description('bbb'))
-    pbl = pbl_repo.find_by_product_id(product.id)
+    plan = plan_repo.find_by_product_id(product.id)
 
-    expect(pbl.items).to eq [base_item, new_item]
+    expect(plan.release(1).items).to eq [base_item, new_item]
   end
 end

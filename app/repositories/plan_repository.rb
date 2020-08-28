@@ -14,12 +14,12 @@ module PlanRepository
         releases = rels.map do |rel|
           Plan::Release.from_repository(
             rel.title,
-            rel.items.map { |i| Feature::Id.from_string(i) }
+            rel.items.map { |i| Pbi::Id.from_string(i) }
           )
         end
 
         Plan::Plan.from_repository(
-          Product::Id.from_string(rels.first.title),
+          Product::Id.from_string(rels.first.dao_product_id),
           releases
         )
       end
