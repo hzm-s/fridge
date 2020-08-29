@@ -1,17 +1,17 @@
 # typed: false
-class FeatureDevelopmentsController < ApplicationController
+class PbiDevelopmentsController < ApplicationController
   def create
-    StartFeatureDevelopmentUsecase.perform(feature_id)
+    StartPbiDevelopmentUsecase.perform(feature_id)
 
-    @feature = FeatureQuery.call(feature_id.to_s)
+    @feature = PbiQuery.call(feature_id.to_s)
     flash.now[:notice] = feedback_message('feature.start_development')
     render :show
   end
 
   def destroy
-    AbortFeatureDevelopmentUsecase.perform(feature_id)
+    AbortPbiDevelopmentUsecase.perform(feature_id)
 
-    @feature = FeatureQuery.call(feature_id.to_s)
+    @feature = PbiQuery.call(feature_id.to_s)
     flash.now[:notice] = feedback_message('feature.abort_development')
     render :show
   end
@@ -19,6 +19,6 @@ class FeatureDevelopmentsController < ApplicationController
   private
 
   def feature_id
-    @__feature_id ||= Feature::Id.from_string(params[:id])
+    @__feature_id ||= Pbi::Id.from_string(params[:id])
   end
 end
