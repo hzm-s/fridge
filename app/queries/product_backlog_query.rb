@@ -4,60 +4,44 @@ require 'sorbet-runtime'
 module ProductBacklogQuery
   class << self
     def call(product_id)
-      ProductBacklog.new(
-        ordered_item_ids: fetch_ordered_item_ids(product_id),
-        releases: fetch_releases(product_id),
-        features: fetch_features(product_id)
-      )
+      items = fetch_pbis(product_id).map { |r| Item.new(r) }
+      releases = fetch_releases(product_id).map { |r| Release.new(r, items) }
+      ProductBacklog.new(releases)
     end
 
     private
 
-    def fetch_ordered_item_ids(product_id)
-      Dao::ProductBacklog.find_by(dao_product_id: product_id)&.items || []
-    end
-
-    def fetch_features(product_id)
-      Dao::Feature
-        .eager_load(:criteria)
-        .where(dao_product_id: product_id)
-        .map { |r| Item.new(r) }
+    def fetch_pbis(product_id)
+      Dao::Pbi.eager_load(:criteria).where(dao_product_id: product_id)
     end
 
     def fetch_releases(product_id)
-      ReleaseRepository::AR.all_by_product_id(Product::Id.from_string(product_id))
+      Product::Id.from_string(product_id)
+        .yield_self { |id| PlanRepository::AR.find_by_product_id(id) }
+        .releases
     end
   end
 
-  class ProductBacklog
-
-    def initialize(ordered_item_ids:, releases:, features:)
-      @ordered_item_ids = ordered_item_ids
-      @releases = releases
-      @features = features
-    end
-
-    def items
-      @__items ||= @ordered_item_ids.map { |o| @features.find { |f| f.id == o } }
-    end
-
-    def releases
-      @__releases ||= @releases.map { |r| Release.new(r, items.select { |i| r.items.include?(i.id) }) }
-    end
+  class ProductBacklog < Struct.new(:releases)
   end
 
   class Release < SimpleDelegator
-    attr_reader :items
-    
-    def initialize(release, items)
+
+    def initialize(release, all_items)
       super(release)
-      @items = items
+      @all_items = all_items
+    end
+
+    def items
+      @__items = __getobj__.items.map do |release_item|
+        @all_items.find { |i| i.id == release_item.to_s }
+      end
     end
   end
 
   class Item < SimpleDelegator
     def status
-      @__status ||= Feature::Statuses.from_string(super)
+      @__status ||= Pbi::Statuses.from_string(__getobj__.status)
     end
   end
 end
