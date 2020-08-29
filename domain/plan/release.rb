@@ -66,6 +66,11 @@ module Plan
       end
     end
 
+    sig {params(item: Item).returns(T::Boolean)}
+    def include?(item)
+      @items.include?(item)
+    end
+
     private
 
     sig {params(item: Item, to: Item).void}

@@ -51,5 +51,10 @@ module Plan
     def release(no)
       @releases[no - 1]
     end
+
+    sig {params(item: Release::Item).returns(Integer)}
+    def find_release_no_by_item(item)
+      @releases.find_index { |release| release.include?(item) } + 1
+    end
   end
 end
