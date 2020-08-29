@@ -29,8 +29,11 @@ RSpec.describe ProductBacklogQuery do
 
       pbl = described_class.call(product.id.to_s)
 
-      release_titles = pbl.releases.map(&:title)
-      expect(release_titles).to eq %w(Icebox Phase2 Phase3)
+      numbers = pbl.releases.map(&:no)
+      expect(numbers).to eq [1, 2, 3]
+
+      titles = pbl.releases.map(&:title)
+      expect(titles).to eq %w(Icebox Phase2 Phase3)
     end
 
     it 'リリースの削除可否を返すこと' do

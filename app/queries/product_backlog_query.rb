@@ -5,7 +5,7 @@ module ProductBacklogQuery
   class << self
     def call(product_id)
       items = fetch_pbis(product_id).map { |r| Item.new(r) }
-      releases = fetch_releases(product_id).map { |r| Release.new(r, items) }
+      releases = fetch_releases(product_id).map.with_index(1) { |r, i| Release.new(i, r, items) }
       ProductBacklog.new(releases)
     end
 
@@ -26,9 +26,11 @@ module ProductBacklogQuery
   end
 
   class Release < SimpleDelegator
+    attr_reader :no
 
-    def initialize(release, all_items)
+    def initialize(no, release, all_items)
       super(release)
+      @no = no
       @all_items = all_items
     end
 
