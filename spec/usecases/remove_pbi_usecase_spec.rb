@@ -22,7 +22,7 @@ RSpec.describe RemovePbiUsecase do
     expect { described_class.perform(wip.id) }.to raise_error(Pbi::CanNotRemove)
   end
 
-  xit do
+  it do
     add_release(product.id, 'R2')
     item2 = add_pbi(product.id)
 
