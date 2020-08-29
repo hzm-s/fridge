@@ -4,15 +4,12 @@ require 'rails_helper'
 RSpec.describe AddReleaseUsecase do
   let!(:product) { create_product }
 
-  before do
-    add_feature(product.id)
-  end
-
   it do
-    id = described_class.perform(product.id, 'MVP')
-    release = ReleaseRepository::AR.find_by_id(id)
+    described_class.perform(product.id, 'MVP')
 
-    expect(release.product_id).to eq product.id
+    plan = PlanRepository::AR.find_by_product_id(product.id)
+    release = plan.last_release
+
     expect(release.title).to eq 'MVP'
     expect(release.items).to be_empty
   end

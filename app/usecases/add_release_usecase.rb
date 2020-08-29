@@ -6,13 +6,16 @@ class AddReleaseUsecase < UsecaseBase
 
   sig {void}
   def initialize
-    @repository = T.let(ReleaseRepository::AR, Release::ReleaseRepository)
+    @repository = T.let(PlanRepository::AR, Plan::PlanRepository)
   end
 
-  sig {params(product_id: Product::Id, title: String).returns(Release::Id)}
+  sig {params(product_id: Product::Id, title: String).void}
   def perform(product_id, title)
-    release = Release::Release.create(product_id, title)
-    @repository.add(release)
-    release.id
+    release = Plan::Release.create(title)
+
+    plan = @repository.find_by_product_id(product_id)
+    plan.add_release(release)
+
+    @repository.update(plan)
   end
 end
