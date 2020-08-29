@@ -20,6 +20,6 @@ RSpec.describe AcceptanceCriterionForm do
   it do
     form = described_class.new(valid.merge(content: 'a' * 1001))
     expect(form).to_not be_valid
-    expect(form.errors[:content]).to include(I18n.t('domain.errors.feature.invalid_acceptance_criterion'))
+    expect(form.errors[:content]).to include(I18n.t('domain.errors.pbi.invalid_acceptance_criterion'))
   end
 end

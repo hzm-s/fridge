@@ -1,6 +1,6 @@
 ja:
   domain:
-    feature:
+    pbi:
       statuses:
         draft: 下書き
         preparation: 準備中
@@ -20,7 +20,7 @@ ja:
         scrum_master: SM
 
     errors:
-      feature:
+      pbi:
         invalid_description: 3~500文字で入力してください
         invalid_acceptance_criterion: 3~100文字で入力してください
       team:
