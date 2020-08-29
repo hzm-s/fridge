@@ -49,7 +49,7 @@ module Plan
 
     sig {params(no: Integer).returns(Release)}
     def release(no)
-      @releases[no - 1]
+      @releases[no - 1] or raise ReleaseNotFound
     end
 
     sig {returns(Release)}
