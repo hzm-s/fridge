@@ -1,4 +1,4 @@
-# typed: true
+# typed: false
 module PblHelper
   def sortable_pbl_options(product_id, release)
     {
