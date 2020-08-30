@@ -7,7 +7,7 @@ RSpec.describe SortProductBacklogUsecase do
   let!(:pbi_b) { add_pbi(product.id).id }
   let!(:pbi_c) { add_pbi(product.id).id }
 
-  context 'same release' do
+  context '同じリリース' do
     it do
       described_class.perform(product.id, 1, pbi_a, 1, 3)
 
@@ -17,18 +17,30 @@ RSpec.describe SortProductBacklogUsecase do
     end
   end
 
-  context 'another release' do
-    it do
+  context '別のリリース' do
+    before do
       add_release(product.id, 'R2')
+    end
 
-      described_class.perform(product.id, 1, pbi_b, 2, 1)
+    context 'リリースに最初のアイテムを追加' do
+      it do
+        described_class.perform(product.id, 1, pbi_b, 2, 1)
 
-      plan = PlanRepository::AR.find_by_product_id(product.id)
-      src = plan.release(1)
-      dst = plan.release(2)
+        plan = PlanRepository::AR.find_by_product_id(product.id)
+        src = plan.release(1)
+        dst = plan.release(2)
 
-      expect(src.items).to eq [pbi_a, pbi_c]
-      expect(dst.items).to eq [pbi_b]
+        expect(src.items).to eq [pbi_a, pbi_c]
+        expect(dst.items).to eq [pbi_b]
+      end
+    end
+
+    context '既存のアイテムと入れ替え' do
+      before do
+      end
+
+      it do
+      end
     end
   end
 end
