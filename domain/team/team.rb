@@ -16,9 +16,18 @@ module Team
       end
     end
 
+    sig {returns(Id)}
+    attr_reader :id
+
+    sig {returns(String)}
+    attr_reader :name
+
+    sig {returns(Members)}
+    attr_reader :members
+
     sig {params(id: Id, name: String, members: Members).void}
     def initialize(id, name, members)
-      @id = name = name
+      @id = id
       @name = name
       @members = members
     end
@@ -43,11 +52,6 @@ module Team
       roles << Role::ScrumMaster if count_of_role(Role::ScrumMaster) == 0
       roles << Role::Developer if count_of_role(Role::Developer) <= 8
       roles
-    end
-
-    sig {returns(T::Array[Member])}
-    def to_a
-      @members
     end
 
     private

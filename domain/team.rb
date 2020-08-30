@@ -10,4 +10,5 @@ module Team
   autoload :Team, 'team/team'
   autoload :Member, 'team/member'
   autoload :Role, 'team/role'
+  autoload :TeamRepository, 'team/team_repository'
 end
