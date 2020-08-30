@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 module Plan
   class ReleaseNotFound < StandardError; end
   class CanNotRemoveRelease < StandardError; end

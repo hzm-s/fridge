@@ -2148,7 +2148,6 @@ end
 class ActiveRecord::Scoping::ScopeRegistry
   def initialize; end
   def raise_invalid_scope_type!(scope_type); end
-  def self.value_for(*args, &block); end
   def set_value_for(scope_type, model, value); end
   def value_for(scope_type, model, skip_inherited_scope = nil); end
   extend ActiveSupport::PerThreadRegistry
@@ -5555,6 +5554,16 @@ class ActiveRecord::Associations::Builder::BelongsTo < ActiveRecord::Association
   def self.valid_dependent_options; end
   def self.valid_options(options); end
 end
+class ActiveRecord::Associations::Builder::HasOne < ActiveRecord::Associations::Builder::SingularAssociation
+  def self.add_destroy_callbacks(model, reflection); end
+  def self.add_touch_callbacks(model, reflection); end
+  def self.define_callbacks(model, reflection); end
+  def self.define_validations(model, reflection); end
+  def self.macro; end
+  def self.touch_record(o, name, touch); end
+  def self.valid_dependent_options; end
+  def self.valid_options(options); end
+end
 class ActiveRecord::Associations::Builder::CollectionAssociation < ActiveRecord::Associations::Builder::Association
   def self.define_callback(model, callback_name, name, options); end
   def self.define_callbacks(model, reflection); end
@@ -5568,114 +5577,57 @@ class ActiveRecord::Associations::Builder::HasMany < ActiveRecord::Associations:
   def self.valid_dependent_options; end
   def self.valid_options(options); end
 end
-class ActiveRecord::Associations::Builder::HasOne < ActiveRecord::Associations::Builder::SingularAssociation
-  def self.add_destroy_callbacks(model, reflection); end
-  def self.add_touch_callbacks(model, reflection); end
-  def self.define_callbacks(model, reflection); end
-  def self.define_validations(model, reflection); end
-  def self.macro; end
-  def self.touch_record(o, name, touch); end
-  def self.valid_dependent_options; end
-  def self.valid_options(options); end
-end
 class ActiveRecord::Schema < ActiveRecord::Migration::Current
   def define(info, &block); end
   def self.define(info = nil, &block); end
 end
-class ActiveRecord::PredicateBuilder
-  def build(attribute, value); end
-  def build_bind_attribute(column_name, value); end
-  def build_from_hash(attributes); end
-  def convert_dot_notation_to_hash(attributes); end
-  def expand_from_hash(attributes); end
-  def handler_for(object); end
-  def initialize(table); end
-  def register_handler(klass, handler); end
-  def resolve_column_aliases(*args, &block); end
-  def self.references(attributes); end
-  def table; end
+module ActiveRecord::Migration::Compatibility
+  def self.find(version); end
 end
-class ActiveRecord::PredicateBuilder::ArrayHandler
-  def call(attribute, value); end
-  def initialize(predicate_builder); end
-  def predicate_builder; end
+class ActiveRecord::Migration::Compatibility::V5_2 < ActiveRecord::Migration::Current
+  def add_timestamps(table_name, **options); end
+  def change_table(table_name, **options); end
+  def command_recorder; end
+  def compatible_table_definition(t); end
+  def create_join_table(table_1, table_2, **options); end
+  def create_table(table_name, **options); end
 end
-module ActiveRecord::PredicateBuilder::ArrayHandler::NullPredicate
-  def self.or(other); end
+module ActiveRecord::Migration::Compatibility::V5_2::TableDefinition
+  def timestamps(**options); end
 end
-class ActiveRecord::PredicateBuilder::BaseHandler
-  def call(attribute, value); end
-  def initialize(predicate_builder); end
-  def predicate_builder; end
+module ActiveRecord::Migration::Compatibility::V5_2::CommandRecorder
+  def invert_change_column_comment(args); end
+  def invert_change_table_comment(args); end
+  def invert_transaction(args, &block); end
 end
-class ActiveRecord::PredicateBuilder::BasicObjectHandler
-  def call(attribute, value); end
-  def initialize(predicate_builder); end
-  def predicate_builder; end
+class ActiveRecord::Migration::Compatibility::V5_1 < ActiveRecord::Migration::Compatibility::V5_2
+  def change_column(table_name, column_name, type, options = nil); end
+  def create_table(table_name, **options); end
 end
-class ActiveRecord::PredicateBuilder::RangeHandler
-  def call(attribute, value); end
-  def initialize(predicate_builder); end
-  def predicate_builder; end
+class ActiveRecord::Migration::Compatibility::V5_0 < ActiveRecord::Migration::Compatibility::V5_1
+  def add_belongs_to(table_name, ref_name, **options); end
+  def add_column(table_name, column_name, type, **options); end
+  def add_reference(table_name, ref_name, **options); end
+  def compatible_table_definition(t); end
+  def create_join_table(table_1, table_2, column_options: nil, **options); end
+  def create_table(table_name, **options); end
 end
-class ActiveRecord::PredicateBuilder::RangeHandler::RangeWithBinds < Struct
-  def begin; end
-  def begin=(_); end
-  def end; end
-  def end=(_); end
-  def exclude_end?; end
-  def self.[](*arg0); end
-  def self.inspect; end
-  def self.members; end
-  def self.new(*arg0); end
+module ActiveRecord::Migration::Compatibility::V5_0::TableDefinition
+  def belongs_to(*args, **options); end
+  def primary_key(name, type = nil, **options); end
+  def references(*args, **options); end
 end
-class ActiveRecord::PredicateBuilder::RelationHandler
-  def call(attribute, value); end
+class ActiveRecord::Migration::Compatibility::V4_2 < ActiveRecord::Migration::Compatibility::V5_0
+  def add_belongs_to(table_name, ref_name, **options); end
+  def add_reference(table_name, ref_name, **options); end
+  def add_timestamps(table_name, **options); end
+  def compatible_table_definition(t); end
+  def index_exists?(table_name, column_name, options = nil); end
+  def index_name_for_remove(table_name, options = nil); end
+  def remove_index(table_name, options = nil); end
 end
-class ActiveRecord::PredicateBuilder::AssociationQueryValue
-  def associated_table; end
-  def convert_to_id(value); end
-  def ids; end
-  def initialize(associated_table, value); end
-  def primary_key; end
-  def queries; end
-  def value; end
-end
-class ActiveRecord::PredicateBuilder::PolymorphicArrayValue
-  def associated_table; end
-  def convert_to_id(value); end
-  def initialize(associated_table, values); end
-  def klass(value); end
-  def primary_key(value); end
-  def queries; end
-  def type_to_ids_mapping; end
-  def values; end
-end
-class ActiveRecord::TableMetadata
-  def aggregated_with?(aggregation_name); end
-  def arel_attribute(column_name); end
-  def arel_table; end
-  def associated_predicate_builder(table_name); end
-  def associated_table(table_name); end
-  def associated_with?(association_name); end
-  def association; end
-  def association_foreign_key(*args, &block); end
-  def association_foreign_type(*args, &block); end
-  def association_join_foreign_key(*args, &block); end
-  def association_join_primary_key(*args, &block); end
-  def has_column?(column_name); end
-  def initialize(klass, arel_table, association = nil, types = nil); end
-  def klass; end
-  def polymorphic_association?; end
-  def predicate_builder; end
-  def reflect_on_aggregation(aggregation_name); end
-  def resolve_column_aliases(hash); end
-  def type(column_name); end
-  def types; end
-end
-class Dao::ProductBacklogItem < ApplicationRecord
-  def self.default_scope_override; end
-end
-class Dao::AcceptanceCriterion < ApplicationRecord
-  def self.default_scope_override; end
+module ActiveRecord::Migration::Compatibility::V4_2::TableDefinition
+  def belongs_to(*arg0, **options); end
+  def references(*arg0, **options); end
+  def timestamps(**options); end
 end

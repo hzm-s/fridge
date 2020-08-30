@@ -18,8 +18,7 @@ module ActiveStorage::Blob::Identifiable; end
 module ActiveStorage::Variant; end
 module Anonymous_Module_20::Anonymous_Module_21; end
 module Anonymous_Module_20::Anonymous_Module_22; end
-module Dao::ProductBacklogOrder; end
-module SessionHelper::UserQuery; end
+module Dao::ProductBacklogItem; end
 module T::InterfaceWrapper::Helpers; end
 module T::Private::Abstract::Hooks; end
 module T::Private::Methods::MethodHooks; end
