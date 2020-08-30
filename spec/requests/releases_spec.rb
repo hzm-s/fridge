@@ -15,7 +15,6 @@ RSpec.describe 'releases' do
       follow_redirect!
 
       expect(response.body).to include 'Phase5'
-      expect(response.body).to include 'フィーチャーはありません'
     end
 
     it do

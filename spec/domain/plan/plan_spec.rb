@@ -38,6 +38,14 @@ module Plan
         expect(plan.release(1).title).to eq 'Phase1'
         expect(plan.release(2).title).to eq 'Phase3'
       end
+
+      it do
+        release = plan.release(3)
+        release.add_item(Pbi::Id.create)
+        plan.replace_release(3, release)
+
+        expect { plan.remove_release(3) }.to raise_error CanNotRemoveRelease
+      end
     end
 
     describe 'Replace release' do

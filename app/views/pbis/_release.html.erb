@@ -9,12 +9,6 @@
     <% end %>
   </div>
 </div>
-<%= content_tag :div, id: "release#{release_counter}", class: 'pbl__list', data: sortable_pbl_options(release) do %>
-  <% if release.items.any? %>
-    <%= render partial: 'item', collection: release.items %>
-  <% else %>
-    <div class="pbl__list--empty text-muted text-sm nf">
-      <%=t '.empty' %>
-    </div>
-  <% end %>
+<%= content_tag :div, id: "release#{release_counter}", class: 'pbl__list', data: sortable_pbl_options(current_product_id, release) do %>
+  <%= render partial: 'item', collection: release.items %>
 <% end %>

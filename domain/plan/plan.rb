@@ -39,6 +39,7 @@ module Plan
 
     sig {params(no: Integer).void}
     def remove_release(no)
+      raise CanNotRemoveRelease if release(no).items.any?
       @releases.delete_at(no - 1)
     end
 

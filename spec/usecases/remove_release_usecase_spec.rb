@@ -14,12 +14,12 @@ RSpec.describe RemoveReleaseUsecase do
     expect { plan.release(2) }.to raise_error(Plan::ReleaseNotFound)
   end
 
-  xit do
+  it do
     release = add_release(product.id)
 
-    add_pbi(product.id, release: release.id)
+    add_pbi(product.id, release: 2)
 
-    expect { described_class.perform(release.id) }
+    expect { described_class.perform(product.id, 2) }
       .to raise_error(Plan::CanNotRemoveRelease)
   end
 end

@@ -4,8 +4,8 @@ require_relative '../domain_support/pbi_domain_support'
 module PbiSupport
   include PbiDomainSupport
 
-  def add_pbi(product_id, description = 'fridge helps scrum', acceptance_criteria: [], size: nil, wip: false)
-    pbi = perform_add_pbi(product_id, description)
+  def add_pbi(product_id, description = 'fridge helps scrum', acceptance_criteria: [], size: nil, release: 1, wip: false)
+    pbi = perform_add_pbi(product_id, description, release)
 
     return pbi unless acceptance_criteria
     add_acceptance_criteria(pbi, acceptance_criteria)
@@ -48,9 +48,9 @@ module PbiSupport
 
   private
 
-  def perform_add_pbi(product_id, desc)
+  def perform_add_pbi(product_id, desc, release)
     Pbi::Description.new(desc)
-      .yield_self { |d| AddPbiUsecase.perform(product_id, d) }
+      .yield_self { |d| AddPbiUsecase.perform(product_id, d, release) }
       .yield_self { |id| PbiRepository::AR.find_by_id(id) }
   end
 end

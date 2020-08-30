@@ -63,8 +63,6 @@ ja:
       point: アイテムの大きさ
     item_menu:
       confirm_abort_development: 本当に着手予定を取り消しますか？
-    release:
-      empty: このリリースにアイテムはありません
 
   acceptance_criteria:
     form:
