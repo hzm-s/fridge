@@ -18,12 +18,12 @@ class SortProductBacklogUsecase < UsecaseBase
 
     if from_no == to_no
       destination = to.items[position - 1]
-      to.swap_priorities(item, destination)
+      to.swap_priorities(item, T.must(destination))
     else
       from.remove_item(item)
       to.add_item(item)
       destination = to.items[position - 1]
-      to.swap_priorities(item, destination)
+      to.swap_priorities(item, T.must(destination))
     end
 
     plan.replace_release(from_no, from)

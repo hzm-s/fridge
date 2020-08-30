@@ -1,4 +1,4 @@
-# typed: false
+# typed: true
 require 'sorbet-runtime'
 
 module ProductBacklogQuery
@@ -6,7 +6,7 @@ module ProductBacklogQuery
     def call(product_id)
       items = fetch_pbis(product_id).map { |r| Item.new(r) }
       releases = fetch_releases(product_id).map.with_index(1) { |r, i| Release.new(i, r, items) }
-      ProductBacklog.new(releases)
+      ProductBacklog.new(releases: releases)
     end
 
     private
@@ -22,7 +22,8 @@ module ProductBacklogQuery
     end
   end
 
-  class ProductBacklog < Struct.new(:releases)
+  class ProductBacklog < T::Struct
+    prop :releases, T::Array[Release]
   end
 
   class Release < SimpleDelegator

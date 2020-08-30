@@ -41,7 +41,7 @@ class ReleasesController < ApplicationController
     product_id = Product::Id.from_string(current_product_id)
     RemoveReleaseUsecase.perform(product_id, params[:no].to_i)
     flash = flash_success('release.destroy')
-  rescue Release::CanNotRemoveRelease => e
+  rescue Plan::CanNotRemoveRelease => e
     flash = { notice: t_domain_error(e) }
   ensure
     redirect_to product_pbis_path(product_id: product_id.to_s), flash: flash
@@ -55,7 +55,7 @@ class ReleasesController < ApplicationController
 
   def fetch_release
     product_id = Product::Id.from_string(params[:product_id])
-    no = Release::Id.from_string(params[:no]).to_i
+    no = params[:no].to_i
 
     PlanRepository::AR.find_by_product_id(product_id).release(no)
   end

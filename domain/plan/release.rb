@@ -59,7 +59,7 @@ module Plan
     def swap_priorities(from, to)
       return if from == to
 
-      if @items.index(from) > @items.index(to)
+      if T.must(@items.index(from)) > T.must(@items.index(to))
         remove_item(from)
         insert_item_after(from, to)
       else
@@ -78,13 +78,13 @@ module Plan
     sig {params(item: Item, to: Item).void}
     def insert_item_after(item, to)
       index = @items.index(to)
-      @items.insert(index, item)
+      @items.insert(T.must(index), item)
     end
 
     sig {params(item: Item, to: Item).void}
     def insert_item_before(item, to)
       index = @items.index(to)
-      @items.insert(0 - index, item)
+      @items.insert(0 - T.must(index), item)
     end
   end
 end

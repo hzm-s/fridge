@@ -20,6 +20,6 @@ RSpec.describe RemoveReleaseUsecase do
     add_pbi(product.id, release: release.id)
 
     expect { described_class.perform(release.id) }
-      .to raise_error(Release::CanNotRemoveRelease)
+      .to raise_error(Plan::CanNotRemoveRelease)
   end
 end

@@ -37,7 +37,7 @@ module PbiSupport
   end
 
   def remove_pbi(pbi_id)
-    RemoveProductBacklogItemUsecase.perform(pbi_id)
+    RemovePbiUsecase.perform(pbi_id)
   end
 
   def add_release(product_id, title = 'Release2')
