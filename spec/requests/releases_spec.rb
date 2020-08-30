@@ -48,15 +48,5 @@ RSpec.describe 'releases' do
 
       expect(response.body).to_not include 'EXTRA_RELEASE'
     end
-
-    xit do
-      target = add_release(product.id, 'EXTRA_RELEASE')
-      add_pbi(product.id)
-
-      delete release_path(target.id)
-      follow_redirect!
-
-      expect(response.body).to include I18n.t('domain.errors.release.can_not_remove_release')
-    end
   end
 end
