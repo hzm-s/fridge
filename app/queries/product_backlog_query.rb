@@ -22,10 +22,6 @@ module ProductBacklogQuery
     end
   end
 
-  class ProductBacklog < T::Struct
-    prop :releases, T::Array[Release]
-  end
-
   class Release < SimpleDelegator
     attr_reader :no
 
@@ -46,5 +42,9 @@ module ProductBacklogQuery
     def status
       @__status ||= Pbi::Statuses.from_string(__getobj__.status)
     end
+  end
+
+  class ProductBacklog < T::Struct
+    prop :releases, T::Array[ProductBacklogQuery::Release]
   end
 end
