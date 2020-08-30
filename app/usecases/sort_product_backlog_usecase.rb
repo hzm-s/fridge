@@ -6,22 +6,31 @@ class SortProductBacklogUsecase < UsecaseBase
 
   sig {void}
   def initialize
-    @repository = T.let(ReleaseRepository::AR, Release::ReleaseRepository)
+    @repository = T.let(PlanRepository::AR, Plan::PlanRepository)
   end
 
-  sig {params(product_id: Product::Id, from_id: Release::Id, item_id: Pbi::Id, to_id: Release::Id, position: Integer).void}
-  def perform(product_id, from_id, item_id, to_id, position)
-    all = @repository.all_by_product_id(product_id)
-    from = T.must(all.find { |r| r.id == from_id })
-    to = T.must(all.find { |r| r.id == to_id })
+  sig {params(product_id: Product::Id, from_no: Integer, item: Pbi::Id, to_no: Integer, position: Integer).void}
+  def perform(product_id, from_no, item, to_no, position)
+    plan = @repository.find_by_product_id(product_id)
 
-    sorter = Release::ItemSorter.new(from, item_id, to, position)
-    releases = sorter.sort
+    from = plan.release(from_no)
+    to = plan.release(to_no)
+
+    if from_no == to_no
+      destination = to.items[position - 1]
+      to.swap_priorities(item, destination)
+    else
+      from.remove_item(item)
+      to.add_item(item)
+      destination = to.items[position - 1]
+      to.swap_priorities(item, destination)
+    end
+
+    plan.replace_release(from_no, from)
+    plan.replace_release(to_no, to)
 
     transaction do
-      releases.each do |release|
-        @repository.update(release)
-      end
+      @repository.update(plan)
     end
   end
 end

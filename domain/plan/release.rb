@@ -57,6 +57,8 @@ module Plan
 
     sig {params(from: Item, to: Item).void}
     def swap_priorities(from, to)
+      return if from == to
+
       if @items.index(from) > @items.index(to)
         remove_item(from)
         insert_item_after(from, to)
