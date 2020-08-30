@@ -32,9 +32,7 @@ export default class extends Controller {
           to_no: e.to.dataset.releaseNo,
           position: e.newIndex + 1
         }
-        console.log(payload)
-        console.log(url)
-        //$.ajax({ type: 'PATCH', url: url, dataType: 'json', data: payload })
+        $.ajax({ type: 'PATCH', url: url, dataType: 'json', data: payload })
       }
     })
   }
