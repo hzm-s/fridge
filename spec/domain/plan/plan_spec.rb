@@ -48,6 +48,25 @@ module Plan
       end
     end
 
+    describe 'Remove availability' do
+      let(:plan) { described_class.create(product.id) }
+
+      before do
+        plan.add_release(Release.create('R1'))
+      end
+
+      it do
+        expect(plan).to_not be_can_remove_release
+        expect { plan.remove_release(1) }.to raise_error CanNotRemoveRelease
+      end
+
+      it do
+        plan.add_release(Release.create('R2'))
+
+        expect(plan).to be_can_remove_release
+      end
+    end
+
     describe 'Replace release' do
       let(:plan) { described_class.create(product.id) }
 

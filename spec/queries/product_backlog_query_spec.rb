@@ -37,10 +37,12 @@ RSpec.describe ProductBacklogQuery do
     end
 
     it 'リリースの削除可否を返すこと' do
+      pbl = described_class.call(product.id.to_s)
+      expect(pbl).to_not be_can_remove_release
+
       add_release(product.id, 'Extra')
 
       release = described_class.call(product.id.to_s).releases.last
-
       expect(release).to be_can_remove
     end
 

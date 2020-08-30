@@ -5,8 +5,9 @@ module ProductBacklogQuery
   class << self
     def call(product_id)
       items = fetch_pbis(product_id).map { |r| Item.new(r) }
-      releases = fetch_releases(product_id).map.with_index(1) { |r, i| Release.new(i, r, items) }
-      ProductBacklog.new(releases: releases)
+      plan = fetch_plan(product_id)
+      releases = plan.releases.map.with_index(1) { |r, i| Release.new(i, r, items) }
+      ProductBacklog.new(plan: plan, releases: releases)
     end
 
     private
@@ -15,10 +16,9 @@ module ProductBacklogQuery
       Dao::Pbi.eager_load(:criteria).where(dao_product_id: product_id)
     end
 
-    def fetch_releases(product_id)
+    def fetch_plan(product_id)
       Product::Id.from_string(product_id)
         .yield_self { |id| PlanRepository::AR.find_by_product_id(id) }
-        .releases
     end
   end
 
@@ -45,6 +45,11 @@ module ProductBacklogQuery
   end
 
   class ProductBacklog < T::Struct
+    prop :plan, Plan::Plan
     prop :releases, T::Array[ProductBacklogQuery::Release]
+
+    def can_remove_release?
+      plan.can_remove_release?
+    end
   end
 end

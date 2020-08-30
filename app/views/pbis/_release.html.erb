@@ -4,7 +4,7 @@
   </span>
   <div class="pbl-release__actions">
     <%= link_to t('navs.edit'), edit_release_path(release.no, product_id: current_product_id), class: 'action-link' %>
-    <% if release.can_remove? %>
+    <% if can_remove_release && release.can_remove? %>
       <%= link_to t('navs.delete'), release_path(release.no, product_id: current_product_id), method: :delete, class: 'action-link silent-danger', data: { confirm: t('navs.confirm_delete') } %>
     <% end %>
   </div>

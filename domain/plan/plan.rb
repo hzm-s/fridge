@@ -39,6 +39,7 @@ module Plan
 
     sig {params(no: Integer).void}
     def remove_release(no)
+      raise CanNotRemoveRelease unless can_remove_release?
       raise CanNotRemoveRelease if release(no).items.any?
       @releases.delete_at(no - 1)
     end
@@ -51,6 +52,11 @@ module Plan
     sig {params(no: Integer).returns(Release)}
     def release(no)
       @releases[no - 1] or raise ReleaseNotFound
+    end
+
+    sig {returns(T::Boolean)}
+    def can_remove_release?
+      @releases.size > 1
     end
 
     sig {returns(T.nilable(Release))}
