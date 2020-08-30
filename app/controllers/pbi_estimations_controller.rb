@@ -1,11 +1,11 @@
 # typed: false
 class PbiEstimationsController < ApplicationController
   def update
-    feature_id = Pbi::Id.from_string(params[:id])
+    pbi_id = Pbi::Id.from_string(params[:id])
     point = build_point(params[:form][:point])
-    EstimatePbiUsecase.perform(feature_id, point)
+    EstimatePbiUsecase.perform(pbi_id, point)
 
-    @feature = PbiQuery.call(feature_id)
+    @pbi = PbiQuery.call(pbi_id)
   end
 
   private

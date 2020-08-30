@@ -55,7 +55,7 @@ ja:
       add: アイテムを追加する
       add_release: リリースを追加する
     edit:
-      title: フィーチャーの編集
+      title: アイテムの編集
       title_ac: 受け入れ基準
     acceptance_criteria:
       empty: 受け入れ基準はありません
@@ -64,7 +64,7 @@ ja:
     item_menu:
       confirm_abort_development: 本当に着手予定を取り消しますか？
     release:
-      empty: このリリースにフィーチャーはありません
+      empty: このリリースにアイテムはありません
 
   acceptance_criteria:
     form:

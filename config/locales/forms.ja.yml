@@ -3,7 +3,7 @@ ja:
     attributes:
 
       pbi_form:
-        description: 説明
+        description: アイテムの説明
 
       product_form:
         name: プロダクト名
