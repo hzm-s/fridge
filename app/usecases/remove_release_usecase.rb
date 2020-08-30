@@ -6,14 +6,15 @@ class RemoveReleaseUsecase < UsecaseBase
 
   sig {void}
   def initialize
-    @repository = T.let(ReleaseRepository::AR, Release::ReleaseRepository)
+    @repository = T.let(PlanRepository::AR, Plan::PlanRepository)
   end
 
-  sig {params(id: Release::Id).void}
-  def perform(id)
-    release = @repository.find_by_id(id)
-    raise Release::CanNotRemoveRelease unless release.can_remove? 
+  sig {params(product_id: Product::Id, no: Integer).void}
+  def perform(product_id, no)
+    plan = @repository.find_by_product_id(product_id)
+    plan.remove_release(no)
+    @repository.update(plan)
 
-    @repository.remove(id)
+    #raise Release::CanNotRemoveRelease unless release.can_remove? 
   end
 end

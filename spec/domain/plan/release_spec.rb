@@ -80,6 +80,11 @@ module Plan
       end
 
       it do
+        release.swap_priorities(item_a, item_a)
+        expect(release.items).to eq [item_a, item_b, item_c, item_d, item_e]
+      end
+
+      it do
         release.swap_priorities(item_c, item_b)
         expect(release.items).to eq [item_a, item_c, item_b, item_d, item_e]
       end

@@ -1,4 +1,4 @@
-# typed: false
+# typed: strict
 module Person
   class EmailNotUnique < StandardError; end
 

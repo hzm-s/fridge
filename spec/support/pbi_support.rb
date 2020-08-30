@@ -37,12 +37,13 @@ module PbiSupport
   end
 
   def remove_pbi(pbi_id)
-    RemoveProductBacklogItemUsecase.perform(pbi_id)
+    RemovePbiUsecase.perform(pbi_id)
   end
 
   def add_release(product_id, title = 'Release2')
     AddReleaseUsecase.perform(product_id, title)
-      .yield_self { |id| ReleaseRepository::AR.find_by_id(id) }
+      .yield_self { |id| PlanRepository::AR.find_by_product_id(product_id) }
+      .yield_self { |plan| plan.last_release }
   end
 
   private

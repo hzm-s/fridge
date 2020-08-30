@@ -1,12 +1,12 @@
 # typed: false
 class AcceptanceCriteriaController < ApplicationController
-  helper_method :feature_id
+  helper_method :pbi_id
 
   def create
     @form = AcceptanceCriterionForm.new(permitted_params)
     if @form.valid?
-      AddAcceptanceCriterionUsecase.perform(feature_id, @form.domain_objects[:content])
-      redirect_to edit_feature_path(id: feature_id.to_s)
+      AddAcceptanceCriterionUsecase.perform(pbi_id, @form.domain_objects[:content])
+      redirect_to edit_pbi_path(id: pbi_id.to_s)
     else
       render :new
     end
@@ -15,16 +15,16 @@ class AcceptanceCriteriaController < ApplicationController
   def destroy
     dao = Dao::AcceptanceCriterion.find(params[:id])
     RemoveAcceptanceCriterionUsecase.perform(
-      Feature::Id.from_string(dao.dao_feature_id),
-      Feature::AcceptanceCriterion.new(dao.content)
+      Pbi::Id.from_string(dao.dao_pbi_id),
+      Pbi::AcceptanceCriterion.new(dao.content)
     )
-    redirect_to edit_feature_path(id: dao.dao_feature_id)
+    redirect_to edit_pbi_path(id: dao.dao_pbi_id)
   end
 
   private
 
-  def feature_id
-    @__feature_id ||= Feature::Id.from_string(params[:feature_id])
+  def pbi_id
+    @__pbi_id ||= Pbi::Id.from_string(params[:pbi_id])
   end
 
   def permitted_params

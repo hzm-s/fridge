@@ -11,10 +11,10 @@ RSpec.describe 'releases' do
 
   describe '#create' do
     it do
-      post product_releases_path(product_id: product.id.to_s), params: { form: { title: 'Icebox' } }
+      post product_releases_path(product_id: product.id.to_s), params: { form: { title: 'Phase5' } }
       follow_redirect!
 
-      expect(response.body).to include 'Icebox'
+      expect(response.body).to include 'Phase5'
       expect(response.body).to include 'フィーチャーはありません'
     end
 
@@ -25,17 +25,17 @@ RSpec.describe 'releases' do
   end
 
   describe '#update' do
-    let(:release) { add_release(product.id, 'FURUI_TITLE') }
+    let!(:release) { add_release(product.id, 'FURUI_TITLE') }
 
     it do
-      patch release_path(id: release.id.to_s), params: { form: { title: 'SHIN_TITLE' } }
+      patch release_path(2, product_id: product.id.to_s), params: { form: { title: 'SHIN_TITLE' } }
       follow_redirect!
 
       expect(response.body).to include 'SHIN_TITLE'
     end
 
     it do
-      patch release_path(id: release.id.to_s), params: { form: { title: '' } }
+      patch release_path(2, product_id: product.id.to_s), params: { form: { title: '' } }
       expect(response.body).to include I18n.t('errors.messages.blank')
     end
   end
@@ -44,7 +44,7 @@ RSpec.describe 'releases' do
     it do
       target = add_release(product.id, 'EXTRA_RELEASE')
 
-      delete release_path(id: target.id.to_s)
+      delete release_path(2, product_id: product.id.to_s)
       follow_redirect!
 
       expect(response.body).to_not include 'EXTRA_RELEASE'

@@ -5,7 +5,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/edit/master/lib/activerecord/~>6.0.0/activerecord.rbi
 #
-# typed: strong
+# typed: false
 
 class ActiveRecord::Migration::Compatibility::V5_1 < ActiveRecord::Migration::Compatibility::V5_2; end
 
@@ -371,7 +371,7 @@ class ActiveRecord::Migration::Current < ActiveRecord::Migration
   sig do
     params(
       table_name: T.any(String, Symbol),
-      column_name: T.any(String, Symbol),
+      column_name: T.any(String, Symbol, T::Array[T.any(String, Symbol)]),
       options: T.untyped
     ).returns(T::Boolean)
   end

@@ -1,3 +1,4 @@
+# typed: true
 class App::UserProfile < ApplicationRecord
   BG_COLORS = %w(
     slateblue

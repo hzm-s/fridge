@@ -3,26 +3,26 @@
     <i class="fas fa-ellipsis-h"></i>
   <% end -%>
   <div class="dropdown-menu dropdown-menu-right">
-    <%= link_to edit_feature_path(item.id, status: params[:status]), class: 'dropdown-item' do %>
+    <%= link_to edit_pbi_path(item.id, status: params[:status]), class: 'dropdown-item' do %>
       <i class="fas fa-edit"></i>
       <%=t 'navs.edit' %>
     <% end %>
     <% if item.status.can_remove? %>
-      <%= link_to feature_path(item.id), method: :delete, class: 'dropdown-item text-danger', data: { confirm: t('navs.confirm_delete') } do %>
+      <%= link_to pbi_path(item.id), method: :delete, class: 'dropdown-item text-danger', data: { confirm: t('navs.confirm_delete') } do %>
         <i class="fas fa-trash-alt"></i>
         <%=t 'navs.delete' %>
       <% end %>
     <% end %>
     <% if item.status.can_start_development? %>
       <div class="dropdown-divider"></div>
-      <%= link_to feature_developments_path(id: item.id), method: :post, remote: true, class: 'dropdown-item' do %>
-        <%=t 'domain.feature.start_development' %>
+      <%= link_to pbi_developments_path(id: item.id), method: :post, remote: true, class: 'dropdown-item' do %>
+        <%=t 'domain.pbi.start_development' %>
       <% end %>
     <% end %>
     <% if item.status.can_abort_development? %>
       <div class="dropdown-divider"></div>
-      <%= link_to feature_development_path(item.id), method: :delete, remote: true, data: { confirm: t('.confirm_abort_development') }, class: 'dropdown-item' do %>
-        <%=t 'domain.feature.abort_development' %>
+      <%= link_to pbi_development_path(item.id), method: :delete, remote: true, data: { confirm: t('.confirm_abort_development') }, class: 'dropdown-item' do %>
+        <%=t 'domain.pbi.abort_development' %>
       <% end %>
     <% end %>
   </div>

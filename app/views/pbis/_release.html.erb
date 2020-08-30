@@ -3,9 +3,9 @@
     <%= release.title %>
   </span>
   <div class="pbl-release__actions">
-    <%= link_to t('navs.edit'), edit_release_path(release.id), class: 'action-link' %>
+    <%= link_to t('navs.edit'), edit_release_path(release.no), class: 'action-link' %>
     <% if release.can_remove? %>
-      <%= link_to t('navs.delete'), release_path(release.id), method: :delete, class: 'action-link silent-danger', data: { confirm: t('navs.confirm_delete') } %>
+      <%= link_to t('navs.delete'), release_path(release.no), method: :delete, class: 'action-link silent-danger', data: { confirm: t('navs.confirm_delete') } %>
     <% end %>
   </div>
 </div>

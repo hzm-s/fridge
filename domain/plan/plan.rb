@@ -49,7 +49,17 @@ module Plan
 
     sig {params(no: Integer).returns(Release)}
     def release(no)
-      @releases[no - 1]
+      @releases[no - 1] or raise ReleaseNotFound
+    end
+
+    sig {returns(T.nilable(Release))}
+    def last_release
+      @releases.last
+    end
+
+    sig {params(item: Release::Item).returns(Integer)}
+    def find_release_no_by_item(item)
+      T.must(@releases.find_index { |release| release.include?(item) }) + 1
     end
   end
 end

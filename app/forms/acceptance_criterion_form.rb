@@ -8,5 +8,5 @@ class AcceptanceCriterionForm
 
   validates :content,
     presence: true,
-    domain_object: { object_class: Feature::AcceptanceCriterion, message: t_domain_error(Feature::InvalidAcceptanceCriterion), allow_blank: true }
+    domain_object: { object_class: Pbi::AcceptanceCriterion, message: t_domain_error(Pbi::InvalidAcceptanceCriterion), allow_blank: true }
 end

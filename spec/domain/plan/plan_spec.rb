@@ -59,5 +59,32 @@ module Plan
         expect(plan.release(3).title).to eq 'Phase3'
       end
     end
+
+    describe 'Find release' do
+      let(:plan) { described_class.create(product.id) }
+
+      it do
+        pbi_a = Pbi::Id.create
+        pbi_b = Pbi::Id.create
+        pbi_c = Pbi::Id.create
+
+        release1 = Release.create('Phase1')
+        release1.add_item(pbi_a)
+
+        release2 = Release.create('Phase2')
+        release2.add_item(pbi_b)
+
+        release3 = Release.create('Phase3')
+        release3.add_item(pbi_c)
+
+        plan.add_release(release1)
+        plan.add_release(release2)
+        plan.add_release(release3)
+
+        no = plan.find_release_no_by_item(pbi_b)
+
+        expect(no).to eq 2
+      end
+    end
   end
 end

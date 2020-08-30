@@ -5,7 +5,7 @@ ja:
     signed_out: ログアウトしました
     require_sign_in: ログインしてください
     already_signed_in: ログインしています
-    feature:
+    pbi:
       create: アイテムをプロダクトバックログに追加しました
       update: フィーチャーを更新しました
       destroy: アイテムを削除しました
@@ -54,6 +54,9 @@ ja:
       title: プロダクトバックログ
       add: アイテムを追加する
       add_release: リリースを追加する
+    edit:
+      title: フィーチャーの編集
+      title_ac: 受け入れ基準
     acceptance_criteria:
       empty: 受け入れ基準はありません
     point_form:
@@ -62,11 +65,6 @@ ja:
       confirm_abort_development: 本当に着手予定を取り消しますか？
     release:
       empty: このリリースにフィーチャーはありません
-
-  features:
-    edit:
-      title: フィーチャーの編集
-      title_ac: 受け入れ基準
 
   acceptance_criteria:
     form:

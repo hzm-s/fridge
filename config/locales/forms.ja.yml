@@ -2,7 +2,7 @@ ja:
   activemodel:
     attributes:
 
-      feature_form:
+      pbi_form:
         description: 説明
 
       product_form:
