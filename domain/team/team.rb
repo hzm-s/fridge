@@ -5,16 +5,30 @@ module Team
   class Team
     extend T::Sig
 
-    sig {params(members: T::Array[Member]).void}
-    def initialize(members)
-      @members = members
-      check_member_role!
+    Members = T.type_alias {T::Array[Member]}
+
+    class << self
+      extend T::Sig
+
+      sig {params(name: String).returns(T.attached_class)}
+      def create(name)
+        new(Id.create, name, [])
+      end
     end
 
-    sig {params(member: Member).returns(Team)}
+    sig {params(id: Id, name: String, members: Members).void}
+    def initialize(id, name, members)
+      @id = name = name
+      @name = name
+      @members = members
+    end
+    private_class_method :new
+
+    sig {params(member: Member).void}
     def add_member(member)
       raise AlreadyJoined if self.member(member.person_id)
-      self.class.new(@members + [member])
+      @members << member
+      check_member_role!
     end
 
     sig {params(person_id: Person::Id).returns(T.nilable(Member))}
