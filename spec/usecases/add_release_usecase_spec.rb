@@ -8,7 +8,7 @@ RSpec.describe AddReleaseUsecase do
     described_class.perform(product.id, 'MVP')
 
     plan = PlanRepository::AR.find_by_product_id(product.id)
-    release = plan.last_release
+    release = plan.release(2)
 
     expect(release.title).to eq 'MVP'
     expect(release.items).to be_empty
