@@ -14,6 +14,11 @@ module Team
       def create(name)
         new(Id.create, name, [])
       end
+
+      sig {params(id: Id, name: String, members: Members).returns(T.attached_class)}
+      def from_repository(id, name, members)
+        new(id, name, members)
+      end
     end
 
     sig {returns(Id)}
