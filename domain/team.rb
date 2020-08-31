@@ -6,7 +6,9 @@ module Team
   class TooLargeDevelopmentTeam < InvalidNewMember; end
   class AlreadyJoined < InvalidNewMember; end
 
+  autoload :Id, 'team/id'
+  autoload :Team, 'team/team'
   autoload :Member, 'team/member'
   autoload :Role, 'team/role'
-  autoload :Team, 'team/team'
+  autoload :TeamRepository, 'team/team_repository'
 end

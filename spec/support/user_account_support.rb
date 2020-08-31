@@ -34,4 +34,5 @@ end
 
 RSpec.configure do |c|
   c.include UserAccountSupport::Requests, type: :request
+  c.include UserAccountSupport::Requests, type: :repository
 end
