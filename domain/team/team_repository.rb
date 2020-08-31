@@ -12,5 +12,8 @@ module Team
 
     sig {abstract.params(team: Team).void}
     def update(team); end
+
+    sig {abstract.params(id: Id).returns(Team)}
+    def find_by_id(id); end
   end
 end
