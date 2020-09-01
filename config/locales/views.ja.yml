@@ -67,6 +67,11 @@ ja:
   acceptance_criteria:
     form:
       add: 追加する
+        
+  teams:
+    new:
+      title: 新しいチーム
+      create: 作成する
 
   team_members:
     index:

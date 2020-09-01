@@ -1,11 +1,11 @@
 # typed: false
 class TeamsController < ApplicationController
   def new
-    @form = TeamForm.new
+    @form = CreateTeamForm.new
   end
 
   def create
-    @form = CreateTeamForm.new(permitted_params)
+    @form = CreateTeamForm.new(create_params)
 
     if @form.valid?
       CreateTeamUsecase.perform(
@@ -21,7 +21,7 @@ class TeamsController < ApplicationController
 
   private
 
-  def permitted_params
+  def create_params
     params.require(:form).permit(:name, :role)
   end
 end

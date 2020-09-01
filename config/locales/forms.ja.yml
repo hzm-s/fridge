@@ -13,6 +13,10 @@ ja:
       release_form:
         title: タイトル
 
+      create_team_form:
+        name: 名前
+        role: あなたの役割
+
       team_member_form:
         user_id: ユーザー
         role: 役割
