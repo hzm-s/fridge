@@ -1,16 +1,22 @@
 # typed: false
 class TeamsController < ApplicationController
+  def new
+    @form = TeamForm.new
+  end
+
   def create
-    form = TeamForm.new(permitted_params)
+    @form = CreateTeamForm.new(permitted_params)
 
-    form.valid?
-    CreateTeamUsecase.perform(
-      form.name,
-      current_user.person_id,
-      form.domain_objects[:role]
-    )
-
-    redirect_to home_path
+    if @form.valid?
+      CreateTeamUsecase.perform(
+        @form.name,
+        current_user.person_id,
+        @form.domain_objects[:role]
+      )
+      redirect_to home_path
+    else
+      render :new
+    end
   end
 
   private

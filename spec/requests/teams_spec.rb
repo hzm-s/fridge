@@ -15,5 +15,10 @@ RSpec.describe 'teams' do
 
       expect(response.body).to include 'KAIHATSU GUMI'
     end
+
+    it do
+      post teams_path, params: { form: { name: '', role: 'developer' } }
+      expect(response.body).to include I18n.t('errors.messages.blank')
+    end
   end
 end

@@ -25,5 +25,5 @@ Rails.application.routes.draw do
   resources :pbi_estimations, only: [:update]
   resources :pbi_developments, only: [:create, :destroy]
 
-  resources :teams, only: [:create]
+  resources :teams, only: [:new, :create]
 end
