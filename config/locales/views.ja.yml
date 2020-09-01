@@ -28,6 +28,14 @@ ja:
       sign_up: Googleアカウントでユーザー登録
       or: または
 
+  homes:
+    show:
+      create: 作成する
+      products:
+        title: プロダクト
+      teams:
+        title: チーム
+
   products:
     index:
       title: プロダクト
