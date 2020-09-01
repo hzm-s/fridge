@@ -1,6 +1,8 @@
 # typed: strict
 Rails.application.routes.draw do
-  root to: 'products#index'
+  root to: 'homes#show'
+
+  resource :home, only: [:show]
 
   get 'auth/:provider/callback', to: 'oauth_callbacks#create', as: :oauth_callback
   get 'sign_in', to: 'sessions#new', as: :sign_in
@@ -22,4 +24,6 @@ Rails.application.routes.draw do
 
   resources :pbi_estimations, only: [:update]
   resources :pbi_developments, only: [:create, :destroy]
+
+  resources :teams, only: [:new, :create]
 end

@@ -12,7 +12,7 @@ module Team
       def from_string(str)
         deserialize(str)
       rescue KeyError => e
-        raise ArgumentError.new(e.message)
+        raise InvalidRole
       end
     end
 

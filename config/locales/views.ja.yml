@@ -28,6 +28,14 @@ ja:
       sign_up: Googleアカウントでユーザー登録
       or: または
 
+  homes:
+    show:
+      create: 作成する
+      products:
+        title: プロダクト
+      teams:
+        title: チーム
+
   products:
     index:
       title: プロダクト
@@ -67,6 +75,11 @@ ja:
   acceptance_criteria:
     form:
       add: 追加する
+        
+  teams:
+    new:
+      title: 新しいチーム
+      create: 作成する
 
   team_members:
     index:

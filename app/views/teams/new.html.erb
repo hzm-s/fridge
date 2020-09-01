@@ -1,0 +1,30 @@
+<div class="row d-flex justify-content-center">
+  <div class="col-lg-6 sheet">
+    <div class="d-flex justify-content-center">
+      <h1 class="page-title">
+        <%=t '.title' %>
+      </h1>
+    </div>
+    <div>
+      <%= form_with model: @form, scope: :form, url: teams_path, method: :post, local: true do |f| %>
+        <div class="form-group">
+          <%= f.label :name %>
+          <%= f.text_field :name, class: 'form-control', autocomplete: 'off' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :role %>
+          <%= f.collection_select :role, [Team::Role::Developer, Team::Role::ScrumMaster], :to_s, -> (v) { t(v, scope: 'domain.team.role') }, { prompt: true }, class: 'form-control' %>
+        </div>
+        <%= f.button t('.create'), class: 'btn btn-success', data: with_loader %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="row d-flex justify-content-center">
+  <div class="d-flex mt-2">
+    <%= link_to home_path, class: 'text-md' do %>
+      <i class="fas fa-reply"></i>
+      <%=t 'navs.back' %>
+    <% end %>
+  </div>
+</div>
