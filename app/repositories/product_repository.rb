@@ -13,38 +13,32 @@ module ProductRepository
         Product::Product.from_repository(
           r.product_id_as_do,
           r.name,
-          r.team_as_do,
-          r.description
+          r.description,
+          r.teams_as_do
         )
       end
 
       sig {override.params(product: Product::Product).void}
       def add(product)
-        Dao::Product.new(
+        Dao::Product.create!(
           id: product.id.to_s,
           name: product.name.to_s,
           description: product.description.to_s
-        ) do |p|
-          member = product.team.to_a.first
-          p.members.build(dao_person_id: member.person_id.to_s, role: member.role.to_s) if member
-          p.save!
-        end
+        )
       end
 
       sig {override.params(product: Product::Product).void}
       def update(product)
         r = Dao::Product.find(product.id)
-        r.members = build_new_members(product)
-        r.save!
-      end
+        r.name = product.name
+        r.description = product.description
 
-      private
-
-      sig {params(product: Product::Product).returns(T::Array[Dao::TeamMember])}
-      def build_new_members(product)
-        product.team.to_a.map do |m|
-          Dao::TeamMember.new(dao_product_id: product.id.to_s, dao_person_id: m.person_id.to_s, role: m.role.to_s)
+        r.developments.clear
+        product.teams.each do |team_id|
+          r.developments.build(dao_team_id: team_id.to_s)
         end
+
+        r.save!
       end
     end
   end
