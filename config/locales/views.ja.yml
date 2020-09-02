@@ -30,11 +30,8 @@ ja:
 
   homes:
     show:
+      title: 開発
       create: 作成する
-      products:
-        title: プロダクト
-      teams:
-        title: チーム
 
   products:
     index:
