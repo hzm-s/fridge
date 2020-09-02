@@ -1,33 +1,14 @@
 <div class="row d-flex justify-content-center">
-  <div class="col-lg-9">
+  <div class="col">
     <div class="row d-flex justify-content-center">
-      <h1 class="section-title">
-        <%=t '.products.title' %>
+      <h1 class="page-title">
+        <%=t '.title' %>
       </h1>
-      <div class="sheet__right">
-        <%= link_to new_product_path, class: 'btn btn-sm btn-outline-success' do %>
-          <i class="fas fa-plus"></i>
-          <%=t '.create' %>
-        <% end %>
-      </div>
     </div>
   </div>
 </div>
-<div class="row d-flex justify-content-center mt-3">
+<div class="row d-flex justify-content-center">
   <div class="col-lg-9">
-    <div class="d-flex justify-content-center">
-      <h1 class="section-title">
-        <%=t '.teams.title' %>
-      </h1>
-      <div class="sheet__right">
-        <%= link_to new_team_path, class: 'btn btn-sm btn-outline-success' do %>
-          <i class="fas fa-plus"></i>
-          <%=t '.create' %>
-        <% end %>
-      </div>
-    </div>
-    <div class="d-flex justify-content-center">
-      <%= render partial: 'team', collection: @teams, as: :team %>
-    </div>
+    <%= render partial: 'development', collection: @developments, as: :development %>
   </div>
 </div>
