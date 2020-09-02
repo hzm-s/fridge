@@ -5,17 +5,14 @@ module Product
   class Product
     extend T::Sig
 
+    Teams = T.type_alias {T::Array[Team::Id]}
+
     class << self
       extend T::Sig
 
       sig {params(name: String, description: T.nilable(String)).returns(T.attached_class)}
       def create(name, description = nil)
-        new(
-          Id.create,
-          name,
-          Team::Team.new([]),
-          description
-        )
+        new(Id.create, name, description, [])
       end
 
       sig {params(id: Id, name: String, team: Team::Team, description: T.nilable(String)).returns(T.attached_class)}
@@ -30,28 +27,24 @@ module Product
     sig {returns(String)}
     attr_reader :name
 
-    sig {returns(Team::Team)}
-    attr_reader :team
-
     sig {returns(T.nilable(String))}
     attr_reader :description
 
-    sig {params(id: Id, name: String, team: Team::Team, description: T.nilable(String)).void}
-    def initialize(id, name, team, description)
+    sig {returns(Teams)}
+    attr_reader :teams
+
+    sig {params(id: Id, name: String, description: T.nilable(String), teams: Teams).void}
+    def initialize(id, name, description, teams)
       @id = id
       @name = name
-      @team = team
       @description = description
+      @teams = teams
     end
+    private_class_method :new
 
-    sig {params(member: Team::Member).void}
-    def add_team_member(member)
-      @team = @team.add_member(member)
-    end
-
-    sig {params(person_id: Person::Id).returns(T.nilable(Team::Member))}
-    def team_member(person_id)
-      @team.member(person_id)
+    sig {params(team: Team::Id).void}
+    def assign_team(team)
+      @teams << team
     end
   end
 end
