@@ -12,8 +12,8 @@ RSpec.describe CreateProductUsecase do
 
     aggregate_failures do
       expect(product.name).to eq 'fridge'
-      expect(product.description).to eq 'DESC'
       expect(product.owner).to eq person.id
+      expect(product.description).to eq 'DESC'
 
       expect(plan.release(1).title).to eq 'Icebox'
       expect(plan.release(1).items).to be_empty

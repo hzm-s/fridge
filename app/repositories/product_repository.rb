@@ -11,10 +11,11 @@ module ProductRepository
       def find_by_id(id)
         r = Dao::Product.find(id)
         Product::Product.from_repository(
-          r.product_id_as_do,
+          r.product_id,
           r.name,
+          r.owner,
           r.description,
-          r.teams_as_do
+          r.teams
         )
       end
 
@@ -23,7 +24,8 @@ module ProductRepository
         Dao::Product.create!(
           id: product.id.to_s,
           name: product.name.to_s,
-          description: product.description.to_s
+          description: product.description.to_s,
+          owner_id: product.owner.to_s,
         )
       end
 
@@ -32,6 +34,7 @@ module ProductRepository
         r = Dao::Product.find(product.id)
         r.name = product.name
         r.description = product.description
+        r.owner_id = product.owner.to_s
 
         r.developments.clear
         product.teams.each do |team_id|

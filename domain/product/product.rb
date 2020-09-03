@@ -15,9 +15,9 @@ module Product
         new(Id.create, name, owner, description, [])
       end
 
-      sig {params(id: Id, name: String, description: T.nilable(String), team: Teams).returns(T.attached_class)}
-      def from_repository(id, name, description, team)
-        new(id, name, description, team)
+      sig {params(id: Id, name: String, owner: Person::Id, description: T.nilable(String), team: Teams).returns(T.attached_class)}
+      def from_repository(id, name, owner, description, team)
+        new(id, name, owner, description, team)
       end
     end
 
