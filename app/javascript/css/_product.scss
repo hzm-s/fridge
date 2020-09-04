@@ -25,11 +25,12 @@
   border-left: 1px solid $gray-200;
 }
 
-.pl-item__link {
-  display: block;
-  margin-bottom: .25rem;
+.pl-link {
+  display: flex;
+  align-items: center;
+}
 
-  &:last-child {
-    margin-bottom: 0;
-  }
+.pl-link__icon {
+  width: 30px;
+  color: $link-color;
 }

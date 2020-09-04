@@ -9,18 +9,24 @@
       </p>
     </div>
     <div class="pl-item__tail">
-      <%= link_to product_pbis_path(product_id: product.id), class: 'pl-item__link' do %>
-        <i class="fas fa-list-alt"></i>
-        <%=t '.pbl' %>
-      <% end %>
-      <%= link_to product_team_members_path(product_id: product.id), class: 'pl-item__link' do %>
-        <i class="fas fa-users"></i>
-        <%=t '.team' %>
-      <% end %>
-      <%= link_to '#', class: 'pl-item__link' do %>
-        <i class="fas fa-cog"></i>
-        <%=t '.setting' %>
-      <% end %>
+      <div class="pl-link">
+        <div class="pl-link__icon">
+          <i class="fas fa-list-alt"></i>
+        </div>
+        <%= link_to t('.pbl'), product_pbis_path(product_id: product.id) %>
+      </div>
+      <div class="pl-link">
+        <div class="pl-link__icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <%= link_to t('.team'), product_team_members_path(product_id: product.id) %>
+      </div>
+      <div class="pl-link">
+        <div class="pl-link__icon">
+          <i class="fas fa-cog"></i>
+        </div>
+        <%= link_to t('.setting'), '#' %>
+      </div>
     </div>
   </div>
 </div>
