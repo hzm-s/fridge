@@ -5,6 +5,28 @@ module Team
   RSpec.describe Team do
     let(:team) { described_class.create('The Team') }
 
+    describe '#create' do
+      it do
+        team = described_class.create('ABC')
+
+        aggregate_failures do
+          expect(team.id).to_not be_nil
+          expect(team.name).to eq 'ABC'
+          expect(team.members).to be_empty
+        end
+      end
+    end
+
+    describe '#develop' do
+      let(:product_id) { Product::Id.create }
+
+      it do
+        team.develop(product_id)
+
+        expect(team.product).to eq product_id
+      end
+    end
+
     describe '#add_member' do
       let(:po) { register_person }
       let(:sm) { register_person }

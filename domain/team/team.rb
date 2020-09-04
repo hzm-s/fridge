@@ -12,7 +12,7 @@ module Team
 
       sig {params(name: String).returns(T.attached_class)}
       def create(name)
-        new(Id.create, name, [])
+        new(Id.create, name, nil, [])
       end
 
       sig {params(id: Id, name: String, members: Members).returns(T.attached_class)}
@@ -30,13 +30,22 @@ module Team
     sig {returns(Members)}
     attr_reader :members
 
-    sig {params(id: Id, name: String, members: Members).void}
-    def initialize(id, name, members)
+    sig {returns(Product::Id)}
+    attr_reader :product
+
+    sig {params(id: Id, name: String, product: T.nilable(Product::Id), members: Members).void}
+    def initialize(id, name, product, members)
       @id = id
       @name = name
+      @product = product
       @members = members
     end
     private_class_method :new
+
+    sig {params(product: Product::Id).void}
+    def develop(product)
+      @product = product
+    end
 
     sig {params(member: Member).void}
     def add_member(member)
