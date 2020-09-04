@@ -8,7 +8,6 @@ ja:
       product_form:
         name: プロダクト名
         description: 説明
-        member_role: チームでの役割
 
       release_form:
         title: タイトル

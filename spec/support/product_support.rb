@@ -10,11 +10,11 @@ module ProductSpport
     product
   end
 
-  def create_product(person_id: nil, role: Team::Role::ProductOwner, name: 'example', description: 'desc example')
+  def create_product(person_id: nil, name: 'example', description: 'desc example')
     person_id ||= sign_up_as_person.id
 
     CreateProductUsecase.new
-      .perform(person_id, role, name, description)
+      .perform(person_id, name, description)
       .yield_self { |id| ProductRepository::AR.find_by_id(id) }
   end
 

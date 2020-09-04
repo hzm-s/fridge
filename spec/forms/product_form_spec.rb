@@ -3,7 +3,7 @@ require 'rails_helper'
 
 RSpec.describe ProductForm do
   let(:valid) do
-    { name: 'ABC', description: 'XYZ', member_role: 'developer' }
+    { name: 'ABC', description: 'XYZ' }
   end
 
   it do
@@ -38,15 +38,5 @@ RSpec.describe ProductForm do
       expect(form).to_not be_valid
       expect(form.errors[:description]).to include(I18n.t('errors.messages.too_long', count: 200))
     end
-  end
-
-  it do
-    form = described_class.new(valid.merge(member_role: ''))
-    expect(form).to_not be_valid
-  end
-
-  it do
-    form = described_class.new(valid.merge(member_role: 'guest'))
-    expect(form).to_not be_valid
   end
 end

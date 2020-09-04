@@ -10,12 +10,9 @@ class CreateProductUsecase < UsecaseBase
     @plan_repository = T.let(PlanRepository::AR, Plan::PlanRepository)
   end
 
-  sig {params(person_id: Person::Id, role: Team::Role, name: String, description: T.nilable(String)).returns(Product::Id)}
-  def perform(person_id, role, name, description = nil)
-    product = Product::Product.create(name, description)
-
-    member = Team::Member.new(person_id, role)
-    product.add_team_member(member)
+  sig {params(person_id: Person::Id, name: String, description: T.nilable(String)).returns(Product::Id)}
+  def perform(person_id, name, description = nil)
+    product = Product::Product.create(person_id, name, description)
 
     plan = Plan::Plan.create(product.id)
     release = Plan::Release.create('Icebox')

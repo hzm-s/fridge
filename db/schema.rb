@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 2020_08_10_050340) do
   create_table "dao_products", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "description"
+    t.uuid "owner_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -108,6 +109,7 @@ ActiveRecord::Schema.define(version: 2020_08_10_050340) do
   add_foreign_key "dao_developments", "dao_products"
   add_foreign_key "dao_developments", "dao_teams"
   add_foreign_key "dao_pbis", "dao_products"
+  add_foreign_key "dao_products", "dao_people", column: "owner_id"
   add_foreign_key "dao_releases", "dao_products"
   add_foreign_key "dao_team_members", "dao_teams"
 end

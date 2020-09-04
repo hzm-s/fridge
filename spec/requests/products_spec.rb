@@ -11,13 +11,13 @@ RSpec.describe 'products' do
   describe '#create' do
     context 'given valid params' do
       it do
-        params = { form: { name: 'fridge', description: 'setsumei_of_product', member_role: 'developer' } }
+        params = { form: { name: 'fridge', description: 'setsumei_of_product' } }
         post products_path(format: :js), params: params
         get products_path
 
         aggregate_failures do
-          expect(response.body).to include('fridge')
-          expect(response.body).to include('setsumei_of_product')
+          expect(response.body).to include 'fridge'
+          expect(response.body).to include 'setsumei_of_product'
         end
       end
     end
@@ -27,15 +27,8 @@ RSpec.describe 'products' do
         params = { form: { name: '' } }
         post products_path(format: :js), params: params
 
-        expect(response.body).to include(I18n.t('errors.messages.blank'))
+        expect(response.body).to include I18n.t('errors.messages.blank')
       end
-    end
-  end
-
-  describe '#index' do
-    it do
-      expect(ProductQuery).to receive(:call).with(user_account.person.id)
-      get products_path
     end
   end
 end
