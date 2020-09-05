@@ -16,10 +16,19 @@
         <%= link_to t('.pbl'), product_pbis_path(product_id: product.id) %>
       </div>
       <div class="pl-link">
-        <div class="pl-link__icon">
-          <i class="fas fa-users"></i>
-        </div>
-        <%= link_to t('.team'), product_team_members_path(product_id: product.id) %>
+        <% if product.teams.any? %>
+          <% product.teams.each do |team| %>
+            <div class="pl-link__icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <%= link_to t('.team'), team_path(team.id) %>
+          <% end %>
+        <% else %>
+          <div class="pl-link__icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <%= link_to t('.create_team'), new_team_path(product_id: product.id) %>
+        <% end %>
       </div>
       <div class="pl-link">
         <div class="pl-link__icon">

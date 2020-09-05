@@ -31,4 +31,27 @@ RSpec.describe 'products' do
       end
     end
   end
+
+  describe '#index' do
+    context 'when team NOT assigned' do
+      it do
+        product = create_product(person_id: user_account.person_id)
+
+        get products_path
+
+        expect(response.body).to include new_team_path(product_id: product.id)
+      end
+    end
+
+    context 'when team assigned' do
+      it do
+        dev = dev_member(sign_up_as_person.id)
+        product = create_product(person_id: user_account.person_id, members: [dev])
+
+        get products_path
+
+        expect(response.body).to include team_path(Dao::Team.last.id)
+      end
+    end
+  end
 end
