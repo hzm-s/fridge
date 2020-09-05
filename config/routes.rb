@@ -12,7 +12,6 @@ Rails.application.routes.draw do
     resources :pbis, only: [:index, :create]
     resource :plan, only: [:update]
     resources :releases, only: [:new, :create]
-    resources :team_members, only: [:index, :new, :create]
   end
 
   resources :releases, param: :no, only: [:edit, :update, :destroy]
@@ -25,5 +24,7 @@ Rails.application.routes.draw do
   resources :pbi_estimations, only: [:update]
   resources :pbi_developments, only: [:create, :destroy]
 
-  resources :teams, only: [:new, :create, :show]
+  resources :teams, only: [:new, :create, :show] do
+    resources :members, only: [:new, :create]
+  end
 end

@@ -8,9 +8,9 @@ RSpec.describe 'teams' do
     sign_in(user_account)
   end
 
-  describe '#create' do
-    let!(:product) { create_product(owner: user_account.person_id) }
+  let!(:product) { create_product(owner: user_account.person_id) }
 
+  describe '#create' do
     it do
       post teams_path, params: { form: { product_id: product.id.to_s, name: 'KAIHATSU GUMI' } }
       follow_redirect!
