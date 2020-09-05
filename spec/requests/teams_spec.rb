@@ -9,15 +9,17 @@ RSpec.describe 'teams' do
   end
 
   describe '#create' do
+    let!(:product) { create_product(owner: user_account.person_id) }
+
     it do
-      post teams_path, params: { form: { name: 'KAIHATSU GUMI', role: 'developer' } }
+      post teams_path, params: { form: { product_id: product.id.to_s, name: 'KAIHATSU GUMI' } }
       follow_redirect!
 
       expect(response.body).to include 'KAIHATSU GUMI'
     end
 
     it do
-      post teams_path, params: { form: { name: '', role: 'developer' } }
+      post teams_path, params: { form: { product_id: product.id, name: '' } }
       expect(response.body).to include I18n.t('errors.messages.blank')
     end
   end

@@ -1,12 +1,22 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe CreateTeamForm do
-  let(:valid) { { name: 'ABC', role: 'developer' } }
+RSpec.describe TeamForm do
+  let(:valid) do
+    {
+      product_id: Product::Id.create.to_s,
+      name: 'ABC'
+    }
+  end
 
   it do
     form = described_class.new(valid)
     expect(form).to be_valid
+  end
+
+  it do
+    form = described_class.new(valid.merge(product_id: ''))
+    expect(form).to_not be_valid
   end
 
   it do
@@ -22,22 +32,6 @@ RSpec.describe CreateTeamForm do
     aggregate_failures do
       expect(form).to_not be_valid
       expect(form.errors[:name]).to include I18n.t('errors.messages.too_long', count: 50)
-    end
-  end
-
-  it do
-    form = described_class.new(valid.merge(role: ''))
-    aggregate_failures do
-      expect(form).to_not be_valid
-      expect(form.errors[:role]).to include I18n.t('errors.messages.blank')
-    end
-  end
-
-  it do
-    form = described_class.new(valid.merge(role: 'leader'))
-    aggregate_failures do
-      expect(form).to_not be_valid
-      expect(form.errors[:role]).to include I18n.t('domain.errors.team.invalid_role')
     end
   end
 end

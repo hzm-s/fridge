@@ -2,9 +2,8 @@
 require 'rails_helper'
 
 RSpec.describe 'team_members' do
-  let!(:founder) { sign_up }
   let!(:new_member) { sign_up }
-  let!(:product) { create_product(person_id: Person::Id.from_string(founder.person.id), role: Team::Role::ProductOwner) }
+  let!(:product) { create_product }
 
   describe '#index' do
     before { sign_in(founder) }

@@ -1,19 +1,20 @@
 # typed: false
 class TeamsController < ApplicationController
+  include ProductHelper
+
   def new
-    @form = CreateTeamForm.new
+    @form = TeamForm.new(product_id: current_product_id, name: current_product.name)
   end
 
   def create
-    @form = CreateTeamForm.new(create_params)
+    @form = TeamForm.new(permitted_params)
 
     if @form.valid?
-      CreateTeamUsecase.perform(
-        @form.name,
-        current_user.person_id,
-        @form.domain_objects[:role]
+      CreateProductTeamUsecase.perform(
+        @form.domain_objects[:product_id],
+        @form.name
       )
-      redirect_to home_path
+      redirect_to products_path
     else
       render :new
     end
@@ -21,7 +22,11 @@ class TeamsController < ApplicationController
 
   private
 
-  def create_params
-    params.require(:form).permit(:name, :role)
+  def current_product_id
+    params[:product_id] || params[:form][:product_id]
+  end
+
+  def permitted_params
+    params.require(:form).permit(:product_id, :name)
   end
 end

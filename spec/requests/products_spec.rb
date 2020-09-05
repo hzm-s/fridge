@@ -35,7 +35,7 @@ RSpec.describe 'products' do
   describe '#index' do
     context 'when team NOT assigned' do
       it do
-        product = create_product(person_id: user_account.person_id)
+        product = create_product(owner: user_account.person_id)
 
         get products_path
 
@@ -46,7 +46,7 @@ RSpec.describe 'products' do
     context 'when team assigned' do
       it do
         dev = dev_member(sign_up_as_person.id)
-        product = create_product(person_id: user_account.person_id, members: [dev])
+        product = create_product(owner: user_account.person_id, members: [dev])
 
         get products_path
 
