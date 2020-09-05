@@ -14,8 +14,7 @@ module ProductRepository
           r.product_id,
           r.name,
           r.owner,
-          r.description,
-          r.teams
+          r.description
         )
       end
 
@@ -35,12 +34,6 @@ module ProductRepository
         r.name = product.name
         r.description = product.description
         r.owner_id = product.owner.to_s
-
-        r.developments.clear
-        product.teams.each do |team_id|
-          r.developments.build(dao_team_id: team_id.to_s)
-        end
-
         r.save!
       end
     end

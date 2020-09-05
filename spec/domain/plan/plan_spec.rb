@@ -1,20 +1,20 @@
 # typed: false
-require 'rails_helper'
+require 'domain_helper'
 
 module Plan
   RSpec.describe Plan do
-    let(:product) { create_product }
+    let(:product_id) { Product::Id.create }
 
     describe 'Create' do
       it do
-        plan = described_class.create(product.id)
+        plan = described_class.create(product_id)
 
         expect(plan.releases).to be_empty
       end
     end
 
     describe 'Add & Remove release' do
-      let(:plan) { described_class.create(product.id) }
+      let(:plan) { described_class.create(product_id) }
 
       before do
         release1 = Release.create('Phase1')
@@ -49,7 +49,7 @@ module Plan
     end
 
     describe 'Remove availability' do
-      let(:plan) { described_class.create(product.id) }
+      let(:plan) { described_class.create(product_id) }
 
       before do
         plan.add_release(Release.create('R1'))
@@ -68,7 +68,7 @@ module Plan
     end
 
     describe 'Replace release' do
-      let(:plan) { described_class.create(product.id) }
+      let(:plan) { described_class.create(product_id) }
 
       it do
         release1 = Release.create('Phase1')
@@ -88,7 +88,7 @@ module Plan
     end
 
     describe 'Find release' do
-      let(:plan) { described_class.create(product.id) }
+      let(:plan) { described_class.create(product_id) }
 
       it do
         pbi_a = Pbi::Id.create

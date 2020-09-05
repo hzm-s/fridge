@@ -16,12 +16,17 @@ module TeamRepository
             Team::Role.from_string(m.role)
           )
         end
-        Team::Team.from_repository(Team::Id.from_string(r.id), r.name, members)
+        Team::Team.from_repository(
+          Team::Id.from_string(r.id),
+          r.name,
+          Product::Id.from_string(r.dao_product_id),
+          members
+        )
       end
 
       sig {override.params(team: Team::Team).void}
       def add(team)
-        r = Dao::Team.new(id: team.id.to_s, name: team.name)
+        r = Dao::Team.new(id: team.id.to_s, name: team.name, dao_product_id: team.product)
         r.members = build_members(team.members)
         r.save!
       end
@@ -29,8 +34,12 @@ module TeamRepository
       sig {override.params(team: Team::Team).void}
       def update(team)
         r = Dao::Team.find(team.id)
+        r.name = team.name
+        r.dao_product_id = team.product
+
         r.members.clear
         r.members = build_members(team.members)
+
         r.save!
       end
 
