@@ -4,14 +4,14 @@ require 'rails_helper'
 RSpec.describe 'team_members' do
   let!(:new_member) { sign_up }
   let!(:product) { create_product(members: [dev_member(sign_up.person_id)]) }
-  let!(:team) { Dao::Team.find_by(dao_product_id: product.id.to_s) }
+  let!(:team) { resolve_team(product.id) }
 
   describe '#new' do
     context 'when signed in' do
       before { sign_in(new_member) }
 
       it do
-        get new_team_member_path(team_id: team.id)
+        get new_team_member_path(team_id: team.id.to_s)
 
         expect(response.body).to include 'developer'
         expect(response.body).to include 'scrum_master'
@@ -20,7 +20,7 @@ RSpec.describe 'team_members' do
 
     context 'when NOT signed in' do
       it do
-        get new_team_member_path(team_id: team.id)
+        get new_team_member_path(team_id: team.id.to_s)
         sign_in(new_member)
         follow_redirect!
 
@@ -35,20 +35,19 @@ RSpec.describe 'team_members' do
 
     context 'when valid params' do
       it do
-        post team_members_path(team_id: team.id), params: { role: 'scrum_master' }
+        post team_members_path(team_id: team.id.to_s), params: { role: 'scrum_master' }
 
-        member = Dao::TeamMember.find_by(dao_person_id: new_member.person.id)
+        get team_path(team.id.to_s)
         expect(response.body).to include new_member.name
         expect(response.body).to include I18n.t('domain.team.role_short.scrum_master')
       end
     end
 
-    xcontext 'when invalid params' do
+    context 'when invalid params' do
       it do
-        params = { role: 'product_owner' }
-        post product_team_members_path(product_id: product.id), params: params
+        post team_members_path(team_id: team.id.to_s), params: { role: 'manager' }
 
-        expect(response.body).to include I18n.t('domain.errors.team.duplicated_product_owner')
+        expect(response.body).to include I18n.t('domain.errors.team.invalid_role')
       end
     end
   end

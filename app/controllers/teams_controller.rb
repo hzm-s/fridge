@@ -2,6 +2,10 @@
 class TeamsController < ApplicationController
   include ProductHelper
 
+  def show
+    @team = TeamQuery.call(params[:id])
+  end
+
   def new
     @form = TeamForm.new(product_id: current_product_id, name: current_product.name)
   end
@@ -23,7 +27,11 @@ class TeamsController < ApplicationController
   private
 
   def current_product_id
-    params[:product_id] || params[:form][:product_id]
+    if params[:id]
+      TeamQuery.call(params[:id]).product.id
+    else
+      params[:product_id] || params[:form][:product_id]
+    end
   end
 
   def permitted_params

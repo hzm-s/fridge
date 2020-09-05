@@ -9,7 +9,7 @@ class MembersController < ApplicationController
     team_id = Team::Id.from_string(params[:team_id])
     role = Team::Role.from_string(params[:role])
     AddTeamMemberUsecase.perform(team_id, current_user.person_id, role)
-  rescue Team::InvalidNewMember => e
+  rescue Team::InvalidRole, Team::InvalidNewMember => e
     @error = t_domain_error(e)
     render :new
   else

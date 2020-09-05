@@ -5,10 +5,6 @@
       <i class="fas fa-list-alt"></i>
       <%=t 'products.product.pbl' %>
     <% end %>
-    <%= link_to product_team_members_path(product_id: product.id), class: 'dropdown-item' do %>
-      <i class="fas fa-users"></i>
-      <%=t 'products.product.team' %>
-    <% end %>
     <%= link_to '#', class: 'dropdown-item' do %>
       <i class="fas fa-cog"></i>
       <%=t 'products.product.setting' %>

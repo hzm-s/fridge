@@ -5,9 +5,9 @@
         <%=t '.title' %>
       </h1>
     </div>
-    <%= render partial: 'list', locals: { team: @team } %>
+    <%= render partial: 'members', locals: { team: @team } %>
     <hr>
-    <%= render partial: 'invitation', locals: { product: current_product } %>
+    <%= render partial: 'invitation', locals: { team: @team } %>
   </div>
 </div>
 <div class="row d-flex justify-content-center">
