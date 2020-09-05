@@ -1,6 +1,6 @@
 # typed: true
 class Dao::Product < ApplicationRecord
-  has_many :developments, class_name: 'Dao::Development', foreign_key: :dao_product_id, dependent: :destroy
+  has_many :teams, class_name: 'Dao::Team', foreign_key: :dao_product_id, dependent: :destroy
 
   def product_id
     Product::Id.from_string(id)
@@ -8,9 +8,5 @@ class Dao::Product < ApplicationRecord
 
   def owner
     Person::Id.from_string(owner_id)
-  end
-
-  def teams
-    developments.map { |d| Team::Id.from_string(d.dao_team_id) }
   end
 end

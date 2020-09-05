@@ -8,8 +8,8 @@ RSpec.describe TeamQuery do
   let(:person_d) { sign_up_as_person }
   let(:person_e) { sign_up_as_person }
 
-  let(:product_x) { create_product(person_id: person_a.id, role: Team::Role::ProductOwner) }
-  let(:product_y) { create_product(person_id: person_d.id, role: Team::Role::ScrumMaster) }
+  let(:product_x) { create_product(owner: person_a.id, role: Team::Role::ProductOwner) }
+  let(:product_y) { create_product(owner: person_d.id, role: Team::Role::ScrumMaster) }
 
   before do
     add_team_member(product_x.id, dev_member(person_c.id))

@@ -4,18 +4,19 @@ require_relative '../domain_support/team_domain_support'
 module ProductSpport
   include TeamDomainSupport
 
-  def _create_product
-    product = Product::Product.create('example', 'desc')
-    ProductRepository::AR.add(product)
-    product
-  end
+  def create_product(owner: nil, name: 'xyz', description: 'desc', members: [])
+    owner ||= sign_up_as_person.id
 
-  def create_product(person_id: nil, name: 'example', description: 'desc example')
-    person_id ||= sign_up_as_person.id
+    product =
+      CreateProductUsecase
+        .perform(owner, name, description)
+        .yield_self { |id| ProductRepository::AR.find_by_id(id) }
 
-    CreateProductUsecase.new
-      .perform(person_id, name, description)
-      .yield_self { |id| ProductRepository::AR.find_by_id(id) }
+    return product if members.empty?
+
+    CreateProductTeamUsecase.perform(product.id, "#{product.name}-dev")
+
+    return product
   end
 
   def add_team_member(product_id, member)
