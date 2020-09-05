@@ -2,15 +2,16 @@
 require 'rails_helper'
 
 RSpec.describe AddTeamMemberUsecase do
-  let!(:product_id) { create_product(role: Team::Role::Developer).id }
+  let!(:product) { create_product(members: [sm_member(sign_up_as_person.id)]) }
+  let(:team) { resolve_team(product.id) }
+  let(:new_person) { sign_up_as_person }
 
   it do
-    new_person = sign_up_as_person
-    described_class.perform(product_id, new_person.id, Team::Role::ProductOwner)
+    described_class.perform(team.id, new_person.id, Team::Role::Developer)
 
-    product = ProductRepository::AR.find_by_id(product_id)
-    new_member = product.team_member(new_person.id)
+    stored = TeamRepository::AR.find_by_id(team.id)
+    new_member = stored.member(new_person.id)
 
-    expect(new_member.role).to eq Team::Role::ProductOwner
+    expect(new_member.role).to eq Team::Role::Developer
   end
 end

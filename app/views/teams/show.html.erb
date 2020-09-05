@@ -1,13 +1,13 @@
 <div class="row d-flex justify-content-center">
   <div class="col-lg-7 sheet">
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center mb-2">
       <h1 class="page-title mb-0">
-        <%=t '.title' %>
+        <%=t '.team_name', name: @team.name %>
       </h1>
     </div>
-    <%= render partial: 'list', locals: { team: @team } %>
+    <%= render partial: 'members', locals: { team: @team } %>
     <hr>
-    <%= render partial: 'invitation', locals: { product: current_product } %>
+    <%= render partial: 'invitation', locals: { team: @team } %>
   </div>
 </div>
 <div class="row d-flex justify-content-center">

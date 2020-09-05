@@ -1,0 +1,4 @@
+<%= render partial: 'member', collection: team.developers, as: :member %>
+<% if scrum_master = team.scrum_master %>
+  <%= render partial: 'member', locals: { member: scrum_master } %>
+<% end %>

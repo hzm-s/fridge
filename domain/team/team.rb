@@ -62,7 +62,6 @@ module Team
     sig {returns(T::Array[Role])}
     def available_roles
       roles = []
-      roles << Role::ProductOwner if count_of_role(Role::ProductOwner) == 0
       roles << Role::ScrumMaster if count_of_role(Role::ScrumMaster) == 0
       roles << Role::Developer if count_of_role(Role::Developer) <= 8
       roles
@@ -72,7 +71,6 @@ module Team
 
     sig {void}
     def check_member_role!
-      raise DuplicatedProductOwner if count_of_role(Role::ProductOwner) > 1
       raise DuplicatedScrumMaster if count_of_role(Role::ScrumMaster) > 1
       raise TooLargeDevelopmentTeam if count_of_role(Role::Developer) > 9
     end

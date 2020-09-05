@@ -14,13 +14,14 @@ module ProductSpport
 
     return product if members.empty?
 
-    CreateProductTeamUsecase.perform(product.id, "#{product.name}-dev")
+    team_id = CreateProductTeamUsecase.perform(product.id, "#{product.name}-dev")
+    members.each { |m| add_team_member(team_id, m) }
 
     return product
   end
 
-  def add_team_member(product_id, member)
-    AddTeamMemberUsecase.perform(product_id, member.person_id, member.role)
+  def add_team_member(team_id, member)
+    AddTeamMemberUsecase.perform(team_id, member.person_id, member.role)
   end
 end
 

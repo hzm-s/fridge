@@ -47,11 +47,6 @@ module Team
           .to raise_error(AlreadyJoined)
       end
 
-      it '2人目のプロダクトオーナーはエラーになること' do
-        expect { team.add_member(po_member(new_member.id)) }
-          .to raise_error(DuplicatedProductOwner)
-      end
-
       it '2人目のスクラムマスターはエラーになること' do
         expect { team.add_member(sm_member(new_member.id)) }
           .to raise_error(DuplicatedScrumMaster)
@@ -69,9 +64,6 @@ module Team
       it do
         team.add_member(dev_member(register_person.id))
 
-        expect(team.available_roles).to match_array [Role::ProductOwner, Role::Developer, Role::ScrumMaster]
-
-        team.add_member(po_member(register_person.id))
         expect(team.available_roles).to match_array [Role::Developer, Role::ScrumMaster]
 
         team.add_member(sm_member(register_person.id))

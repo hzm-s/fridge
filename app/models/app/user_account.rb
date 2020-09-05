@@ -3,6 +3,7 @@ class App::UserAccount < ApplicationRecord
   belongs_to :person, class_name: 'Dao::Person', foreign_key: :dao_person_id
   has_one :profile, class_name: 'App::UserProfile', foreign_key: :app_user_account_id, required: false
 
+  delegate :name, to: :person
   delegate :initials, :fgcolor, :bgcolor, to: :profile
 
   class << self

@@ -36,6 +36,10 @@ label {
   @include avatar(2.0rem);
 }
 
+.avatar-sm {
+  @include avatar(1.5rem);
+}
+
 .team-member-role {
   margin-right: .5rem;
   padding: 0 .5rem;

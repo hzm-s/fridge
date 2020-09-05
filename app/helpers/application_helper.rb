@@ -13,7 +13,8 @@ module ApplicationHelper
     { disable_with: LOADING_ICON.html_safe }
   end
 
-  def user_avatar(initials:, fgcolor:, bgcolor:)
-    content_tag(:span, initials, class: 'avatar', style: "background-color: #{bgcolor}; color: #{fgcolor}").html_safe
+  def user_avatar(initials:, fgcolor:, bgcolor:, size: nil)
+    css_class = size ? "avatar-#{size}" : 'avatar'
+    content_tag(:span, initials, class: css_class, style: "background-color: #{bgcolor}; color: #{fgcolor}").html_safe
   end
 end

@@ -1,9 +1,12 @@
 <div class="col-lg-9 sheet pl-item">
   <div class="d-flex mt-1">
     <div class="pl-item__head">
-      <h2 class="pl-item__name">
-        <%= product.name %>
-      </h2>
+      <div class="pl-item__title">
+        <h2 class="pl-item__name">
+          <%= product.name %>
+        </h2>
+        <%= user_avatar(product.owner_avatar.merge(size: :sm)) %>
+      </div>
       <p class="pl-item__desc">
         <%= product.description %>
       </p>
@@ -21,7 +24,7 @@
             <div class="pl-link__icon">
               <i class="fas fa-users"></i>
             </div>
-            <%= link_to team.name, team_path(team.id) %>
+            <%= link_to t('.team'), team_path(team.id) %>
           <% end %>
         <% else %>
           <div class="pl-link__icon">

@@ -6,16 +6,16 @@ class AddTeamMemberUsecase < UsecaseBase
 
   sig {void}
   def initialize
-    @repository = T.let(ProductRepository::AR, Product::ProductRepository)
+    @repository = T.let(TeamRepository::AR, Team::TeamRepository)
   end
 
-  sig {params(product_id: Product::Id, person_id: Person::Id, role: Team::Role).void}
-  def perform(product_id, person_id, role)
-    product = @repository.find_by_id(product_id)
+  sig {params(team_id: Team::Id, person_id: Person::Id, role: Team::Role).void}
+  def perform(team_id, person_id, role)
+    team = @repository.find_by_id(team_id)
 
     member = Team::Member.new(person_id, role)
-    product.add_team_member(member)
+    team.add_member(member)
 
-    @repository.update(product)
+    @repository.update(team)
   end
 end
