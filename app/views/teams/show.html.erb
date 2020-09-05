@@ -1,8 +1,8 @@
 <div class="row d-flex justify-content-center">
   <div class="col-lg-7 sheet">
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center mb-2">
       <h1 class="page-title mb-0">
-        <%= @team.name %>
+        <%=t '.team_name', name: @team.name %>
       </h1>
     </div>
     <%= render partial: 'members', locals: { team: @team } %>

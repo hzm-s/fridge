@@ -1,5 +1,12 @@
 # typed: ignore
 module UserQuery
+  class << self
+    def call(user_account_id)
+      r = App::UserAccount.eager_load(:person, :profile).find(user_account_id)
+      User.build(r)
+    end
+  end
+
   class User < Struct.new(:user_account_id, :person_id, :name, :avatar)
     def self.build(user_account)
       new(
@@ -12,13 +19,6 @@ module UserQuery
           bgcolor: user_account.bgcolor,
         }
       )
-    end
-  end
-
-  class << self
-    def call(user_account_id)
-      r = App::UserAccount.eager_load(:person, :profile).find(user_account_id)
-      User.build(r)
     end
   end
 end
