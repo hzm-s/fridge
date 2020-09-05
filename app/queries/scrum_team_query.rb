@@ -28,6 +28,9 @@ module ScrumTeamQuery
   end
 
   class Role < SimpleDelegator
+    def translate(scope)
+      map { |role| I18n.t(role, scope: scope) }.join('/')
+    end
   end
 
   class Member < T::Struct

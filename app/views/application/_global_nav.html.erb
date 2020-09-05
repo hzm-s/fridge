@@ -7,7 +7,7 @@
   <% end %>
   <div class="gnav__tail d-flex align-items-center">
     <% if member_role = content_for?(:member_role) ? yield(:member_role): nil %>
-      <span class="gnav-tail__child team-member-role"><%=t member_role, scope: 'domain.team.role_short' %></span>
+      <span class="gnav-tail__child team-member-role"><%= member_role %></span>
     <% end %>
     <% if signed_in? %>
       <%= render partial: 'user_menu', locals: { user: current_user } %>
