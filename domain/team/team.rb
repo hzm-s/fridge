@@ -15,9 +15,9 @@ module Team
         new(Id.create, name, nil, [])
       end
 
-      sig {params(id: Id, name: String, members: Members).returns(T.attached_class)}
-      def from_repository(id, name, members)
-        new(id, name, members)
+      sig {params(id: Id, name: String, product: Product::Id, members: Members).returns(T.attached_class)}
+      def from_repository(id, name, product, members)
+        new(id, name, product, members)
       end
     end
 
