@@ -50,7 +50,12 @@ RSpec.describe 'products' do
 
         get products_path
 
-        expect(response.body).to include team_path(Dao::Team.last.id)
+        aggregate_failures do
+          team = Dao::Team.last
+
+          expect(response.body).to include team_path(team.id)
+          expect(response.body).to include team.name
+        end
       end
     end
   end

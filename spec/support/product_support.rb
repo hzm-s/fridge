@@ -14,7 +14,7 @@ module ProductSpport
 
     return product if members.empty?
 
-    CreateProductTeamUsecase.perform(product.id, product.name)
+    CreateProductTeamUsecase.perform(product.id, "#{product.name}-dev")
 
     return product
   end
