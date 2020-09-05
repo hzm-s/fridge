@@ -1,5 +1,4 @@
-<label class="mb-3">
-  <%=t '.title' %>
-</label>
 <%= render partial: 'member', collection: team.developers, as: :member %>
-<%= render partial: 'member', locals: { member: team.scrum_master } %>
+<% if scrum_master = team.scrum_master %>
+  <%= render partial: 'member', locals: { member: scrum_master } %>
+<% end %>

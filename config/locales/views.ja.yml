@@ -78,14 +78,12 @@ ja:
     new:
       title: 新しいチーム
       create: 作成する
+    invitation:
+      title: チーム参加リンク
 
-  team_members:
-    index:
-      title: チーム
+  members:
     new:
       title: チームへ参加
       join: として参加する
     list:
       title: メンバー
-    invitation:
-      title: チーム参加リンク

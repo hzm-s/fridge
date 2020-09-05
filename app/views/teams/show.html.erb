@@ -2,7 +2,7 @@
   <div class="col-lg-7 sheet">
     <div class="d-flex justify-content-center">
       <h1 class="page-title mb-0">
-        <%=t '.title' %>
+        <%= @team.name %>
       </h1>
     </div>
     <%= render partial: 'members', locals: { team: @team } %>
