@@ -30,7 +30,7 @@ module Team
     sig {returns(Members)}
     attr_reader :members
 
-    sig {returns(Product::Id)}
+    sig {returns(T.nilable(Product::Id))}
     attr_reader :product
 
     sig {params(id: Id, name: String, product: T.nilable(Product::Id), members: Members).void}

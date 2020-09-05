@@ -5,7 +5,8 @@ RSpec.describe PlanRepository::AR do
   describe 'add' do
     it do
       product_id = Product::Id.create
-      Dao::Product.create!(id: product_id, name: 'P')
+      owner = sign_up_as_person
+      Dao::Product.create!(id: product_id, name: 'P', owner_id: owner.id)
 
       plan = Plan::Plan.create(product_id)
       release = Plan::Release.create('MVP')
