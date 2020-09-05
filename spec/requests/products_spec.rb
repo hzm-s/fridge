@@ -54,7 +54,6 @@ RSpec.describe 'products' do
           team = Dao::Team.last
 
           expect(response.body).to include team_path(team.id)
-          expect(response.body).to include team.name
         end
       end
     end

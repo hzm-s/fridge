@@ -15,7 +15,7 @@ RSpec.describe 'teams' do
       post teams_path, params: { form: { product_id: product.id.to_s, name: 'KAIHATSU GUMI' } }
       follow_redirect!
 
-      expect(response.body).to include 'KAIHATSU GUMI'
+      expect(response.body).to include team_path(Dao::Team.last.id)
     end
 
     it do
