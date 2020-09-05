@@ -36,6 +36,9 @@ RSpec.describe 'team_members' do
     context 'when valid params' do
       it do
         post team_members_path(team_id: team.id.to_s), params: { role: 'scrum_master' }
+        follow_redirect!
+
+        expect(response.body).to include product.name
 
         get team_path(team.id.to_s)
         expect(response.body).to include new_member.name
