@@ -1,4 +1,4 @@
-# typed: true
+# typed: false
 module ProductListQuery
   class << self
     def call(person_id)
