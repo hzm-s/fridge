@@ -11,8 +11,9 @@ module Pbi
 
       it do
         aggregate_failures do
-          expect(pbi.product_id).to eq product_id
           expect(pbi.id).to_not be_nil
+          expect(pbi.product_id).to eq product_id
+          expect(pbi.release_id).to be_nil
           expect(pbi.description).to eq description
         end
       end

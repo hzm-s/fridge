@@ -13,6 +13,7 @@ module Pbi
         new(
           Id.create,
           product_id,
+          nil,
           Statuses::Preparation,
           description,
           StoryPoint.unknown,
@@ -20,9 +21,9 @@ module Pbi
         )
       end
 
-      sig {params(id: Id, product_id: Product::Id, status: Status, description: Description, size: StoryPoint, acceptance_criteria: AcceptanceCriteria).returns(T.attached_class)}
-      def from_repository(id, product_id, status, description, size, acceptance_criteria)
-        new(id, product_id, status, description, size, acceptance_criteria)
+      sig {params(id: Id, product_id: Product::Id, release_id: T.nilable(Release::Id), status: Status, description: Description, size: StoryPoint, acceptance_criteria: AcceptanceCriteria).returns(T.attached_class)}
+      def from_repository(id, product_id, release_id, status, description, size, acceptance_criteria)
+        new(id, product_id, release_id, status, description, size, acceptance_criteria)
       end
     end
 
@@ -31,6 +32,9 @@ module Pbi
 
     sig {returns(Product::Id)}
     attr_reader :product_id
+
+    sig {returns(T.nilable(Release::Id))}
+    attr_reader :release_id
 
     sig {returns(Status)}
     attr_reader :status
@@ -44,10 +48,11 @@ module Pbi
     sig {returns(AcceptanceCriteria)}
     attr_reader :acceptance_criteria
 
-    sig {params(id: Id, product_id: Product::Id, status: Status, description: Description, size: StoryPoint, acceptance_criteria: AcceptanceCriteria).void}
-    def initialize(id, product_id, status, description, size, acceptance_criteria)
+    sig {params(id: Id, product_id: Product::Id, release_id: T.nilable(Release::Id), status: Status, description: Description, size: StoryPoint, acceptance_criteria: AcceptanceCriteria).void}
+    def initialize(id, product_id, release_id, status, description, size, acceptance_criteria)
       @id = id
       @product_id = product_id
+      @release_id = release_id
       @status = status
       @description = description
       @size = size

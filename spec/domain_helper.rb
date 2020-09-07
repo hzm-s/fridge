@@ -5,6 +5,7 @@ $LOAD_PATH << File.expand_path('../domain', __dir__)
 require 'shared'
 require 'person'
 require 'product'
+require 'release'
 require 'team'
 require 'plan'
 require 'pbi'
