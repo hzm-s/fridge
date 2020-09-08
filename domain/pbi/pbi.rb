@@ -13,15 +13,16 @@ module Pbi
         new(
           Id.create,
           product_id,
-          nil,
           Statuses::Preparation,
           description,
+          nil,
+          nil,
           StoryPoint.unknown,
           AcceptanceCriteria.new([]),
         )
       end
 
-      sig {params(id: Id, product_id: Product::Id, release_id: T.nilable(Release::Id), status: Status, description: Description, size: StoryPoint, acceptance_criteria: AcceptanceCriteria).returns(T.attached_class)}
+      sig {params(id: Id, product_id: Product::Id, status: Status, description: Description, release_id: T.nilable(Release::Id), size: StoryPoint, acceptance_criteria: AcceptanceCriteria).returns(T.attached_class)}
       def from_repository(id, product_id, release_id, status, description, size, acceptance_criteria)
         new(id, product_id, release_id, status, description, size, acceptance_criteria)
       end
@@ -33,14 +34,17 @@ module Pbi
     sig {returns(Product::Id)}
     attr_reader :product_id
 
-    sig {returns(T.nilable(Release::Id))}
-    attr_reader :release_id
-
     sig {returns(Status)}
     attr_reader :status
 
     sig {returns(Description)}
     attr_reader :description
+
+    sig {returns(T.nilable(Release::Id))}
+    attr_reader :release_id
+
+    sig {returns(T.nilable(Integer))}
+    attr_reader :priority
 
     sig {returns(StoryPoint)}
     attr_reader :size
@@ -48,13 +52,23 @@ module Pbi
     sig {returns(AcceptanceCriteria)}
     attr_reader :acceptance_criteria
 
-    sig {params(id: Id, product_id: Product::Id, release_id: T.nilable(Release::Id), status: Status, description: Description, size: StoryPoint, acceptance_criteria: AcceptanceCriteria).void}
-    def initialize(id, product_id, release_id, status, description, size, acceptance_criteria)
+    sig {params(
+      id: Id,
+      product_id: Product::Id,
+      status: Status,
+      description: Description,
+      release_id: T.nilable(Release::Id),
+      priority: T.nilable(Integer),
+      size: StoryPoint,
+      acceptance_criteria: AcceptanceCriteria
+    ).void}
+    def initialize(id, product_id, status, description, release_id, priority, size, acceptance_criteria)
       @id = id
       @product_id = product_id
-      @release_id = release_id
       @status = status
       @description = description
+      @release_id = release_id
+      @priority = priority
       @size = size
       @acceptance_criteria = acceptance_criteria
     end
