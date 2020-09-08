@@ -13,17 +13,13 @@ module Pbi
         aggregate_failures do
           expect(pbi.id).to_not be_nil
           expect(pbi.product_id).to eq product_id
-          expect(pbi.release_id).to be_nil
+          expect(pbi.status).to eq Statuses::Preparation
           expect(pbi.description).to eq description
+          expect(pbi.release_id).to be_nil
+          expect(pbi.priority).to be_nil
+          expect(pbi.size).to eq StoryPoint.unknown
+          expect(pbi.acceptance_criteria).to be_empty
         end
-      end
-
-      it do
-        expect(pbi.size).to eq StoryPoint.unknown
-      end
-
-      it do
-        expect(pbi.acceptance_criteria).to be_empty
       end
     end
 
@@ -51,7 +47,6 @@ module Pbi
       let(:pbi) { described_class.create(product_id, description) }
 
       it do
-        expect(pbi.status).to eq Statuses::Preparation
 
         pbi.modify_description(pbi_description('NEW user story'))
         expect(pbi.status).to eq Statuses::Preparation
