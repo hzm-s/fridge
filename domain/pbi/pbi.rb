@@ -15,7 +15,6 @@ module Pbi
           product_id,
           Statuses::Preparation,
           description,
-          nil,
           StoryPoint.unknown,
           AcceptanceCriteria.new([]),
         )
@@ -39,9 +38,6 @@ module Pbi
     sig {returns(Description)}
     attr_reader :description
 
-    sig {returns(T.nilable(Integer))}
-    attr_reader :priority
-
     sig {returns(StoryPoint)}
     attr_reader :size
 
@@ -53,16 +49,14 @@ module Pbi
       product_id: Product::Id,
       status: Status,
       description: Description,
-      priority: T.nilable(Integer),
       size: StoryPoint,
       acceptance_criteria: AcceptanceCriteria
     ).void}
-    def initialize(id, product_id, status, description, priority, size, acceptance_criteria)
+    def initialize(id, product_id, status, description, size, acceptance_criteria)
       @id = id
       @product_id = product_id
       @status = status
       @description = description
-      @priority = priority
       @size = size
       @acceptance_criteria = acceptance_criteria
     end
