@@ -3,7 +3,6 @@ require 'domain_helper'
 
 module Plan
   RSpec.describe Release do
-    let(:product_id) { Product::Id.create }
     let(:item_a) { Pbi::Id.create }
     let(:item_b) { Pbi::Id.create }
     let(:item_c) { Pbi::Id.create }
