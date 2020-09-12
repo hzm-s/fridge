@@ -19,6 +19,17 @@ module ReleaseRepository
         end
         dao.save!
       end
+
+      sig {override.params(release: Release::Release).void}
+      def update(release)
+        dao = Dao::Release.find(release.id)
+        dao.title = release.title
+        dao.previous_release_id = release.previous_release_id
+        dao.items = release.items.to_a.map do |item|
+          Dao::ReleaseItem.new(dao_pbi_id: item)
+        end
+        dao.save!
+      end
     end
   end
 end

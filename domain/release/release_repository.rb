@@ -13,7 +13,7 @@ module Release
     sig {abstract.params(release: Release).void}
     def add(release); end
 
-    #sig {abstract.params(release: Release).void}
-    #def update(release); end
+    sig {abstract.params(release: Release).void}
+    def update(release); end
   end
 end
