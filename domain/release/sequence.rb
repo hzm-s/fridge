@@ -1,8 +1,8 @@
 # typed: strict
 require 'sorbet-runtime'
 
-module Plan
-  class ReleaseSequence
+module Release
+  class Sequence
     extend T::Sig
 
     sig {params(value: Integer).void}

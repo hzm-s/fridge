@@ -1,7 +1,7 @@
 # typed: strict
 require 'sorbet-runtime'
 
-module Plan
+module Release
   class Release
     extend T::Sig
 
@@ -11,7 +11,7 @@ module Plan
     sig {returns(ItemList)}
     attr_reader :items
 
-    sig {params(sequence: ReleaseSequence, title: String, items: ItemList).void}
+    sig {params(sequence: Sequence, title: String, items: ItemList).void}
     def initialize(sequence, title, items)
       @sequence = sequence
       @title = title

@@ -1,7 +1,7 @@
 # typed: false
 require 'domain_helper'
 
-module Plan
+module Release
   RSpec.describe Release do
     let(:item_a) { Pbi::Id.create }
     let(:item_b) { Pbi::Id.create }
@@ -9,7 +9,7 @@ module Plan
     let(:item_d) { Pbi::Id.create }
     let(:item_e) { Pbi::Id.create }
 
-    let(:seq) { ReleaseSequence.new(1) }
+    let(:seq) { Sequence.new(1) }
 
     describe 'Create' do
       it do
