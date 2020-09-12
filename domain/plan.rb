@@ -5,5 +5,6 @@ module Plan
 
   autoload :Plan, 'plan/plan'
   autoload :Release, 'plan/release'
+  autoload :ItemList, 'plan/item_list'
   autoload :PlanRepository, 'plan/plan_repository'
 end
