@@ -21,6 +21,16 @@ module Release
       end
     end
 
+    describe 'Previous release' do
+      it do
+        phase1 = described_class.create('Phase1')
+        expect(phase1.previous_release_id).to be_nil
+
+        phase2 = described_class.create('Phase2', phase1.id)
+        expect(phase2.previous_release_id).to eq phase1.id
+      end
+    end
+
     describe 'Add & Remove item' do
       let(:release) { described_class.create('MVP') }
 
