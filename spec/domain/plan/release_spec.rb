@@ -9,9 +9,11 @@ module Plan
     let(:item_d) { Pbi::Id.create }
     let(:item_e) { Pbi::Id.create }
 
+    let(:seq) { ReleaseSequence.new(1) }
+
     describe 'Create' do
       it do
-        release = described_class.new('MVP', ItemList.new([]))
+        release = described_class.new(seq, 'MVP', ItemList.new([]))
 
         expect(release.title).to eq 'MVP'
         expect(release.items).to be_empty
@@ -20,7 +22,7 @@ module Plan
 
     describe 'Add & Remove item' do
       before do
-        @release = described_class.new('R', ItemList.new([]))
+        @release = described_class.new(seq, 'R', ItemList.new([]))
         @release = @release.add_item(item_a)
         @release = @release.add_item(item_b)
         @release = @release.add_item(item_c)
@@ -39,7 +41,7 @@ module Plan
 
     describe 'Modify title' do
       it do
-        release = described_class.new('OLD_TITLE', ItemList.new([]))
+        release = described_class.new(seq, 'OLD_TITLE', ItemList.new([]))
 
         release = release.modify_title('NEW_TITLE')
 
@@ -50,12 +52,12 @@ module Plan
 
     describe 'can_remove?' do
       it do
-        release = described_class.new('MVP', ItemList.new([]))
+        release = described_class.new(seq, 'MVP', ItemList.new([]))
         expect(release).to be_can_remove
       end
 
       it do
-        release = described_class.new('MVP', ItemList.new([item_a]))
+        release = described_class.new(seq, 'MVP', ItemList.new([item_a]))
         expect(release).to_not be_can_remove
       end
     end
@@ -63,6 +65,7 @@ module Plan
     describe 'Swap priorities' do
       it do
         release = described_class.new(
+          seq,
           'Icebox',
           ItemList.new([item_a, item_b, item_c, item_d, item_e])
         )
