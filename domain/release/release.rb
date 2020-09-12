@@ -5,47 +5,55 @@ module Release
   class Release
     extend T::Sig
 
+    class << self
+      extend T::Sig
+
+      sig {params(title: String).returns(T.attached_class)}
+      def create(title)
+        new(Id.create, title, ItemList.new([]))
+      end
+    end
+
+    sig {returns(Id)}
+    attr_reader :id
+
     sig {returns(String)}
     attr_reader :title
 
     sig {returns(ItemList)}
     attr_reader :items
 
-    sig {params(sequence: Sequence, title: String, items: ItemList).void}
-    def initialize(sequence, title, items)
-      @sequence = sequence
+    sig {params(id: Id, title: String, items: ItemList).void}
+    def initialize(id, title, items)
+      @id = id
       @title = title
       @items = items
     end
+    private_class_method :new
 
-    sig {params(item: ItemList::Item).returns(T.self_type)}
+    sig {params(item: ItemList::Item).void}
     def add_item(item)
-      replace_items(@items.add_item(item))
+      @items = @items.add_item(item)
     end
 
-    sig {params(item: ItemList::Item).returns(T.self_type)}
+    sig {params(item: ItemList::Item).void}
     def remove_item(item)
-      replace_items(@items.remove_item(item))
+      @items = @items.remove_item(item)
     end
 
-    sig {params(item: ItemList::Item, to: ItemList::Item).returns(T.self_type)}
+    sig {params(item: ItemList::Item, to: ItemList::Item).void}
     def swap_priorities(item, to)
-      replace_items(@items.swap_priorities(item, to))
+      @items = @items.swap_priorities(item, to)
     end
 
-    sig {params(title: String).returns(T.self_type)}
+    sig {params(title: String).void}
     def modify_title(title)
-      self.class.new(@sequence, title, @items)
+      @title = title
     end
 
     sig {returns(T::Boolean)}
     def can_remove?
       @items.empty?
-    end
-
-    sig {params(item: ItemList::Item).returns(T::Boolean)}
-    def include?(item)
-      @items.to_a.include?(item)
     end
 
     private

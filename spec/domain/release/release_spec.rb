@@ -9,41 +9,42 @@ module Release
     let(:item_d) { Pbi::Id.create }
     let(:item_e) { Pbi::Id.create }
 
-    let(:seq) { Sequence.new(1) }
-
     describe 'Create' do
       it do
-        release = described_class.new(seq, 'MVP', ItemList.new([]))
+        release = described_class.create('MVP')
 
-        expect(release.title).to eq 'MVP'
-        expect(release.items).to be_empty
+        aggregate_failures do
+          expect(release.id).to_not be_nil
+          expect(release.title).to eq 'MVP'
+          expect(release.items).to be_empty
+        end
       end
     end
 
     describe 'Add & Remove item' do
+      let(:release) { described_class.create('MVP') }
+
       before do
-        @release = described_class.new(seq, 'R', ItemList.new([]))
-        @release = @release.add_item(item_a)
-        @release = @release.add_item(item_b)
-        @release = @release.add_item(item_c)
+        release.add_item(item_a)
+        release.add_item(item_b)
+        release.add_item(item_c)
       end
 
       it do
-        expect(@release.items).to eq ItemList.new([item_a, item_b, item_c])
+        expect(release.items).to eq ItemList.new([item_a, item_b, item_c])
       end
 
       it do
-        @release = @release.remove_item(item_b)
-
-        expect(@release.items).to eq ItemList.new([item_a, item_c])
+        release.remove_item(item_b)
+        expect(release.items).to eq ItemList.new([item_a, item_c])
       end
     end
 
     describe 'Modify title' do
       it do
-        release = described_class.new(seq, 'OLD_TITLE', ItemList.new([]))
+        release = described_class.create('OLD_TITLE')
 
-        release = release.modify_title('NEW_TITLE')
+        release.modify_title('NEW_TITLE')
 
         expect(release.title).to eq 'NEW_TITLE'
         expect(release.items).to be_empty
@@ -52,31 +53,31 @@ module Release
 
     describe 'can_remove?' do
       it do
-        release = described_class.new(seq, 'MVP', ItemList.new([]))
+        release = described_class.create('MVP')
         expect(release).to be_can_remove
       end
 
       it do
-        release = described_class.new(seq, 'MVP', ItemList.new([item_a]))
+        release = described_class.create('MVP')
+        release.add_item(item_a)
         expect(release).to_not be_can_remove
       end
     end
 
     describe 'Swap priorities' do
       it do
-        release = described_class.new(
-          seq,
-          'Icebox',
-          ItemList.new([item_a, item_b, item_c, item_d, item_e])
-        )
+        release = described_class.create('MVP')
+        [item_a, item_b, item_c, item_d, item_e].each do |item|
+          release.add_item(item)
+        end
 
-        release = release.swap_priorities(item_a, item_e)
+        release.swap_priorities(item_a, item_e)
         expect(release.items).to eq ItemList.new([item_b, item_c, item_d, item_e, item_a])
 
-        release = release.swap_priorities(item_d, item_b)
+        release.swap_priorities(item_d, item_b)
         expect(release.items).to eq ItemList.new([item_d, item_b, item_c, item_e, item_a])
 
-        release = release.swap_priorities(item_b, item_e)
+        release.swap_priorities(item_b, item_e)
         expect(release.items).to eq ItemList.new([item_d, item_c, item_e, item_b, item_a])
       end
     end
