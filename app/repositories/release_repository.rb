@@ -11,7 +11,6 @@ module ReleaseRepository
       def add(release)
         dao = Dao::Release.new(
           id: release.id,
-          previous_release_id: release.previous_release_id,
           title: release.title
         )
         dao.items = build_items(release.items.to_a)
@@ -22,7 +21,6 @@ module ReleaseRepository
       def update(release)
         dao = Dao::Release.find(release.id)
         dao.title = release.title
-        dao.previous_release_id = release.previous_release_id
         dao.items = build_items(release.items.to_a)
         dao.save!
       end

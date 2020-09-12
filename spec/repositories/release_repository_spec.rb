@@ -19,7 +19,6 @@ RSpec.describe ReleaseRepository::AR do
       aggregate_failures do
         expect(rel.id).to eq release.id.to_s
         expect(rel.title).to eq 'MVP'
-        expect(rel.previous_release_id).to be_nil
 
         expect(rel.items.map(&:dao_pbi_id)).to eq [item_a.id.to_s]
       end

@@ -79,7 +79,6 @@ ActiveRecord::Schema.define(version: 2020_09_12_064828) do
 
   create_table "dao_releases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "dao_product_id"
-    t.uuid "previous_release_id"
     t.string "title", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

@@ -8,12 +8,11 @@ module Release
     class << self
       extend T::Sig
 
-      sig {params(product_id: Product::Id, title: String, previous_release_id: T.nilable(Id)).returns(T.attached_class)}
-      def create(product_id, title, previous_release_id = nil)
+      sig {params(product_id: Product::Id, title: String).returns(T.attached_class)}
+      def create(product_id, title)
         new(
           Id.create,
           product_id,
-          previous_release_id,
           title,
           ItemList.new([])
         )
@@ -26,20 +25,16 @@ module Release
     sig {returns(Product::Id)}
     attr_reader :product_id
 
-    sig {returns(T.nilable(Id))}
-    attr_reader :previous_release_id
-
     sig {returns(String)}
     attr_reader :title
 
     sig {returns(ItemList)}
     attr_reader :items
 
-    sig {params(id: Id, product_id: Product::Id, previous_release_id: T.nilable(Id), title: String, items: ItemList).void}
-    def initialize(id, product_id, previous_release_id, title, items)
+    sig {params(id: Id, product_id: Product::Id, title: String, items: ItemList).void}
+    def initialize(id, product_id, title, items)
       @id = id
       @product_id = product_id
-      @previous_release_id = previous_release_id
       @title = title
       @items = items
     end
