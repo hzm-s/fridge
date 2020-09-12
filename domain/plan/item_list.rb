@@ -44,6 +44,11 @@ module Plan
       @items
     end
 
+    sig {params(other: T.self_type).returns(T::Boolean)}
+    def ==(other)
+      self.to_a == other.to_a
+    end
+
     protected
 
     sig {params(item: Item, to: Item).returns(T.self_type)}

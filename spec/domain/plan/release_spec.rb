@@ -11,7 +11,7 @@ module Plan
 
     describe 'Create' do
       it do
-        release = described_class.new('MVP', [])
+        release = described_class.new('MVP', ItemList.new([]))
 
         expect(release.title).to eq 'MVP'
         expect(release.items).to be_empty
@@ -20,26 +20,26 @@ module Plan
 
     describe 'Add & Remove item' do
       before do
-        @release = described_class.new('R', [])
+        @release = described_class.new('R', ItemList.new([]))
         @release = @release.add_item(item_a)
         @release = @release.add_item(item_b)
         @release = @release.add_item(item_c)
       end
 
       it do
-        expect(@release.items).to eq [item_a, item_b, item_c]
+        expect(@release.items).to eq ItemList.new([item_a, item_b, item_c])
       end
 
       it do
         @release = @release.remove_item(item_b)
 
-        expect(@release.items).to eq [item_a, item_c]
+        expect(@release.items).to eq ItemList.new([item_a, item_c])
       end
     end
 
-    describe 'modify title' do
+    describe 'Modify title' do
       it do
-        release = described_class.new('OLD_TITLE', [])
+        release = described_class.new('OLD_TITLE', ItemList.new([]))
 
         release = release.modify_title('NEW_TITLE')
 
@@ -49,53 +49,32 @@ module Plan
     end
 
     describe 'can_remove?' do
-      let(:release) { described_class.new('MVP', []) }
-
       it do
+        release = described_class.new('MVP', ItemList.new([]))
         expect(release).to be_can_remove
       end
 
       it do
-        added = release.add_item(item_a)
-
-        expect(added).to_not be_can_remove
+        release = described_class.new('MVP', ItemList.new([item_a]))
+        expect(release).to_not be_can_remove
       end
     end
 
     describe 'Swap priorities' do
-      before do
-        @release = described_class.new('Icebox', [
-          item_a,
-          item_b,
-          item_c,
-          item_d,
-          item_e,
-        ])
-      end
-
       it do
-        @release = @release.swap_priorities(item_a, item_a)
-        expect(@release.items).to eq [item_a, item_b, item_c, item_d, item_e]
-      end
+        release = described_class.new(
+          'Icebox',
+          ItemList.new([item_a, item_b, item_c, item_d, item_e])
+        )
 
-      it do
-        @release = @release.swap_priorities(item_c, item_b)
-        expect(@release.items).to eq [item_a, item_c, item_b, item_d, item_e]
-      end
+        release = release.swap_priorities(item_a, item_e)
+        expect(release.items).to eq ItemList.new([item_b, item_c, item_d, item_e, item_a])
 
-      it do
-        @release = @release.swap_priorities(item_e, item_a)
-        expect(@release.items).to eq [item_e, item_a, item_b, item_c, item_d]
-      end
+        release = release.swap_priorities(item_d, item_b)
+        expect(release.items).to eq ItemList.new([item_d, item_b, item_c, item_e, item_a])
 
-      it do
-        @release = @release.swap_priorities(item_c, item_d)
-        expect(@release.items).to eq [item_a, item_b, item_d, item_c, item_e]
-      end
-
-      it do
-        @release = @release.swap_priorities(item_a, item_e)
-        expect(@release.items).to eq [item_b, item_c, item_d, item_e, item_a]
+        release = release.swap_priorities(item_b, item_e)
+        expect(release.items).to eq ItemList.new([item_d, item_c, item_e, item_b, item_a])
       end
     end
   end
