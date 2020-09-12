@@ -1,24 +1,32 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe PlanRepository::AR do
+RSpec.describe ReleaseRepository::AR do
+  let(:product) { create_product }
+
   describe 'add' do
     it do
-      product_id = Product::Id.create
-      owner = sign_up_as_person
-      Dao::Product.create!(id: product_id, name: 'P', owner_id: owner.id)
+      item_a = add_pbi(product.id)
+      item_b = add_pbi(product.id)
+      item_c = add_pbi(product.id)
 
-      plan = Plan::Plan.create(product_id)
-      release = Plan::Release.create('MVP')
-      plan.add_release(release)
+      release = Release::Release.create(product.id, 'MVP')
+      release.add_item(item_a.id)
+      release.add_item(item_b.id)
+      release.add_item(item_c.id)
 
-      described_class.add(plan)
+      described_class.add(release)
+      rels = Dao::Release.eager_load(:items).last
 
-      rels = Dao::Release.all
-      expect(rels.size).to eq 1
-      expect(rels[0].dao_product_id).to eq plan.product_id.to_s
-      expect(rels[0].title).to eq 'MVP'
-      expect(rels[0].items).to be_empty
+      aggregate_failures do
+        expect(rels.id).to eq release.id.to_s
+        expect(rels.title).to eq 'MVP'
+        expect(rels.previous_release_id).to be_nil
+
+        expect(rels.items[0].dao_pbi_id).to eq item_a.id.to_s
+        expect(rels.items[1].dao_pbi_id).to eq item_b.id.to_s
+        expect(rels.items[2].dao_pbi_id).to eq item_c.id.to_s
+      end
     end
   end
 
@@ -27,9 +35,6 @@ RSpec.describe PlanRepository::AR do
     let!(:other_product) { create_product }
 
     it do
-      item_a = Pbi::Id.create
-      item_b = Pbi::Id.create
-      item_c = Pbi::Id.create
 
       plan = described_class.find_by_product_id(product.id)
 

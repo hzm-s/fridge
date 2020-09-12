@@ -3,6 +3,7 @@ require 'domain_helper'
 
 module Release
   RSpec.describe Release do
+    let(:product_id) { Product::Id.create }
     let(:item_a) { Pbi::Id.create }
     let(:item_b) { Pbi::Id.create }
     let(:item_c) { Pbi::Id.create }
@@ -11,10 +12,11 @@ module Release
 
     describe 'Create' do
       it do
-        release = described_class.create('MVP')
+        release = described_class.create(product_id, 'MVP')
 
         aggregate_failures do
           expect(release.id).to_not be_nil
+          expect(release.product_id).to eq product_id
           expect(release.title).to eq 'MVP'
           expect(release.items).to be_empty
         end
@@ -23,16 +25,16 @@ module Release
 
     describe 'Previous release' do
       it do
-        phase1 = described_class.create('Phase1')
+        phase1 = described_class.create(product_id, 'Phase1')
         expect(phase1.previous_release_id).to be_nil
 
-        phase2 = described_class.create('Phase2', phase1.id)
+        phase2 = described_class.create(product_id, 'Phase2', phase1.id)
         expect(phase2.previous_release_id).to eq phase1.id
       end
     end
 
     describe 'Add & Remove item' do
-      let(:release) { described_class.create('MVP') }
+      let(:release) { described_class.create(product_id, 'MVP') }
 
       before do
         release.add_item(item_a)
@@ -52,7 +54,7 @@ module Release
 
     describe 'Modify title' do
       it do
-        release = described_class.create('OLD_TITLE')
+        release = described_class.create(product_id, 'OLD_TITLE')
 
         release.modify_title('NEW_TITLE')
 
@@ -63,12 +65,12 @@ module Release
 
     describe 'can_remove?' do
       it do
-        release = described_class.create('MVP')
+        release = described_class.create(product_id, 'MVP')
         expect(release).to be_can_remove
       end
 
       it do
-        release = described_class.create('MVP')
+        release = described_class.create(product_id, 'MVP')
         release.add_item(item_a)
         expect(release).to_not be_can_remove
       end
@@ -76,7 +78,7 @@ module Release
 
     describe 'Swap priorities' do
       it do
-        release = described_class.create('MVP')
+        release = described_class.create(product_id, 'MVP')
         [item_a, item_b, item_c, item_d, item_e].each do |item|
           release.add_item(item)
         end
