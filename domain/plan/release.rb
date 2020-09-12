@@ -8,20 +8,6 @@ module Plan
     Item = T.type_alias {Pbi::Id}
     Items = T.type_alias {T::Array[Item]}
 
-    class << self
-      extend T::Sig
-
-      sig {params(title: String).returns(T.attached_class)}
-      def create(title)
-        new(title, [])
-      end
-
-      sig {params(title: String, items: Items).returns(T.attached_class)}
-      def from_repository(title, items)
-        new(title, items)
-      end
-    end
-
     sig {returns(String)}
     attr_reader :title
 
@@ -33,21 +19,20 @@ module Plan
       @title = title
       @items = items
     end
-    private_class_method :new
 
-    sig {params(item: Item).void}
+    sig {params(item: Item).returns(Release)}
     def add_item(item)
-      @items << item
+      self.class.new(@title, @items + [item])
     end
 
-    sig {params(item: Item).void}
+    sig {params(item: Item).returns(Release)}
     def remove_item(item)
-      @items.delete(item)
+      self.class.new(@title, @items.reject { |i| i == item })
     end
 
-    sig {params(title: String).void}
+    sig {params(title: String).returns(Release)}
     def modify_title(title)
-      @title = title
+      self.class.new(title, @items)
     end
 
     sig {returns(T::Boolean)}
@@ -55,16 +40,14 @@ module Plan
       @items.empty?
     end
 
-    sig {params(from: Item, to: Item).void}
+    sig {params(from: Item, to: Item).returns(Release)}
     def swap_priorities(from, to)
-      return if from == to
+      return self if from == to
 
       if T.must(@items.index(from)) > T.must(@items.index(to))
-        remove_item(from)
-        insert_item_after(from, to)
+        remove_item(from).yield_self { |me| me.insert_item_before(from, to) }
       else
-        remove_item(from)
-        insert_item_before(from, to)
+        remove_item(from).yield_self { |me| me.insert_item_after(from, to) }
       end
     end
 
@@ -73,18 +56,18 @@ module Plan
       @items.include?(item)
     end
 
-    private
+    protected
 
-    sig {params(item: Item, to: Item).void}
-    def insert_item_after(item, to)
-      index = @items.index(to)
-      @items.insert(T.must(index), item)
+    sig {params(item: Item, to: Item).returns(Release)}
+    def insert_item_before(item, to)
+      index = T.must(@items.index(to))
+      self.class.new(@title, @items.insert(index, item))
     end
 
-    sig {params(item: Item, to: Item).void}
-    def insert_item_before(item, to)
-      index = @items.index(to)
-      @items.insert(0 - T.must(index), item)
+    sig {params(item: Item, to: Item).returns(Release)}
+    def insert_item_after(item, to)
+      index = 0 - (@items.size - T.must(@items.index(to)))
+      self.class.new(@title, @items.insert(index, item))
     end
   end
 end
