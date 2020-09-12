@@ -10,7 +10,8 @@ RSpec.describe ReleaseRepository::AR do
       item_b = add_pbi(product.id)
       item_c = add_pbi(product.id)
 
-      release = Release::Release.create(product.id, 'MVP')
+      previous_release_id = Release::Id.create
+      release = Release::Release.create(product.id, 'MVP', previous_release_id)
       release.add_item(item_a.id)
       release.add_item(item_b.id)
       release.add_item(item_c.id)
@@ -21,7 +22,7 @@ RSpec.describe ReleaseRepository::AR do
       aggregate_failures do
         expect(rels.id).to eq release.id.to_s
         expect(rels.title).to eq 'MVP'
-        expect(rels.previous_release_id).to be_nil
+        expect(rels.previous_release_id).to eq previous_release_id.to_s
 
         expect(rels.items[0].dao_pbi_id).to eq item_a.id.to_s
         expect(rels.items[1].dao_pbi_id).to eq item_b.id.to_s
