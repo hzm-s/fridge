@@ -14,9 +14,7 @@ module ReleaseRepository
           previous_release_id: release.previous_release_id,
           title: release.title
         )
-        dao.items = release.items.to_a.map do |item|
-          Dao::ReleaseItem.new(dao_pbi_id: item)
-        end
+        dao.items = build_items(release.items.to_a)
         dao.save!
       end
 
@@ -25,10 +23,17 @@ module ReleaseRepository
         dao = Dao::Release.find(release.id)
         dao.title = release.title
         dao.previous_release_id = release.previous_release_id
-        dao.items = release.items.to_a.map do |item|
+        dao.items = build_items(release.items.to_a)
+        dao.save!
+      end
+
+      private
+
+      sig {params(items: Release::ItemList::Items).returns(T::Array[Dao::ReleaseItem])}
+      def build_items(items)
+        items.map do |item|
           Dao::ReleaseItem.new(dao_pbi_id: item)
         end
-        dao.save!
       end
     end
   end
