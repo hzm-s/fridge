@@ -16,6 +16,6 @@ class AddAcceptanceCriterionUsecase < UsecaseBase
     criteria = pbi.acceptance_criteria.append(criterion)
     pbi.update_acceptance_criteria(criteria)
 
-    @repository.update(pbi)
+    @repository.store(pbi)
   end
 end

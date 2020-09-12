@@ -6,13 +6,13 @@ class AddPbiUsecase < UsecaseBase
 
   sig {void}
   def initialize
-    @pbi_repository = T.let(PbiRepository::AR, Pbi::PbiRepository)
+    @repository = T.let(PbiRepository::AR, Pbi::PbiRepository)
   end
 
   sig {params(product_id: Product::Id, description: Pbi::Description, release_no: Integer).returns(Pbi::Id)}
   def perform(product_id, description, release_no = 1)
     pbi = Pbi::Pbi.create(product_id, description)
-    @pbi_repository.add(pbi)
+    @repository.store(pbi)
     pbi.id
   end
 end
