@@ -12,10 +12,9 @@ module Plan
 
     describe 'Create' do
       it do
-        release = described_class.create(product_id, 'MVP')
+        release = described_class.new(product_id, 'MVP', [])
 
         aggregate_failures do
-          expect(release.id).to_not be_nil
           expect(release.product_id).to eq product_id
           expect(release.title).to eq 'MVP'
           expect(release.items).to be_empty
@@ -23,64 +22,70 @@ module Plan
       end
     end
 
-    describe 'Add & Remove item' do
-      let(:release) { described_class.create(product_id, 'MVP') }
-
-      before do
-        release.add_item(item_a)
-        release.add_item(item_b)
-        release.add_item(item_c)
-      end
-
-      it do
-        expect(release.items).to eq ItemList.new([item_a, item_b, item_c])
-      end
-
-      it do
-        release.remove_item(item_b)
-        expect(release.items).to eq ItemList.new([item_a, item_c])
-      end
-    end
-
     describe 'Modify title' do
       it do
-        release = described_class.create(product_id, 'OLD_TITLE')
+        old = described_class.new(product_id, 'OLD_TITLE', [item_a])
 
-        release.modify_title('NEW_TITLE')
+        new = old.modify_title('NEW_TITLE')
 
-        expect(release.title).to eq 'NEW_TITLE'
-        expect(release.items).to be_empty
+        expect(new.title).to eq 'NEW_TITLE'
+        expect(new.items).to eq [item_a]
       end
     end
 
-    describe 'can_remove?' do
+    describe 'Add & Remove item' do
       it do
-        release = described_class.create(product_id, 'MVP')
-        expect(release).to be_can_remove
+        release = described_class
+          .new(product_id, 'MVP', [])
+          .yield_self { |r| r.add_item(item_a) }
+          .yield_self { |r| r.add_item(item_b) }
+          .yield_self { |r| r.add_item(item_c) }
+        expect(release.items).to eq [item_a, item_b, item_c]
       end
 
       it do
-        release = described_class.create(product_id, 'MVP')
-        release.add_item(item_a)
-        expect(release).to_not be_can_remove
+        release = described_class
+          .new(product_id, 'MVP', [])
+          .yield_self { |r| r.add_item(item_a) }
+          .yield_self { |r| r.add_item(item_b) }
+          .yield_self { |r| r.add_item(item_c) }
+          .yield_self { |r| r.remove_item(item_b) }
+        expect(release.items).to eq [item_a, item_c]
       end
     end
 
     describe 'Swap priorities' do
+      before do
+        @release = described_class.new(
+          product_id,
+          'MVP',
+          [item_a, item_b, item_c, item_d, item_e]
+        )
+      end
+
       it do
-        release = described_class.create(product_id, 'MVP')
-        [item_a, item_b, item_c, item_d, item_e].each do |item|
-          release.add_item(item)
-        end
+        @release = @release.swap_priorities(item_a, item_a)
+        expect(@release.items).to eq [item_a, item_b, item_c, item_d, item_e]
+      end
 
-        release.swap_priorities(item_a, item_e)
-        expect(release.items).to eq ItemList.new([item_b, item_c, item_d, item_e, item_a])
+      it do
+        @release = @release.swap_priorities(item_c, item_b)
+        expect(@release.items).to eq [item_a, item_c, item_b, item_d, item_e]
+      end
 
-        release.swap_priorities(item_d, item_b)
-        expect(release.items).to eq ItemList.new([item_d, item_b, item_c, item_e, item_a])
+      it do
+        @release = @release.swap_priorities(item_e, item_a)
+        expect(@release.items).to eq [item_e, item_a, item_b, item_c, item_d]
+      end
 
-        release.swap_priorities(item_b, item_e)
-        expect(release.items).to eq ItemList.new([item_d, item_c, item_e, item_b, item_a])
+      it do
+        @release = @release.swap_priorities(item_c, item_d)
+        expect(@release.items).to eq [item_a, item_b, item_d, item_c, item_e]
+      end
+
+      it do
+        @release = @release.swap_priorities(item_a, item_e)
+        expect(@release.items).to eq [item_b, item_c, item_d, item_e, item_a]
       end
     end
   end
