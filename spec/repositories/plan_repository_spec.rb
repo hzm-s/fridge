@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe ReleaseRepository::AR do
+RSpec.describe PlanRepository::AR do
   let(:product) { create_product }
 
   describe 'Add & Update' do
@@ -10,7 +10,7 @@ RSpec.describe ReleaseRepository::AR do
       item_b = add_pbi(product.id)
       item_c = add_pbi(product.id)
 
-      release = Release::Release.create(product.id, 'MVP')
+      release = Plan::Release.create(product.id, 'MVP')
       release.add_item(item_a.id)
 
       described_class.add(release)

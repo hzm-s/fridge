@@ -1,7 +1,7 @@
 # typed: false
 require 'domain_helper'
 
-module Release
+module Plan
   RSpec.describe ItemList do
     let(:item_a) { Pbi::Id.create }
     let(:item_b) { Pbi::Id.create }

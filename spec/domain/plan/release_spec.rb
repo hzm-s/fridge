@@ -1,7 +1,7 @@
 # typed: false
 require 'domain_helper'
 
-module Release
+module Plan
   RSpec.describe Release do
     let(:product_id) { Product::Id.create }
     let(:item_a) { Pbi::Id.create }

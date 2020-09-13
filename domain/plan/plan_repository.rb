@@ -1,8 +1,8 @@
 # typed: strict
 require 'sorbet-runtime'
 
-module Release
-  module ReleaseRepository
+module Plan
+  module PlanRepository
     extend T::Sig
     extend T::Helpers
     interface!

@@ -1,13 +1,13 @@
 # typed: strict
 require 'sorbet-runtime'
 
-module ReleaseRepository
+module PlanRepository
   module AR
     class << self
       extend T::Sig
-      include Release::ReleaseRepository
+      include Plan::PlanRepository
 
-      sig {override.params(release: Release::Release).void}
+      sig {override.params(release: Plan::Release).void}
       def add(release)
         dao = Dao::Release.new(
           id: release.id,
@@ -17,7 +17,7 @@ module ReleaseRepository
         dao.save!
       end
 
-      sig {override.params(release: Release::Release).void}
+      sig {override.params(release: Plan::Release).void}
       def update(release)
         dao = Dao::Release.find(release.id)
         dao.title = release.title
@@ -27,7 +27,7 @@ module ReleaseRepository
 
       private
 
-      sig {params(items: Release::ItemList::Items).returns(T::Array[Dao::ReleaseItem])}
+      sig {params(items: Plan::ItemList::Items).returns(T::Array[Dao::ReleaseItem])}
       def build_items(items)
         items.map do |item|
           Dao::ReleaseItem.new(dao_pbi_id: item)
