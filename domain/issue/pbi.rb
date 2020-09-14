@@ -1,7 +1,7 @@
 # typed: strict
 require 'sorbet-runtime'
 
-module Pbi
+module Issue
   class Pbi
     extend T::Sig
 

@@ -1,7 +1,7 @@
 # typed: false
 require 'domain_helper'
 
-module Pbi
+module Issue
   RSpec.describe StoryPoint do
     it do
       points = described_class.all

@@ -1,7 +1,7 @@
 # typed: strict
 require 'sorbet-runtime'
 
-module Pbi
+module Issue
   class AcceptanceCriteria
     extend T::Sig
 

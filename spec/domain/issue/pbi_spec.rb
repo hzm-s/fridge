@@ -1,7 +1,7 @@
 # typed: false
 require 'domain_helper'
 
-module Pbi
+module Issue
   RSpec.describe Pbi do
     let(:product_id) { Product::Id.create }
     let(:description) { pbi_description('A user story') }
