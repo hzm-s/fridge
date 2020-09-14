@@ -7,11 +7,11 @@ module Issue
     extend T::Helpers
     interface!
 
-    sig {abstract.params(id: Id).returns(Pbi)}
+    sig {abstract.params(id: Id).returns(Issue)}
     def find_by_id(id); end
 
-    sig {abstract.params(pbi: Pbi).void}
-    def store(pbi); end
+    sig {abstract.params(issue: Issue).void}
+    def store(issue); end
 
     sig {abstract.params(id: Id).void}
     def delete(id); end
