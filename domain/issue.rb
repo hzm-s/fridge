@@ -8,6 +8,7 @@ module Issue
   class CanNotRemove < StandardError; end
 
   autoload :Id, 'issue/id'
+  autoload :Issue, 'issue/issue'
   autoload :Pbi, 'issue/pbi'
   autoload :Description, 'issue/description'
   autoload :AcceptanceCriterion, 'issue/acceptance_criterion'
