@@ -6,16 +6,16 @@ class AddAcceptanceCriterionUsecase < UsecaseBase
 
   sig {void}
   def initialize
-    @repository = T.let(PbiRepository::AR, Pbi::PbiRepository)
+    @repository = T.let(IssueRepository::AR, Issue::IssueRepository)
   end
 
-  sig {params(pbi_id: Pbi::Id, criterion: Pbi::AcceptanceCriterion).void}
-  def perform(pbi_id, criterion)
-    pbi = @repository.find_by_id(pbi_id)
+  sig {params(issue_id: Issue::Id, criterion: Issue::AcceptanceCriterion).void}
+  def perform(issue_id, criterion)
+    issue = @repository.find_by_id(issue_id)
 
-    criteria = pbi.acceptance_criteria.append(criterion)
-    pbi.update_acceptance_criteria(criteria)
+    criteria = issue.acceptance_criteria.append(criterion)
+    issue.update_acceptance_criteria(criteria)
 
-    @repository.store(pbi)
+    @repository.store(issue)
   end
 end

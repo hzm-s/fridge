@@ -36,21 +36,21 @@ ActiveRecord::Schema.define(version: 2020_09_12_064828) do
   end
 
   create_table "dao_acceptance_criteria", force: :cascade do |t|
-    t.uuid "dao_pbi_id"
+    t.uuid "dao_issue_id"
     t.string "content", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["dao_pbi_id"], name: "index_dao_acceptance_criteria_on_dao_pbi_id"
+    t.index ["dao_issue_id"], name: "index_dao_acceptance_criteria_on_dao_issue_id"
   end
 
-  create_table "dao_pbis", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "dao_issues", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "dao_product_id"
     t.string "status", null: false
     t.string "description", null: false
     t.integer "size"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["dao_product_id"], name: "idx_product_id_on_pbis"
+    t.index ["dao_product_id"], name: "idx_product_id_on_issues"
   end
 
   create_table "dao_people", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -71,10 +71,10 @@ ActiveRecord::Schema.define(version: 2020_09_12_064828) do
 
   create_table "dao_release_items", force: :cascade do |t|
     t.uuid "dao_release_id"
-    t.uuid "dao_pbi_id"
+    t.uuid "dao_issue_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["dao_release_id", "dao_pbi_id"], name: "index_dao_release_items_on_dao_release_id_and_dao_pbi_id", unique: true
+    t.index ["dao_release_id", "dao_issue_id"], name: "index_dao_release_items_on_dao_release_id_and_dao_issue_id", unique: true
   end
 
   create_table "dao_releases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -105,10 +105,10 @@ ActiveRecord::Schema.define(version: 2020_09_12_064828) do
 
   add_foreign_key "app_user_accounts", "dao_people"
   add_foreign_key "app_user_profiles", "app_user_accounts"
-  add_foreign_key "dao_acceptance_criteria", "dao_pbis"
-  add_foreign_key "dao_pbis", "dao_products"
+  add_foreign_key "dao_acceptance_criteria", "dao_issues"
+  add_foreign_key "dao_issues", "dao_products"
   add_foreign_key "dao_products", "dao_people", column: "owner_id"
-  add_foreign_key "dao_release_items", "dao_pbis"
+  add_foreign_key "dao_release_items", "dao_issues"
   add_foreign_key "dao_release_items", "dao_releases"
   add_foreign_key "dao_releases", "dao_products"
   add_foreign_key "dao_team_members", "dao_teams"

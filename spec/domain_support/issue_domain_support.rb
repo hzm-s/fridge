@@ -1,6 +1,6 @@
 # typed: false
 module IssueDomainSupport
-  def pbi_description(desc)
+  def issue_description(desc)
     Issue::Description.new(desc)
   end
 
