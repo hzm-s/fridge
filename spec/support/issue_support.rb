@@ -4,19 +4,19 @@ require_relative '../domain_support/issue_domain_support'
 module IssueSupport
   include IssueDomainSupport
 
-  def add_feature(product_id, description = 'FEATURE', acceptance_criteria: [], size: nil, release: 1, wip: false)
-    feature = perform_add_issue(product_id, description)
+  def add_issue(product_id, description = 'FEATURE', acceptance_criteria: [], size: nil, release: 1, wip: false)
+    issue = perform_add_issue(product_id, description)
 
-    return feature unless acceptance_criteria
-    add_acceptance_criteria(feature, acceptance_criteria)
+    return issue unless acceptance_criteria
+    add_acceptance_criteria(issue, acceptance_criteria)
 
-    return feature unless size
-    estimate_feature(feature.id, size)
+    return issue unless size
+    estimate_feature(issue.id, size)
 
-    return feature unless wip
-    start_issue_development(feature.id)
+    return issue unless wip
+    start_issue_development(issue.id)
 
-    IssueRepository::AR.find_by_id(feature.id)
+    IssueRepository::AR.find_by_id(issue.id)
   end
 
   def add_acceptance_criteria(issue, contents_or_criteria)
