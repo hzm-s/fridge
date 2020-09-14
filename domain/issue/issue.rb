@@ -18,5 +18,14 @@ module Issue
 
     sig {abstract.returns(Description)}
     def description; end
+
+    sig {abstract.params(description: Description).void}
+    def modify_description(description); end
+
+    sig {abstract.void}
+    def start_development; end
+
+    sig {abstract.void}
+    def abort_development; end
   end
 end

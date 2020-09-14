@@ -4,6 +4,7 @@ require 'sorbet-runtime'
 module Issue
   class Pbi
     extend T::Sig
+    include Issue
 
     class << self
       extend T::Sig
@@ -26,16 +27,16 @@ module Issue
       end
     end
 
-    sig {returns(Id)}
+    sig {override.returns(Id)}
     attr_reader :id
 
-    sig {returns(Product::Id)}
+    sig {override.returns(Product::Id)}
     attr_reader :product_id
 
-    sig {returns(Status)}
+    sig {override.returns(Status)}
     attr_reader :status
 
-    sig {returns(Description)}
+    sig {override.returns(Description)}
     attr_reader :description
 
     sig {returns(StoryPoint)}
@@ -61,7 +62,7 @@ module Issue
       @acceptance_criteria = acceptance_criteria
     end
 
-    sig {params(description: Description).void}
+    sig {override.params(description: Description).void}
     def modify_description(description)
       @description = description
     end
@@ -80,12 +81,12 @@ module Issue
       update_status_by_preparation
     end
 
-    sig {void}
+    sig {override.void}
     def start_development
       @status = @status.update_to_wip
     end
 
-    sig {void}
+    sig {override.void}
     def abort_development
       @status = @status.update_by_abort_development
     end
