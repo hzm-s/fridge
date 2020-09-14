@@ -16,5 +16,5 @@ module Issue
   autoload :StoryPoint, 'issue/story_point'
   autoload :Status, 'issue/status'
   autoload :Statuses, 'issue/statuses'
-  autoload :PbiRepository, 'issue/pbi_repository'
+  autoload :IssueRepository, 'issue/issue_repository'
 end

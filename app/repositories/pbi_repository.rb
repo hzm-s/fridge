@@ -5,7 +5,7 @@ module PbiRepository
   class AR < Dao::Pbi
     class << self
       extend T::Sig
-      include Pbi::PbiRepository
+      include Issue::IssueRepository
 
       sig {override.params(id: Pbi::Id).returns(Pbi::Pbi)}
       def find_by_id(id)
