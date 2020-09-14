@@ -2,7 +2,7 @@
 require 'sorbet-runtime'
 
 module Issue
-  module PbiRepository
+  module IssueRepository
     extend T::Sig
     extend T::Helpers
     interface!
