@@ -2,7 +2,7 @@
 require 'sorbet-runtime'
 
 module Issue
-  class Pbi
+  class Feature
     extend T::Sig
     include Issue
 

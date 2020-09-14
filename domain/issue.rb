@@ -9,7 +9,7 @@ module Issue
 
   autoload :Id, 'issue/id'
   autoload :Issue, 'issue/issue'
-  autoload :Pbi, 'issue/pbi'
+  autoload :Feature, 'issue/feature'
   autoload :Description, 'issue/description'
   autoload :AcceptanceCriterion, 'issue/acceptance_criterion'
   autoload :AcceptanceCriteria, 'issue/acceptance_criteria'
