@@ -1,24 +1,46 @@
-# typed: true
+# typed: false
 require 'sorbet-runtime'
 
 module ProductBacklogQuery
   class << self
     def call(product_id)
-      items = fetch_pbis(product_id).map { |r| Item.new(r) }
-      plan = fetch_plan(product_id)
-      releases = plan.releases.map.with_index(1) { |r, i| Release.new(i, r, items) }
-      ProductBacklog.new(plan: plan, releases: releases)
+      items = fetch_issues(product_id).map { |r| Item.new(r) }
+      #plan = fetch_plan(product_id)
+      #releases = plan.releases.map.with_index(1) { |r, i| Release.new(i, r, items) }
+      ProductBacklog.new(items)
     end
 
     private
 
-    def fetch_pbis(product_id)
-      Dao::Pbi.eager_load(:criteria).where(dao_product_id: product_id)
+    def fetch_issues(product_id)
+      Dao::Issue.eager_load(:criteria).where(dao_product_id: product_id).order(:created_at)
     end
 
     def fetch_plan(product_id)
       Product::Id.from_string(product_id)
         .yield_self { |id| PlanRepository::AR.find_by_product_id(id) }
+    end
+  end
+
+  class ItemList < SimpleDelegator
+    def items
+      __getobj__
+    end
+  end
+
+  class ProductBacklog < T::Struct
+    prop :items, ItemList
+
+    def initialize(items)
+      super(items: ItemList.new(items))
+    end
+
+    def icebox
+      items
+    end
+
+    def empty?
+      items.empty?
     end
   end
 
@@ -41,15 +63,6 @@ module ProductBacklogQuery
   class Item < SimpleDelegator
     def status
       @__status ||= Pbi::Statuses.from_string(__getobj__.status)
-    end
-  end
-
-  class ProductBacklog < T::Struct
-    prop :plan, Plan::Plan
-    prop :releases, T::Array[ProductBacklogQuery::Release]
-
-    def can_remove_release?
-      plan.can_remove_release?
     end
   end
 end
