@@ -2,7 +2,7 @@
 require 'domain_helper'
 
 module Issue
-  RSpec.describe Feature do
+  RSpec.describe Issue do
     let(:product_id) { Product::Id.create }
     let(:description) { pbi_description('A user story') }
 

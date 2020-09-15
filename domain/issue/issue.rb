@@ -2,30 +2,99 @@
 require 'sorbet-runtime'
 
 module Issue
-  module Issue
+  class Issue
     extend T::Sig
-    extend T::Helpers
-    interface!
 
-    sig {abstract.returns(Id)}
-    def id; end
+    class << self
+      extend T::Sig
 
-    sig {abstract.returns(Product::Id)}
-    def product_id; end
+      sig {params(product_id: Product::Id, description: Description).returns(T.attached_class)}
+      def create(product_id, description)
+        new(
+          Id.create,
+          product_id,
+          Statuses::Preparation,
+          description,
+          StoryPoint.unknown,
+          AcceptanceCriteria.new([]),
+        )
+      end
 
-    sig {abstract.returns(Status)}
-    def status; end
+      sig {params(id: Id, product_id: Product::Id, status: Status, description: Description, size: StoryPoint, acceptance_criteria: AcceptanceCriteria).returns(T.attached_class)}
+      def from_repository(id, product_id, status, description, size, acceptance_criteria)
+        new(id, product_id, status, description, size, acceptance_criteria)
+      end
+    end
 
-    sig {abstract.returns(Description)}
-    def description; end
+    sig {returns(Id)}
+    attr_reader :id
 
-    sig {abstract.params(description: Description).void}
-    def modify_description(description); end
+    sig {returns(Product::Id)}
+    attr_reader :product_id
 
-    sig {abstract.void}
-    def start_development; end
+    sig {returns(Status)}
+    attr_reader :status
 
-    sig {abstract.void}
-    def abort_development; end
+    sig {returns(Description)}
+    attr_reader :description
+
+    sig {returns(StoryPoint)}
+    attr_reader :size
+
+    sig {returns(AcceptanceCriteria)}
+    attr_reader :acceptance_criteria
+
+    sig {params(
+      id: Id,
+      product_id: Product::Id,
+      status: Status,
+      description: Description,
+      size: StoryPoint,
+      acceptance_criteria: AcceptanceCriteria
+    ).void}
+    def initialize(id, product_id, status, description, size, acceptance_criteria)
+      @id = id
+      @product_id = product_id
+      @status = status
+      @description = description
+      @size = size
+      @acceptance_criteria = acceptance_criteria
+    end
+
+    sig {params(description: Description).void}
+    def modify_description(description)
+      @description = description
+    end
+
+    sig {params(criteria: AcceptanceCriteria).void}
+    def update_acceptance_criteria(criteria)
+      @acceptance_criteria = criteria
+      update_status_by_preparation
+    end
+
+    sig {params(size: StoryPoint).void}
+    def estimate(size)
+      return unless @status.can_estimate?
+
+      @size = size
+      update_status_by_preparation
+    end
+
+    sig {void}
+    def start_development
+      @status = @status.update_to_wip
+    end
+
+    sig {void}
+    def abort_development
+      @status = @status.update_by_abort_development
+    end
+
+    private
+
+    sig {returns(Status)}
+    def update_status_by_preparation
+      @status = @status.update_by_prepartion(acceptance_criteria, size)
+    end
   end
 end
