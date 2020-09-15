@@ -4,7 +4,7 @@ require 'domain_helper'
 module Issue
   RSpec.describe Issue do
     let(:product_id) { Product::Id.create }
-    let(:description) { pbi_description('A user story') }
+    let(:description) { issue_description('A user story') }
 
     describe 'create' do
       let(:pbi) { described_class.create(product_id, description) }
@@ -22,10 +22,10 @@ module Issue
     end
 
     describe 'Modify description' do
-      let(:pbi) { described_class.create(product_id, pbi_description('Origin')) }
+      let(:pbi) { described_class.create(product_id, issue_description('Origin')) }
 
       it do
-        new_desc = pbi_description('Modified')
+        new_desc = issue_description('Modified')
         pbi.modify_description(new_desc)
         expect(pbi.description).to eq new_desc
       end
@@ -46,7 +46,7 @@ module Issue
 
       it do
 
-        pbi.modify_description(pbi_description('NEW user story'))
+        pbi.modify_description(issue_description('NEW user story'))
         expect(pbi.status).to eq Statuses::Preparation
 
         pbi.update_acceptance_criteria(acceptance_criteria(%w(AC1)))
