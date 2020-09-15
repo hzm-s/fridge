@@ -1,5 +1,5 @@
 # typed: false
-class PbisController < ApplicationController
+class IssuesController < ApplicationController
   include ProductHelper
 
   before_action :require_user
@@ -12,14 +12,14 @@ class PbisController < ApplicationController
   end
 
   def create
-    @form = PbiForm.new(permitted_params)
+    @form = IssueForm.new(permitted_params)
 
     if @form.valid?
-      AddPbiUsecase.perform(
+      AddIssueUsecase.perform(
         Product::Id.from_string(params[:product_id]),
         @form.domain_objects[:description]
       )
-      redirect_to product_pbis_path(product_id: params[:product_id]), flash: flash_success('pbi.create')
+      redirect_to product_backlog_path(product_id: params[:product_id]), flash: flash_success('issue.create')
     else
       render :new
     end

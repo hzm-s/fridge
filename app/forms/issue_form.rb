@@ -1,5 +1,5 @@
 # typed: false
-class PbiForm
+class IssueForm
   include ActiveModel::Model
   extend I18nHelper
 
@@ -8,5 +8,5 @@ class PbiForm
 
   validates :description,
     presence: true,
-    domain_object: { object_class: Pbi::Description, message: t_domain_error(Pbi::InvalidDescription), allow_blank: true }
+    domain_object: { object_class: Issue::Description, message: t_domain_error(Issue::InvalidDescription), allow_blank: true }
 end
