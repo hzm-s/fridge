@@ -41,7 +41,7 @@ module IssueRepository
     end
 
     def read
-      Issue::Feature.from_repository(
+      Issue::Issue.from_repository(
         read_issue_id,
         read_product_id,
         read_status,

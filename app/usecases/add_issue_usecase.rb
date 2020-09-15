@@ -11,7 +11,7 @@ class AddIssueUsecase < UsecaseBase
 
   sig {params(product_id: Product::Id, description: Issue::Description, release_no: Integer).returns(Issue::Id)}
   def perform(product_id, description, release_no = 1)
-    issue = Issue::Feature.create(product_id, description)
+    issue = Issue::Issue.create(product_id, description)
     @repository.store(issue)
     issue.id
   end
