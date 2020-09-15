@@ -45,7 +45,6 @@ module Issue
       let(:pbi) { described_class.create(product_id, description) }
 
       it do
-
         pbi.modify_description(issue_description('NEW user story'))
         expect(pbi.status).to eq Statuses::Preparation
 
