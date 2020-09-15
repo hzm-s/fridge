@@ -4,14 +4,33 @@ require 'rails_helper'
 RSpec.describe ProductBacklogQuery do
   let!(:product) { create_product }
 
-  context 'PBIがない場合' do
+  context 'アイテムがない場合' do
     it do
       pbl = described_class.call(product.id.to_s)
-      expect(pbl.releases.first.items).to be_empty
+      expect(pbl).to be_empty
     end
   end
 
-  context 'PBIがある場合' do
+  xit '受け入れ基準がある場合は受け入れ基準を含むこと' do
+    issue = add_issue(product.id, acceptance_criteria: %w(ac1 ac2 ac3))
+
+    item = described_class.call(product.id.to_s).releases.first.items.last
+
+    expect(item.criteria.map(&:content)).to eq %w(ac1 ac2 ac3) 
+  end
+
+  context 'リリース未確定のアイテムがある場合' do
+    it '作成日時の昇順で返すこと' do
+      issue_a = add_issue(product.id)
+      issue_b = add_issue(product.id)
+      issue_c = add_issue(product.id)
+
+      pbl = described_class.call(product.id.to_s)
+      expect(pbl.icebox.items.map(&:id)).to eq [issue_a, issue_b, issue_c].map(&:id).map(&:to_s)
+    end
+  end
+
+  xcontext 'PBIがある場合' do
     let!(:pbi_a) { add_pbi(product.id, 'AAA').id }
     let!(:pbi_b) { add_pbi(product.id, 'BBB').id }
     let!(:pbi_c) { add_pbi(product.id, 'CCC').id }
@@ -44,14 +63,6 @@ RSpec.describe ProductBacklogQuery do
 
       release = described_class.call(product.id.to_s).releases.last
       expect(release).to be_can_remove
-    end
-
-    it '受け入れ基準がある場合は受け入れ基準を含むこと' do
-      pbi = add_pbi(product.id, acceptance_criteria: %w(ac1 ac2 ac3))
-
-      item = described_class.call(product.id.to_s).releases.first.items.last
-
-      expect(item.criteria.map(&:content)).to eq %w(ac1 ac2 ac3) 
     end
 
     it '各操作の可否を返すこと' do
