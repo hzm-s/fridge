@@ -1,1 +1,1 @@
-$('#js-pbi-form').replaceWith('<%=j render partial: 'pbis/form', locals: { form: @form, url: pbi_path(@pbi_id), method: :put, btn_label: I18n.t('navs.save') } %>')
+$('#js-issue-form').replaceWith('<%=j render partial: 'issues/form', locals: { form: @form, url: issue_path(@issue_id), method: :put, btn_label: I18n.t('navs.save') } %>')
