@@ -5,7 +5,7 @@ ja:
     signed_out: ログアウトしました
     require_sign_in: ログインしてください
     already_signed_in: ログインしています
-    pbi:
+    issue:
       create: アイテムをプロダクトバックログに追加しました
       update: フィーチャーを更新しました
       destroy: アイテムを削除しました
@@ -55,7 +55,7 @@ ja:
         post: 追加する
         patch: 保存する
 
-  pbis:
+  issues:
     index:
       title: プロダクトバックログ
       add: アイテムを追加する

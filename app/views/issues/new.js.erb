@@ -1,0 +1,1 @@
+$('#js-pbi-form').replaceWith('<%=j render partial: 'issues/form', locals: { form: @form, url: product_issues_path(current_product_id), method: :post, btn_label: I18n.t('issues.index.add') } %>')
