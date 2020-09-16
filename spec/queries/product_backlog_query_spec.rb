@@ -11,10 +11,11 @@ RSpec.describe ProductBacklogQuery do
     end
   end
 
-  xit '受け入れ基準がある場合は受け入れ基準を含むこと' do
+  it '受け入れ基準がある場合は受け入れ基準を含むこと' do
     issue = add_issue(product.id, acceptance_criteria: %w(ac1 ac2 ac3))
 
-    item = described_class.call(product.id.to_s).releases.first.items.last
+    pbl = described_class.call(product.id.to_s)
+    item = pbl.icebox.items.first
 
     expect(item.criteria.map(&:content)).to eq %w(ac1 ac2 ac3) 
   end
