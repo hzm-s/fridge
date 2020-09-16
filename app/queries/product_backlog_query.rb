@@ -62,7 +62,7 @@ module ProductBacklogQuery
 
   class Item < SimpleDelegator
     def status
-      @__status ||= Pbi::Statuses.from_string(__getobj__.status)
+      @__status ||= Issue::Statuses.from_string(__getobj__.status)
     end
   end
 end

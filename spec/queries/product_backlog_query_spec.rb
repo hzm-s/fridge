@@ -20,6 +20,15 @@ RSpec.describe ProductBacklogQuery do
     expect(item.criteria.map(&:content)).to eq %w(ac1 ac2 ac3) 
   end
 
+  it 'ステータスを返すこと' do
+    issue = add_issue(product.id)
+
+    pbl = described_class.call(product.id.to_s)
+    item = pbl.icebox.items.first
+
+    expect(item.status).to eq Issue::Statuses::Preparation
+  end
+
   context 'リリース未確定のアイテムがある場合' do
     it '作成日時の昇順で返すこと' do
       issue_a = add_issue(product.id)
