@@ -1,6 +1,6 @@
 ja:
   domain:
-    pbi:
+    issue:
       statuses:
         draft: 下書き
         preparation: 準備中

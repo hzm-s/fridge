@@ -55,11 +55,13 @@ ja:
         post: 追加する
         patch: 保存する
 
-  issues:
-    index:
+  product_backlogs:
+    show:
       title: プロダクトバックログ
       add: アイテムを追加する
       add_release: リリースを追加する
+
+  issues:
     edit:
       title: アイテムの編集
       title_ac: 受け入れ基準
