@@ -62,11 +62,11 @@ RSpec.describe 'issues' do
     end
   end
 
-  xdescribe 'destroy' do
-    it do
-      pbi = add_pbi(product.id, 'YOHKYU')
+  describe 'destroy' do
+    xit do
+      issue = add_issue(product.id, 'YOHKYU')
 
-      delete pbi_path(pbi.id)
+      delete issue_path(issue.id)
       follow_redirect!
 
       expect(response.body).to_not include 'YOHKYU'
