@@ -11,7 +11,7 @@ RSpec.describe 'issues' do
 
   describe 'create' do
     context 'given valid params' do
-      xit do
+      it do
         post product_issues_path(product_id: product.id.to_s, format: :js), params: { form: { description: 'ABC' } }
         get product_backlog_path(product_id: product.id.to_s)
 

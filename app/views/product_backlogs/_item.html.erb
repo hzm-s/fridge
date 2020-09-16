@@ -8,12 +8,12 @@
       <%= link_to "#clp-pbi-ac-#{item.id}", collapse_trigger_options(class: 'pbl-item__ac-trigger') do %>
         <i class="fas fa-list"></i>
       <% end %>
-      <%= render partial: 'pbis/point_form', locals: { item: item } %>
-      <%= render partial: 'pbis/item_menu', locals: { item: item } %>
+      <%= render partial: 'point_form', locals: { item: item } %>
+      <%= render partial: 'item_menu', locals: { item: item } %>
     </div>
   </div>
   <div class="collapse pbl-item__ac" id="clp-pbi-ac-<%= item.id %>">
     <hr style="margin: 0.5rem 0;">
-    <%= render partial: 'pbis/acceptance_criteria', locals: { item: item } %>
+    <%= render partial: 'issues/acceptance_criteria', locals: { item: item } %>
   </div>
 </div>

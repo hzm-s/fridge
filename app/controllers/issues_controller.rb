@@ -6,11 +6,6 @@ class IssuesController < ApplicationController
 
   helper_method :current_product_id
 
-  def index
-    @pbl = ProductBacklogQuery.call(params[:product_id])
-    @form = PbiForm.new
-  end
-
   def create
     @form = IssueForm.new(permitted_params)
 
