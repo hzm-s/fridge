@@ -12,7 +12,7 @@ RSpec.describe ProductBacklogQuery do
   end
 
   it '受け入れ基準がある場合は受け入れ基準を含むこと' do
-    issue = add_issue(product.id, acceptance_criteria: %w(ac1 ac2 ac3))
+    add_issue(product.id, acceptance_criteria: %w(ac1 ac2 ac3))
 
     pbl = described_class.call(product.id.to_s)
     item = pbl.icebox.items.first
@@ -21,7 +21,7 @@ RSpec.describe ProductBacklogQuery do
   end
 
   it 'ステータスを返すこと' do
-    issue = add_issue(product.id)
+    add_issue(product.id)
 
     pbl = described_class.call(product.id.to_s)
     item = pbl.icebox.items.first
@@ -73,19 +73,6 @@ RSpec.describe ProductBacklogQuery do
 
       release = described_class.call(product.id.to_s).releases.last
       expect(release).to be_can_remove
-    end
-
-    it '各操作の可否を返すこと' do
-      pbi = add_pbi(product.id, acceptance_criteria: %w(ac1), size: 1)
-
-      item = described_class.call(product.id.to_s).releases.first.items.last
-
-      aggregate_failures do
-        expect(item.status).to be_can_start_development
-        expect(item.status).to_not be_can_abort_development
-        expect(item.status).to be_can_remove
-        expect(item.status).to be_can_estimate
-      end
     end
   end
 end
