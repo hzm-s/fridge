@@ -16,7 +16,7 @@
         <div class="pl-link__icon">
           <i class="fas fa-list-alt"></i>
         </div>
-        <%= link_to t('.pbl'), product_pbis_path(product_id: product.id) %>
+        <%= link_to t('.pbl'), product_backlog_path(product_id: product.id) %>
       </div>
       <div class="pl-link">
         <% if product.teams.any? %>
