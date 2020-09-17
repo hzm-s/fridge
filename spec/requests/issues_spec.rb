@@ -63,7 +63,7 @@ RSpec.describe 'issues' do
   end
 
   describe 'destroy' do
-    xit do
+    it do
       issue = add_issue(product.id, 'YOHKYU')
 
       delete issue_path(issue.id)
