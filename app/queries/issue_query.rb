@@ -1,15 +1,15 @@
 # typed: true
-module PbiQuery
+module IssueQuery
   class << self
     def call(id)
-      rel = Dao::Pbi.eager_load(:criteria).find(id)
+      rel = Dao::Issue.eager_load(:criteria).find(id)
       Wrapper.new(rel)
     end
   end
 
   class Wrapper < SimpleDelegator
     def status
-      @__status ||= Pbi::Statuses.from_string(super)
+      @__status ||= Issue::Statuses.from_string(super)
     end
   end
 end
