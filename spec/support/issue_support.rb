@@ -18,6 +18,7 @@ module IssueSupport
 
     IssueRepository::AR.find_by_id(issue.id)
   end
+  alias_method :add_feature, :add_issue
 
   def add_acceptance_criteria(issue, contents_or_criteria)
     criteria = contents_or_criteria.map do |cc|
