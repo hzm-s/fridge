@@ -7,7 +7,7 @@ RSpec.describe IssueRepository::AR do
   describe 'Add' do
     context 'Feature' do
       it do
-        issue = Issue::Feature.create(product.id, Issue::Description.new('ABC'))
+        issue = Issue::Issue.create(product.id, Issue::Description.new('ABC'))
 
         expect { described_class.store(issue) }
           .to change { Dao::Issue.count }.by(1)

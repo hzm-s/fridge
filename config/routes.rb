@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
   resources :releases, param: :no, only: [:edit, :update, :destroy]
 
-  resources :pbis, only: [:edit, :update, :destroy] do
+  resources :issues, only: [:edit, :update, :destroy] do
     resources :acceptance_criteria, only: [:create]
   end
   resources :acceptance_criteria, only: [:destroy]

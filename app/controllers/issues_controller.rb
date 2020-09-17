@@ -21,20 +21,20 @@ class IssuesController < ApplicationController
   end
 
   def edit
-    @pbi = PbiQuery.call(params[:id])
-    @form = PbiForm.new(description: @pbi.description)
+    @issue = IssueQuery.call(params[:id])
+    @form = IssueForm.new(description: @issue.description)
   end
 
   def update
-    @pbi_id = params[:id]
-    @form = PbiForm.new(permitted_params)
+    @issue_id = params[:id]
+    @form = IssueForm.new(permitted_params)
 
     if @form.valid?
-      ModifyPbiUsecase.perform(
-        Pbi::Id.from_string(@pbi_id),
+      ModifyIssueUsecase.perform(
+        Issue::Id.from_string(@issue_id),
         @form.domain_objects[:description]
       )
-      redirect_to edit_pbi_path(@pbi_id), flash: flash_success('pbi.update')
+      redirect_to edit_issue_path(@issue_id), flash: flash_success('issue.update')
     else
       render :edit
     end
@@ -56,6 +56,6 @@ class IssuesController < ApplicationController
     product_id = params[:product_id]
     return product_id if product_id
 
-    Dao::Pbi.find(params[:id]).product_id
+    IssueQuery.call(params[:id]).product_id
   end
 end

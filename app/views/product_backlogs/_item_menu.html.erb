@@ -3,12 +3,12 @@
     <i class="fas fa-ellipsis-h"></i>
   <% end -%>
   <div class="dropdown-menu dropdown-menu-right">
-    <%= link_to edit_pbi_path(item.id, status: params[:status]), class: 'dropdown-item' do %>
+    <%= link_to edit_issue_path(item.id), class: 'dropdown-item' do %>
       <i class="fas fa-edit"></i>
       <%=t 'navs.edit' %>
     <% end %>
     <% if item.status.can_remove? %>
-      <%= link_to pbi_path(item.id), method: :delete, class: 'dropdown-item text-danger', data: { confirm: t('navs.confirm_delete') } do %>
+      <%= link_to issue_path(item.id), method: :delete, class: 'dropdown-item text-danger', data: { confirm: t('navs.confirm_delete') } do %>
         <i class="fas fa-trash-alt"></i>
         <%=t 'navs.delete' %>
       <% end %>
