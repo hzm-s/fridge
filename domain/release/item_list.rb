@@ -5,7 +5,7 @@ module Release
   class ItemList
     extend T::Sig
 
-    Item = T.type_alias {Pbi::Id}
+    Item = T.type_alias {Issue::Id}
     Items = T.type_alias {T::Array[Item]}
 
     sig {params(items: Items).void}
