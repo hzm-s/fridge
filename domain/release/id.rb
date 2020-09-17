@@ -1,7 +1,7 @@
 # typed: strict
 require 'sorbet-runtime'
 
-module Plan
+module Release
   class Id < Shared::Identifier
   end
 end
