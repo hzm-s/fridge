@@ -20,7 +20,7 @@ RSpec.describe 'acceptance_criteria' do
       end
     end
 
-    xcontext 'given invalid params' do
+    context 'given invalid params' do
       it do
         post issue_acceptance_criteria_path(issue_id: issue.id, format: :js), params: { form: { content: '' } }
         expect(response.body).to include I18n.t('errors.messages.blank')
