@@ -60,6 +60,8 @@ ja:
       title: プロダクトバックログ
       add: アイテムを追加する
       add_release: リリースを追加する
+    point_form:
+      point: アイテムの大きさ
 
   issues:
     edit:
@@ -67,8 +69,6 @@ ja:
       title_ac: 受け入れ基準
     acceptance_criteria:
       empty: 受け入れ基準はありません
-    point_form:
-      point: アイテムの大きさ
     item_menu:
       confirm_abort_development: 本当に着手予定を取り消しますか？
 
