@@ -42,12 +42,12 @@ RSpec.describe 'issues' do
     end
   end
 
-  xdescribe 'update' do
-    let!(:pbi) { add_pbi(product.id, 'ABC') }
+  describe 'update' do
+    let!(:issue) { add_issue(product.id, 'ABC') }
 
     context '入力内容が正しい場合' do
       it do
-        patch pbi_path(pbi.id, format: :js), params: { form: { description: 'XYZ' } }
+        patch issue_path(issue.id, format: :js), params: { form: { description: 'XYZ' } }
         follow_redirect!
 
         expect(response.body).to include('XYZ')
@@ -56,7 +56,7 @@ RSpec.describe 'issues' do
 
     context '入力内容が正しくない場合' do
       it do
-        patch pbi_path(pbi.id, format: :js), params: { form: { description: '' } }
+        patch issue_path(issue.id, format: :js), params: { form: { description: '' } }
         expect(response.body).to include(I18n.t('errors.messages.blank'))
       end
     end
