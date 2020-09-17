@@ -8,6 +8,10 @@ module IssueQuery
   end
 
   class Wrapper < SimpleDelegator
+    def product_id
+      dao_product_id
+    end
+
     def status
       @__status ||= Issue::Statuses.from_string(super)
     end

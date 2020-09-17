@@ -21,8 +21,8 @@ class IssuesController < ApplicationController
   end
 
   def edit
-    @pbi = PbiQuery.call(params[:id])
-    @form = PbiForm.new(description: @pbi.description)
+    @issue = IssueQuery.call(params[:id])
+    @form = IssueForm.new(description: @issue.description)
   end
 
   def update
@@ -56,6 +56,6 @@ class IssuesController < ApplicationController
     product_id = params[:product_id]
     return product_id if product_id
 
-    Dao::Pbi.find(params[:id]).product_id
+    IssueQuery.call(params[:id]).product_id
   end
 end

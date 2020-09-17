@@ -28,12 +28,12 @@ RSpec.describe 'issues' do
     end
   end
 
-  xdescribe 'edit' do
+  describe 'edit' do
     it do
-      pbi = add_pbi(product.id, 'XYZ')
-      add_acceptance_criteria(pbi, %w(AC_123))
+      issue = add_issue(product.id, 'XYZ')
+      add_acceptance_criteria(issue, %w(AC_123))
 
-      get edit_pbi_path(pbi.id.to_s)
+      get edit_issue_path(issue.id.to_s)
 
       aggregate_failures do
         expect(response.body).to include('XYZ')
