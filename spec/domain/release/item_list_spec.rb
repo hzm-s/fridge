@@ -1,13 +1,13 @@
 # typed: false
 require 'domain_helper'
 
-module Plan
+module Release
   RSpec.describe ItemList do
-    let(:item_a) { Pbi::Id.create }
-    let(:item_b) { Pbi::Id.create }
-    let(:item_c) { Pbi::Id.create }
-    let(:item_d) { Pbi::Id.create }
-    let(:item_e) { Pbi::Id.create }
+    let(:item_a) { Issue::Id.create }
+    let(:item_b) { Issue::Id.create }
+    let(:item_c) { Issue::Id.create }
+    let(:item_d) { Issue::Id.create }
+    let(:item_e) { Issue::Id.create }
 
     describe 'Add & Remove item' do
       it do
