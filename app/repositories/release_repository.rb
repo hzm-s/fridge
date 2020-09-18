@@ -1,37 +1,30 @@
-# typed: strict
+# typed: true
 require 'sorbet-runtime'
 
 module ReleaseRepository
-  module AR
+  class AR < Dao::Release
     class << self
       extend T::Sig
       include Release::ReleaseRepository
 
       sig {override.params(release: Release::Release).void}
-      def add(release)
-        dao = Dao::Release.new(
-          id: release.id,
-          title: release.title
-        )
-        dao.items = build_items(release.items.to_a)
-        dao.save!
-      end
-
-      sig {override.params(release: Release::Release).void}
-      def update(release)
-        dao = Dao::Release.find(release.id)
-        dao.title = release.title
-        dao.items = build_items(release.items.to_a)
-        dao.save!
-      end
-
-      private
-
-      sig {params(items: Release::ItemList::Items).returns(T::Array[Dao::ReleaseItem])}
-      def build_items(items)
-        items.map do |item|
-          Dao::ReleaseItem.new(dao_pbi_id: item)
+      def store(release)
+        find_or_initialize_by(id: release.id.to_s).tap do |dao|
+          dao.write(release)
+          dao.save!
         end
+      end
+    end
+
+    def write(release)
+      self.attributes = {
+        dao_product_id: release.product_id.to_s,
+        title: release.title
+      }
+
+      self.items.clear
+      release.items.to_a.each do |item|
+        self.items.build(dao_issue_id: item)
       end
     end
   end

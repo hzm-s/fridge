@@ -11,9 +11,6 @@ module Release
     #def find_by_product_id(product_id); end
 
     sig {abstract.params(release: Release).void}
-    def add(release); end
-
-    sig {abstract.params(release: Release).void}
-    def update(release); end
+    def store(release); end
   end
 end
