@@ -14,6 +14,11 @@ module Release
       def create(product_id, title)
         new(Id.create, product_id, title, ItemList.new([]))
       end
+
+      sig {params(id: Id, product_id: Product::Id, title: String, items: ItemList).returns(T.attached_class)}
+      def from_repository(id, product_id, title, items)
+        new(id, product_id, title, items)
+      end
     end
 
     sig {returns(Id)}
