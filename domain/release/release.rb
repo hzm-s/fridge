@@ -6,7 +6,18 @@ module Release
     extend T::Sig
 
     Item = T.type_alias {Issue::Id}
-    Items = T.type_alias {T::Array[Item]}
+
+    class << self
+      extend T::Sig
+
+      sig {params(product_id: Product::Id, title: String).returns(T.attached_class)}
+      def create(product_id, title)
+        new(Id.create, product_id, title, ItemList.new([]))
+      end
+    end
+
+    sig {returns(Id)}
+    attr_reader :id
 
     sig {returns(Product::Id)}
     attr_reader :product_id
@@ -14,61 +25,36 @@ module Release
     sig {returns(String)}
     attr_reader :title
 
-    sig {returns(Items)}
+    sig {returns(ItemList)}
     attr_reader :items
 
-    sig {params(product_id: Product::Id, title: String, items: Items).void}
-    def initialize(product_id, title, items)
+    sig {params(id: Id, product_id: Product::Id, title: String, items: ItemList).void}
+    def initialize(id, product_id, title, items)
+      @id = id
       @product_id = product_id
       @title = title
       @items = items
     end
+    private_class_method :new
 
-    sig {params(item: Item).returns(T.self_type)}
+    sig {params(item: Item).void}
     def add_item(item)
-      replace_items(@items + [item])
+      @items = @items.add_item(item)
     end
 
-    sig {params(item: Item).returns(T.self_type)}
+    sig {params(item: Item).void}
     def remove_item(item)
-      replace_items(@items.reject { |i| i == item })
+      @items = @items.remove_item(item)
     end
 
-    sig {params(item: Item, to: Item).returns(T.self_type)}
+    sig {params(item: Item, to: Item).void}
     def swap_priorities(item, to)
-      return self if item == to
-
-      if T.must(@items.index(item)) > T.must(@items.index(to))
-        remove_item(item).then { |r| r.insert_item_before(item, to) }
-      else
-        remove_item(item).then { |r| r.insert_item_after(item, to) }
-      end
+      @items = @items.swap_priorities(item, to)
     end
 
-    sig {params(title: String).returns(T.self_type)}
+    sig {params(title: String).void}
     def modify_title(title)
-      self.class.new(@product_id, title, @items)
-    end
-
-    protected
-
-    sig {params(item: Item, to: Item).returns(T.self_type)}
-    def insert_item_before(item, to)
-      index = T.must(@items.index(to))
-      replace_items(@items.insert(index, item))
-    end
-
-    sig {params(item: Item, to: Item).returns(T.self_type)}
-    def insert_item_after(item, to)
-      index = 0 - (@items.size - T.must(@items.index(to)))
-      replace_items(@items.insert(index, item))
-    end
-
-    private
-
-    sig {params(items: Items).returns(T.self_type)}
-    def replace_items(items)
-      self.class.new(@product_id, @title, items)
+      @title = title
     end
   end
 end
