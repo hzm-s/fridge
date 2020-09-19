@@ -4,29 +4,24 @@ require 'rails_helper'
 RSpec.describe ProductBacklogQuery do
   let!(:product) { create_product }
 
-  context 'アイテムがない場合' do
-    it do
+  describe 'Item' do
+    it '受け入れ基準がある場合は受け入れ基準を含むこと' do
+      add_issue(product.id, acceptance_criteria: %w(ac1 ac2 ac3))
+
       pbl = described_class.call(product.id.to_s)
-      expect(pbl).to be_empty
+      item = pbl.icebox.items.first
+
+      expect(item.criteria.map(&:content)).to eq %w(ac1 ac2 ac3) 
     end
-  end
 
-  it '受け入れ基準がある場合は受け入れ基準を含むこと' do
-    add_issue(product.id, acceptance_criteria: %w(ac1 ac2 ac3))
+    it 'ステータスを返すこと' do
+      add_issue(product.id)
 
-    pbl = described_class.call(product.id.to_s)
-    item = pbl.icebox.items.first
+      pbl = described_class.call(product.id.to_s)
+      item = pbl.icebox.items.first
 
-    expect(item.criteria.map(&:content)).to eq %w(ac1 ac2 ac3) 
-  end
-
-  it 'ステータスを返すこと' do
-    add_issue(product.id)
-
-    pbl = described_class.call(product.id.to_s)
-    item = pbl.icebox.items.first
-
-    expect(item.status).to eq Issue::Statuses::Preparation
+      expect(item.status).to eq Issue::Statuses::Preparation
+    end
   end
 
   context 'リリース未確定のアイテムがある場合' do
@@ -40,6 +35,18 @@ RSpec.describe ProductBacklogQuery do
     end
   end
 
+  it 'リリースを返すこと' do
+    pbl = described_class.call(product.id.to_s)
+    expect(pbl.releases).to be_empty
+
+    release = add_release(product.id, 'MVP')
+
+    pbl = described_class.call(product.id.to_s)
+    expect(pbl.releases[0].id).to eq release.id.to_s
+    expect(pbl.releases[0].title).to eq 'MVP'
+    expect(pbl.releases[0].items).to be_empty 
+  end
+
   xcontext 'PBIがある場合' do
     let!(:pbi_a) { add_pbi(product.id, 'AAA').id }
     let!(:pbi_b) { add_pbi(product.id, 'BBB').id }
@@ -50,19 +57,6 @@ RSpec.describe ProductBacklogQuery do
       items = pbl.releases.flat_map(&:items)
 
       expect(items.map(&:id)).to eq [pbi_a, pbi_b, pbi_c].map(&:to_s)
-    end
-
-    it 'リリースを返すこと' do
-      add_release(product.id, 'Phase2')
-      add_release(product.id, 'Phase3')
-
-      pbl = described_class.call(product.id.to_s)
-
-      numbers = pbl.releases.map(&:no)
-      expect(numbers).to eq [1, 2, 3]
-
-      titles = pbl.releases.map(&:title)
-      expect(titles).to eq %w(Icebox Phase2 Phase3)
     end
 
     it 'リリースの削除可否を返すこと' do
