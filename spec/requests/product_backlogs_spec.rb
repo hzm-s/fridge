@@ -18,14 +18,13 @@ RSpec.describe 'product_backlogs' do
       item_b = add_issue(product.id, 'ITEM_BBB')
       item_c = add_issue(product.id, 'ITEM_CCC')
 
+      expect(SortProductBacklogUsecase).to receive(:perform).with(item_a.id, nil, release1.id, 0)
       patch product_backlog_path(product.id.to_s, format: :json), params: {
         item: item_a.id.to_s,
         from_release_id: nil,
         to_release_id: release1.id.to_s,
         new_index: 0
       }
-      pbl = ProductBacklogQuery.call(product.id.to_s)
-      expect(pbl.releases[0].items.map(&:id)).to include item_a.id.to_s
     end
   end
 end
