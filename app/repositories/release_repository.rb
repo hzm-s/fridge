@@ -51,7 +51,7 @@ module ReleaseRepository
     end
 
     def read_items
-      items.map { |item| Issue::Id.from_string(item) }
+      items.map { |item| Issue::Id.from_string(item.dao_issue_id) }
         .yield_self { |list| Release::ItemList.new(list) }
     end
   end
