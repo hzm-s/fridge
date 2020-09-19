@@ -15,6 +15,12 @@ RSpec.describe SortProductBacklogUsecase do
 
     described_class.perform(item_a.id, release1.id, nil, 999)
     expect(fetch_release(release1.id).items.to_a).to_not include item_a.id
+
+    described_class.perform(item_a.id, nil, release1.id, 0)
+    described_class.perform(item_b.id, nil, release1.id, 0)
+    described_class.perform(item_c.id, nil, release1.id, 0)
+    described_class.perform(item_c.id, release1.id, release1.id, 1)
+    expect(fetch_release(release1.id).items.to_a).to eq [item_a.id, item_c.id, item_b.id]
   end
 
   private

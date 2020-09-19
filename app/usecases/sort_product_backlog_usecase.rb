@@ -9,10 +9,15 @@ class SortProductBacklogUsecase < UsecaseBase
 
   sig {params(item: Issue::Id, from_release_id: From, to_release_id: To, new_index: Integer).void}
   def perform(item, from_release_id, to_release_id, new_index)
-    if from_release_id.nil?
+    case [from_release_id, to_release_id]
+    when [nil, to_release_id]
       AddReleaseItemUsecase.perform(item, to_release_id)
-    else
+    when [from_release_id, nil]
       RemoveReleaseItemUsecase.perform(item, from_release_id)
+    else
+      if from_release_id == to_release_id
+        SwapReleaseItemPrioritiesUsecase.perform(from_release_id, item, new_index)
+      end
     end
   end
 end
