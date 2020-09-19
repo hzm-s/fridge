@@ -57,6 +57,11 @@ module Release
       @items = @items.swap_priorities(item, to)
     end
 
+    sig {params(index: Integer).returns(Item)}
+    def fetch_item(index)
+      @items.to_a[index]
+    end
+
     sig {params(title: String).void}
     def modify_title(title)
       @title = title
