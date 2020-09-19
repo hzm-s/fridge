@@ -7,6 +7,6 @@
     <%= link_to t('navs.delete'), release_path(release.id), method: :delete, class: 'action-link silent-danger', data: { confirm: t('navs.confirm_delete') } %>
   </div>
 </div>
-<%= content_tag :div, id: release.id, class: 'pbl__list', data: sortable_pbl_options(current_product_id, :release, release.id) do %>
+<%= content_tag :div, id: release.id, class: 'pbl__list', data: sortable_pbl_options(current_product_id, release.id) do %>
   <%= render partial: 'item', collection: release.items %>
 <% end %>

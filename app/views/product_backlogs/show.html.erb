@@ -26,7 +26,7 @@
         <%= @pbl.icebox.title %>
       </span>
     </div>
-    <%= content_tag :div, id: 'icebox', class: 'pbl__list', data: sortable_pbl_options(current_product_id, :icebox, nil) do %>
+    <%= content_tag :div, class: 'pbl__list', data: sortable_pbl_options(current_product_id, nil) do %>
       <%= render partial: 'item', collection: @pbl.icebox.items %>
     <% end %>
     <div id="anchor-new-pbi" class="pbl__form form-outer">

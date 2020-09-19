@@ -16,7 +16,7 @@ export default class extends Controller {
 
   connect() {
     const url = this.data.get('url')
-    const groupName = this.element.id
+    const groupName = this.data.get('name')
 
     Sortable.create(this.element, {
       ...uiOptions,
@@ -27,12 +27,14 @@ export default class extends Controller {
       },
       onEnd: function(e) {
         const payload = {
-          from_no: e.from.dataset.releaseNo,
           item: e.item.dataset.id,
-          to_no: e.to.dataset.releaseNo,
-          position: e.newIndex + 1
+          from_release_id: e.from.dataset.releaseId,
+          to_release_id: e.to.dataset.releaseId,
+          newIndex: e.newIndex
         }
-        $.ajax({ type: 'PATCH', url: url, dataType: 'json', data: payload })
+        if (payload.from_release_id != undefined || payload.to_release_id != undefined) {
+          $.ajax({ type: 'PATCH', url: url, dataType: 'json', data: payload })
+        }
       }
     })
   }
