@@ -8,6 +8,7 @@ RSpec.describe SortProductBacklogUsecase do
   let!(:item_a) { add_issue(product.id) }
   let!(:item_b) { add_issue(product.id) }
   let!(:item_c) { add_issue(product.id) }
+  let!(:item_d) { add_issue(product.id) }
 
   it do
     described_class.perform(item_a.id, nil, release1.id, 0)
@@ -17,10 +18,13 @@ RSpec.describe SortProductBacklogUsecase do
     expect(fetch_release(release1.id).items.to_a).to_not include item_a.id
 
     described_class.perform(item_a.id, nil, release1.id, 0)
-    described_class.perform(item_b.id, nil, release1.id, 0)
-    described_class.perform(item_c.id, nil, release1.id, 0)
+    described_class.perform(item_b.id, nil, release1.id, 1)
+    described_class.perform(item_c.id, nil, release1.id, 2)
     described_class.perform(item_c.id, release1.id, release1.id, 1)
     expect(fetch_release(release1.id).items.to_a).to eq [item_a.id, item_c.id, item_b.id]
+
+    described_class.perform(item_d.id, nil, release1.id, 0)
+    expect(fetch_release(release1.id).items.to_a).to eq [item_d.id, item_a.id, item_c.id, item_b.id]
   end
 
   private
