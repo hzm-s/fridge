@@ -60,6 +60,8 @@ ja:
       title: プロダクトバックログ
       add: アイテムを追加する
       add_release: リリースを追加する
+    release:
+      empty: アイテムがありません
     point_form:
       point: アイテムの大きさ
 

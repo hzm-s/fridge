@@ -9,7 +9,7 @@ module ProductBacklogQuery
 
       icebox = ItemList.new(
         id: nil,
-        title: nil,
+        title: 'Icebox',
         items: Array(items_per_release[nil]).sort_by(&:created_at)
       )
 

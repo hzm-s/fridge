@@ -3,12 +3,10 @@
     <%= release.title %>
   </span>
   <div class="pbl-release__actions">
-    <%= link_to t('navs.edit'), edit_release_path(release.no, product_id: current_product_id), class: 'action-link' %>
-    <% if can_remove_release && release.can_remove? %>
-      <%= link_to t('navs.delete'), release_path(release.no, product_id: current_product_id), method: :delete, class: 'action-link silent-danger', data: { confirm: t('navs.confirm_delete') } %>
-    <% end %>
+    <%= link_to t('navs.edit'), edit_release_path(release.id), class: 'action-link' %>
+    <%= link_to t('navs.delete'), release_path(release.id), method: :delete, class: 'action-link silent-danger', data: { confirm: t('navs.confirm_delete') } %>
   </div>
 </div>
-<%= content_tag :div, id: "release#{release_counter}", class: 'pbl__list', data: sortable_pbl_options(current_product_id, release) do %>
+<%= content_tag :div, id: release.id, class: 'pbl__list', data: sortable_pbl_options(current_product_id, :release, release.id) do %>
   <%= render partial: 'item', collection: release.items %>
 <% end %>
