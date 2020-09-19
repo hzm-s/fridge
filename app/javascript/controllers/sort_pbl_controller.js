@@ -30,7 +30,7 @@ export default class extends Controller {
           item: e.item.dataset.id,
           from_release_id: e.from.dataset.releaseId,
           to_release_id: e.to.dataset.releaseId,
-          newIndex: e.newIndex
+          new_index: e.newIndex
         }
         if (payload.from_release_id != undefined || payload.to_release_id != undefined) {
           $.ajax({ type: 'PATCH', url: url, dataType: 'json', data: payload })
