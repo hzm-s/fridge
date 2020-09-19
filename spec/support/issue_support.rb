@@ -4,17 +4,16 @@ require_relative '../domain_support/issue_domain_support'
 module IssueSupport
   include IssueDomainSupport
 
-  def add_issue(product_id, description = 'DESC', acceptance_criteria: [], size: nil, release: 1, wip: false)
+  def add_issue(product_id, description = 'DESC', acceptance_criteria: [], size: nil, release: nil, wip: false)
     issue = perform_add_issue(product_id, description)
 
-    return issue unless acceptance_criteria
-    add_acceptance_criteria(issue, acceptance_criteria)
+    add_acceptance_criteria(issue, acceptance_criteria) if acceptance_criteria
 
-    return issue unless size
-    estimate_feature(issue.id, size)
+    estimate_feature(issue.id, size) if size
 
-    return issue unless wip
-    start_issue_development(issue.id)
+    add_issue_to_release(issue.id, release) if release
+
+    start_issue_development(issue.id) if wip
 
     IssueRepository::AR.find_by_id(issue.id)
   end
@@ -27,6 +26,10 @@ module IssueSupport
     criteria.each do |ac|
       AddAcceptanceCriterionUsecase.perform(issue.id, ac)
     end
+  end
+
+  def add_issue_to_release(issue_id, release_id)
+    AddReleaseItemUsecase.perform(issue_id, release_id)
   end
 
   def estimate_feature(issue_id, size)
