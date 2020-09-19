@@ -19,9 +19,14 @@
       </div>
     </div>
     <div class="mt-3">
-      <%#= render partial: 'release', collection: @pbl.releases, locals: { can_remove_release: @pbl.can_remove_release? } %>
+      <%= render partial: 'release', collection: @pbl.releases %>
     </div>
-    <%= content_tag :div, id: 'icebox', class: 'pbl__list', data: sortable_pbl_options(current_product_id, :icebox, nil) do %>
+    <div class="pbl__release">
+      <span class="pbl-release__title">
+        <%= @pbl.icebox.title %>
+      </span>
+    </div>
+    <%= content_tag :div, class: 'pbl__list', data: sortable_pbl_options(current_product_id, nil) do %>
       <%= render partial: 'item', collection: @pbl.icebox.items %>
     <% end %>
     <div id="anchor-new-pbi" class="pbl__form form-outer">

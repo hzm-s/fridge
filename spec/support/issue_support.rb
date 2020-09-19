@@ -43,8 +43,7 @@ module IssueSupport
 
   def add_release(product_id, title = 'Release2')
     AddReleaseUsecase.perform(product_id, title)
-      .yield_self { |id| PlanRepository::AR.find_by_product_id(product_id) }
-      .yield_self { |plan| plan.releases.last }
+      .yield_self { |id| ReleaseRepository::AR.find_by_id(id) }
   end
 
   private

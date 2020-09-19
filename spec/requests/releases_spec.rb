@@ -9,7 +9,7 @@ RSpec.describe 'releases' do
     sign_in(user_account)
   end
 
-  describe '#create' do
+  describe 'create' do
     it do
       post product_releases_path(product_id: product.id.to_s), params: { form: { title: 'Phase5' } }
       follow_redirect!
@@ -23,7 +23,7 @@ RSpec.describe 'releases' do
     end
   end
 
-  xdescribe '#update' do
+  xdescribe 'update' do
     let!(:release) { add_release(product.id, 'FURUI_TITLE') }
 
     it do
@@ -39,7 +39,7 @@ RSpec.describe 'releases' do
     end
   end
 
-  xdescribe '#destroy' do
+  xdescribe 'destroy' do
     it do
       target = add_release(product.id, 'EXTRA_RELEASE')
 

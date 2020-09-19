@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     resources :releases, only: [:new, :create]
   end
 
-  resources :product_backlogs, param: :product_id, only: [:show]
+  resources :product_backlogs, param: :product_id, only: [:show, :update]
 
   resources :releases, param: :no, only: [:edit, :update, :destroy]
 
