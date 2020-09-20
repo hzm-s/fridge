@@ -68,5 +68,18 @@ module Release
         expect(release.items).to eq ItemList.new([item_b, item_c, item_d, item_a, item_e])
       end
     end
+
+    describe 'Removable' do
+      it do
+        release = described_class.create(product_id, 'MVP')
+        expect(release).to be_can_remove
+
+        release.add_item(item_a)
+        expect(release).to_not be_can_remove
+
+        release.remove_item(item_a)
+        expect(release).to be_can_remove
+      end
+    end
   end
 end
