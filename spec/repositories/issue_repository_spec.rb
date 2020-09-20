@@ -61,7 +61,7 @@ RSpec.describe IssueRepository::AR do
     end
   end
 
-  describe 'Delete' do
+  describe 'Remove' do
     it do
       issue = add_issue(product.id, acceptance_criteria: %w(ac1 ac2 ac3))
 
