@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/activerecord/all/activerecord.rbi
 #
-# activerecord-6.0.3.2
+# activerecord-6.0.3.3
 
 module Arel
   def self.arel_node?(value); end
@@ -5554,16 +5554,6 @@ class ActiveRecord::Associations::Builder::BelongsTo < ActiveRecord::Association
   def self.valid_dependent_options; end
   def self.valid_options(options); end
 end
-class ActiveRecord::Associations::Builder::HasOne < ActiveRecord::Associations::Builder::SingularAssociation
-  def self.add_destroy_callbacks(model, reflection); end
-  def self.add_touch_callbacks(model, reflection); end
-  def self.define_callbacks(model, reflection); end
-  def self.define_validations(model, reflection); end
-  def self.macro; end
-  def self.touch_record(o, name, touch); end
-  def self.valid_dependent_options; end
-  def self.valid_options(options); end
-end
 class ActiveRecord::Associations::Builder::CollectionAssociation < ActiveRecord::Associations::Builder::Association
   def self.define_callback(model, callback_name, name, options); end
   def self.define_callbacks(model, reflection); end
@@ -5574,6 +5564,16 @@ class ActiveRecord::Associations::Builder::CollectionAssociation < ActiveRecord:
 end
 class ActiveRecord::Associations::Builder::HasMany < ActiveRecord::Associations::Builder::CollectionAssociation
   def self.macro; end
+  def self.valid_dependent_options; end
+  def self.valid_options(options); end
+end
+class ActiveRecord::Associations::Builder::HasOne < ActiveRecord::Associations::Builder::SingularAssociation
+  def self.add_destroy_callbacks(model, reflection); end
+  def self.add_touch_callbacks(model, reflection); end
+  def self.define_callbacks(model, reflection); end
+  def self.define_validations(model, reflection); end
+  def self.macro; end
+  def self.touch_record(o, name, touch); end
   def self.valid_dependent_options; end
   def self.valid_options(options); end
 end
