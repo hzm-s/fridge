@@ -16,20 +16,12 @@ RSpec.describe 'product_backlogs' do
 
       item = add_issue(product.id, 'ITEM_AAA')
 
-      expect(SortProductBacklogUsecase).to receive(:perform).with(item.id, nil, release1.id, 0)
+      expect(ManageReleaseItemUsecase).to receive(:perform).with(item.id, nil, release1.id, 0)
       patch product_backlog_path(product.id.to_s, format: :json), params: {
         item: item.id.to_s,
         from_release_id: nil,
         to_release_id: release1.id.to_s,
         new_index: 0
-      }
-
-      expect(SortProductBacklogUsecase).to receive(:perform).with(item.id, release1.id, nil, 1)
-      patch product_backlog_path(product.id.to_s, format: :json), params: {
-        item: item.id.to_s,
-        from_release_id: release1.id.to_s,
-        to_release_id: nil,
-        new_index: 1
       }
     end
   end

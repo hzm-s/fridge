@@ -1,7 +1,7 @@
 # typed: strict
 require 'sorbet-runtime'
 
-class RemoveReleaseItemUsecase < UsecaseBase
+class SwapIssuePrioritiesUsecase < UsecaseBase
   extend T::Sig
 
   sig {void}
@@ -9,10 +9,10 @@ class RemoveReleaseItemUsecase < UsecaseBase
     @repository = T.let(ReleaseRepository::AR, Release::ReleaseRepository)
   end
 
-  sig {params(issue_id: Issue::Id, release_id: Release::Id).void}
-  def perform(issue_id, release_id)
+  sig {params(item: Issue::Id, release_id: Release::Id, new_index: Integer).void}
+  def perform(item, release_id, new_index)
     release = @repository.find_by_id(release_id)
-    release.remove_item(issue_id)
+    release.swap_priorities(item, release.fetch_item(new_index))
     @repository.store(release)
   end
 end
