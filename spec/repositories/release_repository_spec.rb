@@ -10,10 +10,9 @@ RSpec.describe ReleaseRepository::AR do
   let(:item_d) { add_issue(product.id) }
   let(:item_e) { add_issue(product.id) }
 
-  let(:release) { Release::Release.create(product.id, 'MVP') }
-
   describe 'Add' do
     it do
+      release = Release::Release.create(product.id, 'MVP')
       release.add_item(item_a.id)
       release.add_item(item_b.id)
       release.add_item(item_c.id)
@@ -34,6 +33,7 @@ RSpec.describe ReleaseRepository::AR do
 
   describe 'Update' do
     it do
+      release = Release::Release.create(product.id, 'MVP')
       release.add_item(item_a.id)
       release.add_item(item_b.id)
       release.add_item(item_c.id)
