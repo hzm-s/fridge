@@ -6,17 +6,15 @@ class ModifyReleaseTitleUsecase < UsecaseBase
 
   sig {void}
   def initialize
-    @repository = T.let(PlanRepository::AR, Plan::PlanRepository)
+    @repository = T.let(ReleaseRepository::AR, Release::ReleaseRepository)
   end
 
-  sig {params(product_id: Product::Id, no: Integer, title: String).void}
-  def perform(product_id, no, title)
-    plan = @repository.find_by_product_id(product_id)
+  sig {params(release_id: Release::Id, title: String).void}
+  def perform(release_id, title)
+    release = @repository.find_by_id(release_id)
 
-    release = plan.release(no)
     release.modify_title(title)
 
-    plan.replace_release(no, release)
-    @repository.update(plan)
+    @repository.store(release)
   end
 end
