@@ -39,11 +39,11 @@ RSpec.describe 'releases' do
     end
   end
 
-  xdescribe 'destroy' do
+  describe 'destroy' do
     it do
-      target = add_release(product.id, 'EXTRA_RELEASE')
+      release = add_release(product.id, 'EXTRA_RELEASE')
 
-      delete release_path(2, product_id: product.id.to_s)
+      delete release_path(release.id.to_s)
       follow_redirect!
 
       expect(response.body).to_not include 'EXTRA_RELEASE'

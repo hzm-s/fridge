@@ -19,15 +19,23 @@ module ReleaseRepository
           dao.save!
         end
       end
+
+      sig {override.params(id: Release::Id).void}
+      def remove(id)
+        find(id).destroy!
+      rescue ActiveRecord::InvalidForeignKey
+        raise Release::CanNotRemove
+      end
     end
 
     def write(release)
       self.attributes = {
         dao_product_id: release.product_id.to_s,
-        title: release.title
+        title: release.title,
+        can_remove: release.can_remove?
       }
 
-      self.items.clear
+      items.destroy(*items)
       release.items.to_a.each do |item|
         self.items.build(dao_issue_id: item)
       end

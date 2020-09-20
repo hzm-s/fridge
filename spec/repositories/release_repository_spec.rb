@@ -26,6 +26,7 @@ RSpec.describe ReleaseRepository::AR do
         expect(rel.id).to eq release.id.to_s
         expect(rel.dao_product_id).to eq release.product_id.to_s
         expect(rel.title).to eq 'MVP'
+        expect(rel.can_remove).to be false
         expect(rel.items.map(&:dao_issue_id)).to eq [item_a, item_b, item_c].map(&:id).map(&:to_s)
       end
     end
@@ -50,6 +51,26 @@ RSpec.describe ReleaseRepository::AR do
 
       rel = Dao::Release.eager_load(:items).last
       expect(rel.items.map(&:dao_issue_id)).to eq [item_a, item_c, item_d, item_e].map(&:id).map(&:to_s)
+    end
+  end
+
+  describe 'Remove' do
+    it do
+      release = add_release(product.id, 'MVP')
+      other_release = add_release(product.id, 'Other')
+
+      described_class.remove(release.id)
+
+      expect(Dao::Release.find_by(id: release.id)).to be_nil
+      expect(Dao::Release.find_by(id: other_release.id)).to_not be_nil
+    end
+
+    it do
+      release = add_release(product.id, 'MVP')
+      add_issue(product.id, release: release.id)
+
+      expect { described_class.remove(release.id) }
+        .to raise_error(Release::CanNotRemove)
     end
   end
 end

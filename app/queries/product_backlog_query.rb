@@ -10,14 +10,16 @@ module ProductBacklogQuery
       icebox = ItemList.new(
         id: nil,
         title: 'Icebox',
-        items: Array(items_per_release[nil]).sort_by(&:created_at)
+        items: Array(items_per_release[nil]).sort_by(&:created_at),
+        can_remove: false
       )
 
       releases = fetch_release(product_id).map do |r|
         ItemList.new(
           id: r.id,
           title: r.title,
-          items: Array(items_per_release[r.id])
+          items: Array(items_per_release[r.id]),
+          can_remove: r.can_remove
         )
       end
 
@@ -52,6 +54,11 @@ module ProductBacklogQuery
     prop :id, T.nilable(String)
     prop :title, T.nilable(String)
     prop :items, T::Array[Item]
+    prop :can_remove, T::Boolean
+
+    def can_remove?
+      can_remove
+    end
   end
 
   class ProductBacklog < T::Struct
