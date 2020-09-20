@@ -1,3 +1,4 @@
+# typed: false
 data = JSON.parse(File.read(ARGV[0])).deep_symbolize_keys
 
 data[:pbis].each do |i|

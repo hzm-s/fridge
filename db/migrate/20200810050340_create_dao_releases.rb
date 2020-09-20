@@ -1,4 +1,4 @@
-# typed: false
+# typed: ignore
 class CreateDaoReleases < ActiveRecord::Migration[6.0]
   def change
     create_table :dao_releases, id: :uuid do |t|

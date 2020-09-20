@@ -1,3 +1,4 @@
+# typed: ignore
 class CreateDaoReleaseItems < ActiveRecord::Migration[6.0]
   def change
     create_table :dao_release_items do |t|
