@@ -1,3 +1,4 @@
+# typed: false
 class ProductBacklogsController < ApplicationController
   include ProductHelper
 

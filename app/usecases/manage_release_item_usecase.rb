@@ -18,7 +18,7 @@ class ManageReleaseItemUsecase < UsecaseBase
       CancelIssueReleaseUsecase.perform(item, from_id)
 
     else
-      if from_id == to_id
+      if (from_id && to_id) && from_id == to_id
         SwapIssuePrioritiesUsecase.perform(item, from_id, new_index)
       else
         SwapIssuePrioritiesBetweenReleasesUsecase.perform(item, from_id, to_id, new_index)
