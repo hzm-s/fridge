@@ -1,4 +1,4 @@
-# typed: true
+# typed: false
 module IssueQuery
   class << self
     def call(id)

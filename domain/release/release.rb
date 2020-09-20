@@ -59,7 +59,7 @@ module Release
 
     sig {params(index: Integer).returns(Item)}
     def fetch_item(index)
-      @items.to_a[index]
+      T.must(@items.to_a[index])
     end
 
     sig {params(title: String).void}

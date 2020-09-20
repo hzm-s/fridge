@@ -44,7 +44,7 @@ module Release
       @items
     end
 
-    sig {params(other: T.self_type).returns(T::Boolean)}
+    sig {params(other: ItemList).returns(T::Boolean)}
     def ==(other)
       self.to_a == other.to_a
     end
