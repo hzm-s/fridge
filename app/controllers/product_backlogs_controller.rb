@@ -9,7 +9,7 @@ class ProductBacklogsController < ApplicationController
   end
 
   def update
-    SortProductBacklogUsecase.perform(
+    ManageReleaseItemUsecase.perform(
       item,
       from_release_id,
       to_release_id,

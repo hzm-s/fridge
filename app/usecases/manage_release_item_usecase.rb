@@ -1,7 +1,7 @@
 # typed: strict
 require 'sorbet-runtime'
 
-class SortProductBacklogUsecase < UsecaseBase
+class ManageReleaseItemUsecase < UsecaseBase
   extend T::Sig
 
   From = T.type_alias {T.nilable(Release::Id)}

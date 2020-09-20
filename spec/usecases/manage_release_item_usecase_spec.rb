@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe SortProductBacklogUsecase do
+RSpec.describe ManageReleaseItemUsecase do
   let!(:product) { create_product }
   let!(:release1) { add_release(product.id) }
   let!(:release2) { add_release(product.id) }
