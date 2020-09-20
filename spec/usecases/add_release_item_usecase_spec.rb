@@ -7,9 +7,9 @@ RSpec.describe AddReleaseItemUsecase do
   let(:issue) { add_issue(product.id) }
 
   it do
-    described_class.perform(issue.id, release.id)
+    described_class.perform(issue.id, release)
 
-    stored = ReleaseRepository::AR.find_by_id(release.id)
+    stored = ReleaseRepository::AR.find_by_id(release)
 
     expect(stored.items.to_a).to include issue.id
   end

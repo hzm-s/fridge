@@ -29,7 +29,9 @@ module IssueSupport
   end
 
   def add_issue_to_release(issue_id, release_id)
-    AddReleaseItemUsecase.perform(issue_id, release_id)
+    ReleaseRepository::AR.find_by_id(release_id)
+      .yield_self { |r| r.tap { |x| x.add_item(issue_id) } }
+      .yield_self { |r| ReleaseRepository::AR.store(r) }
   end
 
   def estimate_feature(issue_id, size)
