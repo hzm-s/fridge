@@ -80,16 +80,6 @@ module Issue
       update_status_by_preparation
     end
 
-    sig {void}
-    def start_development
-      @status = @status.update_to_wip
-    end
-
-    sig {void}
-    def abort_development
-      @status = @status.update_by_abort_development
-    end
-
     private
 
     sig {returns(Status)}
