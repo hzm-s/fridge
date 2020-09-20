@@ -22,7 +22,6 @@ Rails.application.routes.draw do
   resources :acceptance_criteria, only: [:destroy]
 
   resources :feature_estimations, only: [:update]
-  resources :pbi_developments, only: [:create, :destroy]
 
   resources :teams, only: [:new, :create, :show] do
     resources :members, only: [:new, :create]
