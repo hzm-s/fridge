@@ -20,6 +20,10 @@ class ManageReleaseItemUsecase < UsecaseBase
     else
       if from_release_id == to_release_id
         SwapReleaseItemPrioritiesUsecase.perform(from_release_id, item, new_index)
+      else
+        RemoveReleaseItemUsecase.perform(item, from_release_id)
+        AddReleaseItemUsecase.perform(item, to_release_id)
+        SwapReleaseItemPrioritiesUsecase.perform(to_release_id, item, new_index)
       end
     end
   end
