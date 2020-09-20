@@ -816,9 +816,6 @@ end
 class ActionDispatch::Session::CacheStore
 end
 
-class ActionDispatch::Session::CookieStore::SessionId
-end
-
 class ActionDispatch::ShowExceptions
   FAILSAFE_RESPONSE = ::T.let(nil, ::T.untyped)
 end
@@ -1309,9 +1306,6 @@ end
 
 class ActionView::Template::Inline
   Finalizer = ::T.let(nil, ::T.untyped)
-end
-
-class ActionView::Template::LegacyTemplate
 end
 
 class ActionView::Template::Sources::File
@@ -2118,9 +2112,6 @@ class ActiveRecord::ConnectionAdapters::PostgreSQL::OID::Uuid
   ACCEPTABLE_UUID = ::T.let(nil, ::T.untyped)
 end
 
-class ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
-end
-
 class ActiveRecord::ConnectionAdapters::PostgreSQLAdapter
   ADAPTER_NAME = ::T.let(nil, ::T.untyped)
   CACHED_PLAN_HEURISTIC = ::T.let(nil, ::T.untyped)
@@ -2333,9 +2324,6 @@ end
 
 module ActiveRecord::LegacyYamlAdapter
   def self.convert(klass, coder); end
-end
-
-class ActiveRecord::Locking::LockingType
 end
 
 class ActiveRecord::LogSubscriber
@@ -3181,12 +3169,6 @@ ActiveRecord::Type::Decimal = ActiveModel::Type::Decimal
 ActiveRecord::Type::Float = ActiveModel::Type::Float
 
 ActiveRecord::Type::Integer = ActiveModel::Type::Integer
-
-class ActiveRecord::Type::Serialized
-end
-
-class ActiveRecord::Type::Time::Value
-end
 
 module ActiveRecord::VERSION
   MAJOR = ::T.let(nil, ::T.untyped)
@@ -8163,7 +8145,19 @@ class Faraday::Request::Instrumentation
 end
 
 class Faraday::Request::Multipart
+  def create_multipart(env, params); end
+
+  def has_multipart?(obj); end
+
+  def part(boundary, key, value); end
+
+  def process_params(params, prefix=T.unsafe(nil), pieces=T.unsafe(nil), &block); end
+
+  def unique_boundary(); end
   DEFAULT_BOUNDARY_PREFIX = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Request::Multipart
 end
 
 class Faraday::Request::Retry
@@ -8197,7 +8191,20 @@ class Faraday::Request::TokenAuthentication
 end
 
 class Faraday::Request::UrlEncoded
+  def call(env); end
+
+  def match_content_type(env); end
+
+  def process_request?(env); end
+
+  def request_type(env); end
   CONTENT_TYPE = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Request::UrlEncoded
+  def self.mime_type(); end
+
+  def self.mime_type=(mime_type); end
 end
 
 class Faraday::Response::Logger
@@ -8208,8 +8215,12 @@ class Faraday::Response::Logger
 end
 
 class Faraday::Response::RaiseError
+  def response_values(env); end
   ClientErrorStatuses = ::T.let(nil, ::T.untyped)
   ServerErrorStatuses = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Response::RaiseError
 end
 
 Faraday::Timer = Timeout
@@ -9866,24 +9877,6 @@ class IssueForm
 end
 
 class IssueRepository::AR
-  include ::IssueRepository::AR::GeneratedAttributeMethods
-  include ::IssueRepository::AR::GeneratedAssociationMethods
-end
-
-module IssueRepository::AR::GeneratedAssociationMethods
-end
-
-module IssueRepository::AR::GeneratedAssociationMethods
-end
-
-module IssueRepository::AR::GeneratedAttributeMethods
-end
-
-module IssueRepository::AR::GeneratedAttributeMethods
-  extend ::Mutex_m
-end
-
-class IssueRepository::AR
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
@@ -10494,9 +10487,6 @@ class Mail::POP3
 end
 
 class Mail::POP3
-end
-
-class Mail::PartsList
 end
 
 class Mail::PhraseList
@@ -15233,9 +15223,6 @@ end
 
 class Rack::Session::Abstract::SessionHash
   Unspecified = ::T.let(nil, ::T.untyped)
-end
-
-class Rack::Session::Cookie::SessionId
 end
 
 class Rack::Session::Pool
