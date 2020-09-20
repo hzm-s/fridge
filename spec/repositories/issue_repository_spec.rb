@@ -14,7 +14,7 @@ RSpec.describe IssueRepository::AR do
           .and change { Dao::AcceptanceCriterion.count }.by(0)
 
         aggregate_failures do
-          rel = described_class.last
+          rel = Dao::Issue.last
           expect(rel.id).to eq issue.id.to_s
           expect(rel.dao_product_id).to eq issue.product_id.to_s
           expect(rel.status).to eq issue.status.to_s
