@@ -5,12 +5,11 @@ RSpec.describe ModifyReleaseTitleUsecase do
   let!(:product) { create_product }
 
   it do
-    add_release(product.id, 'OLD_TITLE')
+    release = add_release(product.id, 'OLD_TITLE')
 
-    described_class.perform(product.id, 2, 'NEW_TITLE')
+    described_class.perform(release.id, 'NEW_TITLE')
 
-    plan = PlanRepository::AR.find_by_product_id(product.id)
-    stored = plan.release(2)
+    stored = ReleaseRepository::AR.find_by_id(release.id)
 
     expect(stored.title).to eq 'NEW_TITLE'
   end
