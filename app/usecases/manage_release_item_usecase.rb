@@ -5,64 +5,68 @@ class ManageReleaseItemUsecase < UsecaseBase
   extend T::Sig
 
   Item = T.type_alias {Issue::Id}
-  From = T.type_alias {T.nilable(Release::Id)}
-  To = T.type_alias {T.nilable(Release::Id)}
+  FromId = T.type_alias {T.nilable(Release::Id)}
+  ToId = T.type_alias {T.nilable(Release::Id)}
 
   sig {void}
   def initialize
     @repository = T.let(ReleaseRepository::AR, Release::ReleaseRepository)
   end
 
-  sig {params(item: Item, from_release_id: From, to_release_id: To, new_index: Integer).void}
-  def perform(item, from_release_id, to_release_id, new_index)
-    case [from_release_id, to_release_id]
-    when [nil, to_release_id]
-      to = @repository.find_by_id(to_release_id)
-      add_release_item(item, to)
-      swap_item_priorities(to, item, new_index)
-      @repository.store(to)
+  sig {params(item: Item, from_id: FromId, to_id: ToId, new_index: Integer).void}
+  def perform(item, from_id, to_id, new_index)
+    case [from_id, to_id]
+    when [nil, to_id]
+      add_release_item(item, to_id, new_index)
 
-    when [from_release_id, nil]
-      from = @repository.find_by_id(from_release_id)
-      remove_release_item(item, from)
-      @repository.store(from)
+    when [from_id, nil]
+      remove_release_item(item, from_id)
 
     else
-      if from_release_id == to_release_id
-        release = @repository.find_by_id(from_release_id)
-        swap_item_priorities(release, item, new_index)
-        @repository.store(release)
+      if from_id == to_id
+        swap_item_priorities_in_same_release(item, from_id, new_index)
       else
-        from = @repository.find_by_id(from_release_id)
-        to = @repository.find_by_id(to_release_id)
-
-        remove_release_item(item, from)
-        add_release_item(item, to)
-        swap_item_priorities(to, item, new_index)
-
-        transaction do
-          @repository.store(from)
-          @repository.store(to)
-        end
+        swap_item_priorities_in_releases(item, from_id, to_id, new_index)
       end
     end
   end
 
   private
 
-  sig {params(item: Item, to: Release::Release).void}
-  def add_release_item(item, to)
+  sig {params(item: Item, release_id: Release::Id, new_index: Integer).void}
+  def add_release_item(item, release_id, new_index)
+    to = @repository.find_by_id(release_id)
     to.add_item(item)
+    to.swap_priorities(item, to.fetch_item(new_index))
+    @repository.store(to)
   end
 
-  sig {params(item: Item, release: Release::Release).void}
-  def remove_release_item(item, release)
+  sig {params(item: Item, release_id: Release::Id).void}
+  def remove_release_item(item, release_id)
+    release = @repository.find_by_id(release_id)
     release.remove_item(item)
+    @repository.store(release)
   end
 
-  sig {params(release: Release::Release, item: Item, new_index: Integer).void}
-  def swap_item_priorities(release, item, new_index)
-    target = release.fetch_item(new_index)
-    release.swap_priorities(item, target)
+  sig {params(item: Item, release_id: Release::Id, new_index: Integer).void}
+  def swap_item_priorities_in_same_release(item, release_id, new_index)
+    release = @repository.find_by_id(release_id)
+    release.swap_priorities(item, release.fetch_item(new_index))
+    @repository.store(release)
+  end
+
+  sig {params(item: Item, from_id: Release::Id, to_id: Release::Id, new_index: Integer).void}
+  def swap_item_priorities_in_releases(item, from_id, to_id, new_index)
+    from = @repository.find_by_id(from_id)
+    to = @repository.find_by_id(to_id)
+
+    from.remove_item(item)
+    to.add_item(item)
+    to.swap_priorities(item, to.fetch_item(new_index))
+
+    transaction do
+      @repository.store(from)
+      @repository.store(to)
+    end
   end
 end
