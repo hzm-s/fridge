@@ -23,18 +23,18 @@ RSpec.describe 'releases' do
     end
   end
 
-  xdescribe 'update' do
+  describe 'update' do
     let!(:release) { add_release(product.id, 'FURUI_TITLE') }
 
     it do
-      patch release_path(2, product_id: product.id.to_s), params: { form: { title: 'SHIN_TITLE' } }
+      patch release_path(release.id.to_s), params: { form: { title: 'SHIN_TITLE' } }
       follow_redirect!
 
       expect(response.body).to include 'SHIN_TITLE'
     end
 
     it do
-      patch release_path(2, product_id: product.id.to_s), params: { form: { title: '' } }
+      patch release_path(release.id.to_s), params: { form: { title: '' } }
       expect(response.body).to include I18n.t('errors.messages.blank')
     end
   end

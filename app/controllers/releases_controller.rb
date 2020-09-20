@@ -29,9 +29,10 @@ class ReleasesController < ApplicationController
     @form = ReleaseForm.new(release_params)
 
     if @form.valid?
-      product_id = Product::Id.from_string(current_product_id)
-      ModifyReleaseTitleUsecase.perform(product_id, params[:no].to_i, @form.title)
-      redirect_to product_pbis_path(product_id: product_id.to_s), flash: flash_success('release.update')
+      release_id = Release::Id.from_string(params[:id])
+      release = ReleaseRepository::AR.find_by_id(release_id)
+      ModifyReleaseTitleUsecase.perform(release.id, @form.title)
+      redirect_to product_backlog_path(product_id: release.product_id.to_s), flash: flash_success('release.update')
     else
       render :edit
     end
@@ -54,13 +55,14 @@ class ReleasesController < ApplicationController
   end
 
   def fetch_release
-    product_id = Product::Id.from_string(params[:product_id])
-    no = params[:no].to_i
-
-    PlanRepository::AR.find_by_product_id(product_id).release(no)
+    id = Release::Id.from_string(params[:id])
+    ReleaseRepository::AR.find_by_id(id)
   end
 
   def current_product_id
-    params[:product_id]
+    product_id = params[:product_id]
+    return product_id if product_id
+
+    fetch_release.product_id.to_s
   end
 end
