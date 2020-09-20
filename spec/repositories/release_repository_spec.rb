@@ -26,6 +26,7 @@ RSpec.describe ReleaseRepository::AR do
         expect(rel.id).to eq release.id.to_s
         expect(rel.dao_product_id).to eq release.product_id.to_s
         expect(rel.title).to eq 'MVP'
+        expect(rel.can_remove).to be false
         expect(rel.items.map(&:dao_issue_id)).to eq [item_a, item_b, item_c].map(&:id).map(&:to_s)
       end
     end

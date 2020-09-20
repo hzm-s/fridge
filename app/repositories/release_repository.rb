@@ -24,7 +24,8 @@ module ReleaseRepository
     def write(release)
       self.attributes = {
         dao_product_id: release.product_id.to_s,
-        title: release.title
+        title: release.title,
+        can_remove: release.can_remove?
       }
 
       self.items.clear
