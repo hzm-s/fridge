@@ -54,7 +54,7 @@ RSpec.describe ReleaseRepository::AR do
     end
   end
 
-  describe 'Delete' do
+  describe 'Remove' do
     it do
       release = add_release(product.id, 'MVP')
       other_release = add_release(product.id, 'Other')

@@ -7,19 +7,8 @@ RSpec.describe RemoveReleaseUsecase do
   it do
     release = add_release(product.id)
 
-    described_class.perform(product.id, 2)
+    described_class.perform(release.id)
 
-    plan = PlanRepository::AR.find_by_product_id(product.id)
-
-    expect { plan.release(2) }.to raise_error(Plan::ReleaseNotFound)
-  end
-
-  it do
-    release = add_release(product.id)
-
-    add_pbi(product.id, release: 2)
-
-    expect { described_class.perform(product.id, 2) }
-      .to raise_error(Plan::CanNotRemoveRelease)
+    expect(Dao::Release.find_by(id: release.id.to_s)).to be_nil
   end
 end
