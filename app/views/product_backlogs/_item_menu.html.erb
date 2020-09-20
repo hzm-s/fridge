@@ -13,17 +13,5 @@
         <%=t 'navs.delete' %>
       <% end %>
     <% end %>
-    <% if item.status.can_start_development? %>
-      <div class="dropdown-divider"></div>
-      <%= link_to pbi_developments_path(id: item.id), method: :post, remote: true, class: 'dropdown-item' do %>
-        <%=t 'domain.pbi.start_development' %>
-      <% end %>
-    <% end %>
-    <% if item.status.can_abort_development? %>
-      <div class="dropdown-divider"></div>
-      <%= link_to pbi_development_path(item.id), method: :delete, remote: true, data: { confirm: t('.confirm_abort_development') }, class: 'dropdown-item' do %>
-        <%=t 'domain.pbi.abort_development' %>
-      <% end %>
-    <% end %>
   </div>
 </div>

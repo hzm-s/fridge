@@ -9,16 +9,6 @@ module Issue
         include Status
 
         sig {override.returns(T::Boolean)}
-        def can_start_development?
-          false
-        end
-
-        sig {override.returns(T::Boolean)}
-        def can_abort_development?
-          false
-        end
-
-        sig {override.returns(T::Boolean)}
         def can_remove?
           true
         end
@@ -35,16 +25,6 @@ module Issue
           else
             self
           end
-        end
-
-        sig {override.returns(Status)}
-        def update_to_wip
-          raise CanNotStartDevelopment
-        end
-
-        sig {override.returns(Status)}
-        def update_by_abort_development
-          raise NotDevelopmentStarted
         end
 
         sig {override.returns(String)}

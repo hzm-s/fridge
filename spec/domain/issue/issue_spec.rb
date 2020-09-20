@@ -56,16 +56,6 @@ module Issue
 
         pbi.update_acceptance_criteria(acceptance_criteria([]))
         expect(pbi.status).to eq Statuses::Preparation
-
-        pbi.update_acceptance_criteria(acceptance_criteria(%w(AC1 AC2 AC3)))
-        pbi.start_development
-        expect(pbi.status).to eq Statuses::Wip
-
-        pbi.estimate(StoryPoint.new(5))
-        expect(pbi.size).to eq StoryPoint.new(3)
-
-        pbi.abort_development
-        expect(pbi.status).to eq Statuses::Ready
       end
     end
   end
