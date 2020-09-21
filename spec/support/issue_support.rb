@@ -4,8 +4,8 @@ require_relative '../domain_support/issue_domain_support'
 module IssueSupport
   include IssueDomainSupport
 
-  def add_issue(product_id, description = 'DESC', type: Issue::Types::Feature, acceptance_criteria: [], size: nil, release: nil)
-    issue = perform_add_issue(product_id, type, description)
+  def add_issue(product_id, description = 'DESC', type: :feature, acceptance_criteria: [], size: nil, release: nil)
+    issue = perform_add_issue(product_id, Issue::Types.from_string(type.to_s), description)
 
     add_acceptance_criteria(issue, acceptance_criteria) if acceptance_criteria
 

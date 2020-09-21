@@ -12,6 +12,10 @@ module IssueQuery
       dao_product_id
     end
 
+    def type
+      @__type ||= Issue::Types.from_string(issue_type)
+    end
+
     def status
       @__status ||= Issue::Statuses.from_string(super)
     end

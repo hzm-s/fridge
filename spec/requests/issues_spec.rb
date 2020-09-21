@@ -12,7 +12,8 @@ RSpec.describe 'issues' do
   describe 'create' do
     context 'given valid params' do
       it do
-        post product_issues_path(product_id: product.id.to_s, format: :js), params: { form: { description: 'ABC' } }
+        params = { form: { type: 'feature', description: 'ABC' } }
+        post product_issues_path(product_id: product.id.to_s, format: :js), params: params
         get product_backlog_path(product_id: product.id.to_s)
 
         expect(response.body).to include 'ABC'
@@ -21,7 +22,7 @@ RSpec.describe 'issues' do
 
     context 'given invalid params' do
       it do
-        post product_issues_path(product_id: product.id.to_s, format: :js), params: { form: { description: '' } }
+        post product_issues_path(product_id: product.id.to_s, format: :js), params: { form: { type: 'feature', description: '' } }
 
         expect(response.body).to include(I18n.t('errors.messages.blank'))
       end
@@ -47,7 +48,7 @@ RSpec.describe 'issues' do
 
     context '入力内容が正しい場合' do
       it do
-        patch issue_path(issue.id, format: :js), params: { form: { description: 'XYZ' } }
+        patch issue_path(issue.id, format: :js), params: { form: { type: 'task', description: 'XYZ' } }
         follow_redirect!
 
         expect(response.body).to include('XYZ')
@@ -56,7 +57,7 @@ RSpec.describe 'issues' do
 
     context '入力内容が正しくない場合' do
       it do
-        patch issue_path(issue.id, format: :js), params: { form: { description: '' } }
+        patch issue_path(issue.id, format: :js), params: { form: { type: 'task', description: '' } }
         expect(response.body).to include(I18n.t('errors.messages.blank'))
       end
     end

@@ -1,6 +1,9 @@
 ja:
   domain:
     issue:
+      types:
+        feature: フィーチャ
+        task: 作業
       statuses:
         draft: 下書き
         preparation: 準備中
@@ -21,6 +24,7 @@ ja:
 
     errors:
       issue:
+        invalid_type: 不正なアイテムタイプです
         invalid_description: 3~500文字で入力してください
         invalid_acceptance_criterion: 3~100文字で入力してください
       team:

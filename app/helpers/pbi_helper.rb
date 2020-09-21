@@ -8,6 +8,10 @@ module PbiHelper
     Issue::StoryPoint.all.map(&:to_s)
   end
 
+  def all_issue_types
+    Issue::Types.all
+  end
+
   def all_pbi_statuses
     Issue::Statuses.all.map(&:to_s)
   end
