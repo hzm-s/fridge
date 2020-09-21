@@ -8,11 +8,12 @@ module Issue
     class << self
       extend T::Sig
 
-      sig {params(product_id: Product::Id, description: Description).returns(T.attached_class)}
-      def create(product_id, description)
+      sig {params(product_id: Product::Id, type: Type, description: Description).returns(T.attached_class)}
+      def create(product_id, type, description)
         new(
           Id.create,
           product_id,
+          type,
           Statuses::Preparation,
           description,
           StoryPoint.unknown,
@@ -32,6 +33,9 @@ module Issue
     sig {returns(Product::Id)}
     attr_reader :product_id
 
+    sig {returns(Type)}
+    attr_reader :type
+
     sig {returns(Status)}
     attr_reader :status
 
@@ -47,14 +51,16 @@ module Issue
     sig {params(
       id: Id,
       product_id: Product::Id,
+      type: Type,
       status: Status,
       description: Description,
       size: StoryPoint,
       acceptance_criteria: AcceptanceCriteria
     ).void}
-    def initialize(id, product_id, status, description, size, acceptance_criteria)
+    def initialize(id, product_id, type, status, description, size, acceptance_criteria)
       @id = id
       @product_id = product_id
+      @type = type
       @status = status
       @description = description
       @size = size

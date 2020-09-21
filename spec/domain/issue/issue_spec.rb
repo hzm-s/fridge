@@ -7,12 +7,13 @@ module Issue
     let(:description) { issue_description('A user story') }
 
     describe 'create' do
-      let(:issue) { described_class.create(product_id, description) }
+      let(:issue) { described_class.create(product_id, Types::Feature, description) }
 
       it do
         aggregate_failures do
           expect(issue.id).to_not be_nil
           expect(issue.product_id).to eq product_id
+          expect(issue.type).to eq Types::Feature
           expect(issue.status).to eq Statuses::Preparation
           expect(issue.description).to eq description
           expect(issue.size).to eq StoryPoint.unknown
@@ -22,7 +23,7 @@ module Issue
     end
 
     describe 'Modify description' do
-      let(:issue) { described_class.create(product_id, issue_description('Origin')) }
+      let(:issue) { described_class.create(product_id, Types::Feature, issue_description('Origin')) }
 
       it do
         new_desc = issue_description('Modified')
@@ -32,7 +33,7 @@ module Issue
     end
 
     describe 'Acceptance criteria' do
-      let(:issue) { described_class.create(product_id, description) }
+      let(:issue) { described_class.create(product_id, Types::Feature, description) }
 
       it do
         criteria = acceptance_criteria(%w(AC1 AC2 AC3))
@@ -42,7 +43,7 @@ module Issue
     end
 
     describe 'Update Status' do
-      let(:issue) { described_class.create(product_id, description) }
+      let(:issue) { described_class.create(product_id, Types::Feature, description) }
 
       it do
         issue.modify_description(issue_description('NEW user story'))
