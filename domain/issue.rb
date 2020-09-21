@@ -3,10 +3,6 @@ module Issue
   class InvalidDescription < ArgumentError; end
   class InvalidAcceptanceCriterion < ArgumentError; end
 
-  class CanNotStartDevelopment < StandardError; end
-  class NotDevelopmentStarted < StandardError; end
-  class CanNotRemove < StandardError; end
-
   autoload :Id, 'issue/id'
   autoload :Issue, 'issue/issue'
   autoload :Description, 'issue/description'
