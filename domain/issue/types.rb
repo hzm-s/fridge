@@ -16,6 +16,7 @@ module Issue
 
       sig {params(str: String).returns(Type)}
       def from_string(str)
+        raise InvalidType unless TYPES.key?(str)
         T.must(TYPES[str])
       end
     end

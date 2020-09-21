@@ -1,5 +1,6 @@
 # typed: strict
 module Issue
+  class InvalidType < ArgumentError; end
   class InvalidDescription < ArgumentError; end
   class InvalidAcceptanceCriterion < ArgumentError; end
 

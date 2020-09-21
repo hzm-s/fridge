@@ -3,12 +3,31 @@ require 'rails_helper'
 
 RSpec.describe IssueForm do
   let(:valid) do
-    { description: 'ABC' }
+    {
+      type: 'feature',
+      description: 'ABC',
+    }
   end
 
   it do
     form = described_class.new(valid)
     expect(form).to be_valid
+  end
+
+  it do
+    form = described_class.new(valid.merge(type: ''))
+    aggregate_failures do
+      expect(form).to_not be_valid
+      expect(form.errors[:type]).to include(I18n.t('errors.messages.blank'))
+    end
+  end
+
+  it do
+    form = described_class.new(valid.merge(type: 'epic'))
+    aggregate_failures do
+      expect(form).to_not be_valid
+      expect(form.errors[:type]).to include(I18n.t('domain.errors.issue.invalid_type'))
+    end
   end
 
   it do
