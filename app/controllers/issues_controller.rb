@@ -12,6 +12,7 @@ class IssuesController < ApplicationController
     if @form.valid?
       AddIssueUsecase.perform(
         Product::Id.from_string(params[:product_id]),
+        @form.domain_objects[:type],
         @form.domain_objects[:description]
       )
       redirect_to product_backlog_path(product_id: params[:product_id]), flash: flash_success('issue.create')
@@ -49,7 +50,7 @@ class IssuesController < ApplicationController
   private
 
   def permitted_params
-    params.require(:form).permit(:description)
+    params.require(:form).permit(:type, :description)
   end
 
   def current_product_id

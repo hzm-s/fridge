@@ -48,7 +48,7 @@ RSpec.describe 'issues' do
 
     context '入力内容が正しい場合' do
       it do
-        patch issue_path(issue.id, format: :js), params: { form: { description: 'XYZ' } }
+        patch issue_path(issue.id, format: :js), params: { form: { type: 'task', description: 'XYZ' } }
         follow_redirect!
 
         expect(response.body).to include('XYZ')
@@ -57,7 +57,7 @@ RSpec.describe 'issues' do
 
     context '入力内容が正しくない場合' do
       it do
-        patch issue_path(issue.id, format: :js), params: { form: { description: '' } }
+        patch issue_path(issue.id, format: :js), params: { form: { type: 'task', description: '' } }
         expect(response.body).to include(I18n.t('errors.messages.blank'))
       end
     end
