@@ -1,4 +1,3 @@
-# typed: false
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -46,6 +45,7 @@ ActiveRecord::Schema.define(version: 2020_09_12_064828) do
 
   create_table "dao_issues", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "dao_product_id"
+    t.string "issue_type", null: false
     t.string "status", null: false
     t.string "description", null: false
     t.integer "size"

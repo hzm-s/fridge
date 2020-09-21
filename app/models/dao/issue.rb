@@ -8,6 +8,7 @@ class Dao::Issue < ApplicationRecord
   def write(issue)
     self.attributes = {
       dao_product_id: issue.product_id.to_s,
+      issue_type: issue.type.to_s,
       status: issue.status.to_s,
       description: issue.description.to_s,
       size: issue.size.to_i,
@@ -23,6 +24,7 @@ class Dao::Issue < ApplicationRecord
     Issue::Issue.from_repository(
       read_issue_id,
       read_product_id,
+      read_type,
       read_status,
       read_description,
       read_story_point,
@@ -36,6 +38,10 @@ class Dao::Issue < ApplicationRecord
 
   def read_product_id
     Product::Id.from_string(dao_product_id)
+  end
+
+  def read_type
+    Issue::Types.from_string(issue_type)
   end
 
   def read_status

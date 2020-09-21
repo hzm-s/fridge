@@ -4,8 +4,8 @@ require_relative '../domain_support/issue_domain_support'
 module IssueSupport
   include IssueDomainSupport
 
-  def add_issue(product_id, description = 'DESC', acceptance_criteria: [], size: nil, release: nil)
-    issue = perform_add_issue(product_id, description)
+  def add_issue(product_id, description = 'DESC', type: Issue::Types::Feature, acceptance_criteria: [], size: nil, release: nil)
+    issue = perform_add_issue(product_id, type, description)
 
     add_acceptance_criteria(issue, acceptance_criteria) if acceptance_criteria
 
@@ -47,9 +47,9 @@ module IssueSupport
 
   private
 
-  def perform_add_issue(product_id, desc)
+  def perform_add_issue(product_id, type, desc)
     Issue::Description.new(desc)
-      .yield_self { |d| AddIssueUsecase.perform(product_id, d) }
+      .yield_self { |d| AddIssueUsecase.perform(product_id, type, d) }
       .yield_self { |id| IssueRepository::AR.find_by_id(id) }
   end
 end

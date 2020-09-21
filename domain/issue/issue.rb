@@ -21,9 +21,9 @@ module Issue
         )
       end
 
-      sig {params(id: Id, product_id: Product::Id, status: Status, description: Description, size: StoryPoint, acceptance_criteria: AcceptanceCriteria).returns(T.attached_class)}
-      def from_repository(id, product_id, status, description, size, acceptance_criteria)
-        new(id, product_id, status, description, size, acceptance_criteria)
+      sig {params(id: Id, product_id: Product::Id, type: Type, status: Status, description: Description, size: StoryPoint, acceptance_criteria: AcceptanceCriteria).returns(T.attached_class)}
+      def from_repository(id, product_id, type, status, description, size, acceptance_criteria)
+        new(id, product_id, type, status, description, size, acceptance_criteria)
       end
     end
 
