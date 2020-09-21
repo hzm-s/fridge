@@ -1,6 +1,9 @@
 ja:
   domain:
     issue:
+      types:
+        feature: フィーチャ
+        task: 作業
       statuses:
         draft: 下書き
         preparation: 準備中

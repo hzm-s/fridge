@@ -19,6 +19,11 @@ module Issue
         raise InvalidType unless TYPES.key?(str)
         T.must(TYPES[str])
       end
+
+      sig {returns(T::Array[Type])}
+      def all
+        TYPES.values
+      end
     end
   end
 end
