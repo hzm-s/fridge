@@ -4,11 +4,15 @@
       <%= f.label :description %>
       <%= f.text_area :description, rows: 3, class: 'form-control' %>
     </div>
-    <div class="row mb-2">
+    <% if method == :post %>
+    <div class="row">
       <div class="col-lg-5">
         <%= f.select :type, all_issue_types.map { |type| [t(type.to_s, scope: 'domain.issue.types'), type.to_s] }, { prompt: true }, { class: 'form-control' }  %>
       </div>
     </div>
-    <%= f.button btn_label, class: 'btn btn-success', data: with_loader %>
+    <% end %>
+    <div class="mt-2">
+      <%= f.button btn_label, class: 'btn btn-success', data: with_loader %>
+    </div>
   <% end -%>
 </div>

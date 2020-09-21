@@ -7,7 +7,7 @@ ja:
     already_signed_in: ログインしています
     issue:
       create: アイテムをプロダクトバックログに追加しました
-      update: フィーチャーを更新しました
+      update: アイテムを更新しました
       destroy: アイテムを削除しました
     product:
       create: プロダクトを作成しました

@@ -23,7 +23,7 @@ class IssuesController < ApplicationController
 
   def edit
     @issue = IssueQuery.call(params[:id])
-    @form = IssueForm.new(description: @issue.description)
+    @form = IssueForm.new(type: @issue.type, description: @issue.description)
   end
 
   def update
