@@ -8,7 +8,7 @@
       <%= link_to "#clp-pbi-ac-#{item.id}", collapse_trigger_options(class: 'pbl-item__ac-trigger') do %>
         <i class="fas fa-list"></i>
       <% end %>
-      <%= render partial: 'product_backlogs/point_form', locals: { item: item } %>
+      <%= render partial: 'product_backlogs/point', locals: { item: item } %>
       <%= render partial: 'product_backlogs/item_menu', locals: { item: item } %>
     </div>
   </div>

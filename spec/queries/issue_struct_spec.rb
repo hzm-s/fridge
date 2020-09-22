@@ -17,7 +17,7 @@ RSpec.describe IssueStruct do
 
     s = described_class.new(Dao::Issue.last)
 
-    expect(s.type).to eq issue.type
+    expect(s).to_not be_can_estimate
   end
 
   it 'ステータスを返すこと' do

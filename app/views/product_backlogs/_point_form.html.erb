@@ -1,6 +1,5 @@
 <div class="dropdown">
-  <% opt = item.status.can_estimate? ? dd_trigger_options(id: "dd-pbi-point-#{item.id}", class: 'pbl-item__point') : { class: 'pbl-item__point' } %>
-  <%= content_tag :span, present_story_point(item.size), opt %>
+  <%= content_tag :span, present_story_point(item.size), dd_trigger_options(id: "dd-pbi-point-#{item.id}", class: 'pbl-item__point') %>
   <div class="dropdown-menu dropdown-menu-right p-3 py-2">
     <%= form_with scope: :form, url: feature_estimation_path(item.id), method: :put do |f| %>
       <div class="form-group">
