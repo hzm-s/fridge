@@ -11,7 +11,7 @@
         <span>
       </div>
     </div>
-    <%= render partial: 'form', locals: { form: @form, url: issue_path(@issue.id), method: :put, btn_label: t('navs.save') } %>
+    <%= render partial: 'form', locals: { form: @form, url: issue_path(@issue.id), method: :patch, btn_label: t('navs.save') } %>
     <hr>
     <div>
       <label>
