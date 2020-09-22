@@ -1,10 +1,9 @@
 # typed: false
-require 'sorbet-runtime'
 
 module ProductBacklogQuery
   class << self
     def call(product_id)
-      items = fetch_issues(product_id).map { |i| Item.new(i) }
+      items = fetch_issues(product_id).map { |i| IssueStruct.new(i) }
       items_per_release = items.group_by(&:dao_release_id)
 
       icebox = ItemList.new(
@@ -40,20 +39,10 @@ module ProductBacklogQuery
     end
   end
 
-  class Item < SimpleDelegator
-    def status
-      @__status ||= Issue::Statuses.from_string(super)
-    end
-
-    def criteria
-      @__criteria ||= super.sort_by(&:id)
-    end
-  end
-
   class ItemList < T::Struct
     prop :id, T.nilable(String)
     prop :title, T.nilable(String)
-    prop :items, T::Array[Item]
+    prop :items, T::Array[::IssueStruct]
     prop :can_remove, T::Boolean
 
     def can_remove?

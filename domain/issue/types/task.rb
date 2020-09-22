@@ -8,6 +8,11 @@ module Issue
         extend T::Sig
         include Type
 
+        sig {override.returns(T::Boolean)}
+        def can_estimate?
+          false
+        end
+
         sig {override.returns(String)}
         def to_s
           'task'
