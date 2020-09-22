@@ -31,24 +31,6 @@ RSpec.describe ProductBacklogQuery do
     expect(items.map(&:id)).to eq [item_a, item_d, item_b, item_c, item_e].map(&:to_s)
   end
 
-  it '受け入れ基準がある場合は受け入れ基準を含むこと' do
-    add_issue(product.id, acceptance_criteria: %w(ac1 ac2 ac3))
-
-    pbl = described_class.call(product.id.to_s)
-    item = pbl.icebox.items.first
-
-    expect(item.criteria.map(&:content)).to eq %w(ac1 ac2 ac3) 
-  end
-
-  it 'ステータスを返すこと' do
-    add_issue(product.id)
-
-    pbl = described_class.call(product.id.to_s)
-    item = pbl.icebox.items.first
-
-    expect(item.status).to eq Issue::Statuses::Preparation
-  end
-
   it 'リリースを返すこと' do
     pbl = described_class.call(product.id.to_s)
     expect(pbl.releases).to be_empty
