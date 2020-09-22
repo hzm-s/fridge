@@ -1,6 +1,10 @@
 # typed: false
 
 class IssueStruct < SimpleDelegator
+  def product_id
+    dao_product_id
+  end
+
   def type
     @__type ||= Issue::Types.from_string(issue_type)
   end
