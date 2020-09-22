@@ -1,12 +1,12 @@
 # typed: strict
 require 'sorbet-runtime'
+require 'issue/status'
+require 'issue/statuses/preparation'
+require 'issue/statuses/ready'
+require 'issue/statuses/wip'
 
 module Issue
   module Statuses
-    autoload :Preparation, 'issue/statuses/preparation'
-    autoload :Ready, 'issue/statuses/ready'
-    autoload :Wip, 'issue/statuses/wip'
-
     class << self
       extend T::Sig
 
