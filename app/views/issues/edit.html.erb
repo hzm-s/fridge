@@ -18,9 +18,7 @@
         <%= t '.title_ac' %>
       </label>
       <div class="ac-list mt-1">
-        <% @issue.criteria.each do |c| %>
-          <%= render partial: 'acceptance_criteria/item', locals: { issue_id: @issue.id, criterion: c, editable: true } %>
-        <% end %>
+        <%= render partial: 'acceptance_criteria/item', collection: @issue.criteria, locals: { issue_id: @issue.id, editable: true }, as: :criterion %>
       </div>
     </div>
     <div class="mt-3">
