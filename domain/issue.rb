@@ -3,6 +3,7 @@ module Issue
   class InvalidType < ArgumentError; end
   class InvalidDescription < ArgumentError; end
   class InvalidAcceptanceCriterion < ArgumentError; end
+  class CanNotEstimate < ArgumentError; end
 
   autoload :Id, 'issue/id'
   autoload :Issue, 'issue/issue'

@@ -42,6 +42,18 @@ module Issue
       end
     end
 
+    describe 'Estimate' do
+      it do
+        issue = described_class.create(product_id, Types::Feature, description)
+        expect { issue.estimate(StoryPoint.new(3)) }.to_not raise_error
+      end
+
+      it do
+        issue = described_class.create(product_id, Types::Task, description)
+        expect { issue.estimate(StoryPoint.new(3)) }.to raise_error(CanNotEstimate)
+      end
+    end
+
     describe 'Update Status' do
       let(:issue) { described_class.create(product_id, Types::Feature, description) }
 
