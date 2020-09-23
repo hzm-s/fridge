@@ -80,7 +80,7 @@ module Issue
 
     sig {params(size: StoryPoint).void}
     def estimate(size)
-      raise CanNotEstimate unless @type.can_estimate? && @status.can_estimate?
+      raise CanNotEstimate unless @type.can_estimate?
 
       @size = size
       update_status_by_preparation
