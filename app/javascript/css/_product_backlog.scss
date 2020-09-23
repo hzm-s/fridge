@@ -121,11 +121,35 @@
   margin-left: auto;
 }
 
+.pbl-item__ac-containter {
+  position: relative;
+}
+
 .pbl-item__ac-trigger {
   color: $secondary;
 
   &:hover {
     color: $secondary;
+  }
+}
+
+.pbl-item__ac-trigger--empty {
+  &:before {
+    @include nf;
+    position: absolute;
+    top: 1px;
+    right: -5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: .75rem;
+    height: .75rem;
+    content: '?';
+    font-size: .5rem;
+    font-weight: bolder;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
   }
 }
 
