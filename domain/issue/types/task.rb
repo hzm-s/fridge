@@ -13,6 +13,11 @@ module Issue
           false
         end
 
+        sig {override.returns(T::Boolean)}
+        def must_have_acceptance_criteria?
+          false
+        end
+
         sig {override.returns(String)}
         def to_s
           'task'

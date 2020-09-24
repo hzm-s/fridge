@@ -13,6 +13,11 @@ module Issue
           true
         end
 
+        sig {override.returns(T::Boolean)}
+        def must_have_acceptance_criteria?
+          true
+        end
+
         sig {override.returns(String)}
         def to_s
           'feature'
