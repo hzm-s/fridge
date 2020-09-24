@@ -20,4 +20,8 @@ class IssueStruct < SimpleDelegator
   def can_estimate?
     type.can_estimate?
   end
+
+  def must_have_acceptance_criteria?
+    type.must_have_acceptance_criteria?
+  end
 end

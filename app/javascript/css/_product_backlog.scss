@@ -137,7 +137,7 @@
   &:before {
     @include nf;
     position: absolute;
-    top: 1px;
+    top: 0;
     right: -5px;
     display: flex;
     align-items: center;
@@ -145,10 +145,10 @@
     width: .75rem;
     height: .75rem;
     content: '?';
-    font-size: .5rem;
-    font-weight: bolder;
-    background-color: red;
-    color: white;
+    font-size: .75rem;
+    font-weight: bold;
+    background-color: white;
+    color: $danger;
     border-radius: 50%;
   }
 }
