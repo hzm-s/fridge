@@ -8,5 +8,6 @@ require 'product'
 require 'team'
 require 'issue'
 require 'release'
+require 'order'
 
 Dir[File.join(File.expand_path('./domain_support', __dir__), '**', '*.rb')].sort.each { |f| require f }
