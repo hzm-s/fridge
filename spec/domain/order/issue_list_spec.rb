@@ -2,14 +2,14 @@
 require 'domain_helper'
 
 module Order
-  RSpec.describe List do
+  RSpec.describe IssueList do
     let(:issue_a) { Issue::Id.create }
     let(:issue_b) { Issue::Id.create }
     let(:issue_c) { Issue::Id.create }
     let(:issue_d) { Issue::Id.create }
     let(:issue_e) { Issue::Id.create }
 
-    describe 'Append & Remove item' do
+    describe 'Append & Remove' do
       it do
         list = described_class.new([])
         list = list.append(issue_a)
@@ -22,7 +22,7 @@ module Order
       it do
         list = described_class.new([issue_a, issue_b, issue_c])
 
-        list = list.remove_item(issue_b)
+        list = list.remove(issue_b)
 
         expect(list.to_a).to eq [issue_a, issue_c]
       end
@@ -38,33 +38,33 @@ module Order
       end
     end
 
-    describe 'Swap priorities' do
+    describe 'Swap' do
       before do
         @list = described_class.new([issue_a, issue_b, issue_c, issue_d, issue_e])
       end
 
       it do
-        @list = @list.swap_priorities(issue_a, issue_a)
+        @list = @list.swap(issue_a, issue_a)
         expect(@list.to_a).to eq [issue_a, issue_b, issue_c, issue_d, issue_e]
       end
 
       it do
-        @list = @list.swap_priorities(issue_c, issue_b)
+        @list = @list.swap(issue_c, issue_b)
         expect(@list.to_a).to eq [issue_a, issue_c, issue_b, issue_d, issue_e]
       end
 
       it do
-        @list = @list.swap_priorities(issue_e, issue_a)
+        @list = @list.swap(issue_e, issue_a)
         expect(@list.to_a).to eq [issue_e, issue_a, issue_b, issue_c, issue_d]
       end
 
       it do
-        @list = @list.swap_priorities(issue_c, issue_d)
+        @list = @list.swap(issue_c, issue_d)
         expect(@list.to_a).to eq [issue_a, issue_b, issue_d, issue_c, issue_e]
       end
 
       it do
-        @list = @list.swap_priorities(issue_a, issue_e)
+        @list = @list.swap(issue_a, issue_e)
         expect(@list.to_a).to eq [issue_b, issue_c, issue_d, issue_e, issue_a]
       end
     end

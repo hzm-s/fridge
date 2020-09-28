@@ -2,7 +2,7 @@
 require 'sorbet-runtime'
 
 module Order
-  class List
+  class IssueList
     extend T::Sig
 
     sig {params(items: T::Array[Issue::Id]).void}
@@ -16,18 +16,18 @@ module Order
     end
 
     sig {params(item: Issue::Id).returns(T.self_type)}
-    def remove_item(item)
+    def remove(item)
       self.class.new(@items.reject { |i| i == item })
     end
 
-    sig {params(item: Issue::Id, to: Issue::Id).returns(T.self_type)}
-    def swap_priorities(item, to)
-      return self if item == to
+    sig {params(from: Issue::Id, to: Issue::Id).returns(T.self_type)}
+    def swap(from, to)
+      return self if from == to
 
-      if T.must(@items.index(item)) > T.must(@items.index(to))
-        remove_item(item).yield_self { |me| me.insert_item_before(item, to) }
+      if T.must(@items.index(from)) > T.must(@items.index(to))
+        remove(from).then { |list| list.insert_before(from, to) }
       else
-        remove_item(item).yield_self { |me| me.insert_item_after(item, to) }
+        remove(from).then { |list| list.insert_after(from, to) }
       end
     end
 
@@ -49,13 +49,13 @@ module Order
     protected
 
     sig {params(item: Issue::Id, to: Issue::Id).returns(T.self_type)}
-    def insert_item_before(item, to)
+    def insert_before(item, to)
       index = T.must(@items.index(to))
       self.class.new(@items.insert(index, item))
     end
 
     sig {params(item: Issue::Id, to: Issue::Id).returns(T.self_type)}
-    def insert_item_after(item, to)
+    def insert_after(item, to)
       index = 0 - (@items.size - T.must(@items.index(to)))
       self.class.new(@items.insert(index, item))
     end

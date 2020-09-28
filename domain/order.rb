@@ -1,5 +1,5 @@
 # typed: strict
 module Order
   autoload :Order, 'order/order'
-  autoload :List, 'order/list'
+  autoload :IssueList, 'order/issue_list'
 end
