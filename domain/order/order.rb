@@ -18,12 +18,17 @@ module Order
     attr_reader :product_id
 
     sig {returns(IssueList)}
-    attr_reader :issue_list
+    attr_reader :issues
 
-    sig {params(product_id: Product::Id, issue_list: IssueList).void}
-    def initialize(product_id, issue_list)
+    sig {params(product_id: Product::Id, issues: IssueList).void}
+    def initialize(product_id, issues)
       @product_id = product_id
-      @issue_list = issue_list
+      @issues = issues
+    end
+
+    sig {params(issue_id: Issue::Id).void}
+    def append_issue(issue_id)
+      @issues = @issues.append(issue_id)
     end
   end
 end

@@ -41,7 +41,7 @@ module Order
       @items
     end
 
-    sig {params(other: T::Array[Issue::Id]).returns(T::Boolean)}
+    sig {params(other: IssueList).returns(T::Boolean)}
     def ==(other)
       self.to_a == other.to_a
     end

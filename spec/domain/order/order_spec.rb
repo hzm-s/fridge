@@ -3,13 +3,27 @@ require 'domain_helper'
 
 module Order
   RSpec.describe Order do
-    describe 'create' do
-      let!(:product_id) { Product::Id.create }
+    let!(:product_id) { Product::Id.create }
 
+    describe 'Create' do
       it do
         order = described_class.create(product_id)
         expect(order.product_id).to eq product_id
-        expect(order.issue_list).to be_empty
+        expect(order.issues).to be_empty
+      end
+    end
+
+    let(:issue_a) { Issue::Id.create }
+    let(:issue_b) { Issue::Id.create }
+    let(:issue_c) { Issue::Id.create }
+
+    describe 'Append issue' do
+      it do
+        order = described_class.create(product_id)
+        order.append_issue(issue_a)
+        order.append_issue(issue_b)
+        order.append_issue(issue_c)
+        expect(order.issues).to eq IssueList.new([issue_a, issue_b, issue_c])
       end
     end
   end
