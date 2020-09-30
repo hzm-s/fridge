@@ -30,5 +30,10 @@ module Order
     def append_issue(issue_id)
       @issues = @issues.append(issue_id)
     end
+
+    sig {params(issue_id: Issue::Id).void}
+    def remove_issue(issue_id)
+      @issues = @issues.remove(issue_id)
+    end
   end
 end
