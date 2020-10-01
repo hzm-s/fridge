@@ -54,6 +54,14 @@ ActiveRecord::Schema.define(version: 2020_09_12_064828) do
     t.index ["dao_product_id"], name: "idx_product_id_on_issues"
   end
 
+  create_table "dao_orders", force: :cascade do |t|
+    t.uuid "dao_product_id"
+    t.uuid "entries", array: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["dao_product_id"], name: "index_dao_orders_on_dao_product_id"
+  end
+
   create_table "dao_people", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
@@ -109,6 +117,7 @@ ActiveRecord::Schema.define(version: 2020_09_12_064828) do
   add_foreign_key "app_user_profiles", "app_user_accounts"
   add_foreign_key "dao_acceptance_criteria", "dao_issues"
   add_foreign_key "dao_issues", "dao_products"
+  add_foreign_key "dao_orders", "dao_products"
   add_foreign_key "dao_products", "dao_people", column: "owner_id"
   add_foreign_key "dao_release_items", "dao_issues"
   add_foreign_key "dao_release_items", "dao_releases"
