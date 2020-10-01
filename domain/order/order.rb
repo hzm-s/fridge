@@ -35,5 +35,10 @@ module Order
     def remove_issue(issue_id)
       @issues = @issues.remove(issue_id)
     end
+
+    sig {params(from: Issue::Id, to: Issue::Id).void}
+    def swap_issues(from, to)
+      @issues = @issues.swap(from, to)
+    end
   end
 end

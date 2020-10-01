@@ -38,5 +38,17 @@ module Order
         expect(order.issues).to eq IssueList.new([issue_a, issue_c])
       end
     end
+
+    describe 'Swap issue positions' do
+      it do
+        order = described_class.create(product_id)
+        order.append_issue(issue_a)
+        order.append_issue(issue_b)
+        order.append_issue(issue_c)
+
+        order.swap_issues(issue_c, issue_a)
+        expect(order.issues).to eq IssueList.new([issue_c, issue_a, issue_b])
+      end
+    end
   end
 end
