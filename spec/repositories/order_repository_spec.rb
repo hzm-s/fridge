@@ -39,4 +39,18 @@ RSpec.describe OrderRepository::AR do
       expect(rel.entries).to eq [issue_a, issue_b, issue_c].map(&:id).map(&:to_s)
     end
   end
+
+  describe 'Find' do
+    it do
+      order = Order::Order.create(product.id)
+      order.append_issue(issue_a.id)
+      order.append_issue(issue_b.id)
+      order.append_issue(issue_c.id)
+      described_class.store(order)
+
+      stored = described_class.find_by_product_id(product.id)
+
+      expect(stored.issues).to eq Order::IssueList.new([issue_a.id, issue_b.id, issue_c.id])
+    end
+  end
 end

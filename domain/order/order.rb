@@ -12,6 +12,11 @@ module Order
       def create(product_id)
         new(product_id, IssueList.new([]))
       end
+
+      sig {params(product_id: Product::Id, issues: IssueList).returns(T.attached_class)}
+      def from_repository(product_id, issues)
+        new(product_id, issues)
+      end
     end
 
     sig {returns(Product::Id)}
