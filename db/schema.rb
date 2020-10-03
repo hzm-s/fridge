@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 2020_09_12_064828) do
     t.uuid "entries", array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["dao_product_id"], name: "index_dao_orders_on_dao_product_id"
+    t.index ["dao_product_id"], name: "index_dao_orders_on_dao_product_id", unique: true
   end
 
   create_table "dao_people", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
