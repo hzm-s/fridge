@@ -8,26 +8,9 @@ RSpec.describe OrderRepository::AR do
   let(:issue_b) { add_issue(product.id) }
   let(:issue_c) { add_issue(product.id) }
 
-  describe 'Add' do
-    it do
-      order = Order::Order.create(product.id)
-
-      expect { described_class.store(order) }
-        .to change { Dao::Order.count }.by(1)
-
-      aggregate_failures do
-        rel = Dao::Order.last
-        expect(rel.dao_product_id).to eq product.id.to_s
-        expect(rel.entries).to be_empty
-      end
-    end
-  end
-
   describe 'Update' do
     it do
-      order = Order::Order.create(product.id)
-      described_class.store(order)
-
+      order = described_class.find_by_product_id(product.id)
       order.append_issue(issue_a.id)
       order.append_issue(issue_b.id)
       order.append_issue(issue_c.id)
