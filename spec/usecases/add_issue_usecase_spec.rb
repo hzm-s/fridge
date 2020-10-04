@@ -9,6 +9,7 @@ RSpec.describe AddIssueUsecase do
 
     issue_id = described_class.perform(product.id, Issue::Types::Feature, description)
     issue = IssueRepository::AR.find_by_id(issue_id)
+    order = OrderRepository::AR.find_by_product_id(product.id)
 
     aggregate_failures do
       expect(issue.product_id).to eq product.id
@@ -17,6 +18,8 @@ RSpec.describe AddIssueUsecase do
       expect(issue.description).to eq description
       expect(issue.size).to eq Issue::StoryPoint.unknown
       expect(issue.acceptance_criteria).to be_empty
+
+      expect(order.issues).to eq Order::IssueList.new([issue_id])
     end
   end
 end

@@ -13,6 +13,7 @@ class AddIssueUsecase < UsecaseBase
   def perform(product_id, type, description)
     issue = Issue::Issue.create(product_id, type, description)
     @repository.store(issue)
+    AppendIssueToOrderUsecase.perform(product_id, issue.id)
     issue.id
   end
 end
