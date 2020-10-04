@@ -14,6 +14,6 @@ module Issue
     def store(issue); end
 
     sig {abstract.params(id: Id).void}
-    def delete(id); end
+    def remove(id); end
   end
 end

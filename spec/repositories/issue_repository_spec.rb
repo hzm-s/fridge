@@ -66,7 +66,7 @@ RSpec.describe IssueRepository::AR do
     it do
       issue = add_issue(product.id, acceptance_criteria: %w(ac1 ac2 ac3))
 
-      expect { described_class.delete(issue.id) }
+      expect { described_class.remove(issue.id) }
         .to change { Dao::Issue.count }.by(-1)
         .and change { Dao::AcceptanceCriterion.count }.by(-3)
     end

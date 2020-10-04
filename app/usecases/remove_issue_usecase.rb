@@ -13,6 +13,6 @@ class RemoveIssueUsecase < UsecaseBase
   def perform(issue_id)
     issue = @repository.find_by_id(issue_id)
     RemoveIssueFromOrderUsecase.perform(issue.product_id, issue.id)
-    @repository.delete(issue.id)
+    @repository.remove(issue.id)
   end
 end

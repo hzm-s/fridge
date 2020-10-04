@@ -21,7 +21,7 @@ module IssueRepository
       end
 
       sig {override.params(id: Issue::Id).void}
-      def delete(id)
+      def remove(id)
         Dao::Issue.destroy(id.to_s)
       end
     end
