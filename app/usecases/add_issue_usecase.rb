@@ -12,8 +12,10 @@ class AddIssueUsecase < UsecaseBase
   sig {params(product_id: Product::Id, type: Issue::Type, description: Issue::Description).returns(Issue::Id)}
   def perform(product_id, type, description)
     issue = Issue::Issue.create(product_id, type, description)
-    @repository.store(issue)
-    AppendIssueToOrderUsecase.perform(product_id, issue.id)
+    transaction do
+      @repository.store(issue)
+      AppendIssueToOrderUsecase.perform(product_id, issue.id)
+    end
     issue.id
   end
 end

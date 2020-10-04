@@ -7,7 +7,7 @@ class UsecaseBase
   end
 
   def transaction
-    ApplicationRecord.transaction do
+    ApplicationRecord.transaction(joinable: false, requires_new: true) do
       yield
     end
   end

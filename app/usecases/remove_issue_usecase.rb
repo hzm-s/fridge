@@ -12,7 +12,9 @@ class RemoveIssueUsecase < UsecaseBase
   sig {params(issue_id: Issue::Id).void}
   def perform(issue_id)
     issue = @repository.find_by_id(issue_id)
-    RemoveIssueFromOrderUsecase.perform(issue.product_id, issue.id)
-    @repository.remove(issue.id)
+    transaction do
+      RemoveIssueFromOrderUsecase.perform(issue.product_id, issue.id)
+      @repository.remove(issue.id)
+    end
   end
 end
