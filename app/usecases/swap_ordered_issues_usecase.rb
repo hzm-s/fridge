@@ -9,10 +9,10 @@ class SwapOrderedIssuesUsecase < UsecaseBase
     @repository = T.let(OrderRepository::AR, Order::OrderRepository)
   end
 
-  sig {params(product_id: Product::Id, from: Issue::Id, to: Issue::Id).void}
-  def perform(product_id, from, to)
+  sig {params(product_id: Product::Id, issue_id: Issue::Id, to_index: Integer).void}
+  def perform(product_id, issue_id, to_index)
     order = @repository.find_by_product_id(product_id)
-    order.swap_issues(from, to)
+    order.swap_issues(issue_id, order.issues.at(to_index))
     @repository.store(order)
   end
 end

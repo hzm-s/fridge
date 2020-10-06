@@ -8,7 +8,7 @@ RSpec.describe SwapOrderedIssuesUsecase do
   let!(:issue_c) { add_issue(product.id) } 
 
   it do
-    described_class.perform(product.id, issue_a.id, issue_c.id)
+    described_class.perform(product.id, issue_a.id, 2)
 
     order = OrderRepository::AR.find_by_product_id(product.id)
 

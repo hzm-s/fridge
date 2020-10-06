@@ -33,7 +33,12 @@ module Order
 
     sig {returns(T::Boolean)}
     def empty?
-      to_a.empty?
+      @items.empty?
+    end
+
+    sig {params(index: Integer).returns(Issue::Id)}
+    def at(index)
+      @items.at(index)
     end
 
     sig {returns(T::Array[Issue::Id])}

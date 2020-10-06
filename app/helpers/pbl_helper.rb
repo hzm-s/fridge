@@ -3,7 +3,7 @@ module PblHelper
   def sortable_pbl_options(product_id)
     {
       controller: 'sort-pbl',
-      url: product_backlog_path(product_id: product_id),
+      sort_pbl_url: order_path(product_id),
     }
   end
 
