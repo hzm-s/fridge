@@ -11,7 +11,7 @@ RSpec.describe ProductBacklogQuery do
     item_d = add_issue(product.id).id
     item_e = add_issue(product.id).id
 
-    SwapOrderedIssuesUsecase.perform(product.id, item_d, item_b)
+    SwapOrderedIssuesUsecase.perform(product.id, item_d, 1)
 
     pbl = described_class.call(product.id.to_s)
 
