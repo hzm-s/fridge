@@ -11,6 +11,5 @@ RSpec.describe AddReleaseUsecase do
 
     expect(release.title).to eq 'MVP'
     expect(release.product_id).to eq product.id
-    expect(release.items).to eq Release::ItemList.new([])
   end
 end

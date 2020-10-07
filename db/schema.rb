@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_12_064828) do
+ActiveRecord::Schema.define(version: 2020_08_10_050340) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -78,18 +78,9 @@ ActiveRecord::Schema.define(version: 2020_09_12_064828) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "dao_release_items", force: :cascade do |t|
-    t.uuid "dao_release_id"
-    t.uuid "dao_issue_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["dao_release_id", "dao_issue_id"], name: "index_dao_release_items_on_dao_release_id_and_dao_issue_id", unique: true
-  end
-
   create_table "dao_releases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "dao_product_id"
     t.string "title", null: false
-    t.boolean "can_remove", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["dao_product_id"], name: "index_dao_releases_on_dao_product_id"
@@ -119,8 +110,6 @@ ActiveRecord::Schema.define(version: 2020_09_12_064828) do
   add_foreign_key "dao_issues", "dao_products"
   add_foreign_key "dao_orders", "dao_products"
   add_foreign_key "dao_products", "dao_people", column: "owner_id"
-  add_foreign_key "dao_release_items", "dao_issues"
-  add_foreign_key "dao_release_items", "dao_releases"
   add_foreign_key "dao_releases", "dao_products"
   add_foreign_key "dao_team_members", "dao_teams"
   add_foreign_key "dao_teams", "dao_products"

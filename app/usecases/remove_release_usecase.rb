@@ -12,8 +12,6 @@ class RemoveReleaseUsecase < UsecaseBase
   sig {params(release_id: Release::Id).void}
   def perform(release_id)
     release = @repository.find_by_id(release_id)
-    raise Release::CanNotRemove unless release.can_remove?
-
     @repository.remove(release.id)
   end
 end

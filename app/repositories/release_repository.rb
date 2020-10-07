@@ -9,7 +9,7 @@ module ReleaseRepository
 
       sig {override.params(id: Release::Id).returns(Release::Release)}
       def find_by_id(id)
-        Dao::Release.eager_load(:items).find(id).read
+        Dao::Release.find(id).read
       end
 
       sig {override.params(release: Release::Release).void}
@@ -23,8 +23,6 @@ module ReleaseRepository
       sig {override.params(id: Release::Id).void}
       def remove(id)
         Dao::Release.find(id).destroy!
-      rescue ActiveRecord::InvalidForeignKey
-        raise Release::CanNotRemove
       end
     end
   end
