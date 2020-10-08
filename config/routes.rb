@@ -11,11 +11,11 @@ Rails.application.routes.draw do
     resources :releases, only: [:new, :create]
   end
 
+  resources :teams, only: [:new, :create, :show] do
+    resources :members, only: [:new, :create]
+  end
+
   resources :product_backlogs, param: :product_id, only: [:show, :update]
-
-  resources :orders, param: :product_id, only: [:update]
-
-  resources :releases, only: [:edit, :update, :destroy]
 
   resources :issues, only: [:edit, :update, :destroy] do
     resources :acceptance_criteria, only: [:create]
@@ -24,7 +24,9 @@ Rails.application.routes.draw do
 
   resources :feature_estimations, only: [:update]
 
-  resources :teams, only: [:new, :create, :show] do
-    resources :members, only: [:new, :create]
-  end
+  resources :orders, param: :product_id, only: [:update]
+
+  resources :releases, only: [:edit, :update, :destroy]
+
+  resources :release_plans, param: :product_id, only: [:show]
 end

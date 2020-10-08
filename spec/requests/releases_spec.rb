@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.xdescribe 'releases' do
+RSpec.describe 'releases' do
   let!(:user_account) { sign_up }
   let!(:product) { create_product(owner: user_account.person_id) }
 
@@ -23,7 +23,7 @@ RSpec.xdescribe 'releases' do
     end
   end
 
-  describe 'update' do
+  xdescribe 'update' do
     let!(:release) { add_release(product.id, 'FURUI_TITLE') }
 
     it do
@@ -39,7 +39,7 @@ RSpec.xdescribe 'releases' do
     end
   end
 
-  describe 'destroy' do
+  xdescribe 'destroy' do
     it do
       release = add_release(product.id, 'EXTRA_RELEASE')
 
