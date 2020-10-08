@@ -23,7 +23,7 @@ RSpec.describe 'releases' do
     end
   end
 
-  xdescribe 'update' do
+  describe 'update' do
     let!(:release) { add_release(product.id, 'FURUI_TITLE') }
 
     it do

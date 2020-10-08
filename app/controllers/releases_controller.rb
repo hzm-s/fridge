@@ -29,7 +29,7 @@ class ReleasesController < ApplicationController
 
     if @form.valid?
       ModifyReleaseTitleUsecase.perform(current_release.id, @form.title)
-      redirect_to product_backlog_path(product_id: current_product_id.to_s), flash: flash_success('release.update')
+      redirect_to release_plan_path(current_product_id.to_s), flash: flash_success('release.update')
     else
       render :edit
     end
