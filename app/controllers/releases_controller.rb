@@ -37,7 +37,7 @@ class ReleasesController < ApplicationController
 
   def destroy
     RemoveReleaseUsecase.perform(current_release.id)
-    redirect_to product_backlog_path(product_id: current_product_id.to_s), flash: flash_success('release.destroy')
+    redirect_to release_plan_path(current_product_id.to_s), flash: flash_success('release.destroy')
   end
 
   private

@@ -39,7 +39,7 @@ RSpec.describe 'releases' do
     end
   end
 
-  xdescribe 'destroy' do
+  describe 'destroy' do
     it do
       release = add_release(product.id, 'EXTRA_RELEASE')
 
