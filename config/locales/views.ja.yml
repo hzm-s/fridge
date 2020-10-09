@@ -54,6 +54,11 @@ ja:
         post: 追加する
         patch: 保存する
 
+  release_plans:
+    show:
+      title: リリース計画
+      add: リリースを追加する
+
   product_backlogs:
     show:
       title: プロダクトバックログ
