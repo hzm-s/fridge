@@ -37,6 +37,7 @@ ja:
       create: プロダクトを作成する
     product:
       pbl: プロダクトバックログ
+      release_plan: リリース計画
       create_team: チームを作成する
       team: チーム
       setting: プロダクト設定

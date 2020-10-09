@@ -16,7 +16,13 @@
         <div class="pl-link__icon">
           <i class="fas fa-list-alt"></i>
         </div>
-        <%= link_to t('.pbl'), product_backlog_path(product_id: product.id) %>
+        <%= link_to t('.pbl'), product_backlog_path(product.id) %>
+      </div>
+      <div class="pl-link">
+        <div class="pl-link__icon">
+          <i class="fas fa-compass"></i>
+        </div>
+        <%= link_to t('.release_plan'), release_plan_path(product.id) %>
       </div>
       <div class="pl-link">
         <% if product.teams.any? %>
