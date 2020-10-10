@@ -1,13 +1,9 @@
 <div class="nav-item dropdown">
   <%= link_to product.name, '#', dd_trigger_options(id: 'dd-product-menu', class: 'dropdown-toggle gnav__product-name') %>
   <div class="dropdown-menu">
-    <%= link_to product_backlog_path(product.id), class: 'dropdown-item' do %>
+    <%= link_to product_backlog_path(product_id: product.id), class: 'dropdown-item' do %>
       <i class="fas fa-list-alt"></i>
       <%=t 'products.product.pbl' %>
-    <% end %>
-    <%= link_to release_plan_path(product.id), class: 'dropdown-item' do %>
-      <i class="fas fa-compass"></i>
-      <%=t 'products.product.release_plan' %>
     <% end %>
     <%= link_to '#', class: 'dropdown-item' do %>
       <i class="fas fa-cog"></i>

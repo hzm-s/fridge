@@ -37,7 +37,6 @@ ja:
       create: プロダクトを作成する
     product:
       pbl: プロダクトバックログ
-      release_plan: リリース計画
       create_team: チームを作成する
       team: チーム
       setting: プロダクト設定
@@ -53,11 +52,6 @@ ja:
       submit:
         post: 追加する
         patch: 保存する
-
-  release_plans:
-    show:
-      title: リリース計画
-      add: リリースを追加する
 
   product_backlogs:
     show:

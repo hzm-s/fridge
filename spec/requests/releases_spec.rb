@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe 'releases' do
+RSpec.xdescribe 'releases' do
   let!(:user_account) { sign_up }
   let!(:product) { create_product(owner: user_account.person_id) }
 
