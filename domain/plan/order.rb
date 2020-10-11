@@ -1,7 +1,7 @@
 # typed: strict
 require 'sorbet-runtime'
 
-module Order
+module Plan
   class Order
     extend T::Sig
 

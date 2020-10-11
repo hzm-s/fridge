@@ -19,7 +19,7 @@ RSpec.describe AddIssueUsecase do
       expect(issue.size).to eq Issue::StoryPoint.unknown
       expect(issue.acceptance_criteria).to be_empty
 
-      expect(order.issues).to eq Order::IssueList.new([issue_id])
+      expect(order.issues).to eq Plan::IssueList.new([issue_id])
     end
   end
 end

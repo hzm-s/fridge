@@ -10,6 +10,6 @@ RSpec.describe RemoveIssueFromOrderUsecase do
 
     order = OrderRepository::AR.find_by_product_id(product.id)
 
-    expect(order.issues).to eq Order::IssueList.new([])
+    expect(order.issues).to eq Plan::IssueList.new([])
   end
 end

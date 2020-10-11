@@ -10,6 +10,6 @@ RSpec.describe AppendIssueToOrderUsecase do
 
     order = OrderRepository::AR.find_by_product_id(product.id)
 
-    expect(order.issues).to eq Order::IssueList.new([issue.id])
+    expect(order.issues).to eq Plan::IssueList.new([issue.id])
   end
 end

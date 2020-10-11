@@ -1,6 +1,6 @@
 class Dao::Order < ApplicationRecord
   def read
-    Order::Order.from_repository(
+    Plan::Order.from_repository(
       read_product_id,
       read_issue_list,
     )
@@ -21,6 +21,6 @@ class Dao::Order < ApplicationRecord
   def read_issue_list
     entries
       .map { |e| Issue::Id.from_string(e) }
-      .then { |ids| Order::IssueList.new(ids) }
+      .then { |ids| Plan::IssueList.new(ids) }
   end
 end

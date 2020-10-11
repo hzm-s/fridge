@@ -1,7 +1,7 @@
 # typed: strict
 require 'sorbet-runtime'
 
-module Order
+module Plan
   module OrderRepository
     extend T::Sig
     extend T::Helpers

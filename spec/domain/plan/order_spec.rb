@@ -1,7 +1,7 @@
 # typed: false
 require 'domain_helper'
 
-module Order
+module Plan
   RSpec.describe Order do
     let!(:product_id) { Product::Id.create }
 

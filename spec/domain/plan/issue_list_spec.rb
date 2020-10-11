@@ -1,7 +1,7 @@
 # typed: false
 require 'domain_helper'
 
-module Order
+module Plan
   RSpec.describe IssueList do
     let(:issue_a) { Issue::Id.create }
     let(:issue_b) { Issue::Id.create }

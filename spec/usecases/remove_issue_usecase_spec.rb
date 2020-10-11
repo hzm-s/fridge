@@ -12,7 +12,7 @@ RSpec.describe RemoveIssueUsecase do
 
     aggregate_failures do
       expect(Dao::Issue.find_by(id: issue.id.to_s)).to be_nil
-      expect(order.issues).to eq Order::IssueList.new([])
+      expect(order.issues).to eq Plan::IssueList.new([])
     end
   end
 end

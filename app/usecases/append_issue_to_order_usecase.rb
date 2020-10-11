@@ -6,7 +6,7 @@ class AppendIssueToOrderUsecase < UsecaseBase
 
   sig {void}
   def initialize
-    @repository = T.let(OrderRepository::AR, Order::OrderRepository)
+    @repository = T.let(OrderRepository::AR, Plan::OrderRepository)
   end
 
   sig {params(product_id: Product::Id, issue_id: Issue::Id).void}

@@ -6,7 +6,7 @@ class SwapOrderedIssuesUsecase < UsecaseBase
 
   sig {void}
   def initialize
-    @repository = T.let(OrderRepository::AR, Order::OrderRepository)
+    @repository = T.let(OrderRepository::AR, Plan::OrderRepository)
   end
 
   sig {params(product_id: Product::Id, issue_id: Issue::Id, to_index: Integer).void}
