@@ -13,7 +13,7 @@ class CreateProductUsecase < UsecaseBase
   def perform(person_id, name, description = nil)
     product = Product::Product.create(person_id, name, description)
     @product_repository.add(product)
-    PrepareOrderUsecase.perform(product.id)
+    PreparePlanUsecase.perform(product.id)
     product.id
   end
 end

@@ -1,6 +1,6 @@
 # typed: strict
 module Plan
-  autoload :Order, 'plan/order'
+  autoload :Plan, 'plan/plan'
   autoload :IssueList, 'plan/issue_list'
-  autoload :OrderRepository, 'plan/order_repository'
+  autoload :PlanRepository, 'plan/plan_repository'
 end

@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe OrderRepository::AR do
+RSpec.describe PlanRepository::AR do
   let(:product) { create_product }
 
   let(:issue_a) { add_issue(product.id) }
@@ -25,7 +25,7 @@ RSpec.describe OrderRepository::AR do
 
   describe 'Find' do
     it do
-      order = Plan::Order.create(product.id)
+      order = Plan::Plan.create(product.id)
       order.append_issue(issue_a.id)
       order.append_issue(issue_b.id)
       order.append_issue(issue_c.id)

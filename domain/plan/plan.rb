@@ -2,7 +2,7 @@
 require 'sorbet-runtime'
 
 module Plan
-  class Order
+  class Plan
     extend T::Sig
 
     class << self

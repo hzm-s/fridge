@@ -14,7 +14,7 @@ class AddIssueUsecase < UsecaseBase
     issue = Issue::Issue.create(product_id, type, description)
     transaction do
       @repository.store(issue)
-      AppendIssueToOrderUsecase.perform(product_id, issue.id)
+      AppendIssueToPlanUsecase.perform(product_id, issue.id)
     end
     issue.id
   end

@@ -2,7 +2,7 @@
 require 'domain_helper'
 
 module Plan
-  RSpec.describe Order do
+  RSpec.describe Plan do
     let!(:product_id) { Product::Id.create }
 
     describe 'Create' do

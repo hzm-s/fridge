@@ -1,6 +1,6 @@
 class Dao::Order < ApplicationRecord
   def read
-    Plan::Order.from_repository(
+    Plan::Plan.from_repository(
       read_product_id,
       read_issue_list,
     )
