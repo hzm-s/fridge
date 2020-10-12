@@ -10,6 +10,6 @@ RSpec.describe AppendIssueToPlanUsecase do
 
     plan = PlanRepository::AR.find_by_product_id(product.id)
 
-    expect(plan.issues).to eq Plan::IssueList.new([issue.id])
+    expect(plan.issues).to eq Plan::Order.new([issue.id])
   end
 end

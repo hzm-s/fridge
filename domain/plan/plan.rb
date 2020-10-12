@@ -10,10 +10,10 @@ module Plan
 
       sig {params(product_id: Product::Id).returns(T.attached_class)}
       def create(product_id)
-        new(product_id, IssueList.new([]))
+        new(product_id, Order.new([]))
       end
 
-      sig {params(product_id: Product::Id, issues: IssueList).returns(T.attached_class)}
+      sig {params(product_id: Product::Id, issues: Order).returns(T.attached_class)}
       def from_repository(product_id, issues)
         new(product_id, issues)
       end
@@ -22,10 +22,10 @@ module Plan
     sig {returns(Product::Id)}
     attr_reader :product_id
 
-    sig {returns(IssueList)}
+    sig {returns(Order)}
     attr_reader :issues
 
-    sig {params(product_id: Product::Id, issues: IssueList).void}
+    sig {params(product_id: Product::Id, issues: Order).void}
     def initialize(product_id, issues)
       @product_id = product_id
       @issues = issues

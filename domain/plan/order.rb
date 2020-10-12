@@ -2,7 +2,7 @@
 require 'sorbet-runtime'
 
 module Plan
-  class IssueList
+  class Order
     extend T::Sig
 
     sig {params(items: T::Array[Issue::Id]).void}
@@ -46,7 +46,7 @@ module Plan
       @items
     end
 
-    sig {params(other: IssueList).returns(T::Boolean)}
+    sig {params(other: Order).returns(T::Boolean)}
     def ==(other)
       self.to_a == other.to_a
     end

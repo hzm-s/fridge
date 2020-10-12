@@ -12,6 +12,6 @@ RSpec.describe SwapOrderedIssuesUsecase do
 
     plan = PlanRepository::AR.find_by_product_id(product.id)
 
-    expect(plan.issues).to eq Plan::IssueList.new([issue_b.id, issue_c.id, issue_a.id])
+    expect(plan.issues).to eq Plan::Order.new([issue_b.id, issue_c.id, issue_a.id])
   end
 end

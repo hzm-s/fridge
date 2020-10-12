@@ -21,6 +21,6 @@ class Dao::Order < ApplicationRecord
   def read_issue_list
     entries
       .map { |e| Issue::Id.from_string(e) }
-      .then { |ids| Plan::IssueList.new(ids) }
+      .then { |ids| Plan::Order.new(ids) }
   end
 end
