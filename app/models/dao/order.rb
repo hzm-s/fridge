@@ -6,9 +6,9 @@ class Dao::Order < ApplicationRecord
     )
   end
 
-  def write(order)
+  def write(plan)
     self.attributes = {
-      entries: order.issues.to_a.map(&:to_s)
+      entries: plan.order.to_a.map(&:to_s)
     }
   end
 

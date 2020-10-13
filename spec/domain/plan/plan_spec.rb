@@ -9,7 +9,7 @@ module Plan
       it do
         plan = described_class.create(product_id)
         expect(plan.product_id).to eq product_id
-        expect(plan.issues).to be_empty
+        expect(plan.order).to be_empty
       end
     end
 
@@ -23,7 +23,7 @@ module Plan
         plan.append_issue(issue_a)
         plan.append_issue(issue_b)
         plan.append_issue(issue_c)
-        expect(plan.issues).to eq Order.new([issue_a, issue_b, issue_c])
+        expect(plan.order).to eq Order.new([issue_a, issue_b, issue_c])
       end
     end
 
@@ -35,7 +35,7 @@ module Plan
         plan.append_issue(issue_c)
 
         plan.remove_issue(issue_b)
-        expect(plan.issues).to eq Order.new([issue_a, issue_c])
+        expect(plan.order).to eq Order.new([issue_a, issue_c])
       end
     end
 
@@ -47,7 +47,7 @@ module Plan
         plan.append_issue(issue_c)
 
         plan.swap_issues(issue_c, issue_a)
-        expect(plan.issues).to eq Order.new([issue_c, issue_a, issue_b])
+        expect(plan.order).to eq Order.new([issue_c, issue_a, issue_b])
       end
     end
 

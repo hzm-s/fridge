@@ -33,7 +33,7 @@ RSpec.describe PlanRepository::AR do
 
       stored = described_class.find_by_product_id(product.id)
 
-      expect(stored.issues).to eq Plan::Order.new([issue_a.id, issue_b.id, issue_c.id])
+      expect(stored.order).to eq Plan::Order.new([issue_a.id, issue_b.id, issue_c.id])
     end
   end
 end
