@@ -17,52 +17,28 @@ module Plan
     let(:issue_b) { Issue::Id.create }
     let(:issue_c) { Issue::Id.create }
 
-    describe 'Append issue' do
+    describe 'Specify order' do
       it do
         plan = described_class.create(product_id)
-        plan.append_issue(issue_a)
-        plan.append_issue(issue_b)
-        plan.append_issue(issue_c)
-        expect(plan.order).to eq Order.new([issue_a, issue_b, issue_c])
-      end
-    end
+        order = Order.new([issue_a, issue_b, issue_c])
 
-    describe 'Remove issue' do
-      it do
-        plan = described_class.create(product_id)
-        plan.append_issue(issue_a)
-        plan.append_issue(issue_b)
-        plan.append_issue(issue_c)
+        plan.specify_order(order)
 
-        plan.remove_issue(issue_b)
-        expect(plan.order).to eq Order.new([issue_a, issue_c])
-      end
-    end
-
-    describe 'Swap issue positions' do
-      it do
-        plan = described_class.create(product_id)
-        plan.append_issue(issue_a)
-        plan.append_issue(issue_b)
-        plan.append_issue(issue_c)
-
-        plan.swap_issues(issue_c, issue_a)
-        expect(plan.order).to eq Order.new([issue_c, issue_a, issue_b])
+        expect(plan.order).to eq order
       end
     end
 
     xdescribe 'Consolidate issues into release' do
       it do
         plan = described_class.create(product_id)
-        plan.append_issue(issue_a)
-        plan.append_issue(issue_b)
-        plan.append_issue(issue_c)
+        order = Order.new([issue_a, issue_b, issue_c])
+        plan.specify_order(order)
 
         plan.consolidate_issues_into('MVP', [issue_a, issue_b])
-        expect(plan.order).to eq Order.new([
-          OrderedIssue.new(issue_a, 'MVP'),
-          OrderedIssue.new(issue_b, 'MVP'),
-        ])
+
+        expect(plan.releases).to eq [
+          Release.new('MVP', [issue_a, issue_b])
+        ]
       end
     end
   end
