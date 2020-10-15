@@ -12,7 +12,10 @@ class RemoveIssueFromPlanUsecase < UsecaseBase
   sig {params(product_id: Product::Id, issue_id: Issue::Id).void}
   def perform(product_id, issue_id)
     plan = @repository.find_by_product_id(product_id)
-    plan.remove_issue(issue_id)
+
+    new_order = plan.order.remove(issue_id)
+    plan.specify_order(new_order)
+
     @repository.store(plan)
   end
 end
