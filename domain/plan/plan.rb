@@ -13,9 +13,9 @@ module Plan
         new(product_id, Order.new([]))
       end
 
-      sig {params(product_id: Product::Id, order: Order).returns(T.attached_class)}
-      def from_repository(product_id, order)
-        new(product_id, order)
+      sig {params(product_id: Product::Id, issues: Order).returns(T.attached_class)}
+      def from_repository(product_id, issues)
+        new(product_id, issues)
       end
     end
 
@@ -31,9 +31,19 @@ module Plan
       @order = order
     end
 
-    sig {params(order: Order).void}
-    def specify_order(order)
-      @order = order
+    sig {params(issue_id: Issue::Id).void}
+    def append_issue(issue_id)
+      @order = @order.append(issue_id)
+    end
+
+    sig {params(issue_id: Issue::Id).void}
+    def remove_issue(issue_id)
+      @order = @order.remove(issue_id)
+    end
+
+    sig {params(from: Issue::Id, to: Issue::Id).void}
+    def swap_issues(from, to)
+      @order = @order.swap(from, to)
     end
   end
 end

@@ -10,27 +10,30 @@ RSpec.describe PlanRepository::AR do
 
   describe 'Update' do
     it do
-      plan = described_class.find_by_product_id(product.id)
-      plan.specify_order(Plan::Order.new([issue_a.id, issue_b.id, issue_c.id]))
+      order = described_class.find_by_product_id(product.id)
+      order.append_issue(issue_a.id)
+      order.append_issue(issue_b.id)
+      order.append_issue(issue_c.id)
 
-      expect { described_class.store(plan) }
+      expect { described_class.store(order) }
         .to change { Dao::Order.count }.by(0)
 
-      rel = Dao::Order.find_by(dao_product_id: plan.product_id.to_s)
+      rel = Dao::Order.find_by(dao_product_id: order.product_id.to_s)
       expect(rel.entries).to eq [issue_a, issue_b, issue_c].map(&:id).map(&:to_s)
     end
   end
 
   describe 'Find' do
     it do
-      plan = Plan::Plan.create(product.id)
-      order = Plan::Order.new([issue_c.id, issue_b.id, issue_a.id])
-      plan.specify_order(order)
-      described_class.store(plan)
+      order = Plan::Plan.create(product.id)
+      order.append_issue(issue_a.id)
+      order.append_issue(issue_b.id)
+      order.append_issue(issue_c.id)
+      described_class.store(order)
 
       stored = described_class.find_by_product_id(product.id)
 
-      expect(stored.order).to eq order
+      expect(stored.order).to eq Plan::Order.new([issue_a.id, issue_b.id, issue_c.id])
     end
   end
 end
