@@ -9,7 +9,7 @@ module Plan
       it do
         plan = described_class.create(product_id)
         expect(plan.product_id).to eq product_id
-        expect(plan.order).to be_empty
+        expect(plan.to_a).to be_empty
       end
     end
 
@@ -23,7 +23,12 @@ module Plan
         plan.append_issue(issue_a)
         plan.append_issue(issue_b)
         plan.append_issue(issue_c)
-        expect(plan.order).to eq Order.new([issue_a, issue_b, issue_c])
+
+        expect(plan.to_a).to eq [
+          { issue_id: issue_a, release_id: nil },
+          { issue_id: issue_b, release_id: nil },
+          { issue_id: issue_c, release_id: nil },
+        ]
       end
     end
 
@@ -35,7 +40,10 @@ module Plan
         plan.append_issue(issue_c)
 
         plan.remove_issue(issue_b)
-        expect(plan.order).to eq Order.new([issue_a, issue_c])
+        expect(plan.to_a).to eq [
+          { issue_id: issue_a, release_id: nil },
+          { issue_id: issue_c, release_id: nil },
+        ]
       end
     end
 
@@ -47,22 +55,27 @@ module Plan
         plan.append_issue(issue_c)
 
         plan.swap_issues(issue_c, issue_a)
-        expect(plan.order).to eq Order.new([issue_c, issue_a, issue_b])
+        expect(plan.to_a).to eq [
+          { issue_id: issue_c, release_id: nil },
+          { issue_id: issue_a, release_id: nil },
+          { issue_id: issue_b, release_id: nil },
+        ]
       end
     end
 
-    xdescribe 'Consolidate issues into release' do
+    describe 'Consolidate issues into release' do
       it do
         plan = described_class.create(product_id)
         plan.append_issue(issue_a)
         plan.append_issue(issue_b)
         plan.append_issue(issue_c)
 
-        plan.consolidate_issues_into('MVP', [issue_a, issue_b])
-        expect(plan.order).to eq Order.new([
-          OrderedIssue.new(issue_a, 'MVP'),
-          OrderedIssue.new(issue_b, 'MVP'),
-        ])
+        plan.specify_release('MVP', issue_b)
+        expect(plan.to_a).to eq [
+          { issue_id: issue_a, release_id: 'MVP' },
+          { issue_id: issue_b, release_id: 'MVP' },
+          { issue_id: issue_c, release_id: nil },
+        ]
       end
     end
   end

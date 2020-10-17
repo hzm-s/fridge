@@ -31,6 +31,11 @@ module Plan
       end
     end
 
+    sig {params(item: Issue::Id, base: Issue::Id).returns(T::Boolean)}
+    def before?(item, base)
+      @items.index(item) <= @items.index(base)
+    end
+
     sig {returns(T::Boolean)}
     def empty?
       @items.empty?
