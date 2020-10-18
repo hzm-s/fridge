@@ -24,11 +24,7 @@ module Plan
         plan.append_issue(issue_b)
         plan.append_issue(issue_c)
 
-        expect(plan.to_a).to eq [
-          { issue_id: issue_a, release_id: nil },
-          { issue_id: issue_b, release_id: nil },
-          { issue_id: issue_c, release_id: nil },
-        ]
+        expect(plan.order).to eq Order.new([issue_a, issue_b, issue_c])
       end
     end
 
@@ -40,10 +36,7 @@ module Plan
         plan.append_issue(issue_c)
 
         plan.remove_issue(issue_b)
-        expect(plan.to_a).to eq [
-          { issue_id: issue_a, release_id: nil },
-          { issue_id: issue_c, release_id: nil },
-        ]
+        expect(plan.order).to eq Order.new([issue_a, issue_c])
       end
     end
 
@@ -55,11 +48,7 @@ module Plan
         plan.append_issue(issue_c)
 
         plan.swap_issues(issue_c, issue_a)
-        expect(plan.to_a).to eq [
-          { issue_id: issue_c, release_id: nil },
-          { issue_id: issue_a, release_id: nil },
-          { issue_id: issue_b, release_id: nil },
-        ]
+        expect(plan.order).to eq Order.new([issue_c, issue_a, issue_b])
       end
     end
 
