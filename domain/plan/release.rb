@@ -2,7 +2,7 @@
 require 'sorbet-runtime'
 
 module Plan
-  class Scope
+  class Release
     extend T::Sig
 
     Expanded = T.type_alias {T::Array[T::Hash[Symbol, T.any(Issue::Id, T.nilable(String))]]}
