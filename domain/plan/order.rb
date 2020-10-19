@@ -31,15 +31,11 @@ module Plan
       end
     end
 
+    sig {params(head: T.nilable(Issue::Id), tail: Issue::Id).returns(T::Array[Issue::Id])}
     def select_by_range(head, tail)
       head_i = @items.index(head) || 0
       tail_i = @items.index(tail)
-      @items[head_i..tail_i]
-    end
-
-    sig {params(item: Issue::Id, base: Issue::Id).returns(T::Boolean)}
-    def before?(item, base)
-      @items.index(item) <= @items.index(base)
+      T.must(@items[head_i..tail_i])
     end
 
     sig {returns(T::Boolean)}

@@ -15,7 +15,7 @@ module Plan
 
       sig {params(product_id: Product::Id, issues: Order).returns(T.attached_class)}
       def from_repository(product_id, issues)
-        new(product_id, issues)
+        new(product_id, issues, ReleaseList.new([]))
       end
     end
 
@@ -49,12 +49,7 @@ module Plan
 
     sig {params(release_id: String, tail: Issue::Id).void}
     def specify_release(release_id, tail)
-      @releases = @releases.add(Release.new(release_id, tail))
-    end
-
-    sig {returns(Release::Expanded)}
-    def to_a
-      @releases.expand(@order)
+      @releases = @releases.add(release_id, tail)
     end
   end
 end

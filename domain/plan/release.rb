@@ -5,8 +5,6 @@ module Plan
   class Release
     extend T::Sig
 
-    Expanded = T.type_alias {T::Array[T::Hash[Symbol, T.any(Issue::Id, T.nilable(String))]]}
-
     sig {returns(String)}
     attr_reader :id
 
@@ -17,12 +15,9 @@ module Plan
       @tail = tail
     end
 
+    sig {params(order: Order).returns(T::Hash[T.nilable(String), T::Array[Issue::Id]])}
     def describe(order)
-      [@id, order.select_by_range(@head, @tail)]
-    end
-
-    def include?(issue_id, order)
-      order.before?(issue_id, @tail)
+      { @id => order.select_by_range(@head, @tail) }
     end
   end
 end

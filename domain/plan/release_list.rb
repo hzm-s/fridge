@@ -17,26 +17,11 @@ module Plan
       self.class.new(@releases + [release])
     end
 
-    sig {params(order: Order).returns(Release::Expanded)}
-    def expand(order)
-      order.to_a.map do |issue_id|
-        {
-          issue_id: issue_id,
-          release_id: find(issue_id, order)&.release_id
-        }
-      end
-    end
-
+    sig {params(order: Order).returns(T::Hash[T.nilable(String), T::Array[Issue::Id]])}
     def describe(order)
-      scheduled = @releases.map { |r| r.describe(order) }.to_h
-      unscheduled_issues = order.to_a - scheduled.values.flatten
-      scheduled.merge(nil => unscheduled_issues)
-    end
-
-    private
-
-    def find(issue_id, order)
-      @releases.find { |s| s.include?(issue_id, order) }
+      scoped = @releases.reduce({}) { |m, r| m.merge(r.describe(order)) }
+      loose = order.to_a - scoped.values.flatten
+      scoped.merge(nil => loose)
     end
   end
 end

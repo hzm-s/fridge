@@ -9,7 +9,7 @@ module Plan
       it do
         plan = described_class.create(product_id)
         expect(plan.product_id).to eq product_id
-        expect(plan.to_a).to be_empty
+        expect(plan.order).to eq Order.new([])
       end
     end
 
@@ -52,7 +52,7 @@ module Plan
       end
     end
 
-    describe 'Consolidate issues into release' do
+    xdescribe 'Consolidate issues into release' do
       it do
         plan = described_class.create(product_id)
         plan.append_issue(issue_a)
