@@ -10,8 +10,10 @@ module Plan
       @releases = releases
     end
 
-    sig {params(release: Release).returns(T.self_type)}
-    def add(release)
+    sig {params(release_id: String, tail: Issue::Id).returns(T.self_type)}
+    def add(release_id, tail)
+      head = nil
+      release = Release.new(release_id, head, tail)
       self.class.new(@releases + [release])
     end
 
@@ -23,6 +25,12 @@ module Plan
           release_id: find(issue_id, order)&.release_id
         }
       end
+    end
+
+    def describe(order)
+      scheduled = @releases.map { |r| r.describe(order) }.to_h
+      unscheduled_issues = order.to_a - scheduled.values.flatten
+      scheduled.merge(nil => unscheduled_issues)
     end
 
     private

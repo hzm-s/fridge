@@ -8,12 +8,17 @@ module Plan
     Expanded = T.type_alias {T::Array[T::Hash[Symbol, T.any(Issue::Id, T.nilable(String))]]}
 
     sig {returns(String)}
-    attr_reader :release_id
+    attr_reader :id
 
-    sig {params(release_id: String, tail: Issue::Id).void}
-    def initialize(release_id, tail)
-      @release_id = release_id
+    sig {params(id: String, head: T.nilable(Issue::Id), tail: Issue::Id).void}
+    def initialize(id, head, tail)
+      @id = id
+      @head = head
       @tail = tail
+    end
+
+    def describe(order)
+      [@id, order.select_by_range(@head, @tail)]
     end
 
     def include?(issue_id, order)
