@@ -2,7 +2,7 @@
 require 'domain_helper'
 
 module Plan
-  RSpec.describe ReleaseList do
+  RSpec.describe ScopeMap do
     let(:issue_a) { Issue::Id.create }
     let(:issue_b) { Issue::Id.create }
     let(:issue_c) { Issue::Id.create }
@@ -18,12 +18,12 @@ module Plan
 
     describe 'Add release' do
       it do
-        list = described_class.new([])
-        list = list.add('MVP', issue_c)
-        expect(list.describe(order)).to eq ({
-          'MVP' => [issue_a, issue_b, issue_c],
-          nil => [issue_d, issue_e, issue_f, issue_g, issue_h]
-        })
+        map = described_class.new([])
+        map = map.add('MVP', issue_c)
+        expect(map.to_releases(order)).to eq [
+          Release.new('MVP', [issue_a, issue_b, issue_c]),
+          Release.new(nil, [issue_d, issue_e, issue_f, issue_g, issue_h]),
+        ]
       end
     end
   end

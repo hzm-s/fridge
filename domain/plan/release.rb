@@ -5,19 +5,25 @@ module Plan
   class Release
     extend T::Sig
 
-    sig {returns(String)}
-    attr_reader :id
+    sig {returns(T::Array[Issue::Id])}
+    attr_reader :issues
 
-    sig {params(id: String, head: T.nilable(Issue::Id), tail: Issue::Id).void}
-    def initialize(id, head, tail)
+    sig {params(id: T.nilable(String), issues: T::Array[Issue::Id]).void}
+    def initialize(id, issues)
       @id = id
-      @head = head
-      @tail = tail
+      @issues = issues
     end
 
-    sig {params(order: Order).returns(T::Hash[T.nilable(String), T::Array[Issue::Id]])}
-    def describe(order)
-      { @id => order.select_by_range(@head, @tail) }
+    sig {params(other: Release).returns(T::Boolean)}
+    def ==(other)
+      self.to_h == other.to_h
+    end
+
+    protected
+
+    sig {returns(T::Hash[T.nilable(String), T::Array[Issue::Id]])}
+    def to_h
+      { @id => @issues }
     end
   end
 end
