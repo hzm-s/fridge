@@ -49,7 +49,7 @@ module Plan
 
     sig {params(release_id: String, tail: Issue::Id).void}
     def specify_release_scope(release_id, tail)
-      @scope_map = @scope_map.add(release_id, tail)
+      @scope_map = @scope_map.register(release_id, tail)
     end
 
     sig {returns(T::Array[Release])}

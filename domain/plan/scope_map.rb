@@ -11,7 +11,7 @@ module Plan
     end
 
     sig {params(release_id: String, tail: Issue::Id).returns(T.self_type)}
-    def add(release_id, tail)
+    def register(release_id, tail)
       head = nil
       scope = Scope.new(release_id, head, tail)
       self.class.new(@scopes + [scope])
