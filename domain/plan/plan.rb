@@ -10,12 +10,12 @@ module Plan
 
       sig {params(product_id: Product::Id).returns(T.attached_class)}
       def create(product_id)
-        new(product_id, Order.new([]), ReleaseList.new([]))
+        new(product_id, Order.new([]), ScopeMap.new([]))
       end
 
       sig {params(product_id: Product::Id, issues: Order).returns(T.attached_class)}
       def from_repository(product_id, issues)
-        new(product_id, issues, ReleaseList.new([]))
+        new(product_id, issues, ScopeMap.new([]))
       end
     end
 
@@ -25,11 +25,11 @@ module Plan
     sig {returns(Order)}
     attr_reader :order
 
-    sig {params(product_id: Product::Id, order: Order, releases: ReleaseList).void}
-    def initialize(product_id, order, releases)
+    sig {params(product_id: Product::Id, order: Order, scope_map: ScopeMap).void}
+    def initialize(product_id, order, scope_map)
       @product_id = product_id
       @order = order
-      @releases = releases
+      @scope_map = scope_map
     end
 
     sig {params(issue_id: Issue::Id).void}
@@ -48,8 +48,13 @@ module Plan
     end
 
     sig {params(release_id: String, tail: Issue::Id).void}
-    def specify_release(release_id, tail)
-      @releases = @releases.add(release_id, tail)
+    def specify_release_scope(release_id, tail)
+      @scope_map = @scope_map.add(release_id, tail)
+    end
+
+    sig {returns(T::Array[Release])}
+    def releases
+      @scope_map.to_releases(@order)
     end
   end
 end

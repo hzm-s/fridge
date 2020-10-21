@@ -52,18 +52,17 @@ module Plan
       end
     end
 
-    xdescribe 'Consolidate issues into release' do
+    describe 'Sepcify release scope' do
       it do
         plan = described_class.create(product_id)
         plan.append_issue(issue_a)
         plan.append_issue(issue_b)
         plan.append_issue(issue_c)
 
-        plan.specify_release('MVP', issue_b)
-        expect(plan.to_a).to eq [
-          { issue_id: issue_a, release_id: 'MVP' },
-          { issue_id: issue_b, release_id: 'MVP' },
-          { issue_id: issue_c, release_id: nil },
+        plan.specify_release_scope('MVP', issue_b)
+        expect(plan.releases).to eq [
+          Release.new('MVP', [issue_a, issue_b]),
+          Release.new(nil, [issue_c])
         ]
       end
     end
