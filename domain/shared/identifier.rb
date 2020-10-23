@@ -31,10 +31,10 @@ module Shared
       @id
     end
 
-    sig {params(other: T.nilable(Identifier)).returns(T::Boolean)}
+    sig {params(other: Identifier).returns(T::Boolean)}
     def ==(other)
-      return false unless other
-      self.instance_of?(other.class) && self.to_s == other.to_s
+      self.instance_of?(other.class) &&
+        self.to_s == other.to_s
     end
 
     sig {returns(String)}

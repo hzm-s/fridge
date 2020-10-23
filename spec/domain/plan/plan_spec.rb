@@ -9,7 +9,7 @@ module Plan
       it do
         plan = described_class.create(product_id)
         expect(plan.product_id).to eq product_id
-        expect(plan.order).to eq Order.new([])
+        expect(plan.order).to be_empty
       end
     end
 
@@ -23,7 +23,6 @@ module Plan
         plan.append_issue(issue_a)
         plan.append_issue(issue_b)
         plan.append_issue(issue_c)
-
         expect(plan.order).to eq Order.new([issue_a, issue_b, issue_c])
       end
     end
@@ -52,18 +51,18 @@ module Plan
       end
     end
 
-    describe 'Sepcify release scope' do
+    xdescribe 'Consolidate issues into release' do
       it do
         plan = described_class.create(product_id)
         plan.append_issue(issue_a)
         plan.append_issue(issue_b)
         plan.append_issue(issue_c)
 
-        plan.specify_release_scope('MVP', issue_b)
-        expect(plan.releases).to eq [
-          Release.new('MVP', [issue_a, issue_b]),
-          Release.new(nil, [issue_c])
-        ]
+        plan.consolidate_issues_into('MVP', [issue_a, issue_b])
+        expect(plan.order).to eq Order.new([
+          OrderedIssue.new(issue_a, 'MVP'),
+          OrderedIssue.new(issue_b, 'MVP'),
+        ])
       end
     end
   end

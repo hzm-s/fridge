@@ -31,13 +31,6 @@ module Plan
       end
     end
 
-    sig {params(head: T.nilable(Issue::Id), tail: Issue::Id).returns(T::Array[Issue::Id])}
-    def select_by_range(head, tail)
-      head_i = @items.index(head) || 0
-      tail_i = @items.index(tail)
-      T.must(@items[head_i..tail_i])
-    end
-
     sig {returns(T::Boolean)}
     def empty?
       @items.empty?
@@ -46,11 +39,6 @@ module Plan
     sig {params(index: Integer).returns(Issue::Id)}
     def at(index)
       @items.at(index)
-    end
-
-    sig {params(issue: Issue::Id).returns(Integer)}
-    def index(issue)
-      @items.index(issue)
     end
 
     sig {returns(T::Array[Issue::Id])}
