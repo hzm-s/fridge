@@ -19,7 +19,7 @@ module Plan
     describe 'Register scope' do
       it do
         map = described_class.new([])
-        map = map.register('MVP', issue_c)
+        map = map.register('MVP', issue_c, order)
         expect(map.to_releases(order)).to eq [
           Release.new('MVP', [issue_a, issue_b, issue_c]),
           Release.new(nil, [issue_d, issue_e, issue_f, issue_g, issue_h]),

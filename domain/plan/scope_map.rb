@@ -10,22 +10,21 @@ module Plan
       @scopes = scopes
     end
 
-    sig {params(release_id: String, tail: Issue::Id).returns(T.self_type)}
-    def register(release_id, tail)
-      scope = Scope.new(release_id, tail)
-      self.class.new(@scopes + [scope])
+    sig {params(release_id: String, tail: Issue::Id, order: Order).returns(T.self_type)}
+    def register(release_id, tail, order)
+      (@scopes + [Scope.new(release_id, tail)])
+        .then { |scopes| scopes.sort_by { |s| order.index(s.tail) } }
+        .then { |scopes| self.class.new(scopes) }
     end
 
     sig {params(order: Order).returns(T::Array[Release])}
     def to_releases(order)
-      fixed = @scopes.map { |s| s.to_release(previous_of(s), order) }
-      loose = Release.new(nil, order.to_a - fixed.flat_map(&:issues))
-      fixed + [loose]
-    end
-
-    private
-
-    def previous_of(scope)
+      known = @scopes.map.with_index do |s, i|
+        previous = i == 0 ? nil : @scopes[i - 1]
+        s.to_release(previous, order)
+      end
+      unknown = Release.new(nil, order.to_a - known.flat_map(&:issues))
+      known + [unknown]
     end
   end
 end
