@@ -50,20 +50,5 @@ module Plan
         expect(plan.order).to eq Order.new([issue_c, issue_a, issue_b])
       end
     end
-
-    xdescribe 'Consolidate issues into release' do
-      it do
-        plan = described_class.create(product_id)
-        plan.append_issue(issue_a)
-        plan.append_issue(issue_b)
-        plan.append_issue(issue_c)
-
-        plan.consolidate_issues_into('MVP', [issue_a, issue_b])
-        expect(plan.order).to eq Order.new([
-          OrderedIssue.new(issue_a, 'MVP'),
-          OrderedIssue.new(issue_b, 'MVP'),
-        ])
-      end
-    end
   end
 end
