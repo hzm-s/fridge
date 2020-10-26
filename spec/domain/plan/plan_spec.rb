@@ -50,5 +50,20 @@ module Plan
         expect(plan.order).to eq Order.new([issue_c, issue_a, issue_b])
       end
     end
+
+    describe 'Specify release' do
+      it do
+        plan = described_class.create(product_id)
+        plan.append_issue(issue_a)
+        plan.append_issue(issue_b)
+        plan.append_issue(issue_c)
+
+        plan.specify_release('MVP', issue_b)
+        expect(plan.scoped).to eq [
+          Release.new('MVP', [issue_a, issue_b])
+        ]
+        expect(plan.unscoped).to eq [issue_c]
+      end
+    end
   end
 end

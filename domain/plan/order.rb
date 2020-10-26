@@ -41,6 +41,11 @@ module Plan
       @items.at(index)
     end
 
+    sig {params(item: Issue::Id).returns(Integer)}
+    def index(item)
+      @items.index(item)
+    end
+
     sig {returns(T::Array[Issue::Id])}
     def to_a
       @items

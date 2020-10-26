@@ -25,10 +25,19 @@ module Plan
     sig {returns(Order)}
     attr_reader :order
 
+    sig {returns(T::Array[Release])}
+    attr_reader :scoped
+
+    sig {returns(T::Array[Issue::Id])}
+    attr_reader :unscoped
+
     sig {params(product_id: Product::Id, order: Order).void}
     def initialize(product_id, order)
       @product_id = product_id
       @order = order
+      @scoped = []
+      @unscoped = []
+      @releases = []
     end
 
     sig {params(issue_id: Issue::Id).void}
@@ -44,6 +53,22 @@ module Plan
     sig {params(from: Issue::Id, to: Issue::Id).void}
     def swap_issues(from, to)
       @order = @order.swap(from, to)
+    end
+
+    sig {params(title: String, tail: Issue::Id).void}
+    def specify_release(title, tail)
+      @releases << { title: title, tail_index: @order.index(tail) }
+      sorted = @releases.sort_by { |r| r[:tail_index] }
+
+      sorted.each_with_index do |r, i|
+        head_index =
+          if i == 0
+            0
+          else
+            sorted[i - 1][:tail_index] - 1
+          end
+        @scoped << Release.new(r[:title], @order.to_a[head_index..r[:tail_index]])
+      end
     end
   end
 end
