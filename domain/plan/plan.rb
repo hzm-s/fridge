@@ -29,7 +29,8 @@ module Plan
     def initialize(product_id, order)
       @product_id = product_id
       @order = order
-      @scopes = ScopeSet.new
+      @scopes = T.let(ScopeSet.new, ScopeSet)
+      @__scoped ||= T.let(nil, T.nilable(T::Array[Release]))
     end
 
     sig {params(issue_id: Issue::Id).void}
@@ -52,10 +53,12 @@ module Plan
       @scopes = @scopes.add(release_id, tail, @order)
     end
 
+    sig {returns(T::Array[Release])}
     def scoped
       @__scoped ||= @scopes.make_releases(@order)
     end
 
+    sig {returns(T::Array[Issue::Id])}
     def unscoped
       @order.to_a - scoped.flat_map(&:issues)
     end

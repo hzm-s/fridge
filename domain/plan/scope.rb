@@ -5,21 +5,18 @@ module Plan
   class Scope
     extend T::Sig
 
-    sig {params(release_id: String, tail_index: Integer).void}
-    def initialize(release_id, tail_index)
+    sig {returns(Issue::Id)}
+    attr_reader :tail
+
+    sig {params(release_id: String, tail: Issue::Id).void}
+    def initialize(release_id, tail)
       @release_id = release_id
-      @tail_index = tail_index
+      @tail = tail
     end
 
+    sig {params(order: Order, previous: T.nilable(Scope)).returns(Release)}
     def make_release(order, previous)
-      Release.new(@release_id, order.to_a[head_index(order, previous)..@tail_index])
-    end
-
-    private
-
-    def head_index(order, previous)
-      return 0 unless previous
-      order.index(previous.tail_index) - 1
+      Release.new(@release_id, order.subset(previous&.tail, @tail))
     end
   end
 end

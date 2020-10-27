@@ -31,6 +31,18 @@ module Plan
       end
     end
 
+    sig {params(head: T.nilable(Issue::Id), tail: Issue::Id).returns(T::Array[Issue::Id])}
+    def subset(head, tail)
+      head_index =
+        if head
+          T.must(@items.index(head)) + 1
+        else
+          0
+        end
+      tail_index = T.must(@items.index(tail))
+      T.must(@items[head_index..tail_index])
+    end
+
     sig {returns(T::Boolean)}
     def empty?
       @items.empty?
@@ -43,7 +55,7 @@ module Plan
 
     sig {params(item: Issue::Id).returns(Integer)}
     def index(item)
-      @items.index(item)
+      T.must(@items.index(item))
     end
 
     sig {returns(T::Array[Issue::Id])}
