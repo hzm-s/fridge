@@ -25,19 +25,11 @@ module Plan
     sig {returns(Order)}
     attr_reader :order
 
-    sig {returns(T::Array[Release])}
-    attr_reader :scoped
-
-    sig {returns(T::Array[Issue::Id])}
-    attr_reader :unscoped
-
     sig {params(product_id: Product::Id, order: Order).void}
     def initialize(product_id, order)
       @product_id = product_id
       @order = order
-      @scoped = []
-      @unscoped = []
-      @releases = []
+      @scopes = ScopeSet.new
     end
 
     sig {params(issue_id: Issue::Id).void}
@@ -55,22 +47,17 @@ module Plan
       @order = @order.swap(from, to)
     end
 
-    sig {params(title: String, tail: Issue::Id).void}
-    def specify_release(title, tail)
-      @releases << { title: title, tail_index: @order.index(tail) }
-      sorted = @releases.sort_by { |r| r[:tail_index] }
+    sig {params(release_id: String, tail: Issue::Id).void}
+    def specify_release(release_id, tail)
+      @scopes = @scopes.add(release_id, tail, @order)
+    end
 
-      sorted.each_with_index do |r, i|
-        head_index =
-          if i == 0
-            0
-          else
-            sorted[i - 1][:tail_index] - 1
-          end
-        @scoped << Release.new(r[:title], @order.to_a[head_index..r[:tail_index]])
-      end
+    def scoped
+      @__scoped ||= @scopes.make_releases(@order)
+    end
 
-      @unscoped = @order.to_a - @scoped.flat_map { |r| r.issues }
+    def unscoped
+      @order.to_a - scoped.flat_map(&:issues)
     end
   end
 end
