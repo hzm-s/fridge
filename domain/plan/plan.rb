@@ -69,6 +69,8 @@ module Plan
           end
         @scoped << Release.new(r[:title], @order.to_a[head_index..r[:tail_index]])
       end
+
+      @unscoped = @order.to_a - @scoped.flat_map { |r| r.issues }
     end
   end
 end
