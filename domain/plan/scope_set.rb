@@ -21,15 +21,20 @@ module Plan
     def make_releases(order)
       scoped = []
       @scopes.each_with_index do |scope, i|
-        previous =
-          if i == 0
-            nil
-          else
-            @scopes[i - 1]
-          end
+        previous = previous_scope(scope)
         scoped << scope.make_release(order, previous)
       end
       scoped
+    end
+
+    private
+
+    sig {params(scope: Scope).returns(T.nilable(Scope))}
+    def previous_scope(scope)
+      i = T.must(@scopes.find_index { |s| s == scope })
+      return nil if i == 0
+
+      @scopes[i - 1]
     end
   end
 end
