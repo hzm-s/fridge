@@ -13,7 +13,8 @@ module Plan
     sig {params(release_id: String, tail: Issue::Id, order: Order).returns(T.self_type)}
     def add(release_id, tail, order)
       scope = Scope.new(release_id, tail)
-      new_scopes = (@scopes + [scope]).sort_by { |s| order.index(s.tail) }
+      uniq_scopes = @scopes.reject { |s| s.like?(scope) }
+      new_scopes = (uniq_scopes + [scope]).sort_by { |s| order.index(s.tail) }
       self.class.new(new_scopes)
     end
 
@@ -26,6 +27,16 @@ module Plan
       end
       scoped
     end
+
+    sig {params(other: ScopeSet).returns(T::Boolean)}
+    def ==(other)
+      self.scopes == other.scopes
+    end
+
+    protected
+
+    sig {returns(T::Array[Scope])}
+    attr_reader :scopes
 
     private
 

@@ -5,6 +5,9 @@ module Plan
   class Scope
     extend T::Sig
 
+    sig {returns(String)}
+    attr_reader :release_id
+
     sig {returns(Issue::Id)}
     attr_reader :tail
 
@@ -19,16 +22,16 @@ module Plan
       Release.new(@release_id, order.subset(previous&.tail, @tail))
     end
 
-    sig {params(other: T.nilable(Scope)).returns(T::Boolean)}
-    def ==(other)
-      self.to_h == other.to_h
+    sig {params(other: Scope).returns(T::Boolean)}
+    def like?(other)
+      self.release_id == other.release_id ||
+        self.tail == other.tail
     end
 
-    protected
-
-    sig {returns(T::Hash[Symbol, T.any(String, Issue::Id)])}
-    def to_h
-      { release_id: @release_id, tail: @tail }
+    sig {params(other: T.nilable(Scope)).returns(T::Boolean)}
+    def ==(other)
+      self.release_id == other.release_id &&
+        self.tail == other.tail
     end
   end
 end
