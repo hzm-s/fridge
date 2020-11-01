@@ -30,6 +30,8 @@ module Plan
 
     sig {params(other: T.nilable(Scope)).returns(T::Boolean)}
     def ==(other)
+      return false unless other
+
       self.release_id == other.release_id &&
         self.tail == other.tail
     end

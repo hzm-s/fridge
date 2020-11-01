@@ -1,4 +1,4 @@
-# typed: strict
+# typed: false
 require 'domain_helper'
 
 module Plan
