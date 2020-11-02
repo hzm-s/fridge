@@ -43,6 +43,14 @@ module Plan
       T.must(@items[head_index..tail_index])
     end
 
+    sig {params(item: Issue::Id).returns(T.nilable(Issue::Id))}
+    def before_of(item)
+      item_index = index(item)
+      return nil if item_index == 0
+
+      at(item_index - 1)
+    end
+
     sig {returns(T::Boolean)}
     def empty?
       @items.empty?
@@ -60,7 +68,12 @@ module Plan
 
     sig {returns(T::Array[Issue::Id])}
     def to_a
-      @items
+      @items.dup
+    end
+
+    sig {params(other: Order).returns(T::Array[Issue::Id])}
+    def -(other)
+      self.to_a - other.to_a
     end
 
     sig {params(other: Order).returns(T::Boolean)}

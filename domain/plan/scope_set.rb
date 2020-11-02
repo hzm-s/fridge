@@ -18,6 +18,20 @@ module Plan
       self.class.new(new_scopes)
     end
 
+    sig {params(old_order: Order, new_order: Order).returns(T.self_type)}
+    def on_remove_issue(old_order, new_order)
+      removed = (old_order - new_order).first
+      return self unless removed
+
+      change_scope = @scopes.find { |scope| scope.tail == removed }
+      return self unless change_scope
+
+      new_tail = old_order.before_of(removed)
+      return self unless new_tail
+
+      add(change_scope.release_id, new_tail, new_order)
+    end
+
     sig {params(order: Order).returns(T::Array[Release])}
     def make_releases(order)
       scoped = []

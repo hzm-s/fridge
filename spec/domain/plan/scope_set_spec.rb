@@ -58,5 +58,23 @@ module Plan
         ]
       end
     end
+
+    describe 'When issue removed' do
+      it do
+        before = Order.new([issue_a, issue_b, issue_c])
+        after = Order.new([issue_a, issue_b])
+        set = described_class.new
+        set = set.on_remove_issue(before, after)
+        expect(set).to eq described_class.new
+      end
+
+      it do
+        before = Order.new([issue_a, issue_b, issue_c])
+        after = Order.new([issue_a, issue_b])
+        set = described_class.new([Scope.new('MVP', issue_c)])
+        set = set.on_remove_issue(before, after)
+        expect(set).to eq described_class.new([Scope.new('MVP', issue_b)])
+      end
+    end
   end
 end
