@@ -75,6 +75,14 @@ module Plan
         set = set.on_remove_issue(before, after)
         expect(set).to eq described_class.new([Scope.new('MVP', issue_b)])
       end
+
+      it do
+        before = Order.new([issue_a, issue_b, issue_c])
+        after = Order.new([issue_b, issue_c])
+        set = described_class.new([Scope.new('MVP', issue_a)])
+        set = set.on_remove_issue(before, after)
+        expect(set).to eq described_class.new([])
+      end
     end
   end
 end

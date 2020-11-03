@@ -27,7 +27,7 @@ module Plan
       return self unless change_scope
 
       new_tail = old_order.before_of(removed)
-      return self unless new_tail
+      return self.class.new([]) unless new_tail
 
       add(change_scope.release_id, new_tail, new_order)
     end
