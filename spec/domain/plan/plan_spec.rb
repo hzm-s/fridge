@@ -37,6 +37,19 @@ module Plan
         plan.remove_issue(issue_b)
         expect(plan.order).to eq Order.new([issue_a, issue_c])
       end
+
+      it do
+        plan = described_class.create(product_id)
+        plan.append_issue(issue_a)
+        plan.append_issue(issue_b)
+        plan.append_issue(issue_c)
+        plan.specify_release('MVP', issue_c)
+
+        plan.remove_issue(issue_c)
+
+        expect(plan.scoped).to eq [Release.new('MVP', [issue_a, issue_b])]
+        expect(plan.unscoped).to eq []
+      end
     end
 
     describe 'Swap issue positions' do
@@ -59,9 +72,7 @@ module Plan
         plan.append_issue(issue_c)
 
         plan.specify_release('MVP', issue_b)
-        expect(plan.scoped).to eq [
-          Release.new('MVP', [issue_a, issue_b])
-        ]
+        expect(plan.scoped).to eq [Release.new('MVP', [issue_a, issue_b])]
         expect(plan.unscoped).to eq [issue_c]
       end
     end

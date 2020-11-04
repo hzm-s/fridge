@@ -40,7 +40,10 @@ module Plan
 
     sig {params(issue_id: Issue::Id).void}
     def remove_issue(issue_id)
-      @order = @order.remove(issue_id)
+      old_order = @order
+      new_order = @order.remove(issue_id)
+      @scopes = @scopes.on_remove_issue(old_order, new_order)
+      @order = new_order
     end
 
     sig {params(from: Issue::Id, to: Issue::Id).void}
