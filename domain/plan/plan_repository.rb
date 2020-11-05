@@ -10,7 +10,7 @@ module Plan
     sig {abstract.params(product_id: Product::Id).returns(Plan)}
     def find_by_product_id(product_id); end
 
-    sig {abstract.params(order: Plan).void}
-    def store(order); end
+    sig {abstract.params(plan: Plan).void}
+    def store(plan); end
   end
 end

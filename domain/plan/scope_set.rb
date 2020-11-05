@@ -42,15 +42,15 @@ module Plan
       scoped
     end
 
-    sig {params(other: ScopeSet).returns(T::Boolean)}
-    def ==(other)
-      self.scopes == other.scopes
+    sig {returns(T::Array[Scope])}
+    def to_a
+      @scopes
     end
 
-    protected
-
-    sig {returns(T::Array[Scope])}
-    attr_reader :scopes
+    sig {params(other: ScopeSet).returns(T::Boolean)}
+    def ==(other)
+      self.to_a == other.to_a
+    end
 
     private
 

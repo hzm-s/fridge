@@ -25,6 +25,9 @@ module Plan
     sig {returns(Order)}
     attr_reader :order
 
+    sig {returns(ScopeSet)}
+    attr_reader :scopes
+
     sig {params(product_id: Product::Id, order: Order).void}
     def initialize(product_id, order)
       @product_id = product_id
