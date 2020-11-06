@@ -54,20 +54,20 @@ ActiveRecord::Schema.define(version: 2020_11_04_091810) do
     t.index ["dao_product_id"], name: "idx_product_id_on_issues"
   end
 
-  create_table "dao_orders", force: :cascade do |t|
-    t.uuid "dao_product_id"
-    t.uuid "entries", array: true
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["dao_product_id"], name: "index_dao_orders_on_dao_product_id", unique: true
-  end
-
   create_table "dao_people", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_dao_people_on_email", unique: true
+  end
+
+  create_table "dao_plans", force: :cascade do |t|
+    t.uuid "dao_product_id"
+    t.uuid "order", array: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["dao_product_id"], name: "index_dao_plans_on_dao_product_id", unique: true
   end
 
   create_table "dao_products", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -79,12 +79,12 @@ ActiveRecord::Schema.define(version: 2020_11_04_091810) do
   end
 
   create_table "dao_scopes", force: :cascade do |t|
-    t.uuid "dao_product_id"
+    t.bigint "dao_plan_id"
     t.string "release_id", null: false
     t.uuid "tail", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["dao_product_id"], name: "index_dao_scopes_on_dao_product_id"
+    t.index ["dao_plan_id"], name: "index_dao_scopes_on_dao_plan_id"
   end
 
   create_table "dao_team_members", force: :cascade do |t|
@@ -109,9 +109,9 @@ ActiveRecord::Schema.define(version: 2020_11_04_091810) do
   add_foreign_key "app_user_profiles", "app_user_accounts"
   add_foreign_key "dao_acceptance_criteria", "dao_issues"
   add_foreign_key "dao_issues", "dao_products"
-  add_foreign_key "dao_orders", "dao_products"
+  add_foreign_key "dao_plans", "dao_products"
   add_foreign_key "dao_products", "dao_people", column: "owner_id"
-  add_foreign_key "dao_scopes", "dao_products"
+  add_foreign_key "dao_scopes", "dao_plans"
   add_foreign_key "dao_team_members", "dao_teams"
   add_foreign_key "dao_teams", "dao_products"
 end
