@@ -2,20 +2,19 @@
 require 'rails_helper'
 
 RSpec.describe PlanRepository::AR do
-  let(:product) { create_product }
-
-  let(:issue_a) { add_issue(product.id) }
-  let(:issue_b) { add_issue(product.id) }
-  let(:issue_c) { add_issue(product.id) }
-
   describe 'Store' do
     it do
+      product = nil
+      expect { product = create_product }
+        .to change { Dao::Plan.count }.by(1)
+
+      issue_a = add_issue(product.id)
+      issue_b = add_issue(product.id)
+      issue_c = add_issue(product.id)
+
       plan = described_class.find_by_product_id(product.id)
-      plan.append_issue(issue_a.id)
-      plan.append_issue(issue_b.id)
-      plan.append_issue(issue_c.id)
       plan.specify_release('Ph1', issue_a.id)
-      plan.specify_release('Ph2', issue_c.id)
+      plan.specify_release('Ph2', issue_b.id)
 
       expect { described_class.store(plan) }
         .to change { Dao::Plan.count }.by(0)
@@ -27,11 +26,17 @@ RSpec.describe PlanRepository::AR do
       expect(rel.scopes[0].release_id).to eq 'Ph1'
       expect(rel.scopes[0].tail).to eq issue_a.id.to_s
       expect(rel.scopes[1].release_id).to eq 'Ph2'
-      expect(rel.scopes[1].tail).to eq issue_c.id.to_s
+      expect(rel.scopes[1].tail).to eq issue_b.id.to_s
     end
   end
 
-  xdescribe 'Find' do
+  describe 'Find' do
+    let(:product) { create_product }
+
+    let(:issue_a) { add_issue(product.id) }
+    let(:issue_b) { add_issue(product.id) }
+    let(:issue_c) { add_issue(product.id) }
+
     it do
       plan = Plan::Plan.create(product.id)
       plan.append_issue(issue_a.id)

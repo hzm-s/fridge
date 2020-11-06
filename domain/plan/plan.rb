@@ -13,9 +13,9 @@ module Plan
         new(product_id, Order.new([]))
       end
 
-      sig {params(product_id: Product::Id, issues: Order).returns(T.attached_class)}
-      def from_repository(product_id, issues)
-        new(product_id, issues)
+      sig {params(product_id: Product::Id, order: Order, scopes: ScopeSet).returns(T.attached_class)}
+      def from_repository(product_id, order, scopes)
+        new(product_id, order, scopes)
       end
     end
 
@@ -28,11 +28,11 @@ module Plan
     sig {returns(ScopeSet)}
     attr_reader :scopes
 
-    sig {params(product_id: Product::Id, order: Order).void}
-    def initialize(product_id, order)
+    sig {params(product_id: Product::Id, order: Order, scopes: ScopeSet).void}
+    def initialize(product_id, order, scopes = ScopeSet.new)
       @product_id = product_id
       @order = order
-      @scopes = T.let(ScopeSet.new, ScopeSet)
+      @scopes = scopes
       @__scoped ||= T.let(nil, T.nilable(T::Array[Release]))
     end
 

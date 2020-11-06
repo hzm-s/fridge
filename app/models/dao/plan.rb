@@ -5,6 +5,7 @@ class Dao::Plan < ApplicationRecord
     Plan::Plan.from_repository(
       read_product_id,
       read_order,
+      read_scopes,
     )
   end
 
@@ -29,5 +30,11 @@ class Dao::Plan < ApplicationRecord
     order
       .map { |e| Issue::Id.from_string(e) }
       .then { |ids| Plan::Order.new(ids) }
+  end
+
+  def read_scopes
+    scopes
+      .map { |s| Plan::Scope.new(s.release_id, Issue::Id.from_string(s.tail)) }
+      .then { |scopes| Plan::ScopeSet.new(scopes) }
   end
 end
