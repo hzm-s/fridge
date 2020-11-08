@@ -4,7 +4,7 @@ require 'rails_helper'
 RSpec.describe ProductBacklogQuery do
   let!(:product) { create_product }
 
-  it 'アイテムは優先順位順になっていること' do
+  it do
     item_a = add_issue(product.id).id
     item_b = add_issue(product.id).id
     item_c = add_issue(product.id).id
