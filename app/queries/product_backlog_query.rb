@@ -7,7 +7,7 @@ module ProductBacklogQuery
       order = fetch_order(product_id)
       ordered_items = order.map { |e| items.find { |i| i.id == e } }
 
-      ProductBacklog.new(items: ordered_items)
+      ProductBacklog.new(unscoped: ordered_items)
     end
 
     private
@@ -22,6 +22,6 @@ module ProductBacklogQuery
   end
 
   class ProductBacklog < T::Struct
-    prop :items, T::Array[::IssueStruct]
+    prop :unscoped, T::Array[::IssueStruct]
   end
 end
