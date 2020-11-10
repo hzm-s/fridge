@@ -6,20 +6,20 @@ module Plan
     extend T::Sig
 
     sig {returns(String)}
-    attr_reader :title
+    attr_reader :id
 
     sig {returns(T::Array[Issue::Id])}
     attr_reader :issues
 
-    sig {params(title: String, issues: T::Array[Issue::Id]).void}
-    def initialize(title, issues)
-      @title = title
+    sig {params(id: String, issues: T::Array[Issue::Id]).void}
+    def initialize(id, issues)
+      @id = id
       @issues = issues
     end
 
     sig {params(other: Release).returns(T::Boolean)}
     def ==(other)
-      self.title == other.title &&
+      self.id == other.id &&
         self.issues == other.issues
     end
   end

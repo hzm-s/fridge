@@ -3,11 +3,13 @@
 module ProductBacklogQuery
   class << self
     def call(product_id)
-      items = fetch_issues(product_id).map { |i| IssueStruct.new(i) }
-      order = fetch_order(product_id)
-      ordered_items = order.map { |e| items.find { |i| i.id == e } }
+      issues = fetch_issues(product_id).map { |i| IssueStruct.new(i) }
 
-      ProductBacklog.new(unscoped: ordered_items)
+      plan = fetch_plan(product_id)
+      releases = plan.scoped.map { |r| ReleaseStruct.create(r, issues) }
+      unscoped_items = plan.unscoped.map { |ui| issues.find { |i| i.id == ui.to_s } }
+
+      ProductBacklog.new(scoped: releases, unscoped: unscoped_items)
     end
 
     private
@@ -16,12 +18,27 @@ module ProductBacklogQuery
       Dao::Issue.eager_load(:criteria).where(dao_product_id: product_id)
     end
 
-    def fetch_order(product_id)
-      Dao::Plan.find_by(dao_product_id: product_id).order
+    def fetch_plan(product_id)
+      PlanRepository::AR.find_by_product_id(Product::Id.from_string(product_id))
     end
   end
 
+  class ReleaseStruct < T::Struct
+    class << self
+      def create(release, issues)
+        new(
+          release_id: release.id,
+          items: release.issues.map { |ri| issues.find { |i| i.id == ri.to_s } }
+        )
+      end
+    end
+
+    prop :release_id, String
+    prop :items, T::Array[::IssueStruct]
+  end
+
   class ProductBacklog < T::Struct
+    prop :scoped, T::Array[ReleaseStruct]
     prop :unscoped, T::Array[::IssueStruct]
   end
 end
