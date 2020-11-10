@@ -13,8 +13,8 @@ RSpec.describe PlanRepository::AR do
       issue_c = add_issue(product.id)
 
       plan = described_class.find_by_product_id(product.id)
-      plan.specify_release('Ph1', issue_a.id)
       plan.specify_release('Ph2', issue_b.id)
+      plan.specify_release('Ph1', issue_a.id)
 
       expect { described_class.store(plan) }
         .to change { Dao::Plan.count }.by(0)
