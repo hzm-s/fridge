@@ -27,13 +27,13 @@ module ProductBacklogQuery
     class << self
       def create(release, issues)
         new(
-          release_id: release.id,
+          name: release.name,
           items: release.issues.map { |ri| issues.find { |i| i.id == ri.to_s } }
         )
       end
     end
 
-    prop :release_id, String
+    prop :name, String
     prop :items, T::Array[::IssueStruct]
   end
 
