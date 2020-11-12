@@ -15,12 +15,12 @@ RSpec.describe 'releases' do
       item_b = add_issue(product.id).id
       item_c = add_issue(product.id).id
 
-      post product_releases_path(product_id: product.id.to_s), params: { release_id: 'MVP', issue_id: item_b }
+      post product_releases_path(product_id: product.id.to_s), params: { name: 'MVP', issue_id: item_b }
 
       pbl = ProductBacklogQuery.call(product.id.to_s)
       expect(pbl.scoped.size).to eq 1
-      expect(pbl.scoped[0].items.map(&:id)).to eq [item_a, item_b]
-      expect(pbl.unscoped.map(&:id)).to eq [item_c]
+      expect(pbl.scoped[0].items.map(&:id)).to eq [item_a, item_b].map(&:to_s)
+      expect(pbl.unscoped.map(&:id)).to eq [item_c].map(&:to_s)
     end
   end
 end

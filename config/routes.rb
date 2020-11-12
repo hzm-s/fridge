@@ -15,8 +15,6 @@ Rails.application.routes.draw do
 
   resources :orders, param: :product_id, only: [:update]
 
-  resources :releases, only: [:edit, :update, :destroy]
-
   resources :issues, only: [:edit, :update, :destroy] do
     resources :acceptance_criteria, only: [:create]
   end
