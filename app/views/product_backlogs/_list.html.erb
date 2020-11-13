@@ -1,3 +1,6 @@
 <%= content_tag :div, class: 'pbl__list', data: sortable_pbl_options(current_product_id) do %>
-  <%= render partial: 'item', collection: items %>
+  <% pbl.scoped.each do |release| %>
+    <%= render partial: 'item', collection: release.items %>
+  <% end -%>
+  <%= render partial: 'item', collection: pbl.unscoped %>
 <% end %>
