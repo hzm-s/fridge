@@ -22,7 +22,7 @@ RSpec.describe 'orders' do
       patch order_path(product.id.to_s, format: :json), params: params
 
       pbl = ProductBacklogQuery.call(product.id.to_s)
-      expect(pbl.items.map(&:id)).to eq [item_c, item_a, item_b].map(&:to_s)
+      expect(pbl.unscoped.map(&:id)).to eq [item_c, item_a, item_b].map(&:to_s)
     end
   end
 end
