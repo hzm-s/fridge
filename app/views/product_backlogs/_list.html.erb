@@ -1,6 +1,16 @@
 <%= content_tag :div, class: 'pbl__list', data: sortable_pbl_options(current_product_id) do %>
   <% pbl.scoped.each do |release| %>
     <%= render partial: 'item', collection: release.items %>
+    <div class="pbl-release">
+      <span class="pbl-release__grip js-sortable-handle">
+        <i class="fas fa-grip-vertical"></i>
+      </span>
+      <span class="pbl-release__title">
+        <%= release.name %>
+      </span>
+    </div>
   <% end -%>
-  <%= render partial: 'item', collection: pbl.unscoped %>
+  <div class="pbl__list">
+    <%= render partial: 'item', collection: pbl.unscoped %>
+  </div>
 <% end %>
