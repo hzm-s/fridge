@@ -9,7 +9,7 @@ module Plan
     let(:issue_d) { Issue::Id.create }
     let(:issue_e) { Issue::Id.create }
 
-    describe 'Append & Remove' do
+    describe 'Append' do
       it do
         list = described_class.new([])
         list = list.append(issue_a)
@@ -18,7 +18,9 @@ module Plan
 
         expect(list.to_a).to eq [issue_a, issue_b, issue_c]
       end
+    end
 
+    describe 'Remove' do
       it do
         list = described_class.new([issue_a, issue_b, issue_c])
 
