@@ -31,49 +31,14 @@ module Plan
       end
     end
 
-    sig {params(head: T.nilable(Issue::Id), tail: Issue::Id).returns(T::Array[Issue::Id])}
-    def subset(head, tail)
-      head_index =
-        if head
-          T.must(@items.index(head)) + 1
-        else
-          0
-        end
-      tail_index = T.must(@items.index(tail))
-      T.must(@items[head_index..tail_index])
-    end
-
-    sig {params(item: Issue::Id).returns(T.nilable(Issue::Id))}
-    def before_of(item)
-      item_index = index(item)
-      return nil if item_index == 0
-
-      at(item_index - 1)
-    end
-
     sig {returns(T::Boolean)}
     def empty?
       @items.empty?
     end
 
-    sig {params(index: Integer).returns(Issue::Id)}
-    def at(index)
-      @items.at(index)
-    end
-
-    sig {params(item: Issue::Id).returns(Integer)}
-    def index(item)
-      T.must(@items.index(item))
-    end
-
     sig {returns(T::Array[Issue::Id])}
     def to_a
       @items.dup
-    end
-
-    sig {params(other: Order).returns(T::Array[Issue::Id])}
-    def -(other)
-      self.to_a - other.to_a
     end
 
     sig {params(other: Order).returns(T::Boolean)}

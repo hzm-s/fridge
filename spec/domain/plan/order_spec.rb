@@ -68,16 +68,5 @@ module Plan
         expect(@order.to_a).to eq [issue_b, issue_c, issue_d, issue_e, issue_a]
       end
     end
-
-    describe '#subset' do
-      it do
-        order = described_class.new([issue_a, issue_b, issue_c, issue_d, issue_e])
-
-        aggregate_failures do
-          expect(order.subset(nil, issue_b)).to eq [issue_a, issue_b]
-          expect(order.subset(issue_a, issue_d)).to eq [issue_b, issue_c, issue_d]
-        end
-      end
-    end
   end
 end
