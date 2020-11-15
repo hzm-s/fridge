@@ -1,7 +1,7 @@
 # typed: strict
 module Plan
   autoload :Plan, 'plan/plan'
-  autoload :Order, 'plan/order'
+  autoload :IssueList, 'plan/issue_list'
   autoload :Scope, 'plan/scope'
   autoload :ScopeSet, 'plan/scope_set'
   autoload :Release, 'plan/release'
