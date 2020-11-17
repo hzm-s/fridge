@@ -34,5 +34,10 @@ module Plan
       @scoped = scoped
       @not_scoped = not_scoped
     end
+
+    sig {params(issue_id: Issue::Id).void}
+    def add_issue(issue_id)
+      @not_scoped = @not_scoped.append(issue_id)
+    end
   end
 end

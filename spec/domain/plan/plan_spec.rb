@@ -17,64 +17,19 @@ module Plan
     let(:issue_a) { Issue::Id.create }
     let(:issue_b) { Issue::Id.create }
     let(:issue_c) { Issue::Id.create }
+    let(:issue_d) { Issue::Id.create }
+    let(:issue_e) { Issue::Id.create }
 
-    xdescribe 'Append issue' do
+    describe 'Add issue' do
       it do
         plan = described_class.create(product_id)
-        plan.append_issue(issue_a)
-        plan.append_issue(issue_b)
-        plan.append_issue(issue_c)
-        expect(plan.order).to eq Order.new([issue_a, issue_b, issue_c])
-      end
-    end
 
-    xdescribe 'Remove issue' do
-      it do
-        plan = described_class.create(product_id)
-        plan.append_issue(issue_a)
-        plan.append_issue(issue_b)
-        plan.append_issue(issue_c)
+        plan.add_issue(issue_a)
 
-        plan.remove_issue(issue_b)
-        expect(plan.order).to eq Order.new([issue_a, issue_c])
-      end
-
-      it do
-        plan = described_class.create(product_id)
-        plan.append_issue(issue_a)
-        plan.append_issue(issue_b)
-        plan.append_issue(issue_c)
-        plan.specify_release('MVP', issue_c)
-
-        plan.remove_issue(issue_c)
-
-        expect(plan.scoped).to eq [Release.new('MVP', [issue_a, issue_b])]
-        expect(plan.unscoped).to eq []
-      end
-    end
-
-    xdescribe 'Swap issue positions' do
-      it do
-        plan = described_class.create(product_id)
-        plan.append_issue(issue_a)
-        plan.append_issue(issue_b)
-        plan.append_issue(issue_c)
-
-        plan.swap_issues(issue_c, issue_a)
-        expect(plan.order).to eq Order.new([issue_c, issue_a, issue_b])
-      end
-    end
-
-    xdescribe 'Specify release' do
-      it do
-        plan = described_class.create(product_id)
-        plan.append_issue(issue_a)
-        plan.append_issue(issue_b)
-        plan.append_issue(issue_c)
-
-        plan.specify_release('MVP', issue_b)
-        expect(plan.scoped).to eq [Release.new('MVP', [issue_a, issue_b])]
-        expect(plan.unscoped).to eq [issue_c]
+        aggregate_failures do
+          expect(plan.scoped).to be_empty
+          expect(plan.not_scoped).to eq IssueList.new([issue_a])
+        end
       end
     end
   end
