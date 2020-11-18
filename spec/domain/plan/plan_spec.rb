@@ -32,5 +32,21 @@ module Plan
         end
       end
     end
+
+    describe 'Remove issue' do
+      it do
+        plan = described_class.create(product_id)
+        plan.add_issue(issue_a)
+        plan.add_issue(issue_b)
+        plan.add_issue(issue_c)
+
+        plan.remove_issue(issue_b)
+
+        aggregate_failures do
+          expect(plan.scoped).to be_empty
+          expect(plan.not_scoped).to eq IssueList.new([issue_a, issue_c])
+        end
+      end
+    end
   end
 end
