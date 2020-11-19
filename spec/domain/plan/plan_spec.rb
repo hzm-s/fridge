@@ -33,13 +33,33 @@ module Plan
       end
     end
 
-    describe 'Remove issue' do
+    describe 'Add release' do
+      let(:plan) { described_class.create(product_id) }
+
       it do
-        plan = described_class.create(product_id)
         plan.add_issue(issue_a)
         plan.add_issue(issue_b)
         plan.add_issue(issue_c)
 
+        plan.add_release('MVP')
+
+        aggregate_failures do
+          expect(plan.scoped).to eq [Release.new('MVP', IssueList.new)]
+          expect(plan.not_scoped).to eq IssueList.new([issue_a, issue_b, issue_c])
+        end
+      end
+    end
+
+    describe 'Remove issue' do
+      let(:plan) { described_class.create(product_id) }
+
+      before do
+        plan.add_issue(issue_a)
+        plan.add_issue(issue_b)
+        plan.add_issue(issue_c)
+      end
+
+      it do
         plan.remove_issue(issue_b)
 
         aggregate_failures do

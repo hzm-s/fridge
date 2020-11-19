@@ -6,7 +6,7 @@ module Plan
     extend T::Sig
 
     sig {params(items: T::Array[Issue::Id]).void}
-    def initialize(items)
+    def initialize(items = [])
       @items = items
     end
 

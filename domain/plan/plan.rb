@@ -35,6 +35,11 @@ module Plan
       @not_scoped = not_scoped
     end
 
+    sig {params(release_title: String).void}
+    def add_release(release_title)
+      @scoped << Release.new(release_title, IssueList.new)
+    end
+
     sig {params(issue_id: Issue::Id).void}
     def add_issue(issue_id)
       @not_scoped = @not_scoped.append(issue_id)
