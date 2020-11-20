@@ -35,9 +35,14 @@ module Plan
       @not_scoped = not_scoped
     end
 
-    sig {params(release_title: String).void}
-    def add_release(release_title)
-      @scoped << Release.new(release_title, IssueList.new)
+    sig {params(name: String).void}
+    def add_release(name)
+      @scoped << Release.new(name, IssueList.new)
+    end
+
+    sig {params(name: String).void}
+    def remove_release(name)
+      @scoped.delete_if { |r| r.name == name }
     end
 
     sig {params(issue_id: Issue::Id).void}

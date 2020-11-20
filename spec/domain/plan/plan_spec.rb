@@ -50,6 +50,21 @@ module Plan
       end
     end
 
+    describe 'Remove release' do
+      let(:plan) { described_class.create(product_id) }
+
+      it do
+        plan.add_release('MVP')
+
+        plan.remove_release('MVP')
+
+        aggregate_failures do
+          expect(plan.scoped).to eq []
+          expect(plan.not_scoped).to eq IssueList.new
+        end
+      end
+    end
+
     describe 'Remove issue' do
       let(:plan) { described_class.create(product_id) }
 
