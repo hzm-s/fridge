@@ -4,6 +4,7 @@ require 'sorbet-runtime'
 module Plan
   class IssueList
     extend T::Sig
+    include IssueContainer
 
     sig {params(items: T::Array[Issue::Id]).void}
     def initialize(items = [])
@@ -39,6 +40,11 @@ module Plan
     sig {returns(T::Array[Issue::Id])}
     def to_a
       @items.dup
+    end
+
+    sig {override.params(other: IssueContainer).returns(T::Boolean)}
+    def have_same_issue?(other)
+      (self.to_a & other.to_a).any?
     end
 
     sig {params(other: IssueList).returns(T::Boolean)}

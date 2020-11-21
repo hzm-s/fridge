@@ -40,6 +40,38 @@ module Plan
       end
     end
 
+    describe 'Check to have same issue' do
+      it do
+        a = described_class.new([])
+        b = described_class.new([])
+        expect(a.have_same_issue?(b)).to be false
+      end
+
+      it do
+        a = described_class.new([issue_a])
+        b = described_class.new([issue_a])
+        expect(a.have_same_issue?(b)).to be true
+      end
+
+      it do
+        a = described_class.new([issue_a, issue_b])
+        b = described_class.new([issue_c, issue_d])
+        expect(a.have_same_issue?(b)).to be false
+      end
+
+      it do
+        a = described_class.new([issue_a, issue_b, issue_c])
+        b = described_class.new([issue_c, issue_d, issue_e])
+        expect(a.have_same_issue?(b)).to be true
+      end
+
+      it do
+        a = described_class.new([issue_a, issue_b, issue_c])
+        b = described_class.new([issue_b, issue_c, issue_a])
+        expect(a.have_same_issue?(b)).to be true
+      end
+    end
+
     describe 'Swap' do
       before do
         @list = described_class.new([issue_a, issue_b, issue_c, issue_d, issue_e])
