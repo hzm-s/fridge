@@ -13,7 +13,7 @@ module Plan
     attr_reader :issues
 
     sig {params(name: String, issues: IssueList).void}
-    def initialize(name, issues)
+    def initialize(name, issues = IssueList.new)
       @name = name
       @issues = issues
     end
