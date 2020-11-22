@@ -14,72 +14,68 @@ module Plan
       end
     end
 
+    let(:plan) { described_class.create(product_id) }
     let(:issue_a) { Issue::Id.create }
     let(:issue_b) { Issue::Id.create }
     let(:issue_c) { Issue::Id.create }
     let(:issue_d) { Issue::Id.create }
     let(:issue_e) { Issue::Id.create }
 
-    describe 'Add issue' do
+    describe 'Add release' do
       it do
-        plan = described_class.create(product_id)
+        issues = issue_list(issue_a, issue_b, issue_c)
+        plan.update_not_scoped(issues)
 
-        plan.add_issue(issue_a)
+        release = Release.new('MVP', issue_list)
+        plan.add_release(release)
 
         aggregate_failures do
-          expect(plan.scoped).to be_empty
-          expect(plan.not_scoped).to eq IssueList.new([issue_a])
+          expect(plan.scoped).to eq [release]
+          expect(plan.not_scoped).to eq issues
         end
       end
     end
 
-    describe 'Add release' do
-      let(:plan) { described_class.create(product_id) }
-
+    describe 'Update release' do
       it do
-        plan.add_issue(issue_a)
-        plan.add_issue(issue_b)
-        plan.add_issue(issue_c)
+        before = Release.new('MVP', issue_list)
+        plan.add_release(before)
 
-        plan.add_release('MVP')
+        after = Release.new('MVP', issue_list(issue_a, issue_b))
+        plan.update_scoped(after)
 
         aggregate_failures do
-          expect(plan.scoped).to eq [Release.new('MVP', IssueList.new)]
-          expect(plan.not_scoped).to eq IssueList.new([issue_a, issue_b, issue_c])
+          expect(plan.scoped).to eq [after]
+          expect(plan.not_scoped).to eq issue_list
+        end
+      end
+
+      it do
+        plan.update_not_scoped(issue_list(issue_a, issue_b))
+
+        before = Release.new('MVP', issue_list)
+        plan.add_release(before)
+
+        after = Release.new('MVP', issue_list(issue_c, issue_a))
+        plan.update_scoped(after)
+
+        aggregate_failures do
+          expect(plan.scoped).to eq [before]
+          expect(plan.not_scoped).to eq issue_list(issue_a, issue_b)
         end
       end
     end
 
     describe 'Remove release' do
-      let(:plan) { described_class.create(product_id) }
-
       it do
-        plan.add_release('MVP')
+        release = Release.new('MVP', issue_list)
+        plan.add_release(release)
 
         plan.remove_release('MVP')
 
         aggregate_failures do
           expect(plan.scoped).to eq []
-          expect(plan.not_scoped).to eq IssueList.new
-        end
-      end
-    end
-
-    describe 'Remove issue' do
-      let(:plan) { described_class.create(product_id) }
-
-      before do
-        plan.add_issue(issue_a)
-        plan.add_issue(issue_b)
-        plan.add_issue(issue_c)
-      end
-
-      it do
-        plan.remove_issue(issue_b)
-
-        aggregate_failures do
-          expect(plan.scoped).to be_empty
-          expect(plan.not_scoped).to eq IssueList.new([issue_a, issue_c])
+          expect(plan.not_scoped).to eq issue_list
         end
       end
     end

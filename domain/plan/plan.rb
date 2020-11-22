@@ -35,9 +35,9 @@ module Plan
       @not_scoped = not_scoped
     end
 
-    sig {params(name: String).void}
-    def add_release(name)
-      @scoped << Release.new(name, IssueList.new)
+    sig {params(release: Release).void}
+    def add_release(release)
+      @scoped << release
     end
 
     sig {params(name: String).void}
@@ -45,14 +45,17 @@ module Plan
       @scoped.delete_if { |r| r.name == name }
     end
 
-    sig {params(issue_id: Issue::Id).void}
-    def add_issue(issue_id)
-      @not_scoped = @not_scoped.append(issue_id)
+    sig {params(release: Release).void}
+    def update_scoped(release)
+      return if release.have_same_issue?(@not_scoped)
+
+      index = @scoped.find_index { |r| r.name == release.name }
+      @scoped[index] = release
     end
 
-    sig {params(issue_id: Issue::Id).void}
-    def remove_issue(issue_id)
-      @not_scoped = @not_scoped.remove(issue_id)
+    sig {params(list: IssueList).void}
+    def update_not_scoped(list)
+      @not_scoped = list
     end
   end
 end
