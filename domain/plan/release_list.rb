@@ -15,6 +15,18 @@ module Plan
       self.class.new(@releases + [release])
     end
 
+    sig {params(name: String).returns(T.self_type)}
+    def remove(name)
+      raise ReleaseIsNotEmpty unless get(name).empty?
+
+      self.class.new(@releases.delete_if { |r| r.name == name })
+    end
+
+    sig {params(name: String).returns(Release)}
+    def get(name)
+      @releases.find { |r| r.name == name }
+    end
+
     sig {returns(T::Array[Release])}
     def to_a
       @releases

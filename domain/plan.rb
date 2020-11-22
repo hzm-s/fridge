@@ -1,5 +1,7 @@
 # typed: strict
 module Plan
+  class ReleaseIsNotEmpty < StandardError; end
+
   autoload :Plan, 'plan/plan'
   autoload :IssueContainer, 'plan/issue_container'
   autoload :IssueList, 'plan/issue_list'

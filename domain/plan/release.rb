@@ -44,6 +44,11 @@ module Plan
       self.issues.have_same_issue?(other_issues)
     end
 
+    sig {returns(T::Boolean)}
+    def empty?
+      @issues.empty?
+    end
+
     sig {params(other: Release).returns(T::Boolean)}
     def ==(other)
       self.name == other.name &&
