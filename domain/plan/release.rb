@@ -4,7 +4,6 @@ require 'sorbet-runtime'
 module Plan
   class Release
     extend T::Sig
-    include IssueContainer
 
     sig {returns(String)}
     attr_reader :name
@@ -33,15 +32,9 @@ module Plan
       self.class.new(@name, @issues.swap(from, to))
     end
 
-    sig {override.params(other: IssueContainer).returns(T::Boolean)}
-    def have_same_issue?(other)
-      other_issues =
-        if other.respond_to?(:issues)
-          other.issues
-        else
-          other
-        end
-      self.issues.have_same_issue?(other_issues)
+    sig {params(issues: IssueList).returns(T::Boolean)}
+    def have_same_issue?(issues)
+      self.issues.have_same_issue?(issues)
     end
 
     sig {returns(T::Boolean)}

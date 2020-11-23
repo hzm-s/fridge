@@ -30,25 +30,5 @@ module Plan
         expect(r).to eq described_class.new('MVP', issue_list(issue_c, issue_a, issue_b))
       end
     end
-
-    describe 'Check to have same issue' do
-      it do
-        a = described_class.new('A', issue_list(issue_a, issue_b, issue_c))
-        b = described_class.new('B', issue_list(issue_a, issue_c))
-        expect(a.have_same_issue?(b)).to be true
-      end
-
-      it do
-        a = described_class.new('A', issue_list(issue_a, issue_b))
-        b = described_class.new('B', issue_list(issue_c))
-        expect(a.have_same_issue?(b)).to be false
-      end
-
-      it do
-        a = described_class.new('A', issue_list(issue_a, issue_b, issue_c))
-        b = issue_list(issue_a, issue_c)
-        expect(a.have_same_issue?(b)).to be true
-      end
-    end
   end
 end
