@@ -12,6 +12,8 @@ module Plan
 
     sig {params(release: Release).returns(T.self_type)}
     def add(release)
+      raise DuplicatedIssue if have_same_issue?(release.issues)
+
       self.class.new(@releases + [release])
     end
 
@@ -25,6 +27,11 @@ module Plan
     sig {params(name: String).returns(Release)}
     def get(name)
       @releases.find { |r| r.name == name }
+    end
+
+    sig {params(issues: IssueList).returns(T::Boolean)}
+    def have_same_issue?(issues)
+      @releases.any? { |r| r.have_same_issue?(issues) }
     end
 
     sig {returns(T::Array[Release])}

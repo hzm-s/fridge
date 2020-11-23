@@ -34,5 +34,17 @@ module Plan
       @scoped = scoped
       @not_scoped = not_scoped
     end
+
+    sig {params(scoped: ReleaseList).void}
+    def update_scoped(scoped)
+      @scoped = scoped
+    end
+
+    sig {params(not_scoped: IssueList).void}
+    def update_not_scoped(not_scoped)
+      raise DuplicatedIssue if @scoped.have_same_issue?(not_scoped)
+
+      @not_scoped = not_scoped
+    end
   end
 end

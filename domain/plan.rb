@@ -1,6 +1,7 @@
 # typed: strict
 module Plan
   class ReleaseIsNotEmpty < StandardError; end
+  class DuplicatedIssue < StandardError; end
 
   autoload :Plan, 'plan/plan'
   autoload :IssueContainer, 'plan/issue_container'
