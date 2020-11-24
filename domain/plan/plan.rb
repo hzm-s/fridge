@@ -13,9 +13,9 @@ module Plan
         new(product_id, ReleaseList.new, IssueList.new)
       end
 
-      sig {params(product_id: Product::Id, order: Order, scopes: ScopeSet).returns(T.attached_class)}
-      def from_repository(product_id, order, scopes)
-        new(product_id, order, scopes)
+      sig {params(product_id: Product::Id, scoped: ReleaseList, not_scoped: IssueList).returns(T.attached_class)}
+      def from_repository(product_id, scoped, not_scoped)
+        new(product_id, scoped, not_scoped)
       end
     end
 
