@@ -21,6 +21,8 @@ module Plan
     let(:issue_c) { Issue::Id.create }
     let(:issue_d) { Issue::Id.create }
     let(:issue_e) { Issue::Id.create }
+    let(:issue_f) { Issue::Id.create }
+    let(:issue_g) { Issue::Id.create }
 
     describe 'Update not scoped' do
       it do
@@ -64,6 +66,33 @@ module Plan
         ])
         plan.update_scoped(scoped)
         expect(plan.scoped).to eq scoped
+      end
+
+      it do
+        not_scoped = IssueList.new([issue_a, issue_b, issue_c])
+        plan.update_not_scoped(not_scoped)
+
+        scoped = ReleaseList.new([
+          Release.new('R', issue_list(issue_d, issue_e))
+        ])
+        plan.update_scoped(scoped)
+
+        aggregate_failures do
+          expect(plan.scoped).to eq scoped
+          expect(plan.not_scoped).to eq not_scoped
+        end
+      end
+
+      it do
+        not_scoped = IssueList.new([issue_a, issue_b])
+        plan.update_not_scoped(not_scoped)
+
+        scoped = ReleaseList.new([
+          Release.new('R1', issue_list(issue_c, issue_d, issue_e)),
+          Release.new('R2', issue_list(issue_f, issue_a, issue_g))
+        ])
+
+        expect { plan.update_scoped(scoped) }.to raise_error DuplicatedIssue
       end
     end
   end

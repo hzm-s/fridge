@@ -37,6 +37,8 @@ module Plan
 
     sig {params(scoped: ReleaseList).void}
     def update_scoped(scoped)
+      raise DuplicatedIssue if scoped.have_same_issue?(@not_scoped)
+
       @scoped = scoped
     end
 
