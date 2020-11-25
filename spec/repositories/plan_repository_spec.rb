@@ -3,7 +3,7 @@ require 'rails_helper'
 
 RSpec.describe PlanRepository::AR do
   describe 'Store' do
-    xit do
+    it do
       product = nil
       expect { product = create_product }
         .to change { Dao::Plan.count }.by(1)
