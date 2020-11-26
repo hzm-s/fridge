@@ -16,7 +16,7 @@ class Dao::Plan < ApplicationRecord
 
     self.releases.clear
     plan.scoped.to_a.each do |r|
-      self.releases.build(name: r.name.to_s, issues: r.issues.map(&:to_s))
+      self.releases.build(name: r.name.to_s, issues: r.issues.to_a.map(&:to_s))
     end
   end
 
