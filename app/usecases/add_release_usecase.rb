@@ -1,7 +1,7 @@
 # typed: strict
 require 'sorbet-runtime'
 
-class SpecifyReleaseUsecase < UsecaseBase
+class AddReleaseUsecase < UsecaseBase
   extend T::Sig
 
   sig {void}
@@ -9,10 +9,11 @@ class SpecifyReleaseUsecase < UsecaseBase
     @repository = T.let(PlanRepository::AR, Plan::PlanRepository)
   end
 
-  sig {params(product_id: Product::Id, release_id: String, issue_id: Issue::Id).void}
-  def perform(product_id, release_id, issue_id)
+  sig {params(product_id: Product::Id, name: String).void}
+  def perform(product_id, name)
     plan = @repository.find_by_product_id(product_id)
-    plan.specify_release(release_id, issue_id)
+    scoped = plan.scoped.add(Plan::Release.new(name))
+    plan.update_scoped(scoped)
     @repository.store(plan)
   end
 end
