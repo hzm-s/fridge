@@ -31,19 +31,24 @@ module Plan
       end
     end
 
-    sig {returns(T::Boolean)}
-    def empty?
-      @items.empty?
+    sig {params(index: Integer).returns(Issue::Id)}
+    def at(index)
+      to_a.at(index)
     end
 
-    sig {returns(T::Array[Issue::Id])}
-    def to_a
-      @items.dup
+    sig {returns(T::Boolean)}
+    def empty?
+      to_a.empty?
     end
 
     sig {params(other: IssueList).returns(T::Boolean)}
     def have_same_issue?(other)
       (self.to_a & other.to_a).any?
+    end
+
+    sig {returns(T::Array[Issue::Id])}
+    def to_a
+      @items
     end
 
     sig {params(other: IssueList).returns(T::Boolean)}

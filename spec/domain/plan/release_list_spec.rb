@@ -57,6 +57,35 @@ module Plan
       end
     end
 
+    describe 'Update' do
+      it do
+        list = described_class.new([
+          Release.new('R1', issue_list(issue_a, issue_b, issue_c)),
+          Release.new('R2', issue_list(issue_d, issue_e)),
+          Release.new('R3', issue_list(issue_f, issue_g)),
+        ])
+
+        list = list.update(Release.new('R1', issue_list(issue_b, issue_c, issue_a)))
+
+        expect(list).to eq described_class.new([
+          Release.new('R1', issue_list(issue_b, issue_c, issue_a)),
+          Release.new('R2', issue_list(issue_d, issue_e)),
+          Release.new('R3', issue_list(issue_f, issue_g)),
+        ])
+      end
+
+      it do
+        list = described_class.new([
+          Release.new('R1', issue_list(issue_a, issue_b, issue_c)),
+          Release.new('R2', issue_list(issue_d, issue_e)),
+          Release.new('R3', issue_list(issue_f, issue_g)),
+        ])
+
+        expect { list.update(Release.new('R2', issue_list(issue_e, issue_d, issue_g))) }
+          .to raise_error(DuplicatedIssue)
+      end
+    end
+
     describe 'Check to have same issue' do
       it do
         releases = described_class.new
