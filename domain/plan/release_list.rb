@@ -35,7 +35,7 @@ module Plan
 
     sig {params(name: String).returns(Release)}
     def get(name)
-      @releases.find { |r| r.name == name }
+      @releases.find { |r| r.name == name }.dup
     end
 
     sig {params(issues: IssueList).returns(T::Boolean)}

@@ -13,10 +13,10 @@ RSpec.describe PlanRepository::AR do
       issue_c = add_issue(product.id)
 
       plan = described_class.find_by_product_id(product.id)
-      scoped = Plan::ReleaseList.new([
-        Plan::Release.new('Ph1', issue_list(issue_a.id)),
-        Plan::Release.new('Ph2', issue_list(issue_b.id))
-      ])
+      scoped = release_list({
+        'Ph1' => issue_list(issue_a.id),
+        'Ph2' => issue_list(issue_b.id)
+      })
       not_scoped = issue_list(issue_c.id)
 
       plan.update_scoped(scoped)
@@ -48,10 +48,10 @@ RSpec.describe PlanRepository::AR do
 
       described_class.store(plan)
       stored = described_class.find_by_product_id(product.id)
-      scoped = Plan::ReleaseList.new([
-        Plan::Release.new('Ph1', issue_list(issue_a.id)),
-        Plan::Release.new('Ph2', issue_list(issue_b.id))
-      ])
+      scoped = release_list({
+        'Ph1' => issue_list(issue_a.id),
+        'Ph2' => issue_list(issue_b.id)
+      })
       not_scoped = issue_list(issue_c.id)
 
       stored.update_scoped(scoped)
