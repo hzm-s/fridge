@@ -70,6 +70,12 @@ module Plan
         b = described_class.new([issue_b, issue_c, issue_a])
         expect(a.have_same_issue?(b)).to be true
       end
+
+      it do
+        a = described_class.new([issue_a])
+        b = described_class.new([Issue::Id.from_string(issue_a.to_s)])
+        expect(a.have_same_issue?(b)).to be true
+      end
     end
 
     describe 'Swap' do

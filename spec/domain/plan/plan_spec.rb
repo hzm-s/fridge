@@ -94,6 +94,18 @@ module Plan
 
         expect { plan.update_scoped(scoped) }.to raise_error DuplicatedIssue
       end
+
+      it do
+        not_scoped = IssueList.new([issue_a, issue_b, issue_c, issue_d, issue_e, issue_f, issue_g])
+        plan.update_not_scoped(not_scoped)
+
+        scoped = ReleaseList.new([
+          Release.new('R1', issue_list(issue_a, issue_b)),
+          Release.new('R2', issue_list(issue_c, issue_d, issue_e))
+        ])
+
+        expect { plan.update_scoped(scoped) }.to raise_error DuplicatedIssue
+      end
     end
   end
 end
