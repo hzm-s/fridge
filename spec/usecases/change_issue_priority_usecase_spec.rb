@@ -9,10 +9,10 @@ RSpec.describe ChangeIssuePriorityUsecase do
 
   before do
     plan = PlanRepository::AR.find_by_product_id(product.id)
+    plan.update_not_scoped(issue_list)
     plan.update_scoped(
       release_list({ 'MVP' => issue_list(issue_a.id, issue_b.id, issue_c.id) })
     )
-    plan.update_not_scoped(issue_list)
     PlanRepository::AR.store(plan)
   end
 
