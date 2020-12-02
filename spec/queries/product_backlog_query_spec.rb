@@ -14,28 +14,15 @@ describe ProductBacklogQuery do
 
   it do
     plan = PlanRepository::AR.find_by_product_id(product.id)
-    not_scoped = Plan::IssueList.new([issue_a, issue_b, issue_c, issue_d, issue_e, issue_f, issue_g])
-    plan.update_not_scoped(not_scoped)
-
-    scoped = release_list({
-      'R1' => issue_list(issue_a, issue_b),
-      'R2' => issue_list(issue_c, issue_d, issue_e)
-    })
-
-    plan.update_scoped(scoped)
-  end
-
-  it do
-    plan = PlanRepository::AR.find_by_product_id(product.id)
-
-    scoped = release_list({
-      'R1' => issue_list(issue_a, issue_b),
-      'R2' => issue_list(issue_c, issue_d, issue_e)
-    })
-    plan.update_scoped(scoped)
 
     not_scoped = issue_list(issue_f, issue_g)
     plan.update_not_scoped(not_scoped)
+
+    scoped = release_list({
+      'R1' => issue_list(issue_a, issue_b),
+      'R2' => issue_list(issue_c, issue_d, issue_e)
+    })
+    plan.update_scoped(scoped)
 
     PlanRepository::AR.store(plan)
 

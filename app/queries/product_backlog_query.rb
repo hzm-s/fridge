@@ -19,7 +19,7 @@ module ProductBacklogQuery
     end
 
     def fetch_plan(product_id)
-      Dao::Plan.eager_load(:releases).where(dao_product_id: product_id)
+      Dao::Plan.eager_load(:releases).find_by(dao_product_id: product_id)
     end
   end
 
