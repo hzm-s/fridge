@@ -13,14 +13,13 @@ RSpec.describe PlanRepository::AR do
       issue_c = add_issue(product.id)
 
       plan = described_class.find_by_product_id(product.id)
+
+      plan.update_not_scoped(issue_list(issue_c.id))
       scoped = release_list({
         'Ph1' => issue_list(issue_a.id),
         'Ph2' => issue_list(issue_b.id)
       })
-      not_scoped = issue_list(issue_c.id)
-
       plan.update_scoped(scoped)
-      plan.update_not_scoped(not_scoped)
 
       expect { described_class.store(plan) }
         .to change { Dao::Plan.count }.by(0)
