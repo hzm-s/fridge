@@ -10,7 +10,7 @@ ja:
         description: 説明
 
       release_form:
-        title: タイトル
+        name: 名前
 
       team_form:
         name: 名前

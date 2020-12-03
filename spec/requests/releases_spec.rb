@@ -11,16 +11,16 @@ RSpec.describe 'releases' do
 
   describe 'create' do
     it do
-      item_a = add_issue(product.id).id
-      item_b = add_issue(product.id).id
-      item_c = add_issue(product.id).id
-
-      post product_releases_path(product_id: product.id.to_s), params: { name: 'MVP', issue_id: item_b }
+      post product_releases_path(product_id: product.id.to_s), params: { name: 'MVP' }
 
       pbl = ProductBacklogQuery.call(product.id.to_s)
-      expect(pbl.scoped.size).to eq 1
-      expect(pbl.scoped[0].items.map(&:id)).to eq [item_a, item_b].map(&:to_s)
-      expect(pbl.unscoped.map(&:id)).to eq [item_c].map(&:to_s)
+
+      aggregate_failures do
+        expect(pbl.scoped.size).to eq 1
+        expect(pbl.scoped[0].name).to eq 'MVP'
+        expect(pbl.scoped[0].issues).to be_empty
+        expect(pbl.not_scoped).to be_empty
+      end
     end
   end
 end
