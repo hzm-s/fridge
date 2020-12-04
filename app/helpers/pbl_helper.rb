@@ -1,9 +1,10 @@
 # typed: false
 module PblHelper
-  def sortable_pbl_options(product_id)
+  def sortable_pbl_options(product_id, release_name)
     {
       controller: 'sort-pbl',
-      sort_pbl_url: order_path(product_id),
+      sort_pbl_url: product_plan_path(product_id),
+      sort_pbl_group: release_name,
     }
   end
 

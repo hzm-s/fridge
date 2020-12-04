@@ -21,13 +21,16 @@
   background-color: #fff;
 }
 
-.pbl-release {
+.pbl-release__header {
   @include nf;
 
   display: flex;
   align-items: center;
 
   padding: .25rem 1rem;
+
+  border-top: 1px solid $gray-300;
+  border-bottom: 1px solid $gray-300;
 
   &:hover {
     .pbl-release__actions {
@@ -36,19 +39,15 @@
   }
 }
 
-.pbl-release__grip {
-  color: $secondary;
-  margin-left: .15rem;
-  margin-right: .75rem;
-
-  &:hover {
-    cursor: pointer;
-  }
-}
-
 .pbl-release__title {
   font-size: .875rem;
   font-weight: bold;
+}
+
+.pbl-release__empty-label {
+  padding: .5rem 1rem;
+  font-size: .875rem;
+  color: $gray-600;
 }
 
 .pbl-release__actions {

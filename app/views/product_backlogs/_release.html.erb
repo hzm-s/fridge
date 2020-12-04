@@ -1,0 +1,16 @@
+<div class="pbl-release">
+  <div class="pbl-release__header">
+    <span class="pbl-release__title">
+      <%= release.name %>
+    </span>
+  </div>
+  <% if release.issues.any? %>
+    <%= content_tag :div, class: 'pbl__list', data: sortable_pbl_options(current_product_id, release.name) do %>
+      <%= render partial: 'item', collection: release.issues %>
+    <% end -%>
+  <% else %>
+    <div class="pbl-release__empty-label">
+      <%=t '.empty' %>
+    </div>
+  <% end %>
+</div>

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :products, only: [:new, :create, :index] do
     resources :issues, only: [:create]
     resources :releases, only: [:new, :create]
+    resource :plan, only: [:update]
   end
 
   resources :product_backlogs, param: :product_id, only: [:show, :update]
