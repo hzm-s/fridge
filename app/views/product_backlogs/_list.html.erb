@@ -1,6 +1,13 @@
 <% pbl.scoped.each do |release| %>
   <%= render partial: 'release', locals: { release: release } %>
 <% end %>
-<%= content_tag :div, class: 'pbl__list', data: sortable_pbl_options(current_product_id, nil) do %>
-  <%= render partial: 'item', collection: pbl.not_scoped %>
-<% end %>
+<div class="pbl-list">
+  <div class="pbl-list__header">
+    <span class="pbl-list__title">
+      Icebox
+    </span>
+  </div>
+  <%= content_tag :div, data: sortable_pbl_options(current_product_id, nil) do %>
+    <%= render partial: 'item', collection: pbl.not_scoped %>
+  <% end %>
+</div>
