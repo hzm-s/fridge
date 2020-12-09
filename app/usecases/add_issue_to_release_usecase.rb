@@ -14,13 +14,19 @@ class AddIssueToReleaseUsecase < UsecaseBase
     plan = @repository.find_by_product_id(product_id)
 
     not_scoped = plan.not_scoped.remove(issue_id)
+    plan.update_not_scoped(not_scoped)
 
     release = plan.scoped.get(release_name)
-    new_release = release.append_issue(issue_id).swap_issues(issue_id, release.issues.at(to_index))
+    new_release =
+      if release.issues.empty?
+        release.append_issue(issue_id)
+      else
+        release.append_issue(issue_id).swap_issues(issue_id, release.issues.at(to_index))
+      end
     new_releases = plan.scoped.update(new_release)
 
-    plan.update_not_scoped(not_scoped)
     plan.update_scoped(new_releases)
+
     @repository.store(plan)
   end
 end
