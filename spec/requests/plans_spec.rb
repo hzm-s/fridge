@@ -29,5 +29,15 @@ RSpec.describe 'plans' do
           params: { issue_id: 'i123', to: 'MVP', to_index: 1 }
       end
     end
+
+    context 'when remove issue from release' do
+      it do
+        expect(RemoveIssueFromReleaseUsecase)
+          .to receive(:perform).with(product.id, Issue::Id.from_string('i123'), 'MVP')
+
+        patch product_plan_path(product_id: product.id.to_s, format: :json),
+          params: { issue_id: 'i123', from: 'MVP' }
+      end
+    end
   end
 end
