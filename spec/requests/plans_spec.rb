@@ -39,5 +39,25 @@ RSpec.describe 'plans' do
           params: { issue_id: 'i123', from: 'MVP' }
       end
     end
+
+    context 'when change priority' do
+      it do
+        expect(ChangeIssuePriorityUsecase)
+          .to receive(:perform).with(product.id, 'MVP', Issue::Id.from_string('i123'), 5)
+
+        patch product_plan_path(product_id: product.id.to_s, format: :json),
+          params: { issue_id: 'i123', from: 'MVP', to: 'MVP', to_index: 5 }
+      end
+    end
+
+    context 'when change relase' do
+      it do
+        expect(ChangeReleaseOfIssueUsecase)
+          .to receive(:perform).with(product.id, Issue::Id.from_string('i123'), 'R1', 'R2', 3)
+
+        patch product_plan_path(product_id: product.id.to_s, format: :json),
+          params: { issue_id: 'i123', from: 'R1', to: 'R2', to_index: 3 }
+      end
+    end
   end
 end
