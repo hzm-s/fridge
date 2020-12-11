@@ -28,7 +28,7 @@ module Plan
     end
 
     sig {params(from: Issue::Id, to: Issue::Id).returns(T.self_type)}
-    def swap_issues(from, to)
+    def change_issue_priority(from, to)
       self.class.new(@name, @issues.swap(from, to))
     end
 

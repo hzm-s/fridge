@@ -21,7 +21,7 @@ class AddIssueToReleaseUsecase < UsecaseBase
       if release.issues.empty?
         release.append_issue(issue_id)
       else
-        release.append_issue(issue_id).swap_issues(issue_id, release.issues.at(to_index))
+        release.append_issue(issue_id).change_issue_priority(issue_id, release.issues.at(to_index))
       end
     new_releases = plan.scoped.update(new_release)
 

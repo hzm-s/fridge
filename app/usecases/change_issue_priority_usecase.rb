@@ -14,7 +14,7 @@ class ChangeIssuePriorityUsecase < UsecaseBase
     plan = @repository.find_by_product_id(product_id)
 
     release = plan.scoped.get(release_name)
-    new_release = release.swap_issues(issue_id, release.issues.at(to_index))
+    new_release = release.change_issue_priority(issue_id, release.issues.at(to_index))
 
     new_releases = plan.scoped.update(new_release)
     plan.update_scoped(new_releases)
