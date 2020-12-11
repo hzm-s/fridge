@@ -37,6 +37,11 @@ module Plan
       self.issues.have_same_issue?(issues)
     end
 
+    sig {params(index: Integer).returns(T.nilable(Issue::Id))}
+    def issue_at(index)
+      issues.at(index)
+    end
+
     sig {returns(T::Boolean)}
     def empty?
       @issues.empty?
