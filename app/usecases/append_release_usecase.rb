@@ -1,7 +1,7 @@
 # typed: strict
 require 'sorbet-runtime'
 
-class AddReleaseUsecase < UsecaseBase
+class AppendReleaseUsecase < UsecaseBase
   extend T::Sig
 
   sig {void}
@@ -12,7 +12,7 @@ class AddReleaseUsecase < UsecaseBase
   sig {params(product_id: Product::Id, name: String).void}
   def perform(product_id, name)
     plan = @repository.find_by_product_id(product_id)
-    scoped = plan.scoped.add(Plan::Release.new(name))
+    scoped = plan.scoped.append(Plan::Release.new(name))
     plan.update_scoped(scoped)
     @repository.store(plan)
   end

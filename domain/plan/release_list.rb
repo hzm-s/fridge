@@ -11,7 +11,7 @@ module Plan
     end
 
     sig {params(release: Release).returns(T.self_type)}
-    def add(release)
+    def append(release)
       raise DuplicatedIssue if have_same_issue?(release.issues)
 
       self.class.new(@releases + [release])

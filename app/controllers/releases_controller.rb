@@ -11,7 +11,7 @@ class ReleasesController < ApplicationController
   def create
     @form = ReleaseForm.new(permitted_params)
     if @form.valid?
-      AddReleaseUsecase.perform(
+      AppendReleaseUsecase.perform(
         Product::Id.from_string(params[:product_id]),
         @form.name
       )

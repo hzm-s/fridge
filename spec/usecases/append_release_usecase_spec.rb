@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe AddReleaseUsecase do
+RSpec.describe AppendReleaseUsecase do
   let(:product) { create_product }
 
   it do

@@ -11,10 +11,10 @@ module Plan
     let(:issue_f) { Issue::Id.create }
     let(:issue_g) { Issue::Id.create }
 
-    describe 'Add' do
+    describe 'Append' do
       it do
         list = described_class.new
-        list = list.add(Release.new('MVP'))
+        list = list.append(Release.new('MVP'))
         expect(list).to eq described_class.new([
           Release.new('MVP')
         ])
@@ -27,7 +27,7 @@ module Plan
         ])
 
         r = Release.new('R3', issue_list(issue_e, issue_f))
-        expect { list.add(r) }.to_not raise_error
+        expect { list.append(r) }.to_not raise_error
       end
 
       it do
@@ -37,7 +37,7 @@ module Plan
         ])
 
         r = Release.new('R3', issue_list(issue_e, issue_d, issue_f))
-        expect { list.add(r) }.to raise_error DuplicatedIssue
+        expect { list.append(r) }.to raise_error DuplicatedIssue
       end
     end
 
