@@ -7,7 +7,7 @@ module IssueSupport
   def add_issue(product_id, description = 'DESC', type: :feature, acceptance_criteria: [], size: nil)
     issue = perform_add_issue(product_id, Issue::Types.from_string(type.to_s), description)
 
-    add_acceptance_criteria(issue, acceptance_criteria) if acceptance_criteria
+    append_acceptance_criteria(issue, acceptance_criteria) if acceptance_criteria
 
     estimate_feature(issue.id, size) if size
 
@@ -15,12 +15,12 @@ module IssueSupport
   end
   alias_method :add_feature, :add_issue
 
-  def add_acceptance_criteria(issue, contents_or_criteria)
+  def append_acceptance_criteria(issue, contents_or_criteria)
     criteria = contents_or_criteria.map do |cc|
       cc.is_a?(String)? acceptance_criterion(cc) : cc
     end
     criteria.each do |ac|
-      AddAcceptanceCriterionUsecase.perform(issue.id, ac)
+      AppendAcceptanceCriterionUsecase.perform(issue.id, ac)
     end
   end
 
