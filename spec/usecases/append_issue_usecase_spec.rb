@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe AddIssueUsecase do
+RSpec.describe AppendIssueUsecase do
   let!(:product) { create_product }
 
   it do

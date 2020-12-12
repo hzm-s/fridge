@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe AddIssueToReleaseUsecase do
+RSpec.describe AppendIssueToReleaseUsecase do
   let(:product) { create_product }
   let!(:issue_a) { add_issue(product.id) }
   let!(:issue_b) { add_issue(product.id) }

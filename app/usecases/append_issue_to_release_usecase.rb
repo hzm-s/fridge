@@ -1,7 +1,7 @@
 # typed: strict
 require 'sorbet-runtime'
 
-class AddIssueToReleaseUsecase < UsecaseBase
+class AppendIssueToReleaseUsecase < UsecaseBase
   extend T::Sig
 
   sig {void}

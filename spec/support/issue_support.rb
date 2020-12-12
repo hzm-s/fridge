@@ -36,7 +36,7 @@ module IssueSupport
 
   def perform_add_issue(product_id, type, desc)
     Issue::Description.new(desc)
-      .yield_self { |d| AddIssueUsecase.perform(product_id, type, d) }
+      .yield_self { |d| AppendIssueUsecase.perform(product_id, type, d) }
       .yield_self { |id| IssueRepository::AR.find_by_id(id) }
   end
 end

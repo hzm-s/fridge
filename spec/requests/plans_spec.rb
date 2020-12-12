@@ -20,9 +20,9 @@ RSpec.describe 'plans' do
       end
     end
 
-    context 'when add issue to release' do
+    context 'when append issue to release' do
       it do
-        expect(AddIssueToReleaseUsecase)
+        expect(AppendIssueToReleaseUsecase)
           .to receive(:perform).with(product.id, Issue::Id.from_string('i123'), 'MVP', 1)
 
         patch product_plan_path(product_id: product.id.to_s, format: :json),
