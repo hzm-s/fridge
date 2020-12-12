@@ -49,4 +49,18 @@ RSpec.describe ChangeReleaseOfIssueUsecase do
       })
     end
   end
+
+  it do
+    described_class.perform(product.id, issue_c.id, 'R2', 'R1', 2)
+    
+    plan = PlanRepository::AR.find_by_product_id(product.id)
+    aggregate_failures do
+      expect(plan.not_scoped).to eq issue_list
+      expect(plan.scoped).to eq release_list({
+        'R1' => issue_list(issue_a.id, issue_b.id, issue_c.id),
+        'R2' => issue_list(issue_d.id, issue_e.id),
+        'R3' => issue_list,
+      })
+    end
+  end
 end

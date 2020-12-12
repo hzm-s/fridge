@@ -18,7 +18,7 @@ class ChangeReleaseOfIssueUsecase < UsecaseBase
 
     dst = tmp_scoped.get(dst_name)
     new_dst =
-      if dst.issues.empty?
+      if dst.issues.empty? || dst.issue_at(to_index).nil?
         dst.append_issue(issue_id)
       else
         dst.append_issue(issue_id).change_issue_priority(issue_id, dst.issue_at(to_index))

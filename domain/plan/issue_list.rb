@@ -31,7 +31,7 @@ module Plan
       end
     end
 
-    sig {params(index: Integer).returns(Issue::Id)}
+    sig {params(index: Integer).returns(T.nilable(Issue::Id))}
     def at(index)
       to_a.at(index)
     end
