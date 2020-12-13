@@ -1,22 +1,22 @@
 class Dao::Plan < ApplicationRecord
-  has_many :scopes, -> { order :id }, class_name: 'Dao::Scope', foreign_key: :dao_plan_id, dependent: :destroy
+  has_many :releases, -> { order :id }, class_name: 'Dao::Release', foreign_key: :dao_plan_id, dependent: :destroy
 
   def read
     Plan::Plan.from_repository(
       read_product_id,
-      read_order,
-      read_scopes,
+      read_scoped,
+      read_not_scoped,
     )
   end
 
   def write(plan)
     self.attributes = {
-      order: plan.order.to_a.map(&:to_s)
+      not_scoped_issues: plan.not_scoped.to_a.map(&:to_s)
     }
 
-    self.scopes.clear
-    plan.scopes.to_a.each do |s|
-      self.scopes.build(release_id: s.release_id.to_s, tail: s.tail.to_s)
+    self.releases.clear
+    plan.scoped.to_a.each do |r|
+      self.releases.build(name: r.name.to_s, issues: r.issues.to_a.map(&:to_s))
     end
   end
 
@@ -26,15 +26,18 @@ class Dao::Plan < ApplicationRecord
     Product::Id.from_string(dao_product_id)
   end
 
-  def read_order
-    order
-      .map { |e| Issue::Id.from_string(e) }
-      .then { |ids| Plan::Order.new(ids) }
+  def read_scoped
+    releases
+      .map { |r| Plan::Release.new(r.name, build_issue_list(r.issues)) }
+      .then { |list| Plan::ReleaseList.new(list) }
   end
 
-  def read_scopes
-    scopes
-      .map { |s| Plan::Scope.new(s.release_id, Issue::Id.from_string(s.tail)) }
-      .then { |scopes| Plan::ScopeSet.new(scopes) }
+  def read_not_scoped
+    build_issue_list(not_scoped_issues)
+  end
+
+  def build_issue_list(raw_issue_ids)
+    raw_issue_ids.map { |i| Issue::Id.from_string(i) }
+      .then { |ids| Plan::IssueList.new(ids) }
   end
 end

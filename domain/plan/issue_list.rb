@@ -2,11 +2,11 @@
 require 'sorbet-runtime'
 
 module Plan
-  class Order
+  class IssueList
     extend T::Sig
 
     sig {params(items: T::Array[Issue::Id]).void}
-    def initialize(items)
+    def initialize(items = [])
       @items = items
     end
 
@@ -31,52 +31,27 @@ module Plan
       end
     end
 
-    sig {params(head: T.nilable(Issue::Id), tail: Issue::Id).returns(T::Array[Issue::Id])}
-    def subset(head, tail)
-      head_index =
-        if head
-          T.must(@items.index(head)) + 1
-        else
-          0
-        end
-      tail_index = T.must(@items.index(tail))
-      T.must(@items[head_index..tail_index])
-    end
-
-    sig {params(item: Issue::Id).returns(T.nilable(Issue::Id))}
-    def before_of(item)
-      item_index = index(item)
-      return nil if item_index == 0
-
-      at(item_index - 1)
+    sig {params(index: Integer).returns(T.nilable(Issue::Id))}
+    def at(index)
+      to_a.at(index)
     end
 
     sig {returns(T::Boolean)}
     def empty?
-      @items.empty?
+      to_a.empty?
     end
 
-    sig {params(index: Integer).returns(Issue::Id)}
-    def at(index)
-      @items.at(index)
-    end
-
-    sig {params(item: Issue::Id).returns(Integer)}
-    def index(item)
-      T.must(@items.index(item))
+    sig {params(other: IssueList).returns(T::Boolean)}
+    def have_same_issue?(other)
+      (self.to_a & other.to_a).any?
     end
 
     sig {returns(T::Array[Issue::Id])}
     def to_a
-      @items.dup
+      @items
     end
 
-    sig {params(other: Order).returns(T::Array[Issue::Id])}
-    def -(other)
-      self.to_a - other.to_a
-    end
-
-    sig {params(other: Order).returns(T::Boolean)}
+    sig {params(other: IssueList).returns(T::Boolean)}
     def ==(other)
       self.to_a == other.to_a
     end

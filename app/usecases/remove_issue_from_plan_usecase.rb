@@ -12,7 +12,8 @@ class RemoveIssueFromPlanUsecase < UsecaseBase
   sig {params(product_id: Product::Id, issue_id: Issue::Id).void}
   def perform(product_id, issue_id)
     plan = @repository.find_by_product_id(product_id)
-    plan.remove_issue(issue_id)
+    not_scoped = plan.not_scoped.remove(issue_id)
+    plan.update_not_scoped(not_scoped)
     @repository.store(plan)
   end
 end

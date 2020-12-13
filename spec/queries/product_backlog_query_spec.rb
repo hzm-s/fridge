@@ -13,32 +13,27 @@ describe ProductBacklogQuery do
   let!(:issue_g) { add_issue(product.id).id }
 
   it do
-    SwapOrderedIssuesUsecase.perform(product.id, issue_d, 1)
+    plan = PlanRepository::AR.find_by_product_id(product.id)
+
+    not_scoped = issue_list(issue_f, issue_g)
+    plan.update_not_scoped(not_scoped)
+
+    scoped = release_list({
+      'R1' => issue_list(issue_a, issue_b),
+      'R2' => issue_list(issue_c, issue_d, issue_e)
+    })
+    plan.update_scoped(scoped)
+
+    PlanRepository::AR.store(plan)
 
     pbl = described_class.call(product.id.to_s)
 
     aggregate_failures do
-      expect(pbl.scoped).to be_empty
-      expect(pbl.unscoped.map(&:id)).to eq [issue_a, issue_d, issue_b, issue_c, issue_e, issue_f, issue_g].map(&:to_s)
-    end
-  end
-
-  it do
-    SpecifyReleaseUsecase.perform(product.id, 'Ph1', issue_c)
-    SpecifyReleaseUsecase.perform(product.id, 'Ph2', issue_e)
-    SpecifyReleaseUsecase.perform(product.id, 'Ph3', issue_f)
-
-    pbl = described_class.call(product.id.to_s)
-
-    aggregate_failures do
-      expect(pbl.scoped.size).to eq 3
-      expect(pbl.scoped[0].name).to eq 'Ph1'
-      expect(pbl.scoped[0].items.map(&:id)).to eq [issue_a, issue_b, issue_c].map(&:to_s)
-      expect(pbl.scoped[1].name).to eq 'Ph2'
-      expect(pbl.scoped[1].items.map(&:id)).to eq [issue_d, issue_e].map(&:to_s)
-      expect(pbl.scoped[2].name).to eq 'Ph3'
-      expect(pbl.scoped[2].items.map(&:id)).to eq [issue_f].map(&:to_s)
-      expect(pbl.unscoped.map(&:id)).to eq [issue_g].map(&:to_s)
+      expect(pbl.scoped[0].name).to eq 'R1'
+      expect(pbl.scoped[0].issues.map(&:id)).to eq [issue_a, issue_b].map(&:to_s)
+      expect(pbl.scoped[1].name).to eq 'R2'
+      expect(pbl.scoped[1].issues.map(&:id)).to eq [issue_c, issue_d, issue_e].map(&:to_s)
+      expect(pbl.not_scoped.map(&:id)).to eq [issue_f, issue_g].map(&:to_s)
     end
   end
 end

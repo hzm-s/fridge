@@ -10,7 +10,7 @@ class IssuesController < ApplicationController
     @form = IssueForm.new(permitted_params)
 
     if @form.valid?
-      AddIssueUsecase.perform(
+      AppendIssueUsecase.perform(
         Product::Id.from_string(params[:product_id]),
         @form.domain_objects[:type],
         @form.domain_objects[:description]

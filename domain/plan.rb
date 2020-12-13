@@ -1,9 +1,11 @@
 # typed: strict
 module Plan
+  class ReleaseIsNotEmpty < StandardError; end
+  class DuplicatedIssue < StandardError; end
+
   autoload :Plan, 'plan/plan'
-  autoload :Order, 'plan/order'
-  autoload :Scope, 'plan/scope'
-  autoload :ScopeSet, 'plan/scope_set'
+  autoload :IssueList, 'plan/issue_list'
   autoload :Release, 'plan/release'
+  autoload :ReleaseList, 'plan/release_list'
   autoload :PlanRepository, 'plan/plan_repository'
 end

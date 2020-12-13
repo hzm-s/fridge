@@ -31,6 +31,16 @@ module Shared
       @id
     end
 
+    sig {returns(Integer)}
+    def hash
+      @id.hash
+    end
+
+    sig {params(other: T.nilable(Identifier)).returns(T::Boolean)}
+    def eql?(other)
+      self == other
+    end
+
     sig {params(other: T.nilable(Identifier)).returns(T::Boolean)}
     def ==(other)
       return false unless other

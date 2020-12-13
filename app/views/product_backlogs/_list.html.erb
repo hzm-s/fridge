@@ -1,16 +1,13 @@
-<%= content_tag :div, class: 'pbl__list', data: sortable_pbl_options(current_product_id) do %>
-  <% pbl.scoped.each do |release| %>
-    <%= render partial: 'item', collection: release.items %>
-    <div class="pbl-release">
-      <span class="pbl-release__grip js-sortable-handle">
-        <i class="fas fa-grip-vertical"></i>
-      </span>
-      <span class="pbl-release__title">
-        <%= release.name %>
-      </span>
-    </div>
-  <% end -%>
-  <div class="pbl__list">
-    <%= render partial: 'item', collection: pbl.unscoped %>
-  </div>
+<% pbl.scoped.each do |release| %>
+  <%= render partial: 'release', locals: { release: release } %>
 <% end %>
+<div class="pbl-list">
+  <div class="pbl-list__header">
+    <span class="pbl-list__title">
+      Icebox
+    </span>
+  </div>
+  <%= content_tag :div, data: sortable_pbl_options(current_product_id, nil) do %>
+    <%= render partial: 'item', collection: pbl.not_scoped %>
+  <% end %>
+</div>

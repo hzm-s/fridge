@@ -8,72 +8,103 @@ module Plan
     describe 'Create' do
       it do
         plan = described_class.create(product_id)
+
         expect(plan.product_id).to eq product_id
-        expect(plan.order).to be_empty
+        expect(plan.scoped).to eq ReleaseList.new
+        expect(plan.not_scoped).to eq IssueList.new
       end
     end
 
+    let(:plan) { described_class.create(product_id) }
     let(:issue_a) { Issue::Id.create }
     let(:issue_b) { Issue::Id.create }
     let(:issue_c) { Issue::Id.create }
+    let(:issue_d) { Issue::Id.create }
+    let(:issue_e) { Issue::Id.create }
+    let(:issue_f) { Issue::Id.create }
+    let(:issue_g) { Issue::Id.create }
 
-    describe 'Append issue' do
+    describe 'Update not scoped' do
       it do
-        plan = described_class.create(product_id)
-        plan.append_issue(issue_a)
-        plan.append_issue(issue_b)
-        plan.append_issue(issue_c)
-        expect(plan.order).to eq Order.new([issue_a, issue_b, issue_c])
+        not_scoped = IssueList.new([issue_a, issue_b, issue_c])
+        plan.update_not_scoped(not_scoped)
+        expect(plan.not_scoped).to eq not_scoped
+      end
+
+      it do
+        scoped = ReleaseList.new([
+          Release.new('R', issue_list(issue_d, issue_e))
+        ])
+        plan.update_scoped(scoped)
+        
+        not_scoped = IssueList.new([issue_a, issue_b, issue_c])
+        plan.update_not_scoped(not_scoped)
+
+        aggregate_failures do
+          expect(plan.scoped).to eq scoped
+          expect(plan.not_scoped).to eq not_scoped
+        end
+      end
+
+      it do
+        scoped = ReleaseList.new([
+          Release.new('R', issue_list(issue_d, issue_a, issue_e))
+        ])
+        plan.update_scoped(scoped)
+        
+        not_scoped = IssueList.new([issue_a, issue_b, issue_c])
+
+        expect { plan.update_not_scoped(not_scoped) }.to raise_error DuplicatedIssue
       end
     end
 
-    describe 'Remove issue' do
+    describe 'Update scoped' do
       it do
-        plan = described_class.create(product_id)
-        plan.append_issue(issue_a)
-        plan.append_issue(issue_b)
-        plan.append_issue(issue_c)
-
-        plan.remove_issue(issue_b)
-        expect(plan.order).to eq Order.new([issue_a, issue_c])
+        scoped = ReleaseList.new([
+          Release.new('R1', issue_list(issue_a, issue_b, issue_c)),
+          Release.new('R2', issue_list(issue_d, issue_e))
+        ])
+        plan.update_scoped(scoped)
+        expect(plan.scoped).to eq scoped
       end
 
       it do
-        plan = described_class.create(product_id)
-        plan.append_issue(issue_a)
-        plan.append_issue(issue_b)
-        plan.append_issue(issue_c)
-        plan.specify_release('MVP', issue_c)
+        not_scoped = IssueList.new([issue_a, issue_b, issue_c])
+        plan.update_not_scoped(not_scoped)
 
-        plan.remove_issue(issue_c)
+        scoped = ReleaseList.new([
+          Release.new('R', issue_list(issue_d, issue_e))
+        ])
+        plan.update_scoped(scoped)
 
-        expect(plan.scoped).to eq [Release.new('MVP', [issue_a, issue_b])]
-        expect(plan.unscoped).to eq []
+        aggregate_failures do
+          expect(plan.scoped).to eq scoped
+          expect(plan.not_scoped).to eq not_scoped
+        end
       end
-    end
 
-    describe 'Swap issue positions' do
       it do
-        plan = described_class.create(product_id)
-        plan.append_issue(issue_a)
-        plan.append_issue(issue_b)
-        plan.append_issue(issue_c)
+        not_scoped = IssueList.new([issue_a, issue_b])
+        plan.update_not_scoped(not_scoped)
 
-        plan.swap_issues(issue_c, issue_a)
-        expect(plan.order).to eq Order.new([issue_c, issue_a, issue_b])
+        scoped = ReleaseList.new([
+          Release.new('R1', issue_list(issue_c, issue_d, issue_e)),
+          Release.new('R2', issue_list(issue_f, issue_a, issue_g))
+        ])
+
+        expect { plan.update_scoped(scoped) }.to raise_error DuplicatedIssue
       end
-    end
 
-    describe 'Specify release' do
       it do
-        plan = described_class.create(product_id)
-        plan.append_issue(issue_a)
-        plan.append_issue(issue_b)
-        plan.append_issue(issue_c)
+        not_scoped = IssueList.new([issue_a, issue_b, issue_c, issue_d, issue_e, issue_f, issue_g])
+        plan.update_not_scoped(not_scoped)
 
-        plan.specify_release('MVP', issue_b)
-        expect(plan.scoped).to eq [Release.new('MVP', [issue_a, issue_b])]
-        expect(plan.unscoped).to eq [issue_c]
+        scoped = ReleaseList.new([
+          Release.new('R1', issue_list(issue_a, issue_b)),
+          Release.new('R2', issue_list(issue_c, issue_d, issue_e))
+        ])
+
+        expect { plan.update_scoped(scoped) }.to raise_error DuplicatedIssue
       end
     end
   end

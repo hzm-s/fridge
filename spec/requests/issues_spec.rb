@@ -32,7 +32,7 @@ RSpec.describe 'issues' do
   describe 'edit' do
     it do
       issue = add_issue(product.id, 'XYZ')
-      add_acceptance_criteria(issue, %w(AC_123))
+      append_acceptance_criteria(issue, %w(AC_123))
 
       get edit_issue_path(issue.id.to_s)
 

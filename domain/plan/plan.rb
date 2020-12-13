@@ -10,63 +10,43 @@ module Plan
 
       sig {params(product_id: Product::Id).returns(T.attached_class)}
       def create(product_id)
-        new(product_id, Order.new([]))
+        new(product_id, ReleaseList.new, IssueList.new)
       end
 
-      sig {params(product_id: Product::Id, order: Order, scopes: ScopeSet).returns(T.attached_class)}
-      def from_repository(product_id, order, scopes)
-        new(product_id, order, scopes)
+      sig {params(product_id: Product::Id, scoped: ReleaseList, not_scoped: IssueList).returns(T.attached_class)}
+      def from_repository(product_id, scoped, not_scoped)
+        new(product_id, scoped, not_scoped)
       end
     end
 
     sig {returns(Product::Id)}
     attr_reader :product_id
 
-    sig {returns(Order)}
-    attr_reader :order
+    sig {returns(ReleaseList)}
+    attr_reader :scoped
 
-    sig {returns(ScopeSet)}
-    attr_reader :scopes
+    sig {returns(IssueList)}
+    attr_reader :not_scoped
 
-    sig {params(product_id: Product::Id, order: Order, scopes: ScopeSet).void}
-    def initialize(product_id, order, scopes = ScopeSet.new)
+    sig {params(product_id: Product::Id, scoped: ReleaseList, not_scoped: IssueList).void}
+    def initialize(product_id, scoped, not_scoped)
       @product_id = product_id
-      @order = order
-      @scopes = scopes
-      @__scoped ||= T.let(nil, T.nilable(T::Array[Release]))
+      @scoped = scoped
+      @not_scoped = not_scoped
     end
 
-    sig {params(issue_id: Issue::Id).void}
-    def append_issue(issue_id)
-      @order = @order.append(issue_id)
+    sig {params(scoped: ReleaseList).void}
+    def update_scoped(scoped)
+      raise DuplicatedIssue if scoped.have_same_issue?(@not_scoped)
+
+      @scoped = scoped
     end
 
-    sig {params(issue_id: Issue::Id).void}
-    def remove_issue(issue_id)
-      old_order = @order
-      new_order = @order.remove(issue_id)
-      @scopes = @scopes.on_remove_issue(old_order, new_order)
-      @order = new_order
-    end
+    sig {params(not_scoped: IssueList).void}
+    def update_not_scoped(not_scoped)
+      raise DuplicatedIssue if @scoped.have_same_issue?(not_scoped)
 
-    sig {params(from: Issue::Id, to: Issue::Id).void}
-    def swap_issues(from, to)
-      @order = @order.swap(from, to)
-    end
-
-    sig {params(release_id: String, tail: Issue::Id).void}
-    def specify_release(release_id, tail)
-      @scopes = @scopes.add(release_id, tail, @order)
-    end
-
-    sig {returns(T::Array[Release])}
-    def scoped
-      @__scoped ||= @scopes.make_releases(@order)
-    end
-
-    sig {returns(T::Array[Issue::Id])}
-    def unscoped
-      @order.to_a - scoped.flat_map(&:issues)
+      @not_scoped = not_scoped
     end
   end
 end

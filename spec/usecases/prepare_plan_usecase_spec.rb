@@ -8,6 +8,6 @@ RSpec.describe PreparePlanUsecase do
     described_class.perform(product.id)
 
     plan = PlanRepository::AR.find_by_product_id(product.id)
-    expect(plan.order).to be_empty
+    expect(plan).to_not be_nil
   end
 end

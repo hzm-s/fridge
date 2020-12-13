@@ -16,11 +16,15 @@ export default class extends Controller {
 
   connect() {
     const url = this.data.get('url')
+    const group = this.data.get('group')
 
     Sortable.create(this.element, {
       ...uiOptions,
+      group: { name: group, pull: true, put: true },
       onEnd: function(e) {
         const payload = {
+          from: e.from.dataset.sortPblGroup,
+          to: e.to.dataset.sortPblGroup,
           issue_id: e.item.dataset.id,
           to_index: e.newIndex,
         }

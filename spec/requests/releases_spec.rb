@@ -10,17 +10,27 @@ RSpec.describe 'releases' do
   end
 
   describe 'create' do
-    it do
-      item_a = add_issue(product.id).id
-      item_b = add_issue(product.id).id
-      item_c = add_issue(product.id).id
+    context 'given valid params' do
+      it do
+        post product_releases_path(product_id: product.id.to_s), params: { form: { name: 'MVP' } }
 
-      post product_releases_path(product_id: product.id.to_s), params: { name: 'MVP', issue_id: item_b }
+        pbl = ProductBacklogQuery.call(product.id.to_s)
 
-      pbl = ProductBacklogQuery.call(product.id.to_s)
-      expect(pbl.scoped.size).to eq 1
-      expect(pbl.scoped[0].items.map(&:id)).to eq [item_a, item_b].map(&:to_s)
-      expect(pbl.unscoped.map(&:id)).to eq [item_c].map(&:to_s)
+        aggregate_failures do
+          expect(pbl.scoped.size).to eq 1
+          expect(pbl.scoped[0].name).to eq 'MVP'
+          expect(pbl.scoped[0].issues).to be_empty
+          expect(pbl.not_scoped).to be_empty
+        end
+      end
+    end
+
+    context 'given invalid params' do
+      it do
+        post product_releases_path(product_id: product.id.to_s), params: { form: { name: '' } }
+
+        expect(response.body).to include(I18n.t('errors.messages.blank'))
+      end
     end
   end
 end

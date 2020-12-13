@@ -1,7 +1,7 @@
 # typed: strict
 require 'sorbet-runtime'
 
-class SwapOrderedIssuesUsecase < UsecaseBase
+class AppendReleaseUsecase < UsecaseBase
   extend T::Sig
 
   sig {void}
@@ -9,10 +9,11 @@ class SwapOrderedIssuesUsecase < UsecaseBase
     @repository = T.let(PlanRepository::AR, Plan::PlanRepository)
   end
 
-  sig {params(product_id: Product::Id, issue_id: Issue::Id, to_index: Integer).void}
-  def perform(product_id, issue_id, to_index)
+  sig {params(product_id: Product::Id, name: String).void}
+  def perform(product_id, name)
     plan = @repository.find_by_product_id(product_id)
-    plan.swap_issues(issue_id, plan.order.at(to_index))
+    scoped = plan.scoped.append(Plan::Release.new(name))
+    plan.update_scoped(scoped)
     @repository.store(plan)
   end
 end

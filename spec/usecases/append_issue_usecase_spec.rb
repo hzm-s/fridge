@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe AddIssueUsecase do
+RSpec.describe AppendIssueUsecase do
   let!(:product) { create_product }
 
   it do
@@ -19,7 +19,7 @@ RSpec.describe AddIssueUsecase do
       expect(issue.size).to eq Issue::StoryPoint.unknown
       expect(issue.acceptance_criteria).to be_empty
 
-      expect(plan.order).to eq Plan::Order.new([issue_id])
+      expect(plan.not_scoped).to eq Plan::IssueList.new([issue_id])
     end
   end
 end

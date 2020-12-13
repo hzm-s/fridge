@@ -1,0 +1,10 @@
+<div class="pbl-list">
+  <div class="pbl-list__header">
+    <span class="pbl-list__title">
+      <%= release.name %>
+    </span>
+  </div>
+  <%= content_tag :div, data: sortable_pbl_options(current_product_id, release.name) do %>
+    <%= render partial: 'item', collection: release.issues %>
+  <% end %>
+</div>
