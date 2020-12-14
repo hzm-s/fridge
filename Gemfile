@@ -54,3 +54,4 @@ gem 'sorbet-runtime'
 gem 'validates_domain_object_of', github: 'haazime/validates_domain_object_of'
 
 gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection', '~> 0.1'
