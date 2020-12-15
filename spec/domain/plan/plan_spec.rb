@@ -24,6 +24,30 @@ module Plan
     let(:issue_f) { Issue::Id.create }
     let(:issue_g) { Issue::Id.create }
 
+    describe 'Remove issue' do
+      before do
+        plan.update_not_scoped(issue_list(issue_a, issue_b))
+        plan.update_scoped(release_list({
+          'R1' => issue_list(issue_c, issue_d),
+          'R2' => issue_list(issue_e, issue_f, issue_g),
+        }))
+      end
+
+      context 'remove not scoped issue' do
+        it do
+          plan.remove_issue(issue_a)
+
+          aggregate_failures do
+            expect(plan.not_scoped).to eq issue_list(issue_b)
+            expect(plan.scoped).to eq release_list({
+              'R1' => issue_list(issue_c, issue_d),
+              'R2' => issue_list(issue_e, issue_f, issue_g),
+            })
+          end
+        end
+      end
+    end
+
     describe 'Update not scoped' do
       it do
         not_scoped = IssueList.new([issue_a, issue_b, issue_c])
@@ -36,7 +60,7 @@ module Plan
           Release.new('R', issue_list(issue_d, issue_e))
         ])
         plan.update_scoped(scoped)
-        
+
         not_scoped = IssueList.new([issue_a, issue_b, issue_c])
         plan.update_not_scoped(not_scoped)
 
@@ -51,7 +75,7 @@ module Plan
           Release.new('R', issue_list(issue_d, issue_a, issue_e))
         ])
         plan.update_scoped(scoped)
-        
+
         not_scoped = IssueList.new([issue_a, issue_b, issue_c])
 
         expect { plan.update_not_scoped(not_scoped) }.to raise_error DuplicatedIssue
