@@ -41,6 +41,11 @@ module Plan
       to_a.empty?
     end
 
+    sig {params(issue_id: Issue::Id).returns(T::Boolean)}
+    def include?(issue_id)
+      to_a.include?(issue_id)
+    end
+
     sig {params(other: IssueList).returns(T::Boolean)}
     def have_same_issue?(other)
       (self.to_a & other.to_a).any?

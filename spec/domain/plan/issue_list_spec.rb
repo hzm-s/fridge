@@ -40,6 +40,11 @@ module Plan
       end
     end
 
+    describe 'Check to include issue' do
+      it { expect(described_class.new([issue_a, issue_b, issue_c])).to be_include(issue_b) }
+      it { expect(described_class.new([issue_a, issue_b, issue_c])).to_not be_include(issue_d) }
+    end
+
     describe 'Check to have same issue' do
       it do
         a = described_class.new([])
