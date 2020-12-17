@@ -30,5 +30,10 @@ module Plan
         expect(r).to eq described_class.new('MVP', issue_list(issue_c, issue_a, issue_b))
       end
     end
+
+    describe 'Check to include issue' do
+      it { expect(described_class.new('R', issue_list(issue_a, issue_b, issue_c))).to be_include(issue_b) }
+      it { expect(described_class.new('R', issue_list(issue_a, issue_c))).to_not be_include(issue_b) }
+    end
   end
 end
