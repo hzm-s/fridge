@@ -35,7 +35,13 @@ module Plan
 
     sig {params(name: String).returns(Release)}
     def get(name)
-      @releases.find { |r| r.name == name }.dup
+      releases.find { |r| r.name == name }.dup
+    end
+
+    sig {params(issue_id: Issue::Id).returns(T.self_type)}
+    def remove_issue(issue_id)
+      release = to_a.find { |r| r.include?(issue_id) }
+      update(release.remove_issue(issue_id))
     end
 
     sig {params(issues: IssueList).returns(T::Boolean)}
@@ -45,7 +51,7 @@ module Plan
 
     sig {returns(T::Array[Release])}
     def to_a
-      @releases
+      @releases.dup
     end
 
     sig {params(other: ReleaseList).returns(T::Boolean)}

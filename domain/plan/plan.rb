@@ -37,8 +37,11 @@ module Plan
 
     sig {params(issue_id: Issue::Id).void}
     def remove_issue(issue_id)
-      new_issue_list = @not_scoped.remove(issue_id)
-      update_not_scoped(new_issue_list)
+      if @not_scoped.include?(issue_id)
+        update_not_scoped(not_scoped.remove(issue_id))
+      else
+        update_scoped(scoped.remove_issue(issue_id))
+      end
     end
 
     sig {params(scoped: ReleaseList).void}

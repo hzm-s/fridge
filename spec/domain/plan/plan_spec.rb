@@ -46,6 +46,20 @@ module Plan
           end
         end
       end
+
+      context 'remove scoped issue' do
+        it do
+          plan.remove_issue(issue_f)
+
+          aggregate_failures do
+            expect(plan.not_scoped).to eq issue_list(issue_a, issue_b)
+            expect(plan.scoped).to eq release_list({
+              'R1' => issue_list(issue_c, issue_d),
+              'R2' => issue_list(issue_e, issue_g),
+            })
+          end
+        end
+      end
     end
 
     describe 'Update not scoped' do
