@@ -22,6 +22,9 @@ import 'controllers'
 window.$ = $
 import 'bootstrap'
 import '@fortawesome/fontawesome-free/js/all'
+import { config, dom } from '@fortawesome/fontawesome-svg-core'
+config.mutateApproach = 'sync'
+dom.watch()
 
 // css
 import '../css/application.scss'
