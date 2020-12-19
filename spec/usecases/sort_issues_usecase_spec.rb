@@ -14,7 +14,7 @@ RSpec.describe SortIssuesUsecase do
 
     aggregate_failures do
       expect(plan.scoped).to eq Plan::ReleaseList.new
-      expect(plan.not_scoped).to eq issue_list(issue_b.id, issue_c.id, issue_a.id)
+      expect(plan.pending).to eq issue_list(issue_b.id, issue_c.id, issue_a.id)
     end
   end
 end

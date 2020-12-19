@@ -18,14 +18,14 @@ class RemoveIssueFromReleaseUsecase < UsecaseBase
     new_scoped = plan.scoped.update(new_release)
     plan.update_scoped(new_scoped)
 
-    not_scoped = plan.not_scoped
-    new_not_scoped =
-      if not_scoped.empty?
-        not_scoped.append(issue_id)
+    pending = plan.pending
+    new_pending =
+      if pending.empty?
+        pending.append(issue_id)
       else
-        not_scoped.append(issue_id).swap(issue_id, not_scoped.at(0))
+        pending.append(issue_id).swap(issue_id, pending.at(0))
       end
-    plan.update_not_scoped(new_not_scoped)
+    plan.update_pending(new_pending)
 
     @repository.store(plan)
   end

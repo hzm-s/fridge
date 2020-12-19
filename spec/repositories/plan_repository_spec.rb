@@ -14,7 +14,7 @@ RSpec.describe PlanRepository::AR do
 
       plan = described_class.find_by_product_id(product.id)
 
-      plan.update_not_scoped(issue_list(issue_c.id))
+      plan.update_pending(issue_list(issue_c.id))
       scoped = release_list({
         'Ph1' => issue_list(issue_a.id),
         'Ph2' => issue_list(issue_b.id)
@@ -26,7 +26,7 @@ RSpec.describe PlanRepository::AR do
         .and change { Dao::Release.count }.by(2)
 
       rel = Dao::Plan.find_by(dao_product_id: plan.product_id.to_s)
-      expect(rel.not_scoped_issues).to eq [issue_c.id.to_s]
+      expect(rel.pending_issues).to eq [issue_c.id.to_s]
       expect(rel.releases.size).to eq 2
       expect(rel.releases[0].name).to eq 'Ph1'
       expect(rel.releases[0].issues).to eq [issue_a.id.to_s]
@@ -51,13 +51,13 @@ RSpec.describe PlanRepository::AR do
         'Ph1' => issue_list(issue_a.id),
         'Ph2' => issue_list(issue_b.id)
       })
-      not_scoped = issue_list(issue_c.id)
+      pending = issue_list(issue_c.id)
 
       stored.update_scoped(scoped)
-      stored.update_not_scoped(not_scoped)
+      stored.update_pending(pending)
 
       expect(stored.scoped).to eq scoped
-      expect(stored.not_scoped).to eq not_scoped
+      expect(stored.pending).to eq pending
     end
   end
 end

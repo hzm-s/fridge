@@ -13,8 +13,8 @@ class AppendIssueToReleaseUsecase < UsecaseBase
   def perform(product_id, issue_id, release_name, to_index)
     plan = @repository.find_by_product_id(product_id)
 
-    not_scoped = plan.not_scoped.remove(issue_id)
-    plan.update_not_scoped(not_scoped)
+    pending = plan.pending.remove(issue_id)
+    plan.update_pending(pending)
 
     release = plan.scoped.get(release_name)
     new_release =

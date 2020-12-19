@@ -9,7 +9,7 @@ RSpec.describe ChangeIssuePriorityUsecase do
 
   before do
     plan = PlanRepository::AR.find_by_product_id(product.id)
-    plan.update_not_scoped(issue_list)
+    plan.update_pending(issue_list)
     plan.update_scoped(
       release_list({ 'MVP' => issue_list(issue_a.id, issue_b.id, issue_c.id) })
     )
@@ -23,7 +23,7 @@ RSpec.describe ChangeIssuePriorityUsecase do
 
     aggregate_failures do
       expect(plan.scoped).to eq release_list({ 'MVP' => issue_list(issue_b.id, issue_c.id, issue_a.id) })
-      expect(plan.not_scoped).to eq Plan::IssueList.new
+      expect(plan.pending).to eq Plan::IssueList.new
     end
   end
 end

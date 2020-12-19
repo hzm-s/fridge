@@ -35,7 +35,7 @@ module Plan
 
     sig {params(name: String).returns(Release)}
     def get(name)
-      releases.find { |r| r.name == name }.dup
+      to_a.find { |r| r.name == name }.dup
     end
 
     sig {params(issue_id: Issue::Id).returns(T.self_type)}

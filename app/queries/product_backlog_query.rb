@@ -7,9 +7,9 @@ module ProductBacklogQuery
       plan = fetch_plan(product_id)
 
       scoped = plan.releases.map { |r| ReleaseStruct.create(r, issues) }
-      not_scoped = plan.not_scoped_issues.map { |pi| issues.find { |i| i.id == pi } }
+      pending = plan.pending_issues.map { |pi| issues.find { |i| i.id == pi } }
 
-      ProductBacklog.new(scoped: scoped, not_scoped: not_scoped)
+      ProductBacklog.new(scoped: scoped, pending: pending)
     end
 
     private
@@ -39,6 +39,6 @@ module ProductBacklogQuery
 
   class ProductBacklog < T::Struct
     prop :scoped, T::Array[ReleaseStruct]
-    prop :not_scoped, T::Array[::IssueStruct]
+    prop :pending, T::Array[::IssueStruct]
   end
 end

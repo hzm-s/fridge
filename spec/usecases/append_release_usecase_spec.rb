@@ -12,6 +12,6 @@ RSpec.describe AppendReleaseUsecase do
     expect(plan.scoped).to eq Plan::ReleaseList.new([
       Plan::Release.new('MVP', Plan::IssueList.new)
     ])
-    expect(plan.not_scoped).to eq Plan::IssueList.new
+    expect(plan.pending).to eq Plan::IssueList.new
   end
 end

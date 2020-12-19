@@ -11,7 +11,7 @@ module Plan
 
         expect(plan.product_id).to eq product_id
         expect(plan.scoped).to eq ReleaseList.new
-        expect(plan.not_scoped).to eq IssueList.new
+        expect(plan.pending).to eq IssueList.new
       end
     end
 
@@ -26,7 +26,7 @@ module Plan
 
     describe 'Remove issue' do
       before do
-        plan.update_not_scoped(issue_list(issue_a, issue_b))
+        plan.update_pending(issue_list(issue_a, issue_b))
         plan.update_scoped(release_list({
           'R1' => issue_list(issue_c, issue_d),
           'R2' => issue_list(issue_e, issue_f, issue_g),
@@ -38,7 +38,7 @@ module Plan
           plan.remove_issue(issue_a)
 
           aggregate_failures do
-            expect(plan.not_scoped).to eq issue_list(issue_b)
+            expect(plan.pending).to eq issue_list(issue_b)
             expect(plan.scoped).to eq release_list({
               'R1' => issue_list(issue_c, issue_d),
               'R2' => issue_list(issue_e, issue_f, issue_g),
@@ -52,7 +52,7 @@ module Plan
           plan.remove_issue(issue_f)
 
           aggregate_failures do
-            expect(plan.not_scoped).to eq issue_list(issue_a, issue_b)
+            expect(plan.pending).to eq issue_list(issue_a, issue_b)
             expect(plan.scoped).to eq release_list({
               'R1' => issue_list(issue_c, issue_d),
               'R2' => issue_list(issue_e, issue_g),
@@ -64,9 +64,9 @@ module Plan
 
     describe 'Update not scoped' do
       it do
-        not_scoped = IssueList.new([issue_a, issue_b, issue_c])
-        plan.update_not_scoped(not_scoped)
-        expect(plan.not_scoped).to eq not_scoped
+        pending = IssueList.new([issue_a, issue_b, issue_c])
+        plan.update_pending(pending)
+        expect(plan.pending).to eq pending
       end
 
       it do
@@ -75,12 +75,12 @@ module Plan
         ])
         plan.update_scoped(scoped)
 
-        not_scoped = IssueList.new([issue_a, issue_b, issue_c])
-        plan.update_not_scoped(not_scoped)
+        pending = IssueList.new([issue_a, issue_b, issue_c])
+        plan.update_pending(pending)
 
         aggregate_failures do
           expect(plan.scoped).to eq scoped
-          expect(plan.not_scoped).to eq not_scoped
+          expect(plan.pending).to eq pending
         end
       end
 
@@ -90,9 +90,9 @@ module Plan
         ])
         plan.update_scoped(scoped)
 
-        not_scoped = IssueList.new([issue_a, issue_b, issue_c])
+        pending = IssueList.new([issue_a, issue_b, issue_c])
 
-        expect { plan.update_not_scoped(not_scoped) }.to raise_error DuplicatedIssue
+        expect { plan.update_pending(pending) }.to raise_error DuplicatedIssue
       end
     end
 
@@ -107,8 +107,8 @@ module Plan
       end
 
       it do
-        not_scoped = IssueList.new([issue_a, issue_b, issue_c])
-        plan.update_not_scoped(not_scoped)
+        pending = IssueList.new([issue_a, issue_b, issue_c])
+        plan.update_pending(pending)
 
         scoped = ReleaseList.new([
           Release.new('R', issue_list(issue_d, issue_e))
@@ -117,13 +117,13 @@ module Plan
 
         aggregate_failures do
           expect(plan.scoped).to eq scoped
-          expect(plan.not_scoped).to eq not_scoped
+          expect(plan.pending).to eq pending
         end
       end
 
       it do
-        not_scoped = IssueList.new([issue_a, issue_b])
-        plan.update_not_scoped(not_scoped)
+        pending = IssueList.new([issue_a, issue_b])
+        plan.update_pending(pending)
 
         scoped = ReleaseList.new([
           Release.new('R1', issue_list(issue_c, issue_d, issue_e)),
@@ -134,8 +134,8 @@ module Plan
       end
 
       it do
-        not_scoped = IssueList.new([issue_a, issue_b, issue_c, issue_d, issue_e, issue_f, issue_g])
-        plan.update_not_scoped(not_scoped)
+        pending = IssueList.new([issue_a, issue_b, issue_c, issue_d, issue_e, issue_f, issue_g])
+        plan.update_pending(pending)
 
         scoped = ReleaseList.new([
           Release.new('R1', issue_list(issue_a, issue_b)),

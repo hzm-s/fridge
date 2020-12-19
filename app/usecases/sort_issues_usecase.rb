@@ -13,8 +13,8 @@ class SortIssuesUsecase < UsecaseBase
   def perform(product_id, issue_id, to_index)
     plan = @repository.find_by_product_id(product_id)
 
-    issues = plan.not_scoped
-    plan.update_not_scoped(issues.swap(issue_id, issues.at(to_index)))
+    issues = plan.pending
+    plan.update_pending(issues.swap(issue_id, issues.at(to_index)))
 
     @repository.store(plan)
   end

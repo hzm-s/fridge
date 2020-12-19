@@ -13,7 +13,7 @@ RSpec.describe RemoveIssueFromPlanUsecase do
 
       aggregate_failures do
         expect(plan.scoped).to eq release_list({})
-        expect(plan.not_scoped).to eq issue_list
+        expect(plan.pending).to eq issue_list
       end
     end
   end
@@ -21,7 +21,7 @@ RSpec.describe RemoveIssueFromPlanUsecase do
   context 'given scoped issue' do
     it do
       plan = PlanRepository::AR.find_by_product_id(product.id)
-      plan.update_not_scoped(issue_list)
+      plan.update_pending(issue_list)
       plan.update_scoped(release_list({ 'R' => issue_list(issue.id) }))
       PlanRepository::AR.store(plan)
 
@@ -31,7 +31,7 @@ RSpec.describe RemoveIssueFromPlanUsecase do
 
       aggregate_failures do
         expect(plan.scoped).to eq release_list({ 'R' => issue_list })
-        expect(plan.not_scoped).to eq issue_list
+        expect(plan.pending).to eq issue_list
       end
     end
   end

@@ -9,7 +9,7 @@ RSpec.describe RemoveIssueFromReleaseUsecase do
 
   before do
     plan = PlanRepository::AR.find_by_product_id(product.id)
-    plan.update_not_scoped(issue_list)
+    plan.update_pending(issue_list)
     plan.update_scoped(
       release_list({
         'R1' => issue_list(issue_a.id, issue_b.id),
@@ -24,7 +24,7 @@ RSpec.describe RemoveIssueFromReleaseUsecase do
 
     plan = PlanRepository::AR.find_by_product_id(product.id)
     aggregate_failures do
-      expect(plan.not_scoped).to eq issue_list(issue_b.id)
+      expect(plan.pending).to eq issue_list(issue_b.id)
       expect(plan.scoped).to eq release_list({
         'R1' => issue_list(issue_a.id),
         'R2' => issue_list(issue_c.id),
@@ -35,7 +35,7 @@ RSpec.describe RemoveIssueFromReleaseUsecase do
 
     plan = PlanRepository::AR.find_by_product_id(product.id)
     aggregate_failures do
-      expect(plan.not_scoped).to eq issue_list(issue_c.id, issue_b.id)
+      expect(plan.pending).to eq issue_list(issue_c.id, issue_b.id)
       expect(plan.scoped).to eq release_list({
         'R1' => issue_list(issue_a.id),
         'R2' => issue_list,

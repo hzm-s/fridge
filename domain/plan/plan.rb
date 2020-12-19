@@ -13,9 +13,9 @@ module Plan
         new(product_id, ReleaseList.new, IssueList.new)
       end
 
-      sig {params(product_id: Product::Id, scoped: ReleaseList, not_scoped: IssueList).returns(T.attached_class)}
-      def from_repository(product_id, scoped, not_scoped)
-        new(product_id, scoped, not_scoped)
+      sig {params(product_id: Product::Id, scoped: ReleaseList, pending: IssueList).returns(T.attached_class)}
+      def from_repository(product_id, scoped, pending)
+        new(product_id, scoped, pending)
       end
     end
 
@@ -26,19 +26,19 @@ module Plan
     attr_reader :scoped
 
     sig {returns(IssueList)}
-    attr_reader :not_scoped
+    attr_reader :pending
 
-    sig {params(product_id: Product::Id, scoped: ReleaseList, not_scoped: IssueList).void}
-    def initialize(product_id, scoped, not_scoped)
+    sig {params(product_id: Product::Id, scoped: ReleaseList, pending: IssueList).void}
+    def initialize(product_id, scoped, pending)
       @product_id = product_id
       @scoped = scoped
-      @not_scoped = not_scoped
+      @pending = pending
     end
 
     sig {params(issue_id: Issue::Id).void}
     def remove_issue(issue_id)
-      if @not_scoped.include?(issue_id)
-        update_not_scoped(not_scoped.remove(issue_id))
+      if @pending.include?(issue_id)
+        update_pending(pending.remove(issue_id))
       else
         update_scoped(scoped.remove_issue(issue_id))
       end
@@ -46,16 +46,16 @@ module Plan
 
     sig {params(scoped: ReleaseList).void}
     def update_scoped(scoped)
-      raise DuplicatedIssue if scoped.have_same_issue?(@not_scoped)
+      raise DuplicatedIssue if scoped.have_same_issue?(@pending)
 
       @scoped = scoped
     end
 
-    sig {params(not_scoped: IssueList).void}
-    def update_not_scoped(not_scoped)
-      raise DuplicatedIssue if @scoped.have_same_issue?(not_scoped)
+    sig {params(pending: IssueList).void}
+    def update_pending(pending)
+      raise DuplicatedIssue if @scoped.have_same_issue?(pending)
 
-      @not_scoped = not_scoped
+      @pending = pending
     end
   end
 end

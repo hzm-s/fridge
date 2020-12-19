@@ -19,7 +19,7 @@ RSpec.describe AppendIssueUsecase do
       expect(issue.size).to eq Issue::StoryPoint.unknown
       expect(issue.acceptance_criteria).to be_empty
 
-      expect(plan.not_scoped).to eq Plan::IssueList.new([issue_id])
+      expect(plan.pending).to eq Plan::IssueList.new([issue_id])
     end
   end
 end

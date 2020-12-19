@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 2020_11_04_091810) do
 
   create_table "dao_plans", force: :cascade do |t|
     t.uuid "dao_product_id"
-    t.uuid "not_scoped_issues", array: true
+    t.uuid "pending_issues", array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["dao_product_id"], name: "index_dao_plans_on_dao_product_id", unique: true

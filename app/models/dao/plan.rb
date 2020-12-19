@@ -5,13 +5,13 @@ class Dao::Plan < ApplicationRecord
     Plan::Plan.from_repository(
       read_product_id,
       read_scoped,
-      read_not_scoped,
+      read_pending,
     )
   end
 
   def write(plan)
     self.attributes = {
-      not_scoped_issues: plan.not_scoped.to_a.map(&:to_s)
+      pending_issues: plan.pending.to_a.map(&:to_s)
     }
 
     self.releases.clear
@@ -32,8 +32,8 @@ class Dao::Plan < ApplicationRecord
       .then { |list| Plan::ReleaseList.new(list) }
   end
 
-  def read_not_scoped
-    build_issue_list(not_scoped_issues)
+  def read_pending
+    build_issue_list(pending_issues)
   end
 
   def build_issue_list(raw_issue_ids)
