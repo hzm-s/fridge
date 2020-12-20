@@ -53,4 +53,21 @@ RSpec.describe AppendIssueToReleaseUsecase do
       end
     end
   end
+
+  context 'append to tail' do
+    it do
+      described_class.perform(product.id, issue_c.id, 'R1', 1)
+
+      plan = PlanRepository::AR.find_by_product_id(product.id)
+
+      aggregate_failures do
+        expect(plan.scoped).to eq release_list({
+          'R1' => issue_list(issue_d.id, issue_c.id),
+          'R2' => issue_list(issue_a.id, issue_b.id),
+          'R3' => issue_list,
+        })
+        expect(plan.pending).to eq issue_list(issue_e.id)
+      end
+    end
+  end
 end
