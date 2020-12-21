@@ -12,7 +12,7 @@ RSpec.describe AppendIssueToReleaseUsecase do
   before do
     plan = PlanRepository::AR.find_by_product_id(product.id)
     plan.update_pending(issue_list(issue_c.id, issue_e.id))
-    plan.update_scoped(release_list({
+    plan.update_scheduled(release_list({
       'R1' => issue_list(issue_d.id),
       'R2' => issue_list(issue_a.id, issue_b.id),
       'R3' => issue_list,
@@ -27,7 +27,7 @@ RSpec.describe AppendIssueToReleaseUsecase do
       plan = PlanRepository::AR.find_by_product_id(product.id)
 
       aggregate_failures do
-        expect(plan.scoped).to eq release_list({
+        expect(plan.scheduled).to eq release_list({
           'R1' => issue_list(issue_d.id),
           'R2' => issue_list(issue_a.id, issue_c.id, issue_b.id),
           'R3' => issue_list,
@@ -44,7 +44,7 @@ RSpec.describe AppendIssueToReleaseUsecase do
       plan = PlanRepository::AR.find_by_product_id(product.id)
 
       aggregate_failures do
-        expect(plan.scoped).to eq release_list({
+        expect(plan.scheduled).to eq release_list({
           'R1' => issue_list(issue_d.id),
           'R2' => issue_list(issue_a.id, issue_b.id),
           'R3' => issue_list(issue_c.id),
@@ -61,7 +61,7 @@ RSpec.describe AppendIssueToReleaseUsecase do
       plan = PlanRepository::AR.find_by_product_id(product.id)
 
       aggregate_failures do
-        expect(plan.scoped).to eq release_list({
+        expect(plan.scheduled).to eq release_list({
           'R1' => issue_list(issue_d.id, issue_c.id),
           'R2' => issue_list(issue_a.id, issue_b.id),
           'R3' => issue_list,

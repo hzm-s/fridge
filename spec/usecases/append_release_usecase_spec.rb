@@ -9,7 +9,7 @@ RSpec.describe AppendReleaseUsecase do
 
     plan = PlanRepository::AR.find_by_product_id(product.id)
 
-    expect(plan.scoped).to eq Plan::ReleaseList.new([
+    expect(plan.scheduled).to eq Plan::ReleaseList.new([
       Plan::Release.new('MVP', Plan::IssueList.new)
     ])
     expect(plan.pending).to eq Plan::IssueList.new

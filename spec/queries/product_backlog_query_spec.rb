@@ -18,21 +18,21 @@ describe ProductBacklogQuery do
     pending = issue_list(issue_f, issue_g)
     plan.update_pending(pending)
 
-    scoped = release_list({
+    scheduled = release_list({
       'R1' => issue_list(issue_a, issue_b),
       'R2' => issue_list(issue_c, issue_d, issue_e)
     })
-    plan.update_scoped(scoped)
+    plan.update_scheduled(scheduled)
 
     PlanRepository::AR.store(plan)
 
     pbl = described_class.call(product.id.to_s)
 
     aggregate_failures do
-      expect(pbl.scoped[0].name).to eq 'R1'
-      expect(pbl.scoped[0].issues.map(&:id)).to eq [issue_a, issue_b].map(&:to_s)
-      expect(pbl.scoped[1].name).to eq 'R2'
-      expect(pbl.scoped[1].issues.map(&:id)).to eq [issue_c, issue_d, issue_e].map(&:to_s)
+      expect(pbl.scheduled[0].name).to eq 'R1'
+      expect(pbl.scheduled[0].issues.map(&:id)).to eq [issue_a, issue_b].map(&:to_s)
+      expect(pbl.scheduled[1].name).to eq 'R2'
+      expect(pbl.scheduled[1].issues.map(&:id)).to eq [issue_c, issue_d, issue_e].map(&:to_s)
       expect(pbl.pending.map(&:id)).to eq [issue_f, issue_g].map(&:to_s)
     end
   end

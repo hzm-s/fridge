@@ -13,9 +13,9 @@ module Plan
         new(product_id, ReleaseList.new, IssueList.new)
       end
 
-      sig {params(product_id: Product::Id, scoped: ReleaseList, pending: IssueList).returns(T.attached_class)}
-      def from_repository(product_id, scoped, pending)
-        new(product_id, scoped, pending)
+      sig {params(product_id: Product::Id, scheduled: ReleaseList, pending: IssueList).returns(T.attached_class)}
+      def from_repository(product_id, scheduled, pending)
+        new(product_id, scheduled, pending)
       end
     end
 
@@ -23,15 +23,15 @@ module Plan
     attr_reader :product_id
 
     sig {returns(ReleaseList)}
-    attr_reader :scoped
+    attr_reader :scheduled
 
     sig {returns(IssueList)}
     attr_reader :pending
 
-    sig {params(product_id: Product::Id, scoped: ReleaseList, pending: IssueList).void}
-    def initialize(product_id, scoped, pending)
+    sig {params(product_id: Product::Id, scheduled: ReleaseList, pending: IssueList).void}
+    def initialize(product_id, scheduled, pending)
       @product_id = product_id
-      @scoped = scoped
+      @scheduled = scheduled
       @pending = pending
     end
 
@@ -40,20 +40,20 @@ module Plan
       if @pending.include?(issue_id)
         update_pending(pending.remove(issue_id))
       else
-        update_scoped(scoped.remove_issue(issue_id))
+        update_scheduled(scheduled.remove_issue(issue_id))
       end
     end
 
-    sig {params(scoped: ReleaseList).void}
-    def update_scoped(scoped)
-      raise DuplicatedIssue if scoped.have_same_issue?(@pending)
+    sig {params(scheduled: ReleaseList).void}
+    def update_scheduled(scheduled)
+      raise DuplicatedIssue if scheduled.have_same_issue?(@pending)
 
-      @scoped = scoped
+      @scheduled = scheduled
     end
 
     sig {params(pending: IssueList).void}
     def update_pending(pending)
-      raise DuplicatedIssue if @scoped.have_same_issue?(pending)
+      raise DuplicatedIssue if @scheduled.have_same_issue?(pending)
 
       @pending = pending
     end

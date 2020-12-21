@@ -4,7 +4,7 @@ class Dao::Plan < ApplicationRecord
   def read
     Plan::Plan.from_repository(
       read_product_id,
-      read_scoped,
+      read_scheduled,
       read_pending,
     )
   end
@@ -15,7 +15,7 @@ class Dao::Plan < ApplicationRecord
     }
 
     self.releases.clear
-    plan.scoped.to_a.each do |r|
+    plan.scheduled.to_a.each do |r|
       self.releases.build(name: r.name.to_s, issues: r.issues.to_a.map(&:to_s))
     end
   end
@@ -26,7 +26,7 @@ class Dao::Plan < ApplicationRecord
     Product::Id.from_string(dao_product_id)
   end
 
-  def read_scoped
+  def read_scheduled
     releases
       .map { |r| Plan::Release.new(r.name, build_issue_list(r.issues)) }
       .then { |list| Plan::ReleaseList.new(list) }

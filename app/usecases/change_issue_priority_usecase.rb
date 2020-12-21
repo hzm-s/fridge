@@ -13,11 +13,11 @@ class ChangeIssuePriorityUsecase < UsecaseBase
   def perform(product_id, release_name, issue_id, to_index)
     plan = @repository.find_by_product_id(product_id)
 
-    release = plan.scoped.get(release_name)
+    release = plan.scheduled.get(release_name)
     new_release = release.change_issue_priority(issue_id, release.issue_at(to_index))
 
-    new_releases = plan.scoped.update(new_release)
-    plan.update_scoped(new_releases)
+    new_releases = plan.scheduled.update(new_release)
+    plan.update_scheduled(new_releases)
 
     @repository.store(plan)
   end

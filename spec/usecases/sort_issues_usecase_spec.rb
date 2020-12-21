@@ -13,7 +13,7 @@ RSpec.describe SortIssuesUsecase do
     plan = PlanRepository::AR.find_by_product_id(product.id)
 
     aggregate_failures do
-      expect(plan.scoped).to eq Plan::ReleaseList.new
+      expect(plan.scheduled).to eq Plan::ReleaseList.new
       expect(plan.pending).to eq issue_list(issue_b.id, issue_c.id, issue_a.id)
     end
   end

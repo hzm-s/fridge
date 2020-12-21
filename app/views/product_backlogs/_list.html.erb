@@ -1,4 +1,4 @@
-<% pbl.scoped.each do |release| %>
+<% pbl.scheduled.each do |release| %>
   <%= render partial: 'release', locals: { release: release } %>
 <% end %>
 <div class="pbl-list">

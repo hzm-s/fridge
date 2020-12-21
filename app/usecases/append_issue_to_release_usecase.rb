@@ -16,16 +16,16 @@ class AppendIssueToReleaseUsecase < UsecaseBase
     pending = plan.pending.remove(issue_id)
     plan.update_pending(pending)
 
-    release = plan.scoped.get(release_name)
+    release = plan.scheduled.get(release_name)
     new_release =
       if release.issues.empty? || release.issues.to_a.size <= to_index
         release.append_issue(issue_id)
       else
         release.append_issue(issue_id).change_issue_priority(issue_id, release.issue_at(to_index))
       end
-    new_releases = plan.scoped.update(new_release)
+    new_releases = plan.scheduled.update(new_release)
 
-    plan.update_scoped(new_releases)
+    plan.update_scheduled(new_releases)
 
     @repository.store(plan)
   end

@@ -17,9 +17,9 @@ RSpec.describe 'releases' do
         pbl = ProductBacklogQuery.call(product.id.to_s)
 
         aggregate_failures do
-          expect(pbl.scoped.size).to eq 1
-          expect(pbl.scoped[0].name).to eq 'MVP'
-          expect(pbl.scoped[0].issues).to be_empty
+          expect(pbl.scheduled.size).to eq 1
+          expect(pbl.scheduled[0].name).to eq 'MVP'
+          expect(pbl.scheduled[0].issues).to be_empty
           expect(pbl.pending).to be_empty
         end
       end

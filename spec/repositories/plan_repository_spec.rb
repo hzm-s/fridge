@@ -15,11 +15,11 @@ RSpec.describe PlanRepository::AR do
       plan = described_class.find_by_product_id(product.id)
 
       plan.update_pending(issue_list(issue_c.id))
-      scoped = release_list({
+      scheduled = release_list({
         'Ph1' => issue_list(issue_a.id),
         'Ph2' => issue_list(issue_b.id)
       })
-      plan.update_scoped(scoped)
+      plan.update_scheduled(scheduled)
 
       expect { described_class.store(plan) }
         .to change { Dao::Plan.count }.by(0)
@@ -47,16 +47,16 @@ RSpec.describe PlanRepository::AR do
 
       described_class.store(plan)
       stored = described_class.find_by_product_id(product.id)
-      scoped = release_list({
+      scheduled = release_list({
         'Ph1' => issue_list(issue_a.id),
         'Ph2' => issue_list(issue_b.id)
       })
       pending = issue_list(issue_c.id)
 
-      stored.update_scoped(scoped)
+      stored.update_scheduled(scheduled)
       stored.update_pending(pending)
 
-      expect(stored.scoped).to eq scoped
+      expect(stored.scheduled).to eq scheduled
       expect(stored.pending).to eq pending
     end
   end
