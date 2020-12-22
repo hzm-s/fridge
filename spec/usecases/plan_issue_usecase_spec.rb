@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe AppendIssueToPlanUsecase do
+RSpec.describe PlanIssueUsecase do
   let(:product) { create_product }
   let(:issue) { Issue::Issue.create(product.id, Issue::Types::Feature, issue_description('DESC')) }
 
