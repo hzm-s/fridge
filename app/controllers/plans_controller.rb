@@ -13,7 +13,7 @@ class PlansController < ApplicationController
     when [true, false]
       RemoveIssueFromReleaseUsecase.perform(product_id, issue_id, from)
     when [false, true]
-      AppendIssueToReleaseUsecase.perform(product_id, issue_id, to, to_index)
+      ScheduleIssueUsecase.perform(product_id, issue_id, to, to_index)
     when [true, true]
       if from == to
         ChangeIssuePriorityUsecase.perform(product_id, from, issue_id, to_index)

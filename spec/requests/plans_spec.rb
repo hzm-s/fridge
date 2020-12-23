@@ -10,7 +10,7 @@ RSpec.describe 'plans' do
   end
 
   describe '#update' do
-    context 'when sort not scoped issues' do
+    context 'when sort pending issues' do
       it do
         expect(SortIssuesUsecase)
           .to receive(:perform).with(product.id, Issue::Id.from_string('i123'), 1)
@@ -20,9 +20,9 @@ RSpec.describe 'plans' do
       end
     end
 
-    context 'when append issue to release' do
+    context 'when schedule issue' do
       it do
-        expect(AppendIssueToReleaseUsecase)
+        expect(ScheduleIssueUsecase)
           .to receive(:perform).with(product.id, Issue::Id.from_string('i123'), 'MVP', 1)
 
         patch product_plan_path(product_id: product.id.to_s, format: :json),
