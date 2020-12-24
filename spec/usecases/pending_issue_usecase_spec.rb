@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe RemoveIssueFromReleaseUsecase do
+RSpec.describe PendingIssueUsecase do
   let(:product) { create_product }
   let!(:issue_a) { add_issue(product.id) }
   let!(:issue_b) { add_issue(product.id) }

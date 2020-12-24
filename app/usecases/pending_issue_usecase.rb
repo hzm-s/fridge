@@ -1,7 +1,7 @@
 # typed: strict
 require 'sorbet-runtime'
 
-class RemoveIssueFromReleaseUsecase < UsecaseBase
+class PendingIssueUsecase < UsecaseBase
   extend T::Sig
 
   sig {void}
