@@ -35,12 +35,14 @@ module Plan
 
     sig {params(name: String).returns(Release)}
     def get(name)
-      to_a.find { |r| r.name == name }.dup
+      T.must(to_a.find { |r| r.name == name }).dup
     end
 
     sig {params(issue_id: Issue::Id).returns(T.self_type)}
     def remove_issue(issue_id)
       release = to_a.find { |r| r.include?(issue_id) }
+      return self unless release
+
       update(release.remove_issue(issue_id))
     end
 
