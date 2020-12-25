@@ -61,6 +61,7 @@ module Plan
 
     private
 
+    sig {params(releases: T::Array[Release], issues: IssueList).returns(T::Boolean)}
     def have_same_issue_in_releases?(releases, issues)
       releases.any? { |r| r.have_same_issue?(issues) }
     end
