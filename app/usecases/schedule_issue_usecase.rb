@@ -21,7 +21,10 @@ class ScheduleIssueUsecase < UsecaseBase
       if release.issues.empty? || release.issues.to_a.size <= to_index
         release.append_issue(issue_id)
       else
-        release.append_issue(issue_id).change_issue_priority(issue_id, release.issue_at(to_index))
+        target_issue = release.issue_at(to_index)
+        return unless target_issue
+
+        release.append_issue(issue_id).change_issue_priority(issue_id, target_issue)
       end
     new_releases = plan.scheduled.update(new_release)
 

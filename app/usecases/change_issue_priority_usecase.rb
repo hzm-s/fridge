@@ -14,7 +14,10 @@ class ChangeIssuePriorityUsecase < UsecaseBase
     plan = @repository.find_by_product_id(product_id)
 
     release = plan.scheduled.get(release_name)
-    new_release = release.change_issue_priority(issue_id, release.issue_at(to_index))
+    target_issue = release.issue_at(to_index)
+    return unless target_issue
+
+    new_release = release.change_issue_priority(issue_id, target_issue)
 
     new_releases = plan.scheduled.update(new_release)
     plan.update_scheduled(new_releases)

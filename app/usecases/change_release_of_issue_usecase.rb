@@ -21,7 +21,10 @@ class ChangeReleaseOfIssueUsecase < UsecaseBase
       if dst.issues.empty? || dst.issue_at(to_index).nil?
         dst.append_issue(issue_id)
       else
-        dst.append_issue(issue_id).change_issue_priority(issue_id, dst.issue_at(to_index))
+        target_issue = dst.issue_at(to_index)
+        return unless target_issue
+
+        dst.append_issue(issue_id).change_issue_priority(issue_id, target_issue)
       end
     new_scheduled = tmp_scheduled.update(new_dst)
 

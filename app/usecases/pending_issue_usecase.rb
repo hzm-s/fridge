@@ -23,7 +23,10 @@ class PendingIssueUsecase < UsecaseBase
       if pending.empty?
         pending.append(issue_id)
       else
-        pending.append(issue_id).swap(issue_id, pending.at(0))
+        target_issue = pending.at(0)
+        return unless target_issue
+
+        pending.append(issue_id).swap(issue_id, target_issue)
       end
     plan.update_pending(new_pending)
 
