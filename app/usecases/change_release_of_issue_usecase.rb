@@ -13,16 +13,14 @@ class ChangeReleaseOfIssueUsecase < UsecaseBase
   def perform(product_id, issue_id, from_name, to_name, to_index)
     plan = @repository.find_by_product_id(product_id)
 
-    resolver = PlannedIssueResolver.new(plan)
-    target_issue_id = resolver.resolve_scheduled(to_name, to_index)
-
     new_scheduled = plan.scheduled.reschedule_issue(issue_id, from_name, to_name)
+
+    target_issue_id = PlannedIssueResolver.resolve_scheduled(plan, to_name, to_index)
     if target_issue_id
       new_scheduled = new_scheduled.change_issue_priority(to_name, issue_id, target_issue_id)
     end
 
     plan.update_scheduled(new_scheduled)
-
     @repository.store(plan)
   end
 end
