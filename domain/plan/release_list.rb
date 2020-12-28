@@ -24,6 +24,12 @@ module Plan
       self.class.new(@releases.select { |r| r.name != name })
     end
 
+    sig {params(name: String, from: Issue::Id, to: Issue::Id).returns(T.self_type)}
+    def change_issue_priority(name, from, to)
+      swapped = get(name).change_issue_priority(from, to)
+      update(swapped)
+    end
+
     sig {params(release: Release).returns(T.self_type)}
     def update(release)
       index = @releases.find_index { |r| r.name == release.name }

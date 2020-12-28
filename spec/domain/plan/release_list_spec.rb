@@ -57,6 +57,20 @@ module Plan
       end
     end
 
+    describe 'Change issue priority' do
+      it do
+        list = described_class.new([
+          Release.new('R1', issue_list(issue_a, issue_b, issue_c)),
+          Release.new('R2', issue_list(issue_d, issue_e, issue_f)),
+        ])
+        swapped = list.change_issue_priority('R1', issue_b, issue_a)
+        expect(swapped).to eq described_class.new([
+          Release.new('R1', issue_list(issue_b, issue_a, issue_c)),
+          Release.new('R2', issue_list(issue_d, issue_e, issue_f)),
+        ])
+      end
+    end
+
     describe 'Update' do
       it do
         list = described_class.new([
