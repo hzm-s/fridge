@@ -6,8 +6,8 @@ class PlannedIssueResolver < UsecaseBase
 
   sig {params(plan: Plan::Plan).void}
   def initialize(plan)
-    @pending = plan.pending
-    @scheduled = plan.scheduled
+    @pending = T.let(plan.pending, Plan::IssueList)
+    @scheduled = T.let(plan.scheduled, Plan::ReleaseList)
   end
 
   sig {params(index: Integer).returns(T.nilable(Issue::Id))}
