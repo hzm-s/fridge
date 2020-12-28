@@ -71,6 +71,20 @@ module Plan
       end
     end
 
+    describe 'Reschedule issue' do
+      it do
+        list = described_class.new([
+          Release.new('R1', issue_list(issue_a, issue_b, issue_c)),
+          Release.new('R2', issue_list(issue_d, issue_e, issue_f)),
+        ])
+        rescheduled = list.reschedule_issue(issue_a, 'R1', 'R2')
+        expect(rescheduled).to eq described_class.new([
+          Release.new('R1', issue_list(issue_b, issue_c)),
+          Release.new('R2', issue_list(issue_d, issue_e, issue_f, issue_a)),
+        ])
+      end
+    end
+
     describe 'Update' do
       it do
         list = described_class.new([

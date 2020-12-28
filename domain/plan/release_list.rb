@@ -30,6 +30,14 @@ module Plan
       update(swapped)
     end
 
+    sig {params(issue: Issue::Id, from: String, to: String).returns(T.self_type)}
+    def reschedule_issue(issue, from, to)
+      new_from = get(from).remove_issue(issue)
+      new_to = get(to).append_issue(issue)
+
+      update(new_from).update(new_to)
+    end
+
     sig {params(release: Release).returns(T.self_type)}
     def update(release)
       index = @releases.find_index { |r| r.name == release.name }
