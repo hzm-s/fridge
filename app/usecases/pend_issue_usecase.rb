@@ -13,23 +13,10 @@ class PendIssueUsecase < UsecaseBase
   def perform(product_id, issue_id, release_name)
     plan = @repository.find_by_product_id(product_id)
 
-    release = plan.scheduled.get(release_name)
-    new_release = release.remove_issue(issue_id)
-    new_scheduled = plan.scheduled.update(new_release)
-    plan.update_scheduled(new_scheduled)
+    plan.remove_issue(issue_id)
+    new_pending = plan.pending.add_to_first(issue_id)
 
-    pending = plan.pending
-    new_pending =
-      if pending.empty?
-        pending.append(issue_id)
-      else
-        target_issue = pending.at(0)
-        return unless target_issue
-
-        pending.append(issue_id).swap(issue_id, target_issue)
-      end
     plan.update_pending(new_pending)
-
     @repository.store(plan)
   end
 end

@@ -16,6 +16,11 @@ module Plan
     end
 
     sig {params(item: Issue::Id).returns(T.self_type)}
+    def add_to_first(item)
+      self.class.new([item] + @items)
+    end
+
+    sig {params(item: Issue::Id).returns(T.self_type)}
     def remove(item)
       self.class.new(@items.reject { |i| i == item })
     end
