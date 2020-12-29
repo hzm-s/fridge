@@ -13,11 +13,12 @@ class SortIssuesUsecase < UsecaseBase
   def perform(product_id, issue_id, to_index)
     plan = @repository.find_by_product_id(product_id)
 
-    issues = plan.pending
-    target_issue = issues.at(to_index)
-    return unless target_issue
+    target_issue_id = PlannedIssueResolver.resolve_pending(plan, to_index)
+    return unless target_issue_id
 
-    plan.update_pending(issues.swap(issue_id, target_issue))
+    new_pending = plan.pending.swap(issue_id, target_issue_id)
+
+    plan.update_pending(new_pending)
     @repository.store(plan)
   end
 end
