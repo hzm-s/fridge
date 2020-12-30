@@ -24,10 +24,24 @@ module Plan
       self.class.new(@releases.select { |r| r.name != name })
     end
 
+    sig {params(name: String, issue: Issue::Id).returns(T.self_type)}
+    def append_issue(name, issue)
+      new_release = get(name).append_issue(issue)
+      update(new_release)
+    end
+
+    sig {params(issue_id: Issue::Id).returns(T.self_type)}
+    def remove_issue(issue_id)
+      release = to_a.find { |r| r.include?(issue_id) }
+      return self unless release
+
+      update(release.remove_issue(issue_id))
+    end
+
     sig {params(name: String, from: Issue::Id, to: Issue::Id).returns(T.self_type)}
     def change_issue_priority(name, from, to)
-      swapped = get(name).change_issue_priority(from, to)
-      update(swapped)
+      new_release = get(name).change_issue_priority(from, to)
+      update(new_release)
     end
 
     sig {params(issue: Issue::Id, from: String, to: String).returns(T.self_type)}
@@ -50,14 +64,6 @@ module Plan
     sig {params(name: String).returns(Release)}
     def get(name)
       T.must(to_a.find { |r| r.name == name }).dup
-    end
-
-    sig {params(issue_id: Issue::Id).returns(T.self_type)}
-    def remove_issue(issue_id)
-      release = to_a.find { |r| r.include?(issue_id) }
-      return self unless release
-
-      update(release.remove_issue(issue_id))
     end
 
     sig {params(issues: IssueList).returns(T::Boolean)}
