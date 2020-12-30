@@ -13,12 +13,16 @@ module ::Anonymous_Delegator_2; end
 module ::Anonymous_Delegator_36; end
 module ::Anonymous_Delegator_4; end
 module ::Anonymous_Delegator_7; end
+module ActionController::RespondWith; end
+module ActionController::RespondWith::ClassMethods; end
 module ActiveStorage::Blob::Analyzable; end
 module ActiveStorage::Blob::Identifiable; end
 module ActiveStorage::Variant; end
 module Anonymous_Module_20::Anonymous_Module_21; end
 module Anonymous_Module_20::Anonymous_Module_22; end
 module Dao::ProductBacklogItem; end
+module Rails::Generators::Migration; end
+module Rails::Generators::NamedBase; end
 module T::InterfaceWrapper::Helpers; end
 module T::Private::Abstract::Hooks; end
 module T::Private::Methods::MethodHooks; end

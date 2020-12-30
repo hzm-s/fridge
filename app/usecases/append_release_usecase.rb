@@ -12,8 +12,10 @@ class AppendReleaseUsecase < UsecaseBase
   sig {params(product_id: Product::Id, name: String).void}
   def perform(product_id, name)
     plan = @repository.find_by_product_id(product_id)
-    scheduled = plan.scheduled.append(Plan::Release.new(name))
-    plan.update_scheduled(scheduled)
+
+    new_scheduled = plan.scheduled.append(Plan::Release.new(name))
+    plan.update_scheduled(new_scheduled)
+
     @repository.store(plan)
   end
 end

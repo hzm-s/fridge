@@ -32,7 +32,7 @@ RSpec.describe 'plans' do
 
     context 'when pending issue' do
       it do
-        expect(PendingIssueUsecase)
+        expect(PendIssueUsecase)
           .to receive(:perform).with(product.id, Issue::Id.from_string('i123'), 'MVP')
 
         patch product_plan_path(product_id: product.id.to_s, format: :json),

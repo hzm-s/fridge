@@ -9,27 +9,18 @@ class ChangeReleaseOfIssueUsecase < UsecaseBase
     @repository = T.let(PlanRepository::AR, Plan::PlanRepository)
   end
 
-  sig {params(product_id: Product::Id, issue_id: Issue::Id, src_name: String, dst_name: String, to_index: Integer).void}
-  def perform(product_id, issue_id, src_name, dst_name, to_index)
+  sig {params(product_id: Product::Id, issue_id: Issue::Id, from_name: String, to_name: String, to_index: Integer).void}
+  def perform(product_id, issue_id, from_name, to_name, to_index)
     plan = @repository.find_by_product_id(product_id)
 
-    new_src = plan.scheduled.get(src_name).remove_issue(issue_id)
-    tmp_scheduled = plan.scheduled.update(new_src)
+    new_scheduled = plan.scheduled.reschedule_issue(issue_id, from_name, to_name)
 
-    dst = tmp_scheduled.get(dst_name)
-    new_dst =
-      if dst.issues.empty? || dst.issue_at(to_index).nil?
-        dst.append_issue(issue_id)
-      else
-        target_issue = dst.issue_at(to_index)
-        return unless target_issue
-
-        dst.append_issue(issue_id).change_issue_priority(issue_id, target_issue)
-      end
-    new_scheduled = tmp_scheduled.update(new_dst)
+    target_issue_id = PlannedIssueResolver.resolve_scheduled(plan, to_name, to_index)
+    if target_issue_id
+      new_scheduled = new_scheduled.change_issue_priority(to_name, issue_id, target_issue_id)
+    end
 
     plan.update_scheduled(new_scheduled)
-
     @repository.store(plan)
   end
 end

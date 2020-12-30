@@ -12,24 +12,16 @@ class ScheduleIssueUsecase < UsecaseBase
   sig {params(product_id: Product::Id, issue_id: Issue::Id, release_name: String, to_index: Integer).void}
   def perform(product_id, issue_id, release_name, to_index)
     plan = @repository.find_by_product_id(product_id)
+    target_issue_id = PlannedIssueResolver.resolve_scheduled(plan, release_name, to_index)
 
-    pending = plan.pending.remove(issue_id)
-    plan.update_pending(pending)
+    plan.remove_issue(issue_id)
 
-    release = plan.scheduled.get(release_name)
-    new_release =
-      if release.issues.empty? || release.issues.to_a.size <= to_index
-        release.append_issue(issue_id)
-      else
-        target_issue = release.issue_at(to_index)
-        return unless target_issue
+    new_scheduled = plan.scheduled.append_issue(release_name, issue_id)
+    if target_issue_id
+      new_scheduled = new_scheduled.change_issue_priority(release_name, issue_id, target_issue_id)
+    end
 
-        release.append_issue(issue_id).change_issue_priority(issue_id, target_issue)
-      end
-    new_releases = plan.scheduled.update(new_release)
-
-    plan.update_scheduled(new_releases)
-
+    plan.update_scheduled(new_scheduled)
     @repository.store(plan)
   end
 end

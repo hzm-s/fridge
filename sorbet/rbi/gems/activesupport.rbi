@@ -2014,6 +2014,34 @@ module ActiveSupport::EachTimeWithZone
   def ensure_iteration_allowed; end
   def step(n = nil, &block); end
 end
+module ActiveSupport::Configurable
+  def config; end
+  extend ActiveSupport::Concern
+end
+class ActiveSupport::Configurable::Configuration < ActiveSupport::InheritableOptions
+  def compile_methods!; end
+  def self.compile_methods!(keys); end
+end
+module ActiveSupport::Configurable::ClassMethods
+  def config; end
+  def config_accessor(*names, instance_reader: nil, instance_writer: nil, instance_accessor: nil); end
+  def configure; end
+end
+class ActiveSupport::ParameterFilter
+  def compiled_filter; end
+  def filter(params); end
+  def filter_param(key, value); end
+  def initialize(filters = nil, mask: nil); end
+end
+class ActiveSupport::ParameterFilter::CompiledFilter
+  def blocks; end
+  def call(params, parents = nil, original_params = nil); end
+  def deep_regexps; end
+  def initialize(regexps, deep_regexps, blocks, mask:); end
+  def regexps; end
+  def self.compile(filters, mask:); end
+  def value_for_key(key, value, parents = nil, original_params = nil); end
+end
 class ActiveSupport::ExecutionWrapper
   def __callbacks; end
   def __callbacks?; end
@@ -2103,21 +2131,6 @@ class ActiveSupport::Reloader < ActiveSupport::ExecutionWrapper
   def self.to_prepare(*args, &block); end
   def self.wrap; end
 end
-class ActiveSupport::ParameterFilter
-  def compiled_filter; end
-  def filter(params); end
-  def filter_param(key, value); end
-  def initialize(filters = nil, mask: nil); end
-end
-class ActiveSupport::ParameterFilter::CompiledFilter
-  def blocks; end
-  def call(params, parents = nil, original_params = nil); end
-  def deep_regexps; end
-  def initialize(regexps, deep_regexps, blocks, mask:); end
-  def regexps; end
-  def self.compile(filters, mask:); end
-  def value_for_key(key, value, parents = nil, original_params = nil); end
-end
 class ActiveSupport::EventedFileUpdateChecker
   def boot!; end
   def changed(modified, added, removed); end
@@ -2147,8 +2160,8 @@ module Digest::UUID
   def self.uuid_v5(uuid_namespace, name); end
 end
 class File < IO
-  def self.atomic_write(file_name, temp_dir = nil); end
   def self.empty?(arg0); end
+  def self.probe_stat_in(dir); end
 end
 module ActiveSupport::MarshalWithAutoloading
   def load(source, proc = nil); end
@@ -2290,19 +2303,6 @@ module ActiveSupport::Rescuable::ClassMethods
   def handler_for_rescue(exception, object: nil); end
   def rescue_from(*klasses, with: nil, &block); end
   def rescue_with_handler(exception, object: nil, visited_exceptions: nil); end
-end
-module ActiveSupport::Configurable
-  def config; end
-  extend ActiveSupport::Concern
-end
-class ActiveSupport::Configurable::Configuration < ActiveSupport::InheritableOptions
-  def compile_methods!; end
-  def self.compile_methods!(keys); end
-end
-module ActiveSupport::Configurable::ClassMethods
-  def config; end
-  def config_accessor(*names, instance_reader: nil, instance_writer: nil, instance_accessor: nil); end
-  def configure; end
 end
 module ActiveSupport::Testing
 end

@@ -12,16 +12,11 @@ class ChangeIssuePriorityUsecase < UsecaseBase
   sig {params(product_id: Product::Id, release_name: String, issue_id: Issue::Id, to_index: Integer).void}
   def perform(product_id, release_name, issue_id, to_index)
     plan = @repository.find_by_product_id(product_id)
+    target_issue_id = T.must(PlannedIssueResolver.resolve_scheduled(plan, release_name, to_index))
 
-    release = plan.scheduled.get(release_name)
-    target_issue = release.issue_at(to_index)
-    return unless target_issue
+    new_scheduled = plan.scheduled.change_issue_priority(release_name, issue_id, target_issue_id)
 
-    new_release = release.change_issue_priority(issue_id, target_issue)
-
-    new_releases = plan.scheduled.update(new_release)
-    plan.update_scheduled(new_releases)
-
+    plan.update_scheduled(new_scheduled)
     @repository.store(plan)
   end
 end

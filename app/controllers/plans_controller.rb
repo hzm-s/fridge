@@ -11,7 +11,7 @@ class PlansController < ApplicationController
     when [false, false]
       SortIssuesUsecase.perform(product_id, issue_id, to_index)
     when [true, false]
-      PendingIssueUsecase.perform(product_id, issue_id, from)
+      PendIssueUsecase.perform(product_id, issue_id, from)
     when [false, true]
       ScheduleIssueUsecase.perform(product_id, issue_id, to, to_index)
     when [true, true]

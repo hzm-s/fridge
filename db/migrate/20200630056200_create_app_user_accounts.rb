@@ -1,4 +1,4 @@
-# typed: ignore
+# typed: false
 class CreateAppUserAccounts < ActiveRecord::Migration[6.0]
   def change
     create_table :app_user_accounts, id: :uuid do |t|
