@@ -12,8 +12,6 @@ module AbstractController::Rendering
 end
 
 class AcceptanceCriterionForm
-  include ::ActiveSupport::Callbacks
-  include ::ActiveModel::Validations::HelperMethods
   def __callbacks(); end
 
   def __callbacks?(); end
@@ -89,15 +87,6 @@ module ActionCable::VERSION
   TINY = ::T.let(nil, ::T.untyped)
 end
 
-class ActionController::API
-  MODULES = ::T.let(nil, ::T.untyped)
-end
-
-class ActionController::Base
-  MODULES = ::T.let(nil, ::T.untyped)
-  PROTECTED_IVARS = ::T.let(nil, ::T.untyped)
-end
-
 module ActionController::DataStreaming
   DEFAULT_SEND_FILE_DISPOSITION = ::T.let(nil, ::T.untyped)
   DEFAULT_SEND_FILE_TYPE = ::T.let(nil, ::T.untyped)
@@ -164,32 +153,9 @@ module ActionController::ParamsWrapper
   EXCLUDE_PARAMETERS = ::T.let(nil, ::T.untyped)
 end
 
-class ActionController::Renderer
-  DEFAULTS = ::T.let(nil, ::T.untyped)
-  IDENTITY = ::T.let(nil, ::T.untyped)
-  RACK_KEY_TRANSLATION = ::T.let(nil, ::T.untyped)
-  RACK_VALUE_TRANSLATION = ::T.let(nil, ::T.untyped)
-end
-
-module ActionController::Renderers
-  RENDERERS = ::T.let(nil, ::T.untyped)
-end
-
-module ActionController::Rendering
-  RENDER_FORMATS_IN_PRIORITY = ::T.let(nil, ::T.untyped)
-end
-
 module ActionController::RequestForgeryProtection
   AUTHENTICITY_TOKEN_LENGTH = ::T.let(nil, ::T.untyped)
   NULL_ORIGIN_MESSAGE = ::T.let(nil, ::T.untyped)
-end
-
-class ActionController::RespondToMismatchError
-  DEFAULT_MESSAGE = ::T.let(nil, ::T.untyped)
-end
-
-class ActionController::SessionOverflowError
-  DEFAULT_MESSAGE = ::T.let(nil, ::T.untyped)
 end
 
 class ActionController::TestRequest
@@ -297,67 +263,6 @@ end
 
 class ActionDispatch::HostAuthorization
   DEFAULT_RESPONSE_APP = ::T.let(nil, ::T.untyped)
-end
-
-module ActionDispatch::Http
-  include ::ActiveSupport::Deprecation::DeprecatedConstantAccessor
-end
-
-module ActionDispatch::Http::Cache::Request
-  HTTP_IF_MODIFIED_SINCE = ::T.let(nil, ::T.untyped)
-  HTTP_IF_NONE_MATCH = ::T.let(nil, ::T.untyped)
-end
-
-module ActionDispatch::Http::Cache::Response
-  DATE = ::T.let(nil, ::T.untyped)
-  DEFAULT_CACHE_CONTROL = ::T.let(nil, ::T.untyped)
-  LAST_MODIFIED = ::T.let(nil, ::T.untyped)
-  MUST_REVALIDATE = ::T.let(nil, ::T.untyped)
-  NO_CACHE = ::T.let(nil, ::T.untyped)
-  PRIVATE = ::T.let(nil, ::T.untyped)
-  PUBLIC = ::T.let(nil, ::T.untyped)
-  SPECIAL_KEYS = ::T.let(nil, ::T.untyped)
-end
-
-class ActionDispatch::Http::ContentDisposition
-  RFC_5987_ESCAPED_CHAR = ::T.let(nil, ::T.untyped)
-  TRADITIONAL_ESCAPED_CHAR = ::T.let(nil, ::T.untyped)
-end
-
-module ActionDispatch::Http::FilterParameters
-  ENV_MATCH = ::T.let(nil, ::T.untyped)
-  KV_RE = ::T.let(nil, ::T.untyped)
-  NULL_ENV_FILTER = ::T.let(nil, ::T.untyped)
-  NULL_PARAM_FILTER = ::T.let(nil, ::T.untyped)
-  PAIR_RE = ::T.let(nil, ::T.untyped)
-end
-
-module ActionDispatch::Http::FilterRedirect
-  FILTERED = ::T.let(nil, ::T.untyped)
-end
-
-class ActionDispatch::Http::Headers
-  CGI_VARIABLES = ::T.let(nil, ::T.untyped)
-  DEFAULT = ::T.let(nil, ::T.untyped)
-  HTTP_HEADER = ::T.let(nil, ::T.untyped)
-end
-
-module ActionDispatch::Http::MimeNegotiation
-  BROWSER_LIKE_ACCEPTS = ::T.let(nil, ::T.untyped)
-  RESCUABLE_MIME_FORMAT_ERRORS = ::T.let(nil, ::T.untyped)
-end
-
-ActionDispatch::Http::ParameterFilter = ActiveSupport::ParameterFilter
-
-module ActionDispatch::Http::Parameters
-  DEFAULT_PARSERS = ::T.let(nil, ::T.untyped)
-  PARAMETERS_KEY = ::T.let(nil, ::T.untyped)
-end
-
-module ActionDispatch::Http::URL
-  HOST_REGEXP = ::T.let(nil, ::T.untyped)
-  IP_HOST_REGEXP = ::T.let(nil, ::T.untyped)
-  PROTOCOL_REGEXP = ::T.let(nil, ::T.untyped)
 end
 
 module ActionDispatch::Integration
@@ -657,10 +562,6 @@ class ActionDispatch::Journey::Visitors::Visitor
   DISPATCH_CACHE = ::T.let(nil, ::T.untyped)
 end
 
-class ActionDispatch::RemoteIp
-  TRUSTED_PROXIES = ::T.let(nil, ::T.untyped)
-end
-
 class ActionDispatch::Request
   include ::ActionDispatch::Flash::RequestMethods
   ACTION_DISPATCH_REQUEST_ID = ::T.let(nil, ::T.untyped)
@@ -680,15 +581,6 @@ end
 
 class ActionDispatch::RequestId
   X_REQUEST_ID = ::T.let(nil, ::T.untyped)
-end
-
-class ActionDispatch::Response
-  CONTENT_TYPE = ::T.let(nil, ::T.untyped)
-  CONTENT_TYPE_PARSER = ::T.let(nil, ::T.untyped)
-  LOCATION = ::T.let(nil, ::T.untyped)
-  NO_CONTENT_CODES = ::T.let(nil, ::T.untyped)
-  NullContentTypeHeader = ::T.let(nil, ::T.untyped)
-  SET_COOKIE = ::T.let(nil, ::T.untyped)
 end
 
 module ActionDispatch::Routing
@@ -980,8 +872,6 @@ class ActionView::AbstractRenderer::RenderedTemplate
 end
 
 class ActionView::Base
-  include ::ActionView::Context
-  include ::ERB::Util
   include ::ActionCable::Helpers::ActionCableHelper
   include ::Webpacker::Helper
   include ::Sprockets::Rails::Helper
@@ -1045,7 +935,6 @@ class ActionView::Base
   def unknown_asset_fallback=(val); end
 
   def unknown_asset_fallback?(); end
-  NULL = ::T.let(nil, ::T.untyped)
 end
 
 class ActionView::Base
@@ -1121,37 +1010,6 @@ class ActionView::DependencyTracker::ERBTracker
   VARIABLE_OR_METHOD_CHAIN = ::T.let(nil, ::T.untyped)
 end
 
-module ActionView::Helpers::AssetUrlHelper
-  ASSET_EXTENSIONS = ::T.let(nil, ::T.untyped)
-  ASSET_PUBLIC_DIRECTORIES = ::T.let(nil, ::T.untyped)
-  URI_REGEXP = ::T.let(nil, ::T.untyped)
-end
-
-module ActionView::Helpers::ControllerHelper
-  CONTROLLER_DELEGATES = ::T.let(nil, ::T.untyped)
-end
-
-module ActionView::Helpers::DateHelper
-  MINUTES_IN_QUARTER_YEAR = ::T.let(nil, ::T.untyped)
-  MINUTES_IN_THREE_QUARTERS_YEAR = ::T.let(nil, ::T.untyped)
-  MINUTES_IN_YEAR = ::T.let(nil, ::T.untyped)
-end
-
-module ActionView::Helpers::JavaScriptHelper
-  JS_ESCAPE_MAP = ::T.let(nil, ::T.untyped)
-end
-
-module ActionView::Helpers::TagHelper
-  BOOLEAN_ATTRIBUTES = ::T.let(nil, ::T.untyped)
-  PRE_CONTENT_STRINGS = ::T.let(nil, ::T.untyped)
-  TAG_PREFIXES = ::T.let(nil, ::T.untyped)
-end
-
-module ActionView::Helpers::UrlHelper
-  BUTTON_TAG_METHOD_VERBS = ::T.let(nil, ::T.untyped)
-  STRINGIFIED_COMMON_METHODS = ::T.let(nil, ::T.untyped)
-end
-
 class ActionView::LogSubscriber
   def render_collection(event); end
 
@@ -1208,11 +1066,6 @@ end
 
 class ActionView::Railtie
   NULL_OPTION = ::T.let(nil, ::T.untyped)
-end
-
-module ActionView::RecordIdentifier
-  JOIN = ::T.let(nil, ::T.untyped)
-  NEW = ::T.let(nil, ::T.untyped)
 end
 
 class ActionView::Renderer
@@ -1481,15 +1334,6 @@ module ActiveJob::VERSION
   TINY = ::T.let(nil, ::T.untyped)
 end
 
-module ActiveModel::AttributeMethods
-  CALL_COMPILABLE_REGEXP = ::T.let(nil, ::T.untyped)
-  NAME_COMPILABLE_REGEXP = ::T.let(nil, ::T.untyped)
-end
-
-module ActiveModel::AttributeMethods::AttrNames
-  DEF_SAFE_NAME = ::T.let(nil, ::T.untyped)
-end
-
 class ActiveModel::AttributeMutationTracker
   OPTION_NOT_GIVEN = ::T.let(nil, ::T.untyped)
 end
@@ -1515,11 +1359,6 @@ module ActiveModel::Attributes
   extend ::ActiveSupport::Concern
 end
 
-class ActiveModel::Errors
-  CALLBACKS_OPTIONS = ::T.let(nil, ::T.untyped)
-  MESSAGE_OPTIONS = ::T.let(nil, ::T.untyped)
-end
-
 module ActiveModel::Lint
 end
 
@@ -1541,10 +1380,6 @@ module ActiveModel::Lint::Tests
 end
 
 module ActiveModel::Lint
-end
-
-module ActiveModel::SecurePassword
-  MAX_PASSWORD_LENGTH_ALLOWED = ::T.let(nil, ::T.untyped)
 end
 
 class ActiveModel::Type::Boolean
@@ -1962,10 +1797,6 @@ class ActiveRecord::Associations::JoinDependency
   def self.walk_tree(associations, hash); end
 end
 
-class ActiveRecord::Associations::Preloader
-  def preload(records, associations, preload_scope=T.unsafe(nil)); end
-end
-
 class ActiveRecord::Associations::Preloader::AlreadyLoaded
   def initialize(klass, owners, reflection, preload_scope); end
 
@@ -2024,10 +1855,6 @@ end
 module ActiveRecord::Associations::ThroughAssociation
 end
 
-module ActiveRecord::AttributeMethods
-  RESTRICTED_CLASS_METHODS = ::T.let(nil, ::T.untyped)
-end
-
 module ActiveRecord::Base::GeneratedAttributeMethods
   extend ::Mutex_m
 end
@@ -2038,32 +1865,6 @@ end
 
 module ActiveRecord::Callbacks
   CALLBACKS = ::T.let(nil, ::T.untyped)
-end
-
-class ActiveRecord::Coders::JSON
-end
-
-class ActiveRecord::Coders::JSON
-  def self.dump(obj); end
-
-  def self.load(json); end
-end
-
-class ActiveRecord::Coders::YAMLColumn
-  def assert_valid_value(obj, action:); end
-
-  def dump(obj); end
-
-  def initialize(attr_name, object_class=T.unsafe(nil)); end
-
-  def load(yaml); end
-
-  def object_class(); end
-
-  def object_class=(object_class); end
-end
-
-class ActiveRecord::Coders::YAMLColumn
 end
 
 class ActiveRecord::ConcurrentMigrationError
@@ -2295,16 +2096,6 @@ module ActiveRecord::InternalMetadata::GeneratedAttributeMethods
   extend ::Mutex_m
 end
 
-class ActiveRecord::InternalMetadata
-  def self.[](key); end
-
-  def self.[]=(key, value); end
-
-  def self.create_table(); end
-
-  def self.drop_table(); end
-end
-
 module ActiveRecord::LegacyYamlAdapter
 end
 
@@ -2324,17 +2115,6 @@ end
 
 module ActiveRecord::LegacyYamlAdapter
   def self.convert(klass, coder); end
-end
-
-class ActiveRecord::LogSubscriber
-  def backtrace_cleaner(); end
-
-  def backtrace_cleaner=(val); end
-
-  def backtrace_cleaner?(); end
-
-  def sql(event); end
-  IGNORE_PAYLOAD_NAMES = ::T.let(nil, ::T.untyped)
 end
 
 class ActiveRecord::Middleware::DatabaseSelector
@@ -2387,10 +2167,6 @@ class ActiveRecord::Middleware::DatabaseSelector::Resolver
 end
 
 class ActiveRecord::Middleware::DatabaseSelector
-end
-
-class ActiveRecord::Migration
-  MigrationFilenameRegexp = ::T.let(nil, ::T.untyped)
 end
 
 class ActiveRecord::Migration::CommandRecorder
@@ -2522,10 +2298,6 @@ module ActiveRecord::Migration::CommandRecorder::StraightReversions
 end
 
 class ActiveRecord::Migration::CommandRecorder
-end
-
-class ActiveRecord::Migrator
-  MIGRATOR_SALT = ::T.let(nil, ::T.untyped)
 end
 
 module ActiveRecord::NestedAttributes
@@ -2714,43 +2486,6 @@ class ActiveRecord::Relation::WhereClause
   ARRAY_WITH_EMPTY_STRING = ::T.let(nil, ::T.untyped)
 end
 
-class ActiveRecord::Result
-  include ::Enumerable
-  def [](idx); end
-
-  def cast_values(type_overrides=T.unsafe(nil)); end
-
-  def collect!(); end
-
-  def column_types(); end
-
-  def columns(); end
-
-  def each(&blk); end
-
-  def empty?(); end
-
-  def first(); end
-
-  def includes_column?(name); end
-
-  def initialize(columns, rows, column_types=T.unsafe(nil)); end
-
-  def last(); end
-
-  def length(); end
-
-  def map!(); end
-
-  def rows(); end
-
-  def to_a(); end
-
-  def to_ary(); end
-
-  def to_hash(); end
-end
-
 class ActiveRecord::RuntimeRegistry
   def connection_handler(); end
 
@@ -2915,128 +2650,6 @@ end
 class ActiveRecord::TableMetadata
 end
 
-module ActiveRecord::Tasks::DatabaseTasks
-  def cache_dump_filename(namespace); end
-
-  def charset(*arguments); end
-
-  def charset_current(environment=T.unsafe(nil), specification_name=T.unsafe(nil)); end
-
-  def check_protected_environments!(); end
-
-  def check_schema_file(filename); end
-
-  def check_target_version(); end
-
-  def collation(*arguments); end
-
-  def collation_current(environment=T.unsafe(nil), specification_name=T.unsafe(nil)); end
-
-  def create(*arguments); end
-
-  def create_all(); end
-
-  def create_current(environment=T.unsafe(nil), spec_name=T.unsafe(nil)); end
-
-  def current_config(options=T.unsafe(nil)); end
-
-  def current_config=(current_config); end
-
-  def database_configuration(); end
-
-  def database_configuration=(database_configuration); end
-
-  def db_dir(); end
-
-  def db_dir=(db_dir); end
-
-  def drop(*arguments); end
-
-  def drop_all(); end
-
-  def drop_current(environment=T.unsafe(nil)); end
-
-  def dump_filename(namespace, format=T.unsafe(nil)); end
-
-  def dump_schema(configuration, format=T.unsafe(nil), spec_name=T.unsafe(nil)); end
-
-  def dump_schema_cache(conn, filename); end
-
-  def env(); end
-
-  def env=(env); end
-
-  def fixtures_path(); end
-
-  def fixtures_path=(fixtures_path); end
-
-  def for_each(databases); end
-
-  def load_schema(configuration, format=T.unsafe(nil), file=T.unsafe(nil), environment=T.unsafe(nil), spec_name=T.unsafe(nil)); end
-
-  def load_schema_current(format=T.unsafe(nil), file=T.unsafe(nil), environment=T.unsafe(nil)); end
-
-  def load_seed(); end
-
-  def migrate(); end
-
-  def migrate_status(); end
-
-  def migrations_paths(); end
-
-  def migrations_paths=(migrations_paths); end
-
-  def purge(configuration); end
-
-  def purge_all(); end
-
-  def purge_current(environment=T.unsafe(nil)); end
-
-  def raise_for_multi_db(environment=T.unsafe(nil), command:); end
-
-  def reconstruct_from_schema(configuration, format=T.unsafe(nil), file=T.unsafe(nil), environment=T.unsafe(nil), spec_name=T.unsafe(nil)); end
-
-  def register_task(pattern, task); end
-
-  def root(); end
-
-  def root=(root); end
-
-  def schema_file(format=T.unsafe(nil)); end
-
-  def schema_file_type(format=T.unsafe(nil)); end
-
-  def schema_up_to_date?(configuration, format=T.unsafe(nil), file=T.unsafe(nil), environment=T.unsafe(nil), spec_name=T.unsafe(nil)); end
-
-  def seed_loader(); end
-
-  def seed_loader=(seed_loader); end
-
-  def setup_initial_database_yaml(); end
-
-  def spec(); end
-
-  def structure_dump(*arguments); end
-
-  def structure_load(*arguments); end
-
-  def target_version(); end
-
-  def truncate_all(environment=T.unsafe(nil)); end
-  LOCAL_HOSTS = ::T.let(nil, ::T.untyped)
-end
-
-module ActiveRecord::Tasks::DatabaseTasks
-  extend ::ActiveRecord::Tasks::DatabaseTasks
-  def self.structure_dump_flags(); end
-
-  def self.structure_dump_flags=(obj); end
-
-  def self.structure_load_flags(); end
-
-  def self.structure_load_flags=(obj); end
-end
-
 class ActiveRecord::Tasks::MySQLDatabaseTasks
   def charset(); end
 
@@ -3160,16 +2773,6 @@ module ActiveRecord::Transactions
   ACTIONS = ::T.let(nil, ::T.untyped)
 end
 
-ActiveRecord::Type::BigInteger = ActiveModel::Type::BigInteger
-
-ActiveRecord::Type::Binary = ActiveModel::Type::Binary
-
-ActiveRecord::Type::Decimal = ActiveModel::Type::Decimal
-
-ActiveRecord::Type::Float = ActiveModel::Type::Float
-
-ActiveRecord::Type::Integer = ActiveModel::Type::Integer
-
 module ActiveRecord::VERSION
   MAJOR = ::T.let(nil, ::T.untyped)
   MINOR = ::T.let(nil, ::T.untyped)
@@ -3214,22 +2817,6 @@ class ActiveSupport::Cache::Entry
   DEFAULT_COMPRESS_LIMIT = ::T.let(nil, ::T.untyped)
 end
 
-class ActiveSupport::Cache::FileStore
-  include ::ActiveSupport::Cache::Strategy::LocalCache
-  DIR_FORMATTER = ::T.let(nil, ::T.untyped)
-  FILENAME_MAX_SIZE = ::T.let(nil, ::T.untyped)
-  FILEPATH_MAX_SIZE = ::T.let(nil, ::T.untyped)
-  GITKEEP_FILES = ::T.let(nil, ::T.untyped)
-end
-
-class ActiveSupport::Cache::MemoryStore
-  PER_ENTRY_OVERHEAD = ::T.let(nil, ::T.untyped)
-end
-
-class ActiveSupport::Cache::NullStore
-  include ::ActiveSupport::Cache::Strategy::LocalCache
-end
-
 module ActiveSupport::Callbacks
   CALLBACK_FILTER_TYPES = ::T.let(nil, ::T.untyped)
 end
@@ -3241,23 +2828,6 @@ end
 module ActiveSupport::Dependencies
   extend ::Bootsnap::LoadPathCache::CoreExt::ActiveSupport::ClassMethods
   extend ::ActiveSupport::Dependencies::ZeitwerkIntegration::Decorations
-end
-
-class ActiveSupport::Deprecation
-  def deprecation_horizon(); end
-
-  def deprecation_horizon=(deprecation_horizon); end
-
-  def initialize(deprecation_horizon=T.unsafe(nil), gem_name=T.unsafe(nil)); end
-  DEFAULT_BEHAVIORS = ::T.let(nil, ::T.untyped)
-end
-
-module ActiveSupport::Deprecation::Reporting
-  RAILS_GEM_ROOT = ::T.let(nil, ::T.untyped)
-end
-
-class ActiveSupport::Deprecation
-  extend ::ActiveSupport::Deprecation::InstanceDelegator::OverrideDelegators
 end
 
 class ActiveSupport::Duration
@@ -3294,59 +2864,6 @@ class ActiveSupport::ExecutionWrapper
   Null = ::T.let(nil, ::T.untyped)
 end
 
-module ActiveSupport::JSON
-  DATETIME_REGEX = ::T.let(nil, ::T.untyped)
-  DATE_REGEX = ::T.let(nil, ::T.untyped)
-end
-
-class ActiveSupport::LogSubscriber
-  def colorize_logging(); end
-
-  def colorize_logging=(obj); end
-
-  def debug(progname=T.unsafe(nil), &block); end
-
-  def error(progname=T.unsafe(nil), &block); end
-
-  def fatal(progname=T.unsafe(nil), &block); end
-
-  def info(progname=T.unsafe(nil), &block); end
-
-  def logger(); end
-
-  def unknown(progname=T.unsafe(nil), &block); end
-
-  def warn(progname=T.unsafe(nil), &block); end
-  BLACK = ::T.let(nil, ::T.untyped)
-  BLUE = ::T.let(nil, ::T.untyped)
-  BOLD = ::T.let(nil, ::T.untyped)
-  CLEAR = ::T.let(nil, ::T.untyped)
-  CYAN = ::T.let(nil, ::T.untyped)
-  GREEN = ::T.let(nil, ::T.untyped)
-  MAGENTA = ::T.let(nil, ::T.untyped)
-  RED = ::T.let(nil, ::T.untyped)
-  WHITE = ::T.let(nil, ::T.untyped)
-  YELLOW = ::T.let(nil, ::T.untyped)
-end
-
-class ActiveSupport::MessageEncryptor
-  include ::ActiveSupport::Messages::Rotator::Encryptor
-  include ::ActiveSupport::Messages::Rotator
-end
-
-ActiveSupport::MessageEncryptor::OpenSSLCipherError = OpenSSL::Cipher::CipherError
-
-class ActiveSupport::MessageVerifier
-  include ::ActiveSupport::Messages::Rotator::Verifier
-  include ::ActiveSupport::Messages::Rotator
-end
-
-module ActiveSupport::Multibyte::Unicode
-  NORMALIZATION_FORMS = ::T.let(nil, ::T.untyped)
-  NORMALIZATION_FORM_ALIASES = ::T.let(nil, ::T.untyped)
-  UNICODE_VERSION = ::T.let(nil, ::T.untyped)
-end
-
 class ActiveSupport::NumberHelper::NumberConverter
   DEFAULTS = ::T.let(nil, ::T.untyped)
 end
@@ -3364,25 +2881,8 @@ class ActiveSupport::NumberHelper::NumberToHumanSizeConverter
   STORAGE_UNITS = ::T.let(nil, ::T.untyped)
 end
 
-class ActiveSupport::ParameterFilter
-  FILTERED = ::T.let(nil, ::T.untyped)
-end
-
 module ActiveSupport::RangeWithFormat
   RANGE_FORMATS = ::T.let(nil, ::T.untyped)
-end
-
-class ActiveSupport::SafeBuffer
-  UNSAFE_STRING_METHODS = ::T.let(nil, ::T.untyped)
-  UNSAFE_STRING_METHODS_WITH_BACKREF = ::T.let(nil, ::T.untyped)
-end
-
-class ActiveSupport::Subscriber
-  def finish(name, id, payload); end
-
-  def patterns(); end
-
-  def start(name, id, payload); end
 end
 
 class ActiveSupport::TestCase
@@ -3427,21 +2927,6 @@ end
 
 module ActiveSupport::XmlMini_REXML
   CONTENT_KEY = ::T.let(nil, ::T.untyped)
-end
-
-class AddAcceptanceCriterionUsecase
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
-class AddIssueUsecase
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
-class AddReleaseUsecase
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 class AddTeamMemberUsecase
@@ -3515,6 +3000,21 @@ module App::UserProfile::GeneratedAttributeMethods
   extend ::Mutex_m
 end
 
+class AppendAcceptanceCriterionUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class AppendIssueUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class AppendReleaseUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class ApplicationRecord
   include ::ApplicationRecord::GeneratedAttributeMethods
   include ::ApplicationRecord::GeneratedAssociationMethods
@@ -3557,10 +3057,6 @@ class Array
 
   def to_h(); end
 
-end
-
-class Array
-  def self.wrap(object); end
 end
 
 BasicObject::BasicObject = BasicObject
@@ -6075,7 +5571,12 @@ end
 module CGI::HtmlExtension
 end
 
-class CancelIssueReleaseUsecase
+class ChangeIssuePriorityUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class ChangeReleaseOfIssueUsecase
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
 end
@@ -6434,11 +5935,6 @@ class CreateProductTeamUsecase
 end
 
 class CreateProductUsecase
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
-class CreateTeamUsecase
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
 end
@@ -6834,6 +6330,84 @@ class Dao::Person
   def self.before_remove_for_team_members?(); end
 end
 
+class Dao::Plan
+  include ::Dao::Plan::GeneratedAttributeMethods
+  include ::Dao::Plan::GeneratedAssociationMethods
+  def after_add_for_releases(); end
+
+  def after_add_for_releases=(val); end
+
+  def after_add_for_releases?(); end
+
+  def after_remove_for_releases(); end
+
+  def after_remove_for_releases=(val); end
+
+  def after_remove_for_releases?(); end
+
+  def autosave_associated_records_for_releases(*args); end
+
+  def before_add_for_releases(); end
+
+  def before_add_for_releases=(val); end
+
+  def before_add_for_releases?(); end
+
+  def before_remove_for_releases(); end
+
+  def before_remove_for_releases=(val); end
+
+  def before_remove_for_releases?(); end
+
+  def validate_associated_records_for_releases(*args); end
+end
+
+module Dao::Plan::GeneratedAssociationMethods
+  def release_ids(); end
+
+  def release_ids=(ids); end
+
+  def releases(); end
+
+  def releases=(value); end
+end
+
+module Dao::Plan::GeneratedAssociationMethods
+end
+
+module Dao::Plan::GeneratedAttributeMethods
+end
+
+module Dao::Plan::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+class Dao::Plan
+  def self.after_add_for_releases(); end
+
+  def self.after_add_for_releases=(val); end
+
+  def self.after_add_for_releases?(); end
+
+  def self.after_remove_for_releases(); end
+
+  def self.after_remove_for_releases=(val); end
+
+  def self.after_remove_for_releases?(); end
+
+  def self.before_add_for_releases(); end
+
+  def self.before_add_for_releases=(val); end
+
+  def self.before_add_for_releases?(); end
+
+  def self.before_remove_for_releases(); end
+
+  def self.before_remove_for_releases=(val); end
+
+  def self.before_remove_for_releases?(); end
+end
+
 class Dao::Product
   include ::Dao::Product::GeneratedAttributeMethods
   include ::Dao::Product::GeneratedAssociationMethods
@@ -6929,43 +6503,9 @@ end
 class Dao::Release
   include ::Dao::Release::GeneratedAttributeMethods
   include ::Dao::Release::GeneratedAssociationMethods
-  def after_add_for_items(); end
-
-  def after_add_for_items=(val); end
-
-  def after_add_for_items?(); end
-
-  def after_remove_for_items(); end
-
-  def after_remove_for_items=(val); end
-
-  def after_remove_for_items?(); end
-
-  def autosave_associated_records_for_items(*args); end
-
-  def before_add_for_items(); end
-
-  def before_add_for_items=(val); end
-
-  def before_add_for_items?(); end
-
-  def before_remove_for_items(); end
-
-  def before_remove_for_items=(val); end
-
-  def before_remove_for_items?(); end
-
-  def validate_associated_records_for_items(*args); end
 end
 
 module Dao::Release::GeneratedAssociationMethods
-  def item_ids(); end
-
-  def item_ids=(ids); end
-
-  def items(); end
-
-  def items=(value); end
 end
 
 module Dao::Release::GeneratedAssociationMethods
@@ -6975,50 +6515,6 @@ module Dao::Release::GeneratedAttributeMethods
 end
 
 module Dao::Release::GeneratedAttributeMethods
-  extend ::Mutex_m
-end
-
-class Dao::Release
-  def self.after_add_for_items(); end
-
-  def self.after_add_for_items=(val); end
-
-  def self.after_add_for_items?(); end
-
-  def self.after_remove_for_items(); end
-
-  def self.after_remove_for_items=(val); end
-
-  def self.after_remove_for_items?(); end
-
-  def self.before_add_for_items(); end
-
-  def self.before_add_for_items=(val); end
-
-  def self.before_add_for_items?(); end
-
-  def self.before_remove_for_items(); end
-
-  def self.before_remove_for_items=(val); end
-
-  def self.before_remove_for_items?(); end
-end
-
-class Dao::ReleaseItem
-  include ::Dao::ReleaseItem::GeneratedAttributeMethods
-  include ::Dao::ReleaseItem::GeneratedAssociationMethods
-end
-
-module Dao::ReleaseItem::GeneratedAssociationMethods
-end
-
-module Dao::ReleaseItem::GeneratedAssociationMethods
-end
-
-module Dao::ReleaseItem::GeneratedAttributeMethods
-end
-
-module Dao::ReleaseItem::GeneratedAttributeMethods
   extend ::Mutex_m
 end
 
@@ -7158,17 +6654,8 @@ module Dao::TeamMember::GeneratedAttributeMethods
   extend ::Mutex_m
 end
 
-class Date
-  DATE_FORMATS = ::T.let(nil, ::T.untyped)
-end
-
 class Date::Infinity
   def initialize(d=T.unsafe(nil)); end
-end
-
-module DateAndTime::Calculations
-  DAYS_INTO_WEEK = ::T.let(nil, ::T.untyped)
-  WEEKEND_DAYS = ::T.let(nil, ::T.untyped)
 end
 
 class DidYouMean::ClassNameChecker
@@ -7971,15 +7458,7 @@ class Faraday::Adapter::HTTPClient
 end
 
 class Faraday::Adapter::NetHttp
-  def build_connection(env); end
-
-  def initialize(app=T.unsafe(nil), opts=T.unsafe(nil), &block); end
-
-  def net_http_connection(env); end
   NET_HTTP_EXCEPTIONS = ::T.let(nil, ::T.untyped)
-end
-
-class Faraday::Adapter::NetHttp
 end
 
 class Faraday::Adapter::NetHttpPersistent
@@ -8145,41 +7624,16 @@ class Faraday::Request::Instrumentation
 end
 
 class Faraday::Request::Multipart
-  def create_multipart(env, params); end
-
-  def has_multipart?(obj); end
-
-  def part(boundary, key, value); end
-
-  def process_params(params, prefix=T.unsafe(nil), pieces=T.unsafe(nil), &block); end
-
-  def unique_boundary(); end
   DEFAULT_BOUNDARY_PREFIX = ::T.let(nil, ::T.untyped)
 end
 
-class Faraday::Request::Multipart
-end
-
 class Faraday::Request::Retry
-  def build_exception_matcher(exceptions); end
-
-  def calculate_sleep_amount(retries, env); end
-
-  def call(env); end
-
-  def initialize(app, options=T.unsafe(nil)); end
   DEFAULT_EXCEPTIONS = ::T.let(nil, ::T.untyped)
   IDEMPOTENT_METHODS = ::T.let(nil, ::T.untyped)
 end
 
 class Faraday::Request::Retry::Options
   DEFAULT_CHECK = ::T.let(nil, ::T.untyped)
-end
-
-class Faraday::Request::Retry::Options
-end
-
-class Faraday::Request::Retry
 end
 
 class Faraday::Request::TokenAuthentication
@@ -8191,20 +7645,7 @@ class Faraday::Request::TokenAuthentication
 end
 
 class Faraday::Request::UrlEncoded
-  def call(env); end
-
-  def match_content_type(env); end
-
-  def process_request?(env); end
-
-  def request_type(env); end
   CONTENT_TYPE = ::T.let(nil, ::T.untyped)
-end
-
-class Faraday::Request::UrlEncoded
-  def self.mime_type(); end
-
-  def self.mime_type=(mime_type); end
 end
 
 class Faraday::Response::Logger
@@ -8215,12 +7656,8 @@ class Faraday::Response::Logger
 end
 
 class Faraday::Response::RaiseError
-  def response_values(env); end
   ClientErrorStatuses = ::T.let(nil, ::T.untyped)
   ServerErrorStatuses = ::T.let(nil, ::T.untyped)
-end
-
-class Faraday::Response::RaiseError
 end
 
 Faraday::Timer = Timeout
@@ -8245,9 +7682,9 @@ class Fiber
 end
 
 class File
-  def self.exists?(_); end
+  def self.atomic_write(file_name, temp_dir=T.unsafe(nil)); end
 
-  def self.probe_stat_in(dir); end
+  def self.exists?(_); end
 end
 
 module FileUtils
@@ -8965,8 +8402,6 @@ end
 class Hash
   def self.from_trusted_xml(xml); end
 end
-
-HashWithIndifferentAccess = ActiveSupport::HashWithIndifferentAccess
 
 module Hashie
   VERSION = ::T.let(nil, ::T.untyped)
@@ -9833,9 +9268,26 @@ class Issue::StoryPoint
   extend ::T::Private::Methods::MethodHooks
 end
 
+module Issue::Type
+  extend ::T::Private::Abstract::Hooks
+  extend ::T::InterfaceWrapper::Helpers
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+module Issue::Types::Feature
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+module Issue::Types::Task
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+module Issue::Types
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class IssueForm
-  include ::ActiveSupport::Callbacks
-  include ::ActiveModel::Validations::HelperMethods
   def __callbacks(); end
 
   def __callbacks?(); end
@@ -10636,11 +10088,6 @@ module Mail::VERSION
   STRING = ::T.let(nil, ::T.untyped)
 end
 
-class ManageReleaseItemUsecase
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
 module Marcel
   VERSION = ::T.let(nil, ::T.untyped)
 end
@@ -10682,21 +10129,6 @@ end
 module MethodSource::CodeHelpers::IncompleteExpression
   GENERIC_REGEXPS = ::T.let(nil, ::T.untyped)
   RBX_ONLY_REGEXPS = ::T.let(nil, ::T.untyped)
-end
-
-module Mime
-  ALL = ::T.let(nil, ::T.untyped)
-  EXTENSION_LOOKUP = ::T.let(nil, ::T.untyped)
-  LOOKUP = ::T.let(nil, ::T.untyped)
-  SET = ::T.let(nil, ::T.untyped)
-end
-
-class Mime::Type
-  MIME_NAME = ::T.let(nil, ::T.untyped)
-  MIME_PARAMETER = ::T.let(nil, ::T.untyped)
-  MIME_PARAMETER_KEY = ::T.let(nil, ::T.untyped)
-  MIME_PARAMETER_VALUE = ::T.let(nil, ::T.untyped)
-  MIME_REGEXP = ::T.let(nil, ::T.untyped)
 end
 
 module MiniMime
@@ -10745,11 +10177,6 @@ class Minitest::Unit
 end
 
 class ModifyIssueUsecase
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
-class ModifyReleaseTitleUsecase
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
 end
@@ -11211,271 +10638,8 @@ class NilClass
   def to_d(); end
 end
 
-module Nokogiri
-  LIBXML_ICONV_ENABLED = ::T.let(nil, ::T.untyped)
-  LIBXML_PARSER_VERSION = ::T.let(nil, ::T.untyped)
-  LIBXML_VERSION = ::T.let(nil, ::T.untyped)
-  NOKOGIRI_LIBXML2_PATCHES = ::T.let(nil, ::T.untyped)
-  NOKOGIRI_LIBXML2_PATH = ::T.let(nil, ::T.untyped)
-  NOKOGIRI_LIBXSLT_PATCHES = ::T.let(nil, ::T.untyped)
-  NOKOGIRI_LIBXSLT_PATH = ::T.let(nil, ::T.untyped)
-  NOKOGIRI_USE_PACKAGED_LIBRARIES = ::T.let(nil, ::T.untyped)
-  VERSION = ::T.let(nil, ::T.untyped)
-  VERSION_INFO = ::T.let(nil, ::T.untyped)
-end
-
-class Nokogiri::CSS::Node
-  ALLOW_COMBINATOR_ON_SELF = ::T.let(nil, ::T.untyped)
-end
-
 class Nokogiri::CSS::Parser
-  Racc_arg = ::T.let(nil, ::T.untyped)
   Racc_debug_parser = ::T.let(nil, ::T.untyped)
-  Racc_token_to_s_table = ::T.let(nil, ::T.untyped)
-end
-
-module Nokogiri::Decorators::Slop
-  XPATH_PREFIX = ::T.let(nil, ::T.untyped)
-end
-
-module Nokogiri::HTML
-  NamedCharacters = ::T.let(nil, ::T.untyped)
-end
-
-class Nokogiri::HTML::ElementDescription
-  ACTION_ATTR = ::T.let(nil, ::T.untyped)
-  ALIGN_ATTR = ::T.let(nil, ::T.untyped)
-  ALT_ATTR = ::T.let(nil, ::T.untyped)
-  APPLET_ATTRS = ::T.let(nil, ::T.untyped)
-  AREA_ATTRS = ::T.let(nil, ::T.untyped)
-  ATTRS = ::T.let(nil, ::T.untyped)
-  A_ATTRS = ::T.let(nil, ::T.untyped)
-  BASEFONT_ATTRS = ::T.let(nil, ::T.untyped)
-  BGCOLOR_ATTR = ::T.let(nil, ::T.untyped)
-  BLOCK = ::T.let(nil, ::T.untyped)
-  BLOCKLI_ELT = ::T.let(nil, ::T.untyped)
-  BODY_ATTRS = ::T.let(nil, ::T.untyped)
-  BODY_CONTENTS = ::T.let(nil, ::T.untyped)
-  BODY_DEPR = ::T.let(nil, ::T.untyped)
-  BUTTON_ATTRS = ::T.let(nil, ::T.untyped)
-  CELLHALIGN = ::T.let(nil, ::T.untyped)
-  CELLVALIGN = ::T.let(nil, ::T.untyped)
-  CLEAR_ATTRS = ::T.let(nil, ::T.untyped)
-  COL_ATTRS = ::T.let(nil, ::T.untyped)
-  COL_ELT = ::T.let(nil, ::T.untyped)
-  COMPACT_ATTR = ::T.let(nil, ::T.untyped)
-  COMPACT_ATTRS = ::T.let(nil, ::T.untyped)
-  CONTENT_ATTR = ::T.let(nil, ::T.untyped)
-  COREATTRS = ::T.let(nil, ::T.untyped)
-  CORE_ATTRS = ::T.let(nil, ::T.untyped)
-  CORE_I18N_ATTRS = ::T.let(nil, ::T.untyped)
-  DIR_ATTR = ::T.let(nil, ::T.untyped)
-  DL_CONTENTS = ::T.let(nil, ::T.untyped)
-  DefaultDescriptions = ::T.let(nil, ::T.untyped)
-  EDIT_ATTRS = ::T.let(nil, ::T.untyped)
-  EMBED_ATTRS = ::T.let(nil, ::T.untyped)
-  EMPTY = ::T.let(nil, ::T.untyped)
-  EVENTS = ::T.let(nil, ::T.untyped)
-  FIELDSET_CONTENTS = ::T.let(nil, ::T.untyped)
-  FLOW = ::T.let(nil, ::T.untyped)
-  FLOW_PARAM = ::T.let(nil, ::T.untyped)
-  FONTSTYLE = ::T.let(nil, ::T.untyped)
-  FONT_ATTRS = ::T.let(nil, ::T.untyped)
-  FORMCTRL = ::T.let(nil, ::T.untyped)
-  FORM_ATTRS = ::T.let(nil, ::T.untyped)
-  FORM_CONTENTS = ::T.let(nil, ::T.untyped)
-  FRAMESET_ATTRS = ::T.let(nil, ::T.untyped)
-  FRAMESET_CONTENTS = ::T.let(nil, ::T.untyped)
-  FRAME_ATTRS = ::T.let(nil, ::T.untyped)
-  HEADING = ::T.let(nil, ::T.untyped)
-  HEAD_ATTRS = ::T.let(nil, ::T.untyped)
-  HEAD_CONTENTS = ::T.let(nil, ::T.untyped)
-  HREF_ATTRS = ::T.let(nil, ::T.untyped)
-  HR_DEPR = ::T.let(nil, ::T.untyped)
-  HTML_ATTRS = ::T.let(nil, ::T.untyped)
-  HTML_CDATA = ::T.let(nil, ::T.untyped)
-  HTML_CONTENT = ::T.let(nil, ::T.untyped)
-  HTML_FLOW = ::T.let(nil, ::T.untyped)
-  HTML_INLINE = ::T.let(nil, ::T.untyped)
-  HTML_PCDATA = ::T.let(nil, ::T.untyped)
-  I18N = ::T.let(nil, ::T.untyped)
-  I18N_ATTRS = ::T.let(nil, ::T.untyped)
-  IFRAME_ATTRS = ::T.let(nil, ::T.untyped)
-  IMG_ATTRS = ::T.let(nil, ::T.untyped)
-  INLINE = ::T.let(nil, ::T.untyped)
-  INLINE_P = ::T.let(nil, ::T.untyped)
-  INPUT_ATTRS = ::T.let(nil, ::T.untyped)
-  LABEL_ATTR = ::T.let(nil, ::T.untyped)
-  LABEL_ATTRS = ::T.let(nil, ::T.untyped)
-  LANGUAGE_ATTR = ::T.let(nil, ::T.untyped)
-  LEGEND_ATTRS = ::T.let(nil, ::T.untyped)
-  LINK_ATTRS = ::T.let(nil, ::T.untyped)
-  LIST = ::T.let(nil, ::T.untyped)
-  LI_ELT = ::T.let(nil, ::T.untyped)
-  MAP_CONTENTS = ::T.let(nil, ::T.untyped)
-  META_ATTRS = ::T.let(nil, ::T.untyped)
-  MODIFIER = ::T.let(nil, ::T.untyped)
-  NAME_ATTR = ::T.let(nil, ::T.untyped)
-  NOFRAMES_CONTENT = ::T.let(nil, ::T.untyped)
-  OBJECT_ATTRS = ::T.let(nil, ::T.untyped)
-  OBJECT_CONTENTS = ::T.let(nil, ::T.untyped)
-  OBJECT_DEPR = ::T.let(nil, ::T.untyped)
-  OL_ATTRS = ::T.let(nil, ::T.untyped)
-  OPTGROUP_ATTRS = ::T.let(nil, ::T.untyped)
-  OPTION_ATTRS = ::T.let(nil, ::T.untyped)
-  OPTION_ELT = ::T.let(nil, ::T.untyped)
-  PARAM_ATTRS = ::T.let(nil, ::T.untyped)
-  PCDATA = ::T.let(nil, ::T.untyped)
-  PHRASE = ::T.let(nil, ::T.untyped)
-  PRE_CONTENT = ::T.let(nil, ::T.untyped)
-  PROMPT_ATTRS = ::T.let(nil, ::T.untyped)
-  QUOTE_ATTRS = ::T.let(nil, ::T.untyped)
-  ROWS_COLS_ATTR = ::T.let(nil, ::T.untyped)
-  SCRIPT_ATTRS = ::T.let(nil, ::T.untyped)
-  SELECT_ATTRS = ::T.let(nil, ::T.untyped)
-  SELECT_CONTENT = ::T.let(nil, ::T.untyped)
-  SPECIAL = ::T.let(nil, ::T.untyped)
-  SRC_ALT_ATTRS = ::T.let(nil, ::T.untyped)
-  STYLE_ATTRS = ::T.let(nil, ::T.untyped)
-  TABLE_ATTRS = ::T.let(nil, ::T.untyped)
-  TABLE_CONTENTS = ::T.let(nil, ::T.untyped)
-  TABLE_DEPR = ::T.let(nil, ::T.untyped)
-  TALIGN_ATTRS = ::T.let(nil, ::T.untyped)
-  TARGET_ATTR = ::T.let(nil, ::T.untyped)
-  TEXTAREA_ATTRS = ::T.let(nil, ::T.untyped)
-  TH_TD_ATTR = ::T.let(nil, ::T.untyped)
-  TH_TD_DEPR = ::T.let(nil, ::T.untyped)
-  TR_CONTENTS = ::T.let(nil, ::T.untyped)
-  TR_ELT = ::T.let(nil, ::T.untyped)
-  TYPE_ATTR = ::T.let(nil, ::T.untyped)
-  UL_DEPR = ::T.let(nil, ::T.untyped)
-  VERSION_ATTR = ::T.let(nil, ::T.untyped)
-  WIDTH_ATTR = ::T.let(nil, ::T.untyped)
-end
-
-Nokogiri::HTML::ElementDescription::Desc = Struct::HTMLElementDescription
-
-module Nokogiri::XML
-  XML_C14N_1_0 = ::T.let(nil, ::T.untyped)
-  XML_C14N_1_1 = ::T.let(nil, ::T.untyped)
-  XML_C14N_EXCLUSIVE_1_0 = ::T.let(nil, ::T.untyped)
-end
-
-class Nokogiri::XML::Document
-  IMPLIED_XPATH_CONTEXTS = ::T.let(nil, ::T.untyped)
-  NCNAME_CHAR = ::T.let(nil, ::T.untyped)
-  NCNAME_RE = ::T.let(nil, ::T.untyped)
-  NCNAME_START_CHAR = ::T.let(nil, ::T.untyped)
-end
-
-class Nokogiri::XML::Element
-end
-
-class Nokogiri::XML::Element
-end
-
-class Nokogiri::XML::ElementContent
-  ELEMENT = ::T.let(nil, ::T.untyped)
-  MULT = ::T.let(nil, ::T.untyped)
-  ONCE = ::T.let(nil, ::T.untyped)
-  OPT = ::T.let(nil, ::T.untyped)
-  OR = ::T.let(nil, ::T.untyped)
-  PCDATA = ::T.let(nil, ::T.untyped)
-  PLUS = ::T.let(nil, ::T.untyped)
-  SEQ = ::T.let(nil, ::T.untyped)
-end
-
-class Nokogiri::XML::EntityDecl
-  EXTERNAL_GENERAL_PARSED = ::T.let(nil, ::T.untyped)
-  EXTERNAL_GENERAL_UNPARSED = ::T.let(nil, ::T.untyped)
-  EXTERNAL_PARAMETER = ::T.let(nil, ::T.untyped)
-  INTERNAL_GENERAL = ::T.let(nil, ::T.untyped)
-  INTERNAL_PARAMETER = ::T.let(nil, ::T.untyped)
-  INTERNAL_PREDEFINED = ::T.let(nil, ::T.untyped)
-end
-
-class Nokogiri::XML::Node
-  ATTRIBUTE_DECL = ::T.let(nil, ::T.untyped)
-  ATTRIBUTE_NODE = ::T.let(nil, ::T.untyped)
-  CDATA_SECTION_NODE = ::T.let(nil, ::T.untyped)
-  COMMENT_NODE = ::T.let(nil, ::T.untyped)
-  DOCB_DOCUMENT_NODE = ::T.let(nil, ::T.untyped)
-  DOCUMENT_FRAG_NODE = ::T.let(nil, ::T.untyped)
-  DOCUMENT_NODE = ::T.let(nil, ::T.untyped)
-  DOCUMENT_TYPE_NODE = ::T.let(nil, ::T.untyped)
-  DTD_NODE = ::T.let(nil, ::T.untyped)
-  ELEMENT_DECL = ::T.let(nil, ::T.untyped)
-  ELEMENT_NODE = ::T.let(nil, ::T.untyped)
-  ENTITY_DECL = ::T.let(nil, ::T.untyped)
-  ENTITY_NODE = ::T.let(nil, ::T.untyped)
-  ENTITY_REF_NODE = ::T.let(nil, ::T.untyped)
-  HTML_DOCUMENT_NODE = ::T.let(nil, ::T.untyped)
-  IMPLIED_XPATH_CONTEXTS = ::T.let(nil, ::T.untyped)
-  NAMESPACE_DECL = ::T.let(nil, ::T.untyped)
-  NOTATION_NODE = ::T.let(nil, ::T.untyped)
-  PI_NODE = ::T.let(nil, ::T.untyped)
-  TEXT_NODE = ::T.let(nil, ::T.untyped)
-  XINCLUDE_END = ::T.let(nil, ::T.untyped)
-  XINCLUDE_START = ::T.let(nil, ::T.untyped)
-end
-
-class Nokogiri::XML::NodeSet
-  IMPLIED_XPATH_CONTEXTS = ::T.let(nil, ::T.untyped)
-end
-
-class Nokogiri::XML::ParseOptions
-  COMPACT = ::T.let(nil, ::T.untyped)
-  DEFAULT_HTML = ::T.let(nil, ::T.untyped)
-  DEFAULT_XML = ::T.let(nil, ::T.untyped)
-  DTDATTR = ::T.let(nil, ::T.untyped)
-  DTDLOAD = ::T.let(nil, ::T.untyped)
-  DTDVALID = ::T.let(nil, ::T.untyped)
-  HUGE = ::T.let(nil, ::T.untyped)
-  NOBASEFIX = ::T.let(nil, ::T.untyped)
-  NOBLANKS = ::T.let(nil, ::T.untyped)
-  NOCDATA = ::T.let(nil, ::T.untyped)
-  NODICT = ::T.let(nil, ::T.untyped)
-  NOENT = ::T.let(nil, ::T.untyped)
-  NOERROR = ::T.let(nil, ::T.untyped)
-  NONET = ::T.let(nil, ::T.untyped)
-  NOWARNING = ::T.let(nil, ::T.untyped)
-  NOXINCNODE = ::T.let(nil, ::T.untyped)
-  NSCLEAN = ::T.let(nil, ::T.untyped)
-  OLD10 = ::T.let(nil, ::T.untyped)
-  PEDANTIC = ::T.let(nil, ::T.untyped)
-  RECOVER = ::T.let(nil, ::T.untyped)
-  SAX1 = ::T.let(nil, ::T.untyped)
-  STRICT = ::T.let(nil, ::T.untyped)
-  XINCLUDE = ::T.let(nil, ::T.untyped)
-end
-
-class Nokogiri::XML::Reader
-  TYPE_ATTRIBUTE = ::T.let(nil, ::T.untyped)
-  TYPE_CDATA = ::T.let(nil, ::T.untyped)
-  TYPE_COMMENT = ::T.let(nil, ::T.untyped)
-  TYPE_DOCUMENT = ::T.let(nil, ::T.untyped)
-  TYPE_DOCUMENT_FRAGMENT = ::T.let(nil, ::T.untyped)
-  TYPE_DOCUMENT_TYPE = ::T.let(nil, ::T.untyped)
-  TYPE_ELEMENT = ::T.let(nil, ::T.untyped)
-  TYPE_END_ELEMENT = ::T.let(nil, ::T.untyped)
-  TYPE_END_ENTITY = ::T.let(nil, ::T.untyped)
-  TYPE_ENTITY = ::T.let(nil, ::T.untyped)
-  TYPE_ENTITY_REFERENCE = ::T.let(nil, ::T.untyped)
-  TYPE_NONE = ::T.let(nil, ::T.untyped)
-  TYPE_NOTATION = ::T.let(nil, ::T.untyped)
-  TYPE_PROCESSING_INSTRUCTION = ::T.let(nil, ::T.untyped)
-  TYPE_SIGNIFICANT_WHITESPACE = ::T.let(nil, ::T.untyped)
-  TYPE_TEXT = ::T.let(nil, ::T.untyped)
-  TYPE_WHITESPACE = ::T.let(nil, ::T.untyped)
-  TYPE_XML_DECLARATION = ::T.let(nil, ::T.untyped)
-end
-
-class Nokogiri::XML::SAX::Parser
-  ENCODINGS = ::T.let(nil, ::T.untyped)
-end
-
-module Nokogiri::XML::Searchable
-  LOOKS_LIKE_XPATH = ::T.let(nil, ::T.untyped)
 end
 
 class OauthCallbacksController
@@ -11519,6 +10683,10 @@ class OmniAuth::Form
 end
 
 module OmniAuth::OAuth2
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module OmniAuth::RailsCsrfProtection
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
@@ -13618,6 +12786,11 @@ class Pathname
   def make_symlink(_); end
 end
 
+class PendIssueUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class Person::Person
   extend ::T::Private::Methods::SingletonMethodHooks
   extend ::T::Private::Methods::MethodHooks
@@ -13634,7 +12807,48 @@ module PersonRepository::AR
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
-class PlanIssueReleaseUsecase
+class Plan::IssueList
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class Plan::Plan
+  extend ::T::Private::Methods::SingletonMethodHooks
+  extend ::T::Private::Methods::MethodHooks
+end
+
+module Plan::PlanRepository
+  extend ::T::Private::Abstract::Hooks
+  extend ::T::InterfaceWrapper::Helpers
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class Plan::Release
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class Plan::ReleaseList
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class PlanIssueUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class PlanRepository::AR
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class PlannedIssueResolver
+  extend ::T::Private::Methods::SingletonMethodHooks
+  extend ::T::Private::Methods::MethodHooks
+end
+
+class PreparePlanUsecase
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
 end
@@ -13659,17 +12873,15 @@ module Product::ProductRepository
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
-class ProductBacklogQuery::ItemList
-  def self.inherited(s); end
-end
-
 class ProductBacklogQuery::ProductBacklog
   def self.inherited(s); end
 end
 
+class ProductBacklogQuery::ReleaseStruct
+  def self.inherited(s); end
+end
+
 class ProductForm
-  include ::ActiveSupport::Callbacks
-  include ::ActiveModel::Validations::HelperMethods
   def __callbacks(); end
 
   def __callbacks?(); end
@@ -15344,20 +14556,6 @@ Rack::Utils::KeySpaceConstrainedParams = Rack::QueryParser::Params
 
 Rack::Utils::ParameterTypeError = Rack::QueryParser::ParameterTypeError
 
-class Rails::Application
-  INITIAL_VARIABLES = ::T.let(nil, ::T.untyped)
-end
-
-class Rails::ApplicationController
-end
-
-class Rails::ApplicationController
-end
-
-module Rails::Autoloaders
-  extend ::Enumerable
-end
-
 class Rails::BacktraceCleaner
   APP_DIRS_PATTERN = ::T.let(nil, ::T.untyped)
   DOT_SLASH = ::T.let(nil, ::T.untyped)
@@ -15375,69 +14573,6 @@ class Rails::Html::Sanitizer
 end
 
 Rails::Html::WhiteListSanitizer = Rails::Html::SafeListSanitizer
-
-module Rails::Info
-  def properties(); end
-
-  def properties=(obj); end
-end
-
-module Rails::Info
-  def self.properties(); end
-
-  def self.properties=(obj); end
-
-  def self.property(name, value=T.unsafe(nil)); end
-
-  def self.to_html(); end
-end
-
-class Rails::InfoController
-  def _layout_from_proc(); end
-
-  def index(); end
-
-  def properties(); end
-
-  def routes(); end
-end
-
-class Rails::InfoController
-end
-
-class Rails::MailersController
-  def index(); end
-
-  def preview(); end
-end
-
-class Rails::MailersController
-end
-
-class Rails::Rack::Logger
-  def call(env); end
-
-  def initialize(app, taggers=T.unsafe(nil)); end
-end
-
-class Rails::Railtie
-  ABSTRACT_RAILTIES = ::T.let(nil, ::T.untyped)
-end
-
-module Rails::VERSION
-  MAJOR = ::T.let(nil, ::T.untyped)
-  MINOR = ::T.let(nil, ::T.untyped)
-  PRE = ::T.let(nil, ::T.untyped)
-  STRING = ::T.let(nil, ::T.untyped)
-  TINY = ::T.let(nil, ::T.untyped)
-end
-
-class Rails::WelcomeController
-  def index(); end
-end
-
-class Rails::WelcomeController
-end
 
 module Rake::DSL
   include ::Rake::FileUtilsExt
@@ -15576,26 +14711,7 @@ class RegisterPersonUsecase
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
-class Release::ItemList
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
-class Release::Release
-  extend ::T::Private::Methods::SingletonMethodHooks
-  extend ::T::Private::Methods::MethodHooks
-end
-
-module Release::ReleaseRepository
-  extend ::T::Private::Abstract::Hooks
-  extend ::T::InterfaceWrapper::Helpers
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
 class ReleaseForm
-  include ::ActiveSupport::Callbacks
-  include ::ActiveModel::Validations::HelperMethods
   def __callbacks(); end
 
   def __callbacks?(); end
@@ -15636,39 +14752,17 @@ class ReleaseForm
   def self._validators?(); end
 end
 
-class ReleaseRepository::AR
-  include ::ReleaseRepository::AR::GeneratedAttributeMethods
-  include ::ReleaseRepository::AR::GeneratedAssociationMethods
-end
-
-module ReleaseRepository::AR::GeneratedAssociationMethods
-end
-
-module ReleaseRepository::AR::GeneratedAssociationMethods
-end
-
-module ReleaseRepository::AR::GeneratedAttributeMethods
-end
-
-module ReleaseRepository::AR::GeneratedAttributeMethods
-  extend ::Mutex_m
-end
-
-class ReleaseRepository::AR
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
 class RemoveAcceptanceCriterionUsecase
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
-class RemoveIssueUsecase
+class RemoveIssueFromPlanUsecase
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
-class RemoveReleaseUsecase
+class RemoveIssueUsecase
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
 end
@@ -16725,6 +15819,11 @@ end
 
 ScanError = StringScanner::Error
 
+class ScheduleIssueUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class ScrumTeamQuery::Member
   def self.inherited(s); end
 end
@@ -16971,6 +16070,11 @@ module Socket::Constants
   SO_WANTOOBFLAG = ::T.let(nil, ::T.untyped)
   TCP_NOOPT = ::T.let(nil, ::T.untyped)
   TCP_NOPUSH = ::T.let(nil, ::T.untyped)
+end
+
+class SortIssuesUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 class SortedSet
@@ -17251,32 +16355,8 @@ Struct::Passwd = Etc::Passwd
 
 Struct::Tms = Process::Tms
 
-class SwapIssuePrioritiesBetweenReleasesUsecase
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
-class SwapIssuePrioritiesUsecase
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
 class Symbol
   def self.from_msgpack_ext(data); end
-end
-
-module TZInfo::RubyCoreSupport
-  HALF_DAYS_IN_DAY = ::T.let(nil, ::T.untyped)
-end
-
-class TZInfo::ZoneinfoDataSource
-  DEFAULT_ALTERNATE_ISO3166_TAB_SEARCH_PATH = ::T.let(nil, ::T.untyped)
-  DEFAULT_SEARCH_PATH = ::T.let(nil, ::T.untyped)
-end
-
-class TZInfo::ZoneinfoTimezoneInfo
-  MAX_TIMESTAMP = ::T.let(nil, ::T.untyped)
-  MIN_TIMESTAMP = ::T.let(nil, ::T.untyped)
 end
 
 class Team::Member
@@ -17297,8 +16377,6 @@ module Team::TeamRepository
 end
 
 class TeamForm
-  include ::ActiveSupport::Callbacks
-  include ::ActiveModel::Validations::HelperMethods
   def __callbacks(); end
 
   def __callbacks?(); end

@@ -1,4 +1,4 @@
-# typed: strict
+# typed: false
 Rails.application.routes.draw do
   root to: 'products#index'
 

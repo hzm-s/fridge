@@ -1,4 +1,4 @@
-# typed: ignore
+# typed: false
 class CreateDaoAcceptanceCriteria < ActiveRecord::Migration[6.0]
   def change
     create_table :dao_acceptance_criteria do |t|

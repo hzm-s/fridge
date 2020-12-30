@@ -258,6 +258,518 @@ class Mime::NullType
   extend Singleton::SingletonClassMethods
   include Singleton
 end
+class ActionController::ActionControllerError < StandardError
+end
+class ActionController::BadRequest < ActionController::ActionControllerError
+  def initialize(msg = nil); end
+end
+class ActionController::RenderError < ActionController::ActionControllerError
+end
+class ActionController::RoutingError < ActionController::ActionControllerError
+  def failures; end
+  def initialize(message, failures = nil); end
+end
+class ActionController::UrlGenerationError < ActionController::ActionControllerError
+end
+class ActionController::MethodNotAllowed < ActionController::ActionControllerError
+  def initialize(*allowed_methods); end
+end
+class ActionController::NotImplemented < ActionController::MethodNotAllowed
+end
+class ActionController::MissingFile < ActionController::ActionControllerError
+end
+class ActionController::SessionOverflowError < ActionController::ActionControllerError
+  def initialize(message = nil); end
+end
+class ActionController::UnknownHttpMethod < ActionController::ActionControllerError
+end
+class ActionController::UnknownFormat < ActionController::ActionControllerError
+end
+class ActionController::RespondToMismatchError < ActionController::ActionControllerError
+  def initialize(message = nil); end
+end
+class ActionController::MissingExactTemplate < ActionController::UnknownFormat
+end
+module AbstractController::Helpers
+  extend ActiveSupport::Concern
+end
+class AbstractController::Helpers::MissingHelperError < LoadError
+  def initialize(error, path); end
+end
+module AbstractController::Helpers::ClassMethods
+  def add_template_helper(mod); end
+  def clear_helpers; end
+  def default_helper_module!; end
+  def helper(*args, &block); end
+  def helper_method(*meths); end
+  def inherited(klass); end
+  def modules_for_helpers(args); end
+end
+module AbstractController::Callbacks
+  def process_action(*args); end
+  extend ActiveSupport::Concern
+  include ActiveSupport::Callbacks
+end
+module AbstractController::Callbacks::ClassMethods
+  def _insert_callbacks(callbacks, block = nil); end
+  def _normalize_callback_option(options, from, to); end
+  def _normalize_callback_options(options); end
+  def after_action(*names, &blk); end
+  def append_after_action(*names, &blk); end
+  def append_around_action(*names, &blk); end
+  def append_before_action(*names, &blk); end
+  def around_action(*names, &blk); end
+  def before_action(*names, &blk); end
+  def prepend_after_action(*names, &blk); end
+  def prepend_around_action(*names, &blk); end
+  def prepend_before_action(*names, &blk); end
+  def skip_after_action(*names); end
+  def skip_around_action(*names); end
+  def skip_before_action(*names); end
+end
+class ActionDispatch::Http::Headers
+  def [](key); end
+  def []=(key, value); end
+  def add(key, value); end
+  def each(&block); end
+  def env; end
+  def env_name(key); end
+  def fetch(key, default = nil); end
+  def include?(key); end
+  def initialize(request); end
+  def key?(key); end
+  def merge!(headers_or_env); end
+  def merge(headers_or_env); end
+  def self.from_hash(hash); end
+  include Enumerable
+end
+module ActionDispatch::Http::Cache
+end
+module ActionDispatch::Http::Cache::Request
+  def etag_matches?(etag); end
+  def fresh?(response); end
+  def if_modified_since; end
+  def if_none_match; end
+  def if_none_match_etags; end
+  def not_modified?(modified_at); end
+end
+module ActionDispatch::Http::Cache::Response
+  def cache_control; end
+  def cache_control_headers; end
+  def cache_control_segments; end
+  def date; end
+  def date=(utc_time); end
+  def date?; end
+  def etag=(weak_validators); end
+  def etag?; end
+  def generate_strong_etag(validators); end
+  def generate_weak_etag(validators); end
+  def handle_conditional_get!; end
+  def last_modified; end
+  def last_modified=(utc_time); end
+  def last_modified?; end
+  def merge_and_normalize_cache_control!(cache_control); end
+  def prepare_cache_control!; end
+  def strong_etag=(strong_validators); end
+  def strong_etag?; end
+  def weak_etag=(weak_validators); end
+  def weak_etag?; end
+end
+module ActionDispatch::Http::Parameters
+  def binary_params_for?(controller, action); end
+  def log_parse_error_once; end
+  def parameters; end
+  def params; end
+  def params_parsers; end
+  def parse_formatted_parameters(parsers); end
+  def path_parameters; end
+  def path_parameters=(parameters); end
+  def set_binary_encoding(params, controller, action); end
+  extend ActiveSupport::Concern
+end
+class ActionDispatch::Http::Parameters::ParseError < StandardError
+  def initialize; end
+end
+module ActionDispatch::Http::Parameters::ClassMethods
+  def parameter_parsers=(parsers); end
+end
+module ActionDispatch::Http::MimeNegotiation
+  def accepts; end
+  def content_mime_type; end
+  def content_type; end
+  def format(view_path = nil); end
+  def format=(extension); end
+  def format_from_path_extension; end
+  def formats; end
+  def formats=(extensions); end
+  def has_content_type?; end
+  def negotiate_mime(order); end
+  def use_accept_header; end
+  def valid_accept_header; end
+  def variant; end
+  def variant=(variant); end
+  extend ActiveSupport::Concern
+end
+module ActionDispatch::Http::FilterParameters
+  def env_filter; end
+  def filtered_env; end
+  def filtered_parameters; end
+  def filtered_path; end
+  def filtered_query_string; end
+  def initialize; end
+  def parameter_filter; end
+  def parameter_filter_for(filters); end
+end
+module ActionDispatch::Http::URL
+  def domain(tld_length = nil); end
+  def host; end
+  def host_with_port; end
+  def initialize; end
+  def optional_port; end
+  def port; end
+  def port_string; end
+  def protocol; end
+  def raw_host_with_port; end
+  def self.add_anchor(path, anchor); end
+  def self.add_params(path, params); end
+  def self.add_trailing_slash(path); end
+  def self.build_host_url(host, port, protocol, options, path); end
+  def self.extract_domain(host, tld_length); end
+  def self.extract_domain_from(host, tld_length); end
+  def self.extract_subdomain(host, tld_length); end
+  def self.extract_subdomains(host, tld_length); end
+  def self.extract_subdomains_from(host, tld_length); end
+  def self.full_url_for(options); end
+  def self.named_host?(host); end
+  def self.normalize_host(_host, options); end
+  def self.normalize_port(port, protocol); end
+  def self.normalize_protocol(protocol); end
+  def self.path_for(options); end
+  def self.tld_length; end
+  def self.tld_length=(obj); end
+  def self.url_for(options); end
+  def server_port; end
+  def standard_port; end
+  def standard_port?; end
+  def subdomain(tld_length = nil); end
+  def subdomains(tld_length = nil); end
+  def tld_length; end
+  def tld_length=(obj); end
+  def url; end
+end
+class ActionDispatch::ContentSecurityPolicy
+  def apply_mapping(source); end
+  def apply_mappings(sources); end
+  def base_uri(*sources); end
+  def block_all_mixed_content(enabled = nil); end
+  def build(context = nil, nonce = nil, nonce_directives = nil); end
+  def build_directive(sources, context); end
+  def build_directives(context, nonce, nonce_directives); end
+  def child_src(*sources); end
+  def connect_src(*sources); end
+  def default_src(*sources); end
+  def directives; end
+  def font_src(*sources); end
+  def form_action(*sources); end
+  def frame_ancestors(*sources); end
+  def frame_src(*sources); end
+  def img_src(*sources); end
+  def initialize; end
+  def initialize_copy(other); end
+  def manifest_src(*sources); end
+  def media_src(*sources); end
+  def nonce_directive?(directive, nonce_directives); end
+  def object_src(*sources); end
+  def plugin_types(*types); end
+  def prefetch_src(*sources); end
+  def report_uri(uri); end
+  def require_sri_for(*types); end
+  def resolve_source(source, context); end
+  def sandbox(*values); end
+  def script_src(*sources); end
+  def style_src(*sources); end
+  def upgrade_insecure_requests(enabled = nil); end
+  def worker_src(*sources); end
+end
+class ActionDispatch::ContentSecurityPolicy::Middleware
+  def call(env); end
+  def header_name(request); end
+  def html_response?(headers); end
+  def initialize(app); end
+  def policy_present?(headers); end
+end
+module ActionDispatch::ContentSecurityPolicy::Request
+  def content_security_policy; end
+  def content_security_policy=(policy); end
+  def content_security_policy_nonce; end
+  def content_security_policy_nonce_directives; end
+  def content_security_policy_nonce_directives=(generator); end
+  def content_security_policy_nonce_generator; end
+  def content_security_policy_nonce_generator=(generator); end
+  def content_security_policy_report_only; end
+  def content_security_policy_report_only=(value); end
+  def generate_content_security_policy_nonce; end
+end
+class ActionDispatch::Request
+  def GET; end
+  def POST; end
+  def accept; end
+  def accept_charset; end
+  def accept_encoding; end
+  def accept_language; end
+  def auth_type; end
+  def authenticated_encrypted_cookie_salt; end
+  def authorization; end
+  def body; end
+  def body_stream; end
+  def cache_control; end
+  def check_method(name); end
+  def client_ip; end
+  def commit_cookie_jar!; end
+  def commit_flash; end
+  def content_length; end
+  def controller_class; end
+  def controller_class_for(name); end
+  def controller_instance; end
+  def controller_instance=(controller); end
+  def cookie_jar; end
+  def cookie_jar=(jar); end
+  def cookies_digest; end
+  def cookies_rotations; end
+  def cookies_serializer; end
+  def encrypted_cookie_cipher; end
+  def encrypted_cookie_salt; end
+  def encrypted_signed_cookie_salt; end
+  def engine_script_name(_routes); end
+  def engine_script_name=(name); end
+  def form_data?; end
+  def from; end
+  def fullpath; end
+  def gateway_interface; end
+  def have_cookie_jar?; end
+  def headers; end
+  def http_auth_salt; end
+  def ignore_accept_header; end
+  def ignore_accept_header=(obj); end
+  def initialize(env); end
+  def ip; end
+  def key?(key); end
+  def key_generator; end
+  def local?; end
+  def logger; end
+  def media_type; end
+  def method; end
+  def method_symbol; end
+  def negotiate; end
+  def origin; end
+  def original_fullpath; end
+  def original_script_name; end
+  def original_url; end
+  def path_translated; end
+  def pragma; end
+  def query_parameters; end
+  def raw_post; end
+  def remote_addr; end
+  def remote_host; end
+  def remote_ident; end
+  def remote_ip; end
+  def remote_ip=(remote_ip); end
+  def remote_user; end
+  def request_id; end
+  def request_id=(id); end
+  def request_method; end
+  def request_method=(request_method); end
+  def request_method_symbol; end
+  def request_parameters; end
+  def request_parameters=(params); end
+  def reset_session; end
+  def routes; end
+  def routes=(routes); end
+  def secret_key_base; end
+  def self.empty; end
+  def self.ignore_accept_header; end
+  def self.ignore_accept_header=(obj); end
+  def self.parameter_parsers; end
+  def send_early_hints(links); end
+  def server_addr; end
+  def server_name; end
+  def server_protocol; end
+  def server_software; end
+  def session=(session); end
+  def session_options=(options); end
+  def show_exceptions?; end
+  def signed_cookie_digest; end
+  def signed_cookie_salt; end
+  def ssl?; end
+  def use_authenticated_cookie_encryption; end
+  def use_cookies_with_metadata; end
+  def uuid; end
+  def version; end
+  def x_csrf_token; end
+  def x_forwarded_for; end
+  def x_forwarded_host; end
+  def x_request_id; end
+  def xhr?; end
+  def xml_http_request?; end
+  extend ActionDispatch::Http::Parameters::ClassMethods
+  include ActionDispatch::ContentSecurityPolicy::Request
+  include ActionDispatch::Http::Cache::Request
+  include ActionDispatch::Http::FilterParameters
+  include ActionDispatch::Http::MimeNegotiation
+  include ActionDispatch::Http::Parameters
+  include ActionDispatch::Http::URL
+  include Rack::Request::Env
+  include Rack::Request::Helpers
+end
+class ActionDispatch::Request::PASS_NOT_FOUND
+  def self.action(_); end
+  def self.binary_params_for?(action); end
+  def self.call(_); end
+end
+class ActionDispatch::Cookies
+  def call(env); end
+  def initialize(app); end
+end
+class ActionDispatch::Cookies::CookieOverflow < StandardError
+end
+module ActionDispatch::Cookies::ChainedCookieJars
+  def encrypted; end
+  def encrypted_cookie_cipher; end
+  def permanent; end
+  def signed; end
+  def signed_cookie_digest; end
+  def signed_or_encrypted; end
+  def upgrade_legacy_hmac_aes_cbc_cookies?; end
+end
+class ActionDispatch::Cookies::CookieJar
+  def [](name); end
+  def []=(name, options); end
+  def always_write_cookie; end
+  def always_write_cookie=(obj); end
+  def clear(options = nil); end
+  def commit!; end
+  def committed?; end
+  def delete(name, options = nil); end
+  def deleted?(name, options = nil); end
+  def each(&block); end
+  def escape(string); end
+  def fetch(name, *args, &block); end
+  def handle_options(options); end
+  def has_key?(name); end
+  def initialize(request); end
+  def key?(name); end
+  def make_set_cookie_header(header); end
+  def request; end
+  def self.always_write_cookie; end
+  def self.always_write_cookie=(obj); end
+  def self.build(req, cookies); end
+  def to_hash(*arg0); end
+  def to_header; end
+  def update(other_hash); end
+  def update_cookies_from_jar; end
+  def write(headers); end
+  def write_cookie?(cookie); end
+  include Enumerable
+end
+class ActionDispatch::Cookies::AbstractCookieJar
+  def [](name); end
+  def []=(name, options); end
+  def commit(name, options); end
+  def cookie_metadata(name, options); end
+  def expiry_options(options); end
+  def initialize(parent_jar); end
+  def parse(name, data, purpose: nil); end
+  def request; end
+  include ActionDispatch::Cookies::ChainedCookieJars
+end
+class ActionDispatch::Cookies::PermanentCookieJar < ActionDispatch::Cookies::AbstractCookieJar
+  def commit(name, options); end
+end
+class ActionDispatch::Cookies::JsonSerializer
+  def self.dump(value); end
+  def self.load(value); end
+end
+module ActionDispatch::Cookies::SerializedCookieJars
+  def deserialize(name); end
+  def digest; end
+  def needs_migration?(value); end
+  def serialize(value); end
+  def serializer; end
+end
+class ActionDispatch::Cookies::SignedKeyRotatingCookieJar < ActionDispatch::Cookies::AbstractCookieJar
+  def commit(name, options); end
+  def initialize(parent_jar); end
+  def parse(name, signed_message, purpose: nil); end
+  include ActionDispatch::Cookies::SerializedCookieJars
+end
+class ActionDispatch::Cookies::EncryptedKeyRotatingCookieJar < ActionDispatch::Cookies::AbstractCookieJar
+  def commit(name, options); end
+  def initialize(parent_jar); end
+  def parse(name, encrypted_message, purpose: nil); end
+  include ActionDispatch::Cookies::SerializedCookieJars
+end
+class ActionController::InvalidAuthenticityToken < ActionController::ActionControllerError
+end
+class ActionController::InvalidCrossOriginRequest < ActionController::ActionControllerError
+end
+module ActionController::RequestForgeryProtection
+  def any_authenticity_token_valid?; end
+  def compare_with_global_token(token, session); end
+  def compare_with_real_token(token, session); end
+  def csrf_token_hmac(session, identifier); end
+  def form_authenticity_param; end
+  def form_authenticity_token(form_options: nil); end
+  def global_csrf_token(session); end
+  def handle_unverified_request; end
+  def mark_for_same_origin_verification!; end
+  def marked_for_same_origin_verification?; end
+  def mask_token(raw_token); end
+  def masked_authenticity_token(session, form_options: nil); end
+  def non_xhr_javascript_response?; end
+  def normalize_action_path(action_path); end
+  def per_form_csrf_token(session, action_path, method); end
+  def protect_against_forgery?; end
+  def real_csrf_token(session); end
+  def request_authenticity_tokens; end
+  def unmask_token(masked_token); end
+  def valid_authenticity_token?(session, encoded_masked_token); end
+  def valid_per_form_csrf_token?(token, session); end
+  def valid_request_origin?; end
+  def verified_request?; end
+  def verify_authenticity_token; end
+  def verify_same_origin_request; end
+  def xor_byte_strings(s1, s2); end
+  extend ActiveSupport::Concern
+  include AbstractController::Callbacks
+  include AbstractController::Helpers
+end
+module ActionController::RequestForgeryProtection::ClassMethods
+  def protect_from_forgery(options = nil); end
+  def protection_method_class(name); end
+  def skip_forgery_protection(options = nil); end
+end
+module ActionController::RequestForgeryProtection::ProtectionMethods
+end
+class ActionController::RequestForgeryProtection::ProtectionMethods::NullSession
+  def handle_unverified_request; end
+  def initialize(controller); end
+end
+class ActionController::RequestForgeryProtection::ProtectionMethods::NullSession::NullSessionHash < Rack::Session::Abstract::SessionHash
+  def destroy; end
+  def exists?; end
+  def initialize(req); end
+end
+class ActionController::RequestForgeryProtection::ProtectionMethods::NullSession::NullCookieJar < ActionDispatch::Cookies::CookieJar
+  def write(*arg0); end
+end
+class ActionController::RequestForgeryProtection::ProtectionMethods::ResetSession
+  def handle_unverified_request; end
+  def initialize(controller); end
+end
+class ActionController::RequestForgeryProtection::ProtectionMethods::Exception
+  def handle_unverified_request; end
+  def initialize(controller); end
+end
 module ActionDispatch::Routing
   extend ActiveSupport::Autoload
 end
@@ -312,38 +824,6 @@ class ActionDispatch::Journey::Routes
   def simulator; end
   def size; end
   include Enumerable
-end
-class ActionController::ActionControllerError < StandardError
-end
-class ActionController::BadRequest < ActionController::ActionControllerError
-  def initialize(msg = nil); end
-end
-class ActionController::RenderError < ActionController::ActionControllerError
-end
-class ActionController::RoutingError < ActionController::ActionControllerError
-  def failures; end
-  def initialize(message, failures = nil); end
-end
-class ActionController::UrlGenerationError < ActionController::ActionControllerError
-end
-class ActionController::MethodNotAllowed < ActionController::ActionControllerError
-  def initialize(*allowed_methods); end
-end
-class ActionController::NotImplemented < ActionController::MethodNotAllowed
-end
-class ActionController::MissingFile < ActionController::ActionControllerError
-end
-class ActionController::SessionOverflowError < ActionController::ActionControllerError
-  def initialize(message = nil); end
-end
-class ActionController::UnknownHttpMethod < ActionController::ActionControllerError
-end
-class ActionController::UnknownFormat < ActionController::ActionControllerError
-end
-class ActionController::RespondToMismatchError < ActionController::ActionControllerError
-  def initialize(message = nil); end
-end
-class ActionController::MissingExactTemplate < ActionController::UnknownFormat
 end
 class ActionDispatch::Journey::Formatter
   def build_cache; end
@@ -770,305 +1250,6 @@ class ActionDispatch::Journey::NFA::Simulator
   def simulate(string); end
   def tt; end
 end
-class ActionDispatch::Http::Headers
-  def [](key); end
-  def []=(key, value); end
-  def add(key, value); end
-  def each(&block); end
-  def env; end
-  def env_name(key); end
-  def fetch(key, default = nil); end
-  def include?(key); end
-  def initialize(request); end
-  def key?(key); end
-  def merge!(headers_or_env); end
-  def merge(headers_or_env); end
-  def self.from_hash(hash); end
-  include Enumerable
-end
-module ActionDispatch::Http::Cache
-end
-module ActionDispatch::Http::Cache::Request
-  def etag_matches?(etag); end
-  def fresh?(response); end
-  def if_modified_since; end
-  def if_none_match; end
-  def if_none_match_etags; end
-  def not_modified?(modified_at); end
-end
-module ActionDispatch::Http::Cache::Response
-  def cache_control; end
-  def cache_control_headers; end
-  def cache_control_segments; end
-  def date; end
-  def date=(utc_time); end
-  def date?; end
-  def etag=(weak_validators); end
-  def etag?; end
-  def generate_strong_etag(validators); end
-  def generate_weak_etag(validators); end
-  def handle_conditional_get!; end
-  def last_modified; end
-  def last_modified=(utc_time); end
-  def last_modified?; end
-  def merge_and_normalize_cache_control!(cache_control); end
-  def prepare_cache_control!; end
-  def strong_etag=(strong_validators); end
-  def strong_etag?; end
-  def weak_etag=(weak_validators); end
-  def weak_etag?; end
-end
-module ActionDispatch::Http::Parameters
-  def binary_params_for?(controller, action); end
-  def log_parse_error_once; end
-  def parameters; end
-  def params; end
-  def params_parsers; end
-  def parse_formatted_parameters(parsers); end
-  def path_parameters; end
-  def path_parameters=(parameters); end
-  def set_binary_encoding(params, controller, action); end
-  extend ActiveSupport::Concern
-end
-class ActionDispatch::Http::Parameters::ParseError < StandardError
-  def initialize; end
-end
-module ActionDispatch::Http::Parameters::ClassMethods
-  def parameter_parsers=(parsers); end
-end
-module ActionDispatch::Http::MimeNegotiation
-  def accepts; end
-  def content_mime_type; end
-  def content_type; end
-  def format(view_path = nil); end
-  def format=(extension); end
-  def format_from_path_extension; end
-  def formats; end
-  def formats=(extensions); end
-  def has_content_type?; end
-  def negotiate_mime(order); end
-  def use_accept_header; end
-  def valid_accept_header; end
-  def variant; end
-  def variant=(variant); end
-  extend ActiveSupport::Concern
-end
-module ActionDispatch::Http::FilterParameters
-  def env_filter; end
-  def filtered_env; end
-  def filtered_parameters; end
-  def filtered_path; end
-  def filtered_query_string; end
-  def initialize; end
-  def parameter_filter; end
-  def parameter_filter_for(filters); end
-end
-module ActionDispatch::Http::URL
-  def domain(tld_length = nil); end
-  def host; end
-  def host_with_port; end
-  def initialize; end
-  def optional_port; end
-  def port; end
-  def port_string; end
-  def protocol; end
-  def raw_host_with_port; end
-  def self.add_anchor(path, anchor); end
-  def self.add_params(path, params); end
-  def self.add_trailing_slash(path); end
-  def self.build_host_url(host, port, protocol, options, path); end
-  def self.extract_domain(host, tld_length); end
-  def self.extract_domain_from(host, tld_length); end
-  def self.extract_subdomain(host, tld_length); end
-  def self.extract_subdomains(host, tld_length); end
-  def self.extract_subdomains_from(host, tld_length); end
-  def self.full_url_for(options); end
-  def self.named_host?(host); end
-  def self.normalize_host(_host, options); end
-  def self.normalize_port(port, protocol); end
-  def self.normalize_protocol(protocol); end
-  def self.path_for(options); end
-  def self.tld_length; end
-  def self.tld_length=(obj); end
-  def self.url_for(options); end
-  def server_port; end
-  def standard_port; end
-  def standard_port?; end
-  def subdomain(tld_length = nil); end
-  def subdomains(tld_length = nil); end
-  def tld_length; end
-  def tld_length=(obj); end
-  def url; end
-end
-class ActionDispatch::ContentSecurityPolicy
-  def apply_mapping(source); end
-  def apply_mappings(sources); end
-  def base_uri(*sources); end
-  def block_all_mixed_content(enabled = nil); end
-  def build(context = nil, nonce = nil, nonce_directives = nil); end
-  def build_directive(sources, context); end
-  def build_directives(context, nonce, nonce_directives); end
-  def child_src(*sources); end
-  def connect_src(*sources); end
-  def default_src(*sources); end
-  def directives; end
-  def font_src(*sources); end
-  def form_action(*sources); end
-  def frame_ancestors(*sources); end
-  def frame_src(*sources); end
-  def img_src(*sources); end
-  def initialize; end
-  def initialize_copy(other); end
-  def manifest_src(*sources); end
-  def media_src(*sources); end
-  def nonce_directive?(directive, nonce_directives); end
-  def object_src(*sources); end
-  def plugin_types(*types); end
-  def prefetch_src(*sources); end
-  def report_uri(uri); end
-  def require_sri_for(*types); end
-  def resolve_source(source, context); end
-  def sandbox(*values); end
-  def script_src(*sources); end
-  def style_src(*sources); end
-  def upgrade_insecure_requests(enabled = nil); end
-  def worker_src(*sources); end
-end
-class ActionDispatch::ContentSecurityPolicy::Middleware
-  def call(env); end
-  def header_name(request); end
-  def html_response?(headers); end
-  def initialize(app); end
-  def policy_present?(headers); end
-end
-module ActionDispatch::ContentSecurityPolicy::Request
-  def content_security_policy; end
-  def content_security_policy=(policy); end
-  def content_security_policy_nonce; end
-  def content_security_policy_nonce_directives; end
-  def content_security_policy_nonce_directives=(generator); end
-  def content_security_policy_nonce_generator; end
-  def content_security_policy_nonce_generator=(generator); end
-  def content_security_policy_report_only; end
-  def content_security_policy_report_only=(value); end
-  def generate_content_security_policy_nonce; end
-end
-class ActionDispatch::Request
-  def GET; end
-  def POST; end
-  def accept; end
-  def accept_charset; end
-  def accept_encoding; end
-  def accept_language; end
-  def auth_type; end
-  def authenticated_encrypted_cookie_salt; end
-  def authorization; end
-  def body; end
-  def body_stream; end
-  def cache_control; end
-  def check_method(name); end
-  def client_ip; end
-  def commit_cookie_jar!; end
-  def commit_flash; end
-  def content_length; end
-  def controller_class; end
-  def controller_class_for(name); end
-  def controller_instance; end
-  def controller_instance=(controller); end
-  def cookie_jar; end
-  def cookie_jar=(jar); end
-  def cookies_digest; end
-  def cookies_rotations; end
-  def cookies_serializer; end
-  def encrypted_cookie_cipher; end
-  def encrypted_cookie_salt; end
-  def encrypted_signed_cookie_salt; end
-  def engine_script_name(_routes); end
-  def engine_script_name=(name); end
-  def form_data?; end
-  def from; end
-  def fullpath; end
-  def gateway_interface; end
-  def have_cookie_jar?; end
-  def headers; end
-  def http_auth_salt; end
-  def ignore_accept_header; end
-  def ignore_accept_header=(obj); end
-  def initialize(env); end
-  def ip; end
-  def key?(key); end
-  def key_generator; end
-  def local?; end
-  def logger; end
-  def media_type; end
-  def method; end
-  def method_symbol; end
-  def negotiate; end
-  def origin; end
-  def original_fullpath; end
-  def original_script_name; end
-  def original_url; end
-  def path_translated; end
-  def pragma; end
-  def query_parameters; end
-  def raw_post; end
-  def remote_addr; end
-  def remote_host; end
-  def remote_ident; end
-  def remote_ip; end
-  def remote_ip=(remote_ip); end
-  def remote_user; end
-  def request_id; end
-  def request_id=(id); end
-  def request_method; end
-  def request_method=(request_method); end
-  def request_method_symbol; end
-  def request_parameters; end
-  def request_parameters=(params); end
-  def reset_session; end
-  def routes; end
-  def routes=(routes); end
-  def secret_key_base; end
-  def self.empty; end
-  def self.ignore_accept_header; end
-  def self.ignore_accept_header=(obj); end
-  def self.parameter_parsers; end
-  def send_early_hints(links); end
-  def server_addr; end
-  def server_name; end
-  def server_protocol; end
-  def server_software; end
-  def session=(session); end
-  def session_options=(options); end
-  def show_exceptions?; end
-  def signed_cookie_digest; end
-  def signed_cookie_salt; end
-  def ssl?; end
-  def use_authenticated_cookie_encryption; end
-  def use_cookies_with_metadata; end
-  def uuid; end
-  def version; end
-  def x_csrf_token; end
-  def x_forwarded_for; end
-  def x_forwarded_host; end
-  def x_request_id; end
-  def xhr?; end
-  def xml_http_request?; end
-  extend ActionDispatch::Http::Parameters::ClassMethods
-  include ActionDispatch::ContentSecurityPolicy::Request
-  include ActionDispatch::Http::Cache::Request
-  include ActionDispatch::Http::FilterParameters
-  include ActionDispatch::Http::MimeNegotiation
-  include ActionDispatch::Http::Parameters
-  include ActionDispatch::Http::URL
-  include Rack::Request::Env
-  include Rack::Request::Helpers
-end
-class ActionDispatch::Request::PASS_NOT_FOUND
-  def self.action(_); end
-  def self.binary_params_for?(action); end
-  def self.call(_); end
-end
 class ActionDispatch::Routing::Endpoint
   def app; end
   def dispatcher?; end
@@ -1320,103 +1501,6 @@ class ActionDispatch::ExceptionWrapper
   def wrapped_causes_for(exception, backtrace_cleaner); end
   def wrapper_exceptions; end
   def wrapper_exceptions=(obj); end
-end
-class ActionDispatch::Cookies
-  def call(env); end
-  def initialize(app); end
-end
-class ActionDispatch::Cookies::CookieOverflow < StandardError
-end
-module ActionDispatch::Cookies::ChainedCookieJars
-  def encrypted; end
-  def encrypted_cookie_cipher; end
-  def permanent; end
-  def signed; end
-  def signed_cookie_digest; end
-  def signed_or_encrypted; end
-  def upgrade_legacy_hmac_aes_cbc_cookies?; end
-end
-class ActionDispatch::Cookies::CookieJar
-  def [](name); end
-  def []=(name, options); end
-  def always_write_cookie; end
-  def always_write_cookie=(obj); end
-  def clear(options = nil); end
-  def commit!; end
-  def committed?; end
-  def delete(name, options = nil); end
-  def deleted?(name, options = nil); end
-  def each(&block); end
-  def escape(string); end
-  def fetch(name, *args, &block); end
-  def handle_options(options); end
-  def has_key?(name); end
-  def initialize(request); end
-  def key?(name); end
-  def make_set_cookie_header(header); end
-  def request; end
-  def self.always_write_cookie; end
-  def self.always_write_cookie=(obj); end
-  def self.build(req, cookies); end
-  def to_hash(*arg0); end
-  def to_header; end
-  def update(other_hash); end
-  def update_cookies_from_jar; end
-  def write(headers); end
-  def write_cookie?(cookie); end
-  include Enumerable
-end
-class ActionDispatch::Cookies::AbstractCookieJar
-  def [](name); end
-  def []=(name, options); end
-  def commit(name, options); end
-  def cookie_metadata(name, options); end
-  def expiry_options(options); end
-  def initialize(parent_jar); end
-  def parse(name, data, purpose: nil); end
-  def request; end
-  include ActionDispatch::Cookies::ChainedCookieJars
-end
-class ActionDispatch::Cookies::PermanentCookieJar < ActionDispatch::Cookies::AbstractCookieJar
-  def commit(name, options); end
-end
-class ActionDispatch::Cookies::JsonSerializer
-  def self.dump(value); end
-  def self.load(value); end
-end
-module ActionDispatch::Cookies::SerializedCookieJars
-  def deserialize(name); end
-  def digest; end
-  def needs_migration?(value); end
-  def serialize(value); end
-  def serializer; end
-end
-class ActionDispatch::Cookies::SignedKeyRotatingCookieJar < ActionDispatch::Cookies::AbstractCookieJar
-  def commit(name, options); end
-  def initialize(parent_jar); end
-  def parse(name, signed_message, purpose: nil); end
-  include ActionDispatch::Cookies::SerializedCookieJars
-end
-class ActionDispatch::Cookies::EncryptedKeyRotatingCookieJar < ActionDispatch::Cookies::AbstractCookieJar
-  def commit(name, options); end
-  def initialize(parent_jar); end
-  def parse(name, encrypted_message, purpose: nil); end
-  include ActionDispatch::Cookies::SerializedCookieJars
-end
-module AbstractController::Helpers
-  extend ActiveSupport::Concern
-end
-class AbstractController::Helpers::MissingHelperError < LoadError
-  def initialize(error, path); end
-end
-module AbstractController::Helpers::ClassMethods
-  def add_template_helper(mod); end
-  def clear_helpers; end
-  def default_helper_module!; end
-  def helper(*args, &block); end
-  def helper_method(*meths); end
-  def inherited(klass); end
-  def modules_for_helpers(args); end
 end
 module ActionController::Helpers
   def helpers; end
@@ -2501,90 +2585,6 @@ module ActionController::FormBuilder
 end
 module ActionController::FormBuilder::ClassMethods
   def default_form_builder(builder); end
-end
-module AbstractController::Callbacks
-  def process_action(*args); end
-  extend ActiveSupport::Concern
-  include ActiveSupport::Callbacks
-end
-module AbstractController::Callbacks::ClassMethods
-  def _insert_callbacks(callbacks, block = nil); end
-  def _normalize_callback_option(options, from, to); end
-  def _normalize_callback_options(options); end
-  def after_action(*names, &blk); end
-  def append_after_action(*names, &blk); end
-  def append_around_action(*names, &blk); end
-  def append_before_action(*names, &blk); end
-  def around_action(*names, &blk); end
-  def before_action(*names, &blk); end
-  def prepend_after_action(*names, &blk); end
-  def prepend_around_action(*names, &blk); end
-  def prepend_before_action(*names, &blk); end
-  def skip_after_action(*names); end
-  def skip_around_action(*names); end
-  def skip_before_action(*names); end
-end
-class ActionController::InvalidAuthenticityToken < ActionController::ActionControllerError
-end
-class ActionController::InvalidCrossOriginRequest < ActionController::ActionControllerError
-end
-module ActionController::RequestForgeryProtection
-  def any_authenticity_token_valid?; end
-  def compare_with_global_token(token, session); end
-  def compare_with_real_token(token, session); end
-  def csrf_token_hmac(session, identifier); end
-  def form_authenticity_param; end
-  def form_authenticity_token(form_options: nil); end
-  def global_csrf_token(session); end
-  def handle_unverified_request; end
-  def mark_for_same_origin_verification!; end
-  def marked_for_same_origin_verification?; end
-  def mask_token(raw_token); end
-  def masked_authenticity_token(session, form_options: nil); end
-  def non_xhr_javascript_response?; end
-  def normalize_action_path(action_path); end
-  def per_form_csrf_token(session, action_path, method); end
-  def protect_against_forgery?; end
-  def real_csrf_token(session); end
-  def request_authenticity_tokens; end
-  def unmask_token(masked_token); end
-  def valid_authenticity_token?(session, encoded_masked_token); end
-  def valid_per_form_csrf_token?(token, session); end
-  def valid_request_origin?; end
-  def verified_request?; end
-  def verify_authenticity_token; end
-  def verify_same_origin_request; end
-  def xor_byte_strings(s1, s2); end
-  extend ActiveSupport::Concern
-  include AbstractController::Callbacks
-  include AbstractController::Helpers
-end
-module ActionController::RequestForgeryProtection::ClassMethods
-  def protect_from_forgery(options = nil); end
-  def protection_method_class(name); end
-  def skip_forgery_protection(options = nil); end
-end
-module ActionController::RequestForgeryProtection::ProtectionMethods
-end
-class ActionController::RequestForgeryProtection::ProtectionMethods::NullSession
-  def handle_unverified_request; end
-  def initialize(controller); end
-end
-class ActionController::RequestForgeryProtection::ProtectionMethods::NullSession::NullSessionHash < Rack::Session::Abstract::SessionHash
-  def destroy; end
-  def exists?; end
-  def initialize(req); end
-end
-class ActionController::RequestForgeryProtection::ProtectionMethods::NullSession::NullCookieJar < ActionDispatch::Cookies::CookieJar
-  def write(*arg0); end
-end
-class ActionController::RequestForgeryProtection::ProtectionMethods::ResetSession
-  def handle_unverified_request; end
-  def initialize(controller); end
-end
-class ActionController::RequestForgeryProtection::ProtectionMethods::Exception
-  def handle_unverified_request; end
-  def initialize(controller); end
 end
 module ActionController::ContentSecurityPolicy
   def content_security_policy?; end

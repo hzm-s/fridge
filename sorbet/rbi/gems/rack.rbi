@@ -139,6 +139,97 @@ class Rack::Utils::HeaderHash < Hash
   def self.[](headers); end
   def to_hash; end
 end
+class Rack::Session::SessionId
+  def cookie_value; end
+  def empty?; end
+  def hash_sid(sid); end
+  def initialize(public_id); end
+  def inspect; end
+  def private_id; end
+  def public_id; end
+  def to_s; end
+end
+module Rack::Session::Abstract
+end
+class Rack::Session::Abstract::SessionHash
+  def [](key); end
+  def []=(key, value); end
+  def clear; end
+  def delete(key); end
+  def destroy; end
+  def dig(key, *keys); end
+  def each(&block); end
+  def empty?; end
+  def exists?; end
+  def fetch(key, default = nil, &block); end
+  def has_key?(key); end
+  def id; end
+  def id=(arg0); end
+  def include?(key); end
+  def initialize(store, req); end
+  def inspect; end
+  def key?(key); end
+  def keys; end
+  def load!; end
+  def load_for_read!; end
+  def load_for_write!; end
+  def loaded?; end
+  def merge!(hash); end
+  def options; end
+  def replace(hash); end
+  def self.find(req); end
+  def self.set(req, session); end
+  def self.set_options(req, options); end
+  def store(key, value); end
+  def stringify_keys(other); end
+  def to_hash; end
+  def update(hash); end
+  def values; end
+  include Enumerable
+end
+class Rack::Session::Abstract::Persisted
+  def call(env); end
+  def commit_session(req, res); end
+  def commit_session?(req, session, options); end
+  def context(env, app = nil); end
+  def cookie_value(data); end
+  def current_session_id(req); end
+  def default_options; end
+  def delete_session(req, sid, options); end
+  def extract_session_id(request); end
+  def find_session(env, sid); end
+  def force_options?(options); end
+  def forced_session_update?(session, options); end
+  def generate_sid(secure = nil); end
+  def initialize(app, options = nil); end
+  def initialize_sid; end
+  def key; end
+  def load_session(req); end
+  def loaded_session?(session); end
+  def make_request(env); end
+  def prepare_session(req); end
+  def security_matches?(request, options); end
+  def session_class; end
+  def session_exists?(req); end
+  def set_cookie(request, res, cookie); end
+  def sid_secure; end
+  def write_session(req, sid, session, options); end
+end
+class Rack::Session::Abstract::PersistedSecure < Rack::Session::Abstract::Persisted
+  def cookie_value(data); end
+  def extract_session_id(*arg0); end
+  def generate_sid(*arg0); end
+  def session_class; end
+end
+class Rack::Session::Abstract::PersistedSecure::SecureSessionHash < Rack::Session::Abstract::SessionHash
+  def [](key); end
+end
+class Rack::Session::Abstract::ID < Rack::Session::Abstract::Persisted
+  def delete_session(req, sid, options); end
+  def find_session(req, sid); end
+  def self.inherited(klass); end
+  def write_session(req, sid, session, options); end
+end
 class Rack::Request
   def delete_param(k); end
   def initialize(env); end
@@ -276,97 +367,6 @@ class Rack::MethodOverride
   def initialize(app); end
   def method_override(env); end
   def method_override_param(req); end
-end
-class Rack::Session::SessionId
-  def cookie_value; end
-  def empty?; end
-  def hash_sid(sid); end
-  def initialize(public_id); end
-  def inspect; end
-  def private_id; end
-  def public_id; end
-  def to_s; end
-end
-module Rack::Session::Abstract
-end
-class Rack::Session::Abstract::SessionHash
-  def [](key); end
-  def []=(key, value); end
-  def clear; end
-  def delete(key); end
-  def destroy; end
-  def dig(key, *keys); end
-  def each(&block); end
-  def empty?; end
-  def exists?; end
-  def fetch(key, default = nil, &block); end
-  def has_key?(key); end
-  def id; end
-  def id=(arg0); end
-  def include?(key); end
-  def initialize(store, req); end
-  def inspect; end
-  def key?(key); end
-  def keys; end
-  def load!; end
-  def load_for_read!; end
-  def load_for_write!; end
-  def loaded?; end
-  def merge!(hash); end
-  def options; end
-  def replace(hash); end
-  def self.find(req); end
-  def self.set(req, session); end
-  def self.set_options(req, options); end
-  def store(key, value); end
-  def stringify_keys(other); end
-  def to_hash; end
-  def update(hash); end
-  def values; end
-  include Enumerable
-end
-class Rack::Session::Abstract::Persisted
-  def call(env); end
-  def commit_session(req, res); end
-  def commit_session?(req, session, options); end
-  def context(env, app = nil); end
-  def cookie_value(data); end
-  def current_session_id(req); end
-  def default_options; end
-  def delete_session(req, sid, options); end
-  def extract_session_id(request); end
-  def find_session(env, sid); end
-  def force_options?(options); end
-  def forced_session_update?(session, options); end
-  def generate_sid(secure = nil); end
-  def initialize(app, options = nil); end
-  def initialize_sid; end
-  def key; end
-  def load_session(req); end
-  def loaded_session?(session); end
-  def make_request(env); end
-  def prepare_session(req); end
-  def security_matches?(request, options); end
-  def session_class; end
-  def session_exists?(req); end
-  def set_cookie(request, res, cookie); end
-  def sid_secure; end
-  def write_session(req, sid, session, options); end
-end
-class Rack::Session::Abstract::PersistedSecure < Rack::Session::Abstract::Persisted
-  def cookie_value(data); end
-  def extract_session_id(*arg0); end
-  def generate_sid(*arg0); end
-  def session_class; end
-end
-class Rack::Session::Abstract::PersistedSecure::SecureSessionHash < Rack::Session::Abstract::SessionHash
-  def [](key); end
-end
-class Rack::Session::Abstract::ID < Rack::Session::Abstract::Persisted
-  def delete_session(req, sid, options); end
-  def find_session(req, sid); end
-  def self.inherited(klass); end
-  def write_session(req, sid, session, options); end
 end
 class Rack::Session::Cookie < Rack::Session::Abstract::PersistedSecure
   def coder; end

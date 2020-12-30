@@ -1,4 +1,4 @@
-# typed: true
+# typed: false
 class CreateAppUserProfiles < ActiveRecord::Migration[6.0]
   def change
     create_table :app_user_profiles do |t|

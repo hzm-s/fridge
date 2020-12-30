@@ -1,3 +1,4 @@
+# typed: false
 class CreateDaoPlans < ActiveRecord::Migration[6.0]
   def change
     create_table :dao_plans do |t|
