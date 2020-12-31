@@ -20,11 +20,3 @@ body {
 .nf {
   @include nf;
 }
-
-.silent-danger {
-  color: $secondary;
-
-  &:hover {
-    color: $danger;
-  }
-}

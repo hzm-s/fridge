@@ -61,6 +61,14 @@ label {
   }
 }
 
+.silent-danger {
+  color: $secondary;
+
+  &:hover {
+    color: $danger;
+  }
+}
+
 .text-md {
   font-size: .875rem;
 }
