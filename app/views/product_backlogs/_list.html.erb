@@ -1,6 +1,4 @@
-<% pbl.scheduled.each do |release| %>
-  <%= render partial: 'release', locals: { release: release } %>
-<% end %>
+<%= render partial: 'release', collection: pbl.scheduled, as: :release %>
 <div class="pbl-list">
   <div class="pbl-list__header">
     <span class="pbl-list__title">

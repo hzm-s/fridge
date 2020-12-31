@@ -6,13 +6,13 @@ Rails.application.routes.draw do
   get 'sign_in', to: 'sessions#new', as: :sign_in
   delete 'sign_out', to: 'sessions#destroy', as: :sign_out
 
+  resources :product_backlogs, param: :product_id, only: [:show, :update]
+
   resources :products, only: [:new, :create, :index] do
     resources :issues, only: [:create]
-    resources :releases, only: [:new, :create]
+    resources :releases, only: [:new, :create, :edit, :update, :destroy]
     resource :plan, only: [:update]
   end
-
-  resources :product_backlogs, param: :product_id, only: [:show, :update]
 
   resources :issues, only: [:edit, :update, :destroy] do
     resources :acceptance_criteria, only: [:create]
