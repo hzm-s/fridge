@@ -21,6 +21,14 @@ class ReleasesController < ApplicationController
     end
   end
 
+  def edit
+    release =
+      ProductBacklogQuery
+        .call(current_product_id)
+        .scheduled[release_index]
+    @form = ReleaseForm.new(name: release.name, index: release_index)
+  end
+
   def current_product_id
     params[:product_id]
   end
@@ -29,5 +37,9 @@ class ReleasesController < ApplicationController
 
   def permitted_params
     params.require(:form).permit(:name)
+  end
+
+  def release_index
+    params[:id].to_i
   end
 end

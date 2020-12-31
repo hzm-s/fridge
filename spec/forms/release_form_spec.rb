@@ -9,6 +9,13 @@ RSpec.describe ReleaseForm do
   end
 
   it do
+    aggregate_failures do
+      expect(described_class.new).to_not be_persisted
+      expect(described_class.new(index: 0)).to be_persisted
+    end
+  end
+
+  it do
     form = described_class.new(valid)
     expect(form).to be_valid
   end

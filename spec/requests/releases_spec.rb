@@ -33,4 +33,15 @@ RSpec.describe 'releases' do
       end
     end
   end
+
+  describe 'edit' do
+    before do
+      add_release(product.id, 'ファーストリリース')
+    end
+
+    it do
+      get edit_product_release_path(product_id: product.id, id: 0)
+      expect(response.body).to include 'ファーストリリース'
+    end
+  end
 end

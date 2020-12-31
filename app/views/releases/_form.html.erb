@@ -1,7 +1,9 @@
-<%= form_with model: form, scope: :form, url: product_releases_path(product_id: current_product_id), local: true do |f| %>
+<% url = form.persisted? ? product_release_path(product_id: current_product_id, id: form.index) : product_releases_path(product_id: current_product_id) %>
+<% submit = form.persisted? ? t('navs.save') : t('navs.create') %>
+<%= form_with model: form, scope: :form, url: url, local: true do |f| %>
   <div class="form-group">
     <%= f.label :name %>
     <%= f.text_field :name, class: 'form-control', autocomplete: 'off' %>
   </div>
-  <%= f.button t('navs.create'), class: 'btn btn-success', data: with_loader %>
+  <%= f.button submit, class: 'btn btn-success', data: with_loader %>
 <% end %>
