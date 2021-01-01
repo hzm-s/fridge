@@ -31,6 +31,14 @@ module Plan
       end
     end
 
+    describe 'Change name' do
+      it do
+        r = described_class.new('MVP', issue_list(issue_a, issue_b, issue_c))
+        r = r.change_name('1st Release')
+        expect(r).to eq described_class.new('1st Release', issue_list(issue_a, issue_b, issue_c))
+      end
+    end
+
     describe 'Check to include issue' do
       it { expect(described_class.new('R', issue_list(issue_a, issue_b, issue_c))).to be_include(issue_b) }
       it { expect(described_class.new('R', issue_list(issue_a, issue_c))).to_not be_include(issue_b) }

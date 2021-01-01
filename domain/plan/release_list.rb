@@ -52,9 +52,16 @@ module Plan
       update(new_from).update(new_to)
     end
 
+    sig {params(new_name: String, old_name: String).returns(T.self_type)}
+    def change_release_name(new_name, old_name)
+      index = find_index_by_release_name(old_name)
+      new_releases = @releases.dup.tap { |list| list[index] = Release.new(new_name, list[index].issues) }
+      self.class.new(new_releases)
+    end
+
     sig {params(release: Release).returns(T.self_type)}
     def update(release)
-      index = @releases.find_index { |r| r.name == release.name }
+      index = find_index_by_release_name(release.name)
       new_releases = @releases.dup.tap { |list| list[index] = Release.new(release.name) }
       raise DuplicatedIssue if have_same_issue_in_releases?(new_releases, release.issues)
 
@@ -86,6 +93,11 @@ module Plan
     sig {params(releases: T::Array[Release], issues: IssueList).returns(T::Boolean)}
     def have_same_issue_in_releases?(releases, issues)
       releases.any? { |r| r.have_same_issue?(issues) }
+    end
+
+    sig {params(release_name: String).returns(Integer)}
+    def find_index_by_release_name(release_name)
+      T.must(@releases.find_index { |r| r.name == release_name })
     end
   end
 end

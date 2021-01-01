@@ -32,6 +32,11 @@ module Plan
       self.class.new(@name, @issues.swap(from, to))
     end
 
+    sig {params(name: String).returns(T.self_type)}
+    def change_name(name)
+      self.class.new(name, @issues)
+    end
+
     sig {params(issue_id: Issue::Id).returns(T::Boolean)}
     def include?(issue_id)
       @issues.include?(issue_id)
