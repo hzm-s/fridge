@@ -59,15 +59,6 @@ module Plan
       self.class.new(new_releases)
     end
 
-    sig {params(release: Release).returns(T.self_type)}
-    def update(release)
-      index = find_index_by_release_name(release.name)
-      new_releases = @releases.dup.tap { |list| list[index] = Release.new(release.name) }
-      raise DuplicatedIssue if have_same_issue_in_releases?(new_releases, release.issues)
-
-      self.class.new(new_releases.tap { |list| list[index] = release })
-    end
-
     sig {params(name: String).returns(Release)}
     def get(name)
       T.must(to_a.find { |r| r.name == name }).dup
@@ -86,6 +77,17 @@ module Plan
     sig {params(other: ReleaseList).returns(T::Boolean)}
     def ==(other)
       self.to_a == other.to_a
+    end
+
+    protected
+
+    sig {params(release: Release).returns(T.self_type)}
+    def update(release)
+      index = find_index_by_release_name(release.name)
+      new_releases = @releases.dup.tap { |list| list[index] = Release.new(release.name) }
+      raise DuplicatedIssue if have_same_issue_in_releases?(new_releases, release.issues)
+
+      self.class.new(new_releases.tap { |list| list[index] = release })
     end
 
     private

@@ -36,11 +36,6 @@ module Plan
       end
     end
 
-    sig {params(index: Integer).returns(T.nilable(Issue::Id))}
-    def at(index)
-      to_a.at(index)
-    end
-
     sig {returns(T::Boolean)}
     def empty?
       to_a.empty?
@@ -58,7 +53,7 @@ module Plan
 
     sig {returns(T::Array[Issue::Id])}
     def to_a
-      @items
+      @items.dup
     end
 
     sig {params(other: IssueList).returns(T::Boolean)}
