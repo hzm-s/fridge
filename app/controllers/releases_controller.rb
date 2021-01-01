@@ -12,22 +12,34 @@ class ReleasesController < ApplicationController
     @form = ReleaseForm.new(permitted_params)
     if @form.valid?
       AppendReleaseUsecase.perform(
-        Product::Id.from_string(params[:product_id]),
+        Product::Id.from_string(current_product_id),
         @form.name
       )
-      redirect_to product_backlog_path(product_id: params[:product_id]), flash: flash_success('release.create')
+      redirect_to product_backlog_path(product_id: current_product_id), flash: flash_success('release.create')
     else
       render :new
     end
   end
 
   def edit
-    release =
-      ProductBacklogQuery
-        .call(current_product_id)
-        .scheduled[release_index]
-    @form = ReleaseForm.new(name: release.name, index: release_index)
+    @form = ReleaseForm.new(name: current_release.name, index: release_index)
   end
+
+  def update
+    @form = ReleaseForm.new(name: params[:form][:name], index: release_index)
+    if @form.valid?
+      ChangeReleaseNameUsecase.perform(
+        Product::Id.from_string(current_product_id),
+        @form.name,
+        current_release.name
+      )
+      redirect_to product_backlog_path(product_id: current_product_id), flash: flash_success('release.update')
+    else
+      render :edit
+    end
+  end
+
+  protected
 
   def current_product_id
     params[:product_id]
@@ -35,11 +47,15 @@ class ReleasesController < ApplicationController
 
   private
 
-  def permitted_params
-    params.require(:form).permit(:name)
+  def current_release
+    ProductBacklogQuery.call(current_product_id).scheduled[release_index]
   end
 
   def release_index
     params[:id].to_i
+  end
+
+  def permitted_params
+    params.require(:form).permit(:name)
   end
 end

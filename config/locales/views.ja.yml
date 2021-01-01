@@ -13,6 +13,7 @@ ja:
       create: プロダクトを作成しました
     release:
       create: リリースを追加しました
+      update: リリースを更新しました
       destroy: リリースを削除しました
 
   application:
