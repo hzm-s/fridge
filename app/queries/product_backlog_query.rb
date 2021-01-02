@@ -6,8 +6,8 @@ module ProductBacklogQuery
       issues = fetch_issues(product_id).map { |i| IssueStruct.new(i) }
       plan = fetch_plan(product_id)
 
-      scheduled = plan.releases.map { |r| ReleaseStruct.create(r, issues) }
-      pending = plan.pending_issues.map { |pi| issues.find { |i| i.id == pi } }
+      scheduled = plan.scheduled.to_a.map { |r| ReleaseStruct.create(r, issues) }
+      pending = plan.pending.to_a.map { |pi| issues.find { |i| i.id == pi.to_s } }
 
       ProductBacklog.new(scheduled: scheduled, pending: pending)
     end
@@ -19,7 +19,7 @@ module ProductBacklogQuery
     end
 
     def fetch_plan(product_id)
-      Dao::Plan.eager_load(:releases).find_by(dao_product_id: product_id)
+      PlanRepository::AR.find_by_product_id(Product::Id.from_string(product_id))
     end
   end
 
@@ -28,7 +28,7 @@ module ProductBacklogQuery
       def create(release, issues)
         new(
           name: release.name,
-          issues: release.issues.map { |ri| issues.find { |i| i.id == ri.to_s } }
+          issues: release.issues.to_a.map { |ri| issues.find { |i| i.id == ri.to_s } }
         )
       end
     end
