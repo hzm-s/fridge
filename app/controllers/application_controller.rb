@@ -15,6 +15,10 @@ class ApplicationController < ActionController::Base
     { success: feedback_message(key) }
   end
 
+  def flash_error(key)
+    { error: feedback_message(key) }
+  end
+
   def feedback_message(key)
     I18n.t(key, scope: 'feedbacks')
   end

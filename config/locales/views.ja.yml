@@ -15,6 +15,7 @@ ja:
       create: リリースを追加しました
       update: リリースを更新しました
       destroy: リリースを削除しました
+      not_empty: アイテムを含むリリースは削除できません
 
   application:
     user_menu:

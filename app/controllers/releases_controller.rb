@@ -39,6 +39,17 @@ class ReleasesController < ApplicationController
     end
   end
 
+  def destroy
+    RemoveReleaseUsecase.perform(
+      Product::Id.from_string(current_product_id),
+      current_release.name
+    )
+  rescue Plan::ReleaseIsNotEmpty
+    redirect_to product_backlog_path(product_id: current_product_id), flash: flash_error('release.not_empty')
+  else
+    redirect_to product_backlog_path(product_id: current_product_id), flash: flash_success('release.destroy')
+  end
+
   protected
 
   def current_product_id

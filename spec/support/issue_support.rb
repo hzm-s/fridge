@@ -4,12 +4,14 @@ require_relative '../domain_support/issue_domain_support'
 module IssueSupport
   include IssueDomainSupport
 
-  def add_issue(product_id, description = 'DESC', type: :feature, acceptance_criteria: [], size: nil)
+  def add_issue(product_id, description = 'DESC', type: :feature, acceptance_criteria: [], size: nil, release: nil)
     issue = perform_add_issue(product_id, Issue::Types.from_string(type.to_s), description)
 
     append_acceptance_criteria(issue, acceptance_criteria) if acceptance_criteria
 
     estimate_feature(issue.id, size) if size
+
+    schedule_issue(product_id, issue.id, release) if release
 
     IssueRepository::AR.find_by_id(issue.id)
   end
@@ -30,6 +32,10 @@ module IssueSupport
 
   def remove_issue(issue_id)
     RemoveIssueUsecase.perform(issue_id)
+  end
+
+  def schedule_issue(product_id, issue_id, release)
+    ScheduleIssueUsecase.perform(product_id, issue_id, release, 0)
   end
 
   private
