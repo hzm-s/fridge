@@ -1,12 +1,14 @@
 # typed: false
 
-pbis = Dao::ProductBacklogItem.all
+issues = Dao::Issue.all
 criteria = Dao::AcceptanceCriterion.all
+plans = Dao::Plan.all
 releases = Dao::Release.all
 
 data = {
-  pbis: pbis.map(&:attributes),
+  issues: issues.map(&:attributes),
   criteria: criteria.map(&:attributes),
+  plans: plans.map(&:attributes),
   releases: releases.map(&:attributes),
 }
 
