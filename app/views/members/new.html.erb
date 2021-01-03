@@ -8,7 +8,7 @@
     <div class="mt-2">
       <%= form_with url: team_members_path(team_id: params[:team_id]), local: true do |f| %>
         <div class="form-group">
-          <%= select_tag 'role', options_from_collection_for_select(available_team_roles, :to_s, -> (v) { t(v, scope: 'domain.team.role') }), class: 'form-control' %>
+          <%= select_tag 'role', options_from_collection_for_select(available_team_roles(params[:team_id]), :to_s, -> (v) { t(v, scope: 'domain.team.role') }), class: 'form-control' %>
         </div>
         <% if @error %>
           <p class="invalid-feedback" style="display: block;"><%= @error %></p>

@@ -3,7 +3,7 @@ require 'rails_helper'
 
 RSpec.describe 'feature_estimation' do
   let!(:user_account) { sign_up }
-  let!(:product) { create_product(owner: user_account.person_id) }
+  let!(:product) { create_product(person: user_account.person_id) }
   let!(:feature) { add_feature(product.id) }
 
   describe '#update' do

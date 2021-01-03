@@ -1,5 +1,7 @@
 # typed: false
 class MembersController < ApplicationController
+  include TeamHelper
+
   before_action :store_referer
   before_action :require_user, only: [:new]
 
@@ -22,11 +24,5 @@ class MembersController < ApplicationController
     unless signed_in?
       session[:referer] = new_team_member_path(team_id: params[:team_id])
     end
-  end
-
-  def available_team_roles
-    Team::Id.from_string(params[:team_id])
-      .yield_self { |id| TeamRepository::AR.find_by_id(id) }
-      .yield_self { |t| t.available_roles }
   end
 end

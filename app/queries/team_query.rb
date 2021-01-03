@@ -12,6 +12,10 @@ module TeamQuery
       @__members ||= super.map { |m| Member.new(m) }
     end
 
+    def product_owner
+      members.find { |m| m.role == ::Team::Role::ProductOwner.to_s }
+    end
+
     def developers
       members.select { |m| m.role == ::Team::Role::Developer.to_s }
     end

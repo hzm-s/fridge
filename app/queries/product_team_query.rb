@@ -1,25 +1,21 @@
 # typed: false
 require 'sorbet-runtime'
 
-module ScrumTeamQuery
+module ProductTeamQuery
   class << self
-    def call(person_id, product_id)
-      po =
-        Dao::Product.find(product_id).owner_id
-          .yield_self { |id| Member.new(person_id: id, role: :product_owner) }
-
+    def call(product_id, person_id)
       members =
         Dao::TeamMember
           .joins(team: :product)
           .where(dao_person_id: person_id)
           .where(dao_products: { id: product_id })
-        .map { |tm| Member.new(person_id: tm.dao_person_id, role: tm.role.to_sym) }
+          .map { |m| Member.new(person_id: m.dao_person_id, role: m.role.to_sym) }
 
-      ScrumTeam.new([po] + members)
+      ProductTeam.new(members)
     end
   end
 
-  class ScrumTeam < SimpleDelegator
+  class ProductTeam < SimpleDelegator
     def role(person_id)
       select { |m| m.person_id == person_id }
         .map(&:role)

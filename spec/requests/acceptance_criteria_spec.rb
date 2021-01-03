@@ -3,7 +3,7 @@ require 'rails_helper'
 
 RSpec.describe 'acceptance_criteria' do
   let!(:user_account) { sign_up }
-  let!(:product) { create_product(owner: user_account.person_id) }
+  let!(:product) { create_product(person: user_account.person_id) }
   let!(:issue) { add_issue(product.id) }
 
   before do

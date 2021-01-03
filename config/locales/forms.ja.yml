@@ -5,9 +5,10 @@ ja:
       issue_form:
         description: アイテムの説明
 
-      product_form:
+      create_product_form:
         name: プロダクト名
         description: 説明
+        role: あなたの役割
 
       release_form:
         name: 名前

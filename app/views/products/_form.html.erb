@@ -7,5 +7,9 @@
     <%= f.label :description %>
     <%= f.text_area :description, class: 'form-control' %>
   </div>
+  <div class="form-group">
+    <%= f.label :role %>
+    <%= f.select :role, all_team_roles.map { |r| [t(r.to_s, scope: 'domain.team.role'), r.to_s] }, {}, class: 'form-control' %>
+  </div>
   <%= f.button t('navs.create'), class: 'btn btn-success', data: with_loader %>
 <% end %>

@@ -7,8 +7,8 @@ RSpec.describe ProductListQuery do
   let!(:person_c) { sign_up_as_person }
   let!(:person_d) { sign_up_as_person }
 
-  let!(:product_x) { create_product(owner: person_a.id, members: [dev_member(person_a.id), dev_member(person_c.id)]) }
-  let!(:product_y) { create_product(owner: person_b.id, members: [dev_member(person_c.id)]) }
+  let!(:product_x) { create_product(person: person_a.id, members: [dev_member(person_c.id)]) }
+  let!(:product_y) { create_product(person: person_b.id, members: [dev_member(person_c.id)]) }
 
   context 'given user_a' do
     it do

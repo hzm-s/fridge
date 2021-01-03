@@ -18,7 +18,7 @@ module ApplicationHelper
     content_tag(:span, initials, class: css_class, style: "background-color: #{bgcolor}; color: #{fgcolor}").html_safe
   end
 
-  def scrum_team_member_role
-    current_scrum_team_member_role.translate('domain.team.role_short')
+  def product_team_member_role
+    current_product_team_member_role.translate('domain.team.role_short')
   end
 end

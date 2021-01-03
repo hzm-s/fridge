@@ -1,9 +1,9 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe ProductForm do
+RSpec.describe CreateProductForm do
   let(:valid) do
-    { name: 'ABC', description: 'XYZ' }
+    { name: 'ABC', description: 'XYZ', role: 'scrum_master' }
   end
 
   it do
@@ -37,6 +37,22 @@ RSpec.describe ProductForm do
     aggregate_failures do
       expect(form).to_not be_valid
       expect(form.errors[:description]).to include(I18n.t('errors.messages.too_long', count: 200))
+    end
+  end
+
+  it do
+    form = described_class.new(valid.merge(role: ''))
+    aggregate_failures do
+      expect(form).to_not be_valid
+      expect(form.errors[:role]).to include(I18n.t('errors.messages.blank'))
+    end
+  end
+
+  it do
+    form = described_class.new(valid.merge(role: 'manager'))
+    aggregate_failures do
+      expect(form).to_not be_valid
+      expect(form.errors[:role]).to include(I18n.t('domain.errors.team.invalid_role'))
     end
   end
 end

@@ -1,19 +1,23 @@
 # typed: false
 class ProductsController < ApplicationController
+  include TeamHelper
+
+  helper_method :all_team_roles
 
   def index
     @products = ProductListQuery.call(current_user.person_id.to_s)
   end
 
   def new
-    @form = ProductForm.new
+    @form = CreateProductForm.new
   end
 
   def create
-    @form = ProductForm.new(permitted_params)
+    @form = CreateProductForm.new(permitted_params)
     if @form.valid?
       CreateProductUsecase.perform(
         current_user.person_id,
+        @form.domain_objects[:role],
         @form.name,
         @form.description,
       )
@@ -26,6 +30,6 @@ class ProductsController < ApplicationController
   private
 
   def permitted_params
-    params.require(:form).permit(:name, :description)
+    params.require(:form).permit(:name, :description, :role)
   end
 end

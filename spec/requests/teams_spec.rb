@@ -8,7 +8,7 @@ RSpec.describe 'teams' do
     sign_in(user_account)
   end
 
-  let!(:product) { create_product(owner: user_account.person_id) }
+  let!(:product) { create_product(person: user_account.person_id) }
 
   describe '#create' do
     it do
