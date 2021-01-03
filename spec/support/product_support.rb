@@ -8,11 +8,11 @@ module ProductSpport
     product =
       CreateProductUsecase
         .perform(person_id, role, name, description)
-        .yield_self { |id| ProductRepository::AR.find_by_id(id) }
+        .then { |id| ProductRepository::AR.find_by_id(id) }
 
     return product if members.empty?
 
-    members.each { |m| add_team_member(team_id, m) }
+    members.each { |m| add_team_member(resolve_team(product.id).id, m) }
 
     product
   end

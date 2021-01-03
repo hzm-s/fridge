@@ -1,7 +1,12 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.xdescribe TeamRepository::AR, type: :repository do
+RSpec.describe TeamRepository::AR, type: :repository do
+  let(:product) do
+    Product::Product
+      .create('abc')
+      .tap { |p| ProductRepository::AR.store(p) }
+  end
   let(:person_a) { sign_up }
   let(:person_b) { sign_up }
   let(:person_c) { sign_up }
