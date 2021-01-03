@@ -6,7 +6,7 @@ module ProductSpport
 
   def create_product(person: sign_up_as_person.id, role: Team::Role::ProductOwner, name: 'xyz', description: 'desc', members: [])
     product =
-      CreateProductUsecase
+      CreateProductWithTeamUsecase
         .perform(person, role, name, description)
         .then { |id| ProductRepository::AR.find_by_id(id) }
 
