@@ -8,7 +8,7 @@ RSpec.describe CreateProductUsecase do
     product_id = described_class.perform(person.id, Team::Role::Developer, 'fridge', 'DESC')
 
     product = ProductRepository::AR.find_by_id(product_id)
-    team = TeamRepository::AR.find_all_by_product_id(product_id).first
+    team = resolve_team(product.id)
     plan = PlanRepository::AR.find_by_product_id(product_id)
 
     aggregate_failures do
