@@ -4,10 +4,10 @@ require_relative '../domain_support/team_domain_support'
 module ProductSpport
   include TeamDomainSupport
 
-  def create_product(person_id: sign_up_as_person.id, role: Team::Role::ProductOwner, name: 'xyz', description: 'desc', members: [])
+  def create_product(person: sign_up_as_person.id, role: Team::Role::ProductOwner, name: 'xyz', description: 'desc', members: [])
     product =
       CreateProductUsecase
-        .perform(person_id, role, name, description)
+        .perform(person, role, name, description)
         .then { |id| ProductRepository::AR.find_by_id(id) }
 
     return product if members.empty?

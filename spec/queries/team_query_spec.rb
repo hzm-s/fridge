@@ -10,7 +10,8 @@ RSpec.describe TeamQuery do
 
   let!(:product_x) do
     create_product(
-      owner: person_a.id,
+      person: person_a.id,
+      role: Team::Role::ProductOwner,
       members: [
         dev_member(person_c.id),
         dev_member(person_b.id),
@@ -21,7 +22,8 @@ RSpec.describe TeamQuery do
 
   let!(:product_y) do
     create_product(
-      owner: person_d.id,
+      person: person_d.id,
+      role: Team::Role::ProductOwner,
       members: [
         sm_member(person_a.id),
         dev_member(person_c.id),
@@ -32,25 +34,16 @@ RSpec.describe TeamQuery do
 
   it do
     team = described_class.call(resolve_team(product_x.id).id.to_s)
-    expect(team.members.map(&:person_id)).to eq [person_c, person_b, person_d].map(&:id).map(&:to_s)
+    expect(team.members.map(&:person_id)).to eq [person_a, person_c, person_b, person_d].map(&:id).map(&:to_s)
   end
 
   it do
     team = described_class.call(resolve_team(product_x.id).id.to_s)
 
     aggregate_failures do
+      expect(team.product_owner.person_id).to eq person_a.id.to_s
       expect(team.developers.map(&:person_id)).to eq [person_c, person_b].map(&:id).map(&:to_s)
       expect(team.scrum_master.person_id).to eq person_d.id.to_s
-    end
-  end
-
-  it do
-    member = described_class.call(resolve_team(product_x.id).id.to_s).members.first
-
-    aggregate_failures do
-      expect(member.role).to_not be_nil
-      expect(member.name).to_not be_nil
-      expect(member.avatar).to_not be_nil
     end
   end
 end
