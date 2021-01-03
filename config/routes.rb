@@ -21,7 +21,7 @@ Rails.application.routes.draw do
 
   resources :feature_estimations, only: [:update]
 
-  resources :teams, only: [:new, :create, :show] do
+  resources :teams, only: [:show] do
     resources :members, only: [:new, :create]
   end
 end
