@@ -12,18 +12,13 @@ class CreateProductWithTeamUsecase < UsecaseBase
 
   sig {params(person_id: Person::Id, role: Team::Role, name: String, description: T.nilable(String)).returns(Product::Id)}
   def perform(person_id, role, name, description = nil)
-    product = Product::Product.create(name, description)
+    product_id = CreateProductUsecase.perform(name, description)
 
-    team = Team::Team.create(name)
-    team.develop(product.id)
-    team.add_member(Team::Member.new(person_id, role))
+    team_id = CreateTeamUsecase.perform(person_id, role, name)
+    team = @team_repository.find_by_id(team_id)
+    team.develop(product_id)
+    @team_repository.store(team)
 
-    transaction do
-      @product_repository.store(product)
-      @team_repository.store(team)
-      PreparePlanUsecase.perform(product.id)
-    end
-
-    product.id
+    product_id
   end
 end

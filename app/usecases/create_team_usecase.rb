@@ -13,7 +13,9 @@ class CreateTeamUsecase < UsecaseBase
   def perform(person_id, role, name)
     team = Team::Team.create(name)
     team.add_member(Team::Member.new(person_id, role))
+
     @repository.store(team)
+
     team.id
   end
 end
