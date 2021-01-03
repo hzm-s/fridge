@@ -7,11 +7,11 @@ module Team
 
     Members = T.type_alias {T::Array[Member]}
 
-    OVERCAPACITY_ERRORS = {
+    OVERCAPACITY_ERRORS = T.let({
       Role::ProductOwner => TooManyProductOwner,
       Role::ScrumMaster => TooManyScrumMaster,
       Role::Developer => TooManyDeveloper,
-    }
+    }, T::Hash[Role, InvalidNewMember])
 
     class << self
       extend T::Sig
@@ -56,7 +56,7 @@ module Team
     sig {params(member: Member).void}
     def add_member(member)
       raise AlreadyJoined if self.member(member.person_id)
-      raise OVERCAPACITY_ERRORS[member.role] unless available_roles.include?(member.role)
+      raise T.must(OVERCAPACITY_ERRORS[member.role]) unless available_roles.include?(member.role)
 
       @members << member
     end
