@@ -5,7 +5,7 @@
         <%=t '.team_name', name: @team.name %>
       </h1>
     </div>
-    <%= render partial: 'members', locals: { team: @team } %>
+    <%= render partial: 'member', collection: @team.members, as: :member %>
     <hr>
     <%= render partial: 'invitation', locals: { team: @team } %>
   </div>
