@@ -12,5 +12,8 @@ module Team
 
     sig {abstract.params(id: Id).returns(Team)}
     def find_by_id(id); end
+
+    sig {abstract.params(product_id: Product::Id).returns(T::Array[Team])}
+    def find_all_by_product_id(product_id); end
   end
 end

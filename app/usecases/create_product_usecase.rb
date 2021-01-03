@@ -7,13 +7,23 @@ class CreateProductUsecase < UsecaseBase
   sig {void}
   def initialize
     @product_repository = T.let(ProductRepository::AR, Product::ProductRepository)
+    @team_repository = T.let(TeamRepository::AR, Team::TeamRepository)
   end
 
-  sig {params(person_id: Person::Id, name: String, description: T.nilable(String)).returns(Product::Id)}
-  def perform(person_id, name, description = nil)
+  sig {params(person_id: Person::Id, role: Team::Role, name: String, description: T.nilable(String)).returns(Product::Id)}
+  def perform(person_id, role, name, description = nil)
     product = Product::Product.create(person_id, name, description)
-    @product_repository.add(product)
-    PreparePlanUsecase.perform(product.id)
+
+    team = Team::Team.create(name)
+    team.develop(product.id)
+    team.add_member(Team::Member.new(person_id, role))
+
+    transaction do
+      @product_repository.add(product)
+      @team_repository.store(team)
+      PreparePlanUsecase.perform(product.id)
+    end
+
     product.id
   end
 end

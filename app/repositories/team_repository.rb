@@ -9,7 +9,14 @@ module TeamRepository
 
       sig {override.params(id: Team::Id).returns(Team::Team)}
       def find_by_id(id)
-        Dao::Team.find(id).read
+        Dao::Team.eager_load(:members).find(id).read
+      end
+
+      sig {override.params(product_id: Product::Id).returns(T::Array[Team::Team])}
+      def find_all_by_product_id(product_id)
+        Dao::Team.eager_load(:members)
+          .where(dao_product_id: product_id.to_s)
+          .map(&:read)
       end
 
       sig {override.params(team: Team::Team).void}
