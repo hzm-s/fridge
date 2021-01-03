@@ -9,32 +9,14 @@ module ProductRepository
 
       sig {override.params(id: Product::Id).returns(Product::Product)}
       def find_by_id(id)
-        r = Dao::Product.find(id)
-        Product::Product.from_repository(
-          r.product_id,
-          r.name,
-          r.owner,
-          r.description
-        )
+        Dao::Product.find(id.to_s).read
       end
 
       sig {override.params(product: Product::Product).void}
-      def add(product)
-        Dao::Product.create!(
-          id: product.id.to_s,
-          name: product.name.to_s,
-          description: product.description.to_s,
-          owner_id: product.owner.to_s,
-        )
-      end
-
-      sig {override.params(product: Product::Product).void}
-      def update(product)
-        r = Dao::Product.find(product.id)
-        r.name = product.name
-        r.description = product.description
-        r.owner_id = product.owner.to_s
-        r.save!
+      def store(product)
+        dao = Dao::Product.find_or_initialize_by(id: product.id.to_s)
+        dao.write(product)
+        dao.save!
       end
     end
   end

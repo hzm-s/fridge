@@ -1,4 +1,3 @@
-# typed: false
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -74,7 +73,6 @@ ActiveRecord::Schema.define(version: 2020_11_04_091810) do
   create_table "dao_products", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "description"
-    t.uuid "owner_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -94,7 +92,6 @@ ActiveRecord::Schema.define(version: 2020_11_04_091810) do
     t.string "role", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["dao_team_id", "dao_person_id"], name: "index_dao_team_members_on_dao_team_id_and_dao_person_id", unique: true
     t.index ["dao_team_id"], name: "index_dao_team_members_on_dao_team_id"
   end
 
@@ -111,7 +108,6 @@ ActiveRecord::Schema.define(version: 2020_11_04_091810) do
   add_foreign_key "dao_acceptance_criteria", "dao_issues"
   add_foreign_key "dao_issues", "dao_products"
   add_foreign_key "dao_plans", "dao_products"
-  add_foreign_key "dao_products", "dao_people", column: "owner_id"
   add_foreign_key "dao_releases", "dao_plans"
   add_foreign_key "dao_team_members", "dao_teams"
   add_foreign_key "dao_teams", "dao_products"

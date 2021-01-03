@@ -8,7 +8,5 @@ class CreateDaoTeamMembers < ActiveRecord::Migration[6.0]
 
       t.timestamps
     end
-
-    add_index :dao_team_members, [:dao_team_id, :dao_person_id], unique: true
   end
 end

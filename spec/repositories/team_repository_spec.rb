@@ -1,8 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe TeamRepository::AR, type: :repository do
-  let(:product) { create_product }
+RSpec.xdescribe TeamRepository::AR, type: :repository do
   let(:person_a) { sign_up }
   let(:person_b) { sign_up }
   let(:person_c) { sign_up }
