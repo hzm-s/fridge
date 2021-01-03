@@ -8,10 +8,7 @@ module Team
     interface!
 
     sig {abstract.params(team: Team).void}
-    def add(team); end
-
-    sig {abstract.params(team: Team).void}
-    def update(team); end
+    def store(team); end
 
     sig {abstract.params(id: Id).returns(Team)}
     def find_by_id(id); end

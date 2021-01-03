@@ -16,6 +16,6 @@ class AddTeamMemberUsecase < UsecaseBase
     member = Team::Member.new(person_id, role)
     team.add_member(member)
 
-    @repository.update(team)
+    @repository.store(team)
   end
 end

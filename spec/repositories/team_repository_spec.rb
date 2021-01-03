@@ -16,7 +16,7 @@ RSpec.describe TeamRepository::AR, type: :repository do
       team.add_member(sm_member(person_b.person_id))
       team.add_member(dev_member(person_c.person_id))
 
-      described_class.add(team)
+      described_class.store(team)
 
       team_rels = Dao::Team.all
       expect(team_rels.size).to eq 1
@@ -41,11 +41,11 @@ RSpec.describe TeamRepository::AR, type: :repository do
       team.add_member(po_member(person_a.person_id))
       team.add_member(sm_member(person_b.person_id))
       team.add_member(dev_member(person_c.person_id))
-      described_class.add(team)
+      described_class.store(team)
 
       team.add_member(dev_member(person_d.person_id))
 
-      described_class.update(team)
+      described_class.store(team)
 
       team_rels = Dao::Team.all
       expect(team_rels.size).to eq 1

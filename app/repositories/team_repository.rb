@@ -9,38 +9,14 @@ module TeamRepository
 
       sig {override.params(id: Team::Id).returns(Team::Team)}
       def find_by_id(id)
-        r = Dao::Team.find(id)
-        members = r.members.map do |m|
-          Team::Member.new(
-            Person::Id.from_string(m.dao_person_id),
-            Team::Role.from_string(m.role)
-          )
-        end
-        Team::Team.from_repository(
-          Team::Id.from_string(r.id),
-          r.name,
-          Product::Id.from_string(r.dao_product_id),
-          members
-        )
+        Dao::Team.find(id).read
       end
 
       sig {override.params(team: Team::Team).void}
-      def add(team)
-        r = Dao::Team.new(id: team.id.to_s, name: team.name, dao_product_id: team.product)
-        r.members = build_members(team.members)
-        r.save!
-      end
-
-      sig {override.params(team: Team::Team).void}
-      def update(team)
-        r = Dao::Team.find(team.id)
-        r.name = team.name
-        r.dao_product_id = team.product
-
-        r.members.clear
-        r.members = build_members(team.members)
-
-        r.save!
+      def store(team)
+        dao = Dao::Team.find_or_initialize_by(id: team.id.to_s)
+        dao.write(team)
+        dao.save!
       end
 
       private

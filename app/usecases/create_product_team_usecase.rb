@@ -13,7 +13,7 @@ class CreateProductTeamUsecase < UsecaseBase
   def perform(product_id, name)
     team = Team::Team.create(name)
     team.develop(product_id)
-    @repository.add(team)
+    @repository.store(team)
     team.id
   end
 end
