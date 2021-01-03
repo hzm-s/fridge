@@ -1,7 +1,7 @@
 # typed: strict
 require 'sorbet-runtime'
 
-class CreateProductTeamUsecase < UsecaseBase
+class CreateTeamUsecase < UsecaseBase
   extend T::Sig
 
   sig {void}
@@ -9,10 +9,10 @@ class CreateProductTeamUsecase < UsecaseBase
     @repository = T.let(TeamRepository::AR, Team::TeamRepository)
   end
 
-  sig {params(product_id: Product::Id, name: String).returns(Team::Id)}
-  def perform(product_id, name)
+  sig {params(person_id: Person::Id, role: Team::Role, name: String).returns(Team::Id)}
+  def perform(person_id, role, name)
     team = Team::Team.create(name)
-    team.develop(product_id)
+    team.add_member(Team::Member.new(person_id, role))
     @repository.store(team)
     team.id
   end

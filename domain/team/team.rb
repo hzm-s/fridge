@@ -11,7 +11,7 @@ module Team
       Role::ProductOwner => TooManyProductOwner,
       Role::ScrumMaster => TooManyScrumMaster,
       Role::Developer => TooManyDeveloper,
-    }, T::Hash[Role, InvalidNewMember])
+    }, T::Hash[Role, Class])
 
     class << self
       extend T::Sig
@@ -21,7 +21,7 @@ module Team
         new(Id.create, name, nil, [])
       end
 
-      sig {params(id: Id, name: String, product: Product::Id, members: Members).returns(T.attached_class)}
+      sig {params(id: Id, name: String, product: T.nilable(Product::Id), members: Members).returns(T.attached_class)}
       def from_repository(id, name, product, members)
         new(id, name, product, members)
       end

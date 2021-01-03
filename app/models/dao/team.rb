@@ -35,6 +35,7 @@ class Dao::Team < ApplicationRecord
   end
 
   def read_product_id
+    return nil unless dao_product_id
     Product::Id.from_string(dao_product_id)
   end
 
