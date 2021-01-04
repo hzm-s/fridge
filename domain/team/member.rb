@@ -1,5 +1,6 @@
 # typed: strict
 require 'sorbet-runtime'
+require 'set'
 
 module Team
   class Member
@@ -8,19 +9,19 @@ module Team
     sig {returns(Person::Id)}
     attr_reader :person_id
 
-    sig {returns(Role)}
-    attr_reader :role
+    sig {returns(T::Set[Role])}
+    attr_reader :roles
 
-    sig {params(person_id: Person::Id, role: Role).void}
-    def initialize(person_id, role)
+    sig {params(person_id: Person::Id, roles: T::Array[Role]).void}
+    def initialize(person_id, roles)
       @person_id = person_id
-      @role = role
+      @roles = Set.new(roles)
     end
 
     sig {params(other: Member).returns(T::Boolean)}
     def ==(other)
       self.person_id == other.person_id &&
-        self.role == other.role
+        self.roles == other.roles
     end
   end
 end

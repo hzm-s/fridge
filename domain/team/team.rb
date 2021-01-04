@@ -53,12 +53,12 @@ module Team
       @product = product
     end
 
-    sig {params(member: Member).void}
-    def add_member(member)
-      raise AlreadyJoined if self.member(member.person_id)
-      raise T.must(OVERCAPACITY_ERRORS[member.role]) unless available_roles.include?(member.role)
+    sig {params(new_member: Member).void}
+    def add_member(new_member)
+      raise AlreadyJoined if member(new_member.person_id) == new_member
+      raise T.must(OVERCAPACITY_ERRORS[new_member.role]) unless available_roles.include?(new_member.role)
 
-      @members << member
+      @members << new_member
     end
 
     sig {params(person_id: Person::Id).returns(T.nilable(Member))}
