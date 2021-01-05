@@ -1,6 +1,9 @@
 # typed: strict
 module Team
   class InvalidRole < ArgumentError; end
+  class MemberHasTooManyRoles < ArgumentError; end
+  class InvalidMultipleRoles < ArgumentError; end
+
   class InvalidNewMember < StandardError; end
   class TooManyProductOwner < InvalidNewMember; end
   class TooManyScrumMaster < InvalidNewMember; end
