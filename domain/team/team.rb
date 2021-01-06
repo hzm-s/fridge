@@ -55,15 +55,17 @@ module Team
 
     sig {params(new_member: Member).void}
     def add_member(new_member)
-      raise AlreadyJoined if member(new_member.person_id) == new_member
-      raise T.must(OVERCAPACITY_ERRORS[new_member.role]) unless available_roles.include?(new_member.role)
+      raise AlreadyJoined if member(new_member.person_id)
+      new_member.roles.each do |role|
+        raise T.must(OVERCAPACITY_ERRORS[role]) unless available_roles.include?(role)
+      end
 
       @members << new_member
     end
 
     sig {params(person_id: Person::Id).returns(T.nilable(Member))}
     def member(person_id)
-      @members.find { |member| member.person_id == person_id }
+      @members.find { |member| member.same_person?(person_id) }
     end
 
     sig {returns(T::Array[Role])}
@@ -79,7 +81,7 @@ module Team
 
     sig {params(role: Role).returns(Integer)}
     def count_of_role(role)
-      @members.select { |member| member.role == role }.size
+      @members.select { |member| member.have_role?(role) }.size
     end
   end
 end

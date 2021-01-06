@@ -13,6 +13,7 @@ module Team
   autoload :Id, 'team/id'
   autoload :Team, 'team/team'
   autoload :Member, 'team/member'
+  autoload :RoleSet, 'team/role_set'
   autoload :Role, 'team/role'
   autoload :TeamRepository, 'team/team_repository'
 end

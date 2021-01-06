@@ -28,64 +28,49 @@ module Team
     end
 
     describe 'add member' do
-      describe 'チームの人数' do
-        let(:po) { register_person }
-        let(:sm) { register_person }
-        let(:new_member) { register_person }
+      let(:po) { register_person }
+      let(:sm) { register_person }
+      let(:new_member) { register_person }
 
-        before do
-          team.add_member(po_member(po.id))
-          team.add_member(sm_member(sm.id))
-          8.times do |n|
-            dev = register_person
-            team.add_member(dev_member(dev.id))
-          end
-        end
-
-        it '2人目のプロダクトオーナーはエラーになること' do
-          expect { team.add_member(po_member(new_member.id)) }
-            .to raise_error(TooManyProductOwner)
-        end
-
-        it '2人目のスクラムマスターはエラーになること' do
-          expect { team.add_member(sm_member(new_member.id)) }
-            .to raise_error(TooManyScrumMaster)
-        end
-
-        it '10人目の開発者はエラーになること' do
+      before do
+        team.add_member(po_member(po.id))
+        team.add_member(sm_member(sm.id))
+        8.times do |n|
           dev = register_person
           team.add_member(dev_member(dev.id))
-          expect { team.add_member(dev_member(new_member.id)) }
-            .to raise_error(TooManyDeveloper)
         end
       end
 
-      describe 'multiple roles' do
-        let(:person) { register_person }
+      it '同じ人は複数参加できないこと' do
+        team.add_member(dev_member(new_member.id))
+        expect { team.add_member(dev_member(new_member.id)) }
+          .to raise_error(AlreadyJoined)
+      end
 
-        it '同じ役割では参加できないこと' do
-          team.add_member(dev_member(person.id))
-          expect { team.add_member(dev_member(person.id)) }
-            .to raise_error(AlreadyJoined)
-        end
+      it '2人目のプロダクトオーナーはエラーになること' do
+        expect { team.add_member(po_member(new_member.id)) }
+          .to raise_error(TooManyProductOwner)
+      end
 
-        it 'PO/Devは兼務可能' do
-          team.add_member(dev_member(person.id))
-          expect { team.add_member(po_member(person.id)) }
-            .to_not raise_error
-        end
+      it '2人目のプロダクトオーナー(兼務)はエラーになること' do
+        expect { team.add_member(Member.new(new_member.id, [Role::ProductOwner, Role::ScrumMaster])) }
+          .to raise_error(TooManyProductOwner)
+      end
 
-        it 'PO/SMは兼務可能' do
-          team.add_member(sm_member(person.id))
-          expect { team.add_member(po_member(person.id)) }
-            .to_not raise_error
-        end
+      it '2人目のスクラムマスターはエラーになること' do
+        expect { team.add_member(sm_member(new_member.id)) }
+          .to raise_error(TooManyScrumMaster)
+      end
 
-        it 'Dev/SMは兼務可能' do
-          team.add_member(dev_member(person.id))
-          expect { team.add_member(sm_member(person.id)) }
-            .to_not raise_error
-        end
+      it '2人目のスクラムマスター(兼務)はエラーになること' do
+        expect { team.add_member(Member.new(new_member.id, [Role::ScrumMaster, Role::Developer])) }
+          .to raise_error(TooManyScrumMaster)
+      end
+
+      it '10人目の開発者はエラーになること' do
+        team.add_member(dev_member(register_person.id))
+        expect { team.add_member(dev_member(new_member.id)) }
+          .to raise_error(TooManyDeveloper)
       end
     end
 
@@ -130,6 +115,16 @@ module Team
           team.add_member(dev_member(register_person.id))
         end
         expect(team.available_roles).to be_empty
+      end
+
+      it do
+        team.add_member(Member.new(register_person.id, [Role::ProductOwner, Role::ScrumMaster]))
+        expect(team.available_roles).to match_array [Role::Developer]
+      end
+
+      it do
+        team.add_member(Member.new(register_person.id, [Role::ScrumMaster, Role::Developer]))
+        expect(team.available_roles).to match_array [Role::ProductOwner, Role::Developer]
       end
     end
   end

@@ -1,6 +1,5 @@
 # typed: strict
 require 'sorbet-runtime'
-require 'set'
 
 module Team
   class Member
@@ -9,17 +8,23 @@ module Team
     sig {returns(Person::Id)}
     attr_reader :person_id
 
-    sig {returns(T::Set[Role])}
+    sig {returns(RoleSet)}
     attr_reader :roles
 
-    sig {params(person_id: Person::Id, roles: T::Array[Role]).void}
+    sig {params(person_id: Person::Id, roles: RoleSet).void}
     def initialize(person_id, roles)
-      role_set = Set.new(roles)
-      raise MemberHasTooManyRoles if role_set.size >= 3
-      raise InvalidMultipleRoles if role_set == Set.new([Role::ProductOwner, Role::Developer])
-
       @person_id = person_id
-      @roles = role_set
+      @roles = roles
+    end
+
+    sig {params(person: Person::Id).returns(T::Boolean)}
+    def same_person?(person)
+      @person_id == person
+    end
+
+    sig {params(role: Role).returns(T::Boolean)}
+    def have_role?(role)
+      @roles.include?(role)
     end
 
     sig {params(other: Member).returns(T::Boolean)}
