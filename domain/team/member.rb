@@ -24,7 +24,7 @@ module Team
 
     sig {params(role: Role).returns(T::Boolean)}
     def have_role?(role)
-      @roles.include?(role)
+      @roles.to_a.include?(role)
     end
 
     sig {params(other: Member).returns(T::Boolean)}

@@ -55,10 +55,8 @@ module Team
 
     sig {params(new_member: Member).void}
     def add_member(new_member)
-      raise AlreadyJoined if member(new_member.person_id)
-      new_member.roles.each do |role|
-        raise T.must(OVERCAPACITY_ERRORS[role]) unless available_roles.include?(role)
-      end
+      validate_duplicate_join!(new_member)
+      validate_roles_capacities!(new_member)
 
       @members << new_member
     end
@@ -82,6 +80,18 @@ module Team
     sig {params(role: Role).returns(Integer)}
     def count_of_role(role)
       @members.select { |member| member.have_role?(role) }.size
+    end
+
+    sig {params(new_member: Member).void}
+    def validate_duplicate_join!(new_member)
+      raise AlreadyJoined if member(new_member.person_id)
+    end
+
+    sig {params(new_member: Member).void}
+    def validate_roles_capacities!(new_member)
+      new_member.roles.to_a.each do |role|
+        raise T.must(OVERCAPACITY_ERRORS[role]) unless available_roles.include?(role)
+      end
     end
   end
 end

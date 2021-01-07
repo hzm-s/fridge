@@ -53,7 +53,7 @@ module Team
       end
 
       it '2人目のプロダクトオーナー(兼務)はエラーになること' do
-        expect { team.add_member(Member.new(new_member.id, [Role::ProductOwner, Role::ScrumMaster])) }
+        expect { team.add_member(team_member(new_member.id, :po, :sm)) }
           .to raise_error(TooManyProductOwner)
       end
 
@@ -63,7 +63,7 @@ module Team
       end
 
       it '2人目のスクラムマスター(兼務)はエラーになること' do
-        expect { team.add_member(Member.new(new_member.id, [Role::ScrumMaster, Role::Developer])) }
+        expect { team.add_member(team_member(new_member.id, :sm, :dev)) }
           .to raise_error(TooManyScrumMaster)
       end
 
@@ -118,12 +118,12 @@ module Team
       end
 
       it do
-        team.add_member(Member.new(register_person.id, [Role::ProductOwner, Role::ScrumMaster]))
+        team.add_member(team_member(register_person.id, :po, :sm))
         expect(team.available_roles).to match_array [Role::Developer]
       end
 
       it do
-        team.add_member(Member.new(register_person.id, [Role::ScrumMaster, Role::Developer]))
+        team.add_member(team_member(register_person.id, :sm, :dev))
         expect(team.available_roles).to match_array [Role::ProductOwner, Role::Developer]
       end
     end

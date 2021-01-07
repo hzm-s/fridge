@@ -18,6 +18,11 @@ module Team
       @roles = Set.new(role_set)
     end
 
+    sig {returns(T::Array[Role])}
+    def to_a
+      @roles.to_a
+    end
+
     sig {params(other: RoleSet).returns(T::Boolean)}
     def ==(other)
       self.roles == other.roles
