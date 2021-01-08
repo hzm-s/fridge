@@ -4,10 +4,10 @@ require_relative '../domain_support/team_domain_support'
 module ProductSpport
   include TeamDomainSupport
 
-  def create_product(person: sign_up_as_person.id, role: Team::Role::ProductOwner, name: 'xyz', description: 'desc', members: [])
+  def create_product(person: sign_up_as_person.id, roles: default_roles, name: 'xyz', description: 'desc', members: [])
     product =
       CreateProductWithTeamUsecase
-        .perform(person, role, name, description)
+        .perform(person, roles, name, description)
         .then { |id| ProductRepository::AR.find_by_id(id) }
 
     return product if members.empty?
@@ -18,7 +18,13 @@ module ProductSpport
   end
 
   def add_team_member(team_id, member)
-    AddTeamMemberUsecase.perform(team_id, member.person_id, member.role)
+    AddTeamMemberUsecase.perform(team_id, member.person_id, member.roles)
+  end
+
+  private
+
+  def default_roles
+    Team::RoleSet.new([Team::Role::ProductOwner])
   end
 end
 

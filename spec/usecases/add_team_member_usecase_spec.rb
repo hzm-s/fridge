@@ -7,11 +7,13 @@ RSpec.describe AddTeamMemberUsecase do
   let(:new_person) { sign_up_as_person }
 
   it do
-    described_class.perform(team.id, new_person.id, Team::Role::Developer)
+    roles = Team::RoleSet.new([Team::Role::Developer])
+
+    described_class.perform(team.id, new_person.id, roles)
 
     stored = TeamRepository::AR.find_by_id(team.id)
     new_member = stored.member(new_person.id)
 
-    expect(new_member.role).to eq Team::Role::Developer
+    expect(new_member.roles).to eq roles
   end
 end

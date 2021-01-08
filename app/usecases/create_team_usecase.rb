@@ -9,10 +9,10 @@ class CreateTeamUsecase < UsecaseBase
     @repository = T.let(TeamRepository::AR, Team::TeamRepository)
   end
 
-  sig {params(person_id: Person::Id, role: Team::Role, name: String).returns(Team::Id)}
-  def perform(person_id, role, name)
+  sig {params(person_id: Person::Id, roles: Team::RoleSet, name: String).returns(Team::Id)}
+  def perform(person_id, roles, name)
     team = Team::Team.create(name)
-    team.add_member(Team::Member.new(person_id, role))
+    team.add_member(Team::Member.new(person_id, roles))
 
     @repository.store(team)
 

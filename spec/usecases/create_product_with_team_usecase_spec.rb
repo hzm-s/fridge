@@ -5,7 +5,8 @@ RSpec.describe CreateProductWithTeamUsecase do
   let(:person) { sign_up_as_person }
 
   it do
-    product_id = described_class.perform(person.id, Team::Role::Developer, 'fridge', 'DESC')
+    roles = Team::RoleSet.new([Team::Role::Developer])
+    product_id = described_class.perform(person.id, roles, 'fridge', 'DESC')
 
     product = ProductRepository::AR.find_by_id(product_id)
     team = resolve_team(product.id)
@@ -15,7 +16,7 @@ RSpec.describe CreateProductWithTeamUsecase do
       expect(product.name).to eq 'fridge'
       expect(product.description).to eq 'DESC'
 
-      expect(team.member(person.id).role).to eq Team::Role::Developer
+      expect(team.member(person.id).roles).to eq roles
 
       expect(plan).to_not be_nil
     end
