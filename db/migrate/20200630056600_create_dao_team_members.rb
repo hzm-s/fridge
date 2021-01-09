@@ -4,7 +4,7 @@ class CreateDaoTeamMembers < ActiveRecord::Migration[6.0]
     create_table :dao_team_members do |t|
       t.references :dao_team, type: :uuid, foreign_key: true
       t.references :dao_person, type: :uuid, index: false
-      t.string :role, null: false
+      t.string :roles, array: true, null: false
 
       t.timestamps
     end

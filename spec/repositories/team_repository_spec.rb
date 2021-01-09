@@ -28,15 +28,13 @@ RSpec.describe TeamRepository::AR, type: :repository do
       expect(team_rels[0].name).to eq 'The Team'
 
       member_rels = Dao::TeamMember.all
-      expect(member_rels.size).to eq 4
+      expect(member_rels.size).to eq 3
       expect(member_rels[0].dao_person_id).to eq person_a.person_id.to_s
-      expect(member_rels[0].role).to eq 'product_owner'
+      expect(member_rels[0].roles).to eq ['product_owner']
       expect(member_rels[1].dao_person_id).to eq person_b.person_id.to_s
-      expect(member_rels[1].role).to eq 'scrum_master'
-      expect(member_rels[2].dao_person_id).to eq person_b.person_id.to_s
-      expect(member_rels[2].role).to eq 'developer'
-      expect(member_rels[3].dao_person_id).to eq person_c.person_id.to_s
-      expect(member_rels[3].role).to eq 'developer'
+      expect(member_rels[1].roles).to eq ['scrum_master', 'developer']
+      expect(member_rels[2].dao_person_id).to eq person_c.person_id.to_s
+      expect(member_rels[2].roles).to eq ['developer']
     end
   end
 
@@ -59,17 +57,15 @@ RSpec.describe TeamRepository::AR, type: :repository do
       expect(team_rels[0].name).to eq 'The Team'
 
       member_rels = Dao::TeamMember.all
-      expect(member_rels.size).to eq 5
+      expect(member_rels.size).to eq 4
       expect(member_rels[0].dao_person_id).to eq person_a.person_id.to_s
-      expect(member_rels[0].role).to eq 'product_owner'
+      expect(member_rels[0].roles).to eq ['product_owner']
       expect(member_rels[1].dao_person_id).to eq person_b.person_id.to_s
-      expect(member_rels[1].role).to eq 'developer'
+      expect(member_rels[1].roles).to eq ['developer']
       expect(member_rels[2].dao_person_id).to eq person_c.person_id.to_s
-      expect(member_rels[2].role).to eq 'developer'
+      expect(member_rels[2].roles).to eq ['developer']
       expect(member_rels[3].dao_person_id).to eq person_d.person_id.to_s
-      expect(member_rels[3].role).to eq 'scrum_master'
-      expect(member_rels[4].dao_person_id).to eq person_d.person_id.to_s
-      expect(member_rels[4].role).to eq 'developer'
+      expect(member_rels[3].roles).to eq ['scrum_master', 'developer']
     end
   end
 

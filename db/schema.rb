@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(version: 2020_11_04_091810) do
   create_table "dao_team_members", force: :cascade do |t|
     t.uuid "dao_team_id"
     t.uuid "dao_person_id"
-    t.string "role", null: false
+    t.string "roles", null: false, array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["dao_team_id"], name: "index_dao_team_members_on_dao_team_id"
