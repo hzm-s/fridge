@@ -18,7 +18,14 @@ module ApplicationHelper
     content_tag(:span, initials, class: css_class, style: "background-color: #{bgcolor}; color: #{fgcolor}").html_safe
   end
 
-  def product_team_member_role
-    current_product_team_member_role.translate('domain.team.role_short')
+  def product_team_member_roles_label
+    current_product_team_member(current_user.person_id)
+      .roles
+      .to_a
+      .then { |rs| translate_team_member_roles(rs) }
+  end
+
+  def translate_team_member_roles(roles)
+    roles.map { |role| t(role, scope: 'domain.team.role_short') }.join('/')
   end
 end

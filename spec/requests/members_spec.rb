@@ -35,7 +35,7 @@ RSpec.describe 'team_members' do
 
     context 'when valid params' do
       it do
-        post team_members_path(team_id: team.id.to_s), params: { role: 'scrum_master' }
+        post team_members_path(team_id: team.id.to_s), params: { form: { roles: ['', 'scrum_master', 'developer'] } }
         follow_redirect!
 
         expect(response.body).to include product.name
@@ -43,14 +43,15 @@ RSpec.describe 'team_members' do
         get team_path(team.id.to_s)
         expect(response.body).to include new_member.name
         expect(response.body).to include I18n.t('domain.team.role_short.scrum_master')
+        expect(response.body).to include I18n.t('domain.team.role_short.developer')
       end
     end
 
     context 'when invalid params' do
       it do
-        post team_members_path(team_id: team.id.to_s), params: { role: 'manager' }
+        post team_members_path(team_id: team.id.to_s), params: { form: { roles: ['', '', ''] } }
 
-        expect(response.body).to include I18n.t('domain.errors.team.invalid_role')
+        expect(response.body).to include I18n.t('errors.messages.blank')
       end
     end
   end

@@ -6,7 +6,23 @@
       </h1>
     </div>
     <div>
-      <%= render partial: 'form', locals: { form: @form } %>
+      <%= form_with model: @form, scope: :form, url: products_path, local: true do |f| %>
+        <div class="form-group">
+          <%= f.label :name %>
+          <%= f.text_field :name, class: 'form-control', autocomplete: 'off' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :description %>
+          <%= f.text_area :description, class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :roles %>
+          <%= f.collection_check_boxes :roles, all_team_roles, :to_s, -> (r) { t(r.to_s, scope: 'domain.team.role') } do |b| %>
+            <%= b.label(class: 'form-check-boxes-block-item') { b.check_box + b.text } %>
+          <% end %>
+        </div>
+        <%= f.button t('navs.create'), class: 'btn btn-success', data: with_loader %>
+      <% end %>
     </div>
   </div>
 </div>

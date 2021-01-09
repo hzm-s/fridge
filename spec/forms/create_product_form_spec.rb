@@ -3,7 +3,7 @@ require 'rails_helper'
 
 RSpec.describe CreateProductForm do
   let(:valid) do
-    { name: 'ABC', description: 'XYZ', role: 'scrum_master' }
+    { name: 'ABC', description: 'XYZ', roles: ['', 'scrum_master', ''] }
   end
 
   it do
@@ -41,18 +41,18 @@ RSpec.describe CreateProductForm do
   end
 
   it do
-    form = described_class.new(valid.merge(role: ''))
+    form = described_class.new(valid.merge(roles: ['', '', '']))
     aggregate_failures do
       expect(form).to_not be_valid
-      expect(form.errors[:role]).to include(I18n.t('errors.messages.blank'))
+      expect(form.errors[:roles]).to include(I18n.t('errors.messages.blank'))
     end
   end
 
   it do
-    form = described_class.new(valid.merge(role: 'manager'))
+    form = described_class.new(valid.merge(roles: ['product_owner', '', 'developer']))
     aggregate_failures do
       expect(form).to_not be_valid
-      expect(form.errors[:role]).to include(I18n.t('domain.errors.team.invalid_role'))
+      expect(form.errors[:roles]).to include(I18n.t('domain.errors.team.invalid_multiple_roles'))
     end
   end
 end

@@ -6,10 +6,12 @@
     <%= render partial: 'product_menu', locals: { product: current_product } %>
   <% end %>
   <div class="gnav__tail d-flex align-items-center">
-    <% if member_role = content_for?(:member_role) ? yield(:member_role): nil %>
-      <span class="gnav-tail__child team-member-role"><%= member_role %></span>
-    <% end %>
     <% if signed_in? %>
+      <% if roles_label = content_for?(:member_roles) ? yield(:member_roles): nil %>
+        <span class="gnav-tail__child team-member-role">
+          <%= roles_label %>
+        </span>
+      <% end %>
       <%= render partial: 'user_menu', locals: { user: current_user } %>
     <% end -%>
   </div>

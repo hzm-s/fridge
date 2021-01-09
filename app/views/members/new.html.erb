@@ -1,18 +1,18 @@
 <div class="row d-flex justify-content-center">
-  <div class="col-lg-5 sheet">
+  <div class="col-lg-4 sheet">
     <div class="d-flex justify-content-center">
       <h1 class="page-title">
         <%=t '.title' %>
       </h1>
     </div>
     <div class="mt-2">
-      <%= form_with url: team_members_path(team_id: params[:team_id]), local: true do |f| %>
+      <%= form_with model: @form, scope: :form, url: team_members_path(team_id: params[:team_id]), local: true do |f| %>
+        <%= render partial: 'form_errors', locals: { errors: @form.errors[:base] } %>
         <div class="form-group">
-          <%= select_tag 'role', options_from_collection_for_select(available_team_roles(params[:team_id]), :to_s, -> (v) { t(v, scope: 'domain.team.role') }), class: 'form-control' %>
+          <%= f.collection_check_boxes :roles, available_team_roles(params[:team_id]), :to_s, -> (r) { t(r.to_s, scope: 'domain.team.role') } do |b| %>
+            <%= b.label(class: 'form-check-boxes-block-item') { b.check_box + b.text } %>
+          <% end %>
         </div>
-        <% if @error %>
-          <p class="invalid-feedback" style="display: block;"><%= @error %></p>
-        <% end %>
         <%= button_tag t('.join'), class: 'btn btn-success' %>
       <% end %>
     </div>

@@ -7,18 +7,35 @@ class MembersController < ApplicationController
 
   helper_method :available_team_roles
 
+  def new
+    @form = TeamMemberForm.new
+  end
+
   def create
+    @form = TeamMemberForm.new(permitted_params)
     team_id = Team::Id.from_string(params[:team_id])
-    role = Team::Role.from_string(params[:role])
-    AddTeamMemberUsecase.perform(team_id, current_user.person_id, role)
-  rescue Team::InvalidRole, Team::InvalidNewMember => e
-    @error = t_domain_error(e)
-    render :new
-  else
-    redirect_to products_path
+
+    if @form.valid? && (error = add_team_member(team_id, @form)).blank?
+      redirect_to products_path
+    else
+      @form.errors[:base] << error
+      render :new
+    end
   end
 
   private
+
+  def add_team_member(team_id, form)
+    AddTeamMemberUsecase.perform(team_id, current_user.person_id, form.domain_objects[:roles])
+  rescue Team::InvalidNewMember => e
+    t_domain_error(e)
+  else
+    nil
+  end
+
+  def permitted_params
+    params.require(:form).permit(roles: [])
+  end
 
   def store_referer
     unless signed_in?

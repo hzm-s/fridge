@@ -17,7 +17,7 @@ class ProductsController < ApplicationController
     if @form.valid?
       CreateProductWithTeamUsecase.perform(
         current_user.person_id,
-        @form.domain_objects[:role],
+        @form.domain_objects[:roles],
         @form.name,
         @form.description,
       )
@@ -30,6 +30,6 @@ class ProductsController < ApplicationController
   private
 
   def permitted_params
-    params.require(:form).permit(:name, :description, :role)
+    params.require(:form).permit(:name, :description, roles: [])
   end
 end

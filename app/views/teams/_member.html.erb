@@ -5,7 +5,7 @@
   </span>
   <div class="team-member-item__tail">
     <span class="team-member-role">
-      <%=t member.role, scope: 'domain.team.role_short' %>
+      <%= translate_team_member_roles(member.roles) %>
     </span>
   </div>
 </div>

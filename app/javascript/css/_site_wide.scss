@@ -36,6 +36,10 @@ label {
   border-radius: $border-radius;
 }
 
+.form-check-boxes-block-item {
+  display: block;
+}
+
 .avatar {
   @include avatar(2.0rem);
 }

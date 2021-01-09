@@ -11,7 +11,7 @@ RSpec.describe 'products' do
   describe '#create' do
     context 'given valid params' do
       it do
-        params = { form: { name: 'fridge', description: 'setsumei_of_product', role: 'scrum_master' } }
+        params = { form: { name: 'fridge', description: 'setsumei_of_product', roles: ['', 'scrum_master', ''] } }
         post products_path(format: :js), params: params
         get products_path
 
@@ -24,7 +24,7 @@ RSpec.describe 'products' do
 
     context 'given invalid params' do
       it do
-        params = { form: { name: '' } }
+        params = { form: { name: '', description: '', roles: ['', '', ''] } }
         post products_path(format: :js), params: params
 
         expect(response.body).to include I18n.t('errors.messages.blank')
