@@ -15,7 +15,7 @@ module Team
       raise MemberHasTooManyRoles if role_set.size >= 3
       raise InvalidMultipleRoles if role_set == Set.new([Role::ProductOwner, Role::Developer])
 
-      @roles = Set.new(role_set)
+      @roles = T.let(Set.new(role_set), T::Set[Role])
     end
 
     sig {returns(T::Array[Role])}
