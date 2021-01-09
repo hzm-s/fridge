@@ -9,17 +9,17 @@ module ProductTeamQuery
           .joins(team: :product)
           .where(dao_person_id: person_id)
           .where(dao_products: { id: product_id })
-          .map { |m| Member.new(person_id: m.dao_person_id, role: m.role.to_sym) }
+          .map { |m| Member.new(person_id: m.dao_person_id, roles: m.roles.map(&:to_sym)) }
 
       ProductTeam.new(members)
     end
   end
 
   class ProductTeam < SimpleDelegator
-    def role(person_id)
-      select { |m| m.person_id == person_id }
-        .map(&:role)
-        .yield_self { |roles| Role.new(roles) }
+    def roles(person_id)
+      find { |m| m.person_id == person_id }
+        .roles
+        .map { |r| Role.new(r) }
     end
   end
 
@@ -31,6 +31,6 @@ module ProductTeamQuery
 
   class Member < T::Struct
     prop :person_id, String
-    prop :role, Symbol
+    prop :roles, T::Array[Symbol]
   end
 end

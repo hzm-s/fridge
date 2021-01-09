@@ -14,41 +14,41 @@ RSpec.describe ProductTeamQuery do
 
   context 'when PO' do
     it do
-      product = create_product(person: person.id, role: Team::Role::ProductOwner)
+      product = create_product(person: person.id, roles: team_roles(:po))
 
       team = described_class.call(product.id.to_s, person.id)
 
-      expect(team.role(person.id.to_s).to_a).to eq [:product_owner]
+      expect(team.roles(person.id.to_s)).to eq [:product_owner]
     end
   end
 
   context 'when Dev' do
     it do
-      product = create_product(person: person.id, role: Team::Role::Developer)
+      product = create_product(person: person.id, roles: team_roles(:dev))
 
       team = described_class.call(product.id.to_s, person.id)
 
-      expect(team.role(person.id.to_s).to_a).to eq [:developer]
+      expect(team.roles(person.id.to_s)).to eq [:developer]
     end
   end
 
   context 'when SM' do
     it do
-      product = create_product(person: person.id, role: Team::Role::ScrumMaster)
+      product = create_product(person: person.id, roles: team_roles(:sm))
 
       team = described_class.call(product.id.to_s, person.id)
 
-      expect(team.role(person.id.to_s).to_a).to eq [:scrum_master]
+      expect(team.roles(person.id.to_s)).to eq [:scrum_master]
     end
   end
 
-  xcontext 'when PO and Dev' do
+  context 'when SM and Dev' do
     it do
-      product = create_product(owner: person.id, members: [dev_member(person.id)])
+      product = create_product(person: person.id, roles: team_roles(:sm, :dev))
 
-      team = described_class.call(person.id, product.id.to_s)
+      team = described_class.call(product.id.to_s, person.id)
 
-      expect(team.role(person.id.to_s).to_a).to eq [:product_owner, :developer]
+      expect(team.roles(person.id.to_s)).to eq [:scrum_master, :developer]
     end
   end
 end

@@ -6,9 +6,13 @@ module TeamDomainSupport
     dev: Team::Role::Developer,
   }
 
+  def team_roles(*role_names)
+    role_names.map { |n| ROLE_DICTIONARY[n.to_sym] }
+      .then { |roles| Team::RoleSet.new(roles) }
+  end
+
   def team_member(person_id, *role_names)
-    roles = role_names.map { |n| ROLE_DICTIONARY[n.to_sym] }
-    Team::Member.new(person_id, Team::RoleSet.new(roles))
+    Team::Member.new(person_id, team_roles(*role_names))
   end
 
   def po_member(person_id)

@@ -11,7 +11,7 @@ RSpec.describe TeamQuery do
   let!(:product_x) do
     create_product(
       person: person_a.id,
-      role: Team::Role::ProductOwner,
+      roles: team_roles(:po),
       members: [
         dev_member(person_c.id),
         dev_member(person_b.id),
@@ -23,7 +23,7 @@ RSpec.describe TeamQuery do
   let!(:product_y) do
     create_product(
       person: person_d.id,
-      role: Team::Role::ProductOwner,
+      roles: team_roles(:po),
       members: [
         sm_member(person_a.id),
         dev_member(person_c.id),

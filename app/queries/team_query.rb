@@ -13,19 +13,23 @@ module TeamQuery
     end
 
     def product_owner
-      members.find { |m| m.role == ::Team::Role::ProductOwner.to_s }
+      members.find { |m| m.have_role?(::Team::Role::ProductOwner.to_s) }
     end
 
     def developers
-      members.select { |m| m.role == ::Team::Role::Developer.to_s }
+      members.select { |m| m.have_role?(::Team::Role::Developer.to_s) }
     end
 
     def scrum_master
-      members.find { |m| m.role == ::Team::Role::ScrumMaster.to_s }
+      members.find { |m| m.have_role?(::Team::Role::ScrumMaster.to_s) }
     end
   end
 
   class Member < SimpleDelegator
+    def have_role?(role)
+      roles.include?(role)
+    end
+
     def person_id
       dao_person_id
     end
