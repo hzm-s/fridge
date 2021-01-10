@@ -24,17 +24,23 @@ module ProductBacklogQuery
   end
 
   class ReleaseStruct < T::Struct
+    prop :name, String
+    prop :issues, T::Array[::IssueStruct]
+    prop :can_remove, T::Boolean
+
     class << self
       def create(release, issues)
         new(
           name: release.name,
-          issues: release.issues.to_a.map { |ri| issues.find { |i| i.id == ri.to_s } }
+          issues: release.issues.to_a.map { |ri| issues.find { |i| i.id == ri.to_s } },
+          can_remove: release.can_remove?,
         )
       end
     end
 
-    prop :name, String
-    prop :issues, T::Array[::IssueStruct]
+    def can_remove?
+      can_remove
+    end
   end
 
   class ProductBacklog < T::Struct

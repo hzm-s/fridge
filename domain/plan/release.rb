@@ -48,6 +48,11 @@ module Plan
     end
 
     sig {returns(T::Boolean)}
+    def can_remove?
+      @issues.empty?
+    end
+
+    sig {returns(T::Boolean)}
     def empty?
       @issues.empty?
     end

@@ -43,5 +43,10 @@ module Plan
       it { expect(described_class.new('R', issue_list(issue_a, issue_b, issue_c))).to be_include(issue_b) }
       it { expect(described_class.new('R', issue_list(issue_a, issue_c))).to_not be_include(issue_b) }
     end
+
+    describe 'Query to removable' do
+      it { expect(described_class.new('R', issue_list(issue_a))).to_not be_can_remove }
+      it { expect(described_class.new('R', issue_list)).to be_can_remove }
+    end
   end
 end
