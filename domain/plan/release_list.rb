@@ -19,7 +19,7 @@ module Plan
 
     sig {params(name: String).returns(T.self_type)}
     def remove(name)
-      raise ReleaseIsNotEmpty unless get(name).empty?
+      raise ReleaseIsNotEmpty unless get(name).can_remove?
 
       self.class.new(@releases.select { |r| r.name != name })
     end
