@@ -12,16 +12,20 @@ RSpec.describe IssueStruct do
     expect(s.criteria.map(&:content)).to eq %w(ac1 ac2 ac3) 
   end
 
-  it 'タイプを返すこと' do
+  it '操作可否を返すこと' do
     issue = add_issue(product.id, type: Issue::Types::Task)
 
     s = described_class.new(Dao::Issue.last)
 
-    aggregate_failures do
-      expect(s.status).to eq issue.status
-      expect(s).to_not be_can_estimate
-      expect(s).to_not be_must_have_acceptance_criteria
-    end
+    expect(s).to be_can_estimate
+  end
+
+  it '受け入れ基準要否を返すこと' do
+    issue = add_issue(product.id, type: Issue::Types::Task)
+
+    s = described_class.new(Dao::Issue.last)
+
+    expect(s).to_not be_must_have_acceptance_criteria
   end
 
   it 'ステータスを返すこと' do

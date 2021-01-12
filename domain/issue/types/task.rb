@@ -10,7 +10,7 @@ module Issue
 
         sig {override.returns(T::Boolean)}
         def can_estimate?
-          false
+          true
         end
 
         sig {override.returns(T::Boolean)}
