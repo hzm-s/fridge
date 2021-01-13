@@ -8,6 +8,11 @@ module Issue
         extend T::Sig
         include Type
 
+        sig {override.returns(Status)}
+        def initial_status
+          Statuses::Ready
+        end
+
         sig {override.returns(T::Boolean)}
         def can_estimate?
           true
