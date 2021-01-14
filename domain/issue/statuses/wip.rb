@@ -18,8 +18,8 @@ module Issue
           false
         end
 
-        sig {override.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
-        def update_by_prepartion(criteria, size)
+        sig {override.params(type: Type, criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
+        def update_by_prepartion(type, criteria, size)
           self
         end
 

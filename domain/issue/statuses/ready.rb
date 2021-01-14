@@ -18,9 +18,9 @@ module Issue
           true
         end
 
-        sig {override.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
-        def update_by_prepartion(criteria, size)
-          if Preparation.update_by_prepartion(criteria, size) == self
+        sig {override.params(type: Type, criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
+        def update_by_prepartion(type, criteria, size)
+          if Preparation.update_by_prepartion(type, criteria, size) == self
             self
           else
             Preparation
