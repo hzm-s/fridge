@@ -6,7 +6,7 @@ module Issue
     let(:product_id) { Product::Id.create }
     let(:description) { issue_description('A user story') }
 
-    describe 'create' do
+    describe 'Create' do
       let(:issue) { described_class.create(product_id, Types::Feature, description) }
 
       it do
@@ -42,7 +42,7 @@ module Issue
       end
     end
 
-    describe 'Update Status' do
+    describe 'Feature issue status' do
       let(:issue) { described_class.create(product_id, Types::Feature, description) }
 
       it do
@@ -57,6 +57,29 @@ module Issue
 
         issue.update_acceptance_criteria(acceptance_criteria([]))
         expect(issue.status).to eq Statuses::Preparation
+      end
+    end
+
+    describe 'Task issue status' do
+      let(:issue) { described_class.create(product_id, Types::Task, description) }
+
+      it do
+        expect(issue.status).to eq Statuses::Ready
+
+        issue.modify_description(issue_description('NEW task'))
+        expect(issue.status).to eq Statuses::Ready
+
+        issue.update_acceptance_criteria(acceptance_criteria(%w(AC1)))
+        expect(issue.status).to eq Statuses::Ready
+
+        issue.estimate(StoryPoint.new(3))
+        expect(issue.status).to eq Statuses::Ready
+
+        issue.update_acceptance_criteria(acceptance_criteria([]))
+        expect(issue.status).to eq Statuses::Ready
+
+        issue.estimate(StoryPoint.unknown)
+        expect(issue.status).to eq Statuses::Ready
       end
     end
   end

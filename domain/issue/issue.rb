@@ -14,7 +14,7 @@ module Issue
           Id.create,
           product_id,
           type,
-          Statuses::Preparation,
+          type.initial_status,
           description,
           StoryPoint.unknown,
           AcceptanceCriteria.new([]),
@@ -88,9 +88,11 @@ module Issue
 
     private
 
-    sig {returns(Status)}
+    sig {void}
     def update_status_by_preparation
-      @status = @status.update_by_prepartion(acceptance_criteria, size)
+      return unless @type.update_by_preparation?
+
+      @status = @status.update_by_preparation(acceptance_criteria, size)
     end
   end
 end

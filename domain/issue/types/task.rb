@@ -23,6 +23,11 @@ module Issue
           false
         end
 
+        sig {override.returns(T::Boolean)}
+        def update_by_preparation?
+          false
+        end
+
         sig {override.returns(String)}
         def to_s
           'task'

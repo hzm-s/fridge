@@ -17,6 +17,9 @@ module Issue
     sig {abstract.returns(T::Boolean)}
     def must_have_acceptance_criteria?; end
 
+    sig {abstract.returns(T::Boolean)}
+    def update_by_preparation?; end
+
     sig {abstract.returns(String)}
     def to_s; end
   end

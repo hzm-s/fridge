@@ -14,5 +14,9 @@ module Issue::Types
     describe '.must_have_acceptance_criteria?' do
       it { expect(described_class).to be_must_have_acceptance_criteria }
     end
+
+    describe '.update_by_preparation?' do
+      it { expect(described_class).to be_update_by_preparation }
+    end
   end
 end
