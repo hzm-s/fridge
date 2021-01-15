@@ -13,8 +13,8 @@ module Issue
     sig {abstract.returns(T::Boolean)}
     def can_estimate?; end
 
-    sig {abstract.params(type: Type, criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
-    def update_by_prepartion(type, criteria, size); end
+    sig {abstract.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
+    def update_by_preparation(criteria, size); end
 
     sig {abstract.returns(String)}
     def to_s; end

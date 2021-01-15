@@ -12,11 +12,10 @@ module Issue
         it { expect(described_class).to be_can_estimate }
       end
 
-      describe '#update_by_prepartion' do
-        context 'Feature: AcceptanceCriteria >= 1 and size == unknown' do
+      describe '#update_by_preparation' do
+        context 'AcceptanceCriteria >= 1 and size == unknown' do
           it do
-            status = described_class.update_by_prepartion(
-              Types::Feature,
+            status = described_class.update_by_preparation(
               acceptance_criteria(%w(AC1)),
               StoryPoint.unknown
             )
@@ -24,10 +23,9 @@ module Issue
           end
         end
 
-        context 'Feature: AcceptanceCriteria >= 1 and size != unknown' do
+        context 'AcceptanceCriteria >= 1 and size != unknown' do
           it do
-            status = described_class.update_by_prepartion(
-              Types::Feature,
+            status = described_class.update_by_preparation(
               acceptance_criteria(%w(AC1)),
               StoryPoint.new(3)
             )
@@ -35,10 +33,9 @@ module Issue
           end
         end
 
-        context 'Feature: AcceptanceCriteria == 0 and size != unknown' do
+        context 'AcceptanceCriteria == 0 and size != unknown' do
           it do
-            status = described_class.update_by_prepartion(
-              Types::Feature,
+            status = described_class.update_by_preparation(
               acceptance_criteria([]),
               StoryPoint.new(3)
             )
