@@ -54,6 +54,8 @@ module Plan
 
     sig {params(new_name: String, old_name: String).returns(T.self_type)}
     def change_release_name(new_name, old_name)
+      raise DuplicatedReleaseName if to_a.find { |r| r.name == new_name }
+
       index = find_index_by_release_name(old_name)
       new_releases = @releases.dup.tap { |list| list[index] = Release.new(new_name, list[index].issues) }
       self.class.new(new_releases)

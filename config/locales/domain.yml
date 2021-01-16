@@ -35,3 +35,5 @@ ja:
         invalid_multiple_roles: プロダクトオーナーと開発者は兼務できません
       release:
         can_not_remove_release: リリースを削除できません
+      plan:
+        duplicated_release_name: リリース名が重複しています

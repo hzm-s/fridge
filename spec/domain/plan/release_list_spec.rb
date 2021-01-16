@@ -111,6 +111,14 @@ module Plan
           Release.new('MVP', issue_list(issue_d, issue_e, issue_f)),
         ])
       end
+
+      it do
+        list = described_class.new([
+          Release.new('R1', issue_list(issue_a, issue_b, issue_c)),
+          Release.new('R2', issue_list(issue_d, issue_e, issue_f)),
+        ])
+        expect { list.change_release_name('R1', 'R2') }.to raise_error DuplicatedReleaseName
+      end
     end
 
     describe 'Check to have same issue' do

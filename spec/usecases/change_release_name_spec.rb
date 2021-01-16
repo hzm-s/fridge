@@ -25,4 +25,9 @@ RSpec.describe ChangeReleaseNameUsecase do
       '2nd Release' => issue_list,
     })
   end
+
+  it do
+    expect { described_class.perform(product.id, 'R1', 'R2') }
+      .to raise_error Plan::DuplicatedReleaseName
+  end
 end
