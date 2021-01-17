@@ -13,6 +13,7 @@ module Plan
     sig {params(release: Release).returns(T.self_type)}
     def append(release)
       raise DuplicatedIssue if have_same_issue?(release.issues)
+      raise DuplicatedReleaseName if to_a.find { |r| r.name == release.name }
 
       self.class.new(@releases + [release])
     end

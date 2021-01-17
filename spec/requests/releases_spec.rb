@@ -31,6 +31,13 @@ RSpec.describe 'releases' do
 
         expect(response.body).to include(I18n.t('errors.messages.blank'))
       end
+
+      it do
+        post product_releases_path(product_id: product.id.to_s), params: { form: { name: 'MVP' } }
+        post product_releases_path(product_id: product.id.to_s), params: { form: { name: 'MVP' } }
+
+        expect(response.body).to include(I18n.t('domain.errors.plan.duplicated_release_name'))
+      end
     end
   end
 

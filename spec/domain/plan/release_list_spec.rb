@@ -39,6 +39,16 @@ module Plan
         r = Release.new('R3', issue_list(issue_e, issue_d, issue_f))
         expect { list.append(r) }.to raise_error DuplicatedIssue
       end
+
+      it do
+        list = described_class.new([
+          Release.new('R1', issue_list(issue_a, issue_b)),
+          Release.new('R2', issue_list(issue_c, issue_d))
+        ])
+
+        r = Release.new('R2', issue_list(issue_e))
+        expect { list.append(r) }.to raise_error DuplicatedReleaseName
+      end
     end
 
     describe 'Remove' do

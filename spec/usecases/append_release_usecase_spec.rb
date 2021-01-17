@@ -14,4 +14,10 @@ RSpec.describe AppendReleaseUsecase do
     ])
     expect(plan.pending).to eq Plan::IssueList.new
   end
+
+  it do
+    described_class.perform(product.id, 'MVP')
+    expect { described_class.perform(product.id, 'MVP') }
+      .to raise_error Plan::DuplicatedReleaseName
+  end
 end

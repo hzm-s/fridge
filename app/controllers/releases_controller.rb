@@ -11,11 +11,17 @@ class ReleasesController < ApplicationController
   def create
     @form = ReleaseForm.new(permitted_params)
     if @form.valid?
-      AppendReleaseUsecase.perform(
-        Product::Id.from_string(current_product_id),
-        @form.name
-      )
-      redirect_to product_backlog_path(product_id: current_product_id), flash: flash_success('release.create')
+      begin
+        AppendReleaseUsecase.perform(
+          Product::Id.from_string(current_product_id),
+          @form.name
+        )
+      rescue Plan::DuplicatedReleaseName => e
+        @form.errors.add(:name, t_domain_error(e.class))
+        render :edit
+      else
+        redirect_to product_backlog_path(product_id: current_product_id), flash: flash_success('release.create')
+      end
     else
       render :new
     end
@@ -34,7 +40,7 @@ class ReleasesController < ApplicationController
           @form.name,
           current_release.name
         )
-      rescue ArgumentError => e
+      rescue Plan::DuplicatedReleaseName => e
         @form.errors.add(:name, t_domain_error(e.class))
         render :edit
       else
