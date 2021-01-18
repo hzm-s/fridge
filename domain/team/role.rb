@@ -23,7 +23,7 @@ module Team
     end
 
     sig {returns(T::Array[Symbol])}
-    def unavailable_actions_for_pbi
+    def denied_actions
       case self
       when ProductOwner
         [:estimate_size]
