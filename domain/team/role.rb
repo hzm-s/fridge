@@ -22,6 +22,11 @@ module Team
       ScrumMaster = new('scrum_master')
     end
 
+    sig {returns(T::Boolean)}
+    def can_estimate_issue?
+      self == Developer
+    end
+
     sig {returns(T::Array[Symbol])}
     def denied_actions
       case self
