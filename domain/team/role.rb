@@ -27,6 +27,11 @@ module Team
       self == Developer
     end
 
+    sig {returns(T::Boolean)}
+    def can_change_issue_priority?
+      [ProductOwner, ScrumMaster].include?(self)
+    end
+
     sig {returns(T::Array[Symbol])}
     def denied_actions
       case self
