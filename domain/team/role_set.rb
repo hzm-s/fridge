@@ -18,6 +18,16 @@ module Team
       @roles = T.let(Set.new(role_set), T::Set[Role])
     end
 
+    sig {returns(T::Boolean)}
+    def can_estimate_issue?
+      @roles.any? { |role| role.can_estimate_issue? }
+    end
+
+    sig {returns(T::Boolean)}
+    def can_change_issue_priority?
+      @roles.any? { |role| role.can_change_issue_priority? }
+    end
+
     sig {returns(T::Array[Role])}
     def to_a
       @roles.to_a
