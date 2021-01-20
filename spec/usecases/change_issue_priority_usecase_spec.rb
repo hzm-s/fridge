@@ -17,7 +17,8 @@ RSpec.describe ChangeIssuePriorityUsecase do
   end
 
   it do
-    described_class.perform(product.id, 'MVP', issue_a.id, 2)
+    roles = team_roles(:po)
+    described_class.perform(product.id, roles, 'MVP', issue_a.id, 2)
 
     plan = PlanRepository::AR.find_by_product_id(product.id)
 
@@ -25,5 +26,11 @@ RSpec.describe ChangeIssuePriorityUsecase do
       expect(plan.scheduled).to eq release_list({ 'MVP' => issue_list(issue_b.id, issue_c.id, issue_a.id) })
       expect(plan.pending).to eq Plan::IssueList.new
     end
+  end
+
+  it do
+    roles = team_roles(:dev)
+    expect { described_class.perform(product.id, roles, 'MVP', issue_a.id, 2) }
+      .to raise_error UsecaseBase::NotAllowed
   end
 end
