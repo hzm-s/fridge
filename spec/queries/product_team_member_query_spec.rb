@@ -14,7 +14,10 @@ RSpec.describe ProductTeamMemberQuery do
 
       member = described_class.call(product.id.to_s, person.id)
 
-      expect(member.roles).to eq team_roles(:po)
+      aggregate_failures do
+        expect(member.roles).to eq team_roles(:po)
+        expect(member).to be_can_change_issue_priority
+      end
     end
   end
 
@@ -28,7 +31,10 @@ RSpec.describe ProductTeamMemberQuery do
 
       member = described_class.call(product.id.to_s, person.id)
 
-      expect(member.roles).to eq team_roles(:dev)
+      aggregate_failures do
+        expect(member.roles).to eq team_roles(:dev)
+        expect(member).to_not be_can_change_issue_priority
+      end
     end
   end
 
@@ -42,7 +48,10 @@ RSpec.describe ProductTeamMemberQuery do
 
       member = described_class.call(product.id.to_s, person.id)
 
-      expect(member.roles).to eq team_roles(:sm)
+      aggregate_failures do
+        expect(member.roles).to eq team_roles(:sm)
+        expect(member).to be_can_change_issue_priority
+      end
     end
   end
 
@@ -56,7 +65,10 @@ RSpec.describe ProductTeamMemberQuery do
 
       member = described_class.call(product.id.to_s, person.id)
 
-      expect(member.roles).to eq team_roles(:sm, :dev)
+      aggregate_failures do
+        expect(member.roles).to eq team_roles(:sm, :dev)
+        expect(member).to be_can_change_issue_priority
+      end
     end
   end
 end
