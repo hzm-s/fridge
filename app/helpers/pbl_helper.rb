@@ -5,6 +5,7 @@ module PblHelper
       controller: 'sort-pbl',
       sort_pbl_url: product_plan_path(product_id),
       sort_pbl_group: release_name,
+      test_change_issue_priority: 1,
     }
   end
 
