@@ -3,7 +3,8 @@ require 'rails_helper'
 
 RSpec.describe 'plans' do
   let!(:user_account) { sign_up }
-  let!(:product) { create_product(person: user_account.person_id) }
+  let!(:product) { create_product(person: user_account.person_id, roles: roles) }
+  let(:roles) { team_roles(:dev, :sm) }
 
   before do
     sign_in(user_account)
@@ -43,7 +44,7 @@ RSpec.describe 'plans' do
     context 'when change priority' do
       it do
         expect(ChangeIssuePriorityUsecase)
-          .to receive(:perform).with(product.id, 'MVP', Issue::Id.from_string('i123'), 5)
+          .to receive(:perform).with(product.id, roles, 'MVP', Issue::Id.from_string('i123'), 5)
 
         patch product_plan_path(product_id: product.id.to_s, format: :json),
           params: { issue_id: 'i123', from: 'MVP', to: 'MVP', to_index: 5 }

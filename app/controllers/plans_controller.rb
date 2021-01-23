@@ -1,7 +1,10 @@
 # typed: false
 class PlansController < ApplicationController
+  include ProductHelper
+
   def update
-    product_id = Product::Id.from_string(params[:product_id])
+    product_id = Product::Id.from_string(current_product_id)
+    current_team_member_roles = current_product_team_member(current_user.person_id).roles
     issue_id = Issue::Id.from_string(params[:issue_id])
     to_index = params[:to_index].to_i
     to = params[:to]
@@ -16,12 +19,18 @@ class PlansController < ApplicationController
       ScheduleIssueUsecase.perform(product_id, issue_id, to, to_index)
     when [true, true]
       if from == to
-        ChangeIssuePriorityUsecase.perform(product_id, from, issue_id, to_index)
+        ChangeIssuePriorityUsecase.perform(product_id, current_team_member_roles, from, issue_id, to_index)
       else
         ChangeReleaseOfIssueUsecase.perform(product_id, issue_id, from ,to, to_index)
       end
     else
       raise 'Unknown issue moving'
     end
+  end
+
+  private
+
+  def current_product_id
+    params[:product_id]
   end
 end
