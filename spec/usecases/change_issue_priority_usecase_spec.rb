@@ -27,10 +27,4 @@ RSpec.describe ChangeIssuePriorityUsecase do
       expect(plan.pending).to eq Plan::IssueList.new
     end
   end
-
-  it do
-    roles = team_roles(:dev)
-    expect { described_class.perform(product.id, roles, 'MVP', issue_a.id, 2) }
-      .to raise_error UsecaseBase::NotAllowed
-  end
 end

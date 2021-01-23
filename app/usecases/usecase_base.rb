@@ -1,7 +1,5 @@
 # typed: false
 class UsecaseBase
-  class NotAllowed < StandardError; end
-
   class << self
     def perform(*args)
       new.perform(*args)
