@@ -23,11 +23,13 @@ module Plan
     let(:issue_e) { Issue::Id.create }
     let(:issue_f) { Issue::Id.create }
     let(:issue_g) { Issue::Id.create }
+    let(:po_roles) { team_roles(:po) }
+    let(:dev_roles) { team_roles(:dev) }
 
     describe 'Remove issue' do
       before do
         plan.update_pending(issue_list(issue_a, issue_b))
-        plan.update_scheduled(release_list({
+        plan.update_scheduled(po_roles, release_list({
           'R1' => issue_list(issue_c, issue_d),
           'R2' => issue_list(issue_e, issue_f, issue_g),
         }))
@@ -35,7 +37,7 @@ module Plan
 
       context 'remove not scheduled issue' do
         it do
-          plan.remove_issue(issue_a)
+          plan.remove_issue(po_roles, issue_a)
 
           aggregate_failures do
             expect(plan.pending).to eq issue_list(issue_b)
@@ -49,7 +51,7 @@ module Plan
 
       context 'remove scheduled issue' do
         it do
-          plan.remove_issue(issue_f)
+          plan.remove_issue(po_roles, issue_f)
 
           aggregate_failures do
             expect(plan.pending).to eq issue_list(issue_a, issue_b)
@@ -73,7 +75,7 @@ module Plan
         scheduled = ReleaseList.new([
           Release.new('R', issue_list(issue_d, issue_e))
         ])
-        plan.update_scheduled(scheduled)
+        plan.update_scheduled(po_roles, scheduled)
 
         pending = IssueList.new([issue_a, issue_b, issue_c])
         plan.update_pending(pending)
@@ -88,7 +90,7 @@ module Plan
         scheduled = ReleaseList.new([
           Release.new('R', issue_list(issue_d, issue_a, issue_e))
         ])
-        plan.update_scheduled(scheduled)
+        plan.update_scheduled(po_roles, scheduled)
 
         pending = IssueList.new([issue_a, issue_b, issue_c])
 
@@ -97,12 +99,26 @@ module Plan
     end
 
     describe 'Update scheduled' do
+      describe 'Check permission' do
+        let(:scheduled) { release_list('Release' => issue_list(issue_a)) }
+
+        it do
+          expect { plan.update_scheduled(po_roles, scheduled) }
+            .to_not raise_error
+        end
+
+        it do
+          expect { plan.update_scheduled(dev_roles, scheduled) }
+            .to raise_error PermissionDenied
+        end
+      end
+
       it do
         scheduled = ReleaseList.new([
           Release.new('R1', issue_list(issue_a, issue_b, issue_c)),
           Release.new('R2', issue_list(issue_d, issue_e))
         ])
-        plan.update_scheduled(scheduled)
+        plan.update_scheduled(po_roles, scheduled)
         expect(plan.scheduled).to eq scheduled
       end
 
@@ -113,7 +129,7 @@ module Plan
         scheduled = ReleaseList.new([
           Release.new('R', issue_list(issue_d, issue_e))
         ])
-        plan.update_scheduled(scheduled)
+        plan.update_scheduled(po_roles, scheduled)
 
         aggregate_failures do
           expect(plan.scheduled).to eq scheduled
@@ -130,7 +146,7 @@ module Plan
           Release.new('R2', issue_list(issue_f, issue_a, issue_g))
         ])
 
-        expect { plan.update_scheduled(scheduled) }.to raise_error DuplicatedIssue
+        expect { plan.update_scheduled(po_roles, scheduled) }.to raise_error DuplicatedIssue
       end
 
       it do
@@ -142,7 +158,7 @@ module Plan
           Release.new('R2', issue_list(issue_c, issue_d, issue_e))
         ])
 
-        expect { plan.update_scheduled(scheduled) }.to raise_error DuplicatedIssue
+        expect { plan.update_scheduled(po_roles, scheduled) }.to raise_error DuplicatedIssue
       end
     end
   end

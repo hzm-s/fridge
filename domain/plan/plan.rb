@@ -35,17 +35,18 @@ module Plan
       @pending = pending
     end
 
-    sig {params(issue_id: Issue::Id).void}
-    def remove_issue(issue_id)
+    sig {params(roles: Team::RoleSet, issue_id: Issue::Id).void}
+    def remove_issue(roles, issue_id)
       if @pending.include?(issue_id)
         update_pending(pending.remove(issue_id))
       else
-        update_scheduled(scheduled.remove_issue(issue_id))
+        update_scheduled(roles, scheduled.remove_issue(issue_id))
       end
     end
 
-    sig {params(scheduled: ReleaseList).void}
-    def update_scheduled(scheduled)
+    sig {params(roles: Team::RoleSet, scheduled: ReleaseList).void}
+    def update_scheduled(roles, scheduled)
+      raise PermissionDenied unless roles.can_change_issue_priority?
       raise DuplicatedIssue if scheduled.have_same_issue?(@pending)
 
       @scheduled = scheduled
