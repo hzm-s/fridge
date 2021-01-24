@@ -6,18 +6,19 @@ RSpec.describe ChangeIssuePriorityUsecase do
   let!(:issue_a) { add_issue(product.id) }
   let!(:issue_b) { add_issue(product.id) }
   let!(:issue_c) { add_issue(product.id) }
+  let(:roles) { team_roles(:po) }
 
   before do
     plan = PlanRepository::AR.find_by_product_id(product.id)
     plan.update_pending(issue_list)
     plan.update_scheduled(
+      roles,
       release_list({ 'MVP' => issue_list(issue_a.id, issue_b.id, issue_c.id) })
     )
     PlanRepository::AR.store(plan)
   end
 
   it do
-    roles = team_roles(:po)
     described_class.perform(product.id, roles, 'MVP', issue_a.id, 2)
 
     plan = PlanRepository::AR.find_by_product_id(product.id)

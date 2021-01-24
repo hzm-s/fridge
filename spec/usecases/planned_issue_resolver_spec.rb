@@ -8,11 +8,13 @@ RSpec.describe PlannedIssueResolver do
   let!(:issue_c) { add_issue(product.id).id }
   let!(:issue_d) { add_issue(product.id).id }
   let!(:issue_e) { add_issue(product.id).id }
+  let(:roles) { team_roles(:po) }
 
   before do
     @plan = PlanRepository::AR.find_by_product_id(product.id)
     @plan.update_pending(issue_list(issue_a, issue_b))
     @plan.update_scheduled(
+      roles,
       release_list({
         'R1' => issue_list(issue_c, issue_d),
         'R2' => issue_list(issue_e),

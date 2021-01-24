@@ -8,21 +8,25 @@ RSpec.describe ScheduleIssueUsecase do
   let!(:issue_c) { add_issue(product.id) }
   let!(:issue_d) { add_issue(product.id) }
   let!(:issue_e) { add_issue(product.id) }
+  let(:roles) { team_roles(:po) }
 
   before do
     plan = PlanRepository::AR.find_by_product_id(product.id)
     plan.update_pending(issue_list(issue_c.id, issue_e.id))
-    plan.update_scheduled(release_list({
-      'R1' => issue_list(issue_d.id),
-      'R2' => issue_list(issue_a.id, issue_b.id),
-      'R3' => issue_list,
-    }))
+    plan.update_scheduled(
+      roles,
+      release_list({
+        'R1' => issue_list(issue_d.id),
+        'R2' => issue_list(issue_a.id, issue_b.id),
+        'R3' => issue_list,
+      })
+    )
     PlanRepository::AR.store(plan)
   end
 
   context 'add to some issues included release' do
     it do
-      described_class.perform(product.id, issue_c.id, 'R2', 1)
+      described_class.perform(product.id, roles, issue_c.id, 'R2', 1)
 
       plan = PlanRepository::AR.find_by_product_id(product.id)
 
@@ -39,7 +43,7 @@ RSpec.describe ScheduleIssueUsecase do
 
   context 'add to empty release' do
     it do
-      described_class.perform(product.id, issue_c.id, 'R3', 0)
+      described_class.perform(product.id, roles, issue_c.id, 'R3', 0)
 
       plan = PlanRepository::AR.find_by_product_id(product.id)
 
@@ -56,7 +60,7 @@ RSpec.describe ScheduleIssueUsecase do
 
   context 'append to tail' do
     it do
-      described_class.perform(product.id, issue_c.id, 'R1', 1)
+      described_class.perform(product.id, roles, issue_c.id, 'R1', 1)
 
       plan = PlanRepository::AR.find_by_product_id(product.id)
 

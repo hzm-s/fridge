@@ -8,11 +8,13 @@ RSpec.describe ChangeReleaseOfIssueUsecase do
   let!(:issue_c) { add_issue(product.id) }
   let!(:issue_d) { add_issue(product.id) }
   let!(:issue_e) { add_issue(product.id) }
+  let(:roles) { team_roles(:po) }
 
   before do
     plan = PlanRepository::AR.find_by_product_id(product.id)
     plan.update_pending(issue_list)
     plan.update_scheduled(
+      roles,
       release_list({
         'R1' => issue_list(issue_a.id, issue_b.id),
         'R2' => issue_list(issue_c.id, issue_d.id, issue_e.id),
@@ -23,7 +25,7 @@ RSpec.describe ChangeReleaseOfIssueUsecase do
   end
 
   it do
-    described_class.perform(product.id, issue_c.id, 'R2', 'R1', 1)
+    described_class.perform(product.id, roles, issue_c.id, 'R2', 'R1', 1)
 
     plan = PlanRepository::AR.find_by_product_id(product.id)
     aggregate_failures do
@@ -37,7 +39,7 @@ RSpec.describe ChangeReleaseOfIssueUsecase do
   end
 
   it do
-    described_class.perform(product.id, issue_d.id, 'R2', 'R3', 0)
+    described_class.perform(product.id, roles, issue_d.id, 'R2', 'R3', 0)
 
     plan = PlanRepository::AR.find_by_product_id(product.id)
     aggregate_failures do
@@ -51,7 +53,7 @@ RSpec.describe ChangeReleaseOfIssueUsecase do
   end
 
   it do
-    described_class.perform(product.id, issue_c.id, 'R2', 'R1', 2)
+    described_class.perform(product.id, roles, issue_c.id, 'R2', 'R1', 2)
 
     plan = PlanRepository::AR.find_by_product_id(product.id)
     aggregate_failures do
