@@ -10,54 +10,86 @@ RSpec.describe 'plans' do
     sign_in(user_account)
   end
 
+  let!(:issue_a) { add_issue(product.id) }
+  let!(:issue_b) { add_issue(product.id) }
+  let!(:issue_c) { add_issue(product.id) }
+  let!(:issue_d) { add_issue(product.id) }
+  let!(:issue_e) { add_issue(product.id) }
+  let!(:issue_f) { add_issue(product.id) }
+
+  before do
+    plan = PlanRepository::AR.find_by_product_id(product.id)
+    plan.update_pending(issue_list(issue_a.id, issue_b.id))
+    plan.update_scheduled(
+      roles,
+      release_list({
+        'R1' => issue_list(issue_c.id, issue_d.id),
+        'R2' => issue_list(issue_e.id, issue_f.id),
+      })
+    )
+    PlanRepository::AR.store(plan)
+  end
+
   describe '#update' do
     context 'when sort pending issues' do
       it do
-        expect(SortIssuesUsecase)
-          .to receive(:perform).with(product.id, Issue::Id.from_string('i123'), 1)
-
         patch product_plan_path(product_id: product.id.to_s, format: :json),
-          params: { issue_id: 'i123', to_index: 1 }
+          params: { issue_id: issue_a.id.to_s, to_index: 1 }
+
+        plan = PlanRepository::AR.find_by_product_id(product.id)
+        expect(plan.pending).to eq issue_list(issue_b.id, issue_a.id)
       end
     end
 
     context 'when schedule issue' do
       it do
-        expect(ScheduleIssueUsecase)
-          .to receive(:perform).with(product.id, Issue::Id.from_string('i123'), 'MVP', 1)
-
         patch product_plan_path(product_id: product.id.to_s, format: :json),
-          params: { issue_id: 'i123', to: 'MVP', to_index: 1 }
+          params: { issue_id: issue_b.id.to_s, to: 'R1', to_index: 1 }
+
+        plan = PlanRepository::AR.find_by_product_id(product.id)
+        expect(plan.scheduled).to eq release_list({
+          'R1' => issue_list(issue_c.id, issue_b.id, issue_d.id),
+          'R2' => issue_list(issue_e.id, issue_f.id),
+        })
       end
     end
 
     context 'when pending issue' do
       it do
-        expect(PendIssueUsecase)
-          .to receive(:perform).with(product.id, Issue::Id.from_string('i123'), 'MVP')
-
         patch product_plan_path(product_id: product.id.to_s, format: :json),
-          params: { issue_id: 'i123', from: 'MVP' }
+          params: { issue_id: issue_e.id.to_s, from: 'R2' }
+
+        plan = PlanRepository::AR.find_by_product_id(product.id)
+        expect(plan.scheduled).to eq release_list({
+          'R1' => issue_list(issue_c.id, issue_d.id),
+          'R2' => issue_list(issue_f.id),
+        })
       end
     end
 
     context 'when change priority' do
       it do
-        expect(ChangeIssuePriorityUsecase)
-          .to receive(:perform).with(product.id, roles, 'MVP', Issue::Id.from_string('i123'), 5)
-
         patch product_plan_path(product_id: product.id.to_s, format: :json),
-          params: { issue_id: 'i123', from: 'MVP', to: 'MVP', to_index: 5 }
+          params: { issue_id: issue_c.id.to_s, from: 'R1', to: 'R1', to_index: 1 }
+
+        plan = PlanRepository::AR.find_by_product_id(product.id)
+        expect(plan.scheduled).to eq release_list({
+          'R1' => issue_list(issue_d.id, issue_c.id),
+          'R2' => issue_list(issue_e.id, issue_f.id),
+        })
       end
     end
 
     context 'when change relase' do
       it do
-        expect(ChangeReleaseOfIssueUsecase)
-          .to receive(:perform).with(product.id, Issue::Id.from_string('i123'), 'R1', 'R2', 3)
-
         patch product_plan_path(product_id: product.id.to_s, format: :json),
-          params: { issue_id: 'i123', from: 'R1', to: 'R2', to_index: 3 }
+          params: { issue_id: issue_f.id.to_s, from: 'R2', to: 'R1', to_index: 0 }
+
+        plan = PlanRepository::AR.find_by_product_id(product.id)
+        expect(plan.scheduled).to eq release_list({
+          'R1' => issue_list(issue_f.id, issue_c.id, issue_d.id),
+          'R2' => issue_list(issue_e.id),
+        })
       end
     end
   end

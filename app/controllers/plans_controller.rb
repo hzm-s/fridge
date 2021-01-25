@@ -4,7 +4,7 @@ class PlansController < ApplicationController
 
   def update
     product_id = Product::Id.from_string(current_product_id)
-    current_team_member_roles = current_product_team_member(current_user.person_id).roles
+    roles = current_product_team_member(current_user.person_id).roles
     issue_id = Issue::Id.from_string(params[:issue_id])
     to_index = params[:to_index].to_i
     to = params[:to]
@@ -14,14 +14,14 @@ class PlansController < ApplicationController
     when [false, false]
       SortIssuesUsecase.perform(product_id, issue_id, to_index)
     when [true, false]
-      PendIssueUsecase.perform(product_id, issue_id, from)
+      PendIssueUsecase.perform(product_id, roles, issue_id, from)
     when [false, true]
-      ScheduleIssueUsecase.perform(product_id, issue_id, to, to_index)
+      ScheduleIssueUsecase.perform(product_id, roles, issue_id, to, to_index)
     when [true, true]
       if from == to
-        ChangeIssuePriorityUsecase.perform(product_id, current_team_member_roles, from, issue_id, to_index)
+        ChangeIssuePriorityUsecase.perform(product_id, roles, from, issue_id, to_index)
       else
-        ChangeReleaseOfIssueUsecase.perform(product_id, issue_id, from ,to, to_index)
+        ChangeReleaseOfIssueUsecase.perform(product_id, roles, issue_id, from ,to, to_index)
       end
     else
       raise 'Unknown issue moving'
