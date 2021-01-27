@@ -5,10 +5,12 @@ RSpec.describe RemoveReleaseUsecase do
   let(:product) { create_product }
   let(:issue_a) { add_issue(product.id).id }
   let(:issue_b) { add_issue(product.id).id }
+  let(:roles) { team_roles(:po) }
 
   before do
     plan = PlanRepository::AR.find_by_product_id(product.id)
     plan.update_scheduled(
+      roles,
       release_list({
         'R1' => issue_list(issue_a),
         'R2' => issue_list,
@@ -19,7 +21,7 @@ RSpec.describe RemoveReleaseUsecase do
   end
 
   it do
-    described_class.perform(product.id, 'R2')
+    described_class.perform(product.id, roles, 'R2')
 
     plan = PlanRepository::AR.find_by_product_id(product.id)
 
@@ -30,7 +32,7 @@ RSpec.describe RemoveReleaseUsecase do
   end
 
   it do
-    expect { described_class.perform(product.id, 'R1') }
+    expect { described_class.perform(product.id, roles, 'R1') }
       .to raise_error(Plan::ReleaseIsNotEmpty)
   end
 end

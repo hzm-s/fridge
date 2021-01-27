@@ -11,8 +11,10 @@ class ReleasesController < ApplicationController
   def create
     @form = ReleaseForm.new(permitted_params)
     if @form.valid?
+      roles = current_product_team_member(current_user.person_id).roles
       begin
         AppendReleaseUsecase.perform(
+          roles,
           Product::Id.from_string(current_product_id),
           @form.name
         )
@@ -34,9 +36,11 @@ class ReleasesController < ApplicationController
   def update
     @form = ReleaseForm.new(name: params[:form][:name], index: release_index)
     if @form.valid?
+      roles = current_product_team_member(current_user.person_id).roles
       begin
         ChangeReleaseNameUsecase.perform(
           Product::Id.from_string(current_product_id),
+          roles,
           @form.name,
           current_release.name
         )
@@ -52,8 +56,10 @@ class ReleasesController < ApplicationController
   end
 
   def destroy
+    roles = current_product_team_member(current_user.person_id).roles
     RemoveReleaseUsecase.perform(
       Product::Id.from_string(current_product_id),
+      roles,
       current_release.name
     )
   rescue Plan::ReleaseIsNotEmpty

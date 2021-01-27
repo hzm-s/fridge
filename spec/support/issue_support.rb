@@ -35,7 +35,7 @@ module IssueSupport
   end
 
   def schedule_issue(product_id, issue_id, release)
-    ScheduleIssueUsecase.perform(product_id, issue_id, release, 0)
+    ScheduleIssueUsecase.perform(product_id, team_roles(:po), issue_id, release, 0)
   end
 
   private

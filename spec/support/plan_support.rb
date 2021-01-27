@@ -5,7 +5,7 @@ module PlanSupport
   include PlanDomainSupport
 
   def add_release(product_id, name)
-    AppendReleaseUsecase.perform(product_id, name)
+    AppendReleaseUsecase.perform(team_roles(:po), product_id, name)
     PlanRepository::AR.find_by_product_id(product_id)
   end
 end
