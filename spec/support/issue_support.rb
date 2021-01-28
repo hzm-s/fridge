@@ -1,4 +1,4 @@
-# typed: true
+# typed: false
 require_relative '../domain_support/issue_domain_support'
 
 module IssueSupport

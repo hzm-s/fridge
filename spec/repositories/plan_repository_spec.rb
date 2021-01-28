@@ -2,6 +2,8 @@
 require 'rails_helper'
 
 RSpec.describe PlanRepository::AR do
+  let(:roles) { team_roles(:po) }
+
   describe 'Store' do
     it do
       product = nil
@@ -19,7 +21,7 @@ RSpec.describe PlanRepository::AR do
         'Ph1' => issue_list(issue_a.id),
         'Ph2' => issue_list(issue_b.id)
       })
-      plan.update_scheduled(scheduled)
+      plan.update_scheduled(roles, scheduled)
 
       expect { described_class.store(plan) }
         .to change { Dao::Plan.count }.by(0)
@@ -53,7 +55,7 @@ RSpec.describe PlanRepository::AR do
       })
       pending = issue_list(issue_c.id)
 
-      stored.update_scheduled(scheduled)
+      stored.update_scheduled(roles, scheduled)
       stored.update_pending(pending)
 
       expect(stored.scheduled).to eq scheduled

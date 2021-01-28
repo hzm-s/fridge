@@ -3,7 +3,6 @@ require 'rails_helper'
 
 describe ProductBacklogQuery do
   let!(:product) { create_product }
-
   let!(:issue_a) { add_issue(product.id).id }
   let!(:issue_b) { add_issue(product.id).id }
   let!(:issue_c) { add_issue(product.id).id }
@@ -11,6 +10,7 @@ describe ProductBacklogQuery do
   let!(:issue_e) { add_issue(product.id).id }
   let!(:issue_f) { add_issue(product.id).id }
   let!(:issue_g) { add_issue(product.id).id }
+  let(:roles) { team_roles(:po) }
 
   it do
     plan = PlanRepository::AR.find_by_product_id(product.id)
@@ -23,7 +23,7 @@ describe ProductBacklogQuery do
       'R2' => issue_list(issue_c, issue_d, issue_e),
       'R3' => issue_list,
     })
-    plan.update_scheduled(scheduled)
+    plan.update_scheduled(roles, scheduled)
 
     PlanRepository::AR.store(plan)
 
