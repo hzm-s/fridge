@@ -10,8 +10,8 @@ module ProductTeamMemberQuery
   end
 
   class TeamMemberStruct < SimpleDelegator
-    def can_change_issue_priority?
-      roles.can_change_issue_priority?
+    def can_update_release_plan?
+      roles.can_update_release_plan?
     end
 
     def roles

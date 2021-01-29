@@ -9,10 +9,10 @@ module Team
       it { expect(Role::ScrumMaster).to_not be_can_estimate_issue }
     end
 
-    describe '#can_change_issue_priority?' do
-      it { expect(Role::ProductOwner).to be_can_change_issue_priority }
-      it { expect(Role::Developer).to_not be_can_change_issue_priority }
-      it { expect(Role::ScrumMaster).to be_can_change_issue_priority }
+    describe '#can_update_release_plan?' do
+      it { expect(Role::ProductOwner).to be_can_update_release_plan }
+      it { expect(Role::Developer).to_not be_can_update_release_plan }
+      it { expect(Role::ScrumMaster).to be_can_update_release_plan }
     end
   end
 end

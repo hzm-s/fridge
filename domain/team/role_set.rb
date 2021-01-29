@@ -24,8 +24,8 @@ module Team
     end
 
     sig {returns(T::Boolean)}
-    def can_change_issue_priority?
-      @roles.any? { |role| role.can_change_issue_priority? }
+    def can_update_release_plan?
+      @roles.any? { |role| role.can_update_release_plan? }
     end
 
     sig {returns(T::Array[Role])}

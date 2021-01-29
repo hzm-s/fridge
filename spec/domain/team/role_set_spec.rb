@@ -57,30 +57,30 @@ module Team
       end
     end
 
-    describe 'query change issue priority permission' do
+    describe 'query permission of update release plan' do
       it do
         roles = described_class.new([Role::Developer])
-        expect(roles).to_not be_can_change_issue_priority
+        expect(roles).to_not be_can_update_release_plan
       end
 
       it do
         roles = described_class.new([Role::ScrumMaster])
-        expect(roles).to be_can_change_issue_priority
+        expect(roles).to be_can_update_release_plan
       end
 
       it do
         roles = described_class.new([Role::ProductOwner])
-        expect(roles).to be_can_change_issue_priority
+        expect(roles).to be_can_update_release_plan
       end
 
       it do
         roles = described_class.new([Role::ScrumMaster, Role::Developer])
-        expect(roles).to be_can_change_issue_priority
+        expect(roles).to be_can_update_release_plan
       end
 
       it do
         roles = described_class.new([Role::ScrumMaster, Role::ProductOwner])
-        expect(roles).to be_can_change_issue_priority
+        expect(roles).to be_can_update_release_plan
       end
     end
   end

@@ -10,7 +10,7 @@ RSpec.describe 'product_backlogs' do
 
     it do
       get product_backlog_path(product_id: product.id)
-      expect(response.body).to include 'test-change-issue-priority'
+      expect(response.body).to include 'test-update-release-plan'
     end
   end
 
@@ -20,7 +20,7 @@ RSpec.describe 'product_backlogs' do
 
     it do
       get product_backlog_path(product_id: product.id)
-      expect(response.body).to_not include 'test-change-issue-priority'
+      expect(response.body).to_not include 'test-update-release-plan'
     end
   end
 end

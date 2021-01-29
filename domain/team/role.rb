@@ -28,7 +28,7 @@ module Team
     end
 
     sig {returns(T::Boolean)}
-    def can_change_issue_priority?
+    def can_update_release_plan?
       [ProductOwner, ScrumMaster].include?(self)
     end
 

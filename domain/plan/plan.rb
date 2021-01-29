@@ -46,7 +46,7 @@ module Plan
 
     sig {params(roles: Team::RoleSet, scheduled: ReleaseList).void}
     def update_scheduled(roles, scheduled)
-      raise PermissionDenied unless roles.can_change_issue_priority?
+      raise PermissionDenied unless roles.can_update_release_plan?
       raise DuplicatedIssue if scheduled.have_same_issue?(@pending)
 
       @scheduled = scheduled
