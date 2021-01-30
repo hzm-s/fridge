@@ -66,6 +66,7 @@ module Issue
       @size = size
       @acceptance_criteria = acceptance_criteria
     end
+    private_class_method :new
 
     sig {params(description: Description).void}
     def modify_description(description)
