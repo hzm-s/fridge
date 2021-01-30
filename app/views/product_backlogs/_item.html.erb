@@ -1,6 +1,6 @@
 <%= content_tag :div, id: "js-pbl-item-#{item.id}", class: pbl_item_css_classes(item), data: { id: item.id } do %>
   <div class="pbl-item">
-    <span class="pbl-item__grip js-sortable-handle">
+    <span class="<%= pbl_item_grip_css_classes(can_move) %>">
       <i class="fas fa-grip-vertical"></i>
     </span>
     <%= simple_format(item.description, class: 'pbl-item__description nf') %>
