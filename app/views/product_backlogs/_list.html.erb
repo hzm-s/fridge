@@ -5,7 +5,7 @@
       Pending
     </span>
   </div>
-  <%= content_tag :div, data: can_update_release_plan? && sortable_pbl_options(current_product_id, nil) do %>
+  <%= content_tag :div, data: sortable_pbl_options(current_product_id, nil) do %>
     <%= render partial: 'item', collection: pbl.pending %>
   <% end %>
 </div>

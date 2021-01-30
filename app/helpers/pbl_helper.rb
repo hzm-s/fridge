@@ -1,11 +1,12 @@
 # typed: false
 module PblHelper
   def sortable_pbl_options(product_id, release_name)
+    release_id = release_name ? "release-#{release_name}" : 'pending'
     {
       controller: 'sort-pbl',
       sort_pbl_url: product_plan_path(product_id),
       sort_pbl_group: release_name,
-      test_update_release_plan: 1,
+      "test_update_#{release_id}" => 1,
     }
   end
 
