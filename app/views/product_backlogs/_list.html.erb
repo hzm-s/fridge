@@ -6,6 +6,6 @@
     </span>
   </div>
   <%= content_tag :div, data: sortable_pbl_options(current_product_id, nil) do %>
-    <%= render partial: 'item', collection: pbl.pending, locals: { can_move: true } %>
+    <%= render partial: 'item', collection: pbl.pending, locals: { can_move: true, can_remove: true } %>
   <% end %>
 </div>

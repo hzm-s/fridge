@@ -33,8 +33,13 @@ RSpec.describe 'product_backlogs' do
 
     it do
       get product_backlog_path(product_id: product.id)
-      expect(response.body).to include 'test-update-release-MVP'
-      expect(response.body).to include 'test-update-pending'
+
+      aggregate_failures do
+        expect(response.body).to include 'test-update-release-MVP'
+        expect(response.body).to include 'test-update-pending'
+        expect(response.body).to include "test-remove-issue-#{issue_b.id}"
+        expect(response.body).to include "test-remove-issue-#{issue_a.id}"
+      end
     end
   end
 
@@ -43,8 +48,13 @@ RSpec.describe 'product_backlogs' do
 
     it do
       get product_backlog_path(product_id: product.id)
-      expect(response.body).to_not include 'test-update-release-MVP'
-      expect(response.body).to include 'test-update-pending'
+
+      aggregate_failures do
+        expect(response.body).to_not include 'test-update-release-MVP'
+        expect(response.body).to include 'test-update-pending'
+        expect(response.body).to_not include "test-remove-issue-#{issue_b.id}"
+        expect(response.body).to include "test-remove-issue-#{issue_a.id}"
+      end
     end
   end
 end

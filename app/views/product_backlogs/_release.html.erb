@@ -11,6 +11,6 @@
     </div>
   </div>
   <%= content_tag :div, data: can_update_release_plan? && sortable_pbl_options(current_product_id, release.name) do %>
-    <%= render partial: 'item', collection: release.issues, locals: { can_move: can_update_release_plan? } %>
+    <%= render partial: 'item', collection: release.issues, locals: { can_move: can_update_release_plan?, can_remove: can_update_release_plan? } %>
   <% end %>
 </div>

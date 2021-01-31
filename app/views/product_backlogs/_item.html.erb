@@ -11,7 +11,7 @@
         <% end %>
       </div>
       <%= render partial: 'product_backlogs/point', locals: { item: item } %>
-      <%= render partial: 'product_backlogs/item_menu', locals: { item: item } %>
+      <%= render partial: 'product_backlogs/item_menu', locals: { item: item, can_remove: can_remove && item.status.can_remove? } %>
     </div>
   </div>
   <div class="collapse pbl-item__ac" id="clp-pbi-ac-<%= item.id %>">

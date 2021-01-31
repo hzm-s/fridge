@@ -7,8 +7,8 @@
       <i class="fas fa-edit"></i>
       <%=t 'navs.edit' %>
     <% end %>
-    <% if item.status.can_remove? %>
-      <%= link_to issue_path(item.id), method: :delete, class: 'dropdown-item text-danger', data: { confirm: t('navs.confirm_delete') } do %>
+    <% if can_remove %>
+      <%= link_to issue_path(item.id), method: :delete, class: 'dropdown-item text-danger', data: { confirm: t('navs.confirm_delete'), "test_remove_issue_#{item.id}" => 1 } do %>
         <i class="fas fa-trash-alt"></i>
         <%=t 'navs.delete' %>
       <% end %>

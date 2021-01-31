@@ -6,6 +6,10 @@ RSpec.describe 'feature_estimation' do
   let!(:product) { create_product(person: user_account.person_id) }
   let!(:feature) { add_feature(product.id) }
 
+  before do
+    sign_in(user_account)
+  end
+
   describe '#update' do
     it do
       put feature_estimation_path(feature.id, format: :js), params: { form: { point: '8' } }
