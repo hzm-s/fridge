@@ -12,7 +12,9 @@
         <%=t '.title' %>
       </h1>
       <div class="sheet__right">
-        <%= link_to t('.add_release'), new_product_release_path(product_id: current_product_id), class: 'btn btn-sm btn-outline-secondary' %>
+        <% if can_update_release_plan? %>
+          <%= link_to t('.add_release'), new_product_release_path(product_id: current_product_id), class: 'btn btn-sm btn-outline-secondary', data: { test_new_release: 1 } %>
+        <% end %>
       </div>
     </div>
     <div class="d-flex align-items-center justify-content-center">
