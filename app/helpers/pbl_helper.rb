@@ -6,7 +6,7 @@ module PblHelper
       controller: 'sort-pbl',
       sort_pbl_url: product_plan_path(product_id),
       sort_pbl_group: release_name,
-      "test_update_#{release_id}" => 1,
+      "test_update_issues_in_#{release_id}" => 1,
     }
   end
 
