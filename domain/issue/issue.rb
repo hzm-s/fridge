@@ -79,8 +79,8 @@ module Issue
       update_status_by_preparation
     end
 
-    sig {params(size: StoryPoint).void}
-    def estimate(size)
+    sig {params(roles: Team::RoleSet, size: StoryPoint).void}
+    def estimate(roles, size)
       raise CanNotEstimate unless @type.can_estimate?
 
       @size = size

@@ -5,6 +5,7 @@ module Issue
   RSpec.describe Issue do
     let(:product_id) { Product::Id.create }
     let(:description) { issue_description('A user story') }
+    let(:dev_role) { team_roles(:dev) }
 
     describe 'Create' do
       let(:issue) { described_class.create(product_id, Types::Feature, description) }
@@ -52,7 +53,7 @@ module Issue
         issue.update_acceptance_criteria(acceptance_criteria(%w(AC1)))
         expect(issue.status).to eq Statuses::Preparation
 
-        issue.estimate(StoryPoint.new(3))
+        issue.estimate(dev_role, StoryPoint.new(3))
         expect(issue.status).to eq Statuses::Ready
 
         issue.update_acceptance_criteria(acceptance_criteria([]))
@@ -72,13 +73,13 @@ module Issue
         issue.update_acceptance_criteria(acceptance_criteria(%w(AC1)))
         expect(issue.status).to eq Statuses::Ready
 
-        issue.estimate(StoryPoint.new(3))
+        issue.estimate(dev_role, StoryPoint.new(3))
         expect(issue.status).to eq Statuses::Ready
 
         issue.update_acceptance_criteria(acceptance_criteria([]))
         expect(issue.status).to eq Statuses::Ready
 
-        issue.estimate(StoryPoint.unknown)
+        issue.estimate(dev_role, StoryPoint.unknown)
         expect(issue.status).to eq Statuses::Ready
       end
     end
