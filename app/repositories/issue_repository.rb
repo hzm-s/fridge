@@ -9,7 +9,7 @@ module IssueRepository
 
       sig {override.params(id: Issue::Id).returns(Issue::Issue)}
       def find_by_id(id)
-        Dao::Issue.eager_load(:criteria).find(id).read
+        Dao::Issue.eager_load(:criteria).find(id.to_s).read
       end
 
       sig {override.params(issue: Issue::Issue).void}

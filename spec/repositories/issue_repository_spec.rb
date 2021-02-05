@@ -3,6 +3,7 @@ require 'rails_helper'
 
 RSpec.describe IssueRepository::AR do
   let!(:product) { create_product }
+  let(:dev_role) { team_roles(:dev) }
 
   describe 'Add' do
     context 'Feature' do
@@ -53,7 +54,7 @@ RSpec.describe IssueRepository::AR do
 
     it do
       issue = add_issue(product.id, acceptance_criteria: %w(ac1))
-      issue.estimate(Issue::StoryPoint.new(5))
+      issue.estimate(dev_role, Issue::StoryPoint.new(5))
 
       described_class.store(issue)
       updated = described_class.find_by_id(issue.id)
