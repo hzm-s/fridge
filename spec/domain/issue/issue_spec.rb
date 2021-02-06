@@ -6,6 +6,7 @@ module Issue
     let(:product_id) { Product::Id.create }
     let(:description) { issue_description('A user story') }
     let(:dev_role) { team_roles(:dev) }
+    let(:po_role) { team_roles(:po) }
 
     describe 'Create' do
       let(:issue) { described_class.create(product_id, Types::Feature, description) }
@@ -40,6 +41,29 @@ module Issue
         criteria = acceptance_criteria(%w(AC1 AC2 AC3))
         issue.update_acceptance_criteria(criteria)
         expect(issue.acceptance_criteria).to eq criteria
+      end
+    end
+
+    describe 'estimation permission' do
+      let(:issue) { described_class.create(product_id, Types::Feature, description) }
+
+      context 'when Dev' do
+        it do
+          expect { issue.estimate(dev_role, StoryPoint.new(2)) }.to_not raise_error 
+        end
+      end
+
+      context 'when PO' do
+        it do
+          expect { issue.estimate(po_role, StoryPoint.new(2)) }
+            .to raise_error CanNotEstimate
+        end
+      end
+
+      context 'when SM' do
+        it do
+          expect { issue.estimate(dev_role, StoryPoint.new(2)) }.to_not raise_error 
+        end
       end
     end
 
