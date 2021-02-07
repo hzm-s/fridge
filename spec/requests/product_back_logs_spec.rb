@@ -41,6 +41,7 @@ RSpec.describe 'product_backlogs' do
         expect(response.body).to include "test-remove-issue-#{issue_a.id}"
         expect(response.body).to include "test-new-release"
         expect(response.body).to include "test-update-release-MVP"
+        expect(response.body).to_not include "test-estimate-issue"
       end
     end
   end
@@ -58,6 +59,7 @@ RSpec.describe 'product_backlogs' do
         expect(response.body).to include "test-remove-issue-#{issue_a.id}"
         expect(response.body).to_not include "test-new-release"
         expect(response.body).to_not include "test-update-release-MVP"
+        expect(response.body).to include "test-estimate-issue"
       end
     end
   end

@@ -169,10 +169,8 @@
 }
 
 .pbl-item__point--disabled {
-  background-color: $gray-200;
-
   &:hover {
-    cursor: auto;
+    cursor: not-allowed;
   }
 }
 

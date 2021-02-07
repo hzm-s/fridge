@@ -2,7 +2,7 @@
 class FeatureEstimationsController < ApplicationController
   include ProductHelper
 
-  helper_method :can_update_release_plan?
+  helper_method :can_update_release_plan?, :can_estimate_issue?
 
   def update
     issue_id = Issue::Id.from_string(params[:id])
@@ -29,5 +29,9 @@ class FeatureEstimationsController < ApplicationController
 
   def can_update_release_plan?
     current_team_member_roles.can_update_release_plan?
+  end
+
+  def can_estimate_issue?
+    current_team_member_roles.can_estimate_issue?
   end
 end

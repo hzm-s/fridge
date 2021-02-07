@@ -1,7 +1,5 @@
-<% if item.can_estimate? %>
+<% if can_estimate_issue? %>
   <%= render partial: 'product_backlogs/point_form', locals: { item: item } %>
 <% else %>
-  <span class="pbl-item__point pbl-item__point--disabled">
-    <i class="fa fa-minus"></i>
-  </span>
+  <%= content_tag :span, present_story_point(item.size), class: 'pbl-item__point pbl-item__point--disabled' %>
 <% end %>
