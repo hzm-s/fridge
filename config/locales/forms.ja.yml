@@ -8,7 +8,7 @@ ja:
       create_product_form:
         name: プロダクト名
         description: 説明
-        role: あなたの役割
+        roles: あなたの役割
 
       release_form:
         name: 名前
