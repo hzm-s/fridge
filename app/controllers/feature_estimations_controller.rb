@@ -2,7 +2,7 @@
 class FeatureEstimationsController < ApplicationController
   include ProductHelper
 
-  helper_method :can_update_release_plan?, :can_estimate_issue?
+  helper_method :can_estimate_issue?
 
   def update
     issue_id = Issue::Id.from_string(params[:id])
@@ -10,6 +10,7 @@ class FeatureEstimationsController < ApplicationController
     EstimateFeatureUsecase.perform(issue_id, current_team_member_roles, point)
 
     @issue = IssueQuery.call(issue_id)
+    @can_update_plan = pending_issue?(@issue) || can_update_release_plan?
   end
 
   private
@@ -25,6 +26,12 @@ class FeatureEstimationsController < ApplicationController
 
   def current_team_member_roles
     @__current_team_member_roles ||= current_product_team_member(current_user.person_id).roles
+  end
+
+  def pending_issue?(issue)
+    Dao::Plan.find_by(dao_product_id: issue.product_id.to_s)
+      &.pending_issues
+      &.include?(issue.id.to_s)
   end
 
   def can_update_release_plan?
