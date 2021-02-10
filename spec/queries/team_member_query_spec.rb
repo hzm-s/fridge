@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe ProductTeamMemberQuery do
+RSpec.describe TeamMemberQuery do
   let(:person) { sign_up_as_person }
 
   context 'when PO' do

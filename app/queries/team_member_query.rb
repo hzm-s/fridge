@@ -1,5 +1,5 @@
 # typed: false
-module ProductTeamMemberQuery
+module TeamMemberQuery
   class << self
     def call(product_id, person_id)
       Dao::TeamMember
