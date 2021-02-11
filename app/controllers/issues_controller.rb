@@ -43,7 +43,7 @@ class IssuesController < ApplicationController
 
   def destroy
     issue = IssueRepository::AR.find_by_id(Issue::Id.from_string(params[:id]))
-    roles = current_product_team_member(current_user.person_id).roles
+    roles = current_team_member(current_user.person_id).roles
     RemoveIssueUsecase.perform(roles, issue.id)
     redirect_to product_backlog_path(product_id: issue.product_id), flash: flash_success('issue.destroy')
   end

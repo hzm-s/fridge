@@ -18,8 +18,8 @@ module ApplicationHelper
     content_tag(:span, initials, class: css_class, style: "background-color: #{bgcolor}; color: #{fgcolor}").html_safe
   end
 
-  def product_team_member_roles_label
-    current_product_team_member(current_user.person_id)
+  def team_member_roles_label
+    current_team_member(current_user.person_id)
       .roles
       .to_a
       .then { |rs| translate_team_member_roles(rs) }

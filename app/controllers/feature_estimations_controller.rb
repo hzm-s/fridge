@@ -25,7 +25,7 @@ class FeatureEstimationsController < ApplicationController
   end
 
   def current_team_member_roles
-    @__current_team_member_roles ||= current_product_team_member(current_user.person_id).roles
+    @__current_team_member_roles ||= current_team_member(current_user.person_id).roles
   end
 
   def pending_issue?(issue)

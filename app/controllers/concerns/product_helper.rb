@@ -3,7 +3,7 @@ module ProductHelper
   extend ActiveSupport::Concern
 
   included do
-    helper_method :current_product, :current_product_team_member
+    helper_method :current_product, :current_team_member
   end
 
   def current_product_id
@@ -14,8 +14,8 @@ module ProductHelper
     @__current_product ||= Dao::Product.find_by(id: current_product_id)
   end
 
-  def current_product_team_member(person_id)
-    @__current_product_team_member ||=
+  def current_team_member(person_id)
+    @__current_team_member ||=
       TeamMemberQuery.call(current_product.id.to_s, person_id)
   end
 end
