@@ -1,6 +1,7 @@
 # typed: false
 class IssuesController < ApplicationController
   include ProductHelper
+  include TeamMemberHelper
 
   before_action :require_user
 

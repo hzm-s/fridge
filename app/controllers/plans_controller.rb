@@ -1,6 +1,7 @@
 # typed: false
 class PlansController < ApplicationController
   include ProductHelper
+  include TeamMemberHelper
 
   def update
     product_id = Product::Id.from_string(current_product_id)

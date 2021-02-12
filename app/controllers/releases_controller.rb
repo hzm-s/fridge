@@ -1,6 +1,7 @@
 # typed: false
 class ReleasesController < ApplicationController
   include ProductHelper
+  include TeamMemberHelper
 
   helper_method :current_product_id
 

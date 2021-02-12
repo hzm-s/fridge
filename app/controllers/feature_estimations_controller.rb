@@ -1,6 +1,7 @@
 # typed: false
 class FeatureEstimationsController < ApplicationController
   include ProductHelper
+  include TeamMemberHelper
 
   helper_method :can_estimate_issue?
 

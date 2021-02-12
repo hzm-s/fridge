@@ -1,6 +1,7 @@
 # typed: false
 class ProductBacklogsController < ApplicationController
   include ProductHelper
+  include TeamMemberHelper
 
   helper_method :current_product_id, :can_update_release_plan?, :can_estimate_issue?
 
