@@ -6,8 +6,16 @@ module TeamMemberHelper
     helper_method :current_team_member
   end
 
-  def current_team_member(person_id)
-    @__current_team_member ||=
-      TeamMemberQuery.call(current_product.id.to_s, person_id)
+  def current_team_member
+    @__current_team_member = fetch_current_team_member
+  end
+
+  private
+
+  def fetch_current_team_member
+    raise 'current_user not implemented' unless respond_to?(:current_user, true)
+    raise 'current_product_id not implemented' unless respond_to?(:current_product_id, true)
+
+    TeamMemberQuery.call(current_product_id.to_s, current_user.person_id.to_s)
   end
 end

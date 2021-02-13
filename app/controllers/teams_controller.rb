@@ -1,7 +1,6 @@
 # typed: false
 class TeamsController < ApplicationController
   include ProductHelper
-  include TeamMemberHelper
 
   def show
     @team = TeamQuery.call(params[:id])
