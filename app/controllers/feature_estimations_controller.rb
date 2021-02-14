@@ -25,10 +25,6 @@ class FeatureEstimationsController < ApplicationController
     IssueQuery.call(params[:id]).product_id
   end
 
-  def current_team_member_roles
-    @__current_team_member_roles ||= current_team_member.roles
-  end
-
   def pending_issue?(issue)
     Dao::Plan.find_by(dao_product_id: issue.product_id.to_s)
       &.pending_issues

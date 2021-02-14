@@ -3,11 +3,15 @@ module TeamMemberHelper
   extend ActiveSupport::Concern
 
   included do
-    helper_method :current_team_member
+    helper_method :current_team_member, :current_team_member_roles
   end
 
   def current_team_member
     @__current_team_member = fetch_current_team_member
+  end
+
+  def current_team_member_roles
+    current_team_member.roles
   end
 
   private

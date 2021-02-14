@@ -19,8 +19,7 @@ module ApplicationHelper
   end
 
   def team_member_roles_label
-    current_team_member
-      .roles
+    current_team_member_roles
       .to_a
       .then { |rs| translate_team_member_roles(rs) }
   end
