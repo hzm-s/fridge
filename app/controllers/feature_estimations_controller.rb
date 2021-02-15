@@ -3,8 +3,6 @@ class FeatureEstimationsController < ApplicationController
   include ProductHelper
   include TeamMemberHelper
 
-  helper_method :can_estimate_issue?
-
   def update
     issue_id = Issue::Id.from_string(params[:id])
     point = build_point(params[:form][:point])
@@ -29,13 +27,5 @@ class FeatureEstimationsController < ApplicationController
     Dao::Plan.find_by(dao_product_id: issue.product_id.to_s)
       &.pending_issues
       &.include?(issue.id.to_s)
-  end
-
-  def can_update_release_plan?
-    current_team_member_roles.can_update_release_plan?
-  end
-
-  def can_estimate_issue?
-    current_team_member_roles.can_estimate_issue?
   end
 end
