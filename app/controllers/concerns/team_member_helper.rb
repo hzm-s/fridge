@@ -26,8 +26,8 @@ module TeamMemberHelper
   private
 
   def fetch_current_team_member
-    raise 'current_user not implemented' unless respond_to?(:current_user, true)
-    raise 'current_product_id not implemented' unless respond_to?(:current_product_id, true)
+    raise 'current_user is not implemented' unless respond_to?(:current_user, true)
+    raise 'current_product_id is not implemented' unless respond_to?(:current_product_id, true)
 
     TeamMemberQuery.call(current_product_id.to_s, current_user.person_id.to_s)
   end
