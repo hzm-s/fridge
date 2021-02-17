@@ -1,6 +1,11 @@
 # typed: ignore
+FRIDGE_FIELD_ERROR_IGNORE_CLASSES = [
+  ActionView::Helpers::Tags::Label,
+  ActionView::Helpers::Tags::CheckBox,
+  ActionView::Helpers::Tags::RadioButton,
+]
 ActionView::Base.field_error_proc = Proc.new do |tag, instance|
-  if instance.kind_of?(ActionView::Helpers::Tags::Label)
+  if FRIDGE_FIELD_ERROR_IGNORE_CLASSES.any? { |c| instance.kind_of?(c) }
     tag.html_safe
   else
     attribute = instance.instance_variable_get(:@method_name)

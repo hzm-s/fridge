@@ -20,6 +20,7 @@
           <%= f.collection_check_boxes :roles, all_team_roles, :to_s, -> (r) { t(r.to_s, scope: 'domain.team.role') } do |b| %>
             <%= b.label(class: 'form-check-boxes-block-item') { b.check_box + b.text } %>
           <% end %>
+          <%= render partial: 'error', locals: { errors: @form.errors[:roles] } %>
         </div>
         <%= f.button t('navs.create'), class: 'btn btn-success', data: with_loader %>
       <% end %>
