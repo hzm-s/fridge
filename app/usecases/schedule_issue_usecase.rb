@@ -9,7 +9,7 @@ class ScheduleIssueUsecase < UsecaseBase
     @repository = T.let(PlanRepository::AR, Plan::PlanRepository)
   end
 
-  sig {params(product_id: Product::Id, roles: Team::RoleSet, issue_id: Issue::Id, release_name: String, to_index: Integer).void}
+  sig {params(product_id: Product::Id, roles: Team::RoleSet, issue_id: Issue::Id, release_name: String, to_index: Integer).returns(Issue::Id)}
   def perform(product_id, roles, issue_id, release_name, to_index)
     plan = @repository.find_by_product_id(product_id)
     target_issue_id = PlannedIssueResolver.resolve_scheduled(plan, release_name, to_index)
@@ -23,5 +23,7 @@ class ScheduleIssueUsecase < UsecaseBase
 
     plan.update_scheduled(roles, new_scheduled)
     @repository.store(plan)
+
+    issue_id
   end
 end
