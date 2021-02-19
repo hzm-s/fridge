@@ -8,7 +8,7 @@ class IssuesController < ApplicationController
   helper_method :current_product_id
 
   def create
-    @form = IssueForm.new(permitted_params)
+    @form = CreateIssueForm.new(permitted_params)
 
     if @form.valid?
       AppendIssueUsecase.perform(
@@ -24,12 +24,12 @@ class IssuesController < ApplicationController
 
   def edit
     @issue = IssueQuery.call(params[:id])
-    @form = IssueForm.new(type: @issue.type, description: @issue.description)
+    @form = UpdateIssueForm.new(type: @issue.type, description: @issue.description)
   end
 
   def update
     @issue_id = params[:id]
-    @form = IssueForm.new(permitted_params)
+    @form = UpdateIssueForm.new(permitted_params)
 
     if @form.valid?
       ModifyIssueUsecase.perform(

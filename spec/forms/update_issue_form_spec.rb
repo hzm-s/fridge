@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe CreateIssueForm do
+RSpec.describe UpdateIssueForm do
   let(:valid) do
     {
       type: 'feature',

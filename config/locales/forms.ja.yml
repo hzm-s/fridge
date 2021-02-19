@@ -2,7 +2,10 @@ ja:
   activemodel:
     attributes:
 
-      issue_form:
+      create_issue_form:
+        description: アイテムの説明
+
+      update_issue_form:
         description: アイテムの説明
 
       create_product_form:

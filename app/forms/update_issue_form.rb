@@ -1,5 +1,5 @@
 # typed: false
-class CreateIssueForm
+class UpdateIssueForm
   include ActiveModel::Model
   extend I18nHelper
 
