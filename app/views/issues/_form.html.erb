@@ -1,19 +1,16 @@
 <div id="js-issue-form">
-  <%= form_with model: form, scope: :form, url: url, method: method do |f| %>
+  <%= form_with model: form, scope: :form, url: issue_path(issue.id), method: :patch do |f| %>
     <div class="mb-2">
       <%= f.label :description %>
       <%= f.text_area :description, rows: 3, class: 'form-control' %>
     </div>
     <div class="row">
       <div class="col-lg-5">
-        <%= f.select :type, all_issue_types.map { |type| [t(type.to_s, scope: 'domain.issue.types'), type.to_s] }, { prompt: true }, { class: 'form-control', disabled: method == :patch }  %>
-        <% if method == :patch %>
-          <%= f.hidden_field :type %>
-        <% end %>
+        <%= f.select :type, all_issue_types.map { |type| [t(type.to_s, scope: 'domain.issue.types'), type.to_s] }, { prompt: true }, { class: 'form-control', disabled: true }  %>
       </div>
     </div>
     <div class="mt-2">
-      <%= f.button btn_label, class: 'btn btn-success', data: with_loader %>
+      <%= f.button t('navs.save'), class: 'btn btn-success', data: with_loader %>
     </div>
   <% end -%>
 </div>

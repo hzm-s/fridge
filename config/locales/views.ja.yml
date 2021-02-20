@@ -57,8 +57,10 @@ ja:
   product_backlogs:
     show:
       title: プロダクトバックログ
-      add: アイテムを追加する
       add_release: リリースを追加する
+      add: アイテムを追加する
+    issue_form:
+      add: アイテムを追加する
     release:
       empty: アイテムはありません
     point_form:
