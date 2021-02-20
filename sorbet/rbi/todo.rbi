@@ -20,7 +20,6 @@ module ActiveStorage::Blob::Identifiable; end
 module ActiveStorage::Variant; end
 module Anonymous_Module_20::Anonymous_Module_21; end
 module Anonymous_Module_20::Anonymous_Module_22; end
-module Dao::ProductBacklogItem; end
 module Rails::Generators::Migration; end
 module Rails::Generators::NamedBase; end
 module T::InterfaceWrapper::Helpers; end

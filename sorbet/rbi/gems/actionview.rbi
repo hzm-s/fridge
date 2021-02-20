@@ -1123,6 +1123,66 @@ class ActionView::Base
   include ActionView::Helpers::UrlHelper
   include ActionView::Helpers::UrlHelper
 end
+module ActionView::Helpers::Tags
+  extend ActiveSupport::Autoload
+end
+class ActionView::Helpers::Tags::Base
+  def add_default_name_and_id(options); end
+  def add_default_name_and_id_for_value(tag_value, options); end
+  def add_options(option_tags, options, value = nil); end
+  def generate_ids?; end
+  def initialize(object_name, method_name, template_object, options = nil); end
+  def name_and_id_index(options); end
+  def object; end
+  def placeholder_required?(html_options); end
+  def render; end
+  def retrieve_autoindex(pre_match); end
+  def retrieve_object(object); end
+  def sanitized_method_name; end
+  def sanitized_object_name; end
+  def sanitized_value(value); end
+  def select_content_tag(option_tags, options, html_options); end
+  def tag_id(index = nil); end
+  def tag_name(multiple = nil, index = nil); end
+  def value; end
+  def value_before_type_cast; end
+  def value_came_from_user?; end
+  extend ActionView::Helpers::SanitizeHelper::ClassMethods
+  extend ActionView::Helpers::UrlHelper::ClassMethods
+  include ActionView::Helpers::ActiveModelInstanceTag
+  include ActionView::Helpers::FormOptionsHelper
+  include ActionView::Helpers::SanitizeHelper
+  include ActionView::Helpers::TagHelper
+  include ActionView::Helpers::TagHelper
+  include ActionView::Helpers::TextHelper
+  include ActionView::Helpers::UrlHelper
+end
+class ActionView::Helpers::Tags::Label < ActionView::Helpers::Tags::Base
+  def initialize(object_name, method_name, template_object, content_or_options = nil, options = nil); end
+  def render(&block); end
+  def render_component(builder); end
+end
+class ActionView::Helpers::Tags::Label::LabelBuilder
+  def initialize(template_object, object_name, method_name, object, tag_value); end
+  def object; end
+  def translation; end
+end
+module ActionView::Helpers::Tags::Checkable
+  def input_checked?(options); end
+end
+class ActionView::Helpers::Tags::CheckBox < ActionView::Helpers::Tags::Base
+  def checked?(value); end
+  def hidden_field_for_checkbox(options); end
+  def initialize(object_name, method_name, template_object, checked_value, unchecked_value, options); end
+  def render; end
+  include ActionView::Helpers::Tags::Checkable
+end
+class ActionView::Helpers::Tags::RadioButton < ActionView::Helpers::Tags::Base
+  def checked?(value); end
+  def initialize(object_name, method_name, template_object, tag_value, options); end
+  def render; end
+  include ActionView::Helpers::Tags::Checkable
+end
 class ActionView::CacheExpiry
   def all_view_paths; end
   def clear_cache; end
