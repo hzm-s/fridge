@@ -1,1 +1,1 @@
-$('#js-issue-form').replaceWith('<%=j render partial: 'issues/form', locals: { form: @form, url: issue_path(@issue_id), method: :put, btn_label: I18n.t('navs.save') } %>')
+$('#js-issue-form').replaceWith('<%=j render partial: 'form', locals: { form: @form, issue_id: @issue_id } %>')

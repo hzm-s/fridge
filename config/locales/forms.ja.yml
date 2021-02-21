@@ -3,10 +3,10 @@ ja:
     attributes:
 
       create_issue_form:
-        description: アイテムの説明
+        description: 新しいアイテム
 
       update_issue_form:
-        description: アイテムの説明
+        description: 説明
 
       create_product_form:
         name: プロダクト名

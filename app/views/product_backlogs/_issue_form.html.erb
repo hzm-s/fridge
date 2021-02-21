@@ -6,7 +6,10 @@
     </div>
     <div class="row">
       <div class="col-lg-5">
-        <%= f.select :type, all_issue_types.map { |type| [t(type.to_s, scope: 'domain.issue.types'), type.to_s] }, { prompt: true }, { class: 'form-control' }  %>
+        <%= f.select :type, all_issue_types.map { |type| [t(type.to_s, scope: 'domain.issue.types'), type.to_s] }, { prompt: true }, { class: 'form-control' } %>
+      </div>
+      <div class="col-lg-7">
+        <%= f.select :release, [['Pending', nil]] + releases.map { |r| [r.name, r.name] }, {}, { class: 'form-control' } %>
       </div>
     </div>
     <div class="mt-2">

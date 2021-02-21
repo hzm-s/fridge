@@ -18,6 +18,7 @@ class IssuesController < ApplicationController
       )
       redirect_to product_backlog_path(product_id: params[:product_id]), flash: flash_success('issue.create')
     else
+      @releases = ProductBacklogQuery.call(params[:product_id]).scheduled
       render :new
     end
   end

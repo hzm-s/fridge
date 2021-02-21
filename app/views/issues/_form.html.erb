@@ -1,5 +1,5 @@
 <div id="js-issue-form">
-  <%= form_with model: form, scope: :form, url: issue_path(issue.id), method: :patch do |f| %>
+  <%= form_with model: form, scope: :form, url: issue_path(issue_id), method: :patch do |f| %>
     <div class="mb-2">
       <%= f.label :description %>
       <%= f.text_area :description, rows: 3, class: 'form-control' %>
