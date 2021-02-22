@@ -3,7 +3,7 @@ class CreateIssueForm
   include ActiveModel::Model
   extend I18nHelper
 
-  attr_accessor :type, :description
+  attr_accessor :type, :description, :release
   attr_accessor :domain_objects
 
   validates :type,

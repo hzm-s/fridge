@@ -6,11 +6,17 @@ RSpec.describe CreateIssueForm do
     {
       type: 'feature',
       description: 'ABC',
+      release: 'MVP',
     }
   end
 
   it do
     form = described_class.new(valid)
+    expect(form).to be_valid
+  end
+
+  it do
+    form = described_class.new(valid.merge(release: ''))
     expect(form).to be_valid
   end
 

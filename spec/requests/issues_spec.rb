@@ -11,12 +11,18 @@ RSpec.describe 'issues' do
 
   describe 'create' do
     context 'given valid params' do
+      let(:params) { { form: { type: 'feature', description: 'ABC' } } }
+
       it do
-        params = { form: { type: 'feature', description: 'ABC' } }
         post product_issues_path(product_id: product.id.to_s, format: :js), params: params
         get product_backlog_path(product_id: product.id.to_s)
 
         expect(response.body).to include 'ABC'
+      end
+
+      it do
+        expect(AppendIssueUsecase).to receive(:perform)
+        post product_issues_path(product_id: product.id.to_s, format: :js), params: params
       end
     end
 
@@ -25,6 +31,29 @@ RSpec.describe 'issues' do
         post product_issues_path(product_id: product.id.to_s, format: :js), params: { form: { type: 'feature', description: '' } }
 
         expect(response.body).to include(I18n.t('errors.messages.blank'))
+      end
+    end
+
+    context 'given release' do
+      before do
+        plan = PlanRepository::AR.find_by_product_id(product.id)
+        plan.update_scheduled(team_roles(:po), release_list({ 'MVP' => issue_list }))
+        PlanRepository::AR.store(plan)
+      end
+
+      it do
+        expect(AppendScheduledIssueUsecase)
+          .to receive(:perform)
+          .with(
+            product.id,
+            team_roles(:po),
+            Issue::Types.from_string('feature'),
+            Issue::Description.new('ABC'),
+            'MVP'
+        )
+
+        params = { form: { type: 'feature', description: 'ABC', release: 'MVP' } }
+        post product_issues_path(product_id: product.id.to_s, format: :js), params: params
       end
     end
   end

@@ -11,11 +11,17 @@ class IssuesController < ApplicationController
     @form = CreateIssueForm.new(create_params)
 
     if @form.valid?
-      AppendIssueUsecase.perform(
-        Product::Id.from_string(params[:product_id]),
-        @form.domain_objects[:type],
-        @form.domain_objects[:description]
-      )
+      product_id = Product::Id.from_string(params[:product_id])
+      type = @form.domain_objects[:type]
+      description = @form.domain_objects[:description]
+      release = @form.release
+
+      if release.present?
+        AppendScheduledIssueUsecase.perform(product_id, current_team_member_roles, type, description, release)
+      else
+        AppendIssueUsecase.perform(product_id, type, description)
+      end
+
       redirect_to product_backlog_path(product_id: params[:product_id]), flash: flash_success('issue.create')
     else
       @releases = ProductBacklogQuery.call(params[:product_id]).scheduled
@@ -52,7 +58,7 @@ class IssuesController < ApplicationController
   private
 
   def create_params
-    params.require(:form).permit(:type, :description)
+    params.require(:form).permit(:type, :description, :release)
   end
 
   def update_params
