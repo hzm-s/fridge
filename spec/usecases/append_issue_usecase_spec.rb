@@ -9,7 +9,6 @@ RSpec.describe AppendIssueUsecase do
 
     issue_id = described_class.perform(product.id, Issue::Types::Feature, description)
     issue = IssueRepository::AR.find_by_id(issue_id)
-    plan = PlanRepository::AR.find_by_product_id(product.id)
 
     aggregate_failures do
       expect(issue.product_id).to eq product.id
@@ -18,8 +17,6 @@ RSpec.describe AppendIssueUsecase do
       expect(issue.description).to eq description
       expect(issue.size).to eq Issue::StoryPoint.unknown
       expect(issue.acceptance_criteria).to be_empty
-
-      expect(plan.pending).to eq Plan::IssueList.new([issue_id])
     end
   end
 end
