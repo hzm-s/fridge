@@ -5,15 +5,10 @@ class Dao::Plan < ApplicationRecord
     Plan::Plan.from_repository(
       read_product_id,
       read_scheduled,
-      read_pending,
     )
   end
 
   def write(plan)
-    self.attributes = {
-      pending_issues: plan.pending.to_a.map(&:to_s)
-    }
-
     self.releases.clear
     plan.scheduled.to_a.each do |r|
       self.releases.build(name: r.name.to_s, issues: r.issues.to_a.map(&:to_s))
@@ -30,10 +25,6 @@ class Dao::Plan < ApplicationRecord
     releases
       .map { |r| Plan::Release.new(r.name, build_issue_list(r.issues)) }
       .then { |list| Plan::ReleaseList.new(list) }
-  end
-
-  def read_pending
-    build_issue_list(pending_issues)
   end
 
   def build_issue_list(raw_issue_ids)
