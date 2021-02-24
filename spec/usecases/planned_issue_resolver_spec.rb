@@ -12,26 +12,14 @@ RSpec.describe PlannedIssueResolver do
 
   before do
     @plan = PlanRepository::AR.find_by_product_id(product.id)
-    @plan.update_pending(issue_list(issue_a, issue_b))
     @plan.update_scheduled(
       roles,
       release_list({
         'R1' => issue_list(issue_c, issue_d),
-        'R2' => issue_list(issue_e),
+        'R2' => issue_list(issue_e)
       })
     )
     PlanRepository::AR.store(@plan)
-  end
-
-  describe '#resolve_pending' do
-    it do
-      resolver = described_class.new(@plan)
-      aggregate_failures do
-        expect(resolver.resolve_pending(0)).to eq issue_a
-        expect(resolver.resolve_pending(1)).to eq issue_b
-        expect(resolver.resolve_pending(2)).to be_nil
-      end
-    end
   end
 
   describe '#resolve_scheduled' do
