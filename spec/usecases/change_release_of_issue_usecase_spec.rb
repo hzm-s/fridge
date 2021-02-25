@@ -12,7 +12,6 @@ RSpec.describe ChangeReleaseOfIssueUsecase do
 
   before do
     plan = PlanRepository::AR.find_by_product_id(product.id)
-    plan.update_pending(issue_list)
     plan.update_scheduled(
       roles,
       release_list({
@@ -28,41 +27,32 @@ RSpec.describe ChangeReleaseOfIssueUsecase do
     described_class.perform(product.id, roles, issue_c.id, 'R2', 'R1', 1)
 
     plan = PlanRepository::AR.find_by_product_id(product.id)
-    aggregate_failures do
-      expect(plan.pending).to eq issue_list
-      expect(plan.scheduled).to eq release_list({
-        'R1' => issue_list(issue_a.id, issue_c.id, issue_b.id),
-        'R2' => issue_list(issue_d.id, issue_e.id),
-        'R3' => issue_list,
-      })
-    end
+    expect(plan.scheduled).to eq release_list({
+      'R1' => issue_list(issue_a.id, issue_c.id, issue_b.id),
+      'R2' => issue_list(issue_d.id, issue_e.id),
+      'R3' => issue_list,
+    })
   end
 
   it do
     described_class.perform(product.id, roles, issue_d.id, 'R2', 'R3', 0)
 
     plan = PlanRepository::AR.find_by_product_id(product.id)
-    aggregate_failures do
-      expect(plan.pending).to eq issue_list
-      expect(plan.scheduled).to eq release_list({
-        'R1' => issue_list(issue_a.id, issue_b.id),
-        'R2' => issue_list(issue_c.id, issue_e.id),
-        'R3' => issue_list(issue_d.id),
-      })
-    end
+    expect(plan.scheduled).to eq release_list({
+      'R1' => issue_list(issue_a.id, issue_b.id),
+      'R2' => issue_list(issue_c.id, issue_e.id),
+      'R3' => issue_list(issue_d.id),
+    })
   end
 
   it do
     described_class.perform(product.id, roles, issue_c.id, 'R2', 'R1', 2)
 
     plan = PlanRepository::AR.find_by_product_id(product.id)
-    aggregate_failures do
-      expect(plan.pending).to eq issue_list
-      expect(plan.scheduled).to eq release_list({
-        'R1' => issue_list(issue_a.id, issue_b.id, issue_c.id),
-        'R2' => issue_list(issue_d.id, issue_e.id),
-        'R3' => issue_list,
-      })
-    end
+    expect(plan.scheduled).to eq release_list({
+      'R1' => issue_list(issue_a.id, issue_b.id, issue_c.id),
+      'R2' => issue_list(issue_d.id, issue_e.id),
+      'R3' => issue_list,
+    })
   end
 end

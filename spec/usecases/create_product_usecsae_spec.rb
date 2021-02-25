@@ -13,7 +13,6 @@ RSpec.describe CreateProductUsecase do
       expect(product.description).to eq 'xyz'
 
       expect(plan.scheduled.to_a).to be_empty
-      expect(plan.pending.to_a).to be_empty
     end
   end
 end
