@@ -15,9 +15,6 @@ describe ProductBacklogQuery do
   it do
     plan = PlanRepository::AR.find_by_product_id(product.id)
 
-    pending = issue_list(issue_f, issue_g)
-    plan.update_pending(pending)
-
     scheduled = release_list({
       'R1' => issue_list(issue_a, issue_b),
       'R2' => issue_list(issue_c, issue_d, issue_e),
@@ -39,7 +36,6 @@ describe ProductBacklogQuery do
       expect(pbl.scheduled[2].name).to eq 'R3'
       expect(pbl.scheduled[2].issues).to be_empty
       expect(pbl.scheduled[2]).to be_can_remove
-      expect(pbl.pending.map(&:id)).to eq [issue_f, issue_g].map(&:to_s)
     end
   end
 end

@@ -18,7 +18,6 @@ RSpec.describe 'product_backlogs' do
 
   before do
     plan = PlanRepository::AR.find_by_product_id(product.id)
-    plan.update_pending(issue_list(issue_a.id))
     plan.update_scheduled(
       team_roles(:po),
       release_list({
@@ -36,9 +35,7 @@ RSpec.describe 'product_backlogs' do
 
       aggregate_failures do
         expect(response.body).to include 'test-update-issues-in-release-MVP'
-        expect(response.body).to include 'test-update-issues-in-pending'
         expect(response.body).to include "test-remove-issue-#{issue_b.id}"
-        expect(response.body).to include "test-remove-issue-#{issue_a.id}"
         expect(response.body).to include "test-new-release"
         expect(response.body).to include "test-update-release-MVP"
         expect(response.body).to_not include "test-estimate-issue"
@@ -54,9 +51,7 @@ RSpec.describe 'product_backlogs' do
 
       aggregate_failures do
         expect(response.body).to_not include 'test-update-issues-in-release-MVP'
-        expect(response.body).to include 'test-update-issues-in-pending'
         expect(response.body).to_not include "test-remove-issue-#{issue_b.id}"
-        expect(response.body).to include "test-remove-issue-#{issue_a.id}"
         expect(response.body).to_not include "test-new-release"
         expect(response.body).to_not include "test-update-release-MVP"
         expect(response.body).to include "test-estimate-issue"

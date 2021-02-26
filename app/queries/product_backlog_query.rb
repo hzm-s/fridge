@@ -1,5 +1,4 @@
 # typed: false
-
 module ProductBacklogQuery
   class << self
     def call(product_id)
@@ -7,9 +6,8 @@ module ProductBacklogQuery
       plan = fetch_plan(product_id)
 
       scheduled = plan.scheduled.to_a.map { |r| ReleaseStruct.create(r, issues) }
-      pending = plan.pending.to_a.map { |pi| issues.find { |i| i.id == pi.to_s } }
 
-      ProductBacklog.new(scheduled: scheduled, pending: pending)
+      ProductBacklog.new(scheduled: scheduled)
     end
 
     private
@@ -45,6 +43,5 @@ module ProductBacklogQuery
 
   class ProductBacklog < T::Struct
     prop :scheduled, T::Array[ReleaseStruct]
-    prop :pending, T::Array[::IssueStruct]
   end
 end
