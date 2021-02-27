@@ -1,11 +1,1 @@
 <%= render partial: 'release', collection: pbl.scheduled, as: :release %>
-<div class="pbl-list">
-  <div class="pbl-list__header">
-    <span class="pbl-list__title">
-      Pending
-    </span>
-  </div>
-  <%= content_tag :div, data: sortable_pbl_options(current_product_id, nil) do %>
-    <%= render partial: 'item', collection: pbl.pending, locals: { can_move: true, can_remove: true } %>
-  <% end %>
-</div>

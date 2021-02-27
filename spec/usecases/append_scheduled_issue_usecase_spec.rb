@@ -22,13 +22,10 @@ RSpec.describe AppendScheduledIssueUsecase do
 
     issue_id = described_class.perform(product.id, roles, Issue::Types::Feature, description, 'R2')
 
-    aggregate_failures do
-      plan = PlanRepository::AR.find_by_product_id(product.id)
-      expect(plan.scheduled).to eq release_list({
-        'R1' => issue_list,
-        'R2' => issue_list(issue_id)
-      })
-      expect(plan.pending).to eq issue_list
-    end
+    plan = PlanRepository::AR.find_by_product_id(product.id)
+    expect(plan.scheduled).to eq release_list({
+      'R1' => issue_list,
+      'R2' => issue_list(issue_id)
+    })
   end
 end

@@ -12,17 +12,13 @@ RSpec.describe RemoveIssueFromPlanUsecase do
 
       plan = PlanRepository::AR.find_by_product_id(product.id)
 
-      aggregate_failures do
-        expect(plan.scheduled).to eq release_list({})
-        expect(plan.pending).to eq issue_list
-      end
+      expect(plan.scheduled).to eq release_list({})
     end
   end
 
   context 'given scheduled issue' do
     it do
       plan = PlanRepository::AR.find_by_product_id(product.id)
-      plan.update_pending(issue_list)
       plan.update_scheduled(roles, release_list({ 'R' => issue_list(issue.id) }))
       PlanRepository::AR.store(plan)
 
@@ -30,10 +26,7 @@ RSpec.describe RemoveIssueFromPlanUsecase do
 
       plan = PlanRepository::AR.find_by_product_id(product.id)
 
-      aggregate_failures do
-        expect(plan.scheduled).to eq release_list({ 'R' => issue_list })
-        expect(plan.pending).to eq issue_list
-      end
+      expect(plan.scheduled).to eq release_list({ 'R' => issue_list })
     end
   end
 end

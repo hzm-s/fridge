@@ -12,10 +12,6 @@ class PlansController < ApplicationController
     from = params[:from]
 
     case [from, to].map(&:present?)
-    when [false, false]
-      SortIssuesUsecase.perform(product_id, issue_id, to_index)
-    when [true, false]
-      PendIssueUsecase.perform(product_id, roles, issue_id, from)
     when [false, true]
       ScheduleIssueUsecase.perform(product_id, roles, issue_id, to, to_index)
     when [true, true]

@@ -19,7 +19,6 @@ RSpec.describe 'plans' do
 
   before do
     plan = PlanRepository::AR.find_by_product_id(product.id)
-    plan.update_pending(issue_list(issue_a.id, issue_b.id))
     plan.update_scheduled(
       roles,
       release_list({
@@ -31,16 +30,6 @@ RSpec.describe 'plans' do
   end
 
   describe '#update' do
-    context 'when sort pending issues' do
-      it do
-        patch product_plan_path(product_id: product.id.to_s, format: :json),
-          params: { issue_id: issue_a.id.to_s, to_index: 1 }
-
-        plan = PlanRepository::AR.find_by_product_id(product.id)
-        expect(plan.pending).to eq issue_list(issue_b.id, issue_a.id)
-      end
-    end
-
     context 'when schedule issue' do
       it do
         patch product_plan_path(product_id: product.id.to_s, format: :json),
@@ -50,19 +39,6 @@ RSpec.describe 'plans' do
         expect(plan.scheduled).to eq release_list({
           'R1' => issue_list(issue_c.id, issue_b.id, issue_d.id),
           'R2' => issue_list(issue_e.id, issue_f.id),
-        })
-      end
-    end
-
-    context 'when pending issue' do
-      it do
-        patch product_plan_path(product_id: product.id.to_s, format: :json),
-          params: { issue_id: issue_e.id.to_s, from: 'R2' }
-
-        plan = PlanRepository::AR.find_by_product_id(product.id)
-        expect(plan.scheduled).to eq release_list({
-          'R1' => issue_list(issue_c.id, issue_d.id),
-          'R2' => issue_list(issue_f.id),
         })
       end
     end
