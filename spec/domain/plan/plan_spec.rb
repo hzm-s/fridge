@@ -43,7 +43,7 @@ module Plan
       end
     end
 
-    describe 'Update' do 
+    describe 'Update' do
       it do
         scheduled = ReleaseList.new([
           Release.new('R1', issue_list(issue_a, issue_b, issue_c)),
