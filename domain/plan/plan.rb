@@ -10,7 +10,7 @@ module Plan
 
       sig {params(product_id: Product::Id).returns(T.attached_class)}
       def create(product_id)
-        new(product_id, ReleaseList.new)
+        new(product_id, [Release.create(1)])
       end
 
       sig {params(product_id: Product::Id, scheduled: ReleaseList).returns(T.attached_class)}
@@ -22,13 +22,13 @@ module Plan
     sig {returns(Product::Id)}
     attr_reader :product_id
 
-    sig {returns(ReleaseList)}
-    attr_reader :scheduled
+    sig {returns(T::Array[Release])}
+    attr_reader :releases
 
-    sig {params(product_id: Product::Id, scheduled: ReleaseList).void}
-    def initialize(product_id, scheduled)
+    sig {params(product_id: Product::Id, releases: T::Array[Release]).void}
+    def initialize(product_id, releases)
       @product_id = product_id
-      @scheduled = scheduled
+      @releases = releases
     end
 
     sig {params(roles: Team::RoleSet, issue_id: Issue::Id).void}

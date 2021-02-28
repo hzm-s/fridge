@@ -7,6 +7,17 @@ module Plan
     let(:issue_b) { Issue::Id.create }
     let(:issue_c) { Issue::Id.create }
 
+    describe 'Create' do
+      it do
+        r = described_class.create(1)
+
+        aggregate_failures do
+          expect(r.number).to eq 1
+          expect(r.issues).to eq issue_list
+        end
+      end
+    end
+
     describe 'Append' do
       it do
         r = described_class.new('MVP', issue_list(issue_a, issue_b))

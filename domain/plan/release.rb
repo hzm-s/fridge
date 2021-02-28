@@ -5,15 +5,24 @@ module Plan
   class Release
     extend T::Sig
 
-    sig {returns(String)}
-    attr_reader :name
+    class << self
+      extend T::Sig
+
+      sig {params(number: Integer).returns(T.attached_class)}
+      def create(number)
+        new(number, IssueList.new)
+      end
+    end
+
+    sig {returns(Integer)}
+    attr_reader :number
 
     sig {returns(IssueList)}
     attr_reader :issues
 
-    sig {params(name: String, issues: IssueList).void}
-    def initialize(name, issues = IssueList.new)
-      @name = name
+    sig {params(number: Integer, issues: IssueList).void}
+    def initialize(number, issues)
+      @number= number
       @issues = issues
     end
 

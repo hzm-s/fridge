@@ -10,7 +10,7 @@ module Plan
         plan = described_class.create(product_id)
 
         expect(plan.product_id).to eq product_id
-        expect(plan.scheduled).to eq ReleaseList.new
+        expect(plan.releases).to eq [Release.new(1, issue_list)]
       end
     end
 
