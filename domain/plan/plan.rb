@@ -31,16 +31,13 @@ module Plan
       @releases = releases
     end
 
-    sig {params(roles: Team::RoleSet, issue_id: Issue::Id).void}
-    def remove_issue(roles, issue_id)
-      update_scheduled(roles, scheduled.remove_issue(issue_id))
+    sig {params(release_number: Integer).returns(Release)}
+    def release(release_number)
+      @releases.find { |r| r.number == release_number }
     end
 
-    sig {params(roles: Team::RoleSet, scheduled: ReleaseList).void}
-    def update_scheduled(roles, scheduled)
-      raise PermissionDenied unless roles.can_update_release_plan?
-
-      @scheduled = scheduled
+    sig {params(issue_id: Issue::Id).void}
+    def append_issue(issue_id)
     end
   end
 end

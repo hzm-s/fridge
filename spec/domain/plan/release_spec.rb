@@ -18,13 +18,18 @@ module Plan
       end
     end
 
+    let(:release) { described_class.create(1) }
+
     describe 'Append' do
       it do
-        r = described_class.new('MVP', issue_list(issue_a, issue_b))
-        r = r.append_issue(issue_c)
-        expect(r).to eq described_class.new('MVP', issue_list(issue_a, issue_b, issue_c))
+        release.append_issue(issue_c)
+
+        expect(release.issues).to eq issue_list(issue_c)
       end
     end
+  end
+end
+__END__
 
     describe 'Remove' do
       it do

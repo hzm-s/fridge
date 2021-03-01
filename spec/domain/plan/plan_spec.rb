@@ -9,8 +9,11 @@ module Plan
       it do
         plan = described_class.create(product_id)
 
-        expect(plan.product_id).to eq product_id
-        expect(plan.releases).to eq [Release.new(1, issue_list)]
+        aggregate_failures do
+          expect(plan.product_id).to eq product_id
+          expect(plan.releases.size).to eq 1
+          expect(plan.release(1).issues).to eq issue_list
+        end
       end
     end
 
@@ -25,46 +28,17 @@ module Plan
     let(:po_roles) { team_roles(:po) }
     let(:dev_roles) { team_roles(:dev) }
 
-    describe 'Remove issue' do
-      before do
-        plan.update_scheduled(po_roles, release_list({
-          'R1' => issue_list(issue_c, issue_d),
-          'R2' => issue_list(issue_e, issue_f, issue_g),
-        }))
-      end
-
+    describe 'Update release' do
       it do
-        plan.remove_issue(po_roles, issue_f)
+        release = plan.release(1).tap do |r|
+          r.append_issue(issue_a)
+          r.append_issue(issue_b)
+          r.append_issue(issue_c)
+        end
 
-        expect(plan.scheduled).to eq release_list({
-          'R1' => issue_list(issue_c, issue_d),
-          'R2' => issue_list(issue_e, issue_g),
-        })
-      end
-    end
+        plan.update_release(release)
 
-    describe 'Update' do
-      it do
-        scheduled = ReleaseList.new([
-          Release.new('R1', issue_list(issue_a, issue_b, issue_c)),
-          Release.new('R2', issue_list(issue_d, issue_e))
-        ])
-        plan.update_scheduled(po_roles, scheduled)
-        expect(plan.scheduled).to eq scheduled
-      end
-    end
-
-    describe 'Check permission' do
-      let(:scheduled) { release_list('Release' => issue_list(issue_a)) }
-
-      it do
-        expect { plan.update_scheduled(po_roles, scheduled) }
-          .to_not raise_error
-      end
-
-      it do
-        expect { plan.update_scheduled(dev_roles, scheduled) }
-          .to raise_error PermissionDenied
+        expect(plan.release(1).issues).to eq issue_list(issue_a, issue_b, issue_c)
       end
     end
   end
