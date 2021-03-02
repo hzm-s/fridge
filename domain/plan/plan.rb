@@ -33,11 +33,13 @@ module Plan
 
     sig {params(release_number: Integer).returns(Release)}
     def release(release_number)
-      @releases.find { |r| r.number == release_number }
+      @releases.find { |r| r.number == release_number }.dup
     end
 
-    sig {params(issue_id: Issue::Id).void}
-    def append_issue(issue_id)
+    sig {params(release: Release).void}
+    def update_release(release)
+      index = @releases.find_index { |r| r.number == release.number }
+      @releases[index] = release
     end
   end
 end
