@@ -31,6 +31,11 @@ module Plan
       @issues = @issues.append(issue)
     end
 
+    sig {params(issue: Issue::Id).void}
+    def remove_issue(issue)
+      @issues = @issues.remove(issue)
+    end
+
     sig {params(other: Release).returns(T::Boolean)}
     def ==(other)
       self.number == other.number
