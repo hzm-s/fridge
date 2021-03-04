@@ -39,17 +39,21 @@ module Plan
         expect(release.issues).to eq issue_list(issue_a, issue_c)
       end
     end
-  end
-end
-__END__
 
     describe 'Change issue priority' do
       it do
-        r = described_class.new('MVP', issue_list(issue_a, issue_b, issue_c))
-        r = r.change_issue_priority(issue_c, issue_a)
-        expect(r).to eq described_class.new('MVP', issue_list(issue_c, issue_a, issue_b))
+        release.append_issue(issue_a)
+        release.append_issue(issue_b)
+        release.append_issue(issue_c)
+
+        release.sort_issue_priority(issue_c, issue_a)
+
+        expect(release.issues).to eq issue_list(issue_c, issue_a, issue_b)
       end
     end
+  end
+end
+__END__
 
     describe 'Change name' do
       it do

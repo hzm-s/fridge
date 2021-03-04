@@ -36,6 +36,11 @@ module Plan
       @issues = @issues.remove(issue)
     end
 
+    sig {params(from: Issue::Id, to: Issue::Id).void}
+    def sort_issue_priority(from, to)
+      @issues = @issues.swap(from, to)
+    end
+
     sig {params(other: Release).returns(T::Boolean)}
     def ==(other)
       self.number == other.number
