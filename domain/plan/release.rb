@@ -28,6 +28,8 @@ module Plan
 
     sig {params(issue: Issue::Id).void}
     def append_issue(issue)
+      raise DuplicatedIssue if @issues.include?(issue)
+
       @issues = @issues.append(issue)
     end
 

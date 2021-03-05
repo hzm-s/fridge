@@ -26,6 +26,12 @@ module Plan
 
         expect(release.issues).to eq issue_list(issue_c)
       end
+
+      it do
+        release.append_issue(issue_a)
+
+        expect { release.append_issue(issue_a) }.to raise_error DuplicatedIssue
+      end
     end
 
     describe 'Remove' do
@@ -51,24 +57,8 @@ module Plan
         expect(release.issues).to eq issue_list(issue_c, issue_a, issue_b)
       end
     end
-  end
-end
-__END__
 
-    describe 'Change name' do
-      it do
-        r = described_class.new('MVP', issue_list(issue_a, issue_b, issue_c))
-        r = r.change_name('1st Release')
-        expect(r).to eq described_class.new('1st Release', issue_list(issue_a, issue_b, issue_c))
-      end
-    end
-
-    describe 'Check to include issue' do
-      it { expect(described_class.new('R', issue_list(issue_a, issue_b, issue_c))).to be_include(issue_b) }
-      it { expect(described_class.new('R', issue_list(issue_a, issue_c))).to_not be_include(issue_b) }
-    end
-
-    describe 'Query to removable' do
+    xdescribe 'Query removable' do
       it { expect(described_class.new('R', issue_list(issue_a))).to_not be_can_remove }
       it { expect(described_class.new('R', issue_list)).to be_can_remove }
     end
