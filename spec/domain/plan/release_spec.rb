@@ -57,10 +57,5 @@ module Plan
         expect(release.issues).to eq issue_list(issue_c, issue_a, issue_b)
       end
     end
-
-    xdescribe 'Query removable' do
-      it { expect(described_class.new('R', issue_list(issue_a))).to_not be_can_remove }
-      it { expect(described_class.new('R', issue_list)).to be_can_remove }
-    end
   end
 end

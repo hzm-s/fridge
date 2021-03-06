@@ -31,15 +31,21 @@ module Plan
       @releases = releases
     end
 
-    sig {params(release_number: Integer).returns(Release)}
-    def release(release_number)
-      @releases.find { |r| r.number == release_number }.dup
+    sig {void}
+    def append_release
+      next_release_number = @releases.size + 1
+      @releases << Release.create(next_release_number)
     end
 
     sig {params(release: Release).void}
     def update_release(release)
       index = @releases.find_index { |r| r.number == release.number }
       @releases[index] = release
+    end
+
+    sig {params(release_number: Integer).returns(Release)}
+    def release(release_number)
+      @releases.find { |r| r.number == release_number }.dup
     end
   end
 end

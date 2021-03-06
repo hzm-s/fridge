@@ -23,10 +23,16 @@ module Plan
     let(:issue_c) { Issue::Id.create }
     let(:issue_d) { Issue::Id.create }
     let(:issue_e) { Issue::Id.create }
-    let(:issue_f) { Issue::Id.create }
-    let(:issue_g) { Issue::Id.create }
     let(:po_roles) { team_roles(:po) }
     let(:dev_roles) { team_roles(:dev) }
+
+    describe 'Append release' do
+      it do
+        plan.append_release
+
+        expect(plan.release(2).issues).to eq issue_list
+      end
+    end
 
     describe 'Update release' do
       it do
