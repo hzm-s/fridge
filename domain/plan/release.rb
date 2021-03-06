@@ -43,6 +43,11 @@ module Plan
       @issues = @issues.swap(from, to)
     end
 
+    sig {returns(T::Boolean)}
+    def can_remove?
+      @issues.empty?
+    end
+
     sig {params(other: Release).returns(T::Boolean)}
     def ==(other)
       self.number == other.number

@@ -43,6 +43,14 @@ module Plan
       @releases[index] = release
     end
 
+    sig {params(release_number: Integer).void}
+    def remove_release(release_number)
+      raise ReleaseIsNotEmpty unless release(release_number).can_remove?
+      raise NeedAtLeastOneRelease if @releases.size == 1
+
+      @releases.delete_if { |r| r.number == release_number }
+    end
+
     sig {params(release_number: Integer).returns(Release)}
     def release(release_number)
       @releases.find { |r| r.number == release_number }.dup

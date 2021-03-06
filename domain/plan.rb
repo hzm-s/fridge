@@ -1,6 +1,7 @@
 # typed: strict
 module Plan
   class ReleaseIsNotEmpty < StandardError; end
+  class NeedAtLeastOneRelease < StandardError; end
   class DuplicatedIssue < StandardError; end
   class DuplicatedReleaseName < ArgumentError; end
   class PermissionDenied < StandardError; end

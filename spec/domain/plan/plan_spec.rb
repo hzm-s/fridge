@@ -36,15 +36,48 @@ module Plan
 
     describe 'Update release' do
       it do
-        release = plan.release(1).tap do |r|
+        plan.append_release
+        plan.append_release
+
+        plan.release(1).tap do |r|
           r.append_issue(issue_a)
           r.append_issue(issue_b)
           r.append_issue(issue_c)
+          plan.update_release(r)
         end
 
-        plan.update_release(release)
+        plan.release(3).tap do |r|
+          r.append_issue(issue_d)
+          r.append_issue(issue_e)
+          plan.update_release(r)
+        end
 
         expect(plan.release(1).issues).to eq issue_list(issue_a, issue_b, issue_c)
+        expect(plan.release(2).issues).to eq issue_list
+        expect(plan.release(3).issues).to eq issue_list(issue_d, issue_e)
+      end
+    end
+
+    describe 'Remove release' do
+      it do
+        plan.append_release
+
+        plan.remove_release(1)
+
+        expect(plan.releases.map(&:number)).to eq [2]
+      end
+
+      it do
+        plan.release(1).tap do |r|
+          r.append_issue(issue_a)
+          plan.update_release(r)
+        end
+
+        expect { plan.remove_release(1) }.to raise_error ReleaseIsNotEmpty
+      end
+
+      it do
+        expect { plan.remove_release(1) }.to raise_error NeedAtLeastOneRelease
       end
     end
   end
