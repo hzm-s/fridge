@@ -52,5 +52,10 @@ module Plan
     def ==(other)
       self.number == other.number
     end
+
+    sig {params(other: Release).returns(Integer)}
+    def <=>(other)
+      self.number <=> other.number
+    end
   end
 end

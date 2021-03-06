@@ -33,7 +33,7 @@ module Plan
 
     sig {void}
     def append_release
-      next_release_number = @releases.size + 1
+      next_release_number = @releases.max.number + 1
       @releases << Release.create(next_release_number)
     end
 

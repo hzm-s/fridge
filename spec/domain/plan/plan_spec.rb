@@ -30,7 +30,18 @@ module Plan
       it do
         plan.append_release
 
-        expect(plan.release(2).issues).to eq issue_list
+        aggregate_failures do
+          expect(plan.releases.size).to eq 2
+          expect(plan.release(2).issues).to eq issue_list
+        end
+      end
+
+      it do
+        plan.append_release
+        plan.remove_release(1)
+        plan.append_release
+
+        expect(plan.releases.map(&:number)).to eq [2, 3]
       end
     end
 
