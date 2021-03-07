@@ -62,14 +62,6 @@ ActiveRecord::Schema.define(version: 2020_11_04_091810) do
     t.index ["email"], name: "index_dao_people_on_email", unique: true
   end
 
-  create_table "dao_plans", force: :cascade do |t|
-    t.uuid "dao_product_id"
-    t.uuid "pending_issues", array: true
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["dao_product_id"], name: "index_dao_plans_on_dao_product_id", unique: true
-  end
-
   create_table "dao_products", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "description"
@@ -78,12 +70,13 @@ ActiveRecord::Schema.define(version: 2020_11_04_091810) do
   end
 
   create_table "dao_releases", force: :cascade do |t|
-    t.bigint "dao_plan_id"
-    t.string "name", null: false
+    t.uuid "dao_product_id"
+    t.integer "number", null: false
     t.uuid "issues", array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["dao_plan_id"], name: "index_dao_releases_on_dao_plan_id"
+    t.index ["dao_product_id", "number"], name: "index_dao_releases_on_dao_product_id_and_number", unique: true
+    t.index ["dao_product_id"], name: "index_dao_releases_on_dao_product_id"
   end
 
   create_table "dao_team_members", force: :cascade do |t|
@@ -107,8 +100,7 @@ ActiveRecord::Schema.define(version: 2020_11_04_091810) do
   add_foreign_key "app_user_profiles", "app_user_accounts"
   add_foreign_key "dao_acceptance_criteria", "dao_issues"
   add_foreign_key "dao_issues", "dao_products"
-  add_foreign_key "dao_plans", "dao_products"
-  add_foreign_key "dao_releases", "dao_plans"
+  add_foreign_key "dao_releases", "dao_products"
   add_foreign_key "dao_team_members", "dao_teams"
   add_foreign_key "dao_teams", "dao_products"
 end
