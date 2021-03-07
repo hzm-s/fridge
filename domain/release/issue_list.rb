@@ -1,7 +1,7 @@
 # typed: strict
 require 'sorbet-runtime'
 
-module Plan
+module Release
   class IssueList
     extend T::Sig
 

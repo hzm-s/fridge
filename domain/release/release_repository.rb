@@ -1,13 +1,13 @@
 # typed: strict
 require 'sorbet-runtime'
 
-module Plan
-  module PlanRepository
+module Release
+  module ReleaseRepository
     extend T::Sig
     extend T::Helpers
     interface!
 
-    sig {abstract.params(product_id: Product::Id).returns(Plan)}
+    sig {abstract.params(product_id: Product::Id).returns(Release)}
     def find_by_product_id(product_id); end
 
     sig {abstract.params(plan: Plan).void}

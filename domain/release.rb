@@ -1,12 +1,11 @@
 # typed: strict
-module Plan
+module Release
   class ReleaseIsNotEmpty < StandardError; end
   class NeedAtLeastOneRelease < StandardError; end
   class DuplicatedIssue < StandardError; end
   class PermissionDenied < StandardError; end
 
-  autoload :Plan, 'plan/plan'
-  autoload :IssueList, 'plan/issue_list'
-  autoload :Release, 'plan/release'
-  autoload :PlanRepository, 'plan/plan_repository'
+  autoload :Release, 'release/release'
+  autoload :ReleaseRepository, 'release/release_repository'
+  autoload :IssueList, 'release/issue_list'
 end
