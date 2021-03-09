@@ -8,11 +8,14 @@ module Release
     class << self
       extend T::Sig
 
-      sig {params(number: Integer).returns(T.attached_class)}
-      def create(number)
-        new(number, IssueList.new)
+      sig {params(product_id: Product::Id, number: Integer).returns(T.attached_class)}
+      def create(product_id, number)
+        new(product_id, number, IssueList.new)
       end
     end
+
+    sig {returns(Product::Id)}
+    attr_reader :product_id
 
     sig {returns(Integer)}
     attr_reader :number
@@ -20,8 +23,9 @@ module Release
     sig {returns(IssueList)}
     attr_reader :issues
 
-    sig {params(number: Integer, issues: IssueList).void}
-    def initialize(number, issues)
+    sig {params(product_id: Product::Id, number: Integer, issues: IssueList).void}
+    def initialize(product_id, number, issues)
+      @product_id = product_id
       @number= number
       @issues = issues
     end

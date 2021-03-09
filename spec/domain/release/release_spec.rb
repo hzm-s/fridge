@@ -3,22 +3,24 @@ require 'domain_helper'
 
 module Release
   RSpec.describe Release do
+    let(:product_id) { Product::Id.create }
     let(:issue_a) { Issue::Id.create }
     let(:issue_b) { Issue::Id.create }
     let(:issue_c) { Issue::Id.create }
 
     describe 'Create' do
       it do
-        r = described_class.create(1)
+        r = described_class.create(product_id, 1)
 
         aggregate_failures do
+          expect(r.product_id).to eq product_id
           expect(r.number).to eq 1
           expect(r.issues).to eq issue_list
         end
       end
     end
 
-    let(:release) { described_class.create(1) }
+    let(:release) { described_class.create(product_id, 1) }
 
     describe 'Append' do
       it do
