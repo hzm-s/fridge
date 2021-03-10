@@ -3,6 +3,9 @@ require 'rails_helper'
 
 RSpec.describe ReleaseRepository::AR do
   let(:product_id) { Product::Id.create }
+  let!(:issue_a) { Issue::Id.create }
+  let!(:issue_b) { Issue::Id.create }
+  let!(:issue_c) { Issue::Id.create }
 
   before do
     Dao::Product.create!(id: product_id, name: 'p')
@@ -22,6 +25,20 @@ RSpec.describe ReleaseRepository::AR do
 
   describe 'Append' do
     it do
+      release = Release::Release.create(product_id, 1).tap do |r|
+        r.append_issue(issue_a)
+        r.append_issue(issue_b)
+        r.append_issue(issue_c)
+      end
+
+      expect { described_class.store(release) }
+        .to change { Dao::Release.count }.by(1)
+
+      stored = Dao::Release.last
+
+      expect(stored.dao_product_id).to eq product_id.to_s
+      expect(stored.number).to eq 1
+      expect(stored.issues).to eq [issue_a, issue_b, issue_c].map(&:to_s)
     end
   end
 end
