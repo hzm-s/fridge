@@ -28,5 +28,20 @@ module Plan
     def append_release
       @releases << Release.create(@releases.max.number + 1)
     end
+
+    sig {params(release: Release).void}
+    def update_release(release)
+      index = @releases.find_index { |r| r.number == release.number }
+      @releases[index] = release
+    end
+
+    sig {params(release_number: Integer).void}
+    def remove_release(release_number)
+    end
+
+    sig {params(release_number: Integer).returns(Release)}
+    def release(release_number)
+      @releases.find { |r| r.number == release_number }.dup
+    end
   end
 end
