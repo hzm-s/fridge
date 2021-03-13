@@ -14,9 +14,6 @@ module Plan
       end
     end
 
-    sig {returns(Product::Id)}
-    attr_reader :product_id
-
     sig {returns(Integer)}
     attr_reader :number
 

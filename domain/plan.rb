@@ -5,6 +5,7 @@ module Plan
   class DuplicatedIssue < StandardError; end
   class PermissionDenied < StandardError; end
 
+  autoload :Plan, 'plan/plan'
   autoload :Release, 'plan/release'
   autoload :ReleaseRepository, 'plan/release_repository'
   autoload :IssueList, 'plan/issue_list'
