@@ -8,9 +8,9 @@ module Plan
     class << self
       extend T::Sig
 
-      sig {params(product_id: Product::Id, number: Integer).returns(T.attached_class)}
-      def create(product_id, number)
-        new(product_id, number, IssueList.new)
+      sig {params(number: Integer).returns(T.attached_class)}
+      def create(number)
+        new(number, IssueList.new)
       end
     end
 
@@ -23,9 +23,8 @@ module Plan
     sig {returns(IssueList)}
     attr_reader :issues
 
-    sig {params(product_id: Product::Id, number: Integer, issues: IssueList).void}
-    def initialize(product_id, number, issues)
-      @product_id = product_id
+    sig {params(number: Integer, issues: IssueList).void}
+    def initialize(number, issues)
       @number= number
       @issues = issues
     end

@@ -10,19 +10,18 @@ module Plan
 
     describe 'Create' do
       it do
-        r = described_class.create(product_id, 1)
+        r = described_class.create(1)
 
         aggregate_failures do
-          expect(r.product_id).to eq product_id
           expect(r.number).to eq 1
           expect(r.issues).to eq issue_list
         end
       end
     end
 
-    let(:release) { described_class.create(product_id, 1) }
+    let(:release) { described_class.create(1) }
 
-    describe 'Append' do
+    describe 'Append issue' do
       it do
         release.append_issue(issue_c)
 
@@ -36,7 +35,7 @@ module Plan
       end
     end
 
-    describe 'Remove' do
+    describe 'Remove issue' do
       it do
         release.append_issue(issue_a)
         release.append_issue(issue_b)
