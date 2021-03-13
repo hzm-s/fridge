@@ -23,5 +23,10 @@ module Plan
       @product_id = product_id
       @releases = releases
     end
+
+    sig {void}
+    def append_release
+      @releases << Release.create(@releases.max.number + 1)
+    end
   end
 end
