@@ -1,15 +1,15 @@
 # typed: false
-require_relative '../domain_support/release_domain_support'
+require_relative '../domain_support/plan_domain_support'
 
-module ReleaseSupport
-  include ReleaseDomainSupport
+module PlanSupport
+  include PlanDomainSupport
 
   def add_release(product_id, name)
     AppendReleaseUsecase.perform(team_roles(:po), product_id, name)
-    ReleaseRepository::AR.find_by_product_id(product_id)
+    PlanRepository::AR.find_by_product_id(product_id)
   end
 end
 
 RSpec.configure do |c|
-  c.include ReleaseSupport
+  c.include PlanSupport
 end

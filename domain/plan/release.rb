@@ -12,6 +12,11 @@ module Plan
       def create(number)
         new(number, IssueList.new)
       end
+
+      sig {params(number: Integer, issues: IssueList).returns(T.attached_class)}
+      def from_repository(number, issues)
+        new(number, issues)
+      end
     end
 
     sig {returns(Integer)}

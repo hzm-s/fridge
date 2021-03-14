@@ -7,11 +7,19 @@ module PlanRepository
       extend T::Sig
       include Plan::PlanRepository
 
+      sig {override.params(product_id: Product::Id).returns(Plan::Plan)}
+      def find_by_product_id(product_id)
+        daos = Dao::Release.where(dao_product_id: product_id.to_s)
+        daos.read(daos)
+      end
+
       sig {override.params(plan: Plan::Plan).void}
       def store(plan)
-        dao = Dao::Release.find_or_initialize_by(dao_product_id: release.product_id.to_s, number: release.number)
-        dao.write(release)
-        dao.save!
+        plan.releases.each do |r|
+          dao = Dao::Release.find_or_initialize_by(dao_product_id: plan.product_id.to_s, number: r.number)
+          dao.write(r)
+          dao.save!
+        end
       end
     end
   end
