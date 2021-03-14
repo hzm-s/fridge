@@ -34,7 +34,7 @@ module Plan
       it do
         plan.append_release
 
-        r = plan.release(1)
+        r = plan.release_of(1)
         r.append_issue(issue_a)
         r.append_issue(issue_b)
         r.append_issue(issue_c)
@@ -42,19 +42,30 @@ module Plan
         plan.update_release(r)
 
         aggregate_failures do
-          expect(plan.release(1).issues).to eq issue_list(issue_a, issue_b, issue_c)
-          expect(plan.release(2).issues).to eq issue_list
+          expect(plan.release_of(1).issues).to eq issue_list(issue_a, issue_b, issue_c)
+          expect(plan.release_of(2).issues).to eq issue_list
         end
       end
     end
 
     describe 'Remove release' do
+      before do
+        plan.append_release
+        plan.append_release
+      end
+
       it do
-        plan.append_release
-        plan.append_release
         plan.remove_release(2)
 
         expect(plan.releases.map(&:number)).to match_array [1, 3]
+      end
+
+      it do
+        r = plan.release_of(2)
+        r.append_issue(issue_a)
+        plan.update_release(r)
+
+        expect { plan.remove_release(2) }.to raise_error ReleaseIsNotEmpty
       end
     end
   end

@@ -37,10 +37,14 @@ module Plan
 
     sig {params(release_number: Integer).void}
     def remove_release(release_number)
+      release = release_of(release_number)
+      raise ReleaseIsNotEmpty unless release.can_remove?
+
+      @releases.delete_if { |r| r.number == release.number }
     end
 
     sig {params(release_number: Integer).returns(Release)}
-    def release(release_number)
+    def release_of(release_number)
       @releases.find { |r| r.number == release_number }.dup
     end
   end
