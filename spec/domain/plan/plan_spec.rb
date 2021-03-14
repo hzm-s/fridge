@@ -25,8 +25,12 @@ module Plan
       it do
         plan.append_release
         plan.append_release
+        plan.append_release
+        plan.append_release
+        plan.remove_release(4)
+        plan.append_release
 
-        expect(plan.releases.map(&:number)).to match_array [1, 2, 3]
+        expect(plan.releases.map(&:number)).to match_array [1, 2, 3, 5, 6]
       end
     end
 
