@@ -27,30 +27,41 @@ RSpec.describe PlanRepository::AR do
       stored = described_class.find_by_product_id(product_id)
 
       aggregate_failures do
+        expect(stored.releases.size).to eq 1
         expect(stored.release_of(1).issues).to eq issue_list(issue_a, issue_b, issue_c)
       end
     end
   end
 
-  xdescribe 'Update' do
+  describe 'Update' do
     it do
-      release = Release::Release.create(product_id, 1)
-      described_class.store(release)
+      plan = Plan::Plan.create(product_id)
+      plan.release_of(1).tap do |r|
+        r.append_issue(issue_b)
+        plan.update_release(r)
+      end
+      described_class.store(plan)
 
-      release.append_issue(issue_b)
-      release.append_issue(issue_c)
-      release.append_issue(issue_a)
+      plan.append_release
+      plan.release_of(2).tap do |r|
+        r.append_issue(issue_c)
+        r.append_issue(issue_a)
+        plan.update_release(r)
+      end
 
-      expect { described_class.store(release) }
-        .to change { Dao::Release.count }.by(0)
+      expect { described_class.store(plan) }
+        .to change { Dao::Release.count }.from(1).to(2)
 
-      stored = Dao::Release.last
+      stored = described_class.find_by_product_id(product_id)
 
-      expect(stored.dao_product_id).to eq product_id.to_s
-      expect(stored.number).to eq 1
-      expect(stored.issues).to eq [issue_b, issue_c, issue_a].map(&:to_s)
+      aggregate_failures do
+        expect(stored.releases.size).to eq 2
+        expect(stored.release_of(1).issues).to eq issue_list(issue_b)
+        expect(stored.release_of(2).issues).to eq issue_list(issue_c, issue_a)
+      end
     end
   end
 
-  describe 'Remove'
+  describe 'Remove' do
+  end
 end
