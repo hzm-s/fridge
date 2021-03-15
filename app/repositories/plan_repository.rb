@@ -20,6 +20,7 @@ module PlanRepository
           dao.write(r)
           dao.save!
         end
+        Dao::Release.sync(plan.product_id.to_s, plan.releases.map(&:number))
       end
     end
   end

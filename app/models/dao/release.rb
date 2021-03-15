@@ -7,6 +7,11 @@ class Dao::Release < ApplicationRecord
         daos.map(&:read)
       )
     end
+
+    def sync(product_id, numbers)
+      stored = where(dao_product_id: product_id).pluck(:number)
+      where(dao_product_id: product_id, number: stored - numbers).destroy_all
+    end
   end
 
   def write(release)
