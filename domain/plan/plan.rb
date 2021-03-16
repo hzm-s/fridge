@@ -52,5 +52,10 @@ module Plan
     def release_of(release_number)
       @releases.find { |r| r.number == release_number }.dup
     end
+
+    sig {returns(Release)}
+    def recent_release
+      @releases.min
+    end
   end
 end

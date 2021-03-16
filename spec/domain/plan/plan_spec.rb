@@ -16,6 +16,17 @@ module Plan
       end
     end
 
+    describe 'Query recent release' do
+      it do
+        plan = described_class.create(product_id)
+        plan.append_release
+        plan.append_release
+        plan.remove_release(1)
+
+        expect(plan.recent_release.number).to eq 2
+      end
+    end
+
     let(:plan) { described_class.create(product_id) }
     let(:issue_a) { Issue::Id.create }
     let(:issue_b) { Issue::Id.create }
