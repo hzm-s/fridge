@@ -12,7 +12,8 @@ RSpec.describe CreateProductUsecase do
       expect(product.name).to eq 'abc'
       expect(product.description).to eq 'xyz'
 
-      expect(plan.scheduled.to_a).to be_empty
+      expect(plan.recent_release.number).to eq 1
+      expect(plan.recent_release.issues).to eq issue_list
     end
   end
 end
