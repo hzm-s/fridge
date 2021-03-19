@@ -7,19 +7,19 @@ class PlannedIssueResolver < UsecaseBase
   class << self
     extend T::Sig
 
-    sig {params(plan: Plan::Plan, release_name: String, index: Integer).returns(T.nilable(Issue::Id))}
-    def resolve_scheduled(plan, release_name, index)
-      new(plan).resolve_scheduled(release_name, index)
+    sig {params(plan: Plan::Plan, release_number: Integer, index: Integer).returns(T.nilable(Issue::Id))}
+    def resolve_issue(plan, release_number, index)
+      new(plan).resolve_issue(release_name, index)
     end
   end
 
   sig {params(plan: Plan::Plan).void}
   def initialize(plan)
-    @scheduled = T.let(plan.scheduled, Plan::ReleaseList)
+    @plan = plan
   end
 
-  sig {params(release_name: String, index: Integer).returns(T.nilable(Issue::Id))}
-  def resolve_scheduled(release_name, index)
-    @scheduled.get(release_name).issues.to_a[index]
+  sig {params(issue_id: Issue::Id).returns(T.nilable(Plan::Release))}
+  def resolve_release(issue_id)
+    @plan.releases.find { |r| r.include?(issue_id) }
   end
 end

@@ -53,6 +53,11 @@ module Plan
       @issues.empty?
     end
 
+    sig {params(issue: Issue::Id).returns(T::Boolean)}
+    def include?(issue)
+      @issues.include?(issue)
+    end
+
     sig {params(other: Release).returns(T::Boolean)}
     def ==(other)
       self.number == other.number
