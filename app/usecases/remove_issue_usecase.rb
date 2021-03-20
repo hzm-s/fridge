@@ -6,15 +6,15 @@ class RemoveIssueUsecase < UsecaseBase
 
   sig {void}
   def initialize
-    @repository = T.let(IssueRepository::AR, Issue::IssueRepository)
+    @issue_repository = T.let(IssueRepository::AR, Issue::IssueRepository)
+    @plan_repository = T.let(PlanRepository::AR, Plan::PlanRepository)
   end
 
-  sig {params(roles: Team::RoleSet, issue_id: Issue::Id).void}
-  def perform(roles, issue_id)
-    issue = @repository.find_by_id(issue_id)
+  sig {params(product_id: Product::Id, roles: Team::RoleSet, issue_id: Issue::Id).void}
+  def perform(product_id, roles, issue_id)
     transaction do
-      RemoveIssueFromPlanUsecase.perform(issue.product_id, roles, issue.id)
-      @repository.remove(issue.id)
+      Plan::DropIssue.new(@issue_repository, @plan_repository)
+        .drop(product_id, roles, issue_id)
     end
   end
 end

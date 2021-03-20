@@ -36,7 +36,7 @@ module Plan
 
     sig {params(release: Release).void}
     def update_release(release)
-      index = @releases.find_index { |r| r.number == release.number }
+      index = T.must(@releases.find_index { |r| r.number == release.number })
       @releases[index] = release
     end
 
@@ -50,7 +50,12 @@ module Plan
 
     sig {params(release_number: Integer).returns(Release)}
     def release_of(release_number)
-      @releases.find { |r| r.number == release_number }.dup
+      T.must(@releases.find { |r| r.number == release_number }).dup
+    end
+
+    sig {params(issue: Issue::Id).returns(Release)}
+    def release_by_issue(issue)
+      T.must(@releases.find { |r| r.planned?(issue) }).dup
     end
 
     sig {returns(Release)}

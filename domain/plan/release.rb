@@ -54,7 +54,7 @@ module Plan
     end
 
     sig {params(issue: Issue::Id).returns(T::Boolean)}
-    def include?(issue)
+    def planned?(issue)
       @issues.include?(issue)
     end
 

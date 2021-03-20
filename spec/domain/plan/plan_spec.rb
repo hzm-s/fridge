@@ -83,5 +83,28 @@ module Plan
         expect { plan.remove_release(2) }.to raise_error ReleaseIsNotEmpty
       end
     end
+
+    describe 'Query release by issue' do
+      it do
+        plan.append_release
+
+        plan.release_of(1).tap do |r|
+          r.append_issue(issue_a)
+          plan.update_release(r)
+        end
+
+        plan.release_of(2).tap do |r|
+          r.append_issue(issue_b)
+          r.append_issue(issue_c)
+          plan.update_release(r)
+        end
+
+        aggregate_failures do
+          expect(plan.release_by_issue(issue_a).number).to eq 1
+          expect(plan.release_by_issue(issue_b).number).to eq 2
+          expect(plan.release_by_issue(issue_c).number).to eq 2
+        end
+      end
+    end
   end
 end
