@@ -32,14 +32,14 @@ module Plan
     end
 
     sig {params(issue: Issue::Id).void}
-    def append_issue(issue)
+    def plan_issue(issue)
       raise DuplicatedIssue if @issues.include?(issue)
 
       @issues = @issues.append(issue)
     end
 
     sig {params(issue: Issue::Id).void}
-    def remove_issue(issue)
+    def drop_issue(issue)
       @issues = @issues.remove(issue)
     end
 

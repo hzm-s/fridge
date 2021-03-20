@@ -15,7 +15,7 @@ module Plan
     def drop(product_id, roles, issue_id)
       plan = @plan_repository.find_by_product_id(product_id)
       plan.release_by_issue(issue_id).tap do |r|
-        r.remove_issue(issue_id)
+        r.drop_issue(issue_id)
         plan.update_release(r)
       end
       @plan_repository.store(plan)

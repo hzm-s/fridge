@@ -50,9 +50,9 @@ module Plan
         plan.append_release
 
         r = plan.release_of(1)
-        r.append_issue(issue_a)
-        r.append_issue(issue_b)
-        r.append_issue(issue_c)
+        r.plan_issue(issue_a)
+        r.plan_issue(issue_b)
+        r.plan_issue(issue_c)
 
         plan.update_release(r)
 
@@ -77,7 +77,7 @@ module Plan
 
       it do
         r = plan.release_of(2)
-        r.append_issue(issue_a)
+        r.plan_issue(issue_a)
         plan.update_release(r)
 
         expect { plan.remove_release(2) }.to raise_error ReleaseIsNotEmpty
@@ -89,13 +89,13 @@ module Plan
         plan.append_release
 
         plan.release_of(1).tap do |r|
-          r.append_issue(issue_a)
+          r.plan_issue(issue_a)
           plan.update_release(r)
         end
 
         plan.release_of(2).tap do |r|
-          r.append_issue(issue_b)
-          r.append_issue(issue_c)
+          r.plan_issue(issue_b)
+          r.plan_issue(issue_c)
           plan.update_release(r)
         end
 

@@ -21,27 +21,27 @@ module Plan
 
     let(:release) { described_class.create(1) }
 
-    describe 'Append issue' do
+    describe 'Plan issue' do
       it do
-        release.append_issue(issue_c)
+        release.plan_issue(issue_c)
 
         expect(release.issues).to eq issue_list(issue_c)
       end
 
       it do
-        release.append_issue(issue_a)
+        release.plan_issue(issue_a)
 
-        expect { release.append_issue(issue_a) }.to raise_error DuplicatedIssue
+        expect { release.plan_issue(issue_a) }.to raise_error DuplicatedIssue
       end
     end
 
-    describe 'Remove issue' do
+    describe 'Drop issue' do
       it do
-        release.append_issue(issue_a)
-        release.append_issue(issue_b)
-        release.append_issue(issue_c)
+        release.plan_issue(issue_a)
+        release.plan_issue(issue_b)
+        release.plan_issue(issue_c)
 
-        release.remove_issue(issue_b)
+        release.drop_issue(issue_b)
 
         expect(release.issues).to eq issue_list(issue_a, issue_c)
       end
@@ -49,9 +49,9 @@ module Plan
 
     describe 'Change issue priority' do
       it do
-        release.append_issue(issue_a)
-        release.append_issue(issue_b)
-        release.append_issue(issue_c)
+        release.plan_issue(issue_a)
+        release.plan_issue(issue_b)
+        release.plan_issue(issue_c)
 
         release.sort_issue_priority(issue_c, issue_a)
 

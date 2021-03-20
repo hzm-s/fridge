@@ -15,7 +15,7 @@ module Plan
     def append(product_id, issue)
       plan = @plan_repository.find_by_product_id(product_id)
       plan.recent_release.tap do |r|
-        r.append_issue(issue.id)
+        r.plan_issue(issue.id)
         plan.update_release(r)
       end
 
