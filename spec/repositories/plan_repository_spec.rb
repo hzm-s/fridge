@@ -26,9 +26,9 @@ RSpec.describe PlanRepository::AR do
   describe 'Append' do
     it do
       plan.release_of(1).tap do |r|
-        r.append_issue(issue_a)
-        r.append_issue(issue_b)
-        r.append_issue(issue_c)
+        r.plan_issue(issue_a)
+        r.plan_issue(issue_b)
+        r.plan_issue(issue_c)
         plan.update_release(r)
       end
 
@@ -47,15 +47,15 @@ RSpec.describe PlanRepository::AR do
   describe 'Update' do
     it do
       plan.release_of(1).tap do |r|
-        r.append_issue(issue_b)
+        r.plan_issue(issue_b)
         plan.update_release(r)
       end
       described_class.store(plan)
 
       plan.append_release
       plan.release_of(2).tap do |r|
-        r.append_issue(issue_c)
-        r.append_issue(issue_a)
+        r.plan_issue(issue_c)
+        r.plan_issue(issue_a)
         plan.update_release(r)
       end
 
@@ -75,7 +75,7 @@ RSpec.describe PlanRepository::AR do
   describe 'Remove' do
     it do
       plan.release_of(1).tap do |r|
-        r.append_issue(issue_a)
+        r.plan_issue(issue_a)
         plan.update_release(r)
       end
 
@@ -83,8 +83,8 @@ RSpec.describe PlanRepository::AR do
 
       plan.append_release
       plan.release_of(3).tap do |r|
-        r.append_issue(issue_b)
-        r.append_issue(issue_c)
+        r.plan_issue(issue_b)
+        r.plan_issue(issue_c)
         plan.update_release(r)
       end
 
