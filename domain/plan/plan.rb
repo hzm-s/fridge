@@ -48,14 +48,14 @@ module Plan
       @releases.delete_if { |r| r.number == release.number }
     end
 
-    sig {params(release_number: Integer).returns(Release)}
+    sig {params(release_number: Integer).returns(T.nilable(Release))}
     def release_of(release_number)
-      T.must(@releases.find { |r| r.number == release_number }).dup
+      @releases.find { |r| r.number == release_number }.dup
     end
 
-    sig {params(issue: Issue::Id).returns(Release)}
+    sig {params(issue: Issue::Id).returns(T.nilable(Release))}
     def release_by_issue(issue)
-      T.must(@releases.find { |r| r.planned?(issue) }).dup
+      @releases.find { |r| r.planned?(issue) }.dup
     end
 
     sig {returns(Release)}
