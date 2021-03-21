@@ -9,13 +9,10 @@ class AppendReleaseUsecase < UsecaseBase
     @repository = T.let(PlanRepository::AR, Plan::PlanRepository)
   end
 
-  sig {params(roles: Team::RoleSet, product_id: Product::Id, name: String).void}
-  def perform(roles, product_id, name)
+  sig {params(roles: Team::RoleSet, product_id: Product::Id).void}
+  def perform(roles, product_id)
     plan = @repository.find_by_product_id(product_id)
-
-    new_scheduled = plan.scheduled.append(Plan::Release.new(name))
-    plan.update_scheduled(roles, new_scheduled)
-
+    plan.append_release
     @repository.store(plan)
   end
 end
