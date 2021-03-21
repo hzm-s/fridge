@@ -10,15 +10,15 @@ module PlanSupport
 
   def update_plan(product_id)
     plan = PlanRepository::AR.find_by_product_id(product_id)
-    updated = yield(plan)
-    PlanRepository::AR.store(updated)
+    yield(plan)
+    PlanRepository::AR.store(plan)
   end
 
   def update_release(product_id, release_number)
     update_plan(product_id) do |plan|
       release = plan.release_of(release_number)
-      updated = yield(release)
-      plan.update_release(updated)
+      yield(release)
+      plan.update_release(release)
     end
   end
 

@@ -5,17 +5,18 @@ RSpec.describe PlanIssueUsecase do
   let!(:product) { create_product }
 
   before do
-    plan = PlanRepository::AR.find_by_product_id(product.id)
-    plan.append_release
-    PlanRepository::AR.store(plan)
+    update_plan(product.id) do |p|
+      p.append_release
+    end
   end
 
-  it do
-    description = issue_description('ABC')
+  let(:description) { issue_description('ABC') }
 
+  it do
     issue_id = described_class.perform(product.id, Issue::Types::Feature, description)
+
     issue = IssueRepository::AR.find_by_id(issue_id)
-    plan = PlanRepository::AR.find_by_product_id(product.id)
+    plan = plan_of(product.id)
 
     aggregate_failures do
       expect(issue.product_id).to eq product.id
@@ -27,6 +28,20 @@ RSpec.describe PlanIssueUsecase do
 
       expect(plan.release_of(1).issues).to eq issue_list(issue_id)
       expect(plan.release_of(2).issues).to eq issue_list
+    end
+  end
+
+  context 'given release number' do
+    it do
+      issue_id = described_class.perform(product.id, Issue::Types::Feature, description, 2)
+
+      issue = IssueRepository::AR.find_by_id(issue_id)
+      plan = plan_of(product.id)
+
+      aggregate_failures do
+        expect(plan.release_of(1).issues).to eq issue_list
+        expect(plan.release_of(2).issues).to eq issue_list(issue_id)
+      end
     end
   end
 end
