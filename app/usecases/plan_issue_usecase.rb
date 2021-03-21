@@ -14,11 +14,23 @@ class PlanIssueUsecase < UsecaseBase
   def perform(product_id, type, description, release_number = nil)
     issue = Issue::Issue.create(product_id, type, description)
 
+    plan = @plan_repository.find_by_product_id(product_id)
+    release = detect_release(plan, release_number)
+
     transaction do
       Plan::AppendIssue.new(@issue_repository, @plan_repository)
-        .append(product_id, issue, release_number)
+        .append(plan, release, issue)
     end
 
     issue.id
+  end
+
+  private
+
+  sig {params(plan: Plan::Plan, release_number: T.nilable(Integer)).returns(Plan::Release)}
+  def detect_release(plan, release_number = nil)
+    return plan.recent_release unless release_number
+
+    plan.release_of(release_number)
   end
 end
