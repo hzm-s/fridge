@@ -5,13 +5,13 @@ module IssueSupport
   include IssueDomainSupport
 
   def plan_issue(product_id, description = 'DESC', type: :feature, acceptance_criteria: [], size: nil, release: nil)
-    issue = perform_plan_issue(product_id, Issue::Types.from_string(type.to_s), description)
+    append_release(product_id, release) if release
+
+    issue = perform_plan_issue(product_id, Issue::Types.from_string(type.to_s), description, release)
 
     append_acceptance_criteria(issue, acceptance_criteria) if acceptance_criteria
 
     estimate_feature(issue.id, size) if size
-
-    schedule_issue(product_id, issue.id, release) if release
 
     IssueRepository::AR.find_by_id(issue.id)
   end
@@ -39,9 +39,9 @@ module IssueSupport
 
   private
 
-  def perform_plan_issue(product_id, type, desc)
+  def perform_plan_issue(product_id, type, desc, release_number)
     Issue::Description.new(desc)
-      .then { |d| PlanIssueUsecase.perform(product_id, type, d) }
+      .then { |d| PlanIssueUsecase.perform(product_id, type, d, release_number) }
       .then { |id| IssueRepository::AR.find_by_id(id) }
   end
 end

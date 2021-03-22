@@ -22,9 +22,12 @@ module PlanSupport
     end
   end
 
-  def add_release(product_id, name)
-    AppendReleaseUsecase.perform(team_roles(:po), product_id, name)
-    PlanRepository::AR.find_by_product_id(product_id)
+  def append_release(product_id, number = nil)
+    plan = plan_of(product_id)
+    return if number && plan.release_of(number)
+
+    AppendReleaseUsecase.perform(team_roles(:po), product_id)
+      .then { plan_of(product_id).releases.last }
   end
 end
 
