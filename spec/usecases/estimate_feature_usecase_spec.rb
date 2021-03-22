@@ -6,7 +6,7 @@ RSpec.describe EstimateFeatureUsecase do
   let(:roles) { team_roles(:dev) }
 
   it do
-    feature = add_feature(product.id, 'ABC')
+    feature = plan_issue(product.id, 'ABC', type: :feature)
 
     point = Issue::StoryPoint.new(8)
     id = described_class.perform(feature.id, roles, point)

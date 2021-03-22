@@ -3,8 +3,8 @@ require 'rails_helper'
 
 RSpec.describe RemoveReleaseUsecase do
   let(:product) { create_product }
-  let(:issue_a) { add_issue(product.id).id }
-  let(:issue_b) { add_issue(product.id).id }
+  let(:issue_a) { plan_issue(product.id).id }
+  let(:issue_b) { plan_issue(product.id).id }
   let(:roles) { team_roles(:po) }
 
   before do

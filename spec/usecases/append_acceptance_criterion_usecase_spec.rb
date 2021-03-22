@@ -3,7 +3,7 @@ require 'rails_helper'
 
 RSpec.describe AppendAcceptanceCriterionUsecase do
   let!(:product) { create_product }
-  let!(:issue) { add_issue(product.id) }
+  let!(:issue) { plan_issue(product.id) }
 
   it do
     described_class.perform(issue.id, acceptance_criterion('AC1'))
