@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe ChangeReleaseNameUsecase do
+RSpec.xdescribe ChangeReleaseNameUsecase do
   let(:product) { create_product }
   let(:roles) { team_roles(:po) }
 
