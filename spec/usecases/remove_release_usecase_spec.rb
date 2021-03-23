@@ -3,32 +3,26 @@ require 'rails_helper'
 
 RSpec.describe RemoveReleaseUsecase do
   let(:product) { create_product }
-  let(:issue_a) { plan_issue(product.id).id }
-  let(:issue_b) { plan_issue(product.id).id }
   let(:roles) { team_roles(:po) }
 
   before do
-    plan = PlanRepository::AR.find_by_product_id(product.id)
-    plan.update_scheduled(
-      roles,
-      release_list({
-        'R1' => issue_list(issue_a),
-        'R2' => issue_list,
-      })
-    )
-    PlanRepository::AR.store(plan)
+    update_plan(product.id) do |p|
+      p.append_release
+    end
+
+    plan_issue(product.id, release: 1)
   end
 
   it do
-    described_class.perform(product.id, roles, 'R2')
+    described_class.perform(product.id, roles, 2)
 
-    plan = PlanRepository::AR.find_by_product_id(product.id)
+    plan = plan_of(product.id)
 
-    expect(plan.scheduled).to eq release_list({ 'R1' => issue_list(issue_a) })
+    expect(plan.releases.map(&:number)).to match_array [1]
   end
 
   it do
-    expect { described_class.perform(product.id, roles, 'R1') }
+    expect { described_class.perform(product.id, roles, 1) }
       .to raise_error(Plan::ReleaseIsNotEmpty)
   end
 end

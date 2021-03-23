@@ -9,12 +9,11 @@ class RemoveReleaseUsecase < UsecaseBase
     @repository = T.let(PlanRepository::AR, Plan::PlanRepository)
   end
 
-  sig {params(product_id: Product::Id, roles: Team::RoleSet, name: String).void}
-  def perform(product_id, roles, name)
+  sig {params(product_id: Product::Id, roles: Team::RoleSet, release_number: Integer).void}
+  def perform(product_id, roles, release_number)
     plan = @repository.find_by_product_id(product_id)
 
-    new_scheduled = plan.scheduled.remove(name)
-    plan.update_scheduled(roles, new_scheduled)
+    plan.remove_release(release_number)
 
     @repository.store(plan)
   end
