@@ -5,7 +5,7 @@ RSpec.describe IssueStruct do
   let!(:product) { create_product }
 
   it '受け入れ基準がある場合は受け入れ基準を含むこと' do
-    add_issue(product.id, acceptance_criteria: %w(ac1 ac2 ac3))
+    plan_issue(product.id, acceptance_criteria: %w(ac1 ac2 ac3))
 
     s = described_class.new(Dao::Issue.last)
 
@@ -13,7 +13,7 @@ RSpec.describe IssueStruct do
   end
 
   it '操作可否を返すこと' do
-    issue = add_issue(product.id, type: Issue::Types::Task)
+    issue = plan_issue(product.id, type: Issue::Types::Task)
 
     s = described_class.new(Dao::Issue.last)
 
@@ -21,7 +21,7 @@ RSpec.describe IssueStruct do
   end
 
   it '受け入れ基準要否を返すこと' do
-    issue = add_issue(product.id, type: Issue::Types::Task)
+    issue = plan_issue(product.id, type: Issue::Types::Task)
 
     s = described_class.new(Dao::Issue.last)
 
@@ -29,7 +29,7 @@ RSpec.describe IssueStruct do
   end
 
   it 'ステータスを返すこと' do
-    issue = add_issue(product.id)
+    issue = plan_issue(product.id)
 
     s = described_class.new(Dao::Issue.last)
 

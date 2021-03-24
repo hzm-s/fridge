@@ -5,9 +5,9 @@ module ProductBacklogQuery
       issues = fetch_issues(product_id).map { |i| IssueStruct.new(i) }
       plan = fetch_plan(product_id)
 
-      scheduled = plan.scheduled.to_a.map { |r| ReleaseStruct.create(r, issues) }
+      releases = plan.releases.map { |r| ReleaseStruct.create(r, issues) }
 
-      ProductBacklog.new(scheduled: scheduled)
+      ProductBacklog.new(releases: releases)
     end
 
     private
@@ -22,15 +22,15 @@ module ProductBacklogQuery
   end
 
   class ReleaseStruct < T::Struct
-    prop :name, String
+    prop :number, Integer
     prop :issues, T::Array[::IssueStruct]
     prop :can_remove, T::Boolean
 
     class << self
-      def create(release, issues)
+      def create(release, all_issues)
         new(
-          name: release.name,
-          issues: release.issues.to_a.map { |ri| issues.find { |i| i.id == ri.to_s } },
+          number: release.number,
+          issues: release.issues.to_a.map { |ri| all_issues.find { |i| i.id == ri.to_s } },
           can_remove: release.can_remove?,
         )
       end
@@ -42,6 +42,6 @@ module ProductBacklogQuery
   end
 
   class ProductBacklog < T::Struct
-    prop :scheduled, T::Array[ReleaseStruct]
+    prop :releases, T::Array[ReleaseStruct]
   end
 end

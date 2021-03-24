@@ -3,7 +3,7 @@ require 'rails_helper'
 
 RSpec.describe IssueQuery do
   let!(:product) { create_product }
-  let(:issue) { add_issue(product.id, acceptance_criteria: %w(ac1)) }
+  let(:issue) { plan_issue(product.id, acceptance_criteria: %w(ac1)) }
 
   it do
     stored = described_class.call(issue.id.to_s)
