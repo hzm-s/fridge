@@ -14,17 +14,13 @@ class IssuesController < ApplicationController
       product_id = Product::Id.from_string(params[:product_id])
       type = @form.domain_objects[:type]
       description = @form.domain_objects[:description]
-      release = @form.release
+      #release = @form.release
 
-      if release.present?
-        AppendScheduledIssueUsecase.perform(product_id, current_team_member_roles, type, description, release)
-      else
-        AppendIssueUsecase.perform(product_id, type, description)
-      end
+      PlanIssueUsecase.perform(product_id, type, description)
 
       redirect_to product_backlog_path(product_id: params[:product_id]), flash: flash_success('issue.create')
     else
-      @releases = ProductBacklogQuery.call(params[:product_id]).scheduled
+      @releases = ProductBacklogQuery.call(params[:product_id]).releases
       render :new
     end
   end

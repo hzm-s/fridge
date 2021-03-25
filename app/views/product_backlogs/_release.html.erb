@@ -1,10 +1,10 @@
 <div class="pbl-list">
   <div class="pbl-list__header">
     <span class="pbl-list__title">
-      <%= release.name %>
+      <%= release.number %>
     </span>
     <% if can_update_release_plan? %>
-      <div class="pbl-list__actions action-list" data-test-update-release-<%= release.name %>="1">
+      <div class="pbl-list__actions action-list" data-test-update-release-<%= release.number %>="1">
         <%= link_to t('navs.edit'), edit_product_release_path(product_id: current_product_id, id: release_counter), class: 'action-link' %>
         <% if release.can_remove? %>
           <%= link_to t('navs.delete'), product_release_path(product_id: current_product_id, id: release_counter), method: :delete, data: { confirm: t('navs.confirm_delete') }, class: 'action-link silent-danger' %>
@@ -12,7 +12,7 @@
       </div>
     <% end %>
   </div>
-  <%= content_tag :div, data: can_update_release_plan? && sortable_pbl_options(current_product_id, release.name) do %>
+  <%= content_tag :div, data: can_update_release_plan? && sortable_pbl_options(current_product_id, release.number) do %>
     <%= render partial: 'item', collection: release.issues, locals: { can_move: can_update_release_plan?, can_remove: can_update_release_plan? } %>
   <% end %>
 </div>
