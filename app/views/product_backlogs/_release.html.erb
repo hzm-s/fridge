@@ -1,7 +1,7 @@
 <div class="pbl-list">
   <div class="pbl-list__header">
     <span class="pbl-list__title">
-      <%= release.number %>
+      <%= t('.title', number: release.number) %>
     </span>
     <% if can_update_release_plan? %>
       <div class="pbl-list__actions action-list" data-test-update-release-<%= release.number %>="1">
