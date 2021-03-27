@@ -17,6 +17,25 @@ module Plan
           expect(r.issues).to eq issue_list
         end
       end
+
+      it do
+        r = described_class.create(1, 'Description')
+
+        aggregate_failures do
+          expect(r.number).to eq 1
+          expect(r.description).to eq 'Description'
+          expect(r.issues).to eq issue_list
+        end
+      end
+    end
+
+    describe 'Modify description' do
+      it do
+        release = described_class.create(1, 'Initial')
+        expect { release.modify_description('Modified') }
+          .to change(release, :description)
+          .from('Initial').to('Modified')
+      end
     end
 
     let(:release) { described_class.create(1) }

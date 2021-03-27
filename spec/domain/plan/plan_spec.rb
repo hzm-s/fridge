@@ -35,13 +35,16 @@ module Plan
     describe 'Append release' do
       it do
         plan.append_release
-        plan.append_release
+        plan.append_release('R3')
         plan.append_release
         plan.append_release
         plan.remove_release(4)
         plan.append_release
 
-        expect(plan.releases.map(&:number)).to match_array [1, 2, 3, 5, 6]
+        aggregate_failures do
+          expect(plan.releases.map(&:number)).to match_array [1, 2, 3, 5, 6]
+          expect(plan.release_of(3).description).to eq 'R3'
+        end
       end
     end
 
@@ -53,11 +56,13 @@ module Plan
         r.plan_issue(issue_a)
         r.plan_issue(issue_b)
         r.plan_issue(issue_c)
+        r.modify_description('Updated')
 
         plan.update_release(r)
 
         aggregate_failures do
           expect(plan.release_of(1).issues).to eq issue_list(issue_a, issue_b, issue_c)
+          expect(plan.release_of(1).description).to eq 'Updated'
           expect(plan.release_of(2).issues).to eq issue_list
         end
       end

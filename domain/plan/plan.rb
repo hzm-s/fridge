@@ -29,9 +29,9 @@ module Plan
       @releases = releases
     end
 
-    sig {void}
-    def append_release
-      @releases << Release.create(@releases.max.number + 1)
+    sig {params(description: T.nilable(String)).void}
+    def append_release(description = nil)
+      @releases << Release.create(@releases.max.number + 1, description)
     end
 
     sig {params(release: Release).void}
