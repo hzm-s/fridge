@@ -2,7 +2,7 @@ ja:
   domain:
     issue:
       types:
-        feature: フィーチャ
+        feature: フィーチャー
         task: 作業
       statuses:
         draft: 下書き

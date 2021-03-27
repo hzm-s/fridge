@@ -2,13 +2,9 @@
 class ReleaseForm
   include ActiveModel::Model
 
-  attr_accessor :index, :name
+  attr_accessor :description
 
-  validates :name,
+  validates :description,
     presence: true,
-    length: { maximum: 50 }
-
-  def persisted?
-    !!index
-  end
+    length: { maximum: 100 }, allow_blank: true
 end
