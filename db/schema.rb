@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(version: 2020_11_04_091810) do
 
   create_table "dao_releases", force: :cascade do |t|
     t.uuid "dao_product_id"
+    t.string "description"
     t.integer "number", null: false
     t.uuid "issues", array: true
     t.datetime "created_at", precision: 6, null: false

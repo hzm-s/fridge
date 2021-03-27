@@ -10,7 +10,7 @@ module PlanRepository
       sig {override.params(product_id: Product::Id).returns(Plan::Plan)}
       def find_by_product_id(product_id)
         daos = Dao::Release.where(dao_product_id: product_id.to_s)
-        daos.read(daos)
+        Dao::Release.read(daos)
       end
 
       sig {override.params(plan: Plan::Plan).void}

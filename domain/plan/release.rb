@@ -13,9 +13,9 @@ module Plan
         new(number, description, IssueList.new)
       end
 
-      sig {params(number: Integer, issues: IssueList).returns(T.attached_class)}
-      def from_repository(number, issues)
-        new(number, issues)
+      sig {params(number: Integer, description: T.nilable(String), issues: IssueList).returns(T.attached_class)}
+      def from_repository(number, description, issues)
+        new(number, description, issues)
       end
     end
 
