@@ -9,10 +9,10 @@ class AppendReleaseUsecase < UsecaseBase
     @repository = T.let(PlanRepository::AR, Plan::PlanRepository)
   end
 
-  sig {params(roles: Team::RoleSet, product_id: Product::Id).void}
-  def perform(roles, product_id)
+  sig {params(roles: Team::RoleSet, product_id: Product::Id, description: T.nilable(String)).void}
+  def perform(roles, product_id, description)
     plan = @repository.find_by_product_id(product_id)
-    plan.append_release
+    plan.append_release(description)
     @repository.store(plan)
   end
 end
