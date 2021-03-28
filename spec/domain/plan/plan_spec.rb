@@ -87,6 +87,13 @@ module Plan
 
         expect { plan.remove_release(2) }.to raise_error ReleaseIsNotEmpty
       end
+
+      it do
+        plan.remove_release(3)
+        plan.remove_release(2)
+
+        expect { plan.remove_release(1) }.to raise_error NeedAtLeastOneRelease
+      end
     end
 
     describe 'Query release by issue' do
@@ -109,6 +116,18 @@ module Plan
           expect(plan.release_by_issue(issue_b).number).to eq 2
           expect(plan.release_by_issue(issue_c).number).to eq 2
         end
+      end
+    end
+
+    describe 'Query to remove release' do
+      it do
+        plan.append_release
+
+        expect(plan).to be_can_remove_release
+      end
+
+      it do
+        expect(plan).to_not be_can_remove_release
       end
     end
   end

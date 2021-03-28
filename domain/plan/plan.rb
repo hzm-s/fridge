@@ -42,6 +42,8 @@ module Plan
 
     sig {params(release_number: Integer).void}
     def remove_release(release_number)
+      raise NeedAtLeastOneRelease unless can_remove_release?
+
       release = release_of(release_number)
       raise ReleaseIsNotEmpty unless release.can_remove?
 
@@ -61,6 +63,11 @@ module Plan
     sig {returns(Release)}
     def recent_release
       @releases.min
+    end
+
+    sig {returns(T::Boolean)}
+    def can_remove_release?
+      @releases.size > 1
     end
   end
 end
