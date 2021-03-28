@@ -6,7 +6,7 @@ RSpec.describe ModifyReleaseDescriptionUsecase do
   let(:roles) { team_roles(:po) }
 
   it do
-    described_class.perform(roles, product.id, 1, 'R1')
+    described_class.perform(product.id, roles, 1, 'R1')
 
     plan = PlanRepository::AR.find_by_product_id(product.id)
 

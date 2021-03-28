@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   resources :products, only: [:new, :create, :index] do
     resources :issues, only: [:create]
-    resources :releases, only: [:new, :create, :edit, :update, :destroy]
+    resources :releases, param: :number, only: [:new, :create, :edit, :update, :destroy]
     resource :plan, only: [:update]
   end
 

@@ -33,47 +33,40 @@ RSpec.describe 'releases' do
     end
   end
 
-  xdescribe 'edit' do
+  describe 'edit' do
     before do
-      add_release(product.id, 'ファーストリリース')
+      update_release(product.id, 1) { |r| r.modify_description('ファーストリリース') }
     end
 
     it do
-      get edit_product_release_path(product_id: product.id, id: 0)
+      get edit_product_release_path(product_id: product.id, number: 1)
       expect(response.body).to include 'ファーストリリース'
     end
   end
 
-  xdescribe 'update' do
+  describe 'update' do
     before do
-      add_release(product.id, 'MVP')
-      add_release(product.id, 'Extra')
+      update_release(product.id, 1) { |r| r.modify_description('MVP') }
+      append_release(product.id, 2, description: 'Extra')
     end
 
     context 'given valid params' do
       it do
-        patch product_release_path(product_id: product.id, id: 1), params: { form: { name: '2nd Release' } }
+        patch product_release_path(product_id: product.id, number: 2), params: { form: { description: '2nd Release' } }
 
         pbl = ProductBacklogQuery.call(product.id.to_s)
-
         aggregate_failures do
-          expect(pbl.scheduled[0].name).to eq 'MVP'
-          expect(pbl.scheduled[1].name).to eq '2nd Release'
+          expect(pbl.releases[0].description).to eq 'MVP'
+          expect(pbl.releases[1].description).to eq '2nd Release'
         end
       end
     end
 
     context 'given invalid params' do
       it do
-        patch product_release_path(product_id: product.id, id: 0), params: { form: { name: '' } }
+        patch product_release_path(product_id: product.id, number: 1), params: { form: { description: 'a' * 101 } }
 
-        expect(response.body).to include(I18n.t('errors.messages.blank'))
-      end
-
-      it do
-        patch product_release_path(product_id: product.id, id: 0), params: { form: { name: 'MVP' } }
-
-        expect(response.body).to include(I18n.t('domain.errors.plan.duplicated_release_name'))
+        expect(response.body).to include(I18n.t('errors.messages.too_long', count: 100))
       end
     end
   end

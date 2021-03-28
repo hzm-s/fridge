@@ -22,11 +22,11 @@ module PlanSupport
     end
   end
 
-  def append_release(product_id, number = nil)
+  def append_release(product_id, number = nil, description: nil)
     plan = plan_of(product_id)
     return if number && plan.release_of(number)
 
-    AppendReleaseUsecase.perform(team_roles(:po), product_id)
+    AppendReleaseUsecase.perform(team_roles(:po), product_id, description)
       .then { plan_of(product_id).releases.last }
   end
 end

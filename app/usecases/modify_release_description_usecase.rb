@@ -9,8 +9,8 @@ class ModifyReleaseDescriptionUsecase < UsecaseBase
     @repository = T.let(PlanRepository::AR, Plan::PlanRepository)
   end
 
-  sig {params(roles: Team::RoleSet, product_id: Product::Id, release_number: Integer, description: String).void}
-  def perform(roles, product_id, release_number, description)
+  sig {params(product_id: Product::Id, roles: Team::RoleSet, release_number: Integer, description: String).void}
+  def perform(product_id, roles, release_number, description)
     plan = @repository.find_by_product_id(product_id)
     plan.release_of(release_number).tap do |r|
       r.modify_description(description)
