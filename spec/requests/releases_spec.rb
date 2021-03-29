@@ -71,28 +71,15 @@ RSpec.describe 'releases' do
     end
   end
 
-  xdescribe 'destroy' do
-    before do
-      add_release(product.id, 'R1')
-      add_release(product.id, 'R2')
-      add_issue(product.id, release: 'R1')
-    end
-
+  describe 'destroy' do
     it do
-      delete product_release_path(product_id: product.id, id: 1)
+      append_release(product.id)
+
+      delete product_release_path(product_id: product.id, number: 2)
 
       pbl = ProductBacklogQuery.call(product.id.to_s)
 
-      aggregate_failures do
-        expect(pbl.scheduled.size).to eq 1
-        expect(pbl.scheduled[0].name).to eq 'R1'
-      end
-    end
-
-    it do
-      delete product_release_path(product_id: product.id, id: 0)
-      follow_redirect!
-      expect(response.body).to include 'アイテムを含むリリースは削除できません'
+      expect(pbl.releases.map(&:number)).to eq [1]
     end
   end
 end

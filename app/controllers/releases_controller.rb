@@ -46,7 +46,7 @@ class ReleasesController < ApplicationController
     RemoveReleaseUsecase.perform(
       Product::Id.from_string(current_product_id),
       current_team_member_roles,
-      current_release.name
+      current_release.number
     )
   rescue Plan::ReleaseIsNotEmpty
     redirect_to product_backlog_path(product_id: current_product_id), flash: flash_error('release.not_empty')

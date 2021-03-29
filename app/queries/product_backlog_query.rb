@@ -5,7 +5,7 @@ module ProductBacklogQuery
       issues = fetch_issues(product_id).map { |i| IssueStruct.new(i) }
       plan = fetch_plan(product_id)
 
-      releases = plan.releases.map { |r| ReleaseStruct.create(r, issues) }
+      releases = plan.releases.map { |r| ReleaseStruct.create(r, issues, plan) }
 
       ProductBacklog.new(releases: releases)
     end
@@ -28,12 +28,12 @@ module ProductBacklogQuery
     prop :can_remove, T::Boolean
 
     class << self
-      def create(release, all_issues)
+      def create(release, all_issues, plan)
         new(
           number: release.number,
           description: release.description,
           issues: release.issues.to_a.map { |ri| all_issues.find { |i| i.id == ri.to_s } },
-          can_remove: release.can_remove?,
+          can_remove: plan.can_remove_release? && release.can_remove?,
         )
       end
     end
