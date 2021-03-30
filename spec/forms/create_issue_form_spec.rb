@@ -6,7 +6,7 @@ RSpec.describe CreateIssueForm do
     {
       type: 'feature',
       description: 'ABC',
-      release: 'MVP',
+      release_number: 1,
     }
   end
 
@@ -16,8 +16,16 @@ RSpec.describe CreateIssueForm do
   end
 
   it do
-    form = described_class.new(valid.merge(release: ''))
+    form = described_class.new(valid.merge(release_number: ''))
     expect(form).to be_valid
+  end
+
+  it do
+    form = described_class.new(valid.merge(release_number: '1st'))
+    aggregate_failures do
+      expect(form).to_not be_valid
+      expect(form.errors[:release_number]).to include(I18n.t('errors.messages.not_a_number'))
+    end
   end
 
   it do
