@@ -6,7 +6,7 @@ RSpec.describe CreateIssueForm do
     {
       type: 'feature',
       description: 'ABC',
-      release_number: 1,
+      release_number: '1',
     }
   end
 

@@ -14,9 +14,9 @@ class IssuesController < ApplicationController
       product_id = Product::Id.from_string(params[:product_id])
       type = @form.domain_objects[:type]
       description = @form.domain_objects[:description]
-      #release = @form.release
+      release_number = @form.release_number&.to_i
 
-      PlanIssueUsecase.perform(product_id, type, description)
+      PlanIssueUsecase.perform(product_id, type, description, release_number)
 
       redirect_to product_backlog_path(product_id: params[:product_id]), flash: flash_success('issue.create')
     else
@@ -54,7 +54,7 @@ class IssuesController < ApplicationController
   private
 
   def create_params
-    params.require(:form).permit(:type, :description, :release)
+    params.require(:form).permit(:type, :description, :release_number)
   end
 
   def update_params
