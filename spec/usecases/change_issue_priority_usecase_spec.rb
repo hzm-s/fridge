@@ -9,7 +9,7 @@ RSpec.describe ChangeIssuePriorityUsecase do
   let(:roles) { team_roles(:po) }
 
   it do
-    described_class.perform(product.id, roles, 1, issue_a, 2)
+    described_class.perform(product.id, roles, issue_a, 2)
 
     plan = plan_of(product.id)
 
