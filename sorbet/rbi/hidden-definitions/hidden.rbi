@@ -265,6 +265,10 @@ class ActionDispatch::HostAuthorization
   DEFAULT_RESPONSE_APP = ::T.let(nil, ::T.untyped)
 end
 
+module ActionDispatch::Http
+  include ::ActiveSupport::Deprecation::DeprecatedConstantAccessor
+end
+
 module ActionDispatch::Integration
 end
 
@@ -872,6 +876,8 @@ class ActionView::AbstractRenderer::RenderedTemplate
 end
 
 class ActionView::Base
+  include ::ActionView::Context
+  include ::ERB::Util
   include ::ActionCable::Helpers::ActionCableHelper
   include ::Webpacker::Helper
   include ::Sprockets::Rails::Helper
@@ -1797,6 +1803,10 @@ class ActiveRecord::Associations::JoinDependency
   def self.walk_tree(associations, hash); end
 end
 
+class ActiveRecord::Associations::Preloader
+  def preload(records, associations, preload_scope=T.unsafe(nil)); end
+end
+
 class ActiveRecord::Associations::Preloader::AlreadyLoaded
   def initialize(klass, owners, reflection, preload_scope); end
 
@@ -1865,6 +1875,32 @@ end
 
 module ActiveRecord::Callbacks
   CALLBACKS = ::T.let(nil, ::T.untyped)
+end
+
+class ActiveRecord::Coders::JSON
+end
+
+class ActiveRecord::Coders::JSON
+  def self.dump(obj); end
+
+  def self.load(json); end
+end
+
+class ActiveRecord::Coders::YAMLColumn
+  def assert_valid_value(obj, action:); end
+
+  def dump(obj); end
+
+  def initialize(attr_name, object_class=T.unsafe(nil)); end
+
+  def load(yaml); end
+
+  def object_class(); end
+
+  def object_class=(object_class); end
+end
+
+class ActiveRecord::Coders::YAMLColumn
 end
 
 class ActiveRecord::ConcurrentMigrationError
@@ -2115,6 +2151,16 @@ end
 
 module ActiveRecord::LegacyYamlAdapter
   def self.convert(klass, coder); end
+end
+
+class ActiveRecord::LogSubscriber
+  def backtrace_cleaner(); end
+
+  def backtrace_cleaner=(val); end
+
+  def backtrace_cleaner?(); end
+
+  def sql(event); end
 end
 
 class ActiveRecord::Middleware::DatabaseSelector
@@ -2486,6 +2532,42 @@ class ActiveRecord::Relation::WhereClause
   ARRAY_WITH_EMPTY_STRING = ::T.let(nil, ::T.untyped)
 end
 
+class ActiveRecord::Result
+  def [](idx); end
+
+  def cast_values(type_overrides=T.unsafe(nil)); end
+
+  def collect!(); end
+
+  def column_types(); end
+
+  def columns(); end
+
+  def each(&blk); end
+
+  def empty?(); end
+
+  def first(); end
+
+  def includes_column?(name); end
+
+  def initialize(columns, rows, column_types=T.unsafe(nil)); end
+
+  def last(); end
+
+  def length(); end
+
+  def map!(); end
+
+  def rows(); end
+
+  def to_a(); end
+
+  def to_ary(); end
+
+  def to_hash(); end
+end
+
 class ActiveRecord::RuntimeRegistry
   def connection_handler(); end
 
@@ -2648,6 +2730,126 @@ class ActiveRecord::TableMetadata
 end
 
 class ActiveRecord::TableMetadata
+end
+
+module ActiveRecord::Tasks::DatabaseTasks
+  def cache_dump_filename(namespace); end
+
+  def charset(*arguments); end
+
+  def charset_current(environment=T.unsafe(nil), specification_name=T.unsafe(nil)); end
+
+  def check_protected_environments!(); end
+
+  def check_schema_file(filename); end
+
+  def check_target_version(); end
+
+  def collation(*arguments); end
+
+  def collation_current(environment=T.unsafe(nil), specification_name=T.unsafe(nil)); end
+
+  def create(*arguments); end
+
+  def create_all(); end
+
+  def create_current(environment=T.unsafe(nil), spec_name=T.unsafe(nil)); end
+
+  def current_config(options=T.unsafe(nil)); end
+
+  def current_config=(current_config); end
+
+  def database_configuration(); end
+
+  def database_configuration=(database_configuration); end
+
+  def db_dir(); end
+
+  def db_dir=(db_dir); end
+
+  def drop(*arguments); end
+
+  def drop_all(); end
+
+  def drop_current(environment=T.unsafe(nil)); end
+
+  def dump_filename(namespace, format=T.unsafe(nil)); end
+
+  def dump_schema(configuration, format=T.unsafe(nil), spec_name=T.unsafe(nil)); end
+
+  def dump_schema_cache(conn, filename); end
+
+  def env(); end
+
+  def env=(env); end
+
+  def fixtures_path(); end
+
+  def fixtures_path=(fixtures_path); end
+
+  def for_each(databases); end
+
+  def load_schema(configuration, format=T.unsafe(nil), file=T.unsafe(nil), environment=T.unsafe(nil), spec_name=T.unsafe(nil)); end
+
+  def load_schema_current(format=T.unsafe(nil), file=T.unsafe(nil), environment=T.unsafe(nil)); end
+
+  def load_seed(); end
+
+  def migrate(); end
+
+  def migrate_status(); end
+
+  def migrations_paths(); end
+
+  def migrations_paths=(migrations_paths); end
+
+  def purge(configuration); end
+
+  def purge_all(); end
+
+  def purge_current(environment=T.unsafe(nil)); end
+
+  def raise_for_multi_db(environment=T.unsafe(nil), command:); end
+
+  def reconstruct_from_schema(configuration, format=T.unsafe(nil), file=T.unsafe(nil), environment=T.unsafe(nil), spec_name=T.unsafe(nil)); end
+
+  def register_task(pattern, task); end
+
+  def root(); end
+
+  def root=(root); end
+
+  def schema_file(format=T.unsafe(nil)); end
+
+  def schema_file_type(format=T.unsafe(nil)); end
+
+  def schema_up_to_date?(configuration, format=T.unsafe(nil), file=T.unsafe(nil), environment=T.unsafe(nil), spec_name=T.unsafe(nil)); end
+
+  def seed_loader(); end
+
+  def seed_loader=(seed_loader); end
+
+  def setup_initial_database_yaml(); end
+
+  def spec(); end
+
+  def structure_dump(*arguments); end
+
+  def structure_load(*arguments); end
+
+  def target_version(); end
+
+  def truncate_all(environment=T.unsafe(nil)); end
+end
+
+module ActiveRecord::Tasks::DatabaseTasks
+  def self.structure_dump_flags(); end
+
+  def self.structure_dump_flags=(obj); end
+
+  def self.structure_load_flags(); end
+
+  def self.structure_load_flags=(obj); end
 end
 
 class ActiveRecord::Tasks::MySQLDatabaseTasks
@@ -2817,6 +3019,14 @@ class ActiveSupport::Cache::Entry
   DEFAULT_COMPRESS_LIMIT = ::T.let(nil, ::T.untyped)
 end
 
+class ActiveSupport::Cache::FileStore
+  include ::ActiveSupport::Cache::Strategy::LocalCache
+end
+
+class ActiveSupport::Cache::NullStore
+  include ::ActiveSupport::Cache::Strategy::LocalCache
+end
+
 module ActiveSupport::Callbacks
   CALLBACK_FILTER_TYPES = ::T.let(nil, ::T.untyped)
 end
@@ -2828,6 +3038,14 @@ end
 module ActiveSupport::Dependencies
   extend ::Bootsnap::LoadPathCache::CoreExt::ActiveSupport::ClassMethods
   extend ::ActiveSupport::Dependencies::ZeitwerkIntegration::Decorations
+end
+
+class ActiveSupport::Deprecation
+  def deprecation_horizon(); end
+
+  def deprecation_horizon=(deprecation_horizon); end
+
+  def initialize(deprecation_horizon=T.unsafe(nil), gem_name=T.unsafe(nil)); end
 end
 
 class ActiveSupport::Duration
@@ -2864,6 +3082,38 @@ class ActiveSupport::ExecutionWrapper
   Null = ::T.let(nil, ::T.untyped)
 end
 
+class ActiveSupport::LogSubscriber
+  def colorize_logging(); end
+
+  def colorize_logging=(obj); end
+
+  def debug(progname=T.unsafe(nil), &block); end
+
+  def error(progname=T.unsafe(nil), &block); end
+
+  def fatal(progname=T.unsafe(nil), &block); end
+
+  def info(progname=T.unsafe(nil), &block); end
+
+  def logger(); end
+
+  def unknown(progname=T.unsafe(nil), &block); end
+
+  def warn(progname=T.unsafe(nil), &block); end
+end
+
+class ActiveSupport::MessageEncryptor
+  include ::ActiveSupport::Messages::Rotator::Encryptor
+  include ::ActiveSupport::Messages::Rotator
+end
+
+ActiveSupport::MessageEncryptor::OpenSSLCipherError = OpenSSL::Cipher::CipherError
+
+class ActiveSupport::MessageVerifier
+  include ::ActiveSupport::Messages::Rotator::Verifier
+  include ::ActiveSupport::Messages::Rotator
+end
+
 class ActiveSupport::NumberHelper::NumberConverter
   DEFAULTS = ::T.let(nil, ::T.untyped)
 end
@@ -2883,6 +3133,14 @@ end
 
 module ActiveSupport::RangeWithFormat
   RANGE_FORMATS = ::T.let(nil, ::T.untyped)
+end
+
+class ActiveSupport::Subscriber
+  def finish(name, id, payload); end
+
+  def patterns(); end
+
+  def start(name, id, payload); end
 end
 
 class ActiveSupport::TestCase
@@ -3005,17 +3263,7 @@ class AppendAcceptanceCriterionUsecase
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
-class AppendIssueUsecase
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
 class AppendReleaseUsecase
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
-class AppendScheduledIssueUsecase
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
 end
@@ -5581,16 +5829,6 @@ class ChangeIssuePriorityUsecase
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
-class ChangeReleaseNameUsecase
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
-class ChangeReleaseOfIssueUsecase
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
 class Class
   def json_creatable?(); end
 end
@@ -6869,6 +7107,11 @@ end
 
 class DomainObjectArgumentError
   DEFAULT_I18N_SCOPE = ::T.let(nil, ::T.untyped)
+end
+
+class DropIssueUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 class ERB
@@ -8473,10 +8716,6 @@ end
 
 class Hash
   include ::JSON::Ext::Generator::GeneratorMethods::Hash
-end
-
-class Hash
-  def self.from_trusted_xml(xml); end
 end
 
 module Hashie
@@ -10218,6 +10457,11 @@ class Minitest::Unit
 end
 
 class ModifyIssueUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class ModifyReleaseDescriptionUsecase
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
 end
@@ -13150,11 +13394,6 @@ class Pathname
   def make_symlink(_); end
 end
 
-class PendIssueUsecase
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
 class Person::Person
   extend ::T::Private::Methods::SingletonMethodHooks
   extend ::T::Private::Methods::MethodHooks
@@ -13168,6 +13407,16 @@ module Person::PersonRepository
 end
 
 module PersonRepository::AR
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class Plan::AppendIssue
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class Plan::DropIssue
+  extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
@@ -13189,13 +13438,8 @@ module Plan::PlanRepository
 end
 
 class Plan::Release
-  extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
-end
-
-class Plan::ReleaseList
   extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 class PlanIssueUsecase
@@ -13207,14 +13451,9 @@ class PlanRepository::AR
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
-class PlannedIssueResolver
+class PlannedIssueQuery
   extend ::T::Private::Methods::SingletonMethodHooks
   extend ::T::Private::Methods::MethodHooks
-end
-
-class PreparePlanUsecase
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 class Proc
@@ -14878,6 +15117,16 @@ Rack::Utils::KeySpaceConstrainedParams = Rack::QueryParser::Params
 
 Rack::Utils::ParameterTypeError = Rack::QueryParser::ParameterTypeError
 
+class Rails::ApplicationController
+end
+
+class Rails::ApplicationController
+end
+
+module Rails::Autoloaders
+  extend ::Enumerable
+end
+
 class Rails::BacktraceCleaner
   APP_DIRS_PATTERN = ::T.let(nil, ::T.untyped)
   DOT_SLASH = ::T.let(nil, ::T.untyped)
@@ -14895,6 +15144,57 @@ class Rails::Html::Sanitizer
 end
 
 Rails::Html::WhiteListSanitizer = Rails::Html::SafeListSanitizer
+
+module Rails::Info
+  def properties(); end
+
+  def properties=(obj); end
+end
+
+module Rails::Info
+  def self.properties(); end
+
+  def self.properties=(obj); end
+
+  def self.property(name, value=T.unsafe(nil)); end
+
+  def self.to_html(); end
+end
+
+class Rails::InfoController
+  def _layout_from_proc(); end
+
+  def index(); end
+
+  def properties(); end
+
+  def routes(); end
+end
+
+class Rails::InfoController
+end
+
+class Rails::MailersController
+  def index(); end
+
+  def preview(); end
+end
+
+class Rails::MailersController
+end
+
+class Rails::Rack::Logger
+  def call(env); end
+
+  def initialize(app, taggers=T.unsafe(nil)); end
+end
+
+class Rails::WelcomeController
+  def index(); end
+end
+
+class Rails::WelcomeController
+end
 
 module Rake::DSL
   include ::FileUtils::StreamUtils_
@@ -14993,17 +15293,12 @@ class RemoveAcceptanceCriterionUsecase
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
-class RemoveIssueFromPlanUsecase
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
-class RemoveIssueUsecase
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
 class RemoveReleaseUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class RescheduleIssueUsecase
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
 end
@@ -16060,11 +16355,6 @@ end
 
 ScanError = StringScanner::Error
 
-class ScheduleIssueUsecase
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
 module SecureRandom
   BASE36_ALPHABET = ::T.let(nil, ::T.untyped)
   BASE58_ALPHABET = ::T.let(nil, ::T.untyped)
@@ -16307,11 +16597,6 @@ module Socket::Constants
   SO_WANTOOBFLAG = ::T.let(nil, ::T.untyped)
   TCP_NOOPT = ::T.let(nil, ::T.untyped)
   TCP_NOPUSH = ::T.let(nil, ::T.untyped)
-end
-
-class SortIssuesUsecase
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 class SortedSet
