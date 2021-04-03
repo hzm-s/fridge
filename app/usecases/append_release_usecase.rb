@@ -12,7 +12,7 @@ class AppendReleaseUsecase < UsecaseBase
   sig {params(roles: Team::RoleSet, product_id: Product::Id, description: T.nilable(String)).void}
   def perform(roles, product_id, description = nil)
     plan = @repository.find_by_product_id(product_id)
-    plan.append_release(description)
+    plan.append_release(roles, description)
     @repository.store(plan)
   end
 end

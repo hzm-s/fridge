@@ -17,13 +17,13 @@ class RescheduleIssueUsecase < UsecaseBase
     to = plan.release_of(release_number)
 
     from.drop_issue(issue_id)
-    plan.update_release(from)
+    plan.update_release(roles, from)
 
     to.plan_issue(issue_id)
     if opposite = PlannedIssueQuery.call(plan, release_number, to_index)
       to.sort_issue_priority(issue_id, opposite)
     end
-    plan.update_release(to)
+    plan.update_release(roles, to)
 
     @repository.store(plan)
   end

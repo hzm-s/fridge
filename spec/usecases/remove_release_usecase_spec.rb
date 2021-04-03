@@ -6,7 +6,7 @@ RSpec.describe RemoveReleaseUsecase do
   let(:roles) { team_roles(:po) }
 
   before do
-    update_plan(product.id) { |p| p.append_release }
+    append_release(product.id)
     plan_issue(product.id, release: 1)
   end
 

@@ -7,6 +7,7 @@ RSpec.describe PlanRepository::AR do
   let!(:issue_a) { Issue::Id.create }
   let!(:issue_b) { Issue::Id.create }
   let!(:issue_c) { Issue::Id.create }
+  let!(:po_role) { team_roles(:po) }
 
   before do
     Dao::Product.create!(id: product_id.to_s, name: 'p')
@@ -30,7 +31,7 @@ RSpec.describe PlanRepository::AR do
         r.plan_issue(issue_b)
         r.plan_issue(issue_c)
         r.modify_description('R1')
-        plan.update_release(r)
+        plan.update_release(po_role, r)
       end
 
       expect { described_class.store(plan) }
@@ -51,20 +52,20 @@ RSpec.describe PlanRepository::AR do
       plan.release_of(1).tap do |r|
         r.plan_issue(issue_b)
         r.modify_description('R1')
-        plan.update_release(r)
+        plan.update_release(po_role, r)
       end
       described_class.store(plan)
 
       plan.release_of(1).tap do |r|
         r.modify_description('MVP')
-        plan.update_release(r)
+        plan.update_release(po_role, r)
       end
 
-      plan.append_release
+      plan.append_release(po_role)
       plan.release_of(2).tap do |r|
         r.plan_issue(issue_c)
         r.plan_issue(issue_a)
-        plan.update_release(r)
+        plan.update_release(po_role, r)
       end
 
       expect { described_class.store(plan) }
@@ -86,21 +87,21 @@ RSpec.describe PlanRepository::AR do
     it do
       plan.release_of(1).tap do |r|
         r.plan_issue(issue_a)
-        plan.update_release(r)
+        plan.update_release(po_role, r)
       end
 
-      plan.append_release
+      plan.append_release(po_role)
 
-      plan.append_release
+      plan.append_release(po_role)
       plan.release_of(3).tap do |r|
         r.plan_issue(issue_b)
         r.plan_issue(issue_c)
-        plan.update_release(r)
+        plan.update_release(po_role, r)
       end
 
       described_class.store(plan)
 
-      plan.remove_release(2)
+      plan.remove_release(po_role, 2)
 
       expect { described_class.store(plan) }
         .to change { Dao::Release.count }.from(4).to(3)

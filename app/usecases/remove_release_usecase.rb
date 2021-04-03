@@ -13,7 +13,7 @@ class RemoveReleaseUsecase < UsecaseBase
   def perform(product_id, roles, release_number)
     plan = @repository.find_by_product_id(product_id)
 
-    plan.remove_release(release_number)
+    plan.remove_release(roles, release_number)
 
     @repository.store(plan)
   end

@@ -13,7 +13,7 @@ describe ProductBacklogQuery do
     let!(:issue_e) { plan_issue(product.id, release: 2).id }
 
     before do
-      update_plan(product.id) { |p| p.append_release }
+      append_release(product.id)
       update_release(product.id, 2) do |r|
         r.modify_description('2nd')
       end

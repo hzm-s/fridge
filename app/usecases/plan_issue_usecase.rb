@@ -17,9 +17,11 @@ class PlanIssueUsecase < UsecaseBase
     plan = @plan_repository.find_by_product_id(product_id)
     release = detect_release(plan, release_number)
 
+    roles = Team::RoleSet.new([Team::Role::ProductOwner])
+
     transaction do
       Plan::AppendIssue.new(@issue_repository, @plan_repository)
-        .append(plan, release, issue)
+        .append(roles, plan, release, issue)
     end
 
     issue.id

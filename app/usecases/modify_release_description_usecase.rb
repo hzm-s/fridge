@@ -14,7 +14,7 @@ class ModifyReleaseDescriptionUsecase < UsecaseBase
     plan = @repository.find_by_product_id(product_id)
     plan.release_of(release_number).tap do |r|
       r.modify_description(description)
-      plan.update_release(r)
+      plan.update_release(roles, r)
     end
     @repository.store(plan)
   end

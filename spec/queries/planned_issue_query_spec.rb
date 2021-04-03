@@ -3,39 +3,16 @@ require 'rails_helper'
 
 RSpec.describe PlannedIssueQuery do
   let(:product) { create_product }
-  let!(:issue_a) { Issue::Id.create }
-  let!(:issue_b) { Issue::Id.create }
-  let!(:issue_c) { Issue::Id.create }
-  let!(:issue_d) { Issue::Id.create }
-  let!(:issue_e) { Issue::Id.create }
-  let!(:issue_z) { Issue::Id.create }
-  let(:roles) { team_roles(:po) }
-
-  before do
-    @plan = plan_of(product.id)
-    @plan.append_release
-    @plan.append_release
-
-    @plan.release_of(1).tap do |r|
-      r.plan_issue(issue_a)
-      r.plan_issue(issue_b)
-      @plan.update_release(r)
-    end
-
-    @plan.release_of(2).tap do |r|
-      r.plan_issue(issue_c)
-      @plan.update_release(r)
-    end
-
-    @plan.release_of(3).tap do |r|
-      r.plan_issue(issue_d)
-      r.plan_issue(issue_e)
-      @plan.update_release(r)
-    end
-  end
+  let!(:issue_a) { plan_issue(product.id, release: 1).id }
+  let!(:issue_b) { plan_issue(product.id, release: 1).id }
+  let!(:issue_c) { plan_issue(product.id, release: 2).id }
+  let!(:issue_d) { plan_issue(product.id, release: 3).id }
+  let!(:issue_e) { plan_issue(product.id, release: 3).id }
 
   it do
-    query = described_class.new(@plan)
+    plan = plan_of(product.id)
+
+    query = described_class.new(plan)
 
     aggregate_failures do
       expect(query.call(1, 0)).to eq issue_a

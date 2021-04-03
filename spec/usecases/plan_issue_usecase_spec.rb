@@ -5,7 +5,7 @@ RSpec.describe PlanIssueUsecase do
   let!(:product) { create_product }
 
   before do
-    update_plan(product.id) { |p| p.append_release }
+    append_release(product.id)
   end
 
   let(:description) { issue_description('ABC') }
