@@ -4,6 +4,7 @@ module Plan
   class NeedAtLeastOneRelease < StandardError; end
   class DuplicatedIssue < StandardError; end
   class PermissionDenied < StandardError; end
+  class ReleaseNotFound < StandardError; end
 
   autoload :Plan, 'plan/plan'
   autoload :Release, 'plan/release'

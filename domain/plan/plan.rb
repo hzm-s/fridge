@@ -33,7 +33,7 @@ module Plan
     def append_release(roles, description = nil)
       raise PermissionDenied unless roles.can_update_release_plan?
 
-      @releases << Release.create(@releases.max.number + 1, description)
+      @releases << Release.create(next_release_number, description)
     end
 
     sig {params(roles: Team::RoleSet, release: Release).void}
@@ -55,24 +55,37 @@ module Plan
       @releases.delete_if { |r| r.number == release.number }
     end
 
-    sig {params(release_number: Integer).returns(T.nilable(Release))}
+    sig {params(release_number: Integer).returns(Release)}
     def release_of(release_number)
-      @releases.find { |r| r.number == release_number }.dup
+      release = @releases.find { |r| r.number == release_number }
+      raise ReleaseNotFound unless release
+
+      release.dup
     end
 
-    sig {params(issue: Issue::Id).returns(T.nilable(Release))}
+    sig {params(issue: Issue::Id).returns(Release)}
     def release_by_issue(issue)
-      @releases.find { |r| r.planned?(issue) }.dup
+      release = @releases.find { |r| r.planned?(issue) }
+      raise ReleaseNotFound unless release
+
+      release.dup
     end
 
     sig {returns(Release)}
     def recent_release
-      @releases.min
+      T.must(@releases.min)
     end
 
     sig {returns(T::Boolean)}
     def can_remove_release?
       @releases.size > 1
+    end
+
+    private
+
+    sig {returns(Integer)}
+    def next_release_number
+      T.must(@releases.max).number + 1
     end
   end
 end

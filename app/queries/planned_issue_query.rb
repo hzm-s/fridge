@@ -20,9 +20,18 @@ class PlannedIssueQuery
 
   sig {params(release_number: Integer, index: Integer).returns(T.nilable(Issue::Id))}
   def call(release_number, index)
-    release = @plan.release_of(release_number)
+    release = find_release(release_number)
     return nil unless release
 
     release.issues.to_a[index]
+  end
+
+  private
+
+  sig {params(number: Integer).returns(T.nilable(Plan::Release))}
+  def find_release(number)
+    @plan.release_of(number)
+  rescue Plan::ReleaseNotFound
+    nil
   end
 end
