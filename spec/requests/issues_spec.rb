@@ -13,16 +13,11 @@ RSpec.describe 'issues' do
     context 'given valid params' do
       let(:params) { { form: { type: 'feature', description: 'ABC' } } }
 
-      xit do
+      it do
         post product_issues_path(product_id: product.id.to_s, format: :js), params: params
         get product_backlog_path(product_id: product.id.to_s)
 
         expect(response.body).to include 'ABC'
-      end
-
-      it do
-        expect(AppendIssueUsecase).to receive(:perform)
-        post product_issues_path(product_id: product.id.to_s, format: :js), params: params
       end
     end
 
@@ -36,31 +31,25 @@ RSpec.describe 'issues' do
 
     context 'given release' do
       before do
-        plan = PlanRepository::AR.find_by_product_id(product.id)
-        plan.update_scheduled(team_roles(:po), release_list({ 'MVP' => issue_list }))
-        PlanRepository::AR.store(plan)
+        append_release(product.id)
       end
 
       it do
-        expect(AppendScheduledIssueUsecase)
-          .to receive(:perform)
-          .with(
-            product.id,
-            team_roles(:po),
-            Issue::Types.from_string('feature'),
-            Issue::Description.new('ABC'),
-            'MVP'
-        )
+        post product_issues_path(product_id: product.id.to_s, format: :js), params: { form: { type: 'feature', description: 'ABC', release_number: 2 } }
 
-        params = { form: { type: 'feature', description: 'ABC', release: 'MVP' } }
-        post product_issues_path(product_id: product.id.to_s, format: :js), params: params
+        pbl = ProductBacklogQuery.call(product.id.to_s)
+
+        aggregate_failures do
+          expect(pbl.releases[0].issues).to be_empty
+          expect(pbl.releases[1].issues.map(&:description)).to eq ['ABC']
+        end
       end
     end
   end
 
   describe 'edit' do
     it do
-      issue = add_issue(product.id, 'XYZ')
+      issue = plan_issue(product.id, 'XYZ')
       append_acceptance_criteria(issue, %w(AC_123))
 
       get edit_issue_path(issue.id.to_s)
@@ -73,7 +62,7 @@ RSpec.describe 'issues' do
   end
 
   describe 'update' do
-    let!(:issue) { add_issue(product.id, 'ABC') }
+    let!(:issue) { plan_issue(product.id, 'ABC') }
 
     context '入力内容が正しい場合' do
       it do
@@ -94,7 +83,7 @@ RSpec.describe 'issues' do
 
   describe 'destroy' do
     it do
-      issue = add_issue(product.id, 'YOHKYU')
+      issue = plan_issue(product.id, 'YOHKYU')
 
       delete issue_path(issue.id)
       follow_redirect!

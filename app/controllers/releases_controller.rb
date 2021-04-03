@@ -12,43 +12,31 @@ class ReleasesController < ApplicationController
   def create
     @form = ReleaseForm.new(permitted_params)
     if @form.valid?
-      begin
         AppendReleaseUsecase.perform(
           current_team_member_roles,
           Product::Id.from_string(current_product_id),
-          @form.name
+          @form.description
         )
-      rescue Plan::DuplicatedReleaseName => e
-        @form.errors.add(:name, t_domain_error(e.class))
-        render :edit
-      else
         redirect_to product_backlog_path(product_id: current_product_id), flash: flash_success('release.create')
-      end
     else
       render :new
     end
   end
 
   def edit
-    @form = ReleaseForm.new(name: current_release.name, index: release_index)
+    @form = ReleaseForm.new(description: current_release.description)
   end
 
   def update
-    @form = ReleaseForm.new(name: params[:form][:name], index: release_index)
+    @form = ReleaseForm.new(description: params[:form][:description])
     if @form.valid?
-      begin
-        ChangeReleaseNameUsecase.perform(
-          Product::Id.from_string(current_product_id),
-          current_team_member_roles,
-          @form.name,
-          current_release.name
-        )
-      rescue Plan::DuplicatedReleaseName => e
-        @form.errors.add(:name, t_domain_error(e.class))
-        render :edit
-      else
-        redirect_to product_backlog_path(product_id: current_product_id), flash: flash_success('release.update')
-      end
+      ModifyReleaseDescriptionUsecase.perform(
+        Product::Id.from_string(current_product_id),
+        current_team_member_roles,
+        release_number,
+        @form.description
+      )
+      redirect_to product_backlog_path(product_id: current_product_id), flash: flash_success('release.update')
     else
       render :edit
     end
@@ -58,7 +46,7 @@ class ReleasesController < ApplicationController
     RemoveReleaseUsecase.perform(
       Product::Id.from_string(current_product_id),
       current_team_member_roles,
-      current_release.name
+      current_release.number
     )
   rescue Plan::ReleaseIsNotEmpty
     redirect_to product_backlog_path(product_id: current_product_id), flash: flash_error('release.not_empty')
@@ -75,14 +63,15 @@ class ReleasesController < ApplicationController
   private
 
   def current_release
-    ProductBacklogQuery.call(current_product_id).scheduled[release_index]
+    ProductBacklogQuery.call(current_product_id).releases
+      .then { |rs| rs.find { |r| r.number == release_number } }
   end
 
-  def release_index
-    params[:id].to_i
+  def release_number
+    params[:number].to_i
   end
 
   def permitted_params
-    params.require(:form).permit(:name)
+    params.require(:form).permit(:description)
   end
 end

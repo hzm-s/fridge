@@ -3,7 +3,7 @@ require 'rails_helper'
 
 RSpec.describe RemoveAcceptanceCriterionUsecase do
   let!(:product) { create_product }
-  let!(:issue) { add_issue(product.id, acceptance_criteria: %w(AC1 AC2 AC3)) }
+  let!(:issue) { plan_issue(product.id, acceptance_criteria: %w(AC1 AC2 AC3)) }
   let(:repository) { IssueRepository::AR }
 
   it do

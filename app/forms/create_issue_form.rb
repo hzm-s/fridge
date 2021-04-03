@@ -3,7 +3,7 @@ class CreateIssueForm
   include ActiveModel::Model
   extend I18nHelper
 
-  attr_accessor :type, :description, :release
+  attr_accessor :type, :description, :release_number
   attr_accessor :domain_objects
 
   validates :type,
@@ -13,4 +13,7 @@ class CreateIssueForm
   validates :description,
     presence: true,
     domain_object: { object_class: Issue::Description, message: t_domain_error(Issue::InvalidDescription), allow_blank: true }
+
+  validates :release_number,
+    numericality: { only_integer: true }, allow_blank: true
 end

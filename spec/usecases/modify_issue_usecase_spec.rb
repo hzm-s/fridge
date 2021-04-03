@@ -5,7 +5,7 @@ RSpec.describe ModifyIssueUsecase do
   let!(:product) { create_product }
 
   it do
-    issue = add_issue(product.id, 'ORIGINAL_DESCRIPTION')
+    issue = plan_issue(product.id, 'ORIGINAL_DESCRIPTION')
 
     described_class.perform(issue.id, issue_description('NEW_DESCRIPTION'))
 

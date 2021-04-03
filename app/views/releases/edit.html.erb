@@ -7,7 +7,7 @@
       </h1>
     </div>
     <div>
-      <%= render partial: 'form', locals: { form: @form } %>
+      <%= render partial: 'form', locals: { form: @form, url: product_release_path(product_id: current_product_id, number: params[:number]), method: :patch, submit: t('navs.save') } %>
     </div>
   </div>
 </div>

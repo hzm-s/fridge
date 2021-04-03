@@ -4,18 +4,17 @@ require_relative '../domain_support/issue_domain_support'
 module IssueSupport
   include IssueDomainSupport
 
-  def add_issue(product_id, description = 'DESC', type: :feature, acceptance_criteria: [], size: nil, release: nil)
-    issue = perform_add_issue(product_id, Issue::Types.from_string(type.to_s), description)
+  def plan_issue(product_id, description = 'DESC', type: :feature, acceptance_criteria: [], size: nil, release: nil)
+    append_release(product_id, release) if release
+
+    issue = perform_plan_issue(product_id, Issue::Types.from_string(type.to_s), description, release)
 
     append_acceptance_criteria(issue, acceptance_criteria) if acceptance_criteria
 
     estimate_feature(issue.id, size) if size
 
-    schedule_issue(product_id, issue.id, release) if release
-
     IssueRepository::AR.find_by_id(issue.id)
   end
-  alias_method :add_feature, :add_issue
 
   def append_acceptance_criteria(issue, contents_or_criteria)
     criteria = contents_or_criteria.map do |cc|
@@ -40,10 +39,10 @@ module IssueSupport
 
   private
 
-  def perform_add_issue(product_id, type, desc)
+  def perform_plan_issue(product_id, type, desc, release_number)
     Issue::Description.new(desc)
-      .yield_self { |d| AppendIssueUsecase.perform(product_id, type, d) }
-      .yield_self { |id| IssueRepository::AR.find_by_id(id) }
+      .then { |d| PlanIssueUsecase.perform(product_id, type, d, release_number) }
+      .then { |id| IssueRepository::AR.find_by_id(id) }
   end
 end
 

@@ -1,6 +1,4 @@
 # typed: strict
-require 'sorbet-runtime'
-
 module Plan
   class Plan
     extend T::Sig
@@ -13,9 +11,9 @@ module Plan
         new(product_id, [Release.create(1)])
       end
 
-      sig {params(product_id: Product::Id, scheduled: ReleaseList).returns(T.attached_class)}
-      def from_repository(product_id, scheduled)
-        new(product_id, scheduled)
+      sig {params(product_id: Product::Id, releases: T::Array[Release]).returns(T.attached_class)}
+      def from_repository(product_id, releases)
+        new(product_id, releases)
       end
     end
 
@@ -31,29 +29,63 @@ module Plan
       @releases = releases
     end
 
-    sig {void}
-    def append_release
-      next_release_number = @releases.max.number + 1
-      @releases << Release.create(next_release_number)
+    sig {params(roles: Team::RoleSet, description: T.nilable(String)).void}
+    def append_release(roles, description = nil)
+      raise PermissionDenied unless roles.can_update_release_plan?
+
+      @releases << Release.create(next_release_number, description)
     end
 
-    sig {params(release: Release).void}
-    def update_release(release)
-      index = @releases.find_index { |r| r.number == release.number }
+    sig {params(roles: Team::RoleSet, release: Release).void}
+    def update_release(roles, release)
+      raise PermissionDenied unless roles.can_update_release_plan?
+
+      index = T.must(@releases.find_index { |r| r.number == release.number })
       @releases[index] = release
     end
 
-    sig {params(release_number: Integer).void}
-    def remove_release(release_number)
-      raise ReleaseIsNotEmpty unless release(release_number).can_remove?
-      raise NeedAtLeastOneRelease if @releases.size == 1
+    sig {params(roles: Team::RoleSet, release_number: Integer).void}
+    def remove_release(roles, release_number)
+      raise PermissionDenied unless roles.can_update_release_plan?
+      raise NeedAtLeastOneRelease unless can_remove_release?
 
-      @releases.delete_if { |r| r.number == release_number }
+      release = release_of(release_number)
+      raise ReleaseIsNotEmpty unless release.can_remove?
+
+      @releases.delete_if { |r| r.number == release.number }
     end
 
     sig {params(release_number: Integer).returns(Release)}
-    def release(release_number)
-      @releases.find { |r| r.number == release_number }.dup
+    def release_of(release_number)
+      release = @releases.find { |r| r.number == release_number }
+      raise ReleaseNotFound unless release
+
+      release.dup
+    end
+
+    sig {params(issue: Issue::Id).returns(Release)}
+    def release_by_issue(issue)
+      release = @releases.find { |r| r.planned?(issue) }
+      raise ReleaseNotFound unless release
+
+      release.dup
+    end
+
+    sig {returns(Release)}
+    def recent_release
+      T.must(@releases.min)
+    end
+
+    sig {returns(T::Boolean)}
+    def can_remove_release?
+      @releases.size > 1
+    end
+
+    private
+
+    sig {returns(Integer)}
+    def next_release_number
+      T.must(@releases.max).number + 1
     end
   end
 end

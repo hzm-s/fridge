@@ -14,17 +14,13 @@ class IssuesController < ApplicationController
       product_id = Product::Id.from_string(params[:product_id])
       type = @form.domain_objects[:type]
       description = @form.domain_objects[:description]
-      release = @form.release
+      release_number = @form.release_number&.to_i
 
-      if release.present?
-        AppendScheduledIssueUsecase.perform(product_id, current_team_member_roles, type, description, release)
-      else
-        AppendIssueUsecase.perform(product_id, type, description)
-      end
+      PlanIssueUsecase.perform(product_id, type, description, release_number)
 
       redirect_to product_backlog_path(product_id: params[:product_id]), flash: flash_success('issue.create')
     else
-      @releases = ProductBacklogQuery.call(params[:product_id]).scheduled
+      @releases = ProductBacklogQuery.call(params[:product_id]).releases
       render :new
     end
   end
@@ -51,14 +47,14 @@ class IssuesController < ApplicationController
 
   def destroy
     issue = IssueRepository::AR.find_by_id(Issue::Id.from_string(params[:id]))
-    RemoveIssueUsecase.perform(current_team_member_roles, issue.id)
+    DropIssueUsecase.perform(issue.product_id, current_team_member_roles, issue.id)
     redirect_to product_backlog_path(product_id: issue.product_id), flash: flash_success('issue.destroy')
   end
 
   private
 
   def create_params
-    params.require(:form).permit(:type, :description, :release)
+    params.require(:form).permit(:type, :description, :release_number)
   end
 
   def update_params

@@ -4,15 +4,8 @@ require 'rails_helper'
 RSpec.describe ReleaseForm do
   let(:valid) do
     {
-      name: 'MVP'
+      description: 'MVP'
     }
-  end
-
-  it do
-    aggregate_failures do
-      expect(described_class.new).to_not be_persisted
-      expect(described_class.new(index: 0)).to be_persisted
-    end
   end
 
   it do
@@ -21,18 +14,10 @@ RSpec.describe ReleaseForm do
   end
 
   it do
-    form = described_class.new(valid.merge(name: ''))
+    form = described_class.new(valid.merge(description: 'a' * 101))
     aggregate_failures do
       expect(form).to_not be_valid
-      expect(form.errors[:name]).to include(I18n.t('errors.messages.blank'))
-    end
-  end
-
-  it do
-    form = described_class.new(valid.merge(name: 'a' * 51))
-    aggregate_failures do
-      expect(form).to_not be_valid
-      expect(form.errors[:name]).to include(I18n.t('errors.messages.too_long', count: 50))
+      expect(form.errors[:description]).to include(I18n.t('errors.messages.too_long', count: 100))
     end
   end
 end

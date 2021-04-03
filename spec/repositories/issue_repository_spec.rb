@@ -29,7 +29,7 @@ RSpec.describe IssueRepository::AR do
 
   describe 'Update' do
     it do
-      issue = add_issue(product.id)
+      issue = plan_issue(product.id)
       issue.update_acceptance_criteria(acceptance_criteria(%w(AC1 AC2)))
 
       expect { described_class.store(issue) }
@@ -41,7 +41,7 @@ RSpec.describe IssueRepository::AR do
     end
 
     it do
-      issue = add_issue(product.id, acceptance_criteria: %w(AC1 AC2 AC3 AC4))
+      issue = plan_issue(product.id, acceptance_criteria: %w(AC1 AC2 AC3 AC4))
       issue.update_acceptance_criteria(acceptance_criteria(%w(AC1 AC2 AC3)))
 
       expect { described_class.store(issue) }
@@ -53,7 +53,7 @@ RSpec.describe IssueRepository::AR do
     end
 
     it do
-      issue = add_issue(product.id, acceptance_criteria: %w(ac1))
+      issue = plan_issue(product.id, acceptance_criteria: %w(ac1))
       issue.estimate(dev_role, Issue::StoryPoint.new(5))
 
       described_class.store(issue)
@@ -65,7 +65,7 @@ RSpec.describe IssueRepository::AR do
 
   describe 'Remove' do
     it do
-      issue = add_issue(product.id, acceptance_criteria: %w(ac1 ac2 ac3))
+      issue = plan_issue(product.id, acceptance_criteria: %w(ac1 ac2 ac3))
 
       expect { described_class.remove(issue.id) }
         .to change { Dao::Issue.count }.by(-1)

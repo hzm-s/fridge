@@ -8,20 +8,13 @@ class PlansController < ApplicationController
     roles = current_team_member_roles
     issue_id = Issue::Id.from_string(params[:issue_id])
     to_index = params[:to_index].to_i
-    to = params[:to]
-    from = params[:from]
+    to = params[:to].to_i
+    from = params[:from].to_i
 
-    case [from, to].map(&:present?)
-    when [false, true]
-      ScheduleIssueUsecase.perform(product_id, roles, issue_id, to, to_index)
-    when [true, true]
-      if from == to
-        ChangeIssuePriorityUsecase.perform(product_id, roles, from, issue_id, to_index)
-      else
-        ChangeReleaseOfIssueUsecase.perform(product_id, roles, issue_id, from ,to, to_index)
-      end
+    if from == to
+      ChangeIssuePriorityUsecase.perform(product_id, roles, issue_id, to_index)
     else
-      raise 'Unknown issue moving'
+      RescheduleIssueUsecase.perform(product_id, roles, issue_id, to, to_index)
     end
   end
 
