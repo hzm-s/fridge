@@ -4,7 +4,7 @@ require 'rails_helper'
 RSpec.describe 'feature_estimation' do
   let!(:user_account) { sign_up }
   let!(:product) { create_product(person: user_account.person_id, roles: team_roles(:dev)) }
-  let!(:feature) { add_feature(product.id) }
+  let!(:feature) { plan_issue(product.id, type: :feature) }
 
   before do
     sign_in(user_account)

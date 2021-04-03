@@ -12,22 +12,11 @@ RSpec.describe 'product_backlogs' do
     )
   end
 
-  let!(:issue_a) { add_issue(product.id) }
-  let!(:issue_b) { add_issue(product.id) }
-  let!(:issue_c) { add_issue(product.id) }
+  let!(:issue_a) { plan_issue(product.id, release: 1) }
+  let!(:issue_b) { plan_issue(product.id, release: 2) }
+  let!(:issue_c) { plan_issue(product.id, release: 2) }
 
-  before do
-    plan = PlanRepository::AR.find_by_product_id(product.id)
-    plan.update_scheduled(
-      team_roles(:po),
-      release_list({
-        'MVP' => issue_list(issue_b.id, issue_c.id),
-      })
-    )
-    PlanRepository::AR.store(plan)
-  end
-
-  context 'when PO' do
+  xcontext 'when PO' do
     before { sign_in(user_account_a) }
 
     it do
@@ -43,7 +32,7 @@ RSpec.describe 'product_backlogs' do
     end
   end
 
-  context 'when Dev' do
+  xcontext 'when Dev' do
     before { sign_in(user_account_b) }
 
     it do
