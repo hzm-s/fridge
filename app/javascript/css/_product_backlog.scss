@@ -13,7 +13,7 @@
   }
 }
 
-.pbl-list {
+.pbl-release {
   background-color: #fff;
 
   &:first-child {
@@ -21,7 +21,7 @@
   }
 }
 
-.pbl-list__header {
+.pbl-release__header {
   @include nf;
 
   display: flex;
@@ -29,22 +29,25 @@
   height: 2rem;
   padding: .25rem 1rem;
   border-bottom: 1px solid $gray-300;
-
-  &:hover {
-    .pbl-list__actions {
-      display: inline-block;
-    }
-  }
 }
 
-.pbl-list__title {
+.pbl-release__title {
   font-size: .875rem;
   font-weight: bold;
 }
 
-.pbl-list__actions {
+.pbl-release__actions {
+  margin-left: auto;
+}
+
+.pbl-release__menu {
   margin-left: 1rem;
-  display: none;
+  color: $body-color;
+
+  &:hover {
+    color: $body-color;
+    text-decoration: none;
+  }
 }
 
 .pbl__form {

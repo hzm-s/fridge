@@ -1,16 +1,13 @@
-<div class="pbl-list">
-  <div class="pbl-list__header">
-    <span class="pbl-list__title">
+<div class="pbl-release">
+  <div class="pbl-release__header">
+    <span class="pbl-release__title">
       <%= t('.title', number: release.number) %>
     </span>
-    <% if can_update_release_plan? %>
-      <div class="pbl-list__actions action-list" data-test-update-release-<%= release.number %>="1">
-        <%= link_to t('navs.edit'), edit_product_release_path(product_id: current_product_id, number: release.number), class: 'action-link' %>
-        <% if release.can_remove? %>
-          <%= link_to t('navs.delete'), product_release_path(product_id: current_product_id, number: release.number), method: :delete, data: { confirm: t('navs.confirm_delete') }, class: 'action-link silent-danger' %>
-        <% end %>
-      </div>
-    <% end %>
+    <div class="pbl-release__actions">
+      <% if can_update_release_plan? %>
+        <%= render partial: 'release_menu', locals: { release: release } %>
+      <% end %>
+    </div>
   </div>
   <%= content_tag :div, data: can_update_release_plan? && sortable_pbl_options(current_product_id, release.number) do %>
     <%= render partial: 'item', collection: release.issues, locals: { can_move: can_update_release_plan?, can_remove: can_update_release_plan? } %>

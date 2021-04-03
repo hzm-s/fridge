@@ -1,0 +1,17 @@
+<div class="dropdown" data-test-update-release-<%= release.number %>="1">
+  <%= link_to '#', dd_trigger_options(id: "dd-release-#{release.number}", class: 'pbl-release__menu') do %>
+    <i class="fas fa-ellipsis-h"></i>
+  <% end -%>
+  <div class="dropdown-menu dropdown-menu-right">
+    <%= link_to edit_product_release_path(product_id: current_product_id, number: release.number), class: 'dropdown-item' do %>
+      <i class="fas fa-edit"></i>
+      <%=t 'navs.edit' %>
+    <% end %>
+    <% if release.can_remove? %>
+      <%= link_to product_release_path(product_id: current_product_id, number: release.number), method: :delete, class: 'dropdown-item text-danger', data: { confirm: t('navs.confirm_delete') } do %>
+        <i class="fas fa-trash-alt"></i>
+        <%=t 'navs.delete' %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
