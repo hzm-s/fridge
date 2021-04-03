@@ -9,7 +9,7 @@ class FeatureEstimationsController < ApplicationController
     EstimateFeatureUsecase.perform(issue_id, current_team_member_roles, point)
 
     @issue = IssueQuery.call(issue_id)
-    @can_update_plan = pending_issue?(@issue) || can_update_release_plan?
+    @can_update_plan = can_update_release_plan?
   end
 
   private
@@ -21,11 +21,5 @@ class FeatureEstimationsController < ApplicationController
 
   def current_product_id
     IssueQuery.call(params[:id]).product_id
-  end
-
-  def pending_issue?(issue)
-    Dao::Plan.find_by(dao_product_id: issue.product_id.to_s)
-      &.pending_issues
-      &.include?(issue.id.to_s)
   end
 end
