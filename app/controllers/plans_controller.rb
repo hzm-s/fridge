@@ -14,7 +14,7 @@ class PlansController < ApplicationController
     if from == to
       ChangeIssuePriorityUsecase.perform(product_id, roles, issue_id, to_index)
     else
-      #ChangeReleaseOfIssueUsecase.perform(product_id, roles, issue_id, from ,to, to_index)
+      RescheduleIssueUsecase.perform(product_id, roles, issue_id, to, to_index)
     end
   end
 
