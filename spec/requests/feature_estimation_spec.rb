@@ -25,9 +25,9 @@ RSpec.describe 'feature_estimation' do
       expect(stored.size.to_i).to eq nil 
     end
 
-    xit do
+    it do
       put feature_estimation_path(feature.id, format: :js), params: { form: { point: '2' } }
-      expect(response.body).to include 'test-item-movable'
+      expect(response.body).to_not include 'test-item-movable'
     end
   end
 end

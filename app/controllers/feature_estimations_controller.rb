@@ -9,7 +9,6 @@ class FeatureEstimationsController < ApplicationController
     EstimateFeatureUsecase.perform(issue_id, current_team_member_roles, point)
 
     @issue = IssueQuery.call(issue_id)
-    @can_update_plan = can_update_release_plan?
   end
 
   private
