@@ -29,19 +29,24 @@ module Plan
       @releases = releases
     end
 
-    sig {params(description: T.nilable(String)).void}
-    def append_release(description = nil)
+    sig {params(roles: Team::RoleSet, description: T.nilable(String)).void}
+    def append_release(roles, description = nil)
+      raise PermissionDenied unless roles.can_update_release_plan?
+
       @releases << Release.create(@releases.max.number + 1, description)
     end
 
-    sig {params(release: Release).void}
-    def update_release(release)
+    sig {params(roles: Team::RoleSet, release: Release).void}
+    def update_release(roles, release)
+      raise PermissionDenied unless roles.can_update_release_plan?
+
       index = T.must(@releases.find_index { |r| r.number == release.number })
       @releases[index] = release
     end
 
-    sig {params(release_number: Integer).void}
-    def remove_release(release_number)
+    sig {params(roles: Team::RoleSet, release_number: Integer).void}
+    def remove_release(roles, release_number)
+      raise PermissionDenied unless roles.can_update_release_plan?
       raise NeedAtLeastOneRelease unless can_remove_release?
 
       release = release_of(release_number)
