@@ -3,6 +3,9 @@
     <span class="pbl-release__title">
       <%= t('.title', number: release.number) %>
     </span>
+    <span class="pbl-release__description">
+      <%= release.description %>
+    </span>
     <div class="pbl-release__actions">
       <% if can_update_release_plan? %>
         <%= render partial: 'release_menu', locals: { release: release } %>
