@@ -68,12 +68,9 @@
   border-bottom: 1px solid $gray-300;
 }
 
-.pbl-item-bg--feature {
-  background-color: $white;
-}
-
-.pbl-item-bg--task {
-  background-color: #f2faff;
+.pbl-item__issue-type {
+  color: $secondary;
+  margin-right: .5rem;
 }
 
 .pbl-item-outer--preparation {
@@ -95,7 +92,7 @@
 
 .pbl-item__grip {
   margin-right: .75rem;
-  color: $secondary;
+  color: $gray-700;
 
   &:hover {
     cursor: pointer;

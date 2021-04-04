@@ -3,6 +3,9 @@
     <span class="<%= pbl_item_grip_css_classes(can_move) %>"<%= can_move && ' data-test-item-movable=1' %>>
       <i class="fas fa-grip-vertical"></i>
     </span>
+    <span class="pbl-item__issue-type">
+      <%= pbl_item_type_icon(item.type) %>
+    </span>
     <%= simple_format(item.description, class: 'pbl-item__description nf') %>
     <div class="pbl-item__actions">
       <div class="pbl-item__ac-containter">
