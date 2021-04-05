@@ -43,6 +43,13 @@ module Issue
           end
         end
       end
+
+      describe '#assign_to_sprint' do
+        it do
+          status = described_class.assign_to_sprint
+          expect(status).to eq Wip
+        end
+      end
     end
   end
 end

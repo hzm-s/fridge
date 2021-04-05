@@ -23,6 +23,11 @@ module Issue
           self
         end
 
+        sig {override.returns(Status)}
+        def assign_to_sprint
+          raise CanNotAssignToSprint
+        end
+
         sig {override.returns(String)}
         def to_s
           'wip'

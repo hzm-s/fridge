@@ -4,6 +4,7 @@ module Issue
   class InvalidDescription < ArgumentError; end
   class InvalidAcceptanceCriterion < ArgumentError; end
   class CanNotEstimate < ArgumentError; end
+  class CanNotAssignToSprint < StandardError; end
   class NotFound < StandardError; end
 
   autoload :Id, 'issue/id'

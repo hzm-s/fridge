@@ -82,10 +82,14 @@ module Issue
 
         issue.update_acceptance_criteria(acceptance_criteria([]))
         expect(issue.status).to eq Statuses::Preparation
+
+        issue.update_acceptance_criteria(acceptance_criteria(%w(Criterion)))
+        issue.assign_to_sprint(1)
+        expect(issue.status).to eq Statuses::Wip
       end
     end
 
-    describe 'Task issue status' do
+    xdescribe 'Task issue status' do
       let(:issue) { described_class.create(product_id, Types::Task, description) }
 
       it do
@@ -105,6 +109,9 @@ module Issue
 
         issue.estimate(dev_role, StoryPoint.unknown)
         expect(issue.status).to eq Statuses::Ready
+
+        issue.assign_to_sprint(1)
+        expect(issue.status).to eq Statuses::Wip
       end
     end
   end

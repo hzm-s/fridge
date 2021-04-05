@@ -87,6 +87,11 @@ module Issue
       update_status_by_preparation
     end
 
+    sig {params(sprint_number: Integer).void}
+    def assign_to_sprint(sprint_number)
+      @status = @status.assign_to_sprint
+    end
+
     private
 
     sig {void}
