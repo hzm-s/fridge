@@ -84,7 +84,7 @@ module Issue
         expect(issue.status).to eq Statuses::Preparation
 
         issue.update_acceptance_criteria(acceptance_criteria(%w(Criterion)))
-        issue.assign_to_sprint(1)
+        issue.assign_to_sprint(Sprint::Id.create)
         expect(issue.status).to eq Statuses::Wip
       end
     end

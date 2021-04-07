@@ -87,8 +87,8 @@ module Issue
       update_status_by_preparation
     end
 
-    sig {params(sprint_number: Integer).void}
-    def assign_to_sprint(sprint_number)
+    sig {params(sprint_id: Sprint::Id).void}
+    def assign_to_sprint(sprint_id)
       @status = @status.assign_to_sprint
     end
 
