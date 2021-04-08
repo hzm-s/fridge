@@ -89,7 +89,7 @@ module Issue
       end
     end
 
-    xdescribe 'Task issue status' do
+    describe 'Task issue status' do
       let(:issue) { described_class.create(product_id, Types::Task, description) }
 
       it do
@@ -110,7 +110,7 @@ module Issue
         issue.estimate(dev_role, StoryPoint.unknown)
         expect(issue.status).to eq Statuses::Ready
 
-        issue.assign_to_sprint(1)
+        issue.assign_to_sprint(Sprint::Id.create)
         expect(issue.status).to eq Statuses::Wip
       end
     end
