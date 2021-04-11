@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_04_091810) do
+ActiveRecord::Schema.define(version: 2021_04_10_012059) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -80,6 +80,15 @@ ActiveRecord::Schema.define(version: 2020_11_04_091810) do
     t.index ["dao_product_id"], name: "index_dao_releases_on_dao_product_id"
   end
 
+  create_table "dao_sprints", force: :cascade do |t|
+    t.uuid "dao_product_id"
+    t.integer "number", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["dao_product_id", "number"], name: "index_dao_sprints_on_dao_product_id_and_number", unique: true
+    t.index ["dao_product_id"], name: "index_dao_sprints_on_dao_product_id"
+  end
+
   create_table "dao_team_members", force: :cascade do |t|
     t.uuid "dao_team_id"
     t.uuid "dao_person_id"
@@ -102,6 +111,7 @@ ActiveRecord::Schema.define(version: 2020_11_04_091810) do
   add_foreign_key "dao_acceptance_criteria", "dao_issues"
   add_foreign_key "dao_issues", "dao_products"
   add_foreign_key "dao_releases", "dao_products"
+  add_foreign_key "dao_sprints", "dao_products"
   add_foreign_key "dao_team_members", "dao_teams"
   add_foreign_key "dao_teams", "dao_products"
 end
