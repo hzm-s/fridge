@@ -6,4 +6,12 @@ class Dao::Sprint < ApplicationRecord
       number: sprint.number,
     }
   end
+
+  def read
+    Sprint::Sprint.from_repository(
+      Sprint::Id.from_string(id),
+      Product::Id.from_string(dao_product_id),
+      number,
+    )
+  end
 end

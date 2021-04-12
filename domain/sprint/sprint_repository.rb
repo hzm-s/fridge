@@ -12,5 +12,8 @@ module Sprint
 
     sig {abstract.params(sprint: Sprint).void}
     def store(sprint); end
+
+    sig {abstract.params(id: Id).returns(Sprint)}
+    def find_by_id(id); end
   end
 end

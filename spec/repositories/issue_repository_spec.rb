@@ -6,23 +6,21 @@ RSpec.describe IssueRepository::AR do
   let(:dev_role) { team_roles(:dev) }
 
   describe 'Add' do
-    context 'Feature' do
-      it do
-        issue = Issue::Issue.create(product.id, Issue::Types::Feature, Issue::Description.new('ABC'))
+    it do
+      issue = Issue::Issue.create(product.id, Issue::Types::Feature, Issue::Description.new('ABC'))
 
-        expect { described_class.store(issue) }
-          .to change { Dao::Issue.count }.by(1)
-          .and change { Dao::AcceptanceCriterion.count }.by(0)
+      expect { described_class.store(issue) }
+        .to change { Dao::Issue.count }.by(1)
+        .and change { Dao::AcceptanceCriterion.count }.by(0)
 
-        aggregate_failures do
-          rel = Dao::Issue.last
-          expect(rel.id).to eq issue.id.to_s
-          expect(rel.dao_product_id).to eq issue.product_id.to_s
-          expect(rel.issue_type).to eq issue.type.to_s
-          expect(rel.status).to eq issue.status.to_s
-          expect(rel.description).to eq issue.description.to_s
-          expect(rel.size).to be_nil
-        end
+      aggregate_failures do
+        rel = Dao::Issue.last
+        expect(rel.id).to eq issue.id.to_s
+        expect(rel.dao_product_id).to eq issue.product_id.to_s
+        expect(rel.issue_type).to eq issue.type.to_s
+        expect(rel.status).to eq issue.status.to_s
+        expect(rel.description).to eq issue.description.to_s
+        expect(rel.size).to be_nil
       end
     end
   end

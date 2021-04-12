@@ -12,6 +12,11 @@ module Sprint
       def start(product_id, number)
         new(Id.create, product_id, number)
       end
+
+      sig {params(id: Id, product_id: Product::Id, number: Integer).returns(T.attached_class)}
+      def from_repository(id, product_id, number)
+        new(id, product_id, number)
+      end
     end
 
     sig {returns(Id)}
