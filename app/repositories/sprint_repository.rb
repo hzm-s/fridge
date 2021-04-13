@@ -9,7 +9,10 @@ module SprintRepository
 
       sig {override.params(product_id: Product::Id).returns(Integer)}
       def next_sprint_number(product_id)
-        Dao::Sprint.find_by(dao_product_id: product_id.to_s).number + 1
+        previous = Dao::Sprint.where(dao_product_id: product_id.to_s).order(:number).first
+        return 1 unless previous
+
+        previous.number + 1
       end
 
       sig {override.params(id: Sprint::Id).returns(Sprint::Sprint)}

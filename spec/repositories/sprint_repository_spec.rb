@@ -21,6 +21,12 @@ describe SprintRepository::AR do
 
   describe 'Query next sprint number' do
     it do
+      number = described_class.next_sprint_number(product.id)
+
+      expect(number).to eq 1
+    end
+
+    it do
       previous = Sprint::Sprint.start(product.id, 50)
       described_class.store(previous)
 
