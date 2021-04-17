@@ -18,6 +18,11 @@ module Issue
           true
         end
 
+        sig {override.returns(T::Boolean)}
+        def can_sprint_assign?
+          true
+        end
+
         sig {override.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
         def update_by_preparation(criteria, size)
           if Preparation.update_by_preparation(criteria, size) == self
