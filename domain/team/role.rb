@@ -32,20 +32,6 @@ module Team
       [ProductOwner, ScrumMaster].include?(self)
     end
 
-    sig {returns(T::Array[Symbol])}
-    def denied_actions
-      case self
-      when ProductOwner
-        [:estimate_size]
-      when Developer
-        [:sort]
-      when ScrumMaster
-        [:estimate_size]
-      else
-        T.absurd(self)
-      end
-    end
-
     sig {returns(String)}
     def to_s
       serialize
