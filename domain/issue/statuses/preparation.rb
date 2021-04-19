@@ -8,6 +8,11 @@ module Issue
         extend T::Sig
         include Status
 
+        sig {override.returns(Activity::Set)}
+        def available_activities
+          Activity::Set.from_symbols([:remove_issue, :estimate_issue])
+        end
+
         sig {override.returns(T::Boolean)}
         def can_remove?
           true

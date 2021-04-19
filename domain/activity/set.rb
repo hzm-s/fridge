@@ -5,6 +5,17 @@ module Activity
   class Set
     extend T::Sig
 
+    class << self
+      extend T::Sig
+
+      sig {params(symbols: T::Array[Symbol]).returns(T.attached_class)}
+      def from_symbols(symbols)
+        symbols
+          .map { |sym| Activity.from_string(sym.to_s) }
+          .then { |entries| new(entries) }
+      end
+    end
+
     EntryList = T.type_alias {T::Array[Activity]}
     EntrySet = T.type_alias {T::Set[Activity]}
 
