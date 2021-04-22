@@ -21,6 +21,11 @@ module Team
       Developer = new('developer')
       ScrumMaster = new('scrum_master')
     end
+    
+    sig {returns(Activity::Set)}
+    def available_activities
+      Activity::Set.from_symbols([:remove_issue, :update_plan, :assign_issue_to_sprint])
+    end
 
     sig {returns(T::Boolean)}
     def can_estimate_issue?
