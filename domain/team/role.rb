@@ -24,11 +24,16 @@ module Team
     
     sig {returns(Activity::Set)}
     def available_activities
-      if self == ProductOwner
-        Activity::Set.from_symbols([:remove_issue, :update_plan, :assign_issue_to_sprint])
-      else
-        Activity::Set.from_symbols([:estimate_issue])
-      end
+      activities =
+        case self
+        when ProductOwner
+          [:remove_issue, :update_plan, :assign_issue_to_sprint]
+        when ScrumMaster
+          [:remove_issue, :update_plan]
+        when Developer
+          [:estimate_issue]
+        end
+      Activity::Set.from_symbols(activities)
     end
 
     sig {returns(T::Boolean)}
