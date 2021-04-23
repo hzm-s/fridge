@@ -30,6 +30,18 @@ module Team
       end
     end
 
+    describe 'query avilable activities' do
+      it do
+        roles = described_class.new([Role::Developer])
+        expect(roles.available_activities).to eq activity_set([:estimate_issue])
+      end
+
+      it do
+        roles = described_class.new([Role::ScrumMaster, Role::ProductOwner])
+        expect(roles.available_activities).to eq activity_set([:remove_issue, :update_plan, :assign_issue_to_sprint])
+      end
+    end
+
     describe 'query issue estimate permission' do
       it do
         roles = described_class.new([Role::Developer])

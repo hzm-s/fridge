@@ -18,6 +18,13 @@ module Team
       @roles = T.let(Set.new(role_set), T::Set[Role])
     end
 
+    sig {returns(Activity::Set)}
+    def available_activities
+      @roles.reduce(Activity::Set.new([])) do |set, role|
+        set + role.available_activities
+      end
+    end
+
     sig {returns(T::Boolean)}
     def can_estimate_issue?
       @roles.any? { |role| role.can_estimate_issue? }

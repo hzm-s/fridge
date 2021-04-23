@@ -16,17 +16,19 @@ module Activity
       end
     end
 
-    EntryList = T.type_alias {T::Array[Activity]}
-    EntrySet = T.type_alias {T::Set[Activity]}
-
-    sig {params(entries: EntryList).void}
+    sig {params(entries: T::Array[Activity]).void}
     def initialize(entries)
-      @entries = entries.to_set
+      @entries = T.let(entries.to_set, T::Set[Activity])
     end
 
     sig {params(other: Set).returns(T.self_type)}
     def &(other)
       self.class.new((entries & other.entries).to_a)
+    end
+
+    sig {params(other: Set).returns(T.self_type)}
+    def +(other)
+      self.class.new((entries + other.entries).to_a)
     end
 
     sig {params(entry: Activity).returns(T::Boolean)}
@@ -41,7 +43,7 @@ module Activity
 
     protected
 
-    sig {returns(EntrySet)}
+    sig {returns(T::Set[Activity])}
     attr_reader :entries
   end
 end

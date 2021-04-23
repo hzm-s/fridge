@@ -33,7 +33,7 @@ module Team
         when Developer
           [:estimate_issue]
         end
-      Activity::Set.from_symbols(activities)
+      Activity::Set.from_symbols(T.must(activities))
     end
 
     sig {returns(T::Boolean)}
