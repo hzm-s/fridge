@@ -24,7 +24,11 @@ module Team
     
     sig {returns(Activity::Set)}
     def available_activities
-      Activity::Set.from_symbols([:remove_issue, :update_plan, :assign_issue_to_sprint])
+      if self == ProductOwner
+        Activity::Set.from_symbols([:remove_issue, :update_plan, :assign_issue_to_sprint])
+      else
+        Activity::Set.from_symbols([:estimate_issue])
+      end
     end
 
     sig {returns(T::Boolean)}
