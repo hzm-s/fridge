@@ -10,9 +10,9 @@ module Activity
       c = a & b
 
       aggregate_failures do
-        expect(c.allow?(Activity::RemoveIssue)).to be false
-        expect(c.allow?(Activity::UpdatePlan)).to be true
-        expect(c.allow?(Activity::EstimateIssue)).to be false
+        expect(c.include?(Activity::RemoveIssue)).to be false
+        expect(c.include?(Activity::UpdatePlan)).to be true
+        expect(c.include?(Activity::EstimateIssue)).to be false
       end
     end
   end

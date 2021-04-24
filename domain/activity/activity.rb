@@ -20,5 +20,11 @@ module Activity
       UpdatePlan = new('update_plan')
       AssignIssueToSprint = new('assign_issue_to_sprint')
     end
+
+    sig {params(sets: T::Array[Set]).returns(T::Boolean)}
+    def allow?(sets)
+      base = sets.shift
+      sets.reduce(base) { |a, e| a & e }.include?(self)
+    end
   end
 end

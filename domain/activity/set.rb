@@ -32,7 +32,7 @@ module Activity
     end
 
     sig {params(entry: Activity).returns(T::Boolean)}
-    def allow?(entry)
+    def include?(entry)
       entries.include?(entry)
     end
 
