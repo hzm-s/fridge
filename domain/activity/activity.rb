@@ -8,6 +8,11 @@ module Activity
     class << self
       extend T::Sig
 
+      sig {params(sym: Symbol).returns(T.attached_class)}
+      def from_symbol(sym)
+        from_string(sym.to_s)
+      end
+
       sig {params(str: String).returns(T.attached_class)}
       def from_string(str)
         deserialize(str)
@@ -21,8 +26,9 @@ module Activity
       AssignIssueToSprint = new('assign_issue_to_sprint')
     end
 
-    sig {params(sets: T::Array[Set]).returns(T::Boolean)}
-    def allow?(sets)
+    sig {params(set_providers: T::Array[SetProvider]).returns(T::Boolean)}
+    def allow?(set_providers)
+      sets = set_providers.map(&:available_activities)
       base = sets.shift
       sets.reduce(base) { |a, e| a & e }.include?(self)
     end

@@ -5,6 +5,8 @@ module Team
   class Role < T::Enum
     extend T::Sig
 
+    include Activity::SetProvider
+
     class << self
       extend T::Sig
 
@@ -22,7 +24,7 @@ module Team
       ScrumMaster = new('scrum_master')
     end
     
-    sig {returns(Activity::Set)}
+    sig {override.returns(Activity::Set)}
     def available_activities
       activities =
         case self

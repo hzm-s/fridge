@@ -6,6 +6,8 @@ module Team
   class RoleSet
     extend T::Sig
 
+    include Activity::SetProvider
+
     sig {returns(T::Set[Role])}
     attr_reader :roles
 
@@ -18,7 +20,7 @@ module Team
       @roles = T.let(Set.new(role_set), T::Set[Role])
     end
 
-    sig {returns(Activity::Set)}
+    sig {override.returns(Activity::Set)}
     def available_activities
       @roles.reduce(Activity::Set.new([])) do |set, role|
         set + role.available_activities

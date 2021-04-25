@@ -7,6 +7,8 @@ module Issue
     extend T::Helpers
     interface!
 
+    include Activity::SetProvider
+
     sig {abstract.returns(T::Boolean)}
     def can_remove?; end
 
@@ -21,9 +23,6 @@ module Issue
 
     sig {abstract.returns(Status)}
     def assign_to_sprint; end
-
-    sig {abstract.returns(Activity::Set)}
-    def available_activities; end
 
     sig {abstract.returns(String)}
     def to_s; end
