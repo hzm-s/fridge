@@ -1,1 +1,1 @@
-$('#js-pbl-item-<%= @issue.id %>').replaceWith('<%=j render partial: 'product_backlogs/item', locals: { item: @issue, can_remove: can_update_release_plan? } %>')
+$('#js-pbl-item-<%= @issue.id %>').replaceWith('<%=j render partial: 'product_backlogs/item', locals: { item: @issue } %>')

@@ -32,11 +32,6 @@ module Team
       @roles.any? { |role| role.can_estimate_issue? }
     end
 
-    sig {returns(T::Boolean)}
-    def can_update_release_plan?
-      @roles.any? { |role| role.can_update_release_plan? }
-    end
-
     sig {returns(T::Array[Role])}
     def to_a
       @roles.to_a

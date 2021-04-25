@@ -43,11 +43,6 @@ module Team
       self == Developer
     end
 
-    sig {returns(T::Boolean)}
-    def can_update_release_plan?
-      [ProductOwner, ScrumMaster].include?(self)
-    end
-
     sig {returns(String)}
     def to_s
       serialize

@@ -3,8 +3,7 @@ module TeamMemberHelper
   extend ActiveSupport::Concern
 
   included do
-    helper_method :current_team_member, :current_team_member_roles,
-      :can_update_release_plan?, :can_estimate_issue?
+    helper_method :current_team_member, :current_team_member_roles, :can_estimate_issue?
   end
 
   def current_team_member
@@ -13,10 +12,6 @@ module TeamMemberHelper
 
   def current_team_member_roles
     current_team_member.roles
-  end
-
-  def can_update_release_plan?
-    current_team_member_roles.can_update_release_plan?
   end
 
   def can_estimate_issue?
