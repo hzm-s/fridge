@@ -27,11 +27,6 @@ module Team
       end
     end
 
-    sig {returns(T::Boolean)}
-    def can_estimate_issue?
-      @roles.any? { |role| role.can_estimate_issue? }
-    end
-
     sig {returns(T::Array[Role])}
     def to_a
       @roles.to_a

@@ -41,32 +41,5 @@ module Team
         expect(roles.available_activities).to eq activity_set([:remove_issue, :update_plan, :assign_issue_to_sprint])
       end
     end
-
-    describe 'query issue estimate permission' do
-      it do
-        roles = described_class.new([Role::Developer])
-        expect(roles).to be_can_estimate_issue
-      end
-
-      it do
-        roles = described_class.new([Role::ScrumMaster])
-        expect(roles).to_not be_can_estimate_issue
-      end
-
-      it do
-        roles = described_class.new([Role::ProductOwner])
-        expect(roles).to_not be_can_estimate_issue
-      end
-
-      it do
-        roles = described_class.new([Role::ScrumMaster, Role::Developer])
-        expect(roles).to be_can_estimate_issue
-      end
-
-      it do
-        roles = described_class.new([Role::ScrumMaster, Role::ProductOwner])
-        expect(roles).to_not be_can_estimate_issue
-      end
-    end
   end
 end

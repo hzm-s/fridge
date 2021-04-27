@@ -38,11 +38,6 @@ module Team
       Activity::Set.from_symbols(T.must(activities))
     end
 
-    sig {returns(T::Boolean)}
-    def can_estimate_issue?
-      self == Developer
-    end
-
     sig {returns(String)}
     def to_s
       serialize

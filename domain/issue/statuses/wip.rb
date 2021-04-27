@@ -19,11 +19,6 @@ module Issue
         end
 
         sig {override.returns(T::Boolean)}
-        def can_estimate?
-          false
-        end
-
-        sig {override.returns(T::Boolean)}
         def can_sprint_assign?
           false
         end

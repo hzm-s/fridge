@@ -13,9 +13,6 @@ module Issue
     def can_remove?; end
 
     sig {abstract.returns(T::Boolean)}
-    def can_estimate?; end
-
-    sig {abstract.returns(T::Boolean)}
     def can_sprint_assign?; end
 
     sig {abstract.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
