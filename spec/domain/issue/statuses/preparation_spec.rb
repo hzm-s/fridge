@@ -11,10 +11,6 @@ module Issue
         end
       end
 
-      describe '#can_sprint_assign?' do
-        it { expect(described_class).to_not be_can_sprint_assign }
-      end
-
       describe '#update_by_preparation' do
         context 'AcceptanceCriteria >= 1 and size == unknown' do
           it do
