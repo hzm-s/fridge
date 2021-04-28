@@ -14,11 +14,6 @@ module Issue
         end
 
         sig {override.returns(T::Boolean)}
-        def can_remove?
-          true
-        end
-
-        sig {override.returns(T::Boolean)}
         def can_sprint_assign?
           false
         end

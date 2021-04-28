@@ -11,10 +11,6 @@ module Issue
         end
       end
 
-      describe '#can_remove?' do
-        it { expect(described_class).to be_can_remove }
-      end
-
       describe '#can_sprint_assign?' do
         it { expect(described_class).to be_can_sprint_assign }
       end

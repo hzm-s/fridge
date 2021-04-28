@@ -10,9 +10,6 @@ module Issue
     include Activity::SetProvider
 
     sig {abstract.returns(T::Boolean)}
-    def can_remove?; end
-
-    sig {abstract.returns(T::Boolean)}
     def can_sprint_assign?; end
 
     sig {abstract.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
