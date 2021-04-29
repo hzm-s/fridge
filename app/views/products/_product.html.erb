@@ -18,6 +18,12 @@
         <%= link_to t('.pbl'), product_backlog_path(product_id: product.id) %>
       </div>
       <div class="pl-link">
+        <div class="pl-link__icon">
+          <i class="fas fa-redo-alt"></i>
+        </div>
+        <%= link_to t('.sprint'), sprint_path(product_id: product.id) %>
+      </div>
+      <div class="pl-link">
         <% if product.teams.any? %>
           <% product.teams.each do |team| %>
             <div class="pl-link__icon">
