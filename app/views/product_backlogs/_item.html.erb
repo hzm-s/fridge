@@ -1,3 +1,4 @@
+<% can_move = authorize(:update_plan, current_team_member_roles) %>
 <%= content_tag :div, id: "js-pbl-item-#{item.id}", class: pbl_item_css_classes(item), data: { id: item.id } do %>
   <div class="pbl-item">
     <span class="<%= pbl_item_grip_css_classes(can_move) %>"<%= can_move && ' data-test-item-movable=1' %>>
@@ -14,7 +15,7 @@
         <% end %>
       </div>
       <%= render partial: 'product_backlogs/point', locals: { item: item } %>
-      <%= render partial: 'product_backlogs/item_menu', locals: { item: item, can_remove: can_remove && item.status.can_remove? } %>
+      <%= render partial: 'product_backlogs/item_menu', locals: { item: item } %>
     </div>
   </div>
   <div class="collapse pbl-item__ac" id="clp-pbi-ac-<%= item.id %>">

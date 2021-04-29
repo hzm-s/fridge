@@ -3,6 +3,7 @@ require 'spec_helper'
 $LOAD_PATH << File.expand_path('../domain', __dir__)
 
 require 'shared'
+require 'activity'
 require 'person'
 require 'product'
 require 'plan'

@@ -3,11 +3,17 @@
     <i class="fas fa-ellipsis-h"></i>
   <% end -%>
   <div class="dropdown-menu dropdown-menu-right">
+    <% if authorize(:assign_issue_to_sprint, current_team_member_roles, item.status) %>
+      <%= link_to '', class: 'dropdown-item', data: { "test_assign_issue_to_sprint_#{item.id}" => 1 } do %>
+        <i class="fas fa-play"></i>
+        <%=t 'domain.issue.assign_to_sprint' %>
+      <% end %>
+    <% end %>
     <%= link_to edit_issue_path(item.id), class: 'dropdown-item' do %>
       <i class="fas fa-edit"></i>
       <%=t 'navs.edit' %>
     <% end %>
-    <% if can_remove %>
+    <% if authorize(:remove_issue, current_team_member_roles, item.status) %>
       <%= link_to issue_path(item.id), method: :delete, class: 'dropdown-item text-danger', data: { confirm: t('navs.confirm_delete'), "test_remove_issue_#{item.id}" => 1 } do %>
         <i class="fas fa-trash-alt"></i>
         <%=t 'navs.delete' %>

@@ -12,9 +12,6 @@ module Issue
     def initial_status; end
 
     sig {abstract.returns(T::Boolean)}
-    def can_estimate?; end
-
-    sig {abstract.returns(T::Boolean)}
     def must_have_acceptance_criteria?; end
 
     sig {abstract.returns(T::Boolean)}

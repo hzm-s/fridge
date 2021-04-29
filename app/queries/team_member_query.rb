@@ -10,10 +10,6 @@ module TeamMemberQuery
   end
 
   class TeamMemberStruct < SimpleDelegator
-    def can_update_release_plan?
-      roles.can_update_release_plan?
-    end
-
     def roles
       @__roles =
         super

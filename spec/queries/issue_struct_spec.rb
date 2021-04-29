@@ -12,14 +12,6 @@ RSpec.describe IssueStruct do
     expect(s.criteria.map(&:content)).to eq %w(ac1 ac2 ac3) 
   end
 
-  it '操作可否を返すこと' do
-    issue = plan_issue(product.id, type: Issue::Types::Task)
-
-    s = described_class.new(Dao::Issue.last)
-
-    expect(s).to be_can_estimate
-  end
-
   it '受け入れ基準要否を返すこと' do
     issue = plan_issue(product.id, type: Issue::Types::Task)
 

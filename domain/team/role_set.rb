@@ -6,6 +6,8 @@ module Team
   class RoleSet
     extend T::Sig
 
+    include Activity::SetProvider
+
     sig {returns(T::Set[Role])}
     attr_reader :roles
 
@@ -18,14 +20,11 @@ module Team
       @roles = T.let(Set.new(role_set), T::Set[Role])
     end
 
-    sig {returns(T::Boolean)}
-    def can_estimate_issue?
-      @roles.any? { |role| role.can_estimate_issue? }
-    end
-
-    sig {returns(T::Boolean)}
-    def can_update_release_plan?
-      @roles.any? { |role| role.can_update_release_plan? }
+    sig {override.returns(Activity::Set)}
+    def available_activities
+      @roles.reduce(Activity::Set.new([])) do |set, role|
+        set + role.available_activities
+      end
     end
 
     sig {returns(T::Array[Role])}

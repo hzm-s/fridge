@@ -1,3 +1,4 @@
+<% plan_updatable = authorize(:update_plan, current_team_member_roles) %>
 <div class="pbl-release">
   <div class="pbl-release__header">
     <span class="pbl-release__title">
@@ -7,12 +8,12 @@
       <%= release.description %>
     </span>
     <div class="pbl-release__actions">
-      <% if can_update_release_plan? %>
+      <% if plan_updatable %>
         <%= render partial: 'release_menu', locals: { release: release } %>
       <% end %>
     </div>
   </div>
-  <%= content_tag :div, data: can_update_release_plan? && sortable_pbl_options(current_product_id, release.number) do %>
-    <%= render partial: 'item', collection: release.issues, locals: { can_move: can_update_release_plan?, can_remove: can_update_release_plan? } %>
+  <%= content_tag :div, data: plan_updatable && sortable_pbl_options(current_product_id, release.number) do %>
+    <%= render partial: 'item', collection: release.issues %>
   <% end %>
 </div>

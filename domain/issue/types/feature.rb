@@ -14,11 +14,6 @@ module Issue
         end
 
         sig {override.returns(T::Boolean)}
-        def can_estimate?
-          true
-        end
-
-        sig {override.returns(T::Boolean)}
         def must_have_acceptance_criteria?
           true
         end

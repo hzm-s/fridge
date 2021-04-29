@@ -5,6 +5,8 @@ module Team
   class Role < T::Enum
     extend T::Sig
 
+    include Activity::SetProvider
+
     class << self
       extend T::Sig
 
@@ -21,29 +23,19 @@ module Team
       Developer = new('developer')
       ScrumMaster = new('scrum_master')
     end
-
-    sig {returns(T::Boolean)}
-    def can_estimate_issue?
-      self == Developer
-    end
-
-    sig {returns(T::Boolean)}
-    def can_update_release_plan?
-      [ProductOwner, ScrumMaster].include?(self)
-    end
-
-    sig {returns(T::Array[Symbol])}
-    def denied_actions
-      case self
-      when ProductOwner
-        [:estimate_size]
-      when Developer
-        [:sort]
-      when ScrumMaster
-        [:estimate_size]
-      else
-        T.absurd(self)
-      end
+    
+    sig {override.returns(Activity::Set)}
+    def available_activities
+      activities =
+        case self
+        when ProductOwner
+          [:remove_issue, :update_plan, :assign_issue_to_sprint]
+        when ScrumMaster
+          [:remove_issue, :update_plan]
+        when Developer
+          [:estimate_issue]
+        end
+      Activity::Set.from_symbols(T.must(activities))
     end
 
     sig {returns(String)}

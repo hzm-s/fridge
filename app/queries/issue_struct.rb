@@ -17,10 +17,6 @@ class IssueStruct < SimpleDelegator
     @__criteria ||= super.sort_by(&:id)
   end
 
-  def can_estimate?
-    type.can_estimate?
-  end
-
   def must_have_acceptance_criteria?
     type.must_have_acceptance_criteria?
   end

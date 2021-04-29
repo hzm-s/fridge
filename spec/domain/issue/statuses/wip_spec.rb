@@ -4,16 +4,11 @@ require 'domain_helper'
 module Issue
   module Statuses
     RSpec.describe Wip do
-      describe '#can_remove?' do
-        it { expect(described_class).to_not be_can_remove }
-      end
-
-      describe '#can_sprint_assign?' do
-        it { expect(described_class).to_not be_can_sprint_assign }
-      end
-
-      describe '#can_estimate?' do
-        it { expect(described_class).to_not be_can_estimate }
+      describe '#available_activities' do
+        it do
+          a = described_class.available_activities
+          expect(a).to eq activity_set([])
+        end
       end
 
       describe '#assign_to_sprint' do

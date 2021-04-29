@@ -81,7 +81,7 @@ module Issue
 
     sig {params(roles: Team::RoleSet, size: StoryPoint).void}
     def estimate(roles, size)
-      raise CanNotEstimate unless roles.can_estimate_issue?
+      raise CanNotEstimate unless Activity.allow?(:estimate_issue, [roles, status])
 
       @size = size
       update_status_by_preparation

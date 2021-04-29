@@ -8,19 +8,9 @@ module Issue
         extend T::Sig
         include Status
 
-        sig {override.returns(T::Boolean)}
-        def can_remove?
-          false
-        end
-
-        sig {override.returns(T::Boolean)}
-        def can_estimate?
-          false
-        end
-
-        sig {override.returns(T::Boolean)}
-        def can_sprint_assign?
-          false
+        sig {override.returns(Activity::Set)}
+        def available_activities
+          Activity::Set.from_symbols([])
         end
 
         sig {override.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
