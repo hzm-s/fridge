@@ -12,7 +12,8 @@ RSpec.describe 'product_backlogs' do
     )
   end
 
-  let!(:issue_a) { plan_issue(product.id, release: 1) }
+  let!(:issue_preparation) { plan_issue(product.id, release: 1) }
+  let!(:issue_ready) { plan_issue(product.id, release: 1, acceptance_criteria: %w(AC1), size: 3 ) }
 
   context 'when PO' do
     before { sign_in(user_account_a) }
@@ -22,10 +23,12 @@ RSpec.describe 'product_backlogs' do
 
       aggregate_failures do
         expect(response.body).to include 'test-update-issues-in-release-1'
-        expect(response.body).to include "test-remove-issue-#{issue_a.id}"
+        expect(response.body).to include "test-remove-issue-#{issue_preparation.id}"
         expect(response.body).to include "test-new-release"
         expect(response.body).to include "test-update-release-1"
-        expect(response.body).to_not include "test-estimate-issue"
+        expect(response.body).to include "test-assign-issue-to-sprint-#{issue_ready.id}"
+        expect(response.body).to_not include "test-estimate-issue-#{issue_preparation.id}"
+        expect(response.body).to_not include "test-estimate-issue-#{issue_ready.id}"
       end
     end
   end
@@ -38,10 +41,12 @@ RSpec.describe 'product_backlogs' do
 
       aggregate_failures do
         expect(response.body).to_not include 'test-update-issues-in-release-1'
-        expect(response.body).to_not include "test-remove-issue-#{issue_a.id}"
+        expect(response.body).to_not include "test-remove-issue-#{issue_preparation.id}"
         expect(response.body).to_not include "test-new-release"
         expect(response.body).to_not include "test-update-release-1"
-        expect(response.body).to include "test-estimate-issue"
+        expect(response.body).to_not include "test-assign-issue-to-sprint-#{issue_ready.id}"
+        expect(response.body).to include "test-estimate-issue-#{issue_preparation.id}"
+        expect(response.body).to include "test-estimate-issue-#{issue_ready.id}"
       end
     end
   end

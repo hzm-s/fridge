@@ -9,8 +9,8 @@ ja:
         preparation: 準備中
         ready: 準備完了
         wip: 着手中
-      start_development: 着手する
-      abort_development: 着手を取り消す
+      assign_to_sprint: 着手する
+      cancel_sprint_assign: 着手を取り消す
 
     team:
       role:

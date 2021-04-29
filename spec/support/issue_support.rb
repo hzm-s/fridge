@@ -26,7 +26,7 @@ module IssueSupport
   end
 
   def estimate_feature(issue_id, size)
-    EstimateFeatureUsecase.perform(issue_id, Issue::StoryPoint.new(size))
+    EstimateFeatureUsecase.perform(issue_id, team_roles(:dev), Issue::StoryPoint.new(size))
   end
 
   def remove_issue(issue_id)
