@@ -1,0 +1,32 @@
+<% content_for(:member_roles) { team_member_roles_label } %>
+<div class="row d-flex justify-content-center">
+  <div class="col-lg-10 sheet">
+    <div class="d-flex justify-content-center">
+      <h1 class="page-title">
+        <%=t '.title' %>
+      </h1>
+    </div>
+    <div class="d-flex mt-3">
+      <div class="d-inline-block mx-auto">
+        <%= form_with do |f| %>
+          <div class="d-flex">
+            <%= f.date_field :start_on, class: 'form-control' %>
+            <span class="mx-3">〜</span>
+            <%= f.date_field :finish_on, class: 'form-control' %>
+          </div>
+          <div class="mt-2 text-center">
+            <%= f.button t('.start'), class: 'btn btn-success', data: with_loader %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row d-flex justify-content-center">
+  <div class="d-flex mt-2">
+    <%= link_to products_path, class: 'text-md' do %>
+      <i class="fas fa-reply"></i>
+      <%=t 'navs.back' %>
+    <% end %>
+  </div>
+</div>

@@ -19,9 +19,9 @@
       </div>
       <div class="pl-link">
         <div class="pl-link__icon">
-          <i class="fas fa-redo-alt"></i>
+          <i class="fas fa-list"></i>
         </div>
-        <%= link_to t('.sprint'), sprint_path(product_id: product.id) %>
+        <%= link_to t('.sbl'), sprint_backlog_path(product_id: product.id) %>
       </div>
       <div class="pl-link">
         <% if product.teams.any? %>

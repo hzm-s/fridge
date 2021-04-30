@@ -38,6 +38,7 @@ ja:
       create: プロダクトを作成する
     product:
       pbl: プロダクトバックログ
+      sbl: スプリントバックログ
       create_team: チームを作成する
       team: チーム
       setting: プロダクト設定
@@ -77,7 +78,7 @@ ja:
   acceptance_criteria:
     form:
       add: 追加する
-        
+
   teams:
     new:
       title: 新しいチーム
@@ -93,3 +94,8 @@ ja:
       join: として参加する
     list:
       title: メンバー
+
+  sprint_backlogs:
+    show:
+      title: スプリントバックログ
+      start: 開始する
