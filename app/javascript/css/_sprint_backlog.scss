@@ -1,0 +1,52 @@
+.sbl-list {
+  width: 100%;
+}
+
+.sbl-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+}
+
+.sbl-item__handle {
+}
+
+.sbl-item__body {
+  display: flex;
+  width: 100%;
+}
+
+.sbl-item__issue {
+  width: 50%;
+}
+
+.sbl-item__task-list {
+  flex-grow: 1;
+}
+
+.sbi-issue__content {
+  @include nf;
+  margin-bottom: 0;
+  font-size: .875rem;
+}
+
+.sbi-issue__ac-item {
+  @include nf;
+  margin-bottom: 0;
+  font-size: .75rem;
+
+  &:before {
+    content: '\02022';
+  }
+}
+
+.sbi-task {
+  display: flex;
+  align-items: center;
+}
+
+.sbi-task__content {
+  @include nf;
+  margin-bottom: 0;
+}
