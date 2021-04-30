@@ -1,0 +1,47 @@
+<% tasks = [
+  'API設計',
+  'FE実装',
+  'BE実装',
+  'Devレビュー',
+  'POレビュー',
+] %>
+<div class="sbl-item">
+  <i class="sbl-item__handle fa fa-bars"></i>
+  <div class="sbl-item__body">
+    <div class="sbl-item__issue">
+      <p class="sbi-issue__content">
+        <%= item[:content].html_safe %>
+      </p>
+      <div class="sbi-issue__ac-list">
+        <% item[:criteria].each do |c| %>
+          <p class="sbi-issue__ac-item">
+            <%= c %>
+          </p>
+        <% end %>
+      </div>
+    </div>
+    <div class="sbl-item__task-list">
+      <% tasks.each do |t| %>
+        <div class="sbi-task">
+          <i class="sbi-task__progress fa fa-minus-circle"></i>
+          <p class="sbi-task__content">
+            <%= t %>
+          </p>
+          <i class="sbi-task__remove fa fa-trash-alt"></i>
+        </div>
+      <% end %>
+      <div class="sbi-task__form">
+        <form>
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="input task...">
+            <div class="input-group-append">
+              <button class="btn btn-success btn-lean">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

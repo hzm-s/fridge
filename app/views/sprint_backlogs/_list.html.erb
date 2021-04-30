@@ -1,54 +1,20 @@
-<% tasks = [
-  'API設計',
-  'FE実装',
-  'BE実装',
-  'Devレビュー',
-  'POレビュー',
+<% items = [
+  {
+    content: 'Devとしてアイテムの大きさを見積もりたい<br>それは優先順位の判断材料を提供したいから',
+    criteria: [
+      'ストーリーポイントで見積もれること',
+      'Devのみ見積もりできること',
+      '「わからない」も設定できること',
+    ]
+  },
+  {
+    content: 'メンバーとしてPBIをスプリントで作業できるようにしたい<br>それはプロダクトを開発する必要があるから',
+    criteria: [
+      'POのみ操作できること',
+      'DevとSMは操作できないことがわかること',
+    ]
+  },
 ] %>
 <div class="sbl-list">
-  <div class="sbl-item">
-    <i class="sbl-item__handle fa fa-bars"></i>
-    <div class="sbl-item__body">
-      <div class="sbl-item__issue">
-        <p class="sbi-issue__content">
-          Devとしてアイテムの大きさを見積もりたい<br>
-          それは優先順位の判断材料を提供したいから
-        </p>
-        <div class="sbi-issue__ac-list">
-          <p class="sbi-issue__ac-item">
-            ストーリーポイントで見積もれること
-          </p>
-          <p class="sbi-issue__ac-item">
-            Devのみ見積もりできること
-          </p>
-          <p class="sbi-issue__ac-item">
-            「わからない」も設定できること
-          </p>
-        </div>
-      </div>
-      <div class="sbl-item__task-list">
-        <% tasks.each do |t| %>
-          <div class="sbi-task">
-            <i class="sbi-task__progress fa fa-minus-circle"></i>
-            <p class="sbi-task__content">
-              <%= t %>
-            </p>
-            <i class="sbi-task__remove fa fa-trash-alt"></i>
-          </div>
-        <% end %>
-        <div class="sbi-task__form">
-          <form>
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="input task...">
-              <div class="input-group-append">
-                <button class="btn btn-success btn-lean">
-                  <i class="fa fa-plus"></i>
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+  <%= render partial: 'item', collection: items %>
 </div>
