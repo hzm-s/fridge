@@ -5,7 +5,7 @@
   <div class="dropdown-menu dropdown-menu-right">
     <% if authorize(:assign_issue_to_sprint, current_team_member_roles, item.status) %>
       <%= link_to '', class: 'dropdown-item', data: { "test_assign_issue_to_sprint_#{item.id}" => 1 } do %>
-        <i class="fas fa-play"></i>
+        <i class="fas fa-share"></i>
         <%=t 'domain.issue.assign_to_sprint' %>
       <% end %>
     <% end %>
