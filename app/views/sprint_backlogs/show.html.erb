@@ -1,14 +1,17 @@
 <% content_for(:member_roles) { team_member_roles_label } %>
+<% sprint = 1 %>
 <div class="row d-flex justify-content-center">
-  <div class="col-lg-11 sheet">
+  <div class="col-lg-<%= sprint ? '11' : '5' %> sheet">
     <div class="d-flex justify-content-center">
       <h1 class="page-title">
         <%=t '.title' %>
       </h1>
     </div>
-    <div class="d-flex">
+    <% if sprint %>
       <%= render partial: 'list' %>
-    </div>
+    <% else %>
+      <%= render partial: 'sprints/form' %>
+    <% end %>
   </div>
 </div>
 <div class="row d-flex justify-content-center">

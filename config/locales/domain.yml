@@ -17,6 +17,10 @@ ja:
       done: 完了
       suspend: 中断する
 
+    sprint:
+      start: スプリントを開始する
+      finish: スプリントを終了する
+
     team:
       role:
         product_owner: プロダクトオーナー
