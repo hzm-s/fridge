@@ -10,7 +10,7 @@
   box-sizing: border-box;
   width: 100%;
   margin: 0;
-  padding: .5rem 0;
+  padding: .75rem 0;
   border-bottom: 1px solid $gray-300;
 }
 
@@ -90,7 +90,7 @@
 }
 
 .sbi-task__progress {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   margin-right: .5rem;
 
   &--todo {

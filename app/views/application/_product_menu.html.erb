@@ -5,6 +5,14 @@
       <i class="fas fa-list-alt"></i>
       <%=t 'products.product.pbl' %>
     <% end %>
+    <%= link_to sprint_backlog_path(product_id: product.id), class: 'dropdown-item' do %>
+      <i class="fas fa-list"></i>
+      <%=t 'products.product.sbl' %>
+    <% end %>
+    <%= link_to team_path(product.teams.first.id), class: 'dropdown-item' do %>
+      <i class="fas fa-users"></i>
+      <%=t 'products.product.team' %>
+    <% end %>
     <%= link_to '#', class: 'dropdown-item' do %>
       <i class="fas fa-cog"></i>
       <%=t 'products.product.setting' %>
