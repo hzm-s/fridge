@@ -1,12 +1,14 @@
 <% tasks = [
-  'API設計',
-  'FE実装',
-  'BE実装',
-  'Devレビュー',
-  'POレビュー',
+  { content: 'API設計', progress: :done },
+  { content: 'FE実装', progress: :wip },
+  { content: 'BE実装', progress: :todo },
+  { content: 'Devレビュー', progress: :todo },
+  { content: 'POレビュー', progress: :todo },
 ] %>
 <div class="sbl-item">
-  <i class="sbl-item__handle fa fa-bars"></i>
+  <span class="<%= sbl_item_grip_css_classes(true) %>"<%= true && ' data-test-item-movable=1' %>>
+    <i class="fas fa-grip-vertical"></i>
+  </span>
   <div class="sbl-item__body">
     <div class="sbl-item__issue">
       <p class="sbi-issue__content">
@@ -20,20 +22,14 @@
         <% end %>
       </div>
     </div>
-    <div class="sbl-item__task-list">
-      <% tasks.each do |t| %>
-        <div class="sbi-task">
-          <i class="sbi-task__progress fa fa-minus-circle"></i>
-          <p class="sbi-task__content">
-            <%= t %>
-          </p>
-          <i class="sbi-task__remove fa fa-trash-alt"></i>
-        </div>
-      <% end %>
+    <div class="sbl-item__task">
+      <div class="sbi-task__list">
+        <%= render partial: 'task', collection: tasks %>
+      </div>
       <div class="sbi-task__form">
         <form>
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="input task...">
+            <input type="text" class="form-control" placeholder="<%=t '.task_placeholder' %>">
             <div class="input-group-append">
               <button class="btn btn-success btn-lean">
                 <i class="fa fa-plus"></i>

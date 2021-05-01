@@ -12,6 +12,11 @@ ja:
       assign_to_sprint: 着手する
       cancel_sprint_assign: 着手を取り消す
 
+    task:
+      start: 着手する
+      done: 完了
+      suspend: 中断する
+
     team:
       role:
         product_owner: プロダクトオーナー

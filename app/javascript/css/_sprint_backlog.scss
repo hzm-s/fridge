@@ -10,12 +10,25 @@
   box-sizing: border-box;
   width: 100%;
   margin: 0;
-  padding: .5rem 0 .75rem;
+  padding: .5rem 0;
   border-bottom: 1px solid $gray-300;
 }
 
-.sbl-item__handle {
+.sbl-item__grip {
   margin-right: .5rem;
+  color: $gray-700;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.sbl-item__grip--disabled {
+  color: $gray-200;
+
+  &:hover {
+    cursor: not-allowed;
+  }
 }
 
 .sbl-item__body {
@@ -27,10 +40,10 @@
 .sbl-item__issue {
   width: 50%;
   box-sizing: border-box;
-  padding-right: 1rem;
+  padding-right: .75rem;
 }
 
-.sbl-item__task-list {
+.sbl-item__task {
   flex-grow: 1;
   box-sizing: border-box;
 }
@@ -59,12 +72,50 @@
   }
 }
 
+.sbi-task__list {
+  border-radius: .25rem;
+  border: 1px solid $gray-300;
+  margin-bottom: .5rem;
+}
+
 .sbi-task {
   display: flex;
   align-items: center;
+  border-bottom: 1px solid $gray-300;
+  padding: .25rem .5rem;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+
+.sbi-task__progress {
+  font-size: 1.5rem;
+  margin-right: .5rem;
+
+  &--todo {
+    color: $gray-300;
+  }
+
+  &--done {
+    color: $success;
+  }
 }
 
 .sbi-task__content {
   @include nf;
   margin-bottom: 0;
+}
+
+.sbi-task__actions {
+  margin-left: auto;
+}
+
+.sbi-task__menu {
+  color: $body-color;
+
+  &:hover {
+    color: $body-color;
+    text-decoration: none;
+  }
 }

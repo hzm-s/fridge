@@ -1,0 +1,28 @@
+<div class="dropdown">
+  <%= link_to '#', dd_trigger_options(id: "dd-sbi-task-#{}", class: 'sbi-task__menu') do %>
+    <i class="fas fa-ellipsis-h"></i>
+  <% end -%>
+  <div class="dropdown-menu dropdown-menu-right">
+    <%= link_to '', class: 'dropdown-item', data: { "test_start_task_#{}" => 1 } do %>
+      <i class="fas fa-play"></i>
+      <%=t 'domain.task.start' %>
+    <% end %>
+    <%= link_to '', class: 'dropdown-item', data: { "test_done_task_#{}" => 1 } do %>
+      <i class="fas fa-check"></i>
+      <%=t 'domain.task.done' %>
+    <% end %>
+    <%= link_to '', class: 'dropdown-item', data: { "test_suspend_task_#{}" => 1 } do %>
+      <i class="fas fa-pause"></i>
+      <%=t 'domain.task.suspend' %>
+    <% end %>
+    <div class="dropdown-divider"></div>
+    <%= link_to '', class: 'dropdown-item' do %>
+      <i class="fas fa-edit"></i>
+      <%=t 'navs.edit' %>
+    <% end %>
+    <%= link_to '', method: :delete, class: 'dropdown-item text-danger', data: { confirm: t('navs.confirm_delete'), "test_remove_task_#{}" => 1 } do %>
+      <i class="fas fa-trash-alt"></i>
+      <%=t 'navs.delete' %>
+    <% end %>
+  </div>
+</div>
