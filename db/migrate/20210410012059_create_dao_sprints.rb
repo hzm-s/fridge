@@ -3,6 +3,7 @@ class CreateDaoSprints < ActiveRecord::Migration[6.0]
     create_table :dao_sprints, id: :uuid do |t|
       t.references :dao_product, type: :uuid, foreign_key: true
       t.integer :number, null: false
+      t.boolean :is_finished, null: false
 
       t.timestamps
     end

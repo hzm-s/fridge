@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2021_04_10_012059) do
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "app_user_accounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "app_user_accounts", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "dao_person_id"
     t.string "provider", null: false
     t.string "uid", null: false
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 2021_04_10_012059) do
     t.index ["dao_issue_id"], name: "index_dao_acceptance_criteria_on_dao_issue_id"
   end
 
-  create_table "dao_issues", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "dao_issues", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "dao_product_id"
     t.string "issue_type", null: false
     t.string "status", null: false
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 2021_04_10_012059) do
     t.index ["dao_product_id"], name: "idx_product_id_on_issues"
   end
 
-  create_table "dao_people", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "dao_people", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 2021_04_10_012059) do
     t.index ["email"], name: "index_dao_people_on_email", unique: true
   end
 
-  create_table "dao_products", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "dao_products", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 2021_04_10_012059) do
   create_table "dao_sprints", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "dao_product_id"
     t.integer "number", null: false
+    t.boolean "is_finished", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["dao_product_id", "number"], name: "index_dao_sprints_on_dao_product_id_and_number", unique: true
@@ -98,7 +99,7 @@ ActiveRecord::Schema.define(version: 2021_04_10_012059) do
     t.index ["dao_team_id"], name: "index_dao_team_members_on_dao_team_id"
   end
 
-  create_table "dao_teams", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "dao_teams", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "dao_product_id"
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
