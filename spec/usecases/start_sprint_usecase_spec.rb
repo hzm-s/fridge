@@ -13,4 +13,13 @@ RSpec.describe StartSprintUsecase do
       expect(sprint.number).to eq 1
     end
   end
+
+  it do
+    sprint_id = described_class.perform(product.id)
+
+    aggregate_failures do
+      expect { described_class.perform(product.id) }.to raise_error Sprint::AlreadyStarted
+      expect(SprintRepository::AR.current(product.id).id).to eq sprint_id
+    end
+  end
 end
