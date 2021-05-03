@@ -12,9 +12,13 @@ RSpec.describe 'sprints' do
   describe 'create' do
     it do
       post sprints_path(product_id: product.id.to_s)
+      follow_redirect!
 
       sprint = SprintRepository::AR.current(product.id)
-      expect(sprint).to_not be_nil
+      expect(response.body).to include "test-sprint-backlog-#{sprint.id}"
+
+      expect { post sprints_path(product_id: product.id.to_s) }
+        .to change { Dao::Sprint.count }.by(0)
     end
   end
 end
