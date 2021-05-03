@@ -21,6 +21,7 @@ Rails.application.routes.draw do
 
   resources :feature_estimations, only: [:update]
 
+  resources :sprints, only: [:create]
   resources :sprint_backlogs, param: :product_id, only: [:show]
 
   resources :teams, only: [:show] do
