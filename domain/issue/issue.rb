@@ -87,8 +87,8 @@ module Issue
       update_status_by_preparation
     end
 
-    sig {params(roles: Team::RoleSet, sprint_id: Sprint::Id).void}
-    def assign_to_sprint(roles, sprint_id)
+    sig {params(roles: Team::RoleSet).void}
+    def assign_to_sprint(roles)
       raise CanNotAssignToSprint unless Activity.allow?(:assign_issue_to_sprint, [roles, status])
 
       @status = @status.assign_to_sprint
