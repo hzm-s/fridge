@@ -7,6 +7,7 @@ module Issue
     let(:description) { issue_description('A user story') }
     let(:dev_role) { team_roles(:dev) }
     let(:po_role) { team_roles(:po) }
+    let(:sm_role) { team_roles(:sm) }
 
     describe 'Create' do
       let(:issue) { described_class.create(product_id, Types::Feature, description) }
@@ -47,23 +48,38 @@ module Issue
     describe 'estimation permission' do
       let(:issue) { described_class.create(product_id, Types::Feature, description) }
 
-      context 'when Dev' do
-        it do
-          expect { issue.estimate(dev_role, StoryPoint.new(2)) }.to_not raise_error 
-        end
+      it do
+        expect { issue.estimate(dev_role, StoryPoint.new(2)) }.to_not raise_error 
       end
 
-      context 'when PO' do
-        it do
-          expect { issue.estimate(po_role, StoryPoint.new(2)) }
-            .to raise_error CanNotEstimate
-        end
+      it do
+        expect { issue.estimate(po_role, StoryPoint.new(2)) }.to raise_error CanNotEstimate
       end
 
-      context 'when SM' do
-        it do
-          expect { issue.estimate(dev_role, StoryPoint.new(2)) }.to_not raise_error 
-        end
+      it do
+        expect { issue.estimate(sm_role, StoryPoint.new(2)) }.to raise_error CanNotEstimate
+      end
+    end
+
+    describe 'to assign issue to sprint permission' do
+      let(:issue) { described_class.create(product_id, Types::Feature, description) }
+      let(:sprint_id) { Sprint::Id.create }
+
+      before do
+        issue.update_acceptance_criteria(acceptance_criteria(%w(Criterion)))
+        issue.estimate(dev_role, StoryPoint.new(5))
+      end
+
+      it do
+        expect { issue.assign_to_sprint(dev_role, sprint_id) }.to raise_error CanNotAssignToSprint
+      end
+
+      it do
+        expect { issue.assign_to_sprint(po_role, sprint_id) }.to_not raise_error
+      end
+
+      it do
+        expect { issue.assign_to_sprint(sm_role, sprint_id) }.to_not raise_error 
       end
     end
 
@@ -84,7 +100,7 @@ module Issue
         expect(issue.status).to eq Statuses::Preparation
 
         issue.update_acceptance_criteria(acceptance_criteria(%w(Criterion)))
-        issue.assign_to_sprint(Sprint::Id.create)
+        issue.assign_to_sprint(po_role, Sprint::Id.create)
         expect(issue.status).to eq Statuses::Wip
       end
     end
@@ -110,7 +126,7 @@ module Issue
         issue.estimate(dev_role, StoryPoint.unknown)
         expect(issue.status).to eq Statuses::Ready
 
-        issue.assign_to_sprint(Sprint::Id.create)
+        issue.assign_to_sprint(po_role, Sprint::Id.create)
         expect(issue.status).to eq Statuses::Wip
       end
     end

@@ -31,7 +31,7 @@ module Team
         when ProductOwner
           [:remove_issue, :update_plan, :assign_issue_to_sprint]
         when ScrumMaster
-          [:remove_issue, :update_plan]
+          [:remove_issue, :update_plan, :assign_issue_to_sprint]
         when Developer
           [:estimate_issue]
         end
