@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_10_012059) do
+ActiveRecord::Schema.define(version: 2021_05_05_010558) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -41,6 +41,15 @@ ActiveRecord::Schema.define(version: 2021_04_10_012059) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["dao_issue_id"], name: "index_dao_acceptance_criteria_on_dao_issue_id"
+  end
+
+  create_table "dao_assigned_issues", force: :cascade do |t|
+    t.uuid "dao_sprint_id"
+    t.uuid "dao_issue_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["dao_issue_id"], name: "index_dao_assigned_issues_on_dao_issue_id"
+    t.index ["dao_sprint_id"], name: "index_dao_assigned_issues_on_dao_sprint_id"
   end
 
   create_table "dao_issues", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
@@ -110,6 +119,8 @@ ActiveRecord::Schema.define(version: 2021_04_10_012059) do
   add_foreign_key "app_user_accounts", "dao_people"
   add_foreign_key "app_user_profiles", "app_user_accounts"
   add_foreign_key "dao_acceptance_criteria", "dao_issues"
+  add_foreign_key "dao_assigned_issues", "dao_issues"
+  add_foreign_key "dao_assigned_issues", "dao_sprints"
   add_foreign_key "dao_issues", "dao_products"
   add_foreign_key "dao_releases", "dao_products"
   add_foreign_key "dao_sprints", "dao_products"

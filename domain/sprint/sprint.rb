@@ -10,12 +10,12 @@ module Sprint
 
       sig {params(product_id: Product::Id, number: Integer).returns(T.attached_class)}
       def start(product_id, number)
-        new(Id.create, product_id, number, false, Plan::IssueList.new([]))
+        new(Id.create, product_id, number, false, Plan::IssueList.new)
       end
 
-      sig {params(id: Id, product_id: Product::Id, number: Integer, is_finished: T::Boolean).returns(T.attached_class)}
-      def from_repository(id, product_id, number, is_finished)
-        new(id, product_id, number, is_finished)
+      sig {params(id: Id, product_id: Product::Id, number: Integer, is_finished: T::Boolean, issues: Plan::IssueList).returns(T.attached_class)}
+      def from_repository(id, product_id, number, is_finished, issues)
+        new(id, product_id, number, is_finished, issues)
       end
     end
 
