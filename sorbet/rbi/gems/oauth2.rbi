@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/oauth2/all/oauth2.rbi
 #
-# oauth2-1.4.4
+# oauth2-1.4.7
 
 module OAuth2
 end
@@ -34,10 +34,11 @@ class OAuth2::Client
   def assertion; end
   def auth_code; end
   def authorize_url(params = nil); end
+  def build_access_token(response, access_token_opts, extract_access_token); end
   def client_credentials; end
   def connection; end
   def connection=(arg0); end
-  def get_token(params, access_token_opts = nil, access_token_class = nil); end
+  def get_token(params, access_token_opts = nil, extract_access_token = nil); end
   def id; end
   def implicit; end
   def initialize(client_id, client_secret, options = nil, &block); end

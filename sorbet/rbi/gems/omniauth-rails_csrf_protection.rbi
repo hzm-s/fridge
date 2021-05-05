@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/omniauth-rails_csrf_protection/all/omniauth-rails_csrf_protection.rbi
 #
-# omniauth-rails_csrf_protection-0.1.2
+# omniauth-rails_csrf_protection-1.0.0
 
 module OmniAuth
 end

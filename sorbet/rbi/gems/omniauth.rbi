@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/omniauth/all/omniauth.rbi
 #
-# omniauth-1.9.1
+# omniauth-2.0.3
 
 module OmniAuth
   def self.config; end
@@ -48,11 +48,15 @@ class OmniAuth::Configuration
   def on_failure=(arg0); end
   def path_prefix; end
   def path_prefix=(arg0); end
+  def request_validation_phase(&block); end
+  def request_validation_phase=(arg0); end
   def self.allocate; end
   def self.default_logger; end
   def self.defaults; end
   def self.instance; end
   def self.new(*arg0); end
+  def silence_get_warning; end
+  def silence_get_warning=(arg0); end
   def test_mode; end
   def test_mode=(arg0); end
   extend Singleton::SingletonClassMethods
@@ -84,13 +88,13 @@ module OmniAuth::Strategy
   def credentials; end
   def current_path; end
   def custom_path(kind); end
-  def dup; end
   def env; end
   def extra; end
   def fail!(message_key, exception = nil); end
   def full_host; end
   def info; end
   def initialize(app, *args, &block); end
+  def initialize_copy(*args); end
   def inspect; end
   def log(level, message); end
   def merge_stack(stack); end
@@ -122,6 +126,7 @@ module OmniAuth::Strategy
   def ssl?; end
   def uid; end
   def user_info; end
+  def warn_if_using_get; end
 end
 module OmniAuth::Strategy::ClassMethods
   def args(args = nil); end
@@ -153,6 +158,17 @@ class OmniAuth::FailureEndpoint
   def redirect_to_failure; end
   def self.call(env); end
   def strategy_name_query_param; end
+  def strategy_path_prefix; end
+end
+class OmniAuth::AuthenticityError < StandardError
+end
+class OmniAuth::AuthenticityTokenProtection < Rack::Protection::AuthenticityToken
+  def call!(env); end
+  def call(env); end
+  def default_reaction(_env); end
+  def deny(_env); end
+  def initialize(options = nil); end
+  def self.call(env); end
 end
 class OmniAuth::Form
   def button(text); end

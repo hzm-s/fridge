@@ -18,9 +18,9 @@ module ActiveStorage::Blob::Identifiable; end
 module ActiveStorage::Variant; end
 module Anonymous_Module_20::Anonymous_Module_21; end
 module Anonymous_Module_20::Anonymous_Module_22; end
+module Dao::Plan; end
 module IssueSupport::RemoveIssueUsecase; end
 module IssueSupport::ScheduleIssueUsecase; end
-module Plan::ReleaseList; end
 module T::InterfaceWrapper::Helpers; end
 module T::Private::Abstract::Hooks; end
 module T::Private::Methods::MethodHooks; end

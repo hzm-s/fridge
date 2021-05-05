@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/jwt/all/jwt.rbi
 #
-# jwt-2.2.1
+# jwt-2.2.2
 
 module JWT
   def decode(jwt, key = nil, verify = nil, options = nil, &keyfinder); end
@@ -205,10 +205,9 @@ class JWT::JWK::RSA
   def initialize(keypair); end
   def keypair; end
   def kid; end
-  def private?(*args, &block); end
-  def public_key(*args, &block); end
+  def private?; end
+  def public_key; end
   def self.import(jwk_data); end
-  extend Forwardable
 end
 class JWT::JWK::KeyFinder
   def find_key(kid); end

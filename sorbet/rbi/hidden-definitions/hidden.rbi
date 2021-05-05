@@ -3036,7 +3036,6 @@ module ActiveSupport::Dependencies
 end
 
 module ActiveSupport::Dependencies
-  extend ::Bootsnap::LoadPathCache::CoreExt::ActiveSupport::ClassMethods
   extend ::ActiveSupport::Dependencies::ZeitwerkIntegration::Decorations
 end
 
@@ -3187,6 +3186,22 @@ module ActiveSupport::XmlMini_REXML
   CONTENT_KEY = ::T.let(nil, ::T.untyped)
 end
 
+class Activity::Set
+  extend ::T::Private::Methods::SingletonMethodHooks
+  extend ::T::Private::Methods::MethodHooks
+end
+
+module Activity::SetProvider
+  extend ::T::Private::Abstract::Hooks
+  extend ::T::InterfaceWrapper::Helpers
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+module Activity
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class AddTeamMemberUsecase
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
@@ -3309,7 +3324,11 @@ class Array
   def to_csv(**options); end
 
   def to_h(); end
+end
 
+class AssignIssueToSprintUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 BasicObject::BasicObject = BasicObject
@@ -3388,7 +3407,6 @@ class Bootsnap::LoadPathCache::Path
 end
 
 module Bootsnap::LoadPathCache::PathScanner
-  ALL_FILES = ::T.let(nil, ::T.untyped)
   ALTERNATIVE_NATIVE_EXTENSIONS_PATTERN = ::T.let(nil, ::T.untyped)
   BUNDLE_PATH = ::T.let(nil, ::T.untyped)
   NORMALIZE_NATIVE_EXTENSIONS = ::T.let(nil, ::T.untyped)
@@ -5697,8 +5715,6 @@ module Bundler
   def self.unbundled_exec(*args); end
 
   def self.unbundled_system(*args); end
-
-  def self.with_unbundled_env(); end
 end
 
 module Byebug
@@ -6481,6 +6497,24 @@ module Dao::AcceptanceCriterion::GeneratedAttributeMethods
   extend ::Mutex_m
 end
 
+class Dao::AssignedIssue
+  include ::Dao::AssignedIssue::GeneratedAttributeMethods
+  include ::Dao::AssignedIssue::GeneratedAssociationMethods
+end
+
+module Dao::AssignedIssue::GeneratedAssociationMethods
+end
+
+module Dao::AssignedIssue::GeneratedAssociationMethods
+end
+
+module Dao::AssignedIssue::GeneratedAttributeMethods
+end
+
+module Dao::AssignedIssue::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
 class Dao::Issue
   include ::Dao::Issue::GeneratedAttributeMethods
   include ::Dao::Issue::GeneratedAssociationMethods
@@ -6665,84 +6699,6 @@ class Dao::Person
   def self.before_remove_for_team_members?(); end
 end
 
-class Dao::Plan
-  include ::Dao::Plan::GeneratedAttributeMethods
-  include ::Dao::Plan::GeneratedAssociationMethods
-  def after_add_for_releases(); end
-
-  def after_add_for_releases=(val); end
-
-  def after_add_for_releases?(); end
-
-  def after_remove_for_releases(); end
-
-  def after_remove_for_releases=(val); end
-
-  def after_remove_for_releases?(); end
-
-  def autosave_associated_records_for_releases(*args); end
-
-  def before_add_for_releases(); end
-
-  def before_add_for_releases=(val); end
-
-  def before_add_for_releases?(); end
-
-  def before_remove_for_releases(); end
-
-  def before_remove_for_releases=(val); end
-
-  def before_remove_for_releases?(); end
-
-  def validate_associated_records_for_releases(*args); end
-end
-
-module Dao::Plan::GeneratedAssociationMethods
-  def release_ids(); end
-
-  def release_ids=(ids); end
-
-  def releases(); end
-
-  def releases=(value); end
-end
-
-module Dao::Plan::GeneratedAssociationMethods
-end
-
-module Dao::Plan::GeneratedAttributeMethods
-end
-
-module Dao::Plan::GeneratedAttributeMethods
-  extend ::Mutex_m
-end
-
-class Dao::Plan
-  def self.after_add_for_releases(); end
-
-  def self.after_add_for_releases=(val); end
-
-  def self.after_add_for_releases?(); end
-
-  def self.after_remove_for_releases(); end
-
-  def self.after_remove_for_releases=(val); end
-
-  def self.after_remove_for_releases?(); end
-
-  def self.before_add_for_releases(); end
-
-  def self.before_add_for_releases=(val); end
-
-  def self.before_add_for_releases?(); end
-
-  def self.before_remove_for_releases(); end
-
-  def self.before_remove_for_releases=(val); end
-
-  def self.before_remove_for_releases?(); end
-end
-
 class Dao::Product
   include ::Dao::Product::GeneratedAttributeMethods
   include ::Dao::Product::GeneratedAssociationMethods
@@ -6837,6 +6793,84 @@ end
 
 module Dao::Release::GeneratedAttributeMethods
   extend ::Mutex_m
+end
+
+class Dao::Sprint
+  include ::Dao::Sprint::GeneratedAttributeMethods
+  include ::Dao::Sprint::GeneratedAssociationMethods
+  def after_add_for_issues(); end
+
+  def after_add_for_issues=(val); end
+
+  def after_add_for_issues?(); end
+
+  def after_remove_for_issues(); end
+
+  def after_remove_for_issues=(val); end
+
+  def after_remove_for_issues?(); end
+
+  def autosave_associated_records_for_issues(*args); end
+
+  def before_add_for_issues(); end
+
+  def before_add_for_issues=(val); end
+
+  def before_add_for_issues?(); end
+
+  def before_remove_for_issues(); end
+
+  def before_remove_for_issues=(val); end
+
+  def before_remove_for_issues?(); end
+
+  def validate_associated_records_for_issues(*args); end
+end
+
+module Dao::Sprint::GeneratedAssociationMethods
+  def issue_ids(); end
+
+  def issue_ids=(ids); end
+
+  def issues(); end
+
+  def issues=(value); end
+end
+
+module Dao::Sprint::GeneratedAssociationMethods
+end
+
+module Dao::Sprint::GeneratedAttributeMethods
+end
+
+module Dao::Sprint::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+class Dao::Sprint
+  def self.after_add_for_issues(); end
+
+  def self.after_add_for_issues=(val); end
+
+  def self.after_add_for_issues?(); end
+
+  def self.after_remove_for_issues(); end
+
+  def self.after_remove_for_issues=(val); end
+
+  def self.after_remove_for_issues?(); end
+
+  def self.before_add_for_issues(); end
+
+  def self.before_add_for_issues=(val); end
+
+  def self.before_add_for_issues?(); end
+
+  def self.before_remove_for_issues(); end
+
+  def self.before_remove_for_issues=(val); end
+
+  def self.before_remove_for_issues?(); end
 end
 
 class Dao::Team
@@ -7102,7 +7136,6 @@ end
 
 class Dir
   def self.exists?(_); end
-
 end
 
 class DomainObjectArgumentError
@@ -7118,7 +7151,6 @@ class ERB
   def def_method(mod, methodname, fname=T.unsafe(nil)); end
 
   def def_module(methodname=T.unsafe(nil)); end
-
 end
 
 class ERB::Compiler::Scanner
@@ -7333,6 +7365,7 @@ class Errno::ESHLIBVERS
 end
 
 module Erubi
+  MATCH_METHOD = ::T.let(nil, ::T.untyped)
   RANGE_ALL = ::T.let(nil, ::T.untyped)
   RANGE_FIRST = ::T.let(nil, ::T.untyped)
   RANGE_LAST = ::T.let(nil, ::T.untyped)
@@ -7413,7 +7446,6 @@ end
 
 module Exception2MessageMapper
   def bind(cl); end
-
 end
 
 Exception2MessageMapper::E2MM = Exception2MessageMapper
@@ -7739,15 +7771,6 @@ class Faraday::Adapter::EMSynchrony
   def create_request(env); end
 end
 
-class Faraday::Adapter::EMSynchrony::ParallelManager
-  def add(request, method, *args, &block); end
-
-  def run(); end
-end
-
-class Faraday::Adapter::EMSynchrony::ParallelManager
-end
-
 class Faraday::Adapter::EMSynchrony
   def self.setup_parallel_manager(_options=T.unsafe(nil)); end
 end
@@ -7903,6 +7926,10 @@ end
 
 Faraday::FilePart = UploadIO
 
+module Faraday::NetHttp
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
 Faraday::Parts = Parts
 
 class Faraday::RackBuilder
@@ -7915,8 +7942,6 @@ class Faraday::RackBuilder::Handler
 end
 
 class Faraday::Request::Authorization
-  def call(env); end
-
   def initialize(app, type, token); end
   KEY = ::T.let(nil, ::T.untyped)
 end
@@ -7935,8 +7960,6 @@ class Faraday::Request::BasicAuthentication
 end
 
 class Faraday::Request::Instrumentation
-  def call(env); end
-
   def initialize(app, options=T.unsafe(nil)); end
 end
 
@@ -8008,8 +8031,6 @@ class Fiber
 end
 
 class File
-  def self.atomic_write(file_name, temp_dir=T.unsafe(nil)); end
-
   def self.exists?(_); end
 end
 
@@ -8716,6 +8737,10 @@ end
 
 class Hash
   include ::JSON::Ext::Generator::GeneratorMethods::Hash
+end
+
+class Hash
+  def self.from_xml(xml, disallowed_types=T.unsafe(nil)); end
 end
 
 module Hashie
@@ -9555,6 +9580,11 @@ module Issue::IssueRepository
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
+class Issue::List
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 module Issue::Status
   extend ::T::Private::Abstract::Hooks
   extend ::T::InterfaceWrapper::Helpers
@@ -9736,7 +9766,7 @@ class Listen::Adapter::Linux
   DEFAULTS = ::T.let(nil, ::T.untyped)
   INOTIFY_LIMIT_MESSAGE = ::T.let(nil, ::T.untyped)
   OS_REGEXP = ::T.let(nil, ::T.untyped)
-  WIKI_URL = ::T.let(nil, ::T.untyped)
+  README_URL = ::T.let(nil, ::T.untyped)
 end
 
 class Listen::Adapter::Polling
@@ -9749,18 +9779,24 @@ class Listen::Adapter::Windows
   OS_REGEXP = ::T.let(nil, ::T.untyped)
 end
 
-module Listen::FSM
-  DEFAULT_STATE = ::T.let(nil, ::T.untyped)
+class Listen::Event::Loop
+  MAX_STARTUP_SECONDS = ::T.let(nil, ::T.untyped)
 end
+
+Listen::Event::Loop::Error = Listen::Error
+
+Listen::Event::Loop::NotStarted = Listen::Error::NotStarted
 
 class Listen::Listener::Config
   DEFAULTS = ::T.let(nil, ::T.untyped)
 end
 
 class Listen::Record::SymlinkDetector
+  README_URL = ::T.let(nil, ::T.untyped)
   SYMLINK_LOOP_ERROR = ::T.let(nil, ::T.untyped)
-  WIKI = ::T.let(nil, ::T.untyped)
 end
+
+Listen::Record::SymlinkDetector::Error = Listen::Error
 
 class Listen::Silencer
   DEFAULT_IGNORED_DIRECTORIES = ::T.let(nil, ::T.untyped)
@@ -9831,6 +9867,7 @@ module Loofah::HTML5::Scrub
   CRASS_SEMICOLON = ::T.let(nil, ::T.untyped)
   CSS_IMPORTANT = ::T.let(nil, ::T.untyped)
   CSS_KEYWORDISH = ::T.let(nil, ::T.untyped)
+  CSS_PROPERTY_STRING_WITHOUT_EMBEDDED_QUOTES = ::T.let(nil, ::T.untyped)
 end
 
 Loofah::HTML5::WhiteList = Loofah::HTML5::SafeList
@@ -10363,17 +10400,14 @@ module Mail::VERSION
 end
 
 module Marcel
+  EXTENSIONS = ::T.let(nil, ::T.untyped)
+  MAGIC = ::T.let(nil, ::T.untyped)
+  TYPES = ::T.let(nil, ::T.untyped)
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
 class Marcel::MimeType
   BINARY = ::T.let(nil, ::T.untyped)
-end
-
-class Marcel::MimeType
-  def self.extend(type, extensions: T.unsafe(nil), parents: T.unsafe(nil), magic: T.unsafe(nil)); end
-
-  def self.for(pathname_or_io=T.unsafe(nil), name: T.unsafe(nil), extension: T.unsafe(nil), declared_type: T.unsafe(nil)); end
 end
 
 module Marshal
@@ -10588,8 +10622,6 @@ class Net::HTTP
   ENVIRONMENT_VARIABLE_IS_MULTIUSER_SAFE = ::T.let(nil, ::T.untyped)
 end
 
-Net::HTTP::ProxyMod = Net::HTTP::ProxyDelta
-
 class Net::HTTPAlreadyReported
   HAS_BODY = ::T.let(nil, ::T.untyped)
 end
@@ -10601,8 +10633,6 @@ Net::HTTPClientError::EXCEPTION_TYPE = Net::HTTPServerException
 
 Net::HTTPClientErrorCode = Net::HTTPClientError
 
-Net::HTTPClientException = Net::HTTPServerException
-
 class Net::HTTPEarlyHints
   HAS_BODY = ::T.let(nil, ::T.untyped)
 end
@@ -10612,16 +10642,13 @@ end
 
 Net::HTTPFatalErrorCode = Net::HTTPClientError
 
-class Net::HTTPGatewayTimeout
-  HAS_BODY = ::T.let(nil, ::T.untyped)
+class Net::HTTPInformation
 end
 
-class Net::HTTPGatewayTimeout
+Net::HTTPInformationCode::EXCEPTION_TYPE = Net::HTTPError
+
+class Net::HTTPInformation
 end
-
-Net::HTTPInformation::EXCEPTION_TYPE = Net::HTTPError
-
-Net::HTTPInformationCode = Net::HTTPInformation
 
 class Net::HTTPLoopDetected
   HAS_BODY = ::T.let(nil, ::T.untyped)
@@ -10673,13 +10700,6 @@ Net::HTTPRedirection::EXCEPTION_TYPE = Net::HTTPRetriableError
 
 Net::HTTPRedirectionCode = Net::HTTPRedirection
 
-class Net::HTTPRequestTimeout
-  HAS_BODY = ::T.let(nil, ::T.untyped)
-end
-
-class Net::HTTPRequestTimeout
-end
-
 Net::HTTPRequestURITooLarge = Net::HTTPURITooLong
 
 Net::HTTPResponceReceiver = Net::HTTPResponse
@@ -10714,7 +10734,6 @@ end
 
 class Net::IMAP
   def open_timeout(); end
-
   RESPONSE_ERRORS = ::T.let(nil, ::T.untyped)
 end
 
@@ -11197,6 +11216,11 @@ module Nokogiri::XML::Searchable
   LOOKS_LIKE_XPATH = ::T.let(nil, ::T.untyped)
 end
 
+class OAuth2::Client
+  DEFAULT_EXTRACT_ACCESS_TOKEN = ::T.let(nil, ::T.untyped)
+  RESERVED_PARAM_KEYS = ::T.let(nil, ::T.untyped)
+end
+
 class OauthCallbacksController
   def create(); end
 end
@@ -11259,6 +11283,7 @@ class OmniAuth::Strategies::GoogleOauth2
   BASE_SCOPES = ::T.let(nil, ::T.untyped)
   BASE_SCOPE_URL = ::T.let(nil, ::T.untyped)
   DEFAULT_SCOPE = ::T.let(nil, ::T.untyped)
+  IMAGE_SIZE_REGEXP = ::T.let(nil, ::T.untyped)
   USER_INFO_URL = ::T.let(nil, ::T.untyped)
 end
 
@@ -11332,10 +11357,6 @@ class OpenSSL::BN
   def /(_); end
 
   def negative?(); end
-end
-
-module OpenSSL::Buffering
-  include ::ActiveSupport::ToJsonWithActiveSupportEncoder
 end
 
 module OpenSSL::KDF
@@ -13420,11 +13441,6 @@ class Plan::DropIssue
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
-class Plan::IssueList
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
 class Plan::Plan
   extend ::T::Private::Methods::SingletonMethodHooks
   extend ::T::Private::Methods::MethodHooks
@@ -13613,6 +13629,7 @@ module Psych
 end
 
 module Psych
+  extend ::Bootsnap::CompileCache::YAML::Patch
   def self.add_builtin_type(type_tag, &block); end
 
   def self.add_domain_type(domain, type_tag, &block); end
@@ -13932,8 +13949,20 @@ class RSpec::Matchers::BuiltIn::BaseMatcher
   UNDEFINED = ::T.let(nil, ::T.untyped)
 end
 
+class RSpec::Matchers::BuiltIn::BePredicate
+  REGEX = ::T.let(nil, ::T.untyped)
+end
+
 class RSpec::Matchers::BuiltIn::Equal
   LITERAL_SINGLETONS = ::T.let(nil, ::T.untyped)
+end
+
+class RSpec::Matchers::BuiltIn::Has
+  REGEX = ::T.let(nil, ::T.untyped)
+end
+
+class RSpec::Matchers::BuiltIn::RaiseError
+  UndefinedValue = ::T.let(nil, ::T.untyped)
 end
 
 RSpec::Matchers::BuiltIn::SpecificValuesChange::MATCH_ANYTHING = BasicObject
@@ -14861,6 +14890,142 @@ class Rack::NullLogger
 end
 
 class Rack::NullLogger
+end
+
+module Rack::Protection
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class Rack::Protection::AuthenticityToken
+  TOKEN_LENGTH = ::T.let(nil, ::T.untyped)
+end
+
+class Rack::Protection::Base
+  DEFAULT_OPTIONS = ::T.let(nil, ::T.untyped)
+end
+
+class Rack::Protection::ContentSecurityPolicy
+  def csp_policy(); end
+  DIRECTIVES = ::T.let(nil, ::T.untyped)
+  NO_ARG_DIRECTIVES = ::T.let(nil, ::T.untyped)
+end
+
+class Rack::Protection::ContentSecurityPolicy
+end
+
+class Rack::Protection::CookieTossing
+  def bad_cookies(); end
+
+  def cookie_paths(path); end
+
+  def empty_cookie(host, path); end
+
+  def redirect(env); end
+
+  def remove_bad_cookies(request, response); end
+
+  def session_key(); end
+end
+
+class Rack::Protection::CookieTossing
+end
+
+class Rack::Protection::EscapedParams
+  def escape(object); end
+
+  def escape_hash(hash); end
+
+  def escape_string(str); end
+
+  def handle(hash); end
+
+  def initialize(*_); end
+end
+
+class Rack::Protection::EscapedParams
+  extend ::Rack::Utils
+end
+
+class Rack::Protection::FormToken
+end
+
+class Rack::Protection::FormToken
+end
+
+class Rack::Protection::FrameOptions
+  def frame_options(); end
+end
+
+class Rack::Protection::FrameOptions
+end
+
+class Rack::Protection::HttpOrigin
+  def base_url(env); end
+  DEFAULT_PORTS = ::T.let(nil, ::T.untyped)
+end
+
+class Rack::Protection::HttpOrigin
+end
+
+class Rack::Protection::IPSpoofing
+end
+
+class Rack::Protection::IPSpoofing
+end
+
+class Rack::Protection::JsonCsrf
+  def close_body(body); end
+
+  def has_vector?(request, headers); end
+
+  def react_and_close(env, body); end
+end
+
+class Rack::Protection::JsonCsrf
+end
+
+class Rack::Protection::PathTraversal
+  def cleanup(path); end
+end
+
+class Rack::Protection::PathTraversal
+end
+
+class Rack::Protection::ReferrerPolicy
+end
+
+class Rack::Protection::ReferrerPolicy
+end
+
+class Rack::Protection::RemoteReferrer
+end
+
+class Rack::Protection::RemoteReferrer
+end
+
+class Rack::Protection::RemoteToken
+end
+
+class Rack::Protection::RemoteToken
+end
+
+class Rack::Protection::SessionHijacking
+end
+
+class Rack::Protection::SessionHijacking
+end
+
+class Rack::Protection::StrictTransport
+  def strict_transport(); end
+end
+
+class Rack::Protection::StrictTransport
+end
+
+class Rack::Protection::XSSHeader
+end
+
+class Rack::Protection::XSSHeader
 end
 
 class Rack::Proxy
@@ -16258,34 +16423,8 @@ module RubyToken
   def self.def_token(token_n, super_token=T.unsafe(nil), reading=T.unsafe(nil), *opts); end
 end
 
-module RubyVM::AbstractSyntaxTree
-end
-
 class RubyVM::AbstractSyntaxTree::Node
-  def children(); end
-
-  def first_column(); end
-
-  def first_lineno(); end
-
-  def last_column(); end
-
-  def last_lineno(); end
-
   def pretty_print_children(q, names=T.unsafe(nil)); end
-
-  def type(); end
-end
-
-class RubyVM::AbstractSyntaxTree::Node
-end
-
-module RubyVM::AbstractSyntaxTree
-  def self.of(_); end
-
-  def self.parse(_); end
-
-  def self.parse_file(_); end
 end
 
 class RubyVM::InstructionSequence
@@ -16607,6 +16746,22 @@ class SortedSet
   def self.setup(); end
 end
 
+class Sprint::Sprint
+  extend ::T::Private::Methods::SingletonMethodHooks
+  extend ::T::Private::Methods::MethodHooks
+end
+
+module Sprint::SprintRepository
+  extend ::T::Private::Abstract::Hooks
+  extend ::T::InterfaceWrapper::Helpers
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class SprintRepository::AR
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 module Sprockets
   VERSION = ::T.let(nil, ::T.untyped)
 end
@@ -16838,6 +16993,11 @@ module Sprockets
   extend ::Sprockets::DigestUtils
 end
 
+class StartSprintUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class String
   include ::JSON::Ext::Generator::GeneratorMethods::String
   def parse_csv(**options); end
@@ -16869,6 +17029,15 @@ Struct::Tms = Process::Tms
 
 class Symbol
   def self.from_msgpack_ext(data); end
+end
+
+class TZInfo::JulianDayOfYearTransitionRule
+  LEAP = ::T.let(nil, ::T.untyped)
+  YEAR = ::T.let(nil, ::T.untyped)
+end
+
+class TZInfo::ZoneinfoTimezoneInfo
+  GENERATE_UP_TO = ::T.let(nil, ::T.untyped)
 end
 
 class Team::Member

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/concurrent-ruby/all/concurrent-ruby.rbi
 #
-# concurrent-ruby-1.1.7
+# concurrent-ruby-1.1.8
 
 module Concurrent
   def abort_transaction; end
@@ -253,6 +253,12 @@ class Concurrent::Map < Concurrent::Collection::MriMapBackend
   def validate_options_hash!(options); end
   def value?(value); end
   def values; end
+end
+module Concurrent::ThreadSafe
+end
+module Concurrent::ThreadSafe::Util
+end
+class Concurrent::Hash < Hash
 end
 class Concurrent::Error < StandardError
 end
@@ -906,13 +912,7 @@ class Concurrent::Atom < Concurrent::Synchronization::Object
   def value=(value); end
   include Concurrent::Concern::Observable
 end
-module Concurrent::ThreadSafe
-end
-module Concurrent::ThreadSafe::Util
-end
 class Concurrent::Array < Array
-end
-class Concurrent::Hash < Hash
 end
 class Concurrent::Set < Set
 end

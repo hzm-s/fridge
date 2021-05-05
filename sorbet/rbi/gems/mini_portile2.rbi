@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/mini_portile2/all/mini_portile2.rbi
 #
-# mini_portile2-2.5.0
+# mini_portile2-2.5.1
 
 class MiniPortile
   def activate; end
@@ -29,7 +29,7 @@ class MiniPortile
   def download_file_ftp(uri, full_path); end
   def download_file_http(url, full_path, count = nil); end
   def downloaded?; end
-  def execute(action, command, options = nil); end
+  def execute(action, command, command_opts = nil); end
   def extract; end
   def extract_file(file, target); end
   def files; end
@@ -55,6 +55,8 @@ class MiniPortile
   def patch_files=(arg0); end
   def path; end
   def port_path; end
+  def self.mingw?; end
+  def self.mswin?; end
   def self.windows?; end
   def tar_compression_switch(filename); end
   def tar_exe; end

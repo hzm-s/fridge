@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/omniauth-oauth2/all/omniauth-oauth2.rbi
 #
-# omniauth-oauth2-1.6.0
+# omniauth-oauth2-1.7.1
 
 module OmniAuth
 end
@@ -22,6 +22,8 @@ class OmniAuth::Strategies::OAuth2
   def client; end
   def deep_symbolize(options); end
   def options_for(option); end
+  def pkce_authorize_params; end
+  def pkce_token_params; end
   def request_phase; end
   def self.inherited(subclass); end
   def token_params; end

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/activesupport/all/activesupport.rbi
 #
-# activesupport-6.0.3.3
+# activesupport-6.0.3.6
 
 class Hash
   def _deep_transform_keys_in_object!(object, &block); end
@@ -36,7 +36,7 @@ class Hash
   def reverse_merge!(other_hash); end
   def reverse_merge(other_hash); end
   def reverse_update(other_hash); end
-  def self.from_xml(xml, disallowed_types = nil); end
+  def self.from_trusted_xml(xml); end
   def self.try_convert(arg0); end
   def slice!(*keys); end
   def stringify_keys!; end
@@ -946,7 +946,7 @@ module ActiveSupport::Dependencies
   def self.autoload_once_paths; end
   def self.autoload_once_paths=(obj); end
   def self.autoload_paths; end
-  def self.autoload_paths=(o); end
+  def self.autoload_paths=(obj); end
   def self.autoloaded_constants; end
   def self.autoloaded_constants=(obj); end
   def self.constant_watch_stack; end
@@ -2160,7 +2160,7 @@ module Digest::UUID
   def self.uuid_v5(uuid_namespace, name); end
 end
 class File < IO
-  def self.empty?(arg0); end
+  def self.atomic_write(file_name, temp_dir = nil); end
   def self.probe_stat_in(dir); end
 end
 module ActiveSupport::MarshalWithAutoloading
