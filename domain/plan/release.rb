@@ -10,10 +10,10 @@ module Plan
 
       sig {params(number: Integer, description: T.nilable(String)).returns(T.attached_class)}
       def create(number, description = nil)
-        new(number, description, IssueList.new)
+        new(number, description, Issue::List.new)
       end
 
-      sig {params(number: Integer, description: T.nilable(String), issues: IssueList).returns(T.attached_class)}
+      sig {params(number: Integer, description: T.nilable(String), issues: Issue::List).returns(T.attached_class)}
       def from_repository(number, description, issues)
         new(number, description, issues)
       end
@@ -25,10 +25,10 @@ module Plan
     sig {returns(T.nilable(String))}
     attr_reader :description
 
-    sig {returns(IssueList)}
+    sig {returns(Issue::List)}
     attr_reader :issues
 
-    sig {params(number: Integer, description: T.nilable(String), issues: IssueList).void}
+    sig {params(number: Integer, description: T.nilable(String), issues: Issue::List).void}
     def initialize(number, description, issues)
       @number= number
       @description = description

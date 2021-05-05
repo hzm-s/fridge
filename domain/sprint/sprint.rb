@@ -10,10 +10,10 @@ module Sprint
 
       sig {params(product_id: Product::Id, number: Integer).returns(T.attached_class)}
       def start(product_id, number)
-        new(Id.create, product_id, number, false, Plan::IssueList.new)
+        new(Id.create, product_id, number, false, Issue::List.new)
       end
 
-      sig {params(id: Id, product_id: Product::Id, number: Integer, is_finished: T::Boolean, issues: Plan::IssueList).returns(T.attached_class)}
+      sig {params(id: Id, product_id: Product::Id, number: Integer, is_finished: T::Boolean, issues: Issue::List).returns(T.attached_class)}
       def from_repository(id, product_id, number, is_finished, issues)
         new(id, product_id, number, is_finished, issues)
       end
@@ -28,10 +28,10 @@ module Sprint
     sig {returns(Integer)}
     attr_reader :number
 
-    sig {returns(Plan::IssueList)}
+    sig {returns(Issue::List)}
     attr_reader :issues
 
-    sig {params(id: Id, product_id: Product::Id, number: Integer, is_finished: T::Boolean, issues: Plan::IssueList).void}
+    sig {params(id: Id, product_id: Product::Id, number: Integer, is_finished: T::Boolean, issues: Issue::List).void}
     def initialize(id, product_id, number, is_finished, issues)
       @id = id
       @product_id = product_id

@@ -1,13 +1,13 @@
 # typed: false
 require 'domain_helper'
 
-module Plan
-  RSpec.describe IssueList do
-    let(:issue_a) { Issue::Id.create }
-    let(:issue_b) { Issue::Id.create }
-    let(:issue_c) { Issue::Id.create }
-    let(:issue_d) { Issue::Id.create }
-    let(:issue_e) { Issue::Id.create }
+module Issue
+  RSpec.describe List do
+    let(:issue_a) { Id.create }
+    let(:issue_b) { Id.create }
+    let(:issue_c) { Id.create }
+    let(:issue_d) { Id.create }
+    let(:issue_e) { Id.create }
 
     describe 'Append' do
       it do
@@ -110,7 +110,7 @@ module Plan
 
       it do
         a = described_class.new([issue_a])
-        b = described_class.new([Issue::Id.from_string(issue_a.to_s)])
+        b = described_class.new([Id.from_string(issue_a.to_s)])
         expect(a.have_same_issue?(b)).to be true
       end
     end

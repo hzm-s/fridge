@@ -15,5 +15,6 @@ module Issue
   autoload :AcceptanceCriteria, 'issue/acceptance_criteria'
   autoload :StoryPoint, 'issue/story_point'
   autoload :Statuses, 'issue/statuses'
+  autoload :List, 'issue/list'
   autoload :IssueRepository, 'issue/issue_repository'
 end

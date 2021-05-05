@@ -27,7 +27,7 @@ class Dao::Release < ApplicationRecord
     Plan::Release.from_repository(
       number.to_i,
       description,
-      issues.map { |i| Issue::Id.from_string(i) }.then { |l| Plan::IssueList.new(l) }
+      issues.map { |i| Issue::Id.from_string(i) }.then { |l| Issue::List.new(l) }
     )
   end
 end

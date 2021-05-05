@@ -14,10 +14,6 @@ module PlanDomainSupport
     plan
   end
 
-  def issue_list(*issue_ids)
-    Plan::IssueList.new(issue_ids)
-  end
-
   def fetch_or_append_release(plan, release_number)
     plan.release_of(release_number)
   rescue Plan::ReleaseNotFound

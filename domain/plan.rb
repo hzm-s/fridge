@@ -9,5 +9,4 @@ module Plan
   autoload :Plan, 'plan/plan'
   autoload :Release, 'plan/release'
   autoload :PlanRepository, 'plan/plan_repository'
-  autoload :IssueList, 'plan/issue_list'
 end

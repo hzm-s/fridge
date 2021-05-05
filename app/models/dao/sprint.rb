@@ -27,6 +27,6 @@ class Dao::Sprint < ApplicationRecord
   private
 
   def read_issues
-    Plan::IssueList.new
+    Issue::List.new
   end
 end
