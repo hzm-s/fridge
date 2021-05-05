@@ -29,5 +29,17 @@ module Sprint
         end
       end
     end
+
+    describe 'Append issue' do
+      let(:issue_a) { Issue::Id.create }
+      let(:issue_b) { Issue::Id.create }
+      let(:issue_c) { Issue::Id.create }
+
+      it do
+        sprint = described_class.start(product_id, 1)
+        sprint.append_issue(issue_b)
+        expect(sprint.issues).to eq issue_list(issue_b)
+      end
+    end
   end
 end

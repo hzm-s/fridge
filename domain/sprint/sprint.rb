@@ -10,7 +10,7 @@ module Sprint
 
       sig {params(product_id: Product::Id, number: Integer).returns(T.attached_class)}
       def start(product_id, number)
-        new(Id.create, product_id, number, false)
+        new(Id.create, product_id, number, false, Plan::IssueList.new([]))
       end
 
       sig {params(id: Id, product_id: Product::Id, number: Integer, is_finished: T::Boolean).returns(T.attached_class)}
@@ -28,17 +28,21 @@ module Sprint
     sig {returns(Integer)}
     attr_reader :number
 
-    sig {params(id: Id, product_id: Product::Id, number: Integer, is_finished: T::Boolean).void}
-    def initialize(id, product_id, number, is_finished)
+    sig {returns(Plan::IssueList)}
+    attr_reader :issues
+
+    sig {params(id: Id, product_id: Product::Id, number: Integer, is_finished: T::Boolean, issues: Plan::IssueList).void}
+    def initialize(id, product_id, number, is_finished, issues)
       @id = id
       @product_id = product_id
       @number = number
       @is_finished = is_finished
+      @issues = issues
     end
 
-    sig {returns(T::Boolean)}
-    def finished?
-      @is_finished
+    sig {params(issue_id: Issue::Id).void}
+    def append_issue(issue_id)
+      @issues = @issues.append(issue_id)
     end
 
     sig {void}
@@ -46,6 +50,11 @@ module Sprint
       raise AlreadyFinished if finished?
 
       @is_finished = true
+    end
+
+    sig {returns(T::Boolean)}
+    def finished?
+      @is_finished
     end
   end
 end
