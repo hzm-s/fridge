@@ -1,6 +1,6 @@
 # typed: false
 class Dao::Sprint < ApplicationRecord
-  has_many :issues, class_name: 'Dao::AssignedIssue', foreign_key: :dao_sprint_id, dependent: :destroy
+  has_many :issues, -> { order(:id) }, class_name: 'Dao::AssignedIssue', foreign_key: :dao_sprint_id, dependent: :destroy
 
   def write(sprint)
     self.attributes = {
@@ -27,6 +27,7 @@ class Dao::Sprint < ApplicationRecord
   private
 
   def read_issues
-    Issue::List.new
+    issues.map { |i| Issue::Id.from_string(i.dao_issue_id) }
+      .then { |ids| Issue::List.new(ids) }
   end
 end

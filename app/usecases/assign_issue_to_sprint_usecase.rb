@@ -14,7 +14,11 @@ class AssignIssueToSprintUsecase < UsecaseBase
   def perform(product_id, roles, issue_id)
     issue = @issue_repository.find_by_id(issue_id)
     sprint = @sprint_repository.current(product_id)
+
     issue.assign_to_sprint(roles)
+    sprint.append_issue(issue.id)
+
     @issue_repository.store(issue)
+    @sprint_repository.store(sprint)
   end
 end
