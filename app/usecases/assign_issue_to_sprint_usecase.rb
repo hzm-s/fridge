@@ -6,8 +6,8 @@ class AssignIssueToSprintUsecase < UsecaseBase
 
   sig {void}
   def initialize
-    @issue_repository = T.let(IssueRepository::AR, Issue::IssueRepository)
     @sprint_repository = T.let(SprintRepository::AR, Sprint::SprintRepository)
+    @issue_repository = T.let(IssueRepository::AR, Issue::IssueRepository)
   end
 
   sig {params(product_id: Product::Id, roles: Team::RoleSet, issue_id: Issue::Id).void}
@@ -15,10 +15,9 @@ class AssignIssueToSprintUsecase < UsecaseBase
     issue = @issue_repository.find_by_id(issue_id)
     sprint = @sprint_repository.current(product_id)
 
-    issue.assign_to_sprint(roles)
-    sprint.append_issue(issue.id)
-
-    @issue_repository.store(issue)
-    @sprint_repository.store(sprint)
+    transaction do
+      Sprint::AssignIssue.new(@sprint_repository, @issue_repository)
+        .assign(roles, sprint, issue)
+    end
   end
 end
