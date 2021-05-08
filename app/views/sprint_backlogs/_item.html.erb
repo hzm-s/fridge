@@ -11,9 +11,14 @@
   </span>
   <div class="sbl-item__body">
     <div class="sbl-item__issue">
-      <p class="sbi-issue__content">
-        <%= item[:content].html_safe %>
-      </p>
+      <div class="sbi-issue__main">
+        <p class="sbi-issue__content">
+          <%= item[:content].html_safe %>
+        </p>
+        <div class="ml-2">
+          <%= render partial: 'issue_menu' %>
+        </div>
+      </div>
       <div class="sbi-issue__ac-list">
         <% item[:criteria].each do |c| %>
           <p class="sbi-issue__ac-item">
@@ -26,18 +31,7 @@
       <div class="sbi-task__list">
         <%= render partial: 'task', collection: tasks %>
       </div>
-      <div class="sbi-task__form">
-        <form>
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="<%=t '.task_placeholder' %>">
-            <div class="input-group-append">
-              <button class="btn btn-success btn-lean">
-                <i class="fa fa-plus"></i>
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
+      <%= render partial: 'task_form' %>
     </div>
   </div>
 </div>

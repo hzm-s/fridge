@@ -99,5 +99,5 @@ ja:
     show:
       title: スプリントバックログ
       start: 開始する
-    item:
-      task_placeholder: タスクを追加
+    task_form:
+      placeholder: タスクを追加
