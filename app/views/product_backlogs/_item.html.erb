@@ -1,5 +1,5 @@
 <% can_move = authorize(:update_plan, current_team_member_roles) %>
-<%= content_tag :div, id: "js-pbl-item-#{item.id}", class: pbl_item_css_classes(item), data: { id: item.id } do %>
+<%= content_tag :div, id: "js-pbl-item-#{item.id}", class: pbl_item_css_classes(item), data: { id: item.id, "test-issue-#{item.id}-#{item.status}": 1 } do %>
   <div class="pbl-item">
     <span class="<%= pbl_item_grip_css_classes(can_move) %>"<%= can_move && ' data-test-item-movable=1' %>>
       <i class="fas fa-grip-vertical"></i>
