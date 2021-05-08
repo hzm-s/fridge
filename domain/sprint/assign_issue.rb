@@ -11,8 +11,10 @@ module Sprint
       @issue_repository = issue_repository
     end
 
-    sig {params(roles: Team::RoleSet, sprint: Sprint, issue: Issue::Issue).void}
+    sig {params(roles: Team::RoleSet, sprint: T.nilable(Sprint), issue: Issue::Issue).void}
     def assign(roles, sprint, issue)
+      raise NotStarted unless sprint
+
       issue.assign_to_sprint(roles)
       sprint.append_issue(issue.id)
 
