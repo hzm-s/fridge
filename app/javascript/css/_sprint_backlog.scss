@@ -38,6 +38,7 @@
 }
 
 .sbl-item__issue {
+  display: flex;
   width: 50%;
   box-sizing: border-box;
   padding-right: .75rem;
@@ -49,12 +50,11 @@
 }
 
 .sbi-issue__main {
-  display: flex;
+  flex-grow: 1;
 }
 
 .sbi-issue__content {
   @include nf;
-  flex-grow: 1;
   background-color: $gray-200;
   border-radius: .25rem;
   padding: .325rem .5rem;

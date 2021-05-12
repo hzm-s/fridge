@@ -21,7 +21,7 @@ Rails.application.routes.draw do
 
   resources :feature_estimations, only: [:update]
 
-  resources :sprints, only: [:create]
+  resources :sprints, only: [:new, :create]
   resources :sprint_backlogs, param: :product_id, only: [:show]
 
   scope 'current_sprint/:product_id', as: :current_sprint, module: :current_sprint do

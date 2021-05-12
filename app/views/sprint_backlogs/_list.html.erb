@@ -1,23 +1,12 @@
-<% items = [
-  {
-    content: 'Devとしてアイテムの大きさを見積もりたい<br>それは優先順位の判断材料を提供したいから',
-    criteria: [
-      'ストーリーポイントで見積もれること',
-      'Devのみ見積もりできること',
-      '「わからない」も設定できること',
-    ]
-  },
-  {
-    content: 'メンバーとしてPBIをスプリントで作業できるようにしたい<br>それはプロダクトを開発する必要があるから',
-    criteria: [
-      'POのみ操作できること',
-      'DevとSMは操作できないことがわかること',
-    ]
-  },
-] %>
-<div class="sbl-list" test-sprint-backlog-<%= sprint.id %>="1">
-  <%= render partial: 'item', collection: items %>
-</div>
+<% if items.any? %>
+  <div class="sbl-list">
+    <%= render partial: 'item', collection: items %>
+  </div>
+<% else %>
+  <p class="text-muted text-center my-3">
+    <%=t '.empty' %>
+  </p>
+<% end %>
 <div class="mt-3">
   <button class="btn btn-outline-success">
     <%=t 'domain.sprint.finish' %>

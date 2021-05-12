@@ -37,6 +37,11 @@ module IssueSupport
     ScheduleIssueUsecase.perform(product_id, team_roles(:po), issue_id, release, 0)
   end
 
+  def assign_issue_to_sprint(product_id, issue_id, sprint = nil)
+    sprint ||= SprintRepository::AR.current(product_id)
+    AssignIssueToSprintUsecase.perform(product_id, team_roles(:po), issue_id)
+  end
+
   private
 
   def perform_plan_issue(product_id, type, desc, release_number)

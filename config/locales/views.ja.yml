@@ -99,5 +99,7 @@ ja:
     show:
       title: スプリントバックログ
       start: 開始する
+    list:
+      empty: アイテムはありません
     task_form:
       placeholder: タスクを追加

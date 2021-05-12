@@ -14,26 +14,20 @@ RSpec.describe 'sprint_backlogs' do
       it do
         get sprint_backlog_path(product.id)
         follow_redirect!
-
-        expect(response.body).to_not include 'test-sprint-backlog'
         expect(response.body).to include 'test-start-sprint'
       end
     end
 
-    xcontext 'current sprint is exists' do
+    context 'current sprint is exists' do
       let!(:sprint) { start_sprint(product.id) }
 
       it do
         get sprint_backlog_path(product.id)
-
-        aggregate_failures do
-          expect(response.body).to include "test-sprint-backlog-#{sprint.id}"
-          expect(response.body).to_not include 'test-start-sprint'
-        end
+        expect(response.body).to include "test-sprint-backlog-#{sprint.id}"
       end
     end
 
-    xcontext 'issues assigned' do
+    context 'issues assigned' do
       let!(:issue) { plan_issue(product.id, 'ABC', acceptance_criteria: %w(XYZ), size: 3, release: 1) }
 
       before do
