@@ -9,7 +9,7 @@ class CurrentSprint::IssuesController < ApplicationController
       issue_id,
     )
   rescue Sprint::NotStarted => e
-    redirect_to sprint_backlog_path(product_id: current_product_id), flash: flash_success(t_domain_error(e))
+    redirect_to sprint_backlog_path(product_id: current_product_id), flash: flash_success('sprint.not_started')
   else
     @issue = IssueQuery.call(issue_id)
   end

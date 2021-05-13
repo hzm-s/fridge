@@ -16,6 +16,8 @@ ja:
       update: リリースを更新しました
       destroy: リリースを削除しました
       not_empty: アイテムを含むリリースは削除できません
+    sprint:
+      not_started: スプリントを開始してください
 
   application:
     user_menu:
@@ -95,10 +97,13 @@ ja:
     list:
       title: メンバー
 
+  sprints:
+    new:
+      title: 開始する
+
   sprint_backlogs:
     show:
       title: スプリントバックログ
-      start: 開始する
     list:
       empty: アイテムはありません
     task_form:

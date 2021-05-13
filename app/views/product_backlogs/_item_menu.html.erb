@@ -4,7 +4,7 @@
   <% end -%>
   <div class="dropdown-menu dropdown-menu-right">
     <% if authorize(:assign_issue_to_sprint, current_team_member_roles, item.status) %>
-      <%= button_to '#', remote: true, class: 'dropdown-item', data: { "test_assign_issue_to_sprint_#{item.id}" => 1 } do %>
+      <%= button_to current_sprint_issues_path(product_id: current_product_id, issue_id: item.id.to_s), remote: true, class: 'dropdown-item', data: { "test_assign_issue_to_sprint_#{item.id}" => 1 } do %>
         <i class="fas fa-share"></i>
         <%=t 'domain.issue.assign_to_sprint' %>
       <% end %>
