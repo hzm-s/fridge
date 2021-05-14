@@ -19,9 +19,11 @@
       </div>
     </div>
     <div class="sbl-item__task">
-      <div class="sbi-task__list">
-        <%= render partial: 'task', collection: [] %>
-      </div>
+      <% if item.tasks.any? %>
+        <div class="sbi-task__list">
+          <%= render partial: 'task', collection: [] %>
+        </div>
+      <% end %>
       <%= render partial: 'task_form' %>
     </div>
   </div>

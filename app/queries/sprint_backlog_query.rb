@@ -8,14 +8,20 @@ module SprintBacklogQuery
           .where(dao_sprint_id: sprint_id)
 
       issues = assigned_issues.map do |ai|
-        IssueStruct.new(ai.issue)
+        SprintBacklogItemStruct.new(ai.issue)
       end
 
-      IssueListStruct.new(issues: issues)
+      SprintBacklogStruct.new(issues: issues)
     end
   end
 
-  class IssueListStruct < T::Struct
-    prop :issues, T::Array[::IssueStruct]
+  class SprintBacklogItemStruct < SimpleDelegator
+    def tasks
+      []
+    end
+  end
+
+  class SprintBacklogStruct < T::Struct
+    prop :issues, T::Array[SprintBacklogItemStruct]
   end
 end
