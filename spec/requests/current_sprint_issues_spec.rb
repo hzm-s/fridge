@@ -25,7 +25,8 @@ RSpec.describe 'current_sprint/:product_id/issues' do
       it do
         post current_sprint_issues_path(product_id: product.id, format: :js), params: { issue_id: issue.id.to_s }
         follow_redirect!
-        expect(response.body).to include I18n.t('domain.errors.sprint.not_started')
+        follow_redirect!
+        expect(response.body).to include I18n.t('feedbacks.sprint.not_started')
       end
     end
   end
