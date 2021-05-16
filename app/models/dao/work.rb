@@ -10,4 +10,19 @@ class Dao::Work < ApplicationRecord
       self.tasks.build(number: t.number, content: t.content)
     end
   end
+
+  def read
+    Work::Work.from_repository(
+      Issue::Id.from_string(dao_issue_id),
+      read_tasks,
+    )
+  end
+
+  private
+
+  def read_tasks
+    tasks.map do |t|
+      Work::Task.new(t.number, t.content)
+    end
+  end
 end

@@ -12,6 +12,11 @@ module Work
       def create(issue_id)
         new(issue_id, [])
       end
+
+      sig {params(issue_id: Issue::Id, tasks: T::Array[Task]).void}
+      def from_repository(issue_id, tasks)
+        new(issue_id, tasks)
+      end
     end
 
     sig {returns(Issue::Id)}
