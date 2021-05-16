@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_05_010558) do
+ActiveRecord::Schema.define(version: 2021_05_16_002510) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -99,6 +99,16 @@ ActiveRecord::Schema.define(version: 2021_05_05_010558) do
     t.index ["dao_product_id"], name: "index_dao_sprints_on_dao_product_id"
   end
 
+  create_table "dao_tasks", force: :cascade do |t|
+    t.bigint "dao_work_id"
+    t.integer "number", null: false
+    t.string "content", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["dao_work_id", "number"], name: "index_dao_tasks_on_dao_work_id_and_number", unique: true
+    t.index ["dao_work_id"], name: "index_dao_tasks_on_dao_work_id"
+  end
+
   create_table "dao_team_members", force: :cascade do |t|
     t.uuid "dao_team_id"
     t.uuid "dao_person_id"
@@ -116,6 +126,13 @@ ActiveRecord::Schema.define(version: 2021_05_05_010558) do
     t.index ["dao_product_id"], name: "index_dao_teams_on_dao_product_id"
   end
 
+  create_table "dao_works", force: :cascade do |t|
+    t.uuid "dao_issue_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["dao_issue_id"], name: "index_dao_works_on_dao_issue_id"
+  end
+
   add_foreign_key "app_user_accounts", "dao_people"
   add_foreign_key "app_user_profiles", "app_user_accounts"
   add_foreign_key "dao_acceptance_criteria", "dao_issues"
@@ -124,6 +141,8 @@ ActiveRecord::Schema.define(version: 2021_05_05_010558) do
   add_foreign_key "dao_issues", "dao_products"
   add_foreign_key "dao_releases", "dao_products"
   add_foreign_key "dao_sprints", "dao_products"
+  add_foreign_key "dao_tasks", "dao_works"
   add_foreign_key "dao_team_members", "dao_teams"
   add_foreign_key "dao_teams", "dao_products"
+  add_foreign_key "dao_works", "dao_issues"
 end
