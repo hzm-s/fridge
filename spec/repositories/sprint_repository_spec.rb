@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-describe SprintRepository::AR do
+RSpec.describe SprintRepository::AR do
   let!(:product) { create_product }
 
   describe 'Add' do
