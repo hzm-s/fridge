@@ -9,9 +9,9 @@ RSpec.describe SprintBacklogQuery do
   let!(:sprint) { start_sprint(product.id) }
 
   before do
-    assign_issue_to_sprint(product.id, issue_c.id, sprint)
-    assign_issue_to_sprint(product.id, issue_a.id, sprint)
-    assign_issue_to_sprint(product.id, issue_b.id, sprint)
+    assign_issue_to_sprint(product.id, issue_c.id)
+    assign_issue_to_sprint(product.id, issue_a.id)
+    assign_issue_to_sprint(product.id, issue_b.id)
   end
 
   it do

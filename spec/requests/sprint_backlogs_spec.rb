@@ -31,8 +31,8 @@ RSpec.describe 'sprint_backlogs' do
       let!(:issue) { plan_issue(product.id, 'ABC', acceptance_criteria: %w(XYZ), size: 3, release: 1) }
 
       before do
-        sprint = start_sprint(product.id)
-        assign_issue_to_sprint(product.id, issue.id, sprint.id)
+        start_sprint(product.id)
+        assign_issue_to_sprint(product.id, issue.id)
       end
 
       it do
