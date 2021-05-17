@@ -13,7 +13,7 @@ module Work
         new(issue_id, [])
       end
 
-      sig {params(issue_id: Issue::Id, tasks: T::Array[Task]).void}
+      sig {params(issue_id: Issue::Id, tasks: T::Array[Task]).returns(T.attached_class)}
       def from_repository(issue_id, tasks)
         new(issue_id, tasks)
       end
@@ -37,7 +37,7 @@ module Work
       @tasks << Task.new(number, content)
     end
 
-    sig {params(number: Integer).returns(Task)}
+    sig {params(number: Integer).returns(T.nilable(Task))}
     def task_of(number)
       @tasks.find { |t| t.number == number }
     end
