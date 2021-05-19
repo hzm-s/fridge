@@ -28,6 +28,10 @@ Rails.application.routes.draw do
     resources :issues, only: [:create]
   end
 
+  scope 'works/:issue_id', as: :work do
+    resources :tasks, only: [:create]
+  end
+
   resources :teams, only: [:show] do
     resources :members, only: [:new, :create]
   end
