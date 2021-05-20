@@ -4,7 +4,7 @@ module SprintBacklogQuery
     def call(sprint_id)
       assigned_issues =
         Dao::AssignedIssue
-          .eager_load(issue: :criteria)
+          .eager_load(issue: [:criteria, { work: :tasks }])
           .where(dao_sprint_id: sprint_id)
 
       issues = assigned_issues.map do |ai|
@@ -17,7 +17,7 @@ module SprintBacklogQuery
 
   class SprintBacklogItemStruct < SimpleDelegator
     def tasks
-      []
+      Array(work&.tasks)
     end
   end
 

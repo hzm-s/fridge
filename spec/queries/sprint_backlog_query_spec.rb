@@ -24,4 +24,25 @@ RSpec.describe SprintBacklogQuery do
     issue = sbl.issues.first
     expect(issue.criteria.first.content).to eq 'CRT_C'
   end
+
+  it do
+    sbl = described_class.call(sprint.id)
+    issue = sbl.issues.first
+    expect(issue.tasks).to be_empty
+  end
+
+  it do
+    plan_task(issue_c.id, %w(Task1 Task2 Task3))
+    sbl = described_class.call(sprint.id)
+    issue = sbl.issues.first
+
+    aggregate_failures do
+      expect(issue.tasks[0].number).to eq 1
+      expect(issue.tasks[0].content).to eq 'Task1'
+      expect(issue.tasks[1].number).to eq 2
+      expect(issue.tasks[1].content).to eq 'Task2'
+      expect(issue.tasks[2].number).to eq 3
+      expect(issue.tasks[2].content).to eq 'Task3'
+    end
+  end
 end
