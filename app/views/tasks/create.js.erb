@@ -1,0 +1,2 @@
+$('#js-task-list-<%= @issue_id %>').append('<%=j render partial: 'sprint_backlogs/task', locals: { task: @task } %>')
+$('#js-task-form-<%= @issue_id %>').replaceWith('<%=j render partial: 'sprint_backlogs/task_form', locals: { issue_id: @issue_id } %>')

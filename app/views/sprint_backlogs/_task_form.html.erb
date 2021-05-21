@@ -1,12 +1,12 @@
-<div class="sbi-task__form">
-  <form>
+<div id="js-task-form-<%= issue_id %>" class="sbi-task__form">
+  <%= form_with scope: :form, url: work_tasks_path(issue_id: issue_id) do |f| %>
     <div class="input-group">
-      <input type="text" class="form-control" placeholder="<%=t '.placeholder' %>">
+      <%= f.text_field :content, class: 'form-control', placeholder: t('.placeholder'), autocomplete: 'off' %>
       <div class="input-group-append">
         <button class="btn btn-success btn-lean">
           <i class="fa fa-plus"></i>
         </button>
       </div>
     </div>
-  </form>
+  <% end %>
 </div>

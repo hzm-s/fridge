@@ -20,11 +20,11 @@
     </div>
     <div class="sbl-item__task">
       <% if item.tasks.any? %>
-        <div class="sbi-task__list">
-          <%= render partial: 'task', collection: [] %>
+        <div id="js-task-list-<%= item.id %>" class="sbi-task__list">
+          <%= render partial: 'task', collection: item.tasks %>
         </div>
       <% end %>
-      <%= render partial: 'task_form' %>
+      <%= render partial: 'task_form', locals: { issue_id: item.id } %>
     </div>
   </div>
 </div>
