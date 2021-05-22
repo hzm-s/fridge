@@ -1,5 +1,5 @@
 <div id="js-task-form-<%= issue_id %>" class="sbi-task__form">
-  <%= form_with scope: :form, url: work_tasks_path(issue_id: issue_id) do |f| %>
+  <%= form_with model: form || build_task_form, scope: :form, url: work_tasks_path(issue_id: issue_id) do |f| %>
     <div class="input-group">
       <%= f.text_field :content, class: 'form-control', placeholder: t('.placeholder'), autocomplete: 'off' %>
       <div class="input-group-append">

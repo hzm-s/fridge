@@ -24,7 +24,7 @@
           <%= render partial: 'task', collection: item.tasks %>
         </div>
       <% end %>
-      <%= render partial: 'task_form', locals: { issue_id: item.id } %>
+      <%= render partial: 'task_form', locals: { issue_id: item.id, form: nil } %>
     </div>
   </div>
 </div>

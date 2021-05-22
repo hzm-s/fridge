@@ -17,10 +17,20 @@ RSpec.describe do
       assign_issue_to_sprint(product.id, issue.id)
     end
 
-    it do
-      post work_tasks_path(issue_id: issue.id, format: :js), params: { form: { content: 'Design API' } }
-      get sprint_backlog_path(product.id)
-      expect(response.body).to include 'Design API'
+    context 'given valid params' do
+      it do
+        post work_tasks_path(issue_id: issue.id, format: :js), params: { form: { content: 'Design API' } }
+        get sprint_backlog_path(product.id)
+        expect(response.body).to include 'Design API'
+      end
+    end
+
+    context 'given invalid params' do
+      it do
+        post work_tasks_path(issue_id: issue.id, format: :js), params: { form: { content: '' } }
+
+        expect(response.body).to include(I18n.t('errors.messages.blank'))
+      end
     end
   end
 end
