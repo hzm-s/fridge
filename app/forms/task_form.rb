@@ -4,5 +4,9 @@ class TaskForm
 
   attr_accessor :content
 
-  validates :content, length: { minimum: 2, maximum: 20 }, allow_blank: true
+  validates :content, length: { minimum: 2, maximum: 20 }
+
+  def renew
+    self.class.new
+  end
 end
