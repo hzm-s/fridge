@@ -1,12 +1,10 @@
 <div id="js-task-form-<%= issue_id %>" class="sbi-task__form">
   <%= form_with model: form || build_task_form, scope: :form, url: work_tasks_path(issue_id: issue_id) do |f| %>
-    <div class="input-group">
+    <div class="d-flex">
       <%= f.text_field :content, class: 'form-control', placeholder: t('.placeholder'), autocomplete: 'off' %>
-      <div class="input-group-append">
-        <button class="btn btn-success btn-lean">
-          <i class="fa fa-plus"></i>
-        </button>
-      </div>
+      <button class="ml-1 btn btn-success btn-lean" style="height: 2.25rem !important;">
+        <i class="fa fa-plus"></i>
+      </button>
     </div>
   <% end %>
 </div>
