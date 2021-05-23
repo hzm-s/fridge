@@ -51,6 +51,9 @@
 
 .sbi-issue__main {
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .sbi-issue__content {
@@ -60,15 +63,6 @@
   padding: .325rem .5rem;
   margin-bottom: 0;
   font-size: .75rem;
-}
-
-.sbi-issue__menu {
-  color: $body-color;
-
-  &:hover {
-    color: $body-color;
-    text-decoration: none;
-  }
 }
 
 .sbi-issue__ac-list {

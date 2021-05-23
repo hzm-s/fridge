@@ -4,19 +4,7 @@
   </span>
   <div class="sbl-item__body">
     <div class="sbl-item__issue">
-      <div class="sbi-issue__main">
-        <%= simple_format(item.description, class: 'sbi-issue__content') %>
-        <div class="sbi-issue__ac-list">
-          <% item.criteria.each do |c| %>
-            <p class="sbi-issue__ac-item">
-              <%= c.content %>
-            </p>
-          <% end %>
-        </div>
-      </div>
-      <div class="ml-2">
-        <%= render partial: 'issue_menu' %>
-      </div>
+      <%= render partial: 'issue', locals: { issue: item } %>
     </div>
     <div class="sbl-item__task">
       <% if item.tasks.any? %>
