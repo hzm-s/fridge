@@ -17,7 +17,7 @@ module SprintBacklogQuery
 
   class SprintBacklogItemStruct < SimpleDelegator
     def tasks
-      Array(work&.tasks)
+      Array(work&.tasks).sort_by(&:number)
     end
   end
 
