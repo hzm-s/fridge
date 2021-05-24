@@ -7,7 +7,7 @@ class TasksController < ApplicationController
       PlanTaskUsecase.perform(@issue_id, @form.content)
 
       @form = @form.renew
-      @task = Dao::Work.find_by(dao_issue_id: @issue_id.to_s).tasks.last
+      @task = TaskListQuery.call(@issue_id.to_s).last
     else
       render :new
     end
