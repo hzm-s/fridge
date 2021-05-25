@@ -20,15 +20,28 @@ module Work
 
     describe 'Append task' do
       it do
-        work.append_task('Design API')
-        work.append_task('Impl FE')
-        work.append_task('Impl BE')
+        work.append_task('Task_A')
+        work.append_task('Task_B')
+        work.append_task('Task_C')
 
         aggregate_failures do
-          expect(work.task_of(1).content).to eq 'Design API'
-          expect(work.task_of(2).content).to eq 'Impl FE'
-          expect(work.task_of(3).content).to eq 'Impl BE'
+          expect(work.task_of(1).content).to eq 'Task_A'
+          expect(work.task_of(2).content).to eq 'Task_B'
+          expect(work.task_of(3).content).to eq 'Task_C'
         end
+      end
+    end
+
+    describe 'Remove task' do
+      it do
+        work.append_task('Task_A')
+        work.append_task('Task_B')
+        work.append_task('Task_C')
+
+        work.remove_task(1)
+        work.remove_task(3)
+
+        expect(work.tasks.map(&:content)).to eq %w(Task_B)
       end
     end
   end

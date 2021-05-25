@@ -37,6 +37,11 @@ module Work
       @tasks << Task.new(number, content)
     end
 
+    sig {params(number: Integer).void}
+    def remove_task(number)
+      @tasks.reject! { |t| t.number == number }
+    end
+
     sig {params(number: Integer).returns(T.nilable(Task))}
     def task_of(number)
       @tasks.find { |t| t.number == number }
