@@ -18,30 +18,25 @@ module Work
 
     let(:work) { described_class.create(issue_id) }
 
-    describe 'Append task' do
+    describe 'Append and Remove task' do
       it do
+        work.append_task('Task_A')
+        work.remove_task(1)
         work.append_task('Task_A')
         work.append_task('Task_B')
         work.append_task('Task_C')
+        work.append_task('Task_D')
+        work.append_task('Task_E')
+        work.remove_task(4)
+        work.append_task('Task_F')
 
         aggregate_failures do
           expect(work.task_of(1).content).to eq 'Task_A'
           expect(work.task_of(2).content).to eq 'Task_B'
           expect(work.task_of(3).content).to eq 'Task_C'
+          expect(work.task_of(5).content).to eq 'Task_E'
+          expect(work.task_of(6).content).to eq 'Task_F'
         end
-      end
-    end
-
-    describe 'Remove task' do
-      it do
-        work.append_task('Task_A')
-        work.append_task('Task_B')
-        work.append_task('Task_C')
-
-        work.remove_task(1)
-        work.remove_task(3)
-
-        expect(work.tasks.map(&:content)).to eq %w(Task_B)
       end
     end
   end
