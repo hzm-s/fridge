@@ -11,7 +11,7 @@ class DropTaskUsecase < UsecaseBase
 
   sig {params(issue_id: Issue::Id, task_number: Integer).void}
   def perform(issue_id, task_number)
-    work = @repository.find_by_issue_id(issue_id)
+    work = T.must(@repository.find_by_issue_id(issue_id))
     work.remove_task(task_number)
     @repository.store(work)
   end
