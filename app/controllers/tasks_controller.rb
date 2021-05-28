@@ -7,10 +7,16 @@ class TasksController < ApplicationController
       PlanTaskUsecase.perform(@issue_id, @form.content)
 
       @form = @form.renew
-      @task = TaskListQuery.call(@issue_id.to_s).last
+      @tasks = TaskListQuery.call(@issue_id.to_s)
     else
       render :new
     end
+  end
+
+  def destroy
+    @issue_id = Issue::Id.from_string(params[:issue_id])
+    DropTaskUsecase.perform(@issue_id, params[:number].to_i)
+    @tasks = TaskListQuery.call(@issue_id.to_s)
   end
 
   private

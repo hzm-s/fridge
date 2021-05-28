@@ -6,8 +6,15 @@ module SblHelper
     done: 'far fa-check-circle'
   }
 
+  def sbl_task_list_classes(tasks)
+    classes = %w(sbi-task__list)
+    classes << 'sbi-task__list--empty' if tasks.empty?
+    
+    classes.join(' ')
+  end
+
   def sbl_item_grip_css_classes(can_move)
-    base = "sbl-item__grip"
+    base = 'sbl-item__grip'
     return base if can_move
 
     "#{base} sbl-item__grip--disabled"

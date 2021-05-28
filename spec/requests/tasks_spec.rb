@@ -4,18 +4,16 @@ require 'rails_helper'
 RSpec.describe do
   let!(:user_account) { sign_up }
   let!(:product) { create_product(person: user_account.person_id, roles: team_roles(:dev)) }
+  let!(:issue) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1) }
 
   before do
     sign_in(user_account)
+
+    start_sprint(product.id)
+    assign_issue_to_sprint(product.id, issue.id)
   end
 
   describe 'create' do
-    let!(:issue) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1) }
-
-    before do
-      start_sprint(product.id)
-      assign_issue_to_sprint(product.id, issue.id)
-    end
 
     context 'given valid params' do
       it do
@@ -31,6 +29,18 @@ RSpec.describe do
 
         expect(response.body).to include(I18n.t('errors.messages.blank'))
       end
+    end
+  end
+
+  describe 'destroy' do
+    before do
+      plan_task(issue.id, %w(Tasuku1 Tasuku2 Tasuku3))
+    end
+
+    it do
+      delete work_task_path(issue_id: issue.id, number: 2, format: :js)
+
+      expect(response.body).to_not include 'Tasuku2'
     end
   end
 end

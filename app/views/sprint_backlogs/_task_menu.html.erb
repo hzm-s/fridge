@@ -3,15 +3,15 @@
     <i class="fas fa-ellipsis-h"></i>
   <% end -%>
   <div class="dropdown-menu dropdown-menu-right">
-    <%= link_to '', class: 'dropdown-item', data: { "test_start_task_#{}" => 1 } do %>
+    <%= link_to '', class: 'dropdown-item', data: { "test_start_task" => 1 } do %>
       <i class="fas fa-play"></i>
       <%=t 'domain.task.start' %>
     <% end %>
-    <%= link_to '', class: 'dropdown-item', data: { "test_done_task_#{}" => 1 } do %>
+    <%= link_to '', class: 'dropdown-item', data: { "test_done_task" => 1 } do %>
       <i class="fas fa-check"></i>
       <%=t 'domain.task.done' %>
     <% end %>
-    <%= link_to '', class: 'dropdown-item', data: { "test_suspend_task_#{}" => 1 } do %>
+    <%= link_to '', class: 'dropdown-item', data: { "test_suspend_task" => 1 } do %>
       <i class="fas fa-pause"></i>
       <%=t 'domain.task.suspend' %>
     <% end %>
@@ -20,7 +20,7 @@
       <i class="fas fa-edit"></i>
       <%=t 'navs.edit' %>
     <% end %>
-    <%= link_to '', method: :delete, class: 'dropdown-item text-danger', data: { confirm: t('navs.confirm_delete'), "test_remove_task_#{}" => 1 } do %>
+    <%= link_to work_task_path(issue_id: issue_id, number: task.number), method: :delete, remote: true, class: 'dropdown-item text-danger', data: { confirm: t('navs.confirm_delete'), "test_remove_task" => 1 } do %>
       <i class="fas fa-trash-alt"></i>
       <%=t 'navs.delete' %>
     <% end %>

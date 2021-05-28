@@ -7,11 +7,7 @@
       <%= render partial: 'issue', locals: { issue: item } %>
     </div>
     <div class="sbl-item__task">
-      <% if item.tasks.any? %>
-        <div id="js-task-list-<%= item.id %>" class="sbi-task__list">
-          <%= render partial: 'task', collection: item.tasks %>
-        </div>
-      <% end %>
+      <%= render partial: 'task_list', locals: { issue_id: item.id, tasks: item.tasks } %>
       <%= render partial: 'task_form', locals: { issue_id: item.id, form: nil } %>
     </div>
   </div>

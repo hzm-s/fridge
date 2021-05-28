@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   end
 
   scope 'works/:issue_id', as: :work do
-    resources :tasks, only: [:create]
+    resources :tasks, param: :number, only: [:create, :destroy]
   end
 
   resources :teams, only: [:show] do

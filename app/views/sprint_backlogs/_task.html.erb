@@ -1,9 +1,9 @@
 <div class="sbi-task">
   <i class="<%= sbl_task_progress_classes(task[:progress]) %>"></i>
   <p class="sbi-task__content">
-    <%= task[:content] %>
+    <%= task.content %>
   </p>
   <div class="sbi-task__actions">
-    <%= render partial: 'sprint_backlogs/task_menu' %>
+    <%= render partial: 'sprint_backlogs/task_menu', locals: { issue_id: issue_id, task: task } %>
   </div>
 </div>
