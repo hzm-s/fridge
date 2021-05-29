@@ -29,7 +29,7 @@ module Issue
 
         sig {override.returns(Status)}
         def revert_from_sprint
-          raise NotAssignedToSprint
+          raise CanNotRevertFromSprint
         end
 
         sig {override.returns(String)}

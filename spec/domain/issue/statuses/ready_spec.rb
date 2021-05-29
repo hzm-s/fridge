@@ -51,7 +51,7 @@ module Issue
 
       describe '#revert_from_sprint' do
         it do
-          expect { described_class.revert_from_sprint }.to raise_error NotAssignedToSprint
+          expect { described_class.revert_from_sprint }.to raise_error CanNotRevertFromSprint
         end
       end
     end
