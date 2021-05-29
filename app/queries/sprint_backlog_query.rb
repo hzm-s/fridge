@@ -16,8 +16,17 @@ module SprintBacklogQuery
   end
 
   class SprintBacklogItemStruct < SimpleDelegator
-    def tasks
-      Array(work&.tasks).sort_by(&:number)
+    attr_reader :tasks
+
+    def initialize(issue)
+      super(issue)
+      @tasks = build_tasks.sort_by(&:number)
+    end
+
+    private
+
+    def build_tasks
+      Array(work&.tasks).map { |t| TaskStruct.new(work, t) }
     end
   end
 

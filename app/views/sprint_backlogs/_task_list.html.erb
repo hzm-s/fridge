@@ -1,5 +1,5 @@
 <div id="js-task-list-<%= issue_id %>" class="<%= sbl_task_list_classes(tasks) %>">
   <% if tasks.any? %>
-      <%= render partial: 'sprint_backlogs/task', collection: tasks, locals: { issue_id: issue_id } %>
+      <%= render partial: 'sprint_backlogs/task', collection: tasks %>
   <% end %>
 </div>

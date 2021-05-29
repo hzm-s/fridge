@@ -2,7 +2,8 @@
 module TaskListQuery
   class << self
     def call(issue_id)
-      Dao::Work.find_by(dao_issue_id: issue_id).tasks
+      work = Dao::Work.find_by(dao_issue_id: issue_id)
+      work.tasks.map { |t| TaskStruct.new(work, t) }
     end
   end
 end

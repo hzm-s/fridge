@@ -15,6 +15,9 @@ RSpec.describe TaskListQuery do
 
     tasks = described_class.call(issue.id.to_s)
 
-    expect(tasks.map(&:content)).to eq %w(Task1 Task2 Task3)
+    aggregate_failures do
+      expect(tasks.map(&:issue_id).uniq).to eq [issue.id.to_s]
+      expect(tasks.map(&:content)).to eq %w(Task1 Task2 Task3)
+    end
   end
 end
