@@ -48,6 +48,12 @@ module Issue
           expect { described_class.assign_to_sprint }.to raise_error CanNotAssignToSprint
         end
       end
+
+      describe '#revert_from_sprint' do
+        it do
+          expect { described_class.revert_from_sprint }.to raise_error NotAssignedToSprint
+        end
+      end
     end
   end
 end

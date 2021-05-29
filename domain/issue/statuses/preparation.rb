@@ -27,6 +27,11 @@ module Issue
           raise CanNotAssignToSprint
         end
 
+        sig {override.returns(Status)}
+        def revert_from_sprint
+          raise NotAssignedToSprint
+        end
+
         sig {override.returns(String)}
         def to_s
           'preparation'
