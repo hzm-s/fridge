@@ -38,7 +38,12 @@ module Team
 
       it do
         roles = described_class.new([Role::ScrumMaster, Role::ProductOwner])
-        expect(roles.available_activities).to eq activity_set([:remove_issue, :update_plan, :assign_issue_to_sprint])
+        expect(roles.available_activities).to eq activity_set([
+          :remove_issue,
+          :update_plan,
+          :assign_issue_to_sprint,
+          :revert_issue_from_sprint
+        ])
       end
     end
   end

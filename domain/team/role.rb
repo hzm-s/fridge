@@ -29,9 +29,9 @@ module Team
       activities =
         case self
         when ProductOwner
-          [:remove_issue, :update_plan, :assign_issue_to_sprint]
+          [:remove_issue, :update_plan, :assign_issue_to_sprint, :revert_issue_from_sprint]
         when ScrumMaster
-          [:remove_issue, :update_plan, :assign_issue_to_sprint]
+          [:remove_issue, :update_plan, :assign_issue_to_sprint, :revert_issue_from_sprint]
         when Developer
           [:estimate_issue]
         end

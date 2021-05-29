@@ -94,6 +94,13 @@ module Issue
       @status = @status.assign_to_sprint
     end
 
+    sig {params(roles: Team::RoleSet).void}
+    def revert_from_sprint(roles)
+      raise CanNotRevertFromSprint unless Activity.allow?(:revert_issue_from_sprint, [roles, status])
+
+      @status = @status.revert_from_sprint
+    end
+
     private
 
     sig {void}

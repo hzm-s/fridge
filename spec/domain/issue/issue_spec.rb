@@ -82,6 +82,28 @@ module Issue
       end
     end
 
+    describe 'to revert issue from sprint permission' do
+      let(:issue) { described_class.create(product_id, Types::Feature, description) }
+
+      before do
+        issue.update_acceptance_criteria(acceptance_criteria(%w(Criterion)))
+        issue.estimate(dev_role, StoryPoint.new(5))
+        issue.assign_to_sprint(po_role)
+      end
+
+      it do
+        expect { issue.revert_from_sprint(dev_role) }.to raise_error CanNotRevertFromSprint
+      end
+
+      it do
+        expect { issue.revert_from_sprint(po_role) }.to_not raise_error
+      end
+
+      it do
+        expect { issue.revert_from_sprint(sm_role) }.to_not raise_error 
+      end
+    end
+
     describe 'Feature issue status' do
       let(:issue) { described_class.create(product_id, Types::Feature, description) }
 
@@ -127,6 +149,9 @@ module Issue
 
         issue.assign_to_sprint(po_role)
         expect(issue.status).to eq Statuses::Wip
+
+        issue.revert_from_sprint(po_role)
+        expect(issue.status).to eq Statuses::Ready
       end
     end
   end
