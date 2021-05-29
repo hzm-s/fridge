@@ -15,6 +15,9 @@ module Issue
     sig {abstract.returns(Status)}
     def assign_to_sprint; end
 
+    sig {abstract.returns(Status)}
+    def revert_from_sprint; end
+
     sig {abstract.returns(String)}
     def to_s; end
   end
