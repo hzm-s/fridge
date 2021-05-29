@@ -24,6 +24,7 @@ module Activity
       RemoveIssue = new('remove_issue')
       UpdatePlan = new('update_plan')
       AssignIssueToSprint = new('assign_issue_to_sprint')
+      RevertIssueFromSprint = new('revert_issue_from_sprint')
     end
 
     sig {params(set_providers: T::Array[SetProvider]).returns(T::Boolean)}
