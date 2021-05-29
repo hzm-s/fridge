@@ -27,6 +27,11 @@ module Issue
           Wip
         end
 
+        sig {override.returns(Status)}
+        def revert_from_sprint
+          self
+        end
+
         sig {override.returns(String)}
         def to_s
           'ready'

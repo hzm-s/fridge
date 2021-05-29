@@ -45,8 +45,13 @@ module Issue
 
       describe '#assign_to_sprint' do
         it do
-          status = described_class.assign_to_sprint
-          expect(status).to eq Wip
+          expect(described_class.assign_to_sprint).to eq Wip
+        end
+      end
+
+      describe '#revert_from_sprint' do
+        it do
+          expect(described_class.revert_from_sprint).to eq Ready
         end
       end
     end
