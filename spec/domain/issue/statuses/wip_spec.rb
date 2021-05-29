@@ -11,6 +11,16 @@ module Issue
         end
       end
 
+      describe '#update_by_preparation' do
+        it do
+          status = described_class.update_by_preparation(
+            acceptance_criteria(%w(AC1)),
+            StoryPoint.unknown
+          )
+          expect(status).to eq Wip
+        end
+      end
+
       describe '#assign_to_sprint' do
         it do
           expect { described_class.assign_to_sprint }.to raise_error CanNotAssignToSprint
@@ -19,8 +29,7 @@ module Issue
 
       describe '#revert_from_sprint' do
         it do
-          status = described_class.revert_from_sprint
-          expect(status).to eq Ready
+          expect(described_class.revert_from_sprint).to eq Ready
         end
       end
     end
