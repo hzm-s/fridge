@@ -28,15 +28,4 @@ RSpec.describe RevertIssueFromSprintUsecase do
       expect(stored_issue_c.status).to be Issue::Statuses::Wip
     end
   end
-
-  xit do
-    SprintRepository::AR.current(product.id).tap do |sprint|
-      sprint.finish
-      SprintRepository::AR.store(sprint)
-    end
-
-    expect {
-      described_class.perform(product.id, roles, issue_c.id)
-    }.to raise_error Sprint::Finished
-  end
 end

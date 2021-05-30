@@ -42,6 +42,8 @@ module Sprint
 
     sig {params(issues: Issue::List).void}
     def update_issues(issues)
+      raise AlreadyFinished if finished?
+
       @issues = issues
     end
 
