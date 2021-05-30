@@ -40,9 +40,9 @@ module Sprint
       @issues = issues
     end
 
-    sig {params(issue_id: Issue::Id).void}
-    def append_issue(issue_id)
-      @issues = @issues.append(issue_id)
+    sig {params(issues: Issue::List).void}
+    def update_issues(issues)
+      @issues = issues
     end
 
     sig {void}

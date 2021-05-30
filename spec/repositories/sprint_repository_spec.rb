@@ -31,13 +31,13 @@ RSpec.describe SprintRepository::AR do
       sprint = Sprint::Sprint.start(product.id, 11)
       described_class.store(sprint)
 
-      sprint.append_issue(issue_a)
+      sprint.update_issues(sprint.issues.append(issue_a))
       expect { described_class.store(sprint) }
         .to change { Dao::Sprint.count }.by(0)
         .and change { Dao::AssignedIssue.count }.from(0).to(1)
 
-      sprint.append_issue(issue_b)
-      sprint.append_issue(issue_c)
+      sprint.update_issues(sprint.issues.append(issue_b))
+      sprint.update_issues(sprint.issues.append(issue_c))
       expect { described_class.store(sprint) }
         .to change { Dao::Sprint.count }.by(0)
         .and change { Dao::AssignedIssue.count }.from(1).to(3)

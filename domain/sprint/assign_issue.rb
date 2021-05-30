@@ -16,7 +16,7 @@ module Sprint
       raise NotStarted unless sprint
 
       issue.assign_to_sprint(roles)
-      sprint.append_issue(issue.id)
+      sprint.update_issues(sprint.issues.append(issue.id))
 
       @issue_repository.store(issue)
       @sprint_repository.store(sprint)
