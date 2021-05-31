@@ -13,6 +13,8 @@ module Sprint
 
     sig {params(roles: Team::RoleSet, sprint: T.nilable(Sprint), issue: Issue::Issue).void}
     def revert(roles, sprint, issue)
+      raise NotStarted unless sprint
+
       issue.revert_from_sprint(roles)
       sprint.update_issues(sprint.issues.remove(issue.id))
 
