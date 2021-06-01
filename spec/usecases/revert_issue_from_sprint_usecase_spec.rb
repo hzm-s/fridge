@@ -6,6 +6,7 @@ RSpec.describe RevertIssueFromSprintUsecase do
   let!(:issue_a) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1) }
   let!(:issue_b) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1) }
   let!(:issue_c) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1) }
+  let!(:issue_d) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1) }
   let!(:roles) { team_roles(:po) }
 
   before do
@@ -27,6 +28,11 @@ RSpec.describe RevertIssueFromSprintUsecase do
       expect(stored_issue_b.status).to be Issue::Statuses::Ready
       expect(stored_issue_c.status).to be Issue::Statuses::Wip
     end
+  end
+
+  it do
+    expect { described_class.perform(product.id, roles, issue_d.id) }
+      .to raise_error(Issue::CanNotRevertFromSprint)
   end
 
   it do
