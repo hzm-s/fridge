@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   resources :sprint_backlogs, param: :product_id, only: [:show]
 
   scope 'current_sprint/:product_id', as: :current_sprint, module: :current_sprint do
-    resources :issues, only: [:create]
+    resources :issues, only: [:create, :destroy]
   end
 
   scope 'works/:issue_id', as: :work do
