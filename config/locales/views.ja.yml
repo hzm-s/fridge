@@ -9,6 +9,7 @@ ja:
       create: アイテムをプロダクトバックログに追加しました
       update: アイテムを更新しました
       destroy: アイテムを削除しました
+      revert_from_sprint: 着手を取り消しました
     product:
       create: プロダクトを作成しました
     release:

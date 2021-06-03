@@ -14,6 +14,15 @@ class CurrentSprint::IssuesController < ApplicationController
     @issue = IssueQuery.call(issue_id)
   end
 
+  def destroy
+    RevertIssueFromSprintUsecase.perform(
+      Product::Id.from_string(current_product_id),
+      current_team_member_roles,
+      Issue::Id.from_string(params[:id]),
+    )
+    redirect_to sprint_backlog_path(product_id: current_product_id), flash: flash_success('issue.revert_from_sprint')
+  end
+
   private
 
   def current_product_id

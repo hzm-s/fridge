@@ -1,4 +1,4 @@
-<div class="sbi-issue__main">
+<div class="sbi-issue__main" test-sbi-<%= issue.id %>="1">
   <%= simple_format(issue.description, class: 'sbi-issue__content') %>
   <div class="sbi-issue__ac-list">
     <% issue.criteria.each do |c| %>
@@ -8,7 +8,7 @@
     <% end %>
   </div>
   <div class="mt-auto">
-    <%= link_to '', class: 'btn btn-sm btn-outline-secondary', data: { "test_cancel_sprint_assign_#{}" => 1 } do %>
+    <%= link_to current_sprint_issue_path(product_id: current_product.id, id: issue.id), method: :delete, class: 'btn btn-sm btn-outline-secondary', data: { "test_cancel_sprint_assign_#{issue.id}" => 1 } do %>
       <i class="fas fa-reply"></i>
       <%=t 'domain.issue.cancel_sprint_assign' %>
     <% end %>
