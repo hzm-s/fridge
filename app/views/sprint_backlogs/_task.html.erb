@@ -1,9 +1,15 @@
-<div class="sbi-task">
-  <i class="<%= sbl_task_progress_classes(task[:progress]) %>"></i>
-  <p class="sbi-task__content">
-    <%= task.content %>
-  </p>
-  <div class="sbi-task__actions">
-    <%= render partial: 'sprint_backlogs/task_menu', locals: { task: task } %>
+<div data-controller="inline-edit" class="sbi-task">
+  <div data-target="inline-edit.showSection" class="sbi-task__main">
+    <i class="<%= sbl_task_progress_classes(task[:progress]) %>"></i>
+    <p class="sbi-task__content">
+      <%= task.content %>
+    </p>
+    <div class="sbi-task__actions">
+      <%= render partial: 'sprint_backlogs/task_menu', locals: { task: task } %>
+    </div>
+  </div>
+  <div data-target="inline-edit.editSection" class="sbi-task__edit">
+    <%= render partial: 'sprint_backlogs/edit_task_form', locals: { task: task, form: nil } %>
+    <%= link_to t('navs.cancel'), '#', class: 'text-sm', data: { action: 'inline-edit#close' } %>
   </div>
 </div>

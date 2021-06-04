@@ -1,8 +1,8 @@
 <div id="js-task-form-<%= issue_id %>" class="sbi-task__form">
-  <%= form_with model: form || build_task_form, scope: :form, url: work_tasks_path(issue_id: issue_id) do |f| %>
+  <%= form_with model: form || new_task_form, scope: :form, url: work_tasks_path(issue_id: issue_id) do |f| %>
     <div class="d-flex">
       <%= f.text_field :content, class: 'form-control', placeholder: t('.placeholder'), autocomplete: 'off' %>
-      <button class="ml-1 btn btn-success btn-lean" style="height: 2.25rem !important;">
+      <button class="ml-1 btn btn-success btn-lean btn-combined">
         <i class="fa fa-plus"></i>
       </button>
     </div>

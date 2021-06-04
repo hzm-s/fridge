@@ -16,7 +16,7 @@
       <%=t 'domain.task.suspend' %>
     <% end %>
     <div class="dropdown-divider"></div>
-    <%= link_to '', class: 'dropdown-item' do %>
+    <%= link_to '#', class: 'dropdown-item', data: { action: 'inline-edit#open' } do %>
       <i class="fas fa-edit"></i>
       <%=t 'navs.edit' %>
     <% end %>

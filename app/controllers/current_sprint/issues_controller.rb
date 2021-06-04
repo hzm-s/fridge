@@ -11,6 +11,7 @@ class CurrentSprint::IssuesController < ApplicationController
   rescue Sprint::NotStarted => e
     redirect_to sprint_backlog_path(product_id: current_product_id), flash: flash_success('sprint.not_started')
   else
+    flash.now[:success] = feedback_message('issue.assign_to_sprint')
     @issue = IssueQuery.call(issue_id)
   end
 

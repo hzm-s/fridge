@@ -5,7 +5,7 @@ class SprintBacklogsController < ApplicationController
 
   before_action :ensure_current_sprint, only: [:show]
 
-  helper_method :current_sprint, :build_task_form
+  helper_method :current_sprint
 
   def show
     @sbl = SprintBacklogQuery.call(current_sprint.id)
@@ -25,9 +25,5 @@ class SprintBacklogsController < ApplicationController
 
   def current_sprint
     @__current_sprint ||= SprintRepository::AR.current(Product::Id.from_string(current_product_id))
-  end
-
-  def build_task_form
-    TaskForm.new
   end
 end

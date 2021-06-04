@@ -1,0 +1,10 @@
+<div id="js-task-edit-form-<%= "#{task.issue_id}-#{task.number}" %>" class="sbi-task__form">
+  <%= form_with model: form || build_task_form(task), scope: :form, url: work_task_path(issue_id: task.issue_id, number: task.number), method: :patch do |f| %>
+    <div class="d-flex">
+      <%= f.text_field :content, class: 'form-control', placeholder: t('.placeholder'), autocomplete: 'off' %>
+      <button class="ml-1 btn btn-success btn-lean btn-combined">
+        <i class="fa fa-check"></i>
+      </button>
+    </div>
+  <% end %>
+</div>

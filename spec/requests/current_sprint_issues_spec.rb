@@ -19,6 +19,7 @@ RSpec.describe 'current_sprint/:product_id/issues' do
         post current_sprint_issues_path(product_id: product.id, format: :js), params: { issue_id: issue.id.to_s }
 
         aggregate_failures do
+          expect(response.body).to include I18n.t('feedbacks.issue.assign_to_sprint')
           expect(response.body).to include "test-issue-#{issue.id}-wip"
 
           get sprint_backlog_path(product.id)

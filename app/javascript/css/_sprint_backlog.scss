@@ -92,14 +92,21 @@
 }
 
 .sbi-task {
-  display: flex;
-  align-items: center;
   border-bottom: 1px solid $gray-300;
-  padding: .25rem .5rem;
 
   &:last-child {
     border-bottom: 0;
   }
+}
+
+.sbi-task__main {
+  display: flex;
+  align-items: center;
+  padding: .25rem .5rem;
+}
+
+.sbi-task__edit {
+  padding: .25rem;
 }
 
 .sbi-task__progress {

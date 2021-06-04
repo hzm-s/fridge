@@ -27,4 +27,12 @@ module SblHelper
 
     classes.join(' ')
   end
+
+  def new_task_form
+    TaskForm.new
+  end
+
+  def build_task_form(task)
+    TaskForm.new(content: task.content)
+  end
 end
