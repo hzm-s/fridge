@@ -1,11 +1,9 @@
 # typed: false
 class TaskStruct < SimpleDelegator
-  def initialize(work, task)
-    @work = work
-    super(task)
-  end
+  attr_reader :issue_id
 
-  def issue_id
-    @work.dao_issue_id
+  def initialize(issue_id, task)
+    super(task)
+    @issue_id = issue_id
   end
 end
