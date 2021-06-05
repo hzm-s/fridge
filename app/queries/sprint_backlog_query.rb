@@ -26,7 +26,7 @@ module SprintBacklogQuery
     private
 
     def build_tasks
-      Array(work&.tasks).map { |t| TaskStruct.new(work, t) }
+      Array(work&.tasks).map { |t| TaskStruct.new(work.dao_issue_id, t) }
     end
   end
 

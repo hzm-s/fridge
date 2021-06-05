@@ -37,6 +37,7 @@ RSpec.describe SprintBacklogQuery do
     issue = sbl.issues.first
 
     aggregate_failures do
+      expect(issue.tasks.map(&:issue_id).uniq).to eq [issue_c.id.to_s]
       expect(issue.tasks[0].number).to eq 1
       expect(issue.tasks[0].content).to eq 'Task1'
       expect(issue.tasks[1].number).to eq 2
