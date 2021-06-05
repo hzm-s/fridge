@@ -46,6 +46,14 @@ RSpec.describe do
         end
       end
     end
+
+    context 'given invalid params' do
+      it do
+        patch work_task_path(issue_id: issue.id, number: 2, format: :js), params: { form: { content: '' } }
+
+        expect(response.body).to include(I18n.t('errors.messages.blank'))
+      end
+    end
   end
 
   describe 'destroy' do

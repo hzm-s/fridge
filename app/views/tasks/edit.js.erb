@@ -1,0 +1,1 @@
+$('#js-task-edit-form-<%= "#{@task.issue_id}-#{@task.number}" %>').replaceWith('<%=j render partial: 'sprint_backlogs/edit_task_form', locals: { task: @task, form: @form } %>')
