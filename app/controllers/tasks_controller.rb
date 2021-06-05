@@ -13,6 +13,13 @@ class TasksController < ApplicationController
     end
   end
 
+  def update
+    @issue_id = Issue::Id.from_string(params[:issue_id])
+    @form = TaskForm.new(task_params)
+    ModifyTaskUsecase.perform(@issue_id, params[:number].to_i, @form.content)
+    @tasks = TaskListQuery.call(@issue_id.to_s)
+  end
+
   def destroy
     @issue_id = Issue::Id.from_string(params[:issue_id])
     DropTaskUsecase.perform(@issue_id, params[:number].to_i)

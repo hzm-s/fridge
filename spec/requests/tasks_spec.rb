@@ -14,7 +14,6 @@ RSpec.describe do
   end
 
   describe 'create' do
-
     context 'given valid params' do
       it do
         post work_tasks_path(issue_id: issue.id, format: :js), params: { form: { content: 'Design API' } }
@@ -28,6 +27,23 @@ RSpec.describe do
         post work_tasks_path(issue_id: issue.id, format: :js), params: { form: { content: '' } }
 
         expect(response.body).to include(I18n.t('errors.messages.blank'))
+      end
+    end
+  end
+
+  describe 'update' do
+    before do
+      plan_task(issue.id, %w(Tasuku1 Tasuku2 Tasuku3))
+    end
+
+    context 'given valid params' do
+      it do
+        patch work_task_path(issue_id: issue.id, number: 2, format: :js), params: { form: { content: 'Yarukoto' } }
+
+        aggregate_failures do
+          expect(response.body).to include 'Yarukoto'
+          expect(response.body).to_not include 'Tasuku2'
+        end
       end
     end
   end
