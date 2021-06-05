@@ -16,5 +16,10 @@ module Work
       @number = number
       @content = content
     end
+
+    sig {params(new_content: String).returns(T.self_type)}
+    def modify(new_content)
+      self.class.new(number, new_content)
+    end
   end
 end

@@ -39,5 +39,21 @@ module Work
         end
       end
     end
+
+    describe 'Modify task' do
+      it do
+        work.append_task('Task_A')
+        work.append_task('Task_B')
+        work.append_task('Task_C')
+
+        work.modify_task(2, 'Task_V')
+
+        aggregate_failures do
+          expect(work.task_of(1).content).to eq 'Task_A'
+          expect(work.task_of(2).content).to eq 'Task_V'
+          expect(work.task_of(3).content).to eq 'Task_C'
+        end
+      end
+    end
   end
 end

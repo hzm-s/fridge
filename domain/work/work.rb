@@ -37,6 +37,11 @@ module Work
       @tasks << Task.new(number, content)
     end
 
+    sig {params(number: Integer, content: String).void}
+    def modify_task(number, content)
+      @tasks[number - 1] = T.must(task_of(number)).modify(content)
+    end
+
     sig {params(number: Integer).void}
     def remove_task(number)
       @tasks.reject! { |t| t.number == number }
