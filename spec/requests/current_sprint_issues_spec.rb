@@ -10,7 +10,7 @@ RSpec.describe 'current_sprint/:product_id/issues' do
   end
 
   describe 'Create' do
-    let!(:issue) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1) }
+    let!(:issue) { plan_issue(product.id, 'KINOU', acceptance_criteria: %w(UKEIRE), size: 3, release: 1) }
 
     context 'sprint started' do
       before { start_sprint(product.id) }
@@ -24,6 +24,8 @@ RSpec.describe 'current_sprint/:product_id/issues' do
 
           get sprint_backlog_path(product.id)
           expect(response.body).to include "test-sbi-#{issue.id}"
+          expect(response.body).to include 'KINOU'
+          expect(response.body).to include 'UKEIRE'
         end
       end
     end

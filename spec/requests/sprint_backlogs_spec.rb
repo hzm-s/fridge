@@ -9,40 +9,26 @@ RSpec.describe 'sprint_backlogs' do
     sign_in(user_account)
   end
 
-  describe 'show' do
-    context 'current sprint is NOT exists' do
-      it do
-        get sprint_backlog_path(product.id)
-        follow_redirect!
-        expect(response.body).to include 'test-start-sprint'
-      end
+  context 'current sprint is NOT exists' do
+    it do
+      get sprint_backlog_path(product.id)
+      follow_redirect!
+      expect(response.body).to include 'test-start-sprint'
     end
+  end
 
-    context 'current sprint is exists' do
-      let!(:sprint) { start_sprint(product.id) }
+  context 'current sprint is exists' do
+    let!(:sprint) { start_sprint(product.id) }
 
-      it do
-        get sprint_backlog_path(product.id)
-        expect(response.body).to include "test-sprint-backlog-#{sprint.id}"
-      end
+    it do
+      get sprint_backlog_path(product.id)
+      expect(response.body).to include "test-sprint-backlog-#{sprint.id}"
     end
+  end
 
-    context 'issues assigned' do
-      let!(:issue) { plan_issue(product.id, 'ABC', acceptance_criteria: %w(XYZ), size: 3, release: 1) }
+  context 'when PO' do
+  end
 
-      before do
-        start_sprint(product.id)
-        assign_issue_to_sprint(product.id, issue.id)
-      end
-
-      it do
-        get sprint_backlog_path(product.id)
-
-        aggregate_failures do
-          expect(response.body).to include 'ABC'
-          expect(response.body).to include 'XYZ'
-        end
-      end
-    end
+  context 'when Dev' do
   end
 end
