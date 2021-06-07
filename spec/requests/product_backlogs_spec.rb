@@ -2,13 +2,13 @@
 require 'rails_helper'
 
 RSpec.describe 'product_backlogs' do
-  let!(:user_account_a) { sign_up }
-  let!(:user_account_b) { sign_up }
+  let!(:user_account_po) { sign_up }
+  let!(:user_account_dev) { sign_up }
   let!(:product) do
     create_product(
-      person: user_account_a.person_id,
+      person: user_account_po.person_id,
       roles: team_roles(:po),
-      members: [team_member(user_account_b.person_id, :dev)]
+      members: [team_member(user_account_dev.person_id, :dev)]
     )
   end
 
@@ -16,7 +16,7 @@ RSpec.describe 'product_backlogs' do
   let!(:issue_ready) { plan_issue(product.id, release: 1, acceptance_criteria: %w(AC1), size: 3 ) }
 
   context 'when PO' do
-    before { sign_in(user_account_a) }
+    before { sign_in(user_account_po) }
 
     it do
       get product_backlog_path(product_id: product.id)
@@ -34,7 +34,7 @@ RSpec.describe 'product_backlogs' do
   end
 
   context 'when Dev' do
-    before { sign_in(user_account_b) }
+    before { sign_in(user_account_dev) }
 
     it do
       get product_backlog_path(product_id: product.id)

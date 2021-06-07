@@ -7,10 +7,12 @@
       </p>
     <% end %>
   </div>
-  <div class="mt-auto">
-    <%= link_to current_sprint_issue_path(product_id: current_product.id, id: issue.id), method: :delete, class: 'btn btn-sm btn-outline-secondary', data: { "test_cancel_sprint_assign_#{issue.id}" => 1 } do %>
-      <i class="fas fa-reply"></i>
-      <%=t 'domain.issue.cancel_sprint_assign' %>
-    <% end %>
-  </div>
+  <% if authorize(:revert_issue_from_sprint, current_team_member_roles) %>
+    <div class="mt-auto">
+      <%= link_to current_sprint_issue_path(product_id: current_product.id, id: issue.id), method: :delete, class: 'btn btn-sm btn-outline-secondary', data: { 'test_revert_issue' => 1 } do %>
+        <i class="fas fa-reply"></i>
+        <%=t 'domain.issue.cancel_sprint_assign' %>
+      <% end %>
+    </div>
+  <% end %>
 </div>
