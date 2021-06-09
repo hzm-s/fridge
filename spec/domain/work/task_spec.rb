@@ -5,7 +5,7 @@ module Work
   RSpec.describe Task do
     describe 'Create' do
       it do
-        task = described_class.new(1, 'Task_A')
+        task = described_class.create(1, 'Task_A')
 
         aggregate_failures do
           expect(task.number).to eq 1

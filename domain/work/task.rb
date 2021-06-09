@@ -5,6 +5,20 @@ module Work
   class Task
     extend T::Sig
 
+    class << self
+      extend T::Sig
+
+      sig {params(number: Integer, content: String).returns(T.attached_class)}
+      def create(number, content)
+        new(number, content)
+      end
+
+      sig {params(number: Integer, content: String).returns(T.attached_class)}
+      def from_repository(number, content)
+        new(number, content)
+      end
+    end
+
     sig {returns(Integer)}
     attr_reader :number
 

@@ -22,7 +22,7 @@ class Dao::Work < ApplicationRecord
 
   def read_tasks
     tasks.map do |t|
-      Work::Task.new(t.number, t.content)
+      Work::Task.from_repository(t.number, t.content)
     end
   end
 end
