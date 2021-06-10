@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 2021_05_16_002510) do
   create_table "dao_tasks", force: :cascade do |t|
     t.bigint "dao_work_id"
     t.integer "number", null: false
+    t.string "status", null: false
     t.string "content", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

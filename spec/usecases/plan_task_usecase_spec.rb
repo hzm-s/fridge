@@ -16,6 +16,7 @@ RSpec.describe PlanTaskUsecase do
       expect(work.task_of(1).content).to eq 'Task1'
       expect(work.task_of(2).content).to eq 'Task2'
       expect(work.task_of(3).content).to eq 'Task3'
+      expect(work.tasks.map(&:status).uniq).to eq [Work::TaskStatus::Ready]
     end
   end
 end

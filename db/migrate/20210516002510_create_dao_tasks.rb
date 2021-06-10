@@ -3,6 +3,7 @@ class CreateDaoTasks < ActiveRecord::Migration[6.0]
     create_table :dao_tasks do |t|
       t.references :dao_work, foreign_key: true
       t.integer :number, null: false
+      t.string :status, null: false
       t.string :content, null: false
 
       t.timestamps

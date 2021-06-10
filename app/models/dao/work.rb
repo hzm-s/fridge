@@ -7,7 +7,7 @@ class Dao::Work < ApplicationRecord
     }
     self.tasks.clear
     work.tasks.to_a.each do |t|
-      self.tasks.build(number: t.number, content: t.content)
+      self.tasks.build(number: t.number, content: t.content, status: t.status.to_s)
     end
   end
 
@@ -22,7 +22,11 @@ class Dao::Work < ApplicationRecord
 
   def read_tasks
     tasks.map do |t|
-      Work::Task.from_repository(t.number, t.content)
+      Work::Task.from_repository(
+        t.number,
+        t.content,
+        Work::TaskStatus.from_string(t.status),
+      )
     end
   end
 end
