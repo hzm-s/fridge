@@ -10,13 +10,14 @@ module Work
         aggregate_failures do
           expect(task.number).to eq 1
           expect(task.content).to eq 'Task_A'
+          expect(task.status).to eq TaskStatus::Ready
         end
       end
     end
 
     describe 'Modify content' do
       it do
-        origin = described_class.new(1, 'Task_A')
+        origin = described_class.create(1, 'Task_A')
         modified = origin.modify('Task_AAA')
 
         aggregate_failures do

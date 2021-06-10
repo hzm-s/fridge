@@ -10,12 +10,12 @@ module Work
 
       sig {params(number: Integer, content: String).returns(T.attached_class)}
       def create(number, content)
-        new(number, content)
+        new(number, content, TaskStatus::Ready)
       end
 
-      sig {params(number: Integer, content: String).returns(T.attached_class)}
-      def from_repository(number, content)
-        new(number, content)
+      sig {params(number: Integer, content: String, status: TaskStatus).returns(T.attached_class)}
+      def from_repository(number, content, status)
+        new(number, content, status)
       end
     end
 
@@ -25,15 +25,19 @@ module Work
     sig {returns(String)}
     attr_reader :content
 
-    sig {params(number: Integer, content: String).void}
-    def initialize(number, content)
+    sig {returns(TaskStatus)}
+    attr_reader :status
+
+    sig {params(number: Integer, content: String, status: TaskStatus).void}
+    def initialize(number, content, status)
       @number = number
       @content = content
+      @status = status
     end
 
     sig {params(new_content: String).returns(T.self_type)}
     def modify(new_content)
-      self.class.new(number, new_content)
+      self.class.new(number, new_content, status)
     end
   end
 end
