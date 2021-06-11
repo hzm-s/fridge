@@ -109,11 +109,15 @@
   padding: .25rem;
 }
 
-.sbi-task__progress {
+.sbi-task__status {
   font-size: 1.25rem;
   margin-right: .5rem;
 
   &--todo {
+    color: $gray-300;
+  }
+
+  &--ready {
     color: $gray-300;
   }
 

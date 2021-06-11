@@ -1,6 +1,6 @@
 <div data-controller="inline-edit" class="sbi-task">
   <div data-target="inline-edit.showSection" class="sbi-task__main">
-    <i class="<%= sbl_task_progress_classes(task[:progress]) %>"></i>
+    <%= render_sbl_task_status(task) %>
     <p class="sbi-task__content">
       <%= task.content %>
     </p>

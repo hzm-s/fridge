@@ -4,9 +4,9 @@ require 'rails_helper'
 RSpec.describe TaskQuery do
   let!(:product) { create_product }
   let!(:issue) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1) }
-  let!(:sprint) { start_sprint(product.id) }
 
   before do
+    start_sprint(product.id)
     assign_issue_to_sprint(product.id, issue.id)
   end
 
@@ -18,6 +18,7 @@ RSpec.describe TaskQuery do
     aggregate_failures do
       expect(task.issue_id).to eq issue.id.to_s
       expect(task.number).to eq 3
+      expect(task.status).to eq 'ready'
       expect(task.content).to eq 'Task3'
     end
   end

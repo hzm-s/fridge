@@ -1,7 +1,8 @@
 # typed: true
 module SblHelper
-  TASK_PROGRESS_CLASSES = {
+  TASK_STATUS_CLASSES = {
     todo: 'fa fa-minus-circle',
+    ready: 'fa fa-minus-circle',
     wip: 'far fa-circle',
     done: 'far fa-check-circle'
   }
@@ -20,10 +21,19 @@ module SblHelper
     "#{base} sbl-item__grip--disabled"
   end
 
-  def sbl_task_progress_classes(progress)
-    classes = %w(sbi-task__progress)
-    classes << TASK_PROGRESS_CLASSES[progress]
-    classes << "sbi-task__progress--#{progress}"
+  def render_sbl_task_status(task)
+    content_tag(
+      :i,
+      nil,
+      class: sbl_task_status_classes(task.status),
+      data: { "test_task_status_#{task.issue_id}_#{task.number}" => task.status }
+    )
+  end
+
+  def sbl_task_status_classes(status)
+    classes = %w(sbi-task__status)
+    classes << TASK_STATUS_CLASSES[status.to_sym]
+    classes << "sbi-task__status--#{status}"
 
     classes.join(' ')
   end

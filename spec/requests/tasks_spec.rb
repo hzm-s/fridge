@@ -19,6 +19,7 @@ RSpec.describe do
         post work_tasks_path(issue_id: issue.id, format: :js), params: { form: { content: 'Design API' } }
         get sprint_backlog_path(product.id)
         expect(response.body).to include 'Design API'
+        expect(response.body).to include %Q(test-task-status-#{issue.id}-1="ready")
       end
     end
 
