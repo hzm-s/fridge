@@ -17,7 +17,7 @@ module Work
     end
 
     enums do
-      Ready = new('ready')
+      Todo = new('todo')
     end
 
     sig {returns(String)}

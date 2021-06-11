@@ -35,13 +35,13 @@ RSpec.describe WorkRepository::AR do
       aggregate_failures do
         expect(dao.tasks[0].number).to eq 1
         expect(dao.tasks[0].content).to eq 'T1'
-        expect(dao.tasks[0].status).to eq 'ready'
+        expect(dao.tasks[0].status).to eq 'todo'
         expect(dao.tasks[1].number).to eq 2
         expect(dao.tasks[1].content).to eq 'T2'
-        expect(dao.tasks[1].status).to eq 'ready'
+        expect(dao.tasks[1].status).to eq 'todo'
         expect(dao.tasks[2].number).to eq 3
         expect(dao.tasks[2].content).to eq 'T3'
-        expect(dao.tasks[2].status).to eq 'ready'
+        expect(dao.tasks[2].status).to eq 'todo'
       end
     end
   end

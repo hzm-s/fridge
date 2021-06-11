@@ -18,7 +18,7 @@ RSpec.describe TaskQuery do
     aggregate_failures do
       expect(task.issue_id).to eq issue.id.to_s
       expect(task.number).to eq 3
-      expect(task.status).to eq 'ready'
+      expect(task.status).to eq 'todo'
       expect(task.content).to eq 'Task3'
     end
   end

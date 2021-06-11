@@ -10,7 +10,7 @@ module Work
         aggregate_failures do
           expect(task.number).to eq 1
           expect(task.content).to eq 'Task_A'
-          expect(task.status).to eq TaskStatus::Ready
+          expect(task.status).to eq TaskStatus::Todo
         end
       end
     end

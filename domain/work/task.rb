@@ -10,7 +10,7 @@ module Work
 
       sig {params(number: Integer, content: String).returns(T.attached_class)}
       def create(number, content)
-        new(number, content, TaskStatus::Ready)
+        new(number, content, TaskStatus::Todo)
       end
 
       sig {params(number: Integer, content: String, status: TaskStatus).returns(T.attached_class)}

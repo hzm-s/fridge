@@ -1,8 +1,7 @@
-# typed: true
+# typed: false
 module SblHelper
   TASK_STATUS_CLASSES = {
     todo: 'fa fa-minus-circle',
-    ready: 'fa fa-minus-circle',
     wip: 'far fa-circle',
     done: 'far fa-check-circle'
   }
