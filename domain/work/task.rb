@@ -35,7 +35,7 @@ module Work
       @status = status
     end
 
-    sig {params(new_content: String).returns(T.self_type)}
+    sig {params(new_content: String).void}
     def modify(new_content)
       @content = new_content
     end

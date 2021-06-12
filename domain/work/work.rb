@@ -39,7 +39,7 @@ module Work
 
     sig {params(number: Integer, content: String).void}
     def modify_task(number, content)
-      @tasks[number - 1].modify(content)
+      T.must(@tasks[number - 1]).modify(content)
     end
 
     sig {params(number: Integer).void}
