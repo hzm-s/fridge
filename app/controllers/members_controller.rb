@@ -18,7 +18,7 @@ class MembersController < ApplicationController
     if @form.valid? && (error = add_team_member(team_id, @form)).blank?
       redirect_to products_path
     else
-      @form.errors[:base] << error
+      @form.errors.add(:base, error)
       render :new
     end
   end
