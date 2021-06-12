@@ -43,5 +43,7 @@ module Fridge
     end
 
     config.autoload_paths << Rails.root + 'domain'
+
+    config.action_view.form_with_generates_remote_forms = true
   end
 end
