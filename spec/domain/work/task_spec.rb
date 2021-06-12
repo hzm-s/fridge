@@ -17,13 +17,18 @@ module Work
 
     describe 'Modify content' do
       it do
-        origin = described_class.create(1, 'Task_A')
-        modified = origin.modify('Task_AAA')
+        task = described_class.create(1, 'Task_A')
+        task.modify('Task_AAA')
 
         aggregate_failures do
-          expect(modified.number).to eq 1
-          expect(modified.content).to eq 'Task_AAA'
+          expect(task.number).to eq 1
+          expect(task.content).to eq 'Task_AAA'
         end
+      end
+    end
+
+    describe 'Start' do
+      it do
       end
     end
   end
