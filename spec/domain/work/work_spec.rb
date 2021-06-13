@@ -55,5 +55,13 @@ module Work
         end
       end
     end
+
+    describe 'Start task' do
+      it do
+        work.append_task('Task')
+        work.start_task(1)
+        expect(work.task_of(1).status.to_s).to eq 'wip'
+      end
+    end
   end
 end

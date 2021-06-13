@@ -39,5 +39,10 @@ module Work
     def modify(new_content)
       @content = new_content
     end
+
+    sig {void}
+    def start
+      @status = TaskStatus::Wip
+    end
   end
 end

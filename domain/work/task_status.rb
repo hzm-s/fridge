@@ -18,6 +18,7 @@ module Work
 
     enums do
       Todo = new('todo')
+      Wip = new('wip')
     end
 
     sig {returns(String)}

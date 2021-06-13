@@ -10,7 +10,7 @@ module Work
         aggregate_failures do
           expect(task.number).to eq 1
           expect(task.content).to eq 'Task_A'
-          expect(task.status).to eq TaskStatus::Todo
+          expect(task.status.to_s).to eq 'todo'
         end
       end
     end
@@ -29,6 +29,10 @@ module Work
 
     describe 'Start' do
       it do
+        task = described_class.create(1, 'Task')
+        task.start
+
+        expect(task.status.to_s).to eq 'wip'
       end
     end
   end
