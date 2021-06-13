@@ -58,9 +58,17 @@ module Work
 
     describe 'Start task' do
       it do
-        work.append_task('Task')
-        work.start_task(1)
-        expect(work.task_of(1).status.to_s).to eq 'wip'
+        work.append_task('Task_A')
+        work.append_task('Task_B')
+        work.append_task('Task_C')
+
+        work.start_task(2)
+
+        aggregate_failures do
+          expect(work.task_of(1).status.to_s).to eq 'todo'
+          expect(work.task_of(2).status.to_s).to eq 'wip'
+          expect(work.task_of(3).status.to_s).to eq 'todo'
+        end
       end
     end
   end
