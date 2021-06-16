@@ -1,9 +1,9 @@
 <div class="dropdown">
-  <%= link_to '#', dd_trigger_options(id: "dd-sbi-task-#{}", class: 'sbi-task__menu') do %>
+  <%= link_to '#', dd_trigger_options(id: "dd-sbi-task-#{task_dom_id(task, '')}", class: 'sbi-task__menu') do %>
     <i class="fas fa-ellipsis-h"></i>
   <% end -%>
   <div class="dropdown-menu dropdown-menu-right">
-    <%= link_to '', class: 'dropdown-item', data: { "test_start_task" => 1 } do %>
+    <%= link_to work_start_tasks_path(global_task_params(task)), remote: true, method: :post, class: 'dropdown-item', data: { "test_start_task" => 1 } do %>
       <i class="fas fa-play"></i>
       <%=t 'domain.task.start' %>
     <% end %>
@@ -20,7 +20,7 @@
       <i class="fas fa-edit"></i>
       <%=t 'navs.edit' %>
     <% end %>
-    <%= link_to work_task_path(issue_id: task.issue_id, number: task.number), method: :delete, remote: true, class: 'dropdown-item text-danger', data: { confirm: t('navs.confirm_delete'), "test_remove_task" => 1 } do %>
+    <%= link_to work_task_path(global_task_params(task)), method: :delete, remote: true, class: 'dropdown-item text-danger', data: { confirm: t('navs.confirm_delete'), "test_remove_task" => 1 } do %>
       <i class="fas fa-trash-alt"></i>
       <%=t 'navs.delete' %>
     <% end %>

@@ -1,5 +1,5 @@
-<div id="js-task-edit-form-<%= "#{task.issue_id}-#{task.number}" %>" class="sbi-task__form">
-  <%= form_with model: form || build_task_form(task), scope: :form, url: work_task_path(issue_id: task.issue_id, number: task.number), method: :patch do |f| %>
+<div id="<%= task_dom_id(task, 'js-task-edit-form') %>" class="sbi-task__form">
+  <%= form_with model: form || build_task_form(task), scope: :form, url: work_task_path(global_task_params(task)), method: :patch do |f| %>
     <div class="d-flex">
       <%= f.text_field :content, class: 'form-control', autocomplete: 'off' %>
       <button class="ml-1 btn btn-success btn-lean btn-combined">

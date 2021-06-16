@@ -44,4 +44,12 @@ module SblHelper
   def build_task_form(task)
     TaskForm.new(content: task.content)
   end
+
+  def global_task_params(task)
+    { issue_id: task.issue_id, number: task.number }
+  end
+
+  def task_dom_id(task, prefix)
+    "#{prefix}-#{task.issue_id}-#{task.number}"
+  end
 end
