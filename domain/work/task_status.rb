@@ -19,6 +19,21 @@ module Work
     enums do
       Todo = new('todo')
       Wip = new('wip')
+      Done = new('done')
+    end
+
+    sig {returns(T.self_type)}
+    def start
+      raise TaskIsDone unless self == Todo
+
+      Wip
+    end
+
+    sig {returns(T.self_type)}
+    def complete
+      raise TaskIsNotStarted unless self == Wip
+
+      Done
     end
 
     sig {returns(String)}

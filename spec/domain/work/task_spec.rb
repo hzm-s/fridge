@@ -27,13 +27,25 @@ module Work
       end
     end
 
-    describe 'Start' do
-      it do
-        task = described_class.create(1, 'Task')
-        task.start
+    describe 'Update status' do
+      let(:task) { described_class.create(1, 'Task') }
 
-        expect(task.status.to_s).to eq 'wip'
+      it do
+        aggregate_failures do
+          expect { task.complete }.to raise_error TaskIsNotStarted
+
+          task.start
+          expect(task.status.to_s).to eq 'wip'
+
+          task.complete
+          expect(task.status.to_s).to eq 'done'
+          expect { task.start }.to raise_error TaskIsDone
+        end
       end
+    end
+
+    describe 'Query available action' do
+      xit {}
     end
   end
 end

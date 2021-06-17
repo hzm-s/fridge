@@ -42,7 +42,12 @@ module Work
 
     sig {void}
     def start
-      @status = TaskStatus::Wip
+      @status = @status.start
+    end
+
+    sig {void}
+    def complete
+      @status = @status.complete
     end
   end
 end

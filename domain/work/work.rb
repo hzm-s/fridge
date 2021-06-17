@@ -48,6 +48,11 @@ module Work
     end
 
     sig {params(number: Integer).void}
+    def complete_task(number)
+      T.must(task_of(number)).complete
+    end
+
+    sig {params(number: Integer).void}
     def remove_task(number)
       @tasks.reject! { |t| t.number == number }
     end
