@@ -19,21 +19,36 @@ module Work
     enums do
       Todo = new('todo')
       Wip = new('wip')
+      Wait = new('wait')
       Done = new('done')
     end
 
     sig {returns(T.self_type)}
     def start
-      raise TaskIsDone unless self == Todo
+      raise InvalidTaskStatusUpdate unless self == Todo
 
       Wip
     end
 
     sig {returns(T.self_type)}
     def complete
-      raise TaskIsNotStarted unless self == Wip
+      raise InvalidTaskStatusUpdate unless self == Wip
 
       Done
+    end
+
+    sig {returns(T.self_type)}
+    def suspend
+      raise InvalidTaskStatusUpdate unless self == Wip
+
+      Wait
+    end
+
+    sig {returns(T.self_type)}
+    def resume
+      raise InvalidTaskStatusUpdate unless self == Wait
+
+      Wip
     end
 
     sig {returns(String)}

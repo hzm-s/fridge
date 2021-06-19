@@ -53,6 +53,16 @@ module Work
     end
 
     sig {params(number: Integer).void}
+    def suspend_task(number)
+      T.must(task_of(number)).suspend
+    end
+
+    sig {params(number: Integer).void}
+    def resume_task(number)
+      T.must(task_of(number)).resume
+    end
+
+    sig {params(number: Integer).void}
     def remove_task(number)
       @tasks.reject! { |t| t.number == number }
     end

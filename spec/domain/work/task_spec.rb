@@ -32,14 +32,28 @@ module Work
 
       it do
         aggregate_failures do
-          expect { task.complete }.to raise_error TaskIsNotStarted
+          expect { task.complete }.to raise_error InvalidTaskStatusUpdate
+          expect { task.suspend }.to raise_error InvalidTaskStatusUpdate
+          expect { task.resume }.to raise_error InvalidTaskStatusUpdate
 
           task.start
           expect(task.status.to_s).to eq 'wip'
+          expect { task.resume }.to raise_error InvalidTaskStatusUpdate
+
+          task.suspend
+          expect(task.status.to_s).to eq 'wait'
+          expect { task.start }.to raise_error InvalidTaskStatusUpdate
+          expect { task.complete }.to raise_error InvalidTaskStatusUpdate
+
+          task.resume
+          expect(task.status.to_s).to eq 'wip'
+          expect { task.start }.to raise_error InvalidTaskStatusUpdate
 
           task.complete
           expect(task.status.to_s).to eq 'done'
-          expect { task.start }.to raise_error TaskIsDone
+          expect { task.start }.to raise_error InvalidTaskStatusUpdate
+          expect { task.suspend }.to raise_error InvalidTaskStatusUpdate
+          expect { task.resume }.to raise_error InvalidTaskStatusUpdate
         end
       end
     end

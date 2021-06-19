@@ -1,8 +1,7 @@
 # typed: strict
 module Work
   class InvalidTaskStatus < StandardError; end
-  class TaskIsNotStarted < StandardError; end
-  class TaskIsDone < StandardError; end
+  class InvalidTaskStatusUpdate < StandardError; end
 
   autoload :Work, 'work/work'
   autoload :Task, 'work/task'

@@ -49,5 +49,15 @@ module Work
     def complete
       @status = @status.complete
     end
+
+    sig {void}
+    def suspend
+      @status = @status.suspend
+    end
+
+    sig {void}
+    def resume
+      @status = @status.resume
+    end
   end
 end

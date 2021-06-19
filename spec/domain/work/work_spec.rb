@@ -56,29 +56,25 @@ module Work
       end
     end
 
-    describe 'Start task' do
+    describe 'Update task status' do
       it do
-        work.append_task('Task_A')
-        work.append_task('Task_B')
-
-        work.start_task(2)
-
         aggregate_failures do
+          work.append_task('Task_A')
+          work.append_task('Task_B')
+
+          work.start_task(2)
           expect(work.task_of(1).status.to_s).to eq 'todo'
           expect(work.task_of(2).status.to_s).to eq 'wip'
-        end
-      end
-    end
 
-    describe 'Complete task' do
-      it do
-        work.append_task('Task_A')
-        work.append_task('Task_B')
+          work.suspend_task(2)
+          expect(work.task_of(1).status.to_s).to eq 'todo'
+          expect(work.task_of(2).status.to_s).to eq 'wait'
 
-        work.start_task(2)
-        work.complete_task(2)
+          work.resume_task(2)
+          expect(work.task_of(1).status.to_s).to eq 'todo'
+          expect(work.task_of(2).status.to_s).to eq 'wip'
 
-        aggregate_failures do
+          work.complete_task(2)
           expect(work.task_of(1).status.to_s).to eq 'todo'
           expect(work.task_of(2).status.to_s).to eq 'done'
         end
