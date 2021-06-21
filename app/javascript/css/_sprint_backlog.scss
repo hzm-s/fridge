@@ -120,6 +120,10 @@
   &--done {
     color: $success;
   }
+
+  &--wait {
+    color: $danger;
+  }
 }
 
 .sbi-task__content {

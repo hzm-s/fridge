@@ -11,7 +11,7 @@
       <i class="fas fa-check"></i>
       <%=t 'domain.task.done' %>
     <% end %>
-    <%= link_to '', class: 'dropdown-item', data: { "test_suspend_task" => 1 } do %>
+    <%= link_to work_suspend_tasks_path(global_task_params(task)), remote: true, method: :post, class: 'dropdown-item', data: { "test_suspend_task" => 1 } do %>
       <i class="fas fa-pause"></i>
       <%=t 'domain.task.suspend' %>
     <% end %>

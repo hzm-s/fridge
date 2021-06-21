@@ -3,7 +3,8 @@ module SblHelper
   TASK_STATUS_CLASSES = {
     todo: 'fa fa-minus-circle',
     wip: 'far fa-circle',
-    done: 'far fa-check-circle'
+    done: 'far fa-check-circle',
+    wait: 'fa fa-exclamation-circle',
   }
 
   def sbl_task_list_classes(tasks)
