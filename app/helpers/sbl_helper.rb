@@ -46,8 +46,8 @@ module SblHelper
     TaskForm.new(content: task.content)
   end
 
-  def global_task_params(task)
-    { issue_id: task.issue_id, number: task.number }
+  def global_task_params(task, extras = {})
+    { issue_id: task.issue_id, number: task.number }.merge(extras)
   end
 
   def task_dom_id(task, prefix)
