@@ -14,14 +14,15 @@ class TasksController < ApplicationController
   end
 
   def update
-    @issue_id = Issue::Id.from_string(params[:issue_id])
     @form = TaskForm.new(task_params)
+    @issue_id = Issue::Id.from_string(params[:issue_id])
+    task_number = params[:number].to_i
 
     if @form.valid?
-      ModifyTaskUsecase.perform(@issue_id, params[:number].to_i, @form.content)
-      @tasks = TaskListQuery.call(@issue_id.to_s)
+      ModifyTaskUsecase.perform(@issue_id, task_number, @form.content)
+      @task = TaskQuery.call(@issue_id.to_s, task_number)
     else
-      @task = TaskListQuery.call(@issue_id.to_s).find { |t| t.number == params[:number].to_i }
+      @task = TaskQuery.call(@issue_id.to_s, task_number)
       render :edit
     end
   end

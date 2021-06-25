@@ -30,6 +30,18 @@ RSpec.describe '/work/:issue_id/task_statuses' do
     end
   end
 
+  describe 'Resume' do
+    before do
+      start_task(issue.id, 1)
+      suspend_task(issue.id, 1)
+    end
+
+    it do
+      patch work_task_status_path(issue_id: issue.id, number: 1, type: :resume, format: :js)
+      expect(response.body).to include %Q(test-task-status-#{issue.id}-1=\\"wip\\")
+    end
+  end
+
   describe 'Complete' do
     before { start_task(issue.id, 1) }
 

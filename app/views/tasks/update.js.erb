@@ -1,1 +1,1 @@
-$('#js-task-list-<%= @issue_id %>').replaceWith('<%=j render partial: 'sprint_backlogs/task_list', locals: { issue_id: @issue_id, tasks: @tasks } %>')
+$('#<%= task_dom_id(@task, 'js-task') %>').replaceWith('<%=j render partial: 'sprint_backlogs/task', locals: { task: @task } %>')

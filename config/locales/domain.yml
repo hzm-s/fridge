@@ -14,8 +14,9 @@ ja:
 
     task:
       start: 着手する
-      done: 完了
+      complete: 完了
       suspend: 中断する
+      resume: 再開する
 
     sprint:
       start: スプリントを開始する
