@@ -37,5 +37,10 @@ module Activity
       base = sets.shift
       sets.reduce(base) { |a, e| a & e }.include?(self)
     end
+
+    sig {returns(String)}
+    def to_s
+      serialize
+    end
   end
 end

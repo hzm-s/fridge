@@ -6,4 +6,8 @@ class TaskStruct < SimpleDelegator
     super(task)
     @issue_id = issue_id
   end
+
+  def available_activities
+    Work::TaskStatus.from_string(status).available_activities.to_a.map(&:to_s)
+  end
 end

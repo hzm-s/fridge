@@ -38,7 +38,12 @@ module Activity
 
     sig {params(other: Set).returns(T::Boolean)}
     def ==(other)
-      self.entries == other.entries
+      self.to_a == other.to_a
+    end
+
+    sig {returns(T::Array[Activity])}
+    def to_a
+      entries.to_a
     end
 
     protected
