@@ -25,6 +25,10 @@ module Activity
       UpdatePlan = new('update_plan')
       AssignIssueToSprint = new('assign_issue_to_sprint')
       RevertIssueFromSprint = new('revert_issue_from_sprint')
+      StartTask = new('start_task')
+      SuspendTask = new('suspend_task')
+      ResumeTask = new('resume_task')
+      CompleteTask = new('complete_task')
     end
 
     sig {params(set_providers: T::Array[SetProvider]).returns(T::Boolean)}

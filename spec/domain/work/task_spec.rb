@@ -59,7 +59,43 @@ module Work
     end
 
     describe 'Query available action' do
-      xit {}
+      let(:task) { described_class.create(1, 'Task') }
+
+      context 'when todo' do
+        it do
+          expect(task.available_activities).to eq activity_set([:start_task])
+        end
+      end
+
+      context 'when wip' do
+        before { task.start }
+
+        it do
+          expect(task.available_activities).to eq activity_set([:complete_task, :suspend_task])
+        end
+      end
+
+      context 'when wait' do
+        before do
+          task.start
+          task.suspend
+        end
+
+        it do
+          expect(task.available_activities).to eq activity_set([:resume_task])
+        end
+      end
+
+      context 'when done' do
+        before do
+          task.start
+          task.complete
+        end
+
+        it do
+          expect(task.available_activities).to eq activity_set([])
+        end
+      end
     end
   end
 end

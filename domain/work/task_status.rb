@@ -51,6 +51,22 @@ module Work
       Wip
     end
 
+    sig {returns(Activity::Set)}
+    def available_activities
+      activities =
+        case self
+        when Todo
+          [:start_task]
+        when Wip
+          [:complete_task, :suspend_task]
+        when Wait
+          [:resume_task]
+        else
+          []
+        end
+      Activity::Set.from_symbols(activities)
+    end
+
     sig {returns(String)}
     def to_s
       serialize
