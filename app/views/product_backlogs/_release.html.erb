@@ -13,7 +13,7 @@
       <% end %>
     </div>
   </div>
-  <%= content_tag :div, data: plan_updatable && sortable_pbl_options(current_product_id, release.number) do %>
+  <%= content_tag :div, data: plan_updatable && pbl_sortable_options(current_product_id, release.number) do %>
     <%= render partial: 'item', collection: release.issues %>
   <% end %>
 </div>

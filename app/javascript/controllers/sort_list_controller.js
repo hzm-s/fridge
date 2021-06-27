@@ -23,8 +23,8 @@ export default class extends Controller {
       group: { name: group, pull: true, put: true },
       onEnd: function(e) {
         const payload = {
-          from: e.from.dataset.sortPblGroup,
-          to: e.to.dataset.sortPblGroup,
+          from: e.from.dataset.sortListGroup,
+          to: e.to.dataset.sortListGroup,
           issue_id: e.item.dataset.id,
           to_index: e.newIndex,
         }

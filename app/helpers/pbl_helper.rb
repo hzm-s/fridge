@@ -5,11 +5,11 @@ module PblHelper
     task: 'fas fa-hammer',
   }
 
-  def sortable_pbl_options(product_id, release_number)
+  def pbl_sortable_options(product_id, release_number)
     {
-      controller: 'sort-pbl',
-      sort_pbl_url: product_plan_path(product_id),
-      sort_pbl_group: release_number,
+      controller: 'sort-list',
+      sort_list_url: product_plan_path(product_id),
+      sort_list_group: release_number,
       "test_update_issues_in_release_#{release_number}" => 1,
     }
   end
