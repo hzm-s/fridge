@@ -3,23 +3,12 @@
     <i class="fas fa-ellipsis-h"></i>
   <% end -%>
   <div class="dropdown-menu dropdown-menu-right">
-    <%= link_to work_task_status_path(global_task_params(task, type: :start)), remote: true, method: :patch, class: 'dropdown-item', data: { "test_start_task" => 1 } do %>
-      <i class="fas fa-play"></i>
-      <%=t 'domain.task.start' %>
+    <% task.available_activities.each do |a| %>
+      <%= task_action_link(task, a, { class: 'dropdown-item' }) %>
     <% end %>
-    <%= link_to work_task_status_path(global_task_params(task, type: :complete)), remote: true, method: :patch, class: 'dropdown-item', data: { "test_done_task" => 1 } do %>
-      <i class="fas fa-check"></i>
-      <%=t 'domain.task.complete' %>
+    <% if task.available_activities.size > 0 %>
+      <div class="dropdown-divider"></div>
     <% end %>
-    <%= link_to work_task_status_path(global_task_params(task, type: :suspend)), remote: true, method: :patch, class: 'dropdown-item', data: { "test_suspend_task" => 1 } do %>
-      <i class="fas fa-pause"></i>
-      <%=t 'domain.task.suspend' %>
-    <% end %>
-    <%= link_to work_task_status_path(global_task_params(task, type: :resume)), remote: true, method: :patch, class: 'dropdown-item', data: { "test_resume_task" => 1 } do %>
-      <i class="fas fa-play"></i>
-      <%=t 'domain.task.resume' %>
-    <% end %>
-    <div class="dropdown-divider"></div>
     <%= link_to '#', class: 'dropdown-item', data: { action: 'inline-edit#open' } do %>
       <i class="fas fa-edit"></i>
       <%=t 'navs.edit' %>

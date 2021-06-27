@@ -7,6 +7,13 @@ module SblHelper
     wait: 'fa fa-exclamation-circle',
   }
 
+  TASK_ACTION_CLASSES = {
+    start_task: 'fas fa-play',
+    complete_task: 'fas fa-check',
+    suspend_task: 'fas fa-pause',
+    resume_task: 'fas fa-play',
+  }
+
   def sbl_task_list_classes(tasks)
     classes = %w(sbi-task__list)
     classes << 'sbi-task__list--empty' if tasks.empty?
@@ -52,5 +59,18 @@ module SblHelper
 
   def task_dom_id(task, prefix)
     "#{prefix}-#{task.issue_id}-#{task.number}"
+  end
+
+  def task_action_link(task, action, html_options)
+    url = work_task_status_path(global_task_params(task, type: action))
+    options =
+      { remote: true, method: :patch }
+        .merge(html_options)
+        .merge(data: { task_dom_id(task, "test_#{action}") => 1 })
+
+    link_to(url, options) do
+      concat content_tag(:i, nil, class: TASK_ACTION_CLASSES[action.to_sym], style: 'margin-right:0.3rem')
+      concat t(action, scope: 'domain.task')
+    end
   end
 end

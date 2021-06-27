@@ -13,10 +13,10 @@ ja:
       cancel_sprint_assign: 着手を取り消す
 
     task:
-      start: 着手する
-      complete: 完了
-      suspend: 中断する
-      resume: 再開する
+      start_task: 着手する
+      complete_task: 完了
+      suspend_task: 中断する
+      resume_task: 再開する
 
     sprint:
       start: スプリントを開始する
