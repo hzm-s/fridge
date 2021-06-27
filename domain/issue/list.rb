@@ -46,11 +46,6 @@ module Issue
       to_a.include?(issue_id)
     end
 
-    sig {params(other: List).returns(T::Boolean)}
-    def have_same_issue?(other)
-      (self.to_a & other.to_a).any?
-    end
-
     sig {returns(T::Array[Id])}
     def to_a
       @items.dup
