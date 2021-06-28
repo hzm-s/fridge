@@ -22,7 +22,7 @@ module SblHelper
   end
 
   def sbl_item_grip_css_classes(can_move)
-    base = 'sbl-item__grip'
+    base = 'sbl-item__grip js-sortable-handle'
     return base if can_move
 
     "#{base} sbl-item__grip--disabled"
@@ -72,5 +72,13 @@ module SblHelper
       concat content_tag(:i, nil, class: TASK_ACTION_CLASSES[action.to_sym], style: 'margin-right:0.3rem')
       concat t(action, scope: 'domain.task')
     end
+  end
+
+  def sbl_sortable_options
+    {
+      controller: 'sort-list',
+      sort_list_url: '',
+      sort_list_group: 'sbl'
+    }
   end
 end

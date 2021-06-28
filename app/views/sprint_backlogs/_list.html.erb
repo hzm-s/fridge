@@ -1,7 +1,7 @@
 <% if items.any? %>
-  <div class="sbl-list">
+  <%= content_tag :div, class: 'sbl-list', data: sbl_sortable_options do %>
     <%= render partial: 'item', collection: items %>
-  </div>
+  <% end %>
 <% else %>
   <p class="text-muted text-center my-3">
     <%=t '.empty' %>
