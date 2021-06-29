@@ -31,13 +31,12 @@ module Sprint
     end
 
     let(:sprint) { described_class.start(product_id, 1) }
+    let(:issues) { issue_list(issue_a, issue_b, issue_c) }
+    let(:issue_a) { Issue::Id.create }
+    let(:issue_b) { Issue::Id.create }
+    let(:issue_c) { Issue::Id.create }
 
     describe 'Update issue list' do
-      let(:issues) { issue_list(issue_a, issue_b, issue_c) }
-      let(:issue_a) { Issue::Id.create }
-      let(:issue_b) { Issue::Id.create }
-      let(:issue_c) { Issue::Id.create }
-
       it do
         sprint.update_issues(issues)
         expect(sprint.issues).to eq issues

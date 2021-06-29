@@ -17,18 +17,6 @@ module Issue
       end
     end
 
-    describe 'Add to first' do
-      it do
-        list = described_class.new([])
-        expect(list.add_to_first(issue_a)).to eq described_class.new([issue_a])
-      end
-
-      it do
-        list = described_class.new([issue_a, issue_b])
-        expect(list.add_to_first(issue_c)).to eq described_class.new([issue_c, issue_a, issue_b])
-      end
-    end
-
     describe 'Remove' do
       it do
         list = described_class.new([issue_a, issue_b, issue_c]).remove(issue_b)
@@ -75,6 +63,18 @@ module Issue
     describe 'Check to include issue' do
       it { expect(described_class.new([issue_a, issue_b, issue_c])).to be_include(issue_b) }
       it { expect(described_class.new([issue_a, issue_b, issue_c])).to_not be_include(issue_d) }
+    end
+
+    describe 'Fetch item by index' do
+      it do
+        list = described_class.new([issue_a, issue_b, issue_c, issue_d, issue_e])
+
+        aggregate_failures do
+          expect(list.index_of(0)).to eq issue_a
+          expect(list.index_of(4)).to eq issue_e
+          expect{ list.index_of(5) }.to raise_error(NotFound)
+        end
+      end
     end
   end
 end

@@ -5,9 +5,9 @@ module SprintSupport
       .then { |id| SprintRepository::AR.find_by_id(id) }
   end
 
-  def plan_task(issue_id, task_contents)
-    task_contents.each do |content|
-      PlanTaskUsecase.perform(issue_id, content)
+  def assign_issue_to_sprint(product_id, *issue_ids)
+    issue_ids.each do |issue_id|
+      AssignIssueToSprintUsecase.perform(product_id, team_roles(:po), issue_id)
     end
   end
 end

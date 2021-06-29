@@ -16,11 +16,6 @@ module Issue
     end
 
     sig {params(item: Id).returns(T.self_type)}
-    def add_to_first(item)
-      self.class.new([item] + @items)
-    end
-
-    sig {params(item: Id).returns(T.self_type)}
     def remove(item)
       self.class.new(@items.reject { |i| i == item })
     end
@@ -44,6 +39,11 @@ module Issue
     sig {params(issue_id: Id).returns(T::Boolean)}
     def include?(issue_id)
       to_a.include?(issue_id)
+    end
+
+    sig {params(index: Integer).returns(Id)}
+    def index_of(index)
+      to_a[index].tap { |found| raise NotFound unless found }
     end
 
     sig {returns(T::Array[Id])}
