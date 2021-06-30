@@ -11,9 +11,9 @@ class ChangeWorkPriorityUsecase < UsecaseBase
 
   sig {params(product_id: Product::Id, roles: Team::RoleSet, issue_id: Issue::Id, to_index: Integer).void}
   def perform(product_id, roles, issue_id, to_index)
-    sprint = @repository.current(product_id)
+    sprint = T.must(@repository.current(product_id))
 
-    opposite = T.must(sprint.issues.index_of(to_index))
+    opposite = sprint.issues.index_of(to_index)
     new_issues = sprint.issues.swap(issue_id, opposite)
     sprint.update_issues(new_issues)
 

@@ -43,7 +43,9 @@ module Issue
 
     sig {params(index: Integer).returns(Id)}
     def index_of(index)
-      to_a[index].tap { |found| raise NotFound unless found }
+      raise NotFound unless found = to_a[index]
+
+      found
     end
 
     sig {returns(T::Array[Id])}
