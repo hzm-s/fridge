@@ -26,6 +26,7 @@ Rails.application.routes.draw do
 
   scope 'current_sprint/:product_id', as: :current_sprint, module: :current_sprint do
     resources :issues, only: [:create, :destroy]
+    resource :work_priority, only: [:update]
   end
 
   scope 'works/:issue_id', as: :work do
