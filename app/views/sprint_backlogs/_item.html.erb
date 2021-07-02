@@ -1,4 +1,4 @@
-<div class="sbl-item">
+<%= content_tag :div, class: 'sbl-item', data: { id: item.id } do %>
   <span class="<%= sbl_item_grip_css_classes(true) %>"<%= true && ' data-test-item-movable=1' %>>
     <i class="fas fa-grip-vertical"></i>
   </span>
@@ -11,4 +11,4 @@
       <%= render partial: 'task_form', locals: { issue_id: item.id, form: nil } %>
     </div>
   </div>
-</div>
+<% end %>

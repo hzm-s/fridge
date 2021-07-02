@@ -74,10 +74,10 @@ module SblHelper
     end
   end
 
-  def sbl_sortable_options
+  def sbl_sortable_options(product_id)
     {
       controller: 'sort-list',
-      sort_list_url: '',
+      sort_list_url: current_sprint_work_priority_path(product_id: product_id),
       sort_list_group: 'sbl'
     }
   end

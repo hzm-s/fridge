@@ -1,5 +1,5 @@
 <% if items.any? %>
-  <%= content_tag :div, class: 'sbl-list', data: sbl_sortable_options do %>
+  <%= content_tag :div, class: 'sbl-list', data: sbl_sortable_options(current_product.id) do %>
     <%= render partial: 'item', collection: items %>
   <% end %>
 <% else %>
