@@ -48,7 +48,7 @@ module Plan
     end
 
     sig {params(from: Issue::Id, to: Issue::Id).void}
-    def sort_issue_priority(from, to)
+    def change_issue_priority(from, to)
       @issues = @issues.swap(from, to)
     end
 

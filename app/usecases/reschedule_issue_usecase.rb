@@ -21,7 +21,7 @@ class RescheduleIssueUsecase < UsecaseBase
 
     to.plan_issue(issue_id)
     if opposite = PlannedIssueQuery.call(plan, release_number, to_index)
-      to.sort_issue_priority(issue_id, opposite)
+      to.change_issue_priority(issue_id, opposite)
     end
     plan.update_release(roles, to)
 

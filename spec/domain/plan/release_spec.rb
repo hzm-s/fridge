@@ -72,7 +72,7 @@ module Plan
         release.plan_issue(issue_b)
         release.plan_issue(issue_c)
 
-        release.sort_issue_priority(issue_c, issue_a)
+        release.change_issue_priority(issue_c, issue_a)
 
         expect(release.issues).to eq issue_list(issue_c, issue_a, issue_b)
       end

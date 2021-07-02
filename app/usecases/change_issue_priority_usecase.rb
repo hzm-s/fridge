@@ -15,7 +15,7 @@ class ChangeIssuePriorityUsecase < UsecaseBase
 
     release = plan.release_by_issue(issue_id)
     opposite = T.must(PlannedIssueQuery.call(plan, release.number, to_index))
-    release.sort_issue_priority(issue_id, opposite)
+    release.change_issue_priority(issue_id, opposite)
     plan.update_release(roles, release)
 
     @repository.store(plan)
