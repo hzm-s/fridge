@@ -24,6 +24,10 @@ module SprintBacklogQuery
       @tasks = build_tasks.sort_by(&:number)
     end
 
+    def criteria
+      super.sort_by(&:id)
+    end
+
     private
 
     def build_tasks

@@ -5,7 +5,7 @@ RSpec.describe SprintBacklogQuery do
   let!(:product) { create_product }
   let!(:issue_a) { plan_issue(product.id, acceptance_criteria: %w(CRT_A), size: 3, release: 1) }
   let!(:issue_b) { plan_issue(product.id, acceptance_criteria: %w(CRT_B), size: 3, release: 1) }
-  let!(:issue_c) { plan_issue(product.id, acceptance_criteria: %w(CRT_C), size: 3, release: 1) }
+  let!(:issue_c) { plan_issue(product.id, acceptance_criteria: %w(CRT_C1 CRT_C2 CRT_C3), size: 3, release: 1) }
   let!(:sprint) { start_sprint(product.id) }
 
   before do
@@ -22,7 +22,7 @@ RSpec.describe SprintBacklogQuery do
   it do
     sbl = described_class.call(sprint.id)
     issue = sbl.issues.first
-    expect(issue.criteria.first.content).to eq 'CRT_C'
+    expect(issue.criteria.map(&:content)).to eq %w(CRT_C1 CRT_C2 CRT_C3)
   end
 
   it do
