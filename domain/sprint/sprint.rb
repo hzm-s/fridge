@@ -40,8 +40,9 @@ module Sprint
       @issues = issues
     end
 
-    sig {params(issues: Issue::List).void}
-    def update_issues(issues)
+    sig {params(roles: Team::RoleSet, issues: Issue::List).void}
+    def update_issues(roles, issues)
+      raise PermissonDenied unless Activity.allow?(:update_sprint_issues, [roles])
       raise AlreadyFinished if finished?
 
       @issues = issues

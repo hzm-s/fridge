@@ -16,7 +16,7 @@ module Sprint
       raise NotStarted unless sprint
 
       issue.revert_from_sprint(roles)
-      sprint.update_issues(sprint.issues.remove(issue.id))
+      sprint.update_issues(roles, sprint.issues.remove(issue.id))
 
       @sprint_repository.store(sprint)
       @issue_repository.store(issue)

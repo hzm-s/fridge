@@ -15,7 +15,7 @@ class ChangeWorkPriorityUsecase < UsecaseBase
 
     opposite = sprint.issues.index_of(to_index)
     new_issues = sprint.issues.swap(issue_id, opposite)
-    sprint.update_issues(new_issues)
+    sprint.update_issues(roles, new_issues)
 
     @repository.store(sprint)
   end
