@@ -30,10 +30,10 @@ RSpec.describe TaskForm do
   end
 
   it do
-    form = described_class.new(valid.merge(content: 'a' * 21))
+    form = described_class.new(valid.merge(content: 'a' * 51))
     aggregate_failures do
       expect(form).to_not be_valid
-      expect(form.errors[:content]).to include(I18n.t('errors.messages.too_long', count: 20))
+      expect(form.errors[:content]).to include(I18n.t('errors.messages.too_long', count: 50))
     end
   end
 end
