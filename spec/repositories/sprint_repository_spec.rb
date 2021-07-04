@@ -26,18 +26,19 @@ RSpec.describe SprintRepository::AR do
     let(:issue_a) { plan_issue(product.id).id }
     let(:issue_b) { plan_issue(product.id).id }
     let(:issue_c) { plan_issue(product.id).id }
+    let(:po_roles) { team_roles(:po) }
 
     it do
       sprint = Sprint::Sprint.start(product.id, 11)
       described_class.store(sprint)
 
-      sprint.update_issues(sprint.issues.append(issue_a))
+      sprint.update_issues(po_roles, sprint.issues.append(issue_a))
       expect { described_class.store(sprint) }
         .to change { Dao::Sprint.count }.by(0)
         .and change { Dao::AssignedIssue.count }.from(0).to(1)
 
-      sprint.update_issues(sprint.issues.append(issue_b))
-      sprint.update_issues(sprint.issues.append(issue_c))
+      sprint.update_issues(po_roles, sprint.issues.append(issue_b))
+      sprint.update_issues(po_roles, sprint.issues.append(issue_c))
       expect { described_class.store(sprint) }
         .to change { Dao::Sprint.count }.by(0)
         .and change { Dao::AssignedIssue.count }.from(1).to(3)
