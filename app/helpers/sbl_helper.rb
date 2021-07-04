@@ -74,11 +74,14 @@ module SblHelper
     end
   end
 
-  def sbl_sortable_options(product_id)
-    {
+  def sbl_sortable_options(product_id, can_update)
+    base = {
       controller: 'sort-list',
       sort_list_url: current_sprint_work_priority_path(product_id: product_id),
-      sort_list_group: 'sbl'
+      sort_list_group: 'sbl',
     }
+    return base unless can_update
+
+    base.merge(test_change_work_priority: 1)
   end
 end

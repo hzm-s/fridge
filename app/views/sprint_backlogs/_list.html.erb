@@ -1,6 +1,7 @@
 <% if items.any? %>
-  <%= content_tag :div, class: 'sbl-list', data: sbl_sortable_options(current_product.id) do %>
-    <%= render partial: 'item', collection: items %>
+  <% can_update = authorize(:update_sprint_issues, current_team_member_roles) %>
+  <%= content_tag :div, class: 'sbl-list', data: sbl_sortable_options(current_product.id, can_update) do %>
+    <%= render partial: 'item', collection: items, locals: { can_move: can_update } %>
   <% end %>
 <% else %>
   <p class="text-muted text-center my-3">

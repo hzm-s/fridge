@@ -49,6 +49,7 @@ RSpec.describe 'sprint_backlogs' do
 
         aggregate_failures do
           expect(response.body).to include "test-revert-issue"
+          expect(response.body).to include "test-change-work-priority"
         end
       end
     end
@@ -61,6 +62,7 @@ RSpec.describe 'sprint_backlogs' do
 
         aggregate_failures do
           expect(response.body).to_not include "test-revert-issue"
+          expect(response.body).to_not include "test-change-work-priority"
         end
       end
     end
