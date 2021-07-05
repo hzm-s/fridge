@@ -1,18 +1,15 @@
-<div class="sbi-issue__main" test-sbi-<%= issue.id %>="1">
-  <%= simple_format(issue.description, class: 'sbi-issue__content') %>
-  <div class="sbi-issue__ac-list">
-    <% issue.criteria.each do |c| %>
-      <p class="sbi-issue__ac-item">
-        <%= c.content %>
-      </p>
-    <% end %>
-  </div>
-  <% if authorize(:revert_issue_from_sprint, current_team_member_roles) %>
-    <div class="mt-auto">
-      <%= link_to current_sprint_issue_path(product_id: current_product.id, id: issue.id), method: :delete, class: 'btn btn-sm btn-outline-secondary', data: { 'test_revert_issue' => 1 } do %>
-        <i class="fas fa-reply"></i>
-        <%=t 'domain.issue.cancel_sprint_assign' %>
+<div class="sbi-issue__container" test-sbi-<%= issue.id %>="1">
+  <div class="sbi-issue__main">
+    <%= simple_format(issue.description, class: 'sbi-issue__content') %>
+    <ul class="sbi-issue__ac-list">
+      <% issue.criteria.each do |c| %>
+        <li class="sbi-issue__ac-item">
+          <%= c.content %>
+        </li>
       <% end %>
-    </div>
-  <% end %>
+    </ul>
+  </div>
+  <div class="sbi-issue__actions">
+    <%= render partial: 'item_menu', locals: { item: issue } %>
+  </div>
 </div>

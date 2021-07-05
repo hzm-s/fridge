@@ -11,13 +11,13 @@
   box-sizing: border-box;
   width: 100%;
   margin: 0;
-  padding: .75rem 0;
+  padding: .5rem 0;
   border-bottom: 1px solid $gray-300;
   background-color: $white;
 }
 
 .sbl-item__grip {
-  margin-right: .5rem;
+  margin-right: .25rem;
   color: $gray-700;
 
   &:hover {
@@ -43,7 +43,7 @@
   display: flex;
   width: 50%;
   box-sizing: border-box;
-  padding-right: .75rem;
+  padding-right: .25rem;
 }
 
 .sbl-item__task {
@@ -51,41 +51,41 @@
   box-sizing: border-box;
 }
 
-.sbi-issue__main {
+.sbi-issue__container {
   flex-grow: 1;
   display: flex;
-  flex-direction: column;
-  height: 100%;
+  justify-content: space-between;
+  border: 1px solid $gray-300;
+  border-radius: .25rem;
+  padding: 0 .5rem;
+}
+
+.sbi-issue__main {
+  padding: .5rem .25rem .5rem 0;
 }
 
 .sbi-issue__content {
   @include nf;
-  background-color: $gray-200;
-  border-radius: .25rem;
-  padding: .325rem .5rem;
-  margin-bottom: 0;
   font-size: .75rem;
+  margin-bottom: 0;
 }
 
 .sbi-issue__ac-list {
-  margin: .25rem 0;
-  padding-left: .5rem;
+  margin-top: .5rem;
+  padding-left: 1rem;
 }
 
 .sbi-issue__ac-item {
   @include nf;
   margin-bottom: 0;
   font-size: .75rem;
-
-  &:before {
-    content: '\02022';
-  }
+  color: $gray-600;
 }
 
 .sbi-task__list {
   border-radius: .25rem;
   border: 1px solid $gray-300;
-  margin-bottom: .325rem;
+  margin-bottom: .25rem;
 
   &--empty {
     border: 0;
@@ -135,13 +135,4 @@
 
 .sbi-task__actions {
   margin-left: auto;
-}
-
-.sbi-task__menu {
-  color: $body-color;
-
-  &:hover {
-    color: $body-color;
-    text-decoration: none;
-  }
 }
