@@ -17,7 +17,7 @@ module Issue
           type.initial_status,
           description,
           StoryPoint.unknown,
-          AcceptanceCriteria.new([]),
+          AcceptanceCriteria.create,
         )
       end
 
