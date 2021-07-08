@@ -16,12 +16,9 @@ module IssueSupport
     IssueRepository::AR.find_by_id(issue.id)
   end
 
-  def append_acceptance_criteria(issue, contents_or_criteria)
-    criteria = contents_or_criteria.map do |cc|
-      cc.is_a?(String)? acceptance_criterion(cc) : cc
-    end
-    criteria.each do |ac|
-      AppendAcceptanceCriterionUsecase.perform(issue.id, ac)
+  def append_acceptance_criteria(issue, contents)
+    contents.each do |c|
+      AppendAcceptanceCriterionUsecase.perform(issue.id, c)
     end
   end
 

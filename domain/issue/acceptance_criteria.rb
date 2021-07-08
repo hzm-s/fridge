@@ -6,8 +6,16 @@ module Issue
     extend T::Sig
 
     class << self
+      extend T::Sig
+
+      sig {returns(T.attached_class)}
       def create
         new([])
+      end
+
+      sig {params(criteria: T::Array[AcceptanceCriterion]).returns(T.attached_class)}
+      def from_repository(criteria)
+        new(criteria)
       end
     end
 
@@ -42,9 +50,9 @@ module Issue
       @criteria.size
     end
 
-    sig {returns(T::Array[String])}
+    sig {returns(T::Array[AcceptanceCriterion])}
     def to_a
-      @criteria.map(&:to_s)
+      @criteria
     end
 
     sig {params(other: AcceptanceCriteria).returns(T::Boolean)}

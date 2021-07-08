@@ -5,12 +5,13 @@ module IssueDomainSupport
   end
 
   def acceptance_criterion(content)
-    Issue::AcceptanceCriterion.new(content)
+    Issue::AcceptanceCriterion.new(1, content)
   end
 
   def acceptance_criteria(contents)
-    contents.map { |c| acceptance_criterion(c) }
-      .yield_self { |contents| Issue::AcceptanceCriteria.new(contents) }
+    Issue::AcceptanceCriteria.create.tap do |criteria|
+      contents.each { |c| criteria.append(c) }
+    end
   end
 
   def issue_list(*issue_ids)

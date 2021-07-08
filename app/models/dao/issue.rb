@@ -14,7 +14,7 @@ class Dao::Issue < ApplicationRecord
 
     self.criteria.clear
     issue.acceptance_criteria.to_a.each do |ac|
-      self.criteria.build(content: ac.to_s)
+      self.criteria.build(number: ac.number, content: ac.content)
     end
   end
 
@@ -56,7 +56,7 @@ class Dao::Issue < ApplicationRecord
 
   def read_acceptance_criteria
     criteria
-      .map { |c| Issue::AcceptanceCriterion.new(c.content) }
-      .yield_self { |c| Issue::AcceptanceCriteria.new(c) }
+      .map { |c| Issue::AcceptanceCriterion.new(c.number, c.content) }
+      .then { |criteria| Issue::AcceptanceCriteria.from_repository(criteria) }
   end
 end

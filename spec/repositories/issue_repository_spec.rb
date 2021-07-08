@@ -26,32 +26,54 @@ RSpec.describe IssueRepository::AR do
   end
 
   describe 'Update' do
+    let(:issue) { Issue::Issue.create(product.id, Issue::Types::Feature, Issue::Description.new('ABC')) }
+
+    before { described_class.store(issue) }
+
     it do
-      issue = plan_issue(product.id)
       issue.update_acceptance_criteria(acceptance_criteria(%w(AC1 AC2)))
 
       expect { described_class.store(issue) }
         .to change { Dao::Issue.count }.by(0)
         .and change { Dao::AcceptanceCriterion.count }.by(2)
 
-      criteria = Dao::AcceptanceCriterion.all
-      expect(criteria.map(&:content)).to match_array acceptance_criteria(%w(AC1 AC2).to_a)
+      aggregate_failures do
+        stored = Dao::AcceptanceCriterion.all
+        expect(stored.size).to eq 2
+        expect(stored[0].number).to eq 1
+        expect(stored[0].content).to eq 'AC1'
+        expect(stored[1].number).to eq 2
+        expect(stored[1].content).to eq 'AC2'
+      end
     end
 
     it do
-      issue = plan_issue(product.id, acceptance_criteria: %w(AC1 AC2 AC3 AC4))
-      issue.update_acceptance_criteria(acceptance_criteria(%w(AC1 AC2 AC3)))
+      criteria = acceptance_criteria(%w(AC1 AC2 AC3 AC4))
+      issue.update_acceptance_criteria(criteria)
+      described_class.store(issue)
+
+      criteria.remove(4)
+      issue.update_acceptance_criteria(criteria)
 
       expect { described_class.store(issue) }
         .to change { Dao::Issue.count }.by(0)
         .and change { Dao::AcceptanceCriterion.count }.by(-1)
 
-      criteria = Dao::AcceptanceCriterion.all
-      expect(criteria.map(&:content)).to match_array acceptance_criteria(%w(AC1 AC2 AC3).to_a)
+      aggregate_failures do
+        stored = Dao::AcceptanceCriterion.all
+        expect(stored.size).to eq 3
+        expect(stored[0].number).to eq 1
+        expect(stored[0].content).to eq 'AC1'
+        expect(stored[1].number).to eq 2
+        expect(stored[1].content).to eq 'AC2'
+        expect(stored[2].number).to eq 3
+        expect(stored[2].content).to eq 'AC3'
+      end
     end
 
     it do
-      issue = plan_issue(product.id, acceptance_criteria: %w(ac1))
+      issue.update_acceptance_criteria(acceptance_criteria(%w(CRT)))
+      described_class.store(issue)
       issue.estimate(dev_role, Issue::StoryPoint.new(5))
 
       described_class.store(issue)
@@ -63,7 +85,9 @@ RSpec.describe IssueRepository::AR do
 
   describe 'Remove' do
     it do
-      issue = plan_issue(product.id, acceptance_criteria: %w(ac1 ac2 ac3))
+      issue = Issue::Issue.create(product.id, Issue::Types::Feature, Issue::Description.new('ABC'))
+      issue.update_acceptance_criteria(acceptance_criteria(%w(AC1 AC2 AC3)))
+      described_class.store(issue)
 
       expect { described_class.remove(issue.id) }
         .to change { Dao::Issue.count }.by(-1)
