@@ -18,5 +18,11 @@ module Issue
       @number = number
       @content = content
     end
+
+    sig {params(other: AcceptanceCriterion).returns(T::Boolean)}
+    def ==(other)
+      self.number == other.number &&
+        self.content == other.content
+    end
   end
 end

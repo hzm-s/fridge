@@ -6,13 +6,14 @@ RSpec.describe AppendAcceptanceCriterionUsecase do
   let!(:issue) { plan_issue(product.id) }
 
   it do
-    described_class.perform(issue.id, acceptance_criterion('AC1'))
+    described_class.perform(issue.id, 'AC1')
     stored = IssueRepository::AR.find_by_id(issue.id)
-    expect(stored.acceptance_criteria).to eq acceptance_criteria(%w(AC1))
+    expect(stored.acceptance_criteria.of(1).content).to eq 'AC1'
 
-    described_class.perform(issue.id, acceptance_criterion('AC2'))
-    described_class.perform(issue.id, acceptance_criterion('AC3'))
+    described_class.perform(issue.id, 'AC2')
+    described_class.perform(issue.id, 'AC3')
     stored = IssueRepository::AR.find_by_id(issue.id)
-    expect(stored.acceptance_criteria).to eq acceptance_criteria(%w(AC1 AC2 AC3))
+    expect(stored.acceptance_criteria.of(2).content).to eq 'AC2'
+    expect(stored.acceptance_criteria.of(3).content).to eq 'AC3'
   end
 end
