@@ -1,8 +1,6 @@
-<% if item.criteria.any? %>
-  <div class="ac-list ac-list--small">
-    <% item.criteria.each do |criterion| %>
-      <%= render partial: 'acceptance_criteria/item', locals: { issue_id: item.id, criterion: criterion, editable: false } %>
-    <% end %>
+<% if criteria.any? %>
+  <div class="pbi__ac-list">
+    <%= render partial: 'acceptance_criteria/item', collection: criteria, locals: { issue_id: issue_id }, as: :criterion %>
   </div>
 <% else %>
   <span class="text-muted text-sm nf">

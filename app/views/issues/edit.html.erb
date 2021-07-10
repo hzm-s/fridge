@@ -17,8 +17,8 @@
       <label>
         <%= t '.title_ac' %>
       </label>
-      <div class="ac-list mt-1">
-        <%= render partial: 'acceptance_criteria/item', collection: @issue.criteria, locals: { issue_id: @issue.id, editable: true }, as: :criterion %>
+      <div class="pbi__ac">
+        <%= render partial: 'acceptance_criteria', locals: { issue_id: @issue.id, criteria: @issue.criteria } %>
       </div>
     </div>
     <div class="mt-3">

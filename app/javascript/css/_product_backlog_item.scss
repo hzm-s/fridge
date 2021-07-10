@@ -36,3 +36,15 @@ $pbi-status-color-wip: darken($yellow, 5%);
     background-color: lighten($pbi-status-color-wip, 45%);
   }
 }
+
+.pbi-ac__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pbi-ac-item__content {
+  @include nf;
+  margin-bottom: 0;
+  font-size: .875rem;
+}

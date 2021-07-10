@@ -1,10 +1,10 @@
-<div class="ac-list__item">
-  <p>
+<div class="pbi-ac__item">
+  <p class="pbi-ac-item__content">
     <%= criterion.content %>
   </p>
-  <% if editable %>
-    <%= link_to issue_acceptance_criterion_path(issue_id: issue_id, number: criterion.number), method: :delete, class: 'silent-danger ml-3', data: { confirm: t('navs.confirm_delete') } do %>
+  <div class="pbi-ac-item__actions">
+    <%= link_to issue_acceptance_criterion_path(issue_id: issue_id, number: criterion.number), method: :delete, class: 'silent-danger', data: { confirm: t('navs.confirm_delete') } do %>
       <i class="fas fa-trash-alt"></i>
     <% end %>
-  <% end %>
+  </div>
 </div>

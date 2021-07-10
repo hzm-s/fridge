@@ -1,0 +1,13 @@
+<% if criteria.any? %>
+  <ul class="pbl-item__ac-list">
+    <% criteria.each do |criterion| %>
+      <li class="pbl-item__ac-item">
+        <%= criterion.content %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <span class="text-muted text-sm nf">
+    <%=t 'issues.acceptance_criteria.empty' %>
+  </span>
+<% end %>

@@ -19,7 +19,6 @@
     </div>
   </div>
   <div class="collapse pbl-item__ac" id="clp-pbi-ac-<%= item.id %>">
-    <hr style="margin: 0.5rem 0;">
-    <%= render partial: 'issues/acceptance_criteria', locals: { item: item } %>
+    <%= render partial: 'acceptance_criteria', locals: { criteria: item.criteria } %>
   </div>
 <% end %>

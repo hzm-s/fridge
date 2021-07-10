@@ -190,31 +190,16 @@
 }
 
 .pbl-item__ac {
-  padding-left: 1.5rem;
+  padding-left: 1.25rem;
 }
 
-.ac-list--small {
-  p {
-    font-size: .75rem;
-  }
+.pbl-item__ac-list {
+  margin: .5rem 0 0;
+  padding-left: 1rem;
 }
 
-.ac-list__item {
-  display: flex;
-  align-items: center;
-
-  margin-bottom: .25rem;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-
-  p {
-    @include nf;
-    margin-bottom: 0;
-
-    &:before {
-      content: '\02022';
-    }
-  }
+.pbl-item__ac-item {
+  @include nf;
+  margin-bottom: 0;
+  font-size: .75rem;
 }
