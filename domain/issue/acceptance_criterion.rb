@@ -13,8 +13,6 @@ module Issue
 
     sig {params(number: Integer, content: String).void}
     def initialize(number, content)
-      raise InvalidAcceptanceCriterion unless content.size >= 3 && content.size < 100
-
       @number = number
       @content = content
     end
