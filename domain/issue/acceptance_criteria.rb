@@ -62,10 +62,11 @@ module Issue
 
     private
 
+    sig {returns(Integer)}
     def next_number
       return 1 if @criteria.empty?
 
-      @criteria.last.number + 1
+      T.must(@criteria.last).number + 1
     end
   end
 end
