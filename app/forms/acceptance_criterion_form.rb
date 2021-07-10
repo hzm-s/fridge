@@ -4,5 +4,5 @@ class AcceptanceCriterionForm
 
   attr_accessor :content
 
-  validates :content, presence: true, length: { minimum: 3, maximum: 500 }, allow_nil: true
+  validates :content, length: { minimum: 3, maximum: 500 }, allow_nil: true
 end

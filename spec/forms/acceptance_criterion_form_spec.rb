@@ -12,12 +12,6 @@ RSpec.describe AcceptanceCriterionForm do
   end
 
   it do
-    form = described_class.new(valid.merge(content: ''))
-    expect(form).to_not be_valid
-    expect(form.errors[:content]).to include(I18n.t('errors.messages.blank'))
-  end
-
-  it do
     form = described_class.new(valid.merge(content: 'a' * 2))
     expect(form).to_not be_valid
     expect(form.errors[:content]).to include(I18n.t('errors.messages.too_short', count: 3))
