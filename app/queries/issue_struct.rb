@@ -1,6 +1,13 @@
 # typed: false
 
 class IssueStruct < SimpleDelegator
+  attr_reader :criteria
+
+  def initialize(dao)
+    super(dao)
+    @criteria = dao.criteria.map { |c| AcceptanceCriterionStruct.new(c) }
+  end
+
   def product_id
     dao_product_id
   end
@@ -13,11 +20,13 @@ class IssueStruct < SimpleDelegator
     @__status ||= Issue::Statuses.from_string(super)
   end
 
-  def criteria
-    @__criteria ||= super.sort_by(&:id)
-  end
-
   def must_have_acceptance_criteria?
     type.must_have_acceptance_criteria?
+  end
+
+  class AcceptanceCriterionStruct < SimpleDelegator
+    def issue_id
+      dao_issue_id
+    end
   end
 end

@@ -5,11 +5,12 @@ RSpec.describe IssueStruct do
   let!(:product) { create_product }
 
   it '受け入れ基準がある場合は受け入れ基準を含むこと' do
-    plan_issue(product.id, acceptance_criteria: %w(AC1 AC2 AC3))
+    issue = plan_issue(product.id, acceptance_criteria: %w(AC1 AC2 AC3))
 
     s = described_class.new(Dao::Issue.last)
 
     aggregate_failures do
+      expect(s.criteria.map(&:issue_id).uniq).to eq [issue.id.to_s]
       expect(s.criteria[0].number).to eq 1
       expect(s.criteria[0].content).to eq 'AC1'
       expect(s.criteria[1].number).to eq 2
