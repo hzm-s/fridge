@@ -41,6 +41,12 @@ $pbi-status-color-wip: darken($yellow, 5%);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: .25rem .125rem;
+  border-bottom: 1px solid $gray-300;
+
+  &:last-child {
+    border-bottom: none;
+  }
 }
 
 .pbi-ac-item__content {
