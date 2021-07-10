@@ -29,11 +29,12 @@ RSpec.describe 'acceptance_criteria' do
   end
 
   describe '#destroy' do
-    it do
+    before do
       append_acceptance_criteria(issue, %w(ac_head ukeire_kijyun ac_tail))
+    end
 
-      target = Dao::AcceptanceCriterion.find_by(content: 'ukeire_kijyun')
-      delete acceptance_criterion_path(target.id)
+    it do
+      delete issue_acceptance_criterion_path(issue_id: issue.id, number: 2)
       follow_redirect!
 
       expect(response.body).to_not include 'ukeire_kijyun'

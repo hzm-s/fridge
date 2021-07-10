@@ -13,12 +13,8 @@ class AcceptanceCriteriaController < ApplicationController
   end
 
   def destroy
-    dao = Dao::AcceptanceCriterion.find(params[:id])
-    RemoveAcceptanceCriterionUsecase.perform(
-      Issue::Id.from_string(dao.dao_issue_id),
-      Issue::AcceptanceCriterion.new(dao.content)
-    )
-    redirect_to edit_issue_path(id: dao.dao_issue_id)
+    RemoveAcceptanceCriterionUsecase.perform(issue_id, params[:number].to_i)
+    redirect_to edit_issue_path(issue_id.to_s)
   end
 
   private

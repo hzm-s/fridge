@@ -3,7 +3,7 @@
     <%= criterion.content %>
   </p>
   <% if editable %>
-    <%= link_to acceptance_criterion_path(criterion.id), method: :delete, class: 'silent-danger ml-3', data: { confirm: t('navs.confirm_delete') } do %>
+    <%= link_to issue_acceptance_criterion_path(issue_id: issue_id, number: criterion.number), method: :delete, class: 'silent-danger ml-3', data: { confirm: t('navs.confirm_delete') } do %>
       <i class="fas fa-trash-alt"></i>
     <% end %>
   <% end %>
