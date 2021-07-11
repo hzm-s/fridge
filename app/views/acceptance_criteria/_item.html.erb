@@ -1,8 +1,13 @@
-<div class="pbi-ac__item">
-  <p class="pbi-ac-item__content">
-    <%= item.content %>
-  </p>
-  <div class="pbi-ac-item__actions">
-    <%= render partial: 'acceptance_criteria/item_menu', locals: { item: item } %>
+<div data-controller="inline-edit" class="pbi__ac-list-item">
+  <div data-target="inline-edit.showSection" class="pbi-ac-item">
+    <p class="pbi-ac-item__content">
+      <%= item.content %>
+    </p>
+    <div class="pbi-ac-item__actions">
+      <%= render partial: 'acceptance_criteria/item_menu', locals: { item: item } %>
+    </div>
+  </div>
+  <div data-target="inline-edit.editSection" class="pbi-ac-item__edit">
+    <%= render partial: 'acceptance_criteria/edit_form', locals: { criterion: item } %>
   </div>
 </div>

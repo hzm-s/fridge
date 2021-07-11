@@ -1,0 +1,7 @@
+<%= form_with model: criterion, scope: :form, url: issue_acceptance_criterion_path(global_criterion_params(criterion)), id: criterion_dom_id(criterion, 'js-edit-ac') do |f| %>
+  <%= f.text_field :content, class: 'form-control', autocomplete: 'off' %>
+  <div class="mt-1 d-flex align-items-center justify-content-between">
+    <%= f.button t('navs.save'), class: 'btn btn-success', data: with_loader %>
+    <%= link_to t('navs.cancel'), '#', class: 'text-sm', data: { action: 'inline-edit#close' } %>
+  </div>
+<% end %>

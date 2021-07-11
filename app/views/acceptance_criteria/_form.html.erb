@@ -1,6 +1,6 @@
 <%= form_with scope: :form, url: issue_acceptance_criteria_path(issue_id: issue_id), id: 'js-ac-form' do |f| %>
-  <div class="form-group">
-    <%= f.text_field :content, class: 'form-control', autocomplete: 'off' %>
+  <%= f.text_field :content, class: 'form-control', autocomplete: 'off' %>
+  <div class="mt-2">
+    <%= f.button t('.add'), class: 'btn btn-success', data: with_loader %>
   </div>
-  <%= f.button t('.add'), class: 'btn btn-success', data: with_loader %>
 <% end %>

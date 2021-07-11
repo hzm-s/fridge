@@ -37,16 +37,19 @@ $pbi-status-color-wip: darken($yellow, 5%);
   }
 }
 
-.pbi-ac__item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.pbi__ac-list-item {
   padding: .25rem .125rem;
   border-bottom: 1px solid $gray-300;
 
   &:last-child {
     border-bottom: none;
   }
+}
+
+.pbi-ac-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .pbi-ac-item__content {

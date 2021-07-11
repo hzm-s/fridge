@@ -3,7 +3,7 @@
     <i class="fas fa-ellipsis-h"></i>
   <% end -%>
   <div class="dropdown-menu dropdown-menu-right">
-    <%= link_to '#', class: 'dropdown-item' do %>
+    <%= link_to '#', class: 'dropdown-item', data: { action: 'inline-edit#open' } do %>
       <i class="fas fa-edit"></i>
       <%=t 'navs.edit' %>
     <% end %>
