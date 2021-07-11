@@ -54,3 +54,12 @@ $pbi-status-color-wip: darken($yellow, 5%);
   margin-bottom: 0;
   font-size: .875rem;
 }
+
+.ac-item__menu {
+  color: $body-color;
+
+  &:hover {
+    color: $body-color;
+    text-decoration: none;
+  }
+}

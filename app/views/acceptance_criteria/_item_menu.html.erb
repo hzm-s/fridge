@@ -1,0 +1,15 @@
+<div class="dropdown">
+  <%= link_to '#', dd_trigger_options(id: criterion_dom_id(item, 'dd-ac'), class: 'ac-item__menu') do %>
+    <i class="fas fa-ellipsis-h"></i>
+  <% end -%>
+  <div class="dropdown-menu dropdown-menu-right">
+    <%= link_to '#', class: 'dropdown-item' do %>
+      <i class="fas fa-edit"></i>
+      <%=t 'navs.edit' %>
+    <% end %>
+    <%= link_to issue_acceptance_criterion_path(global_criterion_params(item)), method: :delete, class: 'dropdown-item text-danger', data: { confirm: t('navs.confirm_delete') } do %>
+      <i class="fas fa-trash-alt"></i>
+      <%=t 'navs.delete' %>
+    <% end %>
+  </div>
+</div>

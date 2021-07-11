@@ -1,6 +1,6 @@
 <% if criteria.any? %>
   <div class="pbi__ac-list">
-    <%= render partial: 'acceptance_criteria/item', collection: criteria, locals: { issue_id: issue_id }, as: :criterion %>
+    <%= render partial: 'acceptance_criteria/item', collection: criteria %>
   </div>
 <% else %>
   <span class="text-muted text-sm nf">

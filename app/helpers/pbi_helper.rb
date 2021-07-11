@@ -15,4 +15,12 @@ module PbiHelper
   def all_pbi_statuses
     Issue::Statuses.all.map(&:to_s)
   end
+  
+  def global_criterion_params(criterion, extras = {})
+    { issue_id: criterion.issue_id, number: criterion.number }.merge(extras)
+  end
+
+  def criterion_dom_id(criterion, prefix)
+    "#{prefix}-#{criterion.issue_id}-#{criterion.number}"
+  end
 end
