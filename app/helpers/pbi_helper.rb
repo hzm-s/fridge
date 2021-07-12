@@ -23,4 +23,8 @@ module PbiHelper
   def criterion_dom_id(criterion, prefix)
     "#{prefix}-#{criterion.issue_id}-#{criterion.number}"
   end
+
+  def build_criterion_form(criterion)
+    AcceptanceCriterionForm.new(content: criterion.content)
+  end
 end

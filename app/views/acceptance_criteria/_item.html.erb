@@ -8,6 +8,6 @@
     </div>
   </div>
   <div data-target="inline-edit.editSection" class="pbi-ac-item__edit">
-    <%= render partial: 'acceptance_criteria/edit_form', locals: { criterion: item } %>
+    <%= render partial: 'acceptance_criteria/edit_form', locals: { form: build_criterion_form(item), criterion: item } %>
   </div>
 </div>
