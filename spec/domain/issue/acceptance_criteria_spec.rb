@@ -32,5 +32,25 @@ module Issue
         end
       end
     end
+
+    describe 'Update' do
+      it do
+        criteria = described_class.create
+        criteria.append('AC1')
+        criteria.append('AC2')
+        criteria.append('AC3')
+
+        target = criteria.of(2)
+        target.modify_content('Modified AC2')
+        criteria.update(target)
+
+        aggregate_failures do
+          expect(criteria.of(1).content).to eq 'AC1'
+          expect(criteria.of(2).content).to eq 'Modified AC2'
+          expect(criteria.of(3).content).to eq 'AC3'
+          expect(criteria.to_a.map(&:number)).to eq [1, 2, 3]
+        end
+      end
+    end
   end
 end

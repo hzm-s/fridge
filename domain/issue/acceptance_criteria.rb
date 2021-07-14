@@ -30,6 +30,12 @@ module Issue
       @criteria << AcceptanceCriterion.new(next_number, content)
     end
 
+    sig {params(criterion: AcceptanceCriterion).void}
+    def update(criterion)
+      remove(criterion.number)
+      @criteria << AcceptanceCriterion.new(criterion.number, criterion.content)
+    end
+
     sig {params(number: Integer).void}
     def remove(number)
       @criteria.reject! { |c| c.number == number }
@@ -52,7 +58,7 @@ module Issue
 
     sig {returns(T::Array[AcceptanceCriterion])}
     def to_a
-      @criteria
+      @criteria.sort_by(&:number).dup
     end
 
     sig {params(other: AcceptanceCriteria).returns(T::Boolean)}

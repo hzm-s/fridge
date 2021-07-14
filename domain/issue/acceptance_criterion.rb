@@ -17,6 +17,11 @@ module Issue
       @content = content
     end
 
+    sig {params(content: String).void}
+    def modify_content(content)
+      @content = content
+    end
+
     sig {params(other: AcceptanceCriterion).returns(T::Boolean)}
     def ==(other)
       self.number == other.number &&
