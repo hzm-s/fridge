@@ -33,6 +33,15 @@ RSpec.describe 'acceptance_criteria' do
       append_acceptance_criteria(issue, %w(Ukeire1 Ukeire2 Ukeire3))
     end
 
+    context 'given valid params' do
+      it do
+        patch issue_acceptance_criterion_path(issue_id: issue.id, number: 2, format: :js), params: { form: { content: 'Atarashii2' } }
+        follow_redirect!
+
+        expect(response.body).to include('Atarashii2')
+      end
+    end
+
     context 'given invalid params' do
       it do
         patch issue_acceptance_criterion_path(issue_id: issue.id, number: 2, format: :js), params: { form: { content: '' } }

@@ -14,9 +14,15 @@ class AcceptanceCriteriaController < ApplicationController
 
   def update
     @form = AcceptanceCriterionForm.new(acceptance_criterion_params)
-    @criterion = IssueQuery.call(params[:issue_id]).criteria.find { |ac| ac.number == params[:number].to_i }
     if @form.valid?
+      ModifyAcceptanceCriterionUsecase.perform(
+        issue_id,
+        params[:number].to_i,
+        acceptance_criterion_params[:content],
+      )
+      redirect_to edit_issue_path(id: issue_id.to_s)
     else
+      @criterion = IssueQuery.call(params[:issue_id]).criteria.find { |ac| ac.number == params[:number].to_i }
       render :edit
     end
   end
