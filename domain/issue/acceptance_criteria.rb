@@ -27,13 +27,13 @@ module Issue
 
     sig {params(content: String).void}
     def append(content)
-      @criteria << AcceptanceCriterion.new(next_number, content)
+      @criteria << AcceptanceCriterion.create(next_number, content)
     end
 
     sig {params(criterion: AcceptanceCriterion).void}
     def update(criterion)
       remove(criterion.number)
-      @criteria << AcceptanceCriterion.new(criterion.number, criterion.content)
+      @criteria << AcceptanceCriterion.create(criterion.number, criterion.content)
     end
 
     sig {params(number: Integer).void}
