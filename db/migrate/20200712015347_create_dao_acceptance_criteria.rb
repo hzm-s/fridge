@@ -5,6 +5,7 @@ class CreateDaoAcceptanceCriteria < ActiveRecord::Migration[6.0]
       t.references :dao_issue, type: :uuid, foreign_key: true
       t.integer :number, null: false
       t.string :content, null: false
+      t.boolean :satisfied, null: false, default: false
 
       t.timestamps
     end

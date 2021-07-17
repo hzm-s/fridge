@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2021_05_16_002510) do
     t.uuid "dao_issue_id"
     t.integer "number", null: false
     t.string "content", null: false
+    t.boolean "satisfied", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["dao_issue_id", "number"], name: "index_dao_acceptance_criteria_on_dao_issue_id_and_number", unique: true
