@@ -29,7 +29,7 @@ module Issue
     def initialize(number, content)
       @number = number
       @content = content
-      @satisfied = false
+      @satisfied = T.let(false, T::Boolean)
     end
     private_class_method :new
 
@@ -53,10 +53,9 @@ module Issue
       @satisfied
     end
 
-    sig {params(other: AcceptanceCriterion).returns(T::Boolean)}
-    def ==(other)
-      self.number == other.number &&
-        self.content == other.content
+    sig {params(number: Integer).returns(T::Boolean)}
+    def same?(number)
+      self.number == number
     end
   end
 end

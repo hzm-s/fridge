@@ -38,12 +38,12 @@ module Issue
 
     sig {params(number: Integer).void}
     def remove(number)
-      @criteria.reject! { |c| c.number == number }
+      @criteria.reject! { |c| c.same?(number) }
     end
 
     sig {params(number: Integer).returns(T.nilable(AcceptanceCriterion))}
     def of(number)
-      @criteria.find { |c| c.number == number }.dup
+      @criteria.find { |c| c.same?(number) }.dup
     end
 
     sig {returns(T::Boolean)}
