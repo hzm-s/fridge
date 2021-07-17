@@ -1,13 +1,16 @@
-<div class="dropdown">
-  <%= link_to '#', dd_trigger_options(id: "sbi-menu-#{item.id}", class: 'context-menu') do %>
-    <i class="fas fa-ellipsis-h"></i>
-  <% end -%>
-  <div class="dropdown-menu">
-    <% if authorize(:revert_issue_from_sprint, current_team_member_roles) %>
-      <%= link_to current_sprint_issue_path(product_id: current_product.id, id: item.id), method: :delete, class: 'dropdown-item', data: { 'test_revert_issue' => 1 } do %>
-        <i class="fas fa-reply"></i>
-        <%=t 'domain.issue.cancel_sprint_assign' %>
+<% can_revert = authorize(:revert_issue_from_sprint, current_team_member_roles) %>
+<% if can_revert %>
+  <div class="dropdown">
+    <%= link_to '#', dd_trigger_options(id: "sbi-menu-#{item.id}", class: 'context-menu') do %>
+      <i class="fas fa-ellipsis-h"></i>
+    <% end -%>
+    <div class="dropdown-menu">
+      <% if can_revert %>
+        <%= link_to current_sprint_issue_path(product_id: current_product.id, id: item.id), method: :delete, class: 'dropdown-item', data: { 'test_revert_issue' => 1 } do %>
+          <i class="fas fa-reply"></i>
+          <%=t 'domain.issue.cancel_sprint_assign' %>
+        <% end %>
       <% end %>
-    <% end %>
+    </div>
   </div>
-</div>
+<% end %>
