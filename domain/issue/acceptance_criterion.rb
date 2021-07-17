@@ -29,12 +29,28 @@ module Issue
     def initialize(number, content)
       @number = number
       @content = content
+      @satisfied = false
     end
     private_class_method :new
 
     sig {params(content: String).void}
     def modify_content(content)
       @content = content
+    end
+
+    sig {void}
+    def satisfy
+      @satisfied = true
+    end
+
+    sig {void}
+    def unsatisfy
+      @satisfied = false
+    end
+
+    sig {returns(T::Boolean)}
+    def satisfied?
+      @satisfied
     end
 
     sig {params(other: AcceptanceCriterion).returns(T::Boolean)}

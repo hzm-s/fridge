@@ -8,6 +8,24 @@ module Issue
         criterion = described_class.create(1, 'Criterion')
         expect(criterion.number).to eq 1
         expect(criterion.content).to eq 'Criterion'
+        expect(criterion).to_not be_satisfied
+      end
+    end
+
+    describe 'Satisfy and Unsatisfy' do
+      it do
+        criterion = described_class.create(1, 'Criteiron')
+        criterion.satisfy
+        expect(criterion).to be_satisfied
+
+        criterion.satisfy
+        expect(criterion).to be_satisfied
+
+        criterion.unsatisfy
+        expect(criterion).to_not be_satisfied
+
+        criterion.unsatisfy
+        expect(criterion).to_not be_satisfied
       end
     end
   end
