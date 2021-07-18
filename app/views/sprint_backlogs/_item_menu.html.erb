@@ -4,7 +4,7 @@
     <%= link_to '#', dd_trigger_options(id: "sbi-menu-#{item.id}", class: 'context-menu') do %>
       <i class="fas fa-ellipsis-h"></i>
     <% end -%>
-    <div class="dropdown-menu">
+    <div class="dropdown-menu dropdown-menu-right">
       <% if can_revert %>
         <%= link_to current_sprint_issue_path(product_id: current_product.id, id: item.id), method: :delete, class: 'dropdown-item', data: { 'test_revert_issue' => 1 } do %>
           <i class="fas fa-reply"></i>
