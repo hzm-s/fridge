@@ -41,14 +41,19 @@ module Issue
         criteria.append('AC3')
 
         target = criteria.of(2)
-        target.modify_content('Modified AC2')
+        target.modify_content('Modified_AC2')
+        criteria.update(target)
+
+        target = criteria.of(3)
+        target.satisfy
         criteria.update(target)
 
         aggregate_failures do
-          expect(criteria.of(1).content).to eq 'AC1'
-          expect(criteria.of(2).content).to eq 'Modified AC2'
-          expect(criteria.of(3).content).to eq 'AC3'
-          expect(criteria.to_a.map(&:number)).to eq [1, 2, 3]
+          updated = criteria.to_a
+          expect(updated.size).to eq 3
+          expect(updated.map(&:number)).to eq [1, 2, 3]
+          expect(updated.map(&:content)).to eq %w(AC1 Modified_AC2 AC3)
+          expect(updated.map(&:satisfied?)).to eq [false, false, true]
         end
       end
     end

@@ -14,7 +14,11 @@ class Dao::Issue < ApplicationRecord
 
     self.criteria.clear
     issue.acceptance_criteria.to_a.each do |ac|
-      self.criteria.build(number: ac.number, content: ac.content)
+      self.criteria.build(
+        number: ac.number,
+        content: ac.content,
+        satisfied: ac.satisfied?
+      )
     end
   end
 

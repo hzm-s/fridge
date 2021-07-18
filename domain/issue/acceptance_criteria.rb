@@ -32,8 +32,9 @@ module Issue
 
     sig {params(criterion: AcceptanceCriterion).void}
     def update(criterion)
-      remove(criterion.number)
-      @criteria << AcceptanceCriterion.create(criterion.number, criterion.content)
+      @criteria.map! do |c|
+        c.same?(criterion.number) ? criterion : c
+      end
     end
 
     sig {params(number: Integer).void}

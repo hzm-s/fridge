@@ -14,13 +14,13 @@ RSpec.describe IssueRepository::AR do
         .and change { Dao::AcceptanceCriterion.count }.by(0)
 
       aggregate_failures do
-        rel = Dao::Issue.last
-        expect(rel.id).to eq issue.id.to_s
-        expect(rel.dao_product_id).to eq issue.product_id.to_s
-        expect(rel.issue_type).to eq issue.type.to_s
-        expect(rel.status).to eq issue.status.to_s
-        expect(rel.description).to eq issue.description.to_s
-        expect(rel.size).to be_nil
+        dao = Dao::Issue.last
+        expect(dao.id).to eq issue.id.to_s
+        expect(dao.dao_product_id).to eq issue.product_id.to_s
+        expect(dao.issue_type).to eq issue.type.to_s
+        expect(dao.status).to eq issue.status.to_s
+        expect(dao.description).to eq issue.description.to_s
+        expect(dao.size).to be_nil
       end
     end
   end
@@ -31,19 +31,25 @@ RSpec.describe IssueRepository::AR do
     before { described_class.store(issue) }
 
     it do
-      issue.update_acceptance_criteria(acceptance_criteria(%w(AC1 AC2)))
+      criteria = acceptance_criteria(%w(AC1 AC2))
+      criterion = criteria.of(2)
+      criterion.satisfy
+      criteria.update(criterion)
+      issue.update_acceptance_criteria(criteria)
 
       expect { described_class.store(issue) }
         .to change { Dao::Issue.count }.by(0)
         .and change { Dao::AcceptanceCriterion.count }.by(2)
 
       aggregate_failures do
-        stored = Dao::AcceptanceCriterion.all
-        expect(stored.size).to eq 2
-        expect(stored[0].number).to eq 1
-        expect(stored[0].content).to eq 'AC1'
-        expect(stored[1].number).to eq 2
-        expect(stored[1].content).to eq 'AC2'
+        dao = Dao::AcceptanceCriterion.all
+        expect(dao.size).to eq 2
+        expect(dao[0].number).to eq 1
+        expect(dao[0].content).to eq 'AC1'
+        expect(dao[0].satisfied).to be false
+        expect(dao[1].number).to eq 2
+        expect(dao[1].content).to eq 'AC2'
+        expect(dao[1].satisfied).to be true
       end
     end
 
@@ -60,14 +66,14 @@ RSpec.describe IssueRepository::AR do
         .and change { Dao::AcceptanceCriterion.count }.by(-1)
 
       aggregate_failures do
-        stored = Dao::AcceptanceCriterion.all
-        expect(stored.size).to eq 3
-        expect(stored[0].number).to eq 1
-        expect(stored[0].content).to eq 'AC1'
-        expect(stored[1].number).to eq 2
-        expect(stored[1].content).to eq 'AC2'
-        expect(stored[2].number).to eq 3
-        expect(stored[2].content).to eq 'AC3'
+        dao = Dao::AcceptanceCriterion.all
+        expect(dao.size).to eq 3
+        expect(dao[0].number).to eq 1
+        expect(dao[0].content).to eq 'AC1'
+        expect(dao[1].number).to eq 2
+        expect(dao[1].content).to eq 'AC2'
+        expect(dao[2].number).to eq 3
+        expect(dao[2].content).to eq 'AC3'
       end
     end
 
@@ -89,9 +95,12 @@ RSpec.describe IssueRepository::AR do
       issue.update_acceptance_criteria(acceptance_criteria(%w(AC1 AC2 AC3)))
       described_class.store(issue)
 
-      expect { described_class.remove(issue.id) }
-        .to change { Dao::Issue.count }.by(-1)
-        .and change { Dao::AcceptanceCriterion.count }.by(-3)
+      described_class.remove(issue.id)
+
+      aggregate_failures do
+        expect(Dao::Issue.find_by(id: issue.id.to_s)).to be_nil
+        expect(Dao::AcceptanceCriterion.where(dao_issue_id: issue.id.to_s)).to be_empty
+      end
     end
   end
 end
