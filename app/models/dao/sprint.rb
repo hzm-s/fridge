@@ -1,6 +1,8 @@
 # typed: false
 class Dao::Sprint < ApplicationRecord
-  has_many :issues, -> { order(:id) }, class_name: 'Dao::AssignedIssue', foreign_key: :dao_sprint_id, dependent: :destroy
+  has_many :issues, -> { order(:id) },
+    class_name: 'Dao::AssignedIssue', foreign_key: :dao_sprint_id,
+    dependent: :destroy, autosave: true
 
   def write(sprint)
     self.attributes = {
@@ -8,7 +10,8 @@ class Dao::Sprint < ApplicationRecord
       number: sprint.number,
       is_finished: sprint.finished?,
     }
-    self.issues.clear
+
+    self.issues.each(&:mark_for_destruction)
     sprint.issues.to_a.each do |i|
       self.issues.build(dao_issue_id: i.to_s)
     end

@@ -1,7 +1,9 @@
 # typed: false
 class Dao::Team < ApplicationRecord
   belongs_to :product, class_name: 'Dao::Product', foreign_key: :dao_product_id, optional: true
-  has_many :members, class_name: 'Dao::TeamMember', foreign_key: :dao_team_id, dependent: :destroy
+  has_many :members,
+    class_name: 'Dao::TeamMember', foreign_key: :dao_team_id,
+    dependent: :destroy, autosave: true
 
   def read
     Team::Team.from_repository(
@@ -18,7 +20,7 @@ class Dao::Team < ApplicationRecord
       name: team.name,
     }
 
-    self.members.clear
+    self.members.each(&:mark_for_destruction)
     team.members.to_a.each do |member|
       self.members.build(
         dao_person_id: member.person_id,

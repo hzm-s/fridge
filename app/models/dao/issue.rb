@@ -1,6 +1,8 @@
 # typed: false
 class Dao::Issue < ApplicationRecord
-  has_many :criteria, -> { order :id }, class_name: 'Dao::AcceptanceCriterion', foreign_key: :dao_issue_id, dependent: :destroy
+  has_many :criteria, -> { order :id },
+    class_name: 'Dao::AcceptanceCriterion', foreign_key: :dao_issue_id,
+    dependent: :destroy, autosave: true
   has_one :work, class_name: 'Dao::Work', foreign_key: :dao_issue_id, dependent: :destroy
 
   def write(issue)
@@ -12,7 +14,7 @@ class Dao::Issue < ApplicationRecord
       size: issue.size.to_i,
     }
 
-    self.criteria.clear
+    self.criteria.each(&:mark_for_destruction)
     issue.acceptance_criteria.to_a.each do |ac|
       self.criteria.build(
         number: ac.number,
