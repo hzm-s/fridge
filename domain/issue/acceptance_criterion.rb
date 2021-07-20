@@ -10,12 +10,12 @@ module Issue
 
       sig {params(number: Integer, content: String).returns(T.attached_class)}
       def create(number, content)
-        new(number, content)
+        new(number, content, false)
       end
 
-      sig {params(number: Integer, content: String).returns(T.attached_class)}
-      def from_repository(number, content)
-        new(number, content)
+      sig {params(number: Integer, content: String, satisfied: T::Boolean).returns(T.attached_class)}
+      def from_repository(number, content, satisfied)
+        new(number, content, satisfied)
       end
     end
 
@@ -25,11 +25,11 @@ module Issue
     sig {returns(String)}
     attr_reader :content
 
-    sig {params(number: Integer, content: String).void}
-    def initialize(number, content)
+    sig {params(number: Integer, content: String, satisfied: T::Boolean).void}
+    def initialize(number, content, satisfied)
       @number = number
       @content = content
-      @satisfied = T.let(false, T::Boolean)
+      @satisfied = satisfied
     end
     private_class_method :new
 
