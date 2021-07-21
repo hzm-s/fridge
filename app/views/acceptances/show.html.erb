@@ -1,0 +1,7 @@
+<% @issue.criteria.each do |c| %>
+  <% if c.satisfied? %>
+    <%= content_tag :span, c.content, data: { "satisfied-acceptance-criterion-#{c.number}" => 1 } %>
+  <% else %>
+    <%= content_tag :span, c.content %>
+  <% end %>
+<% end %>
