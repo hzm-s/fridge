@@ -110,3 +110,9 @@ ja:
       empty: アイテムはありません
     task_form:
       placeholder: タスクを追加
+
+  acceptances:
+    show:
+      title: アイテムの受け入れ
+      title_description: 説明
+      title_ac: 受け入れ基準

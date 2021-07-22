@@ -1,7 +1,32 @@
-<% @issue.criteria.each do |c| %>
-  <% if c.satisfied? %>
-    <%= content_tag :span, c.content, data: { "satisfied-acceptance-criterion-#{c.number}" => 1 } %>
-  <% else %>
-    <%= content_tag :span, c.content %>
-  <% end %>
-<% end %>
+<% content_for(:member_roles) { team_member_roles_label } %>
+<div class="row d-flex justify-content-center">
+  <div class="col-lg-8 sheet">
+    <div class="d-flex justify-content-center mb-2">
+      <h1 class="page-title mb-0">
+        <%=t '.title' %>
+      </h1>
+    </div>
+    <div class="mb-3">
+      <label>
+        <%= t '.title_description' %>
+      </label>
+      <%= simple_format(@issue.description, class: 'nf mb-0') %>
+    </div>
+    <div>
+      <label>
+        <%= t '.title_ac' %>
+      </label>
+      <div class="mt-1 mb-1">
+        <%= render partial: 'criterion', collection: @issue.criteria, locals: { issue_id: @issue.id } %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row d-flex justify-content-center">
+  <div class="d-flex mt-2">
+    <%= link_to sprint_backlog_path(product_id: current_product.id), class: 'text-md' do %>
+      <i class="fas fa-reply"></i>
+      <%=t 'navs.back' %>
+    <% end %>
+  </div>
+</div>

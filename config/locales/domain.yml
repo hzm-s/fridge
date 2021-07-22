@@ -11,6 +11,7 @@ ja:
         wip: 着手中
       assign_to_sprint: 着手する
       cancel_sprint_assign: 着手を取り消す
+      acceptance: 受け入れ
 
     task:
       start_task: 着手する

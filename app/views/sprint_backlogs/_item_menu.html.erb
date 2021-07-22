@@ -11,6 +11,10 @@
           <%=t 'domain.issue.cancel_sprint_assign' %>
         <% end %>
       <% end %>
+      <%= link_to issue_acceptance_path(issue_id: item.id), class: 'dropdown-item', data: { "test_issue_acceptance_#{item.id}" => 1 } do %>
+        <i class="fas fa-user-check"></i>
+        <%=t 'domain.issue.acceptance' %>
+      <% end %>
     </div>
   </div>
 <% end %>

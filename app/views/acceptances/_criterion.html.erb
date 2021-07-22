@@ -1,0 +1,6 @@
+<div class="acceptance__criterion">
+  <%= button_to issue_satisfied_acceptance_criteria_path(issue_id: issue_id, number: criterion.number), method: :post, class: 'acceptance-criterion__trigger', data: with_loader do %>
+    <%= render_acceptance_satisfaction_status(criterion) %>
+  <% end %>
+  <%= render_acceptance_criterion_content(criterion, class: 'acceptance-criterion__content') %>
+</div>

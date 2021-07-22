@@ -66,3 +66,35 @@ $pbi-status-color-wip: darken($yellow, 5%);
     text-decoration: none;
   }
 }
+
+.acceptance__criterion {
+  display: flex;
+  align-items: center;
+  margin-bottom: .5rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.acceptance-criterion__trigger {
+  @include icon-button;
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: .25rem;
+}
+
+.acceptance-criterion__status {
+  font-size: 1.5rem;
+  color: $body-color;
+
+  &--satisfied {
+    color: $success;
+  }
+}
+
+.acceptance-criterion__content {
+  @include nf;
+  font-size: .875rem;
+}
