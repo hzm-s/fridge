@@ -28,7 +28,16 @@ module Team
     def available_activities
       activities =
         case self
-        when ProductOwner, ScrumMaster
+        when ProductOwner
+          [
+            :remove_issue,
+            :update_plan,
+            :assign_issue_to_sprint,
+            :revert_issue_from_sprint,
+            :update_sprint_issues,
+            :accept_issue,
+          ]
+        when ScrumMaster
           [
             :remove_issue,
             :update_plan,

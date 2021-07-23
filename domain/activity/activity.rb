@@ -30,6 +30,7 @@ module Activity
       SuspendTask = new('suspend_task')
       ResumeTask = new('resume_task')
       CompleteTask = new('complete_task')
+      AcceptIssue = new('accept_issue')
     end
 
     sig {params(set_providers: T::Array[SetProvider]).returns(T::Boolean)}
