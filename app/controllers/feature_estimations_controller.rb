@@ -8,7 +8,7 @@ class FeatureEstimationsController < ApplicationController
     point = build_point(params[:form][:point])
     EstimateFeatureUsecase.perform(issue_id, current_team_member_roles, point)
 
-    @issue = IssueQuery.call(issue_id)
+    @issue = IssueQuery.call(issue_id.to_s)
   end
 
   private
