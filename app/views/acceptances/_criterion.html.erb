@@ -1,12 +1,4 @@
 <div class="acceptance__criterion">
-  <% if criterion.satisfied? %>
-    <%= button_to issue_satisfied_acceptance_criterion_path(issue_id: issue_id, number: criterion.number), method: :delete, class: 'acceptance-criterion__trigger', data: with_loader do %>
-      <%= render_acceptance_satisfaction_status(criterion) %>
-    <% end %>
-  <% else %>
-    <%= button_to issue_satisfied_acceptance_criteria_path(issue_id: issue_id, number: criterion.number), method: :post, class: 'acceptance-criterion__trigger', data: with_loader do %>
-      <%= render_acceptance_satisfaction_status(criterion) %>
-    <% end %>
-  <% end %>
+  <%= render partial: 'criterion_status', locals: { issue_id: issue_id, criterion: criterion, can_accept: authorize(:accept_issue, current_team_member_roles) } %>
   <%= render_acceptance_criterion_content(criterion, class: 'acceptance-criterion__content') %>
 </div>

@@ -31,4 +31,8 @@
     outline: none;
     appearance: none;
   }
+
+  &:disabled {
+    cursor: auto;
+  }
 }
