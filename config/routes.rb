@@ -16,8 +16,8 @@ Rails.application.routes.draw do
 
   resources :issues, only: [:edit, :update, :destroy] do
     resources :acceptance_criteria, param: :number, only: [:create, :update, :destroy]
-    resources :satisfied_acceptance_criteria, param: :number, only: [:create]
     resource :acceptance, only: [:show]
+    resources :satisfied_acceptance_criteria, param: :number, only: [:create, :destroy]
   end
 
   resources :feature_estimations, only: [:update]

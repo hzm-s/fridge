@@ -24,5 +24,19 @@ RSpec.describe 'satisfied_acceptance_criterion' do
   end
 
   describe 'destroy' do
+    before do
+      satisfy_acceptance_criteria(issue.id, [1, 2, 3])
+    end
+
+    it do
+      delete issue_satisfied_acceptance_criterion_path(issue_id: issue.id.to_s, number: 2)
+      follow_redirect!
+
+      aggregate_failures do
+        expect(response.body).to include "satisfied-acceptance-criterion-1"
+        expect(response.body).to_not include "satisfied-acceptance-criterion-2"
+        expect(response.body).to include "satisfied-acceptance-criterion-3"
+      end
+    end
   end
 end
