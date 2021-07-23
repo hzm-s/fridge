@@ -12,7 +12,7 @@ module Issue
       end
     end
 
-    describe 'Satisfy and Unsatisfy' do
+    describe 'Satisfy and Dissatisfy' do
       it do
         criterion = described_class.create(1, 'Criteiron')
         criterion.satisfy
@@ -21,10 +21,10 @@ module Issue
         criterion.satisfy
         expect(criterion).to be_satisfied
 
-        criterion.unsatisfy
+        criterion.dissatisfy
         expect(criterion).to_not be_satisfied
 
-        criterion.unsatisfy
+        criterion.dissatisfy
         expect(criterion).to_not be_satisfied
       end
     end

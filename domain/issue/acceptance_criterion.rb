@@ -44,7 +44,7 @@ module Issue
     end
 
     sig {void}
-    def unsatisfy
+    def dissatisfy
       @satisfied = false
     end
 

@@ -34,6 +34,12 @@ module IssueSupport
     ScheduleIssueUsecase.perform(product_id, team_roles(:po), issue_id, release, 0)
   end
 
+  def satisfy_acceptance_criteria(issue_id, criterion_numbers)
+    criterion_numbers.each do |n|
+      SatisfyAcceptanceCriterionUsecase.perform(issue_id, n)
+    end
+  end
+
   private
 
   def perform_plan_issue(product_id, type, desc, release_number)
