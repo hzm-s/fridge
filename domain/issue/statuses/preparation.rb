@@ -32,6 +32,11 @@ module Issue
           raise CanNotRevertFromSprint
         end
 
+        sig {override.params(criteria: AcceptanceCriteria).returns(Status)}
+        def update_by_acceptance(criteria)
+          self
+        end
+
         sig {override.returns(String)}
         def to_s
           'preparation'

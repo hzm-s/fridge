@@ -10,7 +10,7 @@ module Issue
 
         sig {override.returns(Activity::Set)}
         def available_activities
-          Activity::Set.from_symbols([:revert_issue_from_sprint])
+          Activity::Set.from_symbols([:revert_issue_from_sprint, :accept_issue])
         end
 
         sig {override.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
@@ -26,6 +26,13 @@ module Issue
         sig {override.returns(Status)}
         def revert_from_sprint
           Ready
+        end
+
+        sig {override.params(criteria: AcceptanceCriteria).returns(Status)}
+        def update_by_acceptance(criteria)
+          return self unless criteria.all_satisfied?
+
+          Accepted
         end
 
         sig {override.returns(String)}

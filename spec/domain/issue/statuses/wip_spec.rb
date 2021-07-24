@@ -7,7 +7,7 @@ module Issue
       describe '#available_activities' do
         it do
           a = described_class.available_activities
-          expect(a).to eq activity_set([:revert_issue_from_sprint])
+          expect(a).to eq activity_set([:revert_issue_from_sprint, :accept_issue])
         end
       end
 
@@ -30,6 +30,22 @@ module Issue
       describe '#revert_from_sprint' do
         it do
           expect(described_class.revert_from_sprint).to eq Ready
+        end
+      end
+
+      describe '#update_by_acceptance' do
+        context 'when satisfied all' do
+          it do
+            criteria = acceptance_criteria(%w(AC1 AC2 AC3), [1, 2, 3])
+            expect(described_class.update_by_acceptance(criteria)).to eq Accepted
+          end
+        end
+
+        context 'when satisfied some' do
+          it do
+            criteria = acceptance_criteria(%w(AC1 AC2 AC3), [1, 3])
+            expect(described_class.update_by_acceptance(criteria)).to eq Wip
+          end
         end
       end
     end

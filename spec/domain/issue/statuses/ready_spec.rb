@@ -43,6 +43,13 @@ module Issue
         end
       end
 
+      describe '#update_by_acceptance' do
+        it do
+          criteria = acceptance_criteria(%w(CRT))
+          expect(described_class.update_by_acceptance(criteria)).to eq Ready
+        end
+      end
+
       describe '#assign_to_sprint' do
         it do
           expect(described_class.assign_to_sprint).to eq Wip
