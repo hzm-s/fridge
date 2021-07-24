@@ -35,12 +35,12 @@ module Issue
       end
     end
 
-    describe 'Acceptance criteria' do
+    describe 'Prepare acceptance criteria' do
       let(:issue) { described_class.create(product_id, Types::Feature, description) }
 
       it do
         criteria = acceptance_criteria(%w(AC1 AC2 AC3))
-        issue.update_acceptance_criteria(criteria)
+        issue.prepare_acceptance_criteria(criteria)
         expect(issue.acceptance_criteria).to eq criteria
       end
     end
@@ -65,7 +65,7 @@ module Issue
       let(:issue) { described_class.create(product_id, Types::Feature, description) }
 
       before do
-        issue.update_acceptance_criteria(acceptance_criteria(%w(Criterion)))
+        issue.prepare_acceptance_criteria(acceptance_criteria(%w(Criterion)))
         issue.estimate(dev_role, StoryPoint.new(5))
       end
 
@@ -86,7 +86,7 @@ module Issue
       let(:issue) { described_class.create(product_id, Types::Feature, description) }
 
       before do
-        issue.update_acceptance_criteria(acceptance_criteria(%w(Criterion)))
+        issue.prepare_acceptance_criteria(acceptance_criteria(%w(Criterion)))
         issue.estimate(dev_role, StoryPoint.new(5))
         issue.assign_to_sprint(po_role)
       end
@@ -111,18 +111,25 @@ module Issue
         issue.modify_description(issue_description('NEW user story'))
         expect(issue.status).to eq Statuses::Preparation
 
-        issue.update_acceptance_criteria(acceptance_criteria(%w(AC1)))
+        issue.prepare_acceptance_criteria(acceptance_criteria(%w(AC1)))
         expect(issue.status).to eq Statuses::Preparation
 
         issue.estimate(dev_role, StoryPoint.new(3))
         expect(issue.status).to eq Statuses::Ready
 
-        issue.update_acceptance_criteria(acceptance_criteria([]))
+        issue.prepare_acceptance_criteria(acceptance_criteria([]))
         expect(issue.status).to eq Statuses::Preparation
 
-        issue.update_acceptance_criteria(acceptance_criteria(%w(Criterion)))
+        issue.prepare_acceptance_criteria(acceptance_criteria(%w(Criterion)))
         issue.assign_to_sprint(po_role)
         expect(issue.status).to eq Statuses::Wip
+
+        issue.revert_from_sprint(po_role)
+        expect(issue.status).to eq Statuses::Ready
+
+        #issue.assign_to_sprint(po_role)
+        #issue.accept(acceptance_criteria(%w(AC1 AC2 AC3), [1, 2, 3]))
+        #expect(issue.status).to eq Statuses::Accepted
       end
     end
 
@@ -135,13 +142,13 @@ module Issue
         issue.modify_description(issue_description('NEW task'))
         expect(issue.status).to eq Statuses::Ready
 
-        issue.update_acceptance_criteria(acceptance_criteria(%w(AC1)))
+        issue.prepare_acceptance_criteria(acceptance_criteria(%w(AC1)))
         expect(issue.status).to eq Statuses::Ready
 
         issue.estimate(dev_role, StoryPoint.new(3))
         expect(issue.status).to eq Statuses::Ready
 
-        issue.update_acceptance_criteria(acceptance_criteria([]))
+        issue.prepare_acceptance_criteria(acceptance_criteria([]))
         expect(issue.status).to eq Statuses::Ready
 
         issue.estimate(dev_role, StoryPoint.unknown)

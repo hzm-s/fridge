@@ -15,7 +15,7 @@ class AppendAcceptanceCriterionUsecase < UsecaseBase
 
     criteria = issue.acceptance_criteria
     criteria.append(content)
-    issue.update_acceptance_criteria(criteria)
+    issue.prepare_acceptance_criteria(criteria)
 
     @repository.store(issue)
   end

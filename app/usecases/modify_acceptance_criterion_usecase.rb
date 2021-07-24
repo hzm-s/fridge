@@ -17,7 +17,7 @@ class ModifyAcceptanceCriterionUsecase < UsecaseBase
       criterion = criteria.of(number)
       criterion.modify_content(content)
       criteria.update(criterion)
-      issue.update_acceptance_criteria(criteria)
+      issue.prepare_acceptance_criteria(criteria)
     end
 
     @repository.store(issue)

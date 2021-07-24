@@ -15,7 +15,7 @@ class RemoveAcceptanceCriterionUsecase < UsecaseBase
 
     criteria = issue.acceptance_criteria
     criteria.remove(number)
-    issue.update_acceptance_criteria(criteria)
+    issue.prepare_acceptance_criteria(criteria)
 
     @repository.store(issue)
   end

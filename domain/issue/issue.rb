@@ -74,8 +74,9 @@ module Issue
     end
 
     sig {params(criteria: AcceptanceCriteria).void}
-    def update_acceptance_criteria(criteria)
+    def prepare_acceptance_criteria(criteria)
       @acceptance_criteria = criteria
+
       update_status_by_preparation
     end
 

@@ -6,6 +6,7 @@ module Issue
   class CanNotAssignToSprint < StandardError; end
   class CanNotRevertFromSprint < StandardError; end
   class NotFound < StandardError; end
+  class AlreadyAccepted < StandardError; end
 
   autoload :Id, 'issue/id'
   autoload :Issue, 'issue/issue'
