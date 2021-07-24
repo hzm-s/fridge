@@ -48,6 +48,11 @@ module Issue
     end
 
     sig {returns(T::Boolean)}
+    def all_satisfied?
+      @criteria.all?(&:satisfied?)
+    end
+
+    sig {returns(T::Boolean)}
     def empty?
       @criteria.empty?
     end

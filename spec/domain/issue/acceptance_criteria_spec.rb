@@ -57,5 +57,23 @@ module Issue
         end
       end
     end
+
+    describe 'Query to all satisfied' do
+      it do
+        criteria = described_class.create
+        criteria.append('AC1')
+        criteria.append('AC2')
+        criteria.append('AC3')
+
+        criteria.update(criteria.of(2).tap { |c| c.satisfy })
+        expect(criteria.all_satisfied?).to be false
+
+        criteria.update(criteria.of(1).tap { |c| c.satisfy })
+        expect(criteria.all_satisfied?).to be false
+
+        criteria.update(criteria.of(3).tap { |c| c.satisfy })
+        expect(criteria.all_satisfied?).to be true
+      end
+    end
   end
 end
