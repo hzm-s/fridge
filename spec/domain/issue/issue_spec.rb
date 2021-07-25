@@ -104,6 +104,29 @@ module Issue
       end
     end
 
+    describe 'to update acceptance' do
+      let(:issue) { described_class.create(product_id, Types::Feature, description) }
+      let(:criteria) { acceptance_criteria(%w(CRT)) }
+
+      before do
+        issue.prepare_acceptance_criteria(criteria)
+        issue.estimate(dev_role, StoryPoint.new(5))
+        issue.assign_to_sprint(po_role)
+      end
+
+      it do
+        expect { issue.update_acceptance(dev_role, criteria) }.to raise_error CanNotUpdateAccept
+      end
+
+      it do
+        expect { issue.update_acceptance(po_role, criteria) }.to_not raise_error
+      end
+
+      it do
+        expect { issue.update_acceptance(sm_role, criteria) }.to raise_error CanNotUpdateAccept
+      end
+    end
+
     describe 'Feature issue status' do
       let(:issue) { described_class.create(product_id, Types::Feature, description) }
 
@@ -127,9 +150,9 @@ module Issue
         issue.revert_from_sprint(po_role)
         expect(issue.status).to eq Statuses::Ready
 
-        #issue.assign_to_sprint(po_role)
-        #issue.accept(acceptance_criteria(%w(AC1 AC2 AC3), [1, 2, 3]))
-        #expect(issue.status).to eq Statuses::Accepted
+        issue.assign_to_sprint(po_role)
+        issue.update_acceptance(po_role, acceptance_criteria(%w(CRT), [1]))
+        expect(issue.status).to eq Statuses::Accepted
       end
     end
 
@@ -159,6 +182,10 @@ module Issue
 
         issue.revert_from_sprint(po_role)
         expect(issue.status).to eq Statuses::Ready
+
+        issue.assign_to_sprint(po_role)
+        issue.update_acceptance(po_role, acceptance_criteria(%w(CRT), [1]))
+        expect(issue.status).to eq Statuses::Accepted
       end
     end
   end
