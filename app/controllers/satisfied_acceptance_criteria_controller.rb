@@ -1,8 +1,12 @@
 class SatisfiedAcceptanceCriteriaController < ApplicationController
+  include TeamMemberHelper
+
+  before_action :require_user
+
   def create
     issue_id = Issue::Id.from_string(params[:issue_id])
     number = params[:number].to_i
-    SatisfyAcceptanceCriterionUsecase.perform(issue_id, number)
+    SatisfyAcceptanceCriterionUsecase.perform(current_team_member_roles, issue_id, number)
 
     redirect_to issue_acceptance_path(issue_id: issue_id.to_s)
   end
@@ -10,8 +14,14 @@ class SatisfiedAcceptanceCriteriaController < ApplicationController
   def destroy
     issue_id = Issue::Id.from_string(params[:issue_id])
     number = params[:number].to_i
-    DissatisfyAcceptanceCriterionUsecase.perform(issue_id, number)
+    DissatisfyAcceptanceCriterionUsecase.perform(current_team_member_roles, issue_id, number)
 
     redirect_to issue_acceptance_path(issue_id: issue_id.to_s)
+  end
+
+  private
+
+  def current_product_id
+    IssueQuery.call(params[:issue_id]).product_id
   end
 end
