@@ -3,8 +3,13 @@ require 'rails_helper'
 
 RSpec.describe SatisfyAcceptanceCriterionUsecase do
   let!(:product) { create_product }
-  let!(:issue) { plan_issue(product.id, acceptance_criteria: %w(AC1 AC2 AC3)) }
+  let!(:issue) { plan_issue(product.id, acceptance_criteria: %w(AC1 AC2 AC3), size: 3) }
   let!(:roles) { team_roles(:po) }
+
+  before do
+    start_sprint(product.id)
+    assign_issue_to_sprint(product.id, issue.id)
+  end
 
   it do
     described_class.perform(roles, issue.id, 2)
@@ -15,5 +20,14 @@ RSpec.describe SatisfyAcceptanceCriterionUsecase do
       expect(stored.acceptance_criteria.of(2)).to be_satisfied
       expect(stored.acceptance_criteria.of(3)).to_not be_satisfied 
     end
+  end
+
+  it do
+    described_class.perform(roles, issue.id, 3)
+    described_class.perform(roles, issue.id, 1)
+    described_class.perform(roles, issue.id, 2)
+    stored = IssueRepository::AR.find_by_id(issue.id)
+
+    expect(stored.status).to eq Issue::Statuses::Accepted
   end
 end

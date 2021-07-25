@@ -32,6 +32,11 @@ module Issue
         def update_by_acceptance(criteria)
           raise AlreadyAccepted
         end
+
+        sig {override.returns(String)}
+        def to_s
+          'accepted'
+        end
       end
     end
   end
