@@ -36,7 +36,7 @@ module IssueSupport
 
   def satisfy_acceptance_criteria(issue_id, criterion_numbers)
     criterion_numbers.each do |n|
-      SatisfyAcceptanceCriterionUsecase.perform(issue_id, n)
+      SatisfyAcceptanceCriterionUsecase.perform(team_roles(:po), issue_id, n)
     end
   end
 

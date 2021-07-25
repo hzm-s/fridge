@@ -9,15 +9,15 @@ class SatisfyAcceptanceCriterionUsecase < UsecaseBase
     @repository = T.let(IssueRepository::AR, Issue::IssueRepository)
   end
 
-  sig {params(issue_id: Issue::Id, number: Integer).void}
-  def perform(issue_id, number)
+  sig {params(roles: Team::RoleSet, issue_id: Issue::Id, number: Integer).void}
+  def perform(roles, issue_id, number)
     issue = @repository.find_by_id(issue_id)
 
     issue.acceptance_criteria.tap do |criteria|
       criterion = criteria.of(number)
       criterion.satisfy
       criteria.update(criterion)
-      issue.prepare_acceptance_criteria(criteria)
+      issue.update_acceptance(roles, criteria)
     end
 
     @repository.store(issue)
