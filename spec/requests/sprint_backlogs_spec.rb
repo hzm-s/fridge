@@ -4,11 +4,15 @@ require 'rails_helper'
 RSpec.describe 'sprint_backlogs' do
   let!(:user_account_po) { sign_up }
   let!(:user_account_dev) { sign_up }
+  let!(:user_account_sm) { sign_up }
   let!(:product) do
     create_product(
       person: user_account_po.person_id,
       roles: team_roles(:po),
-      members: [team_member(user_account_dev.person_id, :dev)]
+      members: [
+        team_member(user_account_dev.person_id, :dev),
+        team_member(user_account_sm.person_id, :sm)
+      ]
     )
   end
 
@@ -49,6 +53,7 @@ RSpec.describe 'sprint_backlogs' do
 
         aggregate_failures do
           expect(response.body).to include "test-revert-issue"
+          expect(response.body).to include "test-accept-issue"
           expect(response.body).to include "test-change-work-priority"
         end
       end
@@ -62,7 +67,22 @@ RSpec.describe 'sprint_backlogs' do
 
         aggregate_failures do
           expect(response.body).to_not include "test-revert-issue"
+          expect(response.body).to_not include "test-accept-issue"
           expect(response.body).to_not include "test-change-work-priority"
+        end
+      end
+    end
+
+    context 'when SM' do
+      before { sign_in(user_account_sm) }
+
+      it do
+        get sprint_backlog_path(product.id)
+
+        aggregate_failures do
+          expect(response.body).to include "test-revert-issue"
+          expect(response.body).to_not include "test-accept-issue"
+          expect(response.body).to include "test-change-work-priority"
         end
       end
     end
