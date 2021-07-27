@@ -1,5 +1,5 @@
-<div id="js-task-list-<%= issue_id %>" class="<%= sbl_task_list_classes(tasks) %>">
+<%= content_tag :div, id: "js-task-list-#{issue_id}", class: sbl_task_list_classes(tasks), data: { "test-task-list-#{issue_id}" => 1 } do %>
   <% if tasks.any? %>
       <%= render partial: 'sprint_backlogs/task', collection: tasks %>
   <% end %>
-</div>
+<% end %>

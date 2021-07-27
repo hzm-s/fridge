@@ -87,4 +87,33 @@ RSpec.describe 'sprint_backlogs' do
       end
     end
   end
+
+  describe 'Issue status' do
+    let!(:issue) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1) }
+
+    before do
+      start_sprint(product.id)
+      assign_issue_to_sprint(product.id, issue.id)
+
+      sign_in(user_account_po)
+    end
+
+    context 'when NOT accepted' do
+      it do
+        get sprint_backlog_path(product.id)
+        expect(response.body).to include "test-task-form-#{issue.id}"
+        expect(response.body).to include "test-task-list-#{issue.id}"
+      end
+    end
+
+    context 'when accepted' do
+      before { satisfy_acceptance_criteria(issue.id, [1]) }
+
+      it do
+        get sprint_backlog_path(product.id)
+        expect(response.body).to_not include "test-task-form-#{issue.id}"
+        expect(response.body).to_not include "test-task-list-#{issue.id}"
+      end
+    end
+  end
 end

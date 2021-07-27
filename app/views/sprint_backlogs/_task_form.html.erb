@@ -1,4 +1,4 @@
-<div id="js-task-form-<%= issue_id %>" class="sbi-task__form">
+<%= content_tag :div, id: "js-task-form-#{issue_id}", class: 'sbi-task__form', data: { "test-task-form-#{issue_id}" => 1 } do %>
   <%= form_with model: form || new_task_form, scope: :form, url: work_tasks_path(issue_id: issue_id) do |f| %>
     <div class="d-flex">
       <%= f.text_field :content, class: 'form-control', placeholder: t('.placeholder'), autocomplete: 'off' %>
@@ -7,4 +7,4 @@
       </button>
     </div>
   <% end %>
-</div>
+<% end %>

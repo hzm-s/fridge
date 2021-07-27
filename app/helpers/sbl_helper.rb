@@ -22,10 +22,9 @@ module SblHelper
   end
 
   def sbl_item_grip_css_classes(can_move)
-    base = 'sbl-item__grip js-sortable-handle'
-    return base if can_move
+    return 'sbl-item__grip js-sortable-handle' if can_move
 
-    "#{base} sbl-item__grip--disabled"
+    "sbl-item__grip sbl-item__grip--disabled"
   end
 
   def render_sbl_task_status(task)
