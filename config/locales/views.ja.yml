@@ -110,6 +110,8 @@ ja:
       empty: アイテムはありません
     task_form:
       placeholder: タスクを追加
+    item_accepted:
+      status: 受け入れ済み
 
   acceptances:
     show:

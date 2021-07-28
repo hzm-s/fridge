@@ -51,6 +51,18 @@
   box-sizing: border-box;
 }
 
+.sbl-item__accepted-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.sbl-item__accepted-status-icon {
+  color: $success;
+  margin-right: .25rem;
+}
+
 .sbi-issue__container {
   flex-grow: 1;
   display: flex;
@@ -79,7 +91,7 @@
   @include nf;
   margin-bottom: 0;
   font-size: .75rem;
-  color: $gray-600;
+  color: $secondary;
 }
 
 .sbi-task__list {
@@ -130,6 +142,7 @@
 
 .sbi-task__content {
   @include nf;
+  font-size: .875rem;
   margin-bottom: 0;
 }
 
