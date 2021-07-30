@@ -4,7 +4,7 @@ require_relative '../domain_support/issue_domain_support'
 module IssueSupport
   include IssueDomainSupport
 
-  def plan_issue(product_id, description = 'DESC', type: :feature, acceptance_criteria: [], size: nil, release: nil)
+  def plan_issue(product_id, description = 'DESC', type: :feature, acceptance_criteria: [], size: nil, release: nil, assign: false)
     append_release(product_id, release) if release
 
     issue = perform_plan_issue(product_id, Issue::Types.from_string(type.to_s), description, release)
@@ -12,6 +12,8 @@ module IssueSupport
     append_acceptance_criteria(issue, acceptance_criteria) if acceptance_criteria
 
     estimate_feature(issue.id, size) if size
+
+    start_sprint_and_assign_issue(product_id, issue.id) if assign
 
     IssueRepository::AR.find_by_id(issue.id)
   end
@@ -46,6 +48,13 @@ module IssueSupport
     Issue::Description.new(desc)
       .then { |d| PlanIssueUsecase.perform(product_id, type, d, release_number) }
       .then { |id| IssueRepository::AR.find_by_id(id) }
+  end
+
+  def start_sprint_and_assign_issue(product_id, issue_id)
+    start_sprint(product_id)
+  rescue Sprint::AlreadyStarted
+  ensure
+    assign_issue_to_sprint(product_id, issue_id)
   end
 end
 

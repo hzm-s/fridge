@@ -41,12 +41,7 @@ RSpec.describe 'current_sprint/:product_id/issues' do
   end
 
   describe 'Destroy' do
-    let!(:issue) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1) }
-
-    before do
-      start_sprint(product.id)
-      assign_issue_to_sprint(product.id, issue.id)
-    end
+    let!(:issue) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1, assign: true) }
 
     it do
       delete current_sprint_issue_path(product_id: product.id.to_s, id: issue.id.to_s)

@@ -3,12 +3,10 @@ require 'rails_helper'
 
 RSpec.describe TaskStruct do
   let!(:product) { create_product }
-  let!(:issue) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1) }
+  let!(:issue) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1, assign: true) }
   let(:dao_task) { Dao::Task.last }
 
   before do
-    start_sprint(product.id)
-    assign_issue_to_sprint(product.id, issue.id)
     plan_task(issue.id, %w(Task1))
   end
 

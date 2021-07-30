@@ -38,12 +38,7 @@ RSpec.describe 'sprint_backlogs' do
   end
 
   describe 'Permission of actions' do
-    let!(:issue) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1) }
-
-    before do
-      start_sprint(product.id)
-      assign_issue_to_sprint(product.id, issue.id)
-    end
+    let!(:issue) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1, assign: true) }
 
     context 'when PO' do
       before { sign_in(user_account_po) }
@@ -89,12 +84,9 @@ RSpec.describe 'sprint_backlogs' do
   end
 
   describe 'Issue status' do
-    let!(:issue) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1) }
+    let!(:issue) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1, assign: true) }
 
     before do
-      start_sprint(product.id)
-      assign_issue_to_sprint(product.id, issue.id)
-
       sign_in(user_account_po)
     end
 

@@ -3,13 +3,8 @@ require 'rails_helper'
 
 RSpec.describe SatisfyAcceptanceCriterionUsecase do
   let!(:product) { create_product }
-  let!(:issue) { plan_issue(product.id, acceptance_criteria: %w(AC1 AC2 AC3), size: 3) }
+  let!(:issue) { plan_issue(product.id, acceptance_criteria: %w(AC1 AC2 AC3), size: 3, assign: true) }
   let!(:roles) { team_roles(:po) }
-
-  before do
-    start_sprint(product.id)
-    assign_issue_to_sprint(product.id, issue.id)
-  end
 
   it do
     described_class.perform(roles, issue.id, 2)
