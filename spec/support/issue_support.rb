@@ -42,6 +42,13 @@ module IssueSupport
     end
   end
 
+  def accept_issue(issue)
+    satisfy_acceptance_criteria(
+      issue.id,
+      issue.acceptance_criteria.to_a.map(&:number)
+    )
+  end
+
   private
 
   def perform_plan_issue(product_id, type, desc, release_number)

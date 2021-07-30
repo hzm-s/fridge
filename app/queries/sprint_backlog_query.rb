@@ -28,6 +28,14 @@ module SprintBacklogQuery
       super.sort_by(&:id)
     end
 
+    def status
+      Issue::Statuses.from_string(super)
+    end
+
+    def accepted?
+      status == Issue::Statuses::Accepted
+    end
+
     private
 
     def build_tasks

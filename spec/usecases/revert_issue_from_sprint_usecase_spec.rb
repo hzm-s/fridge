@@ -25,12 +25,18 @@ RSpec.describe RevertIssueFromSprintUsecase do
     end
   end
 
-  it do
+  it '着手していないアイテムは取り消しできないこと' do
     expect { described_class.perform(product.id, roles, issue_d.id) }
       .to raise_error(Issue::CanNotRevertFromSprint)
   end
 
-  it do
+  it '受け入れ済みアイテムは取り消しできないこと' do
+    accept_issue(issue_a)
+    expect { described_class.perform(product.id, roles, issue_a.id) }
+      .to raise_error(Issue::AlreadyAccepted)
+  end
+
+  it 'スプリントが終了している場合は取り消しできないこと' do
     SprintRepository::AR.current(product.id).tap do |sprint|
       sprint.finish
       SprintRepository::AR.store(sprint)

@@ -1,5 +1,5 @@
 <%= content_tag :div, class: 'sbl-item', data: { id: item.id } do %>
-  <% if item.status == 'accepted' %>
+  <% if item.accepted? %>
     <%= render partial: 'item_accepted', locals: { item: item } %>
   <% else %>
     <%= render partial: 'item_wip', locals: { item: item, can_move: can_move } %>

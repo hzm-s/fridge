@@ -46,4 +46,16 @@ RSpec.describe SprintBacklogQuery do
       expect(issue.tasks[2].content).to eq 'Task3'
     end
   end
+
+  it do
+    accept_issue(issue_c)
+    sbl = described_class.call(sprint.id)
+
+    aggregate_failures do
+      expect(sbl.issues.first.status).to eq Issue::Statuses::Accepted
+
+      expect(sbl.issues.first).to be_accepted
+      expect(sbl.issues.last).to_not be_accepted
+    end
+  end
 end

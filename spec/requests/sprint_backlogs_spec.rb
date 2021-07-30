@@ -47,9 +47,9 @@ RSpec.describe 'sprint_backlogs' do
         get sprint_backlog_path(product.id)
 
         aggregate_failures do
-          expect(response.body).to include "test-revert-issue"
-          expect(response.body).to include "test-accept-issue"
-          expect(response.body).to include "test-change-work-priority"
+          expect(response.body).to include 'test-revert-issue'
+          expect(response.body).to include 'test-accept-issue'
+          expect(response.body).to include 'test-change-work-priority'
         end
       end
     end
@@ -61,9 +61,9 @@ RSpec.describe 'sprint_backlogs' do
         get sprint_backlog_path(product.id)
 
         aggregate_failures do
-          expect(response.body).to_not include "test-revert-issue"
-          expect(response.body).to_not include "test-accept-issue"
-          expect(response.body).to_not include "test-change-work-priority"
+          expect(response.body).to_not include 'test-revert-issue'
+          expect(response.body).to_not include 'test-accept-issue'
+          expect(response.body).to_not include 'test-change-work-priority'
         end
       end
     end
@@ -75,9 +75,9 @@ RSpec.describe 'sprint_backlogs' do
         get sprint_backlog_path(product.id)
 
         aggregate_failures do
-          expect(response.body).to include "test-revert-issue"
-          expect(response.body).to_not include "test-accept-issue"
-          expect(response.body).to include "test-change-work-priority"
+          expect(response.body).to include 'test-revert-issue'
+          expect(response.body).to_not include 'test-accept-issue'
+          expect(response.body).to include 'test-change-work-priority'
         end
       end
     end
@@ -95,16 +95,18 @@ RSpec.describe 'sprint_backlogs' do
         get sprint_backlog_path(product.id)
         expect(response.body).to include "test-task-form-#{issue.id}"
         expect(response.body).to include "test-task-list-#{issue.id}"
+        expect(response.body).to include 'test-revert-issue'
       end
     end
 
     context 'when accepted' do
-      before { satisfy_acceptance_criteria(issue.id, [1]) }
+      before { accept_issue(issue) }
 
       it do
         get sprint_backlog_path(product.id)
         expect(response.body).to_not include "test-task-form-#{issue.id}"
         expect(response.body).to_not include "test-task-list-#{issue.id}"
+        expect(response.body).to_not include 'test-revert-issue'
       end
     end
   end
