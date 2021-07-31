@@ -75,7 +75,7 @@ module Issue
 
     sig {params(criteria: AcceptanceCriteria).void}
     def prepare_acceptance_criteria(criteria)
-      raise AlreadyAccepted unless Activity.allow?(:prepare_issue, [status])
+      raise AlreadyAccepted unless Activity.allow?(:prepare_acceptance_criteria, [status])
 
       @acceptance_criteria = criteria
 
