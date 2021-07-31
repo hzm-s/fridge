@@ -3,9 +3,11 @@
     <p class="pbi-ac-item__content">
       <%= item.content %>
     </p>
-    <div class="pbi-ac-item__actions">
-      <%= render partial: 'acceptance_criteria/item_menu', locals: { item: item } %>
-    </div>
+    <% if can_update %>
+      <div class="pbi-ac-item__actions">
+        <%= render partial: 'acceptance_criteria/item_menu', locals: { item: item } %>
+      </div>
+    <% end %>
   </div>
   <div data-target="inline-edit.editSection" class="pbi-ac-item__edit">
     <%= render partial: 'acceptance_criteria/edit_form', locals: { form: build_criterion_form(item), criterion: item } %>

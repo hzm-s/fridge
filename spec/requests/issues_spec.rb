@@ -57,6 +57,24 @@ RSpec.describe 'issues' do
       aggregate_failures do
         expect(response.body).to include('XYZ')
         expect(response.body).to include('AC_123')
+        expect(response.body).to include 'test-append-acceptance-criterion'
+        expect(response.body).to include 'test-modify-acceptance-criterion-1'
+        expect(response.body).to include 'test-remove-acceptance-criterion-1'
+      end
+    end
+
+    context 'when accepted' do
+      it do
+        issue = plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1, assign: true)
+        accept_issue(issue)
+
+        get edit_issue_path(issue.id.to_s)
+
+        aggregate_failures do
+          expect(response.body).to_not include 'test-append-acceptance-criterion'
+          expect(response.body).to_not include 'test-modify-acceptance-criterion-1'
+          expect(response.body).to_not include 'test-remove-acceptance-criterion-1'
+        end
       end
     end
   end

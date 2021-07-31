@@ -93,9 +93,12 @@ RSpec.describe 'sprint_backlogs' do
     context 'when NOT accepted' do
       it do
         get sprint_backlog_path(product.id)
-        expect(response.body).to include "test-task-form-#{issue.id}"
-        expect(response.body).to include "test-task-list-#{issue.id}"
-        expect(response.body).to include 'test-revert-issue'
+
+        aggregate_failures do
+          expect(response.body).to include "test-task-form-#{issue.id}"
+          expect(response.body).to include "test-task-list-#{issue.id}"
+          expect(response.body).to include 'test-revert-issue'
+        end
       end
     end
 
@@ -104,9 +107,12 @@ RSpec.describe 'sprint_backlogs' do
 
       it do
         get sprint_backlog_path(product.id)
-        expect(response.body).to_not include "test-task-form-#{issue.id}"
-        expect(response.body).to_not include "test-task-list-#{issue.id}"
-        expect(response.body).to_not include 'test-revert-issue'
+
+        aggregate_failures do
+          expect(response.body).to_not include "test-task-form-#{issue.id}"
+          expect(response.body).to_not include "test-task-list-#{issue.id}"
+          expect(response.body).to_not include 'test-revert-issue'
+        end
       end
     end
   end
