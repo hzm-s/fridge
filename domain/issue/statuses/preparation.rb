@@ -10,7 +10,7 @@ module Issue
 
         sig {override.returns(Activity::Set)}
         def available_activities
-          Activity::Set.from_symbols([:remove_issue, :estimate_issue])
+          Activity::Set.from_symbols([:prepare_issue, :remove_issue, :estimate_issue])
         end
 
         sig {override.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}

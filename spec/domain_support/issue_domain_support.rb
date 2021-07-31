@@ -8,11 +8,18 @@ module IssueDomainSupport
     Issue::AcceptanceCriterion.new(1, content)
   end
 
-  def acceptance_criteria(contents, satisfied_numbers = [])
+  def acceptance_criteria(contents, numbers_or_keyword = [])
     Issue::AcceptanceCriteria.create.tap do |criteria|
       contents.each { |c| criteria.append(c) }
 
-      satisfied_numbers.each do |n|
+      satisfy_numbers =
+        if numbers_or_keyword == :all
+          criteria.to_a.map(&:number)
+        else
+          numbers_or_keyword
+        end
+
+      satisfy_numbers.each do |n|
         criterion = criteria.of(n)
         criterion.satisfy
         criteria.update(criterion)

@@ -7,7 +7,7 @@ module Issue
       describe '#available_activities' do
         it do
           a = described_class.available_activities
-          expect(a).to eq activity_set([:remove_issue, :estimate_issue, :assign_issue_to_sprint])
+          expect(a).to eq activity_set([:prepare_issue, :remove_issue, :estimate_issue, :assign_issue_to_sprint])
         end
       end
 

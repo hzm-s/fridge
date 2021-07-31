@@ -20,6 +20,7 @@ module Activity
     end
 
     enums do
+      PrepareIssue = new('prepare_issue')
       EstimateIssue = new('estimate_issue')
       RemoveIssue = new('remove_issue')
       UpdatePlan = new('update_plan')
