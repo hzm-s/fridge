@@ -64,7 +64,7 @@ RSpec.describe 'issues' do
     end
 
     context 'when accepted' do
-      it do
+      xit do
         issue = plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1, assign: true)
         accept_issue(issue)
 

@@ -107,7 +107,8 @@ module Issue
     sig {params(roles: Team::RoleSet, acceptance_criteria: AcceptanceCriteria).void}
     def update_acceptance(roles, acceptance_criteria)
       raise CanNotUpdateAccept unless Activity.allow?(:accept_issue, [roles])
-      @status = @status.update_by_acceptance(acceptance_criteria)
+
+      @acceptance_criteria = acceptance_criteria
     end
 
     private

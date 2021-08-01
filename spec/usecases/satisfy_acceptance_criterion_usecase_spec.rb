@@ -16,13 +16,4 @@ RSpec.describe SatisfyAcceptanceCriterionUsecase do
       expect(stored.acceptance_criteria.of(3)).to_not be_satisfied 
     end
   end
-
-  it do
-    described_class.perform(roles, issue.id, 3)
-    described_class.perform(roles, issue.id, 1)
-    described_class.perform(roles, issue.id, 2)
-    stored = IssueRepository::AR.find_by_id(issue.id)
-
-    expect(stored.status).to eq Issue::Statuses::Accepted
-  end
 end

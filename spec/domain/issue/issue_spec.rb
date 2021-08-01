@@ -61,6 +61,16 @@ module Issue
       end
     end
 
+    describe 'Update acceptance' do
+      let(:issue) { described_class.create(product_id, Types::Feature, description) }
+
+      it do
+        criteria = acceptance_criteria(%w(AC1 AC2 AC3), [1, 3])
+        issue.update_acceptance(po_role, criteria)
+        expect(issue.acceptance_criteria).to eq criteria
+      end
+    end
+
     describe 'to assign issue to sprint permission' do
       let(:issue) { described_class.create(product_id, Types::Feature, description) }
 
@@ -153,9 +163,9 @@ module Issue
 
         issue.assign_to_sprint(po_role)
         issue.update_acceptance(po_role, acceptance_criteria(%w(CRT), :all))
-        expect(issue.status).to eq Statuses::Accepted
+        expect(issue.status).to eq Statuses::Wip
 
-        expect { issue.prepare_acceptance_criteria(criteria) }.to raise_error AlreadyAccepted
+        #expect { issue.prepare_acceptance_criteria(criteria) }.to raise_error AlreadyAccepted
       end
     end
 
@@ -189,9 +199,9 @@ module Issue
 
         issue.assign_to_sprint(po_role)
         issue.update_acceptance(po_role, acceptance_criteria(%w(CRT), :all))
-        expect(issue.status).to eq Statuses::Accepted
+        expect(issue.status).to eq Statuses::Wip
 
-        expect { issue.prepare_acceptance_criteria(criteria) }.to raise_error AlreadyAccepted
+        #expect { issue.prepare_acceptance_criteria(criteria) }.to raise_error AlreadyAccepted
       end
     end
   end
