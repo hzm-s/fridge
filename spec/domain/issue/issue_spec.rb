@@ -45,7 +45,23 @@ module Issue
       end
     end
 
-    describe 'estimation permission' do
+    describe 'Update acceptance' do
+      let(:issue) { described_class.create(product_id, Types::Feature, description) }
+
+      before do
+        issue.prepare_acceptance_criteria(acceptance_criteria(%w(AC1 AC2 AC3)))
+        issue.estimate(dev_role, StoryPoint.new(3))
+        issue.assign_to_sprint(po_role)
+      end
+
+      it do
+        criteria = acceptance_criteria(%w(AC1 AC2 AC3), [1, 3])
+        issue.update_acceptance(po_role, criteria)
+        expect(issue.acceptance_criteria).to eq criteria
+      end
+    end
+
+    describe 'to estimate issue permission' do
       let(:issue) { described_class.create(product_id, Types::Feature, description) }
 
       it do
@@ -58,21 +74,6 @@ module Issue
 
       it do
         expect { issue.estimate(sm_role, StoryPoint.new(2)) }.to raise_error CanNotEstimate
-      end
-    end
-
-    describe 'Update acceptance' do
-      let(:issue) { described_class.create(product_id, Types::Feature, description) }
-
-      before do
-        issue.prepare_acceptance_criteria(acceptance_criteria(%w(AC1 AC2 AC3)))
-        issue.estimate(dev_role, StoryPoint.new(3))
-      end
-
-      it do
-        criteria = acceptance_criteria(%w(AC1 AC2 AC3), [1, 3])
-        issue.update_acceptance(po_role, criteria)
-        expect(issue.acceptance_criteria).to eq criteria
       end
     end
 
@@ -103,7 +104,7 @@ module Issue
       it { expect { issue.revert_from_sprint(sm_role) }.to_not raise_error }
     end
 
-    xdescribe 'to update acceptance' do
+    describe 'to update acceptance' do
       context 'when Feature' do
         let(:issue) { described_class.create(product_id, Types::Feature, description) }
         let(:criteria) { acceptance_criteria(%w(CRT)) }
@@ -216,6 +217,9 @@ module Issue
         expect(issue.status).to eq Statuses::Ready
 
         issue.assign_to_sprint(po_role)
+        issue.update_acceptance(dev_role, acceptance_criteria(%w(CRT), :all))
+        expect(issue.status).to eq Statuses::Wip
+
         issue.accept(dev_role)
 
         expect { issue.prepare_acceptance_criteria(criteria) }.to raise_error AlreadyAccepted
