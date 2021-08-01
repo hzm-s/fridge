@@ -20,7 +20,7 @@ module Activity
     end
 
     enums do
-      PrepareIssue = new('prepare_acceptance_criteria')
+      PrepareAcceptanceCriteria = new('prepare_acceptance_criteria')
       EstimateIssue = new('estimate_issue')
       RemoveIssue = new('remove_issue')
       UpdatePlan = new('update_plan')
@@ -31,7 +31,10 @@ module Activity
       SuspendTask = new('suspend_task')
       ResumeTask = new('resume_task')
       CompleteTask = new('complete_task')
-      AcceptIssue = new('accept_issue')
+      UpdateFeatureAcceptance = new('update_feature_acceptance')
+      UpdateTaskAcceptance = new('update_task_acceptance')
+      #AcceptFeature = new('accept_feature')
+      #AcceptTask = new('accept_task')
     end
 
     sig {params(set_providers: T::Array[SetProvider]).returns(T::Boolean)}
