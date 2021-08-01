@@ -33,18 +33,18 @@ module Issue
         end
       end
 
-      describe '#update_by_acceptance' do
-        context 'when satisfied all' do
+      describe '#accept' do
+        context 'when all criteria are satisfied' do
           it do
             criteria = acceptance_criteria(%w(AC1 AC2 AC3), [1, 2, 3])
-            expect(described_class.update_by_acceptance(criteria)).to eq Accepted
+            expect(described_class.accept(criteria)).to eq Accepted
           end
         end
 
-        context 'when satisfied some' do
+        context 'when some criterion is satisfied' do
           it do
             criteria = acceptance_criteria(%w(AC1 AC2 AC3), [1, 3])
-            expect(described_class.update_by_acceptance(criteria)).to eq Wip
+            expect(described_class.accept(criteria)).to eq Wip
           end
         end
       end

@@ -7,7 +7,7 @@ module Issue
   class CanNotRevertFromSprint < StandardError; end
   class NotFound < StandardError; end
   class AlreadyAccepted < StandardError; end
-  class CanNotUpdateAccept < StandardError; end
+  class CanNotUpdateAcceptance < StandardError; end
 
   autoload :Id, 'issue/id'
   autoload :Issue, 'issue/issue'

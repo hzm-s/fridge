@@ -64,6 +64,11 @@ module Issue
     describe 'Update acceptance' do
       let(:issue) { described_class.create(product_id, Types::Feature, description) }
 
+      before do
+        issue.prepare_acceptance_criteria(acceptance_criteria(%w(AC1 AC2 AC3)))
+        issue.estimate(dev_role, StoryPoint.new(3))
+      end
+
       it do
         criteria = acceptance_criteria(%w(AC1 AC2 AC3), [1, 3])
         issue.update_acceptance(po_role, criteria)
@@ -79,17 +84,9 @@ module Issue
         issue.estimate(dev_role, StoryPoint.new(5))
       end
 
-      it do
-        expect { issue.assign_to_sprint(dev_role) }.to raise_error CanNotAssignToSprint
-      end
-
-      it do
-        expect { issue.assign_to_sprint(po_role) }.to_not raise_error
-      end
-
-      it do
-        expect { issue.assign_to_sprint(sm_role) }.to_not raise_error 
-      end
+      it { expect { issue.assign_to_sprint(dev_role) }.to raise_error CanNotAssignToSprint }
+      it { expect { issue.assign_to_sprint(po_role) }.to_not raise_error }
+      it { expect { issue.assign_to_sprint(sm_role) }.to_not raise_error }
     end
 
     describe 'to revert issue from sprint permission' do
@@ -101,39 +98,57 @@ module Issue
         issue.assign_to_sprint(po_role)
       end
 
-      it do
-        expect { issue.revert_from_sprint(dev_role) }.to raise_error CanNotRevertFromSprint
+      it { expect { issue.revert_from_sprint(dev_role) }.to raise_error CanNotRevertFromSprint }
+      it { expect { issue.revert_from_sprint(po_role) }.to_not raise_error }
+      it { expect { issue.revert_from_sprint(sm_role) }.to_not raise_error }
+    end
+
+    xdescribe 'to update acceptance' do
+      context 'when Feature' do
+        let(:issue) { described_class.create(product_id, Types::Feature, description) }
+        let(:criteria) { acceptance_criteria(%w(CRT)) }
+
+        before do
+          issue.prepare_acceptance_criteria(criteria)
+          issue.estimate(dev_role, StoryPoint.new(5))
+          issue.assign_to_sprint(po_role)
+        end
+
+        it { expect { issue.update_acceptance(dev_role, criteria) }.to raise_error CanNotUpdateAcceptance }
+        it { expect { issue.update_acceptance(po_role, criteria) }.to_not raise_error }
+        it { expect { issue.update_acceptance(sm_role, criteria) }.to raise_error CanNotUpdateAcceptance }
       end
 
-      it do
-        expect { issue.revert_from_sprint(po_role) }.to_not raise_error
-      end
+      context 'when Task' do
+        let(:issue) { described_class.create(product_id, Types::Task, description) }
+        let(:criteria) { acceptance_criteria(%w(CRT)) }
 
-      it do
-        expect { issue.revert_from_sprint(sm_role) }.to_not raise_error 
+        before do
+          issue.prepare_acceptance_criteria(criteria)
+          issue.estimate(dev_role, StoryPoint.new(5))
+          issue.assign_to_sprint(po_role)
+        end
+
+        it { expect { issue.update_acceptance(dev_role, criteria) }.to_not raise_error }
+        it { expect { issue.update_acceptance(po_role, criteria) }.to_not raise_error }
+        it { expect { issue.update_acceptance(sm_role, criteria) }.to raise_error CanNotUpdateAcceptance }
       end
     end
 
-    describe 'to update acceptance' do
-      let(:issue) { described_class.create(product_id, Types::Feature, description) }
-      let(:criteria) { acceptance_criteria(%w(CRT)) }
+    xdescribe 'to accept' do
+      context 'when Feature' do
+        let(:issue) { described_class.create(product_id, Types::Feature, description) }
 
-      before do
-        issue.prepare_acceptance_criteria(criteria)
-        issue.estimate(dev_role, StoryPoint.new(5))
-        issue.assign_to_sprint(po_role)
-      end
+        before do
+          issue.prepare_acceptance_criteria(acceptance_criteria(%w(CRT)))
+          issue.estimate(dev_role, StoryPoint.new(5))
+          issue.assign_to_sprint(po_role)
+          issue.update_acceptance(acceptance_criteria(%w(CRT), :all))
+        end
 
-      it do
-        expect { issue.update_acceptance(dev_role, criteria) }.to raise_error CanNotUpdateAccept
-      end
-
-      it do
-        expect { issue.update_acceptance(po_role, criteria) }.to_not raise_error
-      end
-
-      it do
-        expect { issue.update_acceptance(sm_role, criteria) }.to raise_error CanNotUpdateAccept
+        it { expect { issue.accept(dev_role) }.to raise_error CanNotUpdateAccept }
+        it { expect { issue.accept(po_role) }.to_not raise_error }
+        it { expect { issue.accept(sm_role) }.to raise_error CanNotUpdateAccept }
       end
     end
 
@@ -165,7 +180,10 @@ module Issue
         issue.update_acceptance(po_role, acceptance_criteria(%w(CRT), :all))
         expect(issue.status).to eq Statuses::Wip
 
-        #expect { issue.prepare_acceptance_criteria(criteria) }.to raise_error AlreadyAccepted
+        issue.accept(po_role)
+        expect(issue.status).to eq Statuses::Accepted
+
+        expect { issue.prepare_acceptance_criteria(criteria) }.to raise_error AlreadyAccepted
       end
     end
 
@@ -198,10 +216,9 @@ module Issue
         expect(issue.status).to eq Statuses::Ready
 
         issue.assign_to_sprint(po_role)
-        issue.update_acceptance(po_role, acceptance_criteria(%w(CRT), :all))
-        expect(issue.status).to eq Statuses::Wip
+        issue.accept(dev_role)
 
-        #expect { issue.prepare_acceptance_criteria(criteria) }.to raise_error AlreadyAccepted
+        expect { issue.prepare_acceptance_criteria(criteria) }.to raise_error AlreadyAccepted
       end
     end
   end

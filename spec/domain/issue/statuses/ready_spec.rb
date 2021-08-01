@@ -43,10 +43,10 @@ module Issue
         end
       end
 
-      describe '#update_by_acceptance' do
+      describe '#accept' do
         it do
           criteria = acceptance_criteria(%w(CRT))
-          expect(described_class.update_by_acceptance(criteria)).to eq Ready
+          expect(described_class.accept(criteria)).to eq Ready
         end
       end
 

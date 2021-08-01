@@ -29,10 +29,8 @@ module Issue
         end
 
         sig {override.params(criteria: AcceptanceCriteria).returns(Status)}
-        def update_by_acceptance(criteria)
-          return self if criteria.all_satisfied?
-
-          Wip
+        def accept(criteria)
+          self
         end
 
         sig {override.returns(String)}
