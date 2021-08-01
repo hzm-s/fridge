@@ -30,15 +30,18 @@ module Team
         case self
         when ProductOwner
           [
+            :prepare_acceptance_criteria,
             :remove_issue,
             :update_plan,
             :assign_issue_to_sprint,
             :revert_issue_from_sprint,
             :update_sprint_issues,
-            :accept_issue,
+            :update_feature_acceptance,
+            :update_task_acceptance,
           ]
         when ScrumMaster
           [
+            :prepare_acceptance_criteria,
             :remove_issue,
             :update_plan,
             :assign_issue_to_sprint,
@@ -46,7 +49,11 @@ module Team
             :update_sprint_issues,
           ]
         when Developer
-          [:estimate_issue]
+          [
+            :prepare_acceptance_criteria,
+            :estimate_issue,
+            :update_task_acceptance,
+          ]
         end
       Activity::Set.from_symbols(T.must(activities))
     end

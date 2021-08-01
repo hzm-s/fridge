@@ -33,18 +33,22 @@ module Team
     describe 'query avilable activities' do
       it do
         roles = described_class.new([Role::Developer])
-        expect(roles.available_activities).to eq activity_set([:estimate_issue])
+        expect(roles.available_activities).to eq activity_set([
+          :prepare_acceptance_criteria, :estimate_issue, :update_task_acceptance
+        ])
       end
 
       it do
         roles = described_class.new([Role::ScrumMaster, Role::ProductOwner])
         expect(roles.available_activities).to eq activity_set([
+          :prepare_acceptance_criteria,
           :remove_issue,
           :update_plan,
           :assign_issue_to_sprint,
           :revert_issue_from_sprint,
           :update_sprint_issues,
-          :accept_issue,
+          :update_feature_acceptance,
+          :update_task_acceptance,
         ])
       end
     end

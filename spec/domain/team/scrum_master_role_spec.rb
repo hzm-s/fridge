@@ -8,6 +8,7 @@ module Team
         it do
           a = described_class.available_activities
           expect(a).to eq activity_set([
+            :prepare_acceptance_criteria,
             :remove_issue,
             :update_plan,
             :assign_issue_to_sprint,
