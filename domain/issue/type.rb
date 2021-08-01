@@ -11,6 +11,9 @@ module Issue
     sig {abstract.returns(Status)}
     def initial_status; end
 
+    sig {abstract.params(status: Status, roles: Team::RoleSet).returns(T::Boolean)}
+    def can_update_acceptance?(status, roles); end
+
     sig {abstract.returns(T::Boolean)}
     def must_have_acceptance_criteria?; end
 
