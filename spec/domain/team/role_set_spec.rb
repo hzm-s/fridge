@@ -49,6 +49,7 @@ module Team
           :update_sprint_issues,
           :update_feature_acceptance,
           :update_task_acceptance,
+          :accept_feature,
         ])
       end
     end
