@@ -15,6 +15,7 @@ module Issue
             :revert_issue_from_sprint,
             :update_feature_acceptance,
             :update_task_acceptance,
+            :accept_feature,
           ])
         end
 
