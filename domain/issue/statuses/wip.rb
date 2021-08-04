@@ -34,8 +34,8 @@ module Issue
           Ready
         end
 
-        sig {override.params(criteria: AcceptanceCriteria).returns(Status)}
-        def accept(criteria)
+        sig {override.params(type: Type, criteria: AcceptanceCriteria).returns(Status)}
+        def update_by_acceptance(type, criteria)
           return self unless criteria.all_satisfied?
 
           Accepted

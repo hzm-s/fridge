@@ -43,13 +43,6 @@ module Issue
         end
       end
 
-      describe '.accept' do
-        it do
-          criteria = acceptance_criteria(%w(CRT))
-          expect(described_class.accept(criteria)).to eq Preparation
-        end
-      end
-
       describe '.assign_to_sprint' do
         it do
           expect { described_class.assign_to_sprint }.to raise_error CanNotAssignToSprint
@@ -59,6 +52,13 @@ module Issue
       describe '.revert_from_sprint' do
         it do
           expect { described_class.revert_from_sprint }.to raise_error CanNotRevertFromSprint
+        end
+      end
+
+      describe '.update_by_acceptance' do
+        it do
+          criteria = acceptance_criteria(%w(CRT))
+          expect(described_class.update_by_acceptance(Types::Feature, criteria)).to eq Preparation
         end
       end
     end

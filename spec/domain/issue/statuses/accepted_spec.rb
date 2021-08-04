@@ -33,10 +33,10 @@ module Issue
         end
       end
 
-      describe '.accept' do
+      describe '.update_by_acceptance' do
         it do
           criteria = acceptance_criteria(%w(CRT))
-          expect(described_class.accept(criteria)).to eq Accepted
+          expect(described_class.update_by_acceptance(Types::Feature, criteria)).to eq Accepted
         end
       end
     end

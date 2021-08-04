@@ -113,7 +113,7 @@ module Issue
 
     sig {params(roles: Team::RoleSet).void}
     def accept(roles)
-      @status = @status.accept(acceptance_criteria)
+      @status = @status.update_by_acceptance(@type, acceptance_criteria)
     end
 
     private

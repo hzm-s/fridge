@@ -147,9 +147,9 @@ module Issue
           issue.update_acceptance(acceptance_criteria(%w(CRT), :all))
         end
 
-        it { expect { issue.accept(dev_role) }.to raise_error CanNotUpdateAccept }
+        it { expect { issue.accept(dev_role) }.to raise_error CanNotUpdateAcceptance }
         it { expect { issue.accept(po_role) }.to_not raise_error }
-        it { expect { issue.accept(sm_role) }.to raise_error CanNotUpdateAccept }
+        it { expect { issue.accept(sm_role) }.to raise_error CanNotUpdateAcceptance }
       end
     end
 

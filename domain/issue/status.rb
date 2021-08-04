@@ -18,8 +18,8 @@ module Issue
     sig {abstract.returns(Status)}
     def revert_from_sprint; end
 
-    sig {abstract.params(criteria: AcceptanceCriteria).returns(Status)}
-    def accept(criteria); end
+    sig {abstract.params(type: Type, criteria: AcceptanceCriteria).returns(Status)}
+    def update_by_acceptance(type, criteria); end
 
     sig {abstract.returns(String)}
     def to_s; end
