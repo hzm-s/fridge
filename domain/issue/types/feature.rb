@@ -18,6 +18,11 @@ module Issue
           Activity.allow?(:update_feature_acceptance, [status, roles])
         end
 
+        sig {override.params(criteria: AcceptanceCriteria).returns(T::Boolean)}
+        def all_satisfied?(criteria)
+          criteria.all_satisfied?
+        end
+
         sig {override.returns(T::Boolean)}
         def must_have_acceptance_criteria?
           true
