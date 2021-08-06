@@ -190,7 +190,7 @@ module Issue
 
     describe 'Task issue status' do
       let(:issue) { described_class.create(product_id, Types::Task, description) }
-      let(:criteria) { acceptance_criteria(%w(AC1 AC2 AC3)) }
+      let(:criteria) { acceptance_criteria([]) }
 
       it do
         expect(issue.status).to eq Statuses::Ready
@@ -204,7 +204,7 @@ module Issue
         issue.estimate(dev_role, StoryPoint.new(3))
         expect(issue.status).to eq Statuses::Ready
 
-        issue.prepare_acceptance_criteria(acceptance_criteria([]))
+        issue.prepare_acceptance_criteria(criteria)
         expect(issue.status).to eq Statuses::Ready
 
         issue.estimate(dev_role, StoryPoint.unknown)
@@ -217,10 +217,11 @@ module Issue
         expect(issue.status).to eq Statuses::Ready
 
         issue.assign_to_sprint(po_role)
-        issue.update_acceptance(dev_role, acceptance_criteria(%w(CRT), :all))
+        issue.update_acceptance(dev_role, criteria)
         expect(issue.status).to eq Statuses::Wip
 
         issue.accept(dev_role)
+        expect(issue.status).to eq Statuses::Accepted
 
         expect { issue.prepare_acceptance_criteria(criteria) }.to raise_error AlreadyAccepted
       end
