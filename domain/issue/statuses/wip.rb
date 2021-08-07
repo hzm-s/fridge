@@ -16,6 +16,7 @@ module Issue
             :update_feature_acceptance,
             :update_task_acceptance,
             :accept_feature,
+            :accept_task,
           ])
         end
 
