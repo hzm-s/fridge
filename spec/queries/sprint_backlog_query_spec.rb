@@ -47,15 +47,15 @@ RSpec.describe SprintBacklogQuery do
     end
   end
 
-  xit do
+  it do
     accept_issue(issue_c)
+    accept_issue(issue_b)
     sbl = described_class.call(sprint.id)
 
     aggregate_failures do
-      expect(sbl.issues.first.status).to eq Issue::Statuses::Accepted
-
-      expect(sbl.issues.first).to be_accepted
-      expect(sbl.issues.last).to_not be_accepted
+      expect(sbl.issues[0]).to be_accepted
+      expect(sbl.issues[1]).to_not be_accepted
+      expect(sbl.issues[2]).to be_accepted
     end
   end
 end

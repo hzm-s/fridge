@@ -47,6 +47,7 @@ module IssueSupport
       issue.id,
       issue.acceptance_criteria.to_a.map(&:number)
     )
+    AcceptIssueUsecase.perform(team_roles(:po), issue.id)
   end
 
   private
