@@ -6,6 +6,13 @@ class AcceptancesController < ApplicationController
     @issue = IssueQuery.call(params[:issue_id])
   end
 
+  def update
+    AcceptIssueUsecase.perform(
+      current_team_member_roles,
+      Issue::Id.from_string(params[:issue_id])
+    )
+  end
+
   private
 
   def current_product_id

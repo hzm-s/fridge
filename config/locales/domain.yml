@@ -9,6 +9,7 @@ ja:
         preparation: 準備中
         ready: 準備完了
         wip: 着手中
+        accepted: 受け入れ済み
       assign_to_sprint: 着手する
       cancel_sprint_assign: 着手を取り消す
       acceptance: 受け入れ
