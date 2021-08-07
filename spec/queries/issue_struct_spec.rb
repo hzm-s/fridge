@@ -4,7 +4,7 @@ require 'rails_helper'
 RSpec.describe IssueStruct do
   let!(:product) { create_product }
 
-  it '受け入れ基準がある場合は受け入れ基準を含むこと' do
+  it 'returns acceptance criteria' do
     issue = plan_issue(product.id, acceptance_criteria: %w(AC1 AC2 AC3))
 
     s = described_class.new(Dao::Issue.last)
@@ -20,7 +20,7 @@ RSpec.describe IssueStruct do
     end
   end
 
-  it '受け入れ基準要否を返すこと' do
+  it 'returns requirement to have acceptance criteria' do
     issue = plan_issue(product.id, type: Issue::Types::Task)
 
     s = described_class.new(Dao::Issue.last)
@@ -28,11 +28,21 @@ RSpec.describe IssueStruct do
     expect(s).to_not be_must_have_acceptance_criteria
   end
 
-  it 'ステータスを返すこと' do
+  it 'returns status' do
     issue = plan_issue(product.id)
 
     s = described_class.new(Dao::Issue.last)
 
     expect(s.status).to eq issue.status
+  end
+
+  it 'returns accept issue activity' do
+    feature = plan_issue(product.id, type: :feature).then { described_class.new(Dao::Issue.last) }
+    task = plan_issue(product.id, type: :task).then { described_class.new(Dao::Issue.last) }
+
+    aggregate_failures do
+      expect(feature.accept_issue_activity).to eq :accept_feature
+      expect(task.accept_issue_activity).to eq :accept_task
+    end
   end
 end

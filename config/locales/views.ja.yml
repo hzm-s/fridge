@@ -11,6 +11,7 @@ ja:
       destroy: アイテムを削除しました
       assign_to_sprint: アイテムを着手予定にしました
       revert_from_sprint: アイテム着手を取り消しました
+      accept: アイテムを受け入れました
     product:
       create: プロダクトを作成しました
     release:
@@ -110,11 +111,10 @@ ja:
       empty: アイテムはありません
     task_form:
       placeholder: タスクを追加
-    item_accepted:
-      status: 受け入れ済み
 
   acceptances:
     show:
       title: アイテムの受け入れ
       title_description: 説明
       title_ac: 受け入れ基準
+      accept: 受け入れ

@@ -11,6 +11,7 @@ class AcceptancesController < ApplicationController
       current_team_member_roles,
       Issue::Id.from_string(params[:issue_id])
     )
+    redirect_to sprint_backlog_path(current_product_id), flash: flash_success('issue.accept')
   end
 
   private

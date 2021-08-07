@@ -20,6 +20,9 @@
         <% can_update_acceptance = @issue.type.can_update_acceptance?(current_team_member_roles) %>
         <%= render partial: 'criterion', collection: @issue.criteria, locals: { issue_id: @issue.id, can_update: can_update_acceptance } %>
       </div>
+      <% if authorize(@issue.accept_issue_activity, @issue.status, current_team_member_roles) %>
+        <%= button_to t('.accept'), issue_acceptance_path(issue_id: @issue.id.to_s), method: :patch, data: { test_accept: 1 }, class: 'mt-2 btn btn-success' %>
+      <% end %>
     </div>
   </div>
 </div>

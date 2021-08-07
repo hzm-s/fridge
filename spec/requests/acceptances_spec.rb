@@ -21,6 +21,24 @@ RSpec.describe 'acceptances' do
         expect(response.body).to include 'AC3'
       end
     end
+
+    context 'when not accepted' do
+      it do
+        get issue_acceptance_path(issue_id: issue.id.to_s)
+        expect(response.body).to include 'test-accept'
+      end
+    end
+
+    context 'when accepted' do
+      before do
+        accept_issue(issue)
+      end
+
+      it do
+        get issue_acceptance_path(issue_id: issue.id.to_s)
+        expect(response.body).to_not include 'test-accept'
+      end
+    end
   end
 
   describe 'update' do
@@ -30,8 +48,12 @@ RSpec.describe 'acceptances' do
 
     it do
       patch issue_acceptance_path(issue_id: issue.id.to_s)
-      get sprint_backlog_path(product.id)
-      expect(response.body).to include I18n.t('domain.issue.statuses.accepted')
+      follow_redirect!
+
+      aggregate_failures do
+        expect(response.body).to include I18n.t('feedbacks.issue.accept')
+        expect(response.body).to include I18n.t('domain.issue.statuses.accepted')
+      end
     end
   end
 end

@@ -24,6 +24,10 @@ class IssueStruct < SimpleDelegator
     type.must_have_acceptance_criteria?
   end
 
+  def accept_issue_activity
+    type.accept_issue_activity.to_s.to_sym
+  end
+
   class AcceptanceCriterionStruct < SimpleDelegator
     def issue_id
       dao_issue_id
