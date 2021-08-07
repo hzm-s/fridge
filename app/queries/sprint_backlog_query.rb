@@ -32,6 +32,10 @@ module SprintBacklogQuery
       Issue::Statuses.from_string(super)
     end
 
+    def type
+      Issue::Types.from_string(issue_type)
+    end
+
     def accepted?
       status == Issue::Statuses::Accepted
     end

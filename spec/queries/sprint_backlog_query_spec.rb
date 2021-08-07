@@ -16,7 +16,11 @@ RSpec.describe SprintBacklogQuery do
 
   it do
     sbl = described_class.call(sprint.id)
-    expect(sbl.issues.map(&:id)).to eq [issue_c, issue_a, issue_b].map(&:id).map(&:to_s)
+
+    aggregate_failures do
+      expect(sbl.issues.map(&:id)).to eq [issue_c, issue_a, issue_b].map(&:id).map(&:to_s)
+      expect(sbl.issues.map(&:type)).to eq [issue_c, issue_a, issue_b].map(&:type)
+    end
   end
 
   it do

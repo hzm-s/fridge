@@ -17,7 +17,8 @@
         <%= t '.title_ac' %>
       </label>
       <div class="mt-1 mb-1">
-        <%= render partial: 'criterion', collection: @issue.criteria, locals: { issue_id: @issue.id } %>
+        <% can_update_acceptance = @issue.type.can_update_acceptance?(current_team_member_roles) %>
+        <%= render partial: 'criterion', collection: @issue.criteria, locals: { issue_id: @issue.id, can_update: can_update_acceptance } %>
       </div>
     </div>
   </div>

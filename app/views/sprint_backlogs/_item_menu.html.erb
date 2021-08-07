@@ -9,7 +9,7 @@
         <%=t 'domain.issue.cancel_sprint_assign' %>
       <% end %>
     <% end %>
-    <% if authorize(:accept_issue, current_team_member_roles) %>
+    <% if item.type.can_update_acceptance?(current_team_member_roles) %>
       <%= link_to issue_acceptance_path(issue_id: item.id), class: 'dropdown-item', data: { "test_accept_issue" => 1 } do %>
         <i class="fas fa-user-check"></i>
         <%=t 'domain.issue.acceptance' %>

@@ -1,9 +1,9 @@
 <% if criterion.satisfied? %>
-  <%= button_to issue_satisfied_acceptance_criterion_path(issue_id: issue_id, number: criterion.number), method: :delete, class: 'acceptance-criterion__trigger', data: with_loader, disabled: !can_accept do %>
+  <%= button_to issue_satisfied_acceptance_criterion_path(issue_id: issue_id, number: criterion.number), method: :delete, class: 'acceptance-criterion__trigger', data: with_loader, disabled: !can_update do %>
     <%= render_acceptance_satisfaction_status(criterion) %>
   <% end %>
 <% else %>
-  <%= button_to issue_satisfied_acceptance_criteria_path(issue_id: issue_id, number: criterion.number), method: :post, class: 'acceptance-criterion__trigger', data: with_loader, disabled: !can_accept do %>
+  <%= button_to issue_satisfied_acceptance_criteria_path(issue_id: issue_id, number: criterion.number), method: :post, class: 'acceptance-criterion__trigger', data: with_loader, disabled: !can_update do %>
     <%= render_acceptance_satisfaction_status(criterion) %>
   <% end %>
 <% end %>
