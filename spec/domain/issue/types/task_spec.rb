@@ -69,5 +69,9 @@ module Issue::Types
     describe '.update_by_preparation?' do
       it { expect(described_class).to_not be_update_by_preparation }
     end
+
+    describe '.accept_issue_activity' do
+      it { expect(described_class.accept_issue_activity.to_s).to eq 'accept_task' }
+    end
   end
 end

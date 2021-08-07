@@ -40,6 +40,11 @@ module Issue
           false
         end
 
+        sig {override.returns(Activity::Activity)}
+        def accept_issue_activity
+          Activity::Activity.from_symbol(:accept_task)
+        end
+
         sig {override.returns(String)}
         def to_s
           'task'

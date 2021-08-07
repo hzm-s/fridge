@@ -38,6 +38,11 @@ module Issue
           true
         end
 
+        sig {override.returns(Activity::Activity)}
+        def accept_issue_activity
+          Activity::Activity.from_symbol(:accept_feature)
+        end
+
         sig {override.returns(String)}
         def to_s
           'feature'

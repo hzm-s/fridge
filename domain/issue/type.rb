@@ -26,6 +26,9 @@ module Issue
     sig {abstract.returns(T::Boolean)}
     def update_by_preparation?; end
 
+    sig {abstract.returns(Activity::Activity)}
+    def accept_issue_activity; end
+
     sig {abstract.returns(String)}
     def to_s; end
   end
