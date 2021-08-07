@@ -34,7 +34,7 @@ module Activity
       UpdateFeatureAcceptance = new('update_feature_acceptance')
       UpdateTaskAcceptance = new('update_task_acceptance')
       AcceptFeature = new('accept_feature')
-      #AcceptTask = new('accept_task')
+      AcceptTask = new('accept_task')
     end
 
     sig {params(set_providers: T::Array[SetProvider]).returns(T::Boolean)}

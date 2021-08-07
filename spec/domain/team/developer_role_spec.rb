@@ -11,6 +11,7 @@ module Team
             :prepare_acceptance_criteria,
             :estimate_issue,
             :update_task_acceptance,
+            :accept_task,
           ])
         end
       end

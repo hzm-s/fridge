@@ -8,6 +8,7 @@ module Issue
   class NotFound < StandardError; end
   class AlreadyAccepted < StandardError; end
   class CanNotUpdateAcceptance < StandardError; end
+  class CanNotAccept < StandardError; end
 
   autoload :Id, 'issue/id'
   autoload :Issue, 'issue/issue'

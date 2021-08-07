@@ -34,7 +34,10 @@ module Team
       it do
         roles = described_class.new([Role::Developer])
         expect(roles.available_activities).to eq activity_set([
-          :prepare_acceptance_criteria, :estimate_issue, :update_task_acceptance
+          :prepare_acceptance_criteria,
+          :estimate_issue,
+          :update_task_acceptance,
+          :accept_task,
         ])
       end
 
@@ -50,6 +53,7 @@ module Team
           :update_feature_acceptance,
           :update_task_acceptance,
           :accept_feature,
+          :accept_task,
         ])
       end
     end

@@ -78,7 +78,6 @@ module Issue
       raise AlreadyAccepted unless Activity.allow?(:prepare_acceptance_criteria, [status])
 
       @acceptance_criteria = criteria
-
       update_status_by_preparation
     end
 
@@ -106,13 +105,15 @@ module Issue
 
     sig {params(roles: Team::RoleSet, acceptance_criteria: AcceptanceCriteria).void}
     def update_acceptance(roles, acceptance_criteria)
-      raise CanNotUpdateAcceptance unless @type.can_update_acceptance?(@status, roles)
+      raise CanNotUpdateAcceptance unless @type.can_update_acceptance?(roles)
 
       @acceptance_criteria = acceptance_criteria
     end
 
     sig {params(roles: Team::RoleSet).void}
     def accept(roles)
+      raise CanNotAccept unless @type.can_accept?(roles)
+
       @status = @status.update_by_acceptance(@type, acceptance_criteria)
     end
 

@@ -8,35 +8,33 @@ module Issue::Types
     end
 
     describe '.can_update_acceptance?' do
-      context 'status includes :update_task_acceptance, roles includes :update_task_acceptance' do
+      context 'roles includes :update_feature_acceptance' do
         it do
-          status = Issue::Statuses::Wip
           roles = team_roles(:po)
-          expect(described_class.can_update_acceptance?(status, roles)).to be true
+          expect(described_class.can_update_acceptance?(roles)).to be true
         end
       end
 
-      context 'status includes :update_task_acceptance, roles NOT includes :update_task_acceptance' do
+      context 'roles NOT includes :update_feature_acceptance' do
         it do
-          status = Issue::Statuses::Wip
           roles = team_roles(:dev)
-          expect(described_class.can_update_acceptance?(status, roles)).to be false
+          expect(described_class.can_update_acceptance?(roles)).to be false
         end
       end
+    end
 
-      context 'status NOT includes :update_task_acceptance, roles includes :update_task_acceptance' do
+    describe '.can_accept?' do
+      context 'roles includes :accept_feature' do
         it do
-          status = Issue::Statuses::Ready
           roles = team_roles(:po)
-          expect(described_class.can_update_acceptance?(status, roles)).to be false
+          expect(described_class.can_accept?(roles)).to be true
         end
       end
 
-      context 'status NOT includes :update_task_acceptance, roles NOT includes :update_task_acceptance' do
+      context 'roles NOT includes :accept_feature' do
         it do
-          status = Issue::Statuses::Ready
           roles = team_roles(:dev)
-          expect(described_class.can_update_acceptance?(status, roles)).to be false
+          expect(described_class.can_accept?(roles)).to be false
         end
       end
     end

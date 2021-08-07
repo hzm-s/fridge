@@ -136,7 +136,7 @@ module Issue
       end
     end
 
-    xdescribe 'to accept' do
+    describe 'to accept' do
       context 'when Feature' do
         let(:issue) { described_class.create(product_id, Types::Feature, description) }
 
@@ -144,12 +144,12 @@ module Issue
           issue.prepare_acceptance_criteria(acceptance_criteria(%w(CRT)))
           issue.estimate(dev_role, StoryPoint.new(5))
           issue.assign_to_sprint(po_role)
-          issue.update_acceptance(acceptance_criteria(%w(CRT), :all))
+          issue.update_acceptance(po_role, acceptance_criteria(%w(CRT), :all))
         end
 
-        it { expect { issue.accept(dev_role) }.to raise_error CanNotUpdateAcceptance }
+        it { expect { issue.accept(dev_role) }.to raise_error CanNotAccept }
         it { expect { issue.accept(po_role) }.to_not raise_error }
-        it { expect { issue.accept(sm_role) }.to raise_error CanNotUpdateAcceptance }
+        it { expect { issue.accept(sm_role) }.to raise_error CanNotAccept }
       end
     end
 

@@ -13,9 +13,14 @@ module Issue
           Statuses::Ready
         end
 
-        sig {override.params(status: Status, roles: Team::RoleSet).returns(T::Boolean)}
-        def can_update_acceptance?(status, roles)
-          Activity.allow?(:update_task_acceptance, [status, roles])
+        sig {override.params(roles: Team::RoleSet).returns(T::Boolean)}
+        def can_update_acceptance?(roles)
+          Activity.allow?(:update_task_acceptance, [roles])
+        end
+
+        sig {override.params(roles: Team::RoleSet).returns(T::Boolean)}
+        def can_accept?(roles)
+          Activity.allow?(:accept_task, [roles])
         end
 
         sig {override.params(criteria: AcceptanceCriteria).returns(T::Boolean)}

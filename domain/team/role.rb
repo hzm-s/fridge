@@ -39,6 +39,7 @@ module Team
             :update_feature_acceptance,
             :update_task_acceptance,
             :accept_feature,
+            :accept_task,
           ]
         when ScrumMaster
           [
@@ -54,6 +55,7 @@ module Team
             :prepare_acceptance_criteria,
             :estimate_issue,
             :update_task_acceptance,
+            :accept_task,
           ]
         end
       Activity::Set.from_symbols(T.must(activities))
