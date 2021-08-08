@@ -13,13 +13,8 @@ module Issue
           Statuses::Preparation
         end
 
-        sig {override.params(roles: Team::RoleSet).returns(T::Boolean)}
-        def can_accept?(roles)
-          Activity.allow?(:accept_feature, [roles])
-        end
-
         sig {override.params(criteria: AcceptanceCriteria).returns(T::Boolean)}
-        def satisfied?(criteria)
+        def can_accept?(criteria)
           criteria.satisfied?
         end
 

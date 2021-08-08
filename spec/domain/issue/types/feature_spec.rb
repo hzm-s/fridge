@@ -8,33 +8,17 @@ module Issue::Types
     end
 
     describe '.can_accept?' do
-      context 'roles includes :accept_feature' do
-        it do
-          roles = team_roles(:po)
-          expect(described_class.can_accept?(roles)).to be true
-        end
-      end
-
-      context 'roles NOT includes :accept_feature' do
-        it do
-          roles = team_roles(:dev)
-          expect(described_class.can_accept?(roles)).to be false
-        end
-      end
-    end
-
-    describe '.satisfied?' do
-      context 'when satisfied' do
+      context 'when criteria are satisfied' do
         it do
           criteria = acceptance_criteria(%w(AC1 AC2 AC3), :all)
-          expect(described_class.satisfied?(criteria)).to be true
+          expect(described_class.can_accept?(criteria)).to be true
         end
       end
 
-      context 'when NOT satisfied' do
+      context 'when criteria are NOT satisfied' do
         it do
           criteria = acceptance_criteria(%w(AC1 AC2 AC3), [1, 3])
-          expect(described_class.satisfied?(criteria)).to be false
+          expect(described_class.can_accept?(criteria)).to be false
         end
       end
     end
