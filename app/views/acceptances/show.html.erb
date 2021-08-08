@@ -17,10 +17,10 @@
         <%= t '.title_ac' %>
       </label>
       <div class="mt-1 mb-1">
-        <% can_update_acceptance = @issue.type.can_update_acceptance?(current_team_member_roles) %>
-        <%= render partial: 'criterion', collection: @issue.criteria, locals: { issue_id: @issue.id, can_update: can_update_acceptance } %>
+        <% can_update = authorize(@issue.accept_issue_activity, current_team_member_roles, @issue.status) %>
+        <%= render partial: 'criterion', collection: @issue.criteria, locals: { issue_id: @issue.id, can_update: can_update } %>
       </div>
-      <% if authorize(@issue.accept_issue_activity, @issue.status, current_team_member_roles) %>
+      <% if can_update && @issue.can_accept? %>
         <%= button_to t('.accept'), issue_acceptance_path(issue_id: @issue.id.to_s), method: :patch, data: { test_accept: 1 }, class: 'mt-2 btn btn-success' %>
       <% end %>
     </div>

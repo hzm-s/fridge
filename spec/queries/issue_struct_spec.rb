@@ -31,6 +31,12 @@ RSpec.describe IssueStruct do
   end
 
   it 'returns criteria satisfaction' do
+    issue = plan_issue(product.id, acceptance_criteria: %w(AC1 AC2))
+    satisfy_acceptance_criteria(issue.id, [1])
+
+    s = build_struct { issue }
+
+    expect(s).to_not be_can_accept
   end
 
   it 'returns accept issue activity' do

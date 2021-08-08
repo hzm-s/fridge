@@ -22,7 +22,18 @@ RSpec.describe 'acceptances' do
       end
     end
 
-    context 'when not accepted' do
+    context 'when not acceptable' do
+      it do
+        get issue_acceptance_path(issue_id: issue.id.to_s)
+        expect(response.body).to_not include 'test-accept'
+      end
+    end
+
+    context 'when acceptable' do
+      before do
+        satisfy_acceptance_criteria(issue.id, [1, 2, 3])
+      end
+
       it do
         get issue_acceptance_path(issue_id: issue.id.to_s)
         expect(response.body).to include 'test-accept'
