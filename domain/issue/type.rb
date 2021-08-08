@@ -18,7 +18,7 @@ module Issue
     def can_accept?(roles); end
 
     sig {abstract.params(criteria: AcceptanceCriteria).returns(T::Boolean)}
-    def all_satisfied?(criteria); end
+    def satisfied?(criteria); end
 
     sig {abstract.returns(T::Boolean)}
     def must_have_acceptance_criteria?; end

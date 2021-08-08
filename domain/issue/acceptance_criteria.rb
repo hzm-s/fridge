@@ -48,7 +48,7 @@ module Issue
     end
 
     sig {returns(T::Boolean)}
-    def all_satisfied?
+    def satisfied?
       @criteria.all?(&:satisfied?)
     end
 

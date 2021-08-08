@@ -66,13 +66,13 @@ module Issue
         criteria.append('AC3')
 
         criteria.update(criteria.of(2).tap { |c| c.satisfy })
-        expect(criteria.all_satisfied?).to be false
+        expect(criteria.satisfied?).to be false
 
         criteria.update(criteria.of(1).tap { |c| c.satisfy })
-        expect(criteria.all_satisfied?).to be false
+        expect(criteria.satisfied?).to be false
 
         criteria.update(criteria.of(3).tap { |c| c.satisfy })
-        expect(criteria.all_satisfied?).to be true
+        expect(criteria.satisfied?).to be true
       end
     end
   end

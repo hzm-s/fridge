@@ -39,25 +39,25 @@ module Issue::Types
       end
     end
 
-    describe '.all_satisfied?' do
-      context 'when all satisfied' do
+    describe '.satisfied?' do
+      context 'when satisfied' do
         it do
           criteria = acceptance_criteria(%w(AC1 AC2 AC3), :all)
-          expect(described_class.all_satisfied?(criteria)).to be true
+          expect(described_class.satisfied?(criteria)).to be true
         end
       end
 
-      context 'when NOT all satisfied' do
+      context 'when NOT satisfied' do
         it do
           criteria = acceptance_criteria(%w(AC1 AC2 AC3), [1, 3])
-          expect(described_class.all_satisfied?(criteria)).to be false
+          expect(described_class.satisfied?(criteria)).to be false
         end
       end
 
       context 'when empty criteria' do
         it do
           criteria = acceptance_criteria([])
-          expect(described_class.all_satisfied?(criteria)).to be true
+          expect(described_class.satisfied?(criteria)).to be true
         end
       end
     end

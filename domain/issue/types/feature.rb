@@ -24,8 +24,8 @@ module Issue
         end
 
         sig {override.params(criteria: AcceptanceCriteria).returns(T::Boolean)}
-        def all_satisfied?(criteria)
-          criteria.all_satisfied?
+        def satisfied?(criteria)
+          criteria.satisfied?
         end
 
         sig {override.returns(T::Boolean)}
