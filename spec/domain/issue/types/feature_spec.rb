@@ -7,22 +7,6 @@ module Issue::Types
       it { expect(described_class.initial_status).to eq ::Issue::Statuses::Preparation }
     end
 
-    describe '.can_update_acceptance?' do
-      context 'roles includes :update_feature_acceptance' do
-        it do
-          roles = team_roles(:po)
-          expect(described_class.can_update_acceptance?(roles)).to be true
-        end
-      end
-
-      context 'roles NOT includes :update_feature_acceptance' do
-        it do
-          roles = team_roles(:dev)
-          expect(described_class.can_update_acceptance?(roles)).to be false
-        end
-      end
-    end
-
     describe '.can_accept?' do
       context 'roles includes :accept_feature' do
         it do
@@ -64,7 +48,7 @@ module Issue::Types
     end
 
     describe '.accept_issue_activity' do
-      it { expect(described_class.accept_issue_activity.to_s).to eq 'accept_feature' }
+      it { expect(described_class.accept_issue_activity).to eq :accept_feature }
     end
   end
 end

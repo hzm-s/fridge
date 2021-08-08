@@ -12,9 +12,6 @@ module Issue
     def initial_status; end
 
     sig {abstract.params(roles: Team::RoleSet).returns(T::Boolean)}
-    def can_update_acceptance?(roles); end
-
-    sig {abstract.params(roles: Team::RoleSet).returns(T::Boolean)}
     def can_accept?(roles); end
 
     sig {abstract.params(criteria: AcceptanceCriteria).returns(T::Boolean)}
@@ -26,7 +23,7 @@ module Issue
     sig {abstract.returns(T::Boolean)}
     def update_by_preparation?; end
 
-    sig {abstract.returns(Activity::Activity)}
+    sig {abstract.returns(Symbol)}
     def accept_issue_activity; end
 
     sig {abstract.returns(String)}

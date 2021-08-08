@@ -36,8 +36,6 @@ module Team
             :assign_issue_to_sprint,
             :revert_issue_from_sprint,
             :update_sprint_issues,
-            :update_feature_acceptance,
-            :update_task_acceptance,
             :accept_feature,
             :accept_task,
           ]
@@ -54,7 +52,6 @@ module Team
           [
             :prepare_acceptance_criteria,
             :estimate_issue,
-            :update_task_acceptance,
             :accept_task,
           ]
         end

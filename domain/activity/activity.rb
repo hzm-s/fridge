@@ -31,8 +31,6 @@ module Activity
       SuspendTask = new('suspend_task')
       ResumeTask = new('resume_task')
       CompleteTask = new('complete_task')
-      UpdateFeatureAcceptance = new('update_feature_acceptance')
-      UpdateTaskAcceptance = new('update_task_acceptance')
       AcceptFeature = new('accept_feature')
       AcceptTask = new('accept_task')
     end

@@ -14,11 +14,6 @@ module Issue
         end
 
         sig {override.params(roles: Team::RoleSet).returns(T::Boolean)}
-        def can_update_acceptance?(roles)
-          Activity.allow?(:update_task_acceptance, [roles])
-        end
-
-        sig {override.params(roles: Team::RoleSet).returns(T::Boolean)}
         def can_accept?(roles)
           Activity.allow?(:accept_task, [roles])
         end
@@ -40,9 +35,9 @@ module Issue
           false
         end
 
-        sig {override.returns(Activity::Activity)}
+        sig {override.returns(Symbol)}
         def accept_issue_activity
-          Activity::Activity.from_symbol(:accept_task)
+          :accept_task
         end
 
         sig {override.returns(String)}

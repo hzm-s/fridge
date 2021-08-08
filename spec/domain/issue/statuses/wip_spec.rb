@@ -10,8 +10,6 @@ module Issue
           expect(a).to eq activity_set([
             :prepare_acceptance_criteria,
             :revert_issue_from_sprint,
-            :update_feature_acceptance,
-            :update_task_acceptance,
             :accept_feature,
             :accept_task,
           ])
