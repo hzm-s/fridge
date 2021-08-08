@@ -37,8 +37,13 @@ RSpec.describe IssueStruct do
   end
 
   it 'returns accept issue activity' do
-    feature = plan_issue(product.id, type: :feature).then { described_class.new(Dao::Issue.last) }
-    task = plan_issue(product.id, type: :task).then { described_class.new(Dao::Issue.last) }
+    feature =
+      plan_issue(product.id, type: :feature)
+      .then { |i| described_class.new(Dao::Issue.find(i.id)) }
+
+    task =
+      plan_issue(product.id, type: :task)
+      .then { |i| described_class.new(Dao::Issue.find(i.id)) }
 
     aggregate_failures do
       expect(feature.accept_issue_activity).to eq :accept_feature
