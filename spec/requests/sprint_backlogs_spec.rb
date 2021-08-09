@@ -105,7 +105,7 @@ RSpec.describe 'sprint_backlogs' do
     context 'when accepted' do
       before { accept_issue(issue) }
 
-      xit do
+      it do
         get sprint_backlog_path(product.id)
 
         aggregate_failures do
