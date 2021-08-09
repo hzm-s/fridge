@@ -11,6 +11,9 @@ module Issue
     sig {abstract.returns(Status)}
     def initial_status; end
 
+    sig {abstract.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(T::Boolean)}
+    def prepared?(criteria, size); end
+
     sig {abstract.params(criteria: AcceptanceCriteria).returns(T::Boolean)}
     def can_accept?(criteria); end
 

@@ -13,6 +13,11 @@ module Issue
           Statuses::Ready
         end
 
+        sig {override.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(T::Boolean)}
+        def prepared?(criteria, size)
+          true
+        end
+
         sig {override.params(criteria: AcceptanceCriteria).returns(T::Boolean)}
         def can_accept?(criteria)
           return true if criteria.empty?
