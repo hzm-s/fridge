@@ -28,11 +28,6 @@ module Issue
           true
         end
 
-        sig {override.returns(T::Boolean)}
-        def update_by_preparation?
-          true
-        end
-
         sig {override.returns(Symbol)}
         def accept_issue_activity
           :accept_feature

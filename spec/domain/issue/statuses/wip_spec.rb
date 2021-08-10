@@ -17,12 +17,26 @@ module Issue
       end
 
       describe '.update_by_preparation' do
-        it do
-          status = described_class.update_by_preparation(
-            acceptance_criteria(%w(AC1)),
-            StoryPoint.unknown
-          )
-          expect(status).to eq Wip
+        context 'prepared = true' do
+          it do
+            status = described_class.update_by_preparation(
+              Types::Feature,
+              acceptance_criteria(%w(AC1)),
+              StoryPoint.new(3)
+            )
+            expect(status).to eq Wip
+          end
+        end
+
+        context 'prepared = false' do
+          it do
+            status = described_class.update_by_preparation(
+              Types::Feature,
+              acceptance_criteria(%w(AC1)),
+              StoryPoint.unknown
+            )
+            expect(status).to eq Wip
+          end
         end
       end
 

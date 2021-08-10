@@ -9,8 +9,8 @@ module Issue
 
     include Activity::SetProvider
 
-    sig {abstract.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
-    def update_by_preparation(criteria, size); end
+    sig {abstract.params(type: Type, criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
+    def update_by_preparation(type, criteria, size); end
 
     sig {abstract.returns(Status)}
     def assign_to_sprint; end

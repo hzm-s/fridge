@@ -78,7 +78,7 @@ module Issue
       raise AlreadyAccepted unless Activity.allow?(:prepare_acceptance_criteria, [status])
 
       @acceptance_criteria = criteria
-      update_status_by_preparation
+      @status = @status.update_by_preparation(@type, acceptance_criteria, size)
     end
 
     sig {params(roles: Team::RoleSet, size: StoryPoint).void}
@@ -86,7 +86,7 @@ module Issue
       raise CanNotEstimate unless Activity.allow?(:estimate_issue, [roles, status])
 
       @size = size
-      update_status_by_preparation
+      @status = @status.update_by_preparation(@type, acceptance_criteria, size)
     end
 
     sig {params(roles: Team::RoleSet).void}
@@ -115,15 +115,6 @@ module Issue
       raise CanNotAccept unless Activity.allow?(@type.accept_issue_activity.to_sym, [roles])
 
       @status = @status.update_by_acceptance(@type, acceptance_criteria)
-    end
-
-    private
-
-    sig {void}
-    def update_status_by_preparation
-      return unless @type.update_by_preparation?
-
-      @status = @status.update_by_preparation(acceptance_criteria, size)
     end
   end
 end

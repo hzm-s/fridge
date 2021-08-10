@@ -13,9 +13,9 @@ module Issue
           Activity::Set.from_symbols([])
         end
 
-        sig {override.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
-        def update_by_preparation(criteria, size)
-          self
+        sig {override.params(type: Type, criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
+        def update_by_preparation(type, criteria, size)
+          raise CanNotPrepare
         end
 
         sig {override.returns(Status)}

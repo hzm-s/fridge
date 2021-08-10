@@ -18,8 +18,8 @@ module Issue
           ])
         end
 
-        sig {override.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
-        def update_by_preparation(criteria, size)
+        sig {override.params(type: Type, criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
+        def update_by_preparation(type, criteria, size)
           self
         end
 

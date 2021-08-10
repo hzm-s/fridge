@@ -13,13 +13,11 @@ module Issue
           Activity::Set.from_symbols([:prepare_acceptance_criteria, :remove_issue, :estimate_issue, :assign_issue_to_sprint])
         end
 
-        sig {override.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
-        def update_by_preparation(criteria, size)
-          if Preparation.update_by_preparation(criteria, size) == self
-            self
-          else
-            Preparation
-          end
+        sig {override.params(type: Type, criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
+        def update_by_preparation(type, criteria, size)
+          return Preparation unless type.prepared?(criteria, size)
+
+          self
         end
 
         sig {override.returns(Status)}

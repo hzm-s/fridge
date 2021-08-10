@@ -1,11 +1,12 @@
 # typed: strict
 module Issue
+  class NotFound < StandardError; end
   class InvalidType < ArgumentError; end
   class InvalidDescription < ArgumentError; end
-  class CanNotEstimate < ArgumentError; end
+  class CanNotPrepare < StandardError; end
+  class CanNotEstimate < StandardError; end
   class CanNotAssignToSprint < StandardError; end
   class CanNotRevertFromSprint < StandardError; end
-  class NotFound < StandardError; end
   class AlreadyAccepted < StandardError; end
   class CanNotUpdateAcceptance < StandardError; end
   class CanNotAccept < StandardError; end

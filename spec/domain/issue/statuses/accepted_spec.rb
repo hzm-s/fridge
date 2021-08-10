@@ -13,11 +13,13 @@ module Issue
 
       describe '.update_by_preparation' do
         it do
-          status = described_class.update_by_preparation(
-            acceptance_criteria(%w(AC1)),
-            StoryPoint.unknown
-          )
-          expect(status).to eq Accepted
+          expect {
+            described_class.update_by_preparation(
+              Types::Feature,
+              acceptance_criteria(%w(AC1)),
+              StoryPoint.new(3)
+            )
+          }.to raise_error CanNotPrepare
         end
       end
 
