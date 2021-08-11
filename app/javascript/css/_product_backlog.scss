@@ -85,6 +85,10 @@
   border-left: 3px solid $pbi-status-color-wip;
 }
 
+.pbl-item-outer--accepted {
+  border-left: 3px solid $pbi-status-color-accepted;
+}
+
 .pbl-item {
   display: flex;
   align-items: center;
