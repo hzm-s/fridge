@@ -2,6 +2,16 @@
   font-family: $font-family-normal;
 }
 
+@mixin body-link {
+  color: $body-color;
+  &:visited {
+    color: $body-color;
+  }
+  &:active {
+    color: $body-color;
+  }
+}
+
 @mixin avatar($size, $fg-color: #555, $bg-color: #ccc) {
   display: inline-block;
   vertical-align: middle;

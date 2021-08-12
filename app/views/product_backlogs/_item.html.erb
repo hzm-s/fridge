@@ -7,7 +7,9 @@
     <span class="pbl-item__issue-type">
       <%= pbl_item_type_icon(item.type) %>
     </span>
-    <%= simple_format(item.description, class: 'pbl-item__description nf') %>
+    <%= link_to edit_issue_path(item.id), class: 'pbl-item__description-link' do %>
+      <%= simple_format(item.description, class: 'pbl-item__description') %>
+    <% end %>
     <div class="pbl-item__actions">
       <div class="pbl-item__ac-containter">
         <%= link_to "#clp-pbi-ac-#{item.id}", collapse_trigger_options(class: pbl_item_criteria_css_classes(item)) do %>
