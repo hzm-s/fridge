@@ -29,13 +29,20 @@ $pbi-status-color-accepted: $purple;
     border-color: $pbi-status-color-preparation;
     background-color: $gray-100;
   }
+
   &--ready {
     border-color: $pbi-status-color-ready;
     background-color: $gray-100;
   }
+
   &--wip {
     border-color: $pbi-status-color-wip;
     background-color: lighten($pbi-status-color-wip, 45%);
+  }
+
+  &--accepted {
+    border-color: $pbi-status-color-accepted;
+    background-color: lighten($pbi-status-color-accepted, 45%);
   }
 }
 
