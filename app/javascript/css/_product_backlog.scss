@@ -112,6 +112,11 @@
   }
 }
 
+.pbl-item__description-link {
+  @include nf;
+  @include body-link;
+}
+
 .pbl-item__description {
   padding-right: .5rem;
   margin-bottom: 0;
@@ -190,6 +195,15 @@
   &:hover {
     color: $body-color;
     text-decoration: none;
+  }
+
+  &--disable {
+    color: $gray-500;
+
+    &:hover {
+      color: $gray-500;
+      text-decoration: none;
+    }
   }
 }
 
