@@ -12,11 +12,11 @@
 module OmniAuthTestHelper
   def build_auth_hash(args = nil, generator); end
   def generators; end
-  def generators=(obj); end
+  def generators=(val); end
   def mock_auth_hash(args = nil, &block); end
   def mock_auth_hash_on(context, args = nil, &block); end
   def self.generators; end
-  def self.generators=(obj); end
+  def self.generators=(val); end
   def self.register_generator(&block); end
   def self.register_generator_on(context, &block); end
 end

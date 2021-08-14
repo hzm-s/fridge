@@ -350,7 +350,7 @@ end
 module RSpec::Expectations::Configuration::NullBacktraceFormatter
   def self.format_backtrace(backtrace); end
 end
-class InvalidName___Class_0x00___Differ_37
+class InvalidName___Class_0x00___Differ_34
 end
 module RSpec::Expectations::ExpectationHelper
   def self.check_message(msg); end
@@ -817,7 +817,7 @@ class RSpec::Matchers::BuiltIn::Exist < RSpec::Matchers::BuiltIn::BaseMatcher
   def initialize(*expected); end
   def matches?(actual); end
 end
-class Anonymous_Struct_38 < Struct
+class Anonymous_Struct_35 < Struct
   def actual; end
   def actual=(_); end
   def expected; end
@@ -827,7 +827,7 @@ class Anonymous_Struct_38 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class RSpec::Matchers::BuiltIn::Exist::ExistenceTest < Anonymous_Struct_38
+class RSpec::Matchers::BuiltIn::Exist::ExistenceTest < Anonymous_Struct_35
   def actual_exists?; end
   def deprecated(predicate, actual); end
   def existence_values; end
@@ -991,7 +991,7 @@ module RSpec::Matchers::BuiltIn::CaptureStderr
   def self.capture(block); end
   def self.name; end
 end
-class Anonymous_Struct_39 < Struct
+class Anonymous_Struct_36 < Struct
   def name; end
   def name=(_); end
   def self.[](*arg0); end
@@ -1001,7 +1001,7 @@ class Anonymous_Struct_39 < Struct
   def stream; end
   def stream=(_); end
 end
-class RSpec::Matchers::BuiltIn::CaptureStreamToTempfile < Anonymous_Struct_39
+class RSpec::Matchers::BuiltIn::CaptureStreamToTempfile < Anonymous_Struct_36
   def capture(block); end
 end
 class RSpec::Matchers::BuiltIn::RaiseError

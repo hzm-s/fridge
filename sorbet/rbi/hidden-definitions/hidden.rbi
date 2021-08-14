@@ -11,6 +11,29 @@ module AbstractController::Rendering
   DEFAULT_PROTECTED_INSTANCE_VARIABLES = ::T.let(nil, ::T.untyped)
 end
 
+class AcceptIssueUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+module AcceptanceCriteriaController::HelperMethods
+  include ::ApplicationController::HelperMethods
+  include ::ActionController::Base::HelperMethods
+  include ::Webpacker::Helper
+  include ::ApplicationHelper
+  include ::AcceptanceHelper
+  include ::BootstrapHelper
+  include ::I18nHelper
+  include ::PbiHelper
+  include ::PblHelper
+  include ::PresentationHelper
+  include ::SblHelper
+  def issue_id(*args, &block); end
+end
+
+module AcceptanceCriteriaController::HelperMethods
+end
+
 class AcceptanceCriterionForm
   def __callbacks(); end
 
@@ -37,7 +60,7 @@ class AcceptanceCriterionForm
   extend ::ActiveModel::Validations::HelperMethods
   def self.__callbacks(); end
 
-  def self.__callbacks=(val); end
+  def self.__callbacks=(value); end
 
   def self.__callbacks?(); end
 
@@ -47,9 +70,31 @@ class AcceptanceCriterionForm
 
   def self._validators(); end
 
-  def self._validators=(val); end
+  def self._validators=(value); end
 
   def self._validators?(); end
+end
+
+module AcceptancesController::HelperMethods
+  include ::ApplicationController::HelperMethods
+  include ::ActionController::Base::HelperMethods
+  include ::Webpacker::Helper
+  include ::ApplicationHelper
+  include ::AcceptanceHelper
+  include ::BootstrapHelper
+  include ::I18nHelper
+  include ::PbiHelper
+  include ::PblHelper
+  include ::PresentationHelper
+  include ::SblHelper
+  def current_product(*args, &block); end
+
+  def current_team_member(*args, &block); end
+
+  def current_team_member_roles(*args, &block); end
+end
+
+module AcceptancesController::HelperMethods
 end
 
 module ActionCable
@@ -90,12 +135,6 @@ end
 module ActionController::DataStreaming
   DEFAULT_SEND_FILE_DISPOSITION = ::T.let(nil, ::T.untyped)
   DEFAULT_SEND_FILE_TYPE = ::T.let(nil, ::T.untyped)
-end
-
-module ActionController::ForceSSL
-  ACTION_OPTIONS = ::T.let(nil, ::T.untyped)
-  REDIRECT_OPTIONS = ::T.let(nil, ::T.untyped)
-  URL_OPTIONS = ::T.let(nil, ::T.untyped)
 end
 
 module ActionController::HttpAuthentication::Token
@@ -203,6 +242,7 @@ class ActionDispatch::Cookies
   AUTHENTICATED_ENCRYPTED_COOKIE_SALT = ::T.let(nil, ::T.untyped)
   COOKIES_DIGEST = ::T.let(nil, ::T.untyped)
   COOKIES_ROTATIONS = ::T.let(nil, ::T.untyped)
+  COOKIES_SAME_SITE_PROTECTION = ::T.let(nil, ::T.untyped)
   COOKIES_SERIALIZER = ::T.let(nil, ::T.untyped)
   ENCRYPTED_COOKIE_CIPHER = ::T.let(nil, ::T.untyped)
   ENCRYPTED_COOKIE_SALT = ::T.let(nil, ::T.untyped)
@@ -257,6 +297,10 @@ end
 class ActionDispatch::DebugView
 end
 
+class ActionDispatch::FileHandler
+  PRECOMPRESSED = ::T.let(nil, ::T.untyped)
+end
+
 class ActionDispatch::Flash
   KEY = ::T.let(nil, ::T.untyped)
 end
@@ -265,8 +309,8 @@ class ActionDispatch::HostAuthorization
   DEFAULT_RESPONSE_APP = ::T.let(nil, ::T.untyped)
 end
 
-module ActionDispatch::Http
-  include ::ActiveSupport::Deprecation::DeprecatedConstantAccessor
+module ActionDispatch::Http::Cache::Response
+  NO_STORE = ::T.let(nil, ::T.untyped)
 end
 
 module ActionDispatch::Integration
@@ -280,6 +324,8 @@ module ActionDispatch::Integration::RequestHelpers
   def get(path, **args); end
 
   def head(path, **args); end
+
+  def options(path, **args); end
 
   def patch(path, **args); end
 
@@ -306,11 +352,11 @@ module ActionDispatch::Integration::Runner
 
   def assertions=(assertions); end
 
-  def assigns(*args, **options); end
+  def assigns(*args); end
 
   def before_setup(); end
 
-  def cookies(*args, **options); end
+  def cookies(*args); end
 
   def copy_session_variables!(); end
 
@@ -320,13 +366,13 @@ module ActionDispatch::Integration::Runner
 
   def default_url_options=(options); end
 
-  def delete(*args, **options); end
+  def delete(*args); end
 
-  def follow_redirect!(*args, **options); end
+  def follow_redirect!(*args); end
 
-  def get(*args, **options); end
+  def get(*args); end
 
-  def head(*args, **options); end
+  def head(*args); end
 
   def initialize(*args, &blk); end
 
@@ -334,11 +380,11 @@ module ActionDispatch::Integration::Runner
 
   def open_session(); end
 
-  def patch(*args, **options); end
+  def patch(*args); end
 
-  def post(*args, **options); end
+  def post(*args); end
 
-  def put(*args, **options); end
+  def put(*args); end
 
   def remove!(); end
 
@@ -378,7 +424,7 @@ class ActionDispatch::Integration::Session
 
   def default_url_options(); end
 
-  def default_url_options=(val); end
+  def default_url_options=(default_url_options); end
 
   def default_url_options?(); end
 
@@ -425,7 +471,7 @@ end
 class ActionDispatch::Integration::Session
   def self.default_url_options(); end
 
-  def self.default_url_options=(val); end
+  def self.default_url_options=(value); end
 
   def self.default_url_options?(); end
 end
@@ -502,17 +548,17 @@ class ActionDispatch::Journey::Format
   ESCAPE_SEGMENT = ::T.let(nil, ::T.untyped)
 end
 
-module ActionDispatch::Journey::Formatter::RegexCaseComparator
-  DEFAULT_INPUT = ::T.let(nil, ::T.untyped)
-  DEFAULT_REGEX = ::T.let(nil, ::T.untyped)
-end
-
 class ActionDispatch::Journey::GTG::Builder
   DUMMY = ::T.let(nil, ::T.untyped)
 end
 
+class ActionDispatch::Journey::GTG::Simulator
+  INITIAL_STATE = ::T.let(nil, ::T.untyped)
+end
+
 class ActionDispatch::Journey::Nodes::Symbol
   DEFAULT_EXP = ::T.let(nil, ::T.untyped)
+  GREEDY_EXP = ::T.let(nil, ::T.untyped)
 end
 
 class ActionDispatch::Journey::Parser
@@ -566,6 +612,15 @@ class ActionDispatch::Journey::Visitors::Visitor
   DISPATCH_CACHE = ::T.let(nil, ::T.untyped)
 end
 
+class ActionDispatch::PermissionsPolicy::Middleware
+  CONTENT_TYPE = ::T.let(nil, ::T.untyped)
+  POLICY = ::T.let(nil, ::T.untyped)
+end
+
+module ActionDispatch::PermissionsPolicy::Request
+  POLICY = ::T.let(nil, ::T.untyped)
+end
+
 class ActionDispatch::Request
   include ::ActionDispatch::Flash::RequestMethods
   ACTION_DISPATCH_REQUEST_ID = ::T.let(nil, ::T.untyped)
@@ -581,10 +636,6 @@ class ActionDispatch::Request
   RFC4791 = ::T.let(nil, ::T.untyped)
   RFC5323 = ::T.let(nil, ::T.untyped)
   RFC5789 = ::T.let(nil, ::T.untyped)
-end
-
-class ActionDispatch::RequestId
-  X_REQUEST_ID = ::T.let(nil, ::T.untyped)
 end
 
 module ActionDispatch::Routing
@@ -635,10 +686,6 @@ class ActionDispatch::Routing::RouteSet
   UNKNOWN = ::T.let(nil, ::T.untyped)
 end
 
-class ActionDispatch::Routing::RouteSet::Generator
-  PARAMETERIZE = ::T.let(nil, ::T.untyped)
-end
-
 module ActionDispatch::Routing::RouteSet::MountedHelpers
   def _main_app(); end
 
@@ -649,7 +696,7 @@ class ActionDispatch::Routing::RouteWrapper
   include ::Sprockets::Rails::RouteWrapper
   def assets_prefix(); end
 
-  def assets_prefix=(val); end
+  def assets_prefix=(assets_prefix); end
 
   def assets_prefix?(); end
 end
@@ -657,7 +704,7 @@ end
 class ActionDispatch::Routing::RouteWrapper
   def self.assets_prefix(); end
 
-  def self.assets_prefix=(val); end
+  def self.assets_prefix=(value); end
 
   def self.assets_prefix?(); end
 end
@@ -669,7 +716,7 @@ class ActionDispatch::Routing::RoutesProxy
 
   def default_url_options(); end
 
-  def default_url_options=(val); end
+  def default_url_options=(default_url_options); end
 
   def default_url_options?(); end
 
@@ -687,7 +734,7 @@ end
 class ActionDispatch::Routing::RoutesProxy
   def self.default_url_options(); end
 
-  def self.default_url_options=(val); end
+  def self.default_url_options=(value); end
 
   def self.default_url_options?(); end
 end
@@ -695,8 +742,9 @@ end
 class ActionDispatch::SSL
   def call(env); end
 
-  def initialize(app, redirect: T.unsafe(nil), hsts: T.unsafe(nil), secure_cookies: T.unsafe(nil)); end
+  def initialize(app, redirect: T.unsafe(nil), hsts: T.unsafe(nil), secure_cookies: T.unsafe(nil), ssl_default_redirect_status: T.unsafe(nil)); end
   HSTS_EXPIRES_IN = ::T.let(nil, ::T.untyped)
+  PERMANENT_REDIRECT_REQUEST_METHODS = ::T.let(nil, ::T.untyped)
 end
 
 class ActionDispatch::SSL
@@ -750,8 +798,6 @@ class ActionMailer::LogSubscriber
   def deliver(event); end
 
   def process(event); end
-
-  def receive(event); end
 end
 
 class ActionMailer::NonInferrableMailerError
@@ -771,7 +817,7 @@ class ActionMailer::TestCase
   include ::Rails::Dom::Testing::Assertions::DomAssertions
   def _mailer_class(); end
 
-  def _mailer_class=(val); end
+  def _mailer_class=(_mailer_class); end
 
   def _mailer_class?(); end
 end
@@ -779,6 +825,7 @@ end
 module ActionMailer::TestCase::Behavior
   include ::ActionMailer::TestHelper
   include ::ActiveJob::TestHelper
+  include ::ActiveSupport::Testing::Assertions
   include ::Rails::Dom::Testing::Assertions::SelectorAssertions
   include ::Rails::Dom::Testing::Assertions::SelectorAssertions::CountDescribable
   include ::Rails::Dom::Testing::Assertions::DomAssertions
@@ -810,13 +857,14 @@ class ActionMailer::TestCase
   extend ::ActionMailer::TestCase::Behavior::ClassMethods
   def self._mailer_class(); end
 
-  def self._mailer_class=(val); end
+  def self._mailer_class=(value); end
 
   def self._mailer_class?(); end
 end
 
 module ActionMailer::TestHelper
   include ::ActiveJob::TestHelper
+  include ::ActiveSupport::Testing::Assertions
   def assert_emails(number, &block); end
 
   def assert_enqueued_email_with(mailer, method, args: T.unsafe(nil), queue: T.unsafe(nil), &block); end
@@ -859,6 +907,17 @@ class ActionText::Attachment
   TAG_NAME = ::T.let(nil, ::T.untyped)
 end
 
+class ActionText::Content
+  include ::ActionText::Serialization
+end
+
+class ActionText::FixtureSet
+end
+
+class ActionText::FixtureSet
+  def self.attachment(fixture_set_name, label, column_type: T.unsafe(nil)); end
+end
+
 class ActionText::TrixAttachment
   ATTRIBUTES = ::T.let(nil, ::T.untyped)
   ATTRIBUTE_TYPES = ::T.let(nil, ::T.untyped)
@@ -869,6 +928,16 @@ end
 
 module ActionView
   ENCODING_FLAG = ::T.let(nil, ::T.untyped)
+end
+
+class ActionView::AbstractRenderer
+  NO_DETAILS = ::T.let(nil, ::T.untyped)
+end
+
+module ActionView::AbstractRenderer::ObjectRendering
+  IDENTIFIER_ERROR_MESSAGE = ::T.let(nil, ::T.untyped)
+  OPTION_AS_ERROR_MESSAGE = ::T.let(nil, ::T.untyped)
+  PREFIXED_PARTIAL_NAMES = ::T.let(nil, ::T.untyped)
 end
 
 class ActionView::AbstractRenderer::RenderedTemplate
@@ -884,61 +953,61 @@ class ActionView::Base
   include ::Sprockets::Rails::Utils
   def assets_environment(); end
 
-  def assets_environment=(val); end
+  def assets_environment=(assets_environment); end
 
   def assets_environment?(); end
 
   def assets_manifest(); end
 
-  def assets_manifest=(val); end
+  def assets_manifest=(assets_manifest); end
 
   def assets_manifest?(); end
 
   def assets_precompile(); end
 
-  def assets_precompile=(val); end
+  def assets_precompile=(assets_precompile); end
 
   def assets_precompile?(); end
 
   def assets_prefix(); end
 
-  def assets_prefix=(val); end
+  def assets_prefix=(assets_prefix); end
 
   def assets_prefix?(); end
 
   def check_precompiled_asset(); end
 
-  def check_precompiled_asset=(val); end
+  def check_precompiled_asset=(check_precompiled_asset); end
 
   def check_precompiled_asset?(); end
 
   def debug_assets(); end
 
-  def debug_assets=(val); end
+  def debug_assets=(debug_assets); end
 
   def debug_assets?(); end
 
   def digest_assets(); end
 
-  def digest_assets=(val); end
+  def digest_assets=(digest_assets); end
 
   def digest_assets?(); end
 
   def precompiled_asset_checker(); end
 
-  def precompiled_asset_checker=(val); end
+  def precompiled_asset_checker=(precompiled_asset_checker); end
 
   def precompiled_asset_checker?(); end
 
   def resolve_assets_with(); end
 
-  def resolve_assets_with=(val); end
+  def resolve_assets_with=(resolve_assets_with); end
 
   def resolve_assets_with?(); end
 
   def unknown_asset_fallback(); end
 
-  def unknown_asset_fallback=(val); end
+  def unknown_asset_fallback=(unknown_asset_fallback); end
 
   def unknown_asset_fallback?(); end
 end
@@ -946,63 +1015,114 @@ end
 class ActionView::Base
   def self.assets_environment(); end
 
-  def self.assets_environment=(val); end
+  def self.assets_environment=(value); end
 
   def self.assets_environment?(); end
 
   def self.assets_manifest(); end
 
-  def self.assets_manifest=(val); end
+  def self.assets_manifest=(value); end
 
   def self.assets_manifest?(); end
 
   def self.assets_precompile(); end
 
-  def self.assets_precompile=(val); end
+  def self.assets_precompile=(value); end
 
   def self.assets_precompile?(); end
 
   def self.assets_prefix(); end
 
-  def self.assets_prefix=(val); end
+  def self.assets_prefix=(value); end
 
   def self.assets_prefix?(); end
 
   def self.check_precompiled_asset(); end
 
-  def self.check_precompiled_asset=(val); end
+  def self.check_precompiled_asset=(value); end
 
   def self.check_precompiled_asset?(); end
 
   def self.debug_assets(); end
 
-  def self.debug_assets=(val); end
+  def self.debug_assets=(value); end
 
   def self.debug_assets?(); end
 
   def self.digest_assets(); end
 
-  def self.digest_assets=(val); end
+  def self.digest_assets=(value); end
 
   def self.digest_assets?(); end
 
   def self.precompiled_asset_checker(); end
 
-  def self.precompiled_asset_checker=(val); end
+  def self.precompiled_asset_checker=(value); end
 
   def self.precompiled_asset_checker?(); end
 
   def self.resolve_assets_with(); end
 
-  def self.resolve_assets_with=(val); end
+  def self.resolve_assets_with=(value); end
 
   def self.resolve_assets_with?(); end
 
   def self.unknown_asset_fallback(); end
 
-  def self.unknown_asset_fallback=(val); end
+  def self.unknown_asset_fallback=(value); end
 
   def self.unknown_asset_fallback?(); end
+end
+
+class ActionView::CollectionRenderer
+  include ::ActionView::AbstractRenderer::ObjectRendering
+  def render_collection_derive_partial(collection, context, block); end
+
+  def render_collection_with_partial(collection, partial, context, block); end
+end
+
+class ActionView::CollectionRenderer::CollectionIterator
+  include ::Enumerable
+  def each(&blk); end
+
+  def initialize(collection); end
+
+  def length(); end
+
+  def size(); end
+end
+
+class ActionView::CollectionRenderer::CollectionIterator
+end
+
+class ActionView::CollectionRenderer::MixedCollectionIterator
+  def each_with_info(); end
+
+  def initialize(collection, paths); end
+end
+
+class ActionView::CollectionRenderer::MixedCollectionIterator
+end
+
+class ActionView::CollectionRenderer::PreloadCollectionIterator
+  def initialize(collection, path, variables, relation); end
+end
+
+class ActionView::CollectionRenderer::PreloadCollectionIterator
+end
+
+class ActionView::CollectionRenderer::SameCollectionIterator
+  def each_with_info(); end
+
+  def from_collection(collection); end
+
+  def initialize(collection, path, variables); end
+end
+
+class ActionView::CollectionRenderer::SameCollectionIterator
+end
+
+class ActionView::CollectionRenderer
 end
 
 class ActionView::DependencyTracker::ERBTracker
@@ -1016,8 +1136,16 @@ class ActionView::DependencyTracker::ERBTracker
   VARIABLE_OR_METHOD_CHAIN = ::T.let(nil, ::T.untyped)
 end
 
+module ActionView::Helpers::TagHelper
+  ARIA_PREFIXES = ::T.let(nil, ::T.untyped)
+  DATA_PREFIXES = ::T.let(nil, ::T.untyped)
+  TAG_TYPES = ::T.let(nil, ::T.untyped)
+end
+
 class ActionView::LogSubscriber
   def render_collection(event); end
+
+  def render_layout(event); end
 
   def render_partial(event); end
 
@@ -1028,6 +1156,16 @@ end
 
 module ActionView::LookupContext::Accessors
   DEFAULT_PROCS = ::T.let(nil, ::T.untyped)
+end
+
+class ActionView::ObjectRenderer
+  include ::ActionView::AbstractRenderer::ObjectRendering
+  def render_object_derive_partial(object, context, block); end
+
+  def render_object_with_partial(object, partial, context, block); end
+end
+
+class ActionView::ObjectRenderer
 end
 
 class ActionView::OutputBuffer
@@ -1058,20 +1196,9 @@ end
 class ActionView::OutputFlow
 end
 
-class ActionView::PartialRenderer
-  include ::ActiveRecord::Railties::CollectionCacheAssociationLoading
-  IDENTIFIER_ERROR_MESSAGE = ::T.let(nil, ::T.untyped)
-  OPTION_AS_ERROR_MESSAGE = ::T.let(nil, ::T.untyped)
-  PREFIXED_PARTIAL_NAMES = ::T.let(nil, ::T.untyped)
-end
-
 class ActionView::PathResolver
   DEFAULT_PATTERN = ::T.let(nil, ::T.untyped)
   EXTENSIONS = ::T.let(nil, ::T.untyped)
-end
-
-class ActionView::Railtie
-  NULL_OPTION = ::T.let(nil, ::T.untyped)
 end
 
 class ActionView::Renderer
@@ -1167,6 +1294,19 @@ class ActionView::Template::Inline
   Finalizer = ::T.let(nil, ::T.untyped)
 end
 
+class ActionView::Template::Renderable
+  def format(); end
+
+  def identifier(); end
+
+  def initialize(renderable); end
+
+  def render(context, *args); end
+end
+
+class ActionView::Template::Renderable
+end
+
 class ActionView::Template::Sources::File
   def initialize(filename); end
 end
@@ -1215,7 +1355,7 @@ end
 class ActiveJob::Base
   def self._test_adapter(); end
 
-  def self._test_adapter=(val); end
+  def self._test_adapter=(value); end
 end
 
 module ActiveJob::Callbacks
@@ -1233,6 +1373,22 @@ end
 class ActiveJob::ConfiguredJob
 end
 
+class ActiveJob::LogSubscriber
+  def discard(event); end
+
+  def enqueue(event); end
+
+  def enqueue_at(event); end
+
+  def enqueue_retry(event); end
+
+  def perform(event); end
+
+  def perform_start(event); end
+
+  def retry_stopped(event); end
+end
+
 class ActiveJob::QueueAdapters::AsyncAdapter::Scheduler
   DEFAULT_EXECUTOR_OPTIONS = ::T.let(nil, ::T.untyped)
 end
@@ -1247,6 +1403,10 @@ class ActiveJob::QueueAdapters::InlineAdapter
 end
 
 class ActiveJob::QueueAdapters::TestAdapter
+  def at(); end
+
+  def at=(at); end
+
   def enqueue(job); end
 
   def enqueue_at(job, timestamp); end
@@ -1283,6 +1443,10 @@ end
 class ActiveJob::QueueAdapters::TestAdapter
 end
 
+class ActiveJob::Serializers::TimeObjectSerializer
+  NANO_PRECISION = ::T.let(nil, ::T.untyped)
+end
+
 class ActiveJob::TestCase
   include ::ActiveJob::TestHelper
 end
@@ -1291,11 +1455,12 @@ class ActiveJob::TestCase
 end
 
 module ActiveJob::TestHelper
+  include ::ActiveSupport::Testing::Assertions
   def after_teardown(); end
 
-  def assert_enqueued_jobs(number, only: T.unsafe(nil), except: T.unsafe(nil), queue: T.unsafe(nil)); end
+  def assert_enqueued_jobs(number, only: T.unsafe(nil), except: T.unsafe(nil), queue: T.unsafe(nil), &block); end
 
-  def assert_enqueued_with(job: T.unsafe(nil), args: T.unsafe(nil), at: T.unsafe(nil), queue: T.unsafe(nil)); end
+  def assert_enqueued_with(job: T.unsafe(nil), args: T.unsafe(nil), at: T.unsafe(nil), queue: T.unsafe(nil), &block); end
 
   def assert_no_enqueued_jobs(only: T.unsafe(nil), except: T.unsafe(nil), queue: T.unsafe(nil), &block); end
 
@@ -1311,7 +1476,7 @@ module ActiveJob::TestHelper
 
   def enqueued_jobs=(arg); end
 
-  def perform_enqueued_jobs(only: T.unsafe(nil), except: T.unsafe(nil), queue: T.unsafe(nil)); end
+  def perform_enqueued_jobs(only: T.unsafe(nil), except: T.unsafe(nil), queue: T.unsafe(nil), at: T.unsafe(nil), &block); end
 
   def performed_jobs(*args, &block); end
 
@@ -1349,6 +1514,8 @@ module ActiveModel::Attributes
 
   def attributes(); end
 
+  def freeze(); end
+
   def initialize(*_); end
 end
 
@@ -1363,6 +1530,11 @@ end
 
 module ActiveModel::Attributes
   extend ::ActiveSupport::Concern
+end
+
+class ActiveModel::Error
+  CALLBACKS_OPTIONS = ::T.let(nil, ::T.untyped)
+  MESSAGE_OPTIONS = ::T.let(nil, ::T.untyped)
 end
 
 module ActiveModel::Lint
@@ -1422,29 +1594,8 @@ class ActiveModel::Validations::LengthValidator
   RESERVED_OPTIONS = ::T.let(nil, ::T.untyped)
 end
 
-class ActiveRecord::AdvisoryLockBase
-  include ::ActiveRecord::AdvisoryLockBase::GeneratedAttributeMethods
-  include ::ActiveRecord::AdvisoryLockBase::GeneratedAssociationMethods
-end
-
-module ActiveRecord::AdvisoryLockBase::GeneratedAssociationMethods
-end
-
-module ActiveRecord::AdvisoryLockBase::GeneratedAssociationMethods
-end
-
-module ActiveRecord::AdvisoryLockBase::GeneratedAttributeMethods
-end
-
-module ActiveRecord::AdvisoryLockBase::GeneratedAttributeMethods
-  extend ::Mutex_m
-end
-
-class ActiveRecord::AdvisoryLockBase
-end
-
 class ActiveRecord::Associations::AliasTracker
-  def aliased_table_for(table_name, aliased_name, type_caster); end
+  def aliased_table_for(arel_table, table_name=T.unsafe(nil)); end
 
   def aliases(); end
 
@@ -1452,7 +1603,7 @@ class ActiveRecord::Associations::AliasTracker
 end
 
 class ActiveRecord::Associations::AliasTracker
-  def self.create(connection, initial_table, joins); end
+  def self.create(connection, initial_table, joins, aliases=T.unsafe(nil)); end
 
   def self.initial_count_for(connection, name, table_joins); end
 end
@@ -1495,6 +1646,8 @@ class ActiveRecord::Associations::Association
   def remove_inverse_instance(record); end
 
   def reset(); end
+
+  def reset_negative_cache(); end
 
   def reset_scope(); end
 
@@ -1591,7 +1744,7 @@ class ActiveRecord::Associations::Builder::HasAndBelongsToMany
 end
 
 class ActiveRecord::Associations::CollectionAssociation
-  def add_to_target(record, skip_callbacks=T.unsafe(nil), &block); end
+  def add_to_target(record, skip_callbacks: T.unsafe(nil), replace: T.unsafe(nil), &block); end
 
   def build(attributes=T.unsafe(nil), &block); end
 
@@ -1624,6 +1777,8 @@ class ActiveRecord::Associations::CollectionAssociation
   def replace(other_array); end
 
   def size(); end
+
+  def target=(record); end
 
   def transaction(*args); end
 
@@ -1681,11 +1836,13 @@ class ActiveRecord::Associations::JoinDependency
 
   def base_klass(); end
 
+  def each(&block); end
+
   def initialize(base, table, associations, join_type); end
 
-  def instantiate(result_set, &block); end
+  def instantiate(result_set, strict_loading_value, &block); end
 
-  def join_constraints(joins_to_add, alias_tracker); end
+  def join_constraints(joins_to_add, alias_tracker, references); end
 
   def join_root(); end
 
@@ -1750,11 +1907,11 @@ class ActiveRecord::Associations::JoinDependency::JoinAssociation
 
   def reflection(); end
 
+  def strict_loading?(); end
+
   def table=(table); end
 
   def tables(); end
-
-  def tables=(tables); end
 end
 
 class ActiveRecord::Associations::JoinDependency::JoinAssociation
@@ -1769,6 +1926,8 @@ end
 
 class ActiveRecord::Associations::JoinDependency::JoinPart
   include ::Enumerable
+  def attribute_types(*args, &block); end
+
   def base_klass(); end
 
   def children(); end
@@ -1783,7 +1942,7 @@ class ActiveRecord::Associations::JoinDependency::JoinPart
 
   def initialize(base_klass, children); end
 
-  def instantiate(row, aliases, &block); end
+  def instantiate(row, aliases, column_types=T.unsafe(nil), &block); end
 
   def match?(other); end
 
@@ -1804,11 +1963,13 @@ class ActiveRecord::Associations::JoinDependency
 end
 
 class ActiveRecord::Associations::Preloader
+  def initialize(associate_by_default: T.unsafe(nil)); end
+
   def preload(records, associations, preload_scope=T.unsafe(nil)); end
 end
 
 class ActiveRecord::Associations::Preloader::AlreadyLoaded
-  def initialize(klass, owners, reflection, preload_scope); end
+  def initialize(klass, owners, reflection, preload_scope, associate_by_default=T.unsafe(nil)); end
 
   def preloaded_records(); end
 
@@ -1821,7 +1982,7 @@ class ActiveRecord::Associations::Preloader::AlreadyLoaded
 end
 
 class ActiveRecord::Associations::Preloader::Association
-  def initialize(klass, owners, reflection, preload_scope); end
+  def initialize(klass, owners, reflection, preload_scope, associate_by_default=T.unsafe(nil)); end
 
   def preloaded_records(); end
 
@@ -1867,6 +2028,180 @@ end
 
 module ActiveRecord::Base::GeneratedAttributeMethods
   extend ::Mutex_m
+end
+
+class ActiveRecord::Base
+  def self.__callbacks(); end
+
+  def self.__callbacks=(value); end
+
+  def self.__callbacks?(); end
+
+  def self._before_commit_callbacks(); end
+
+  def self._before_commit_callbacks=(value); end
+
+  def self._commit_callbacks(); end
+
+  def self._commit_callbacks=(value); end
+
+  def self._create_callbacks(); end
+
+  def self._create_callbacks=(value); end
+
+  def self._destroy_callbacks(); end
+
+  def self._destroy_callbacks=(value); end
+
+  def self._find_callbacks(); end
+
+  def self._find_callbacks=(value); end
+
+  def self._initialize_callbacks(); end
+
+  def self._initialize_callbacks=(value); end
+
+  def self._reflections(); end
+
+  def self._reflections=(value); end
+
+  def self._reflections?(); end
+
+  def self._rollback_callbacks(); end
+
+  def self._rollback_callbacks=(value); end
+
+  def self._save_callbacks(); end
+
+  def self._save_callbacks=(value); end
+
+  def self._touch_callbacks(); end
+
+  def self._touch_callbacks=(value); end
+
+  def self._update_callbacks(); end
+
+  def self._update_callbacks=(value); end
+
+  def self._validate_callbacks(); end
+
+  def self._validate_callbacks=(value); end
+
+  def self._validation_callbacks(); end
+
+  def self._validation_callbacks=(value); end
+
+  def self._validators(); end
+
+  def self._validators=(value); end
+
+  def self._validators?(); end
+
+  def self.after_find(*args, **options, &block); end
+
+  def self.after_initialize(*args, **options, &block); end
+
+  def self.after_touch(*args, **options, &block); end
+
+  def self.aggregate_reflections(); end
+
+  def self.aggregate_reflections=(value); end
+
+  def self.aggregate_reflections?(); end
+
+  def self.attribute_aliases(); end
+
+  def self.attribute_aliases=(value); end
+
+  def self.attribute_aliases?(); end
+
+  def self.attribute_method_matchers(); end
+
+  def self.attribute_method_matchers=(value); end
+
+  def self.attribute_method_matchers?(); end
+
+  def self.attributes_to_define_after_schema_loads(); end
+
+  def self.attributes_to_define_after_schema_loads=(value); end
+
+  def self.attributes_to_define_after_schema_loads?(); end
+
+  def self.cache_timestamp_format(); end
+
+  def self.cache_timestamp_format=(value); end
+
+  def self.cache_timestamp_format?(); end
+
+  def self.cache_versioning(); end
+
+  def self.cache_versioning=(value); end
+
+  def self.cache_versioning?(); end
+
+  def self.collection_cache_versioning(); end
+
+  def self.collection_cache_versioning=(value); end
+
+  def self.collection_cache_versioning?(); end
+
+  def self.include_root_in_json(); end
+
+  def self.include_root_in_json=(value); end
+
+  def self.include_root_in_json?(); end
+
+  def self.index_nested_attribute_errors(); end
+
+  def self.index_nested_attribute_errors=(val); end
+
+  def self.local_stored_attributes(); end
+
+  def self.local_stored_attributes=(local_stored_attributes); end
+
+  def self.lock_optimistically(); end
+
+  def self.lock_optimistically=(value); end
+
+  def self.lock_optimistically?(); end
+
+  def self.nested_attributes_options(); end
+
+  def self.nested_attributes_options=(value); end
+
+  def self.nested_attributes_options?(); end
+
+  def self.partial_writes(); end
+
+  def self.partial_writes=(value); end
+
+  def self.partial_writes?(); end
+
+  def self.record_timestamps(); end
+
+  def self.record_timestamps=(value); end
+
+  def self.record_timestamps?(); end
+
+  def self.signed_id_verifier_secret(); end
+
+  def self.signed_id_verifier_secret=(val); end
+
+  def self.skip_time_zone_conversion_for_attributes(); end
+
+  def self.skip_time_zone_conversion_for_attributes=(value); end
+
+  def self.skip_time_zone_conversion_for_attributes?(); end
+
+  def self.time_zone_aware_attributes(); end
+
+  def self.time_zone_aware_attributes=(val); end
+
+  def self.time_zone_aware_types(); end
+
+  def self.time_zone_aware_types=(value); end
+
+  def self.time_zone_aware_types?(); end
 end
 
 module ActiveRecord::Batches
@@ -1917,8 +2252,23 @@ class ActiveRecord::ConnectionAdapters::AbstractAdapter
   SIMPLE_INT = ::T.let(nil, ::T.untyped)
 end
 
+class ActiveRecord::ConnectionAdapters::LegacyPoolManager
+  def get_pool_config(_, shard); end
+
+  def pool_configs(_=T.unsafe(nil)); end
+
+  def remove_pool_config(_, shard); end
+
+  def set_pool_config(_, shard, pool_config); end
+
+  def shard_names(); end
+end
+
+class ActiveRecord::ConnectionAdapters::LegacyPoolManager
+end
+
 class ActiveRecord::ConnectionAdapters::NullTransaction
-  def add_record(record); end
+  def add_record(record, _=T.unsafe(nil)); end
 
   def closed?(); end
 
@@ -1930,11 +2280,6 @@ class ActiveRecord::ConnectionAdapters::NullTransaction
 end
 
 class ActiveRecord::ConnectionAdapters::NullTransaction
-end
-
-module ActiveRecord::ConnectionAdapters::PostgreSQL::DatabaseStatements
-  BYTEA_COLUMN_TYPE_OID = ::T.let(nil, ::T.untyped)
-  MONEY_COLUMN_TYPE_OID = ::T.let(nil, ::T.untyped)
 end
 
 class ActiveRecord::ConnectionAdapters::PostgreSQL::Name
@@ -1951,19 +2296,22 @@ end
 
 class ActiveRecord::ConnectionAdapters::PostgreSQLAdapter
   ADAPTER_NAME = ::T.let(nil, ::T.untyped)
-  CACHED_PLAN_HEURISTIC = ::T.let(nil, ::T.untyped)
   DEADLOCK_DETECTED = ::T.let(nil, ::T.untyped)
+  DUPLICATE_DATABASE = ::T.let(nil, ::T.untyped)
   FEATURE_NOT_SUPPORTED = ::T.let(nil, ::T.untyped)
   FOREIGN_KEY_VIOLATION = ::T.let(nil, ::T.untyped)
   LOCK_NOT_AVAILABLE = ::T.let(nil, ::T.untyped)
   NATIVE_DATABASE_TYPES = ::T.let(nil, ::T.untyped)
   NOT_NULL_VIOLATION = ::T.let(nil, ::T.untyped)
   NUMERIC_VALUE_OUT_OF_RANGE = ::T.let(nil, ::T.untyped)
-  OPERATION_ALIASES = ::T.let(nil, ::T.untyped)
   QUERY_CANCELED = ::T.let(nil, ::T.untyped)
   SERIALIZATION_FAILURE = ::T.let(nil, ::T.untyped)
   UNIQUE_VIOLATION = ::T.let(nil, ::T.untyped)
   VALUE_LIMIT_VIOLATION = ::T.let(nil, ::T.untyped)
+end
+
+class ActiveRecord::ConnectionAdapters::PostgreSQLAdapter::MoneyDecoder
+  TYPE = ::T.let(nil, ::T.untyped)
 end
 
 ActiveRecord::ConnectionAdapters::PostgreSQLAdapter::OID = ActiveRecord::ConnectionAdapters::PostgreSQL::OID
@@ -1984,7 +2332,7 @@ end
 class ActiveRecord::ConnectionAdapters::SavepointTransaction
   def commit(); end
 
-  def initialize(connection, savepoint_name, parent_transaction, *args, **options); end
+  def initialize(connection, savepoint_name, parent_transaction, **options); end
 
   def rollback(); end
 end
@@ -1992,14 +2340,12 @@ end
 class ActiveRecord::ConnectionAdapters::SavepointTransaction
 end
 
-ActiveRecord::ConnectionAdapters::SchemaCreation = ActiveRecord::ConnectionAdapters::AbstractAdapter::SchemaCreation
-
 class ActiveRecord::ConnectionAdapters::StatementPool
   DEFAULT_STATEMENT_LIMIT = ::T.let(nil, ::T.untyped)
 end
 
 class ActiveRecord::ConnectionAdapters::Transaction
-  def add_record(record); end
+  def add_record(record, ensure_finalize=T.unsafe(nil)); end
 
   def before_commit_records(); end
 
@@ -2011,7 +2357,7 @@ class ActiveRecord::ConnectionAdapters::Transaction
 
   def full_rollback?(); end
 
-  def initialize(connection, options, run_commit_callbacks: T.unsafe(nil)); end
+  def initialize(connection, isolation: T.unsafe(nil), joinable: T.unsafe(nil), run_commit_callbacks: T.unsafe(nil)); end
 
   def isolation_level(); end
 
@@ -2030,13 +2376,17 @@ class ActiveRecord::ConnectionAdapters::Transaction
   def savepoint_name(); end
 
   def state(); end
+
+  def written(); end
+
+  def written=(written); end
 end
 
 class ActiveRecord::ConnectionAdapters::Transaction
 end
 
 class ActiveRecord::ConnectionAdapters::TransactionManager
-  def begin_transaction(options=T.unsafe(nil)); end
+  def begin_transaction(isolation: T.unsafe(nil), joinable: T.unsafe(nil), _lazy: T.unsafe(nil)); end
 
   def commit_transaction(); end
 
@@ -2056,7 +2406,7 @@ class ActiveRecord::ConnectionAdapters::TransactionManager
 
   def rollback_transaction(transaction=T.unsafe(nil)); end
 
-  def within_new_transaction(options=T.unsafe(nil)); end
+  def within_new_transaction(isolation: T.unsafe(nil), joinable: T.unsafe(nil)); end
   NULL_TRANSACTION = ::T.let(nil, ::T.untyped)
 end
 
@@ -2132,6 +2482,10 @@ module ActiveRecord::InternalMetadata::GeneratedAttributeMethods
   extend ::Mutex_m
 end
 
+class ActiveRecord::InternalMetadata
+  def self.enabled?(); end
+end
+
 module ActiveRecord::LegacyYamlAdapter
 end
 
@@ -2156,11 +2510,13 @@ end
 class ActiveRecord::LogSubscriber
   def backtrace_cleaner(); end
 
-  def backtrace_cleaner=(val); end
+  def backtrace_cleaner=(backtrace_cleaner); end
 
   def backtrace_cleaner?(); end
 
   def sql(event); end
+
+  def strict_loading_violation(event); end
 end
 
 class ActiveRecord::Middleware::DatabaseSelector
@@ -2186,6 +2542,8 @@ class ActiveRecord::Middleware::DatabaseSelector::Resolver
 
   def read(&blk); end
 
+  def update_context(response); end
+
   def write(&blk); end
   SEND_TO_REPLICA_DELAY = ::T.let(nil, ::T.untyped)
 end
@@ -2194,6 +2552,8 @@ class ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
   def initialize(session); end
 
   def last_write_timestamp(); end
+
+  def save(response); end
 
   def session(); end
 
@@ -2219,6 +2579,8 @@ class ActiveRecord::Migration::CommandRecorder
   include ::ActiveRecord::Migration::JoinTable
   include ::ActiveRecord::Migration::CommandRecorder::StraightReversions
   def add_belongs_to(*args, &block); end
+
+  def add_check_constraint(*args, &block); end
 
   def add_column(*args, &block); end
 
@@ -2278,6 +2640,8 @@ class ActiveRecord::Migration::CommandRecorder
 
   def remove_belongs_to(*args, &block); end
 
+  def remove_check_constraint(*args, &block); end
+
   def remove_column(*args, &block); end
 
   def remove_columns(*args, &block); end
@@ -2309,9 +2673,13 @@ class ActiveRecord::Migration::CommandRecorder
 end
 
 module ActiveRecord::Migration::CommandRecorder::StraightReversions
+  def invert_add_check_constraint(args, &block); end
+
   def invert_add_column(args, &block); end
 
   def invert_add_foreign_key(args, &block); end
+
+  def invert_add_index(args, &block); end
 
   def invert_add_reference(args, &block); end
 
@@ -2331,9 +2699,13 @@ module ActiveRecord::Migration::CommandRecorder::StraightReversions
 
   def invert_execute_block(args, &block); end
 
+  def invert_remove_check_constraint(args, &block); end
+
   def invert_remove_column(args, &block); end
 
   def invert_remove_foreign_key(args, &block); end
+
+  def invert_remove_index(args, &block); end
 
   def invert_remove_reference(args, &block); end
 
@@ -2386,19 +2758,21 @@ module ActiveRecord::NullRelation
 end
 
 class ActiveRecord::PredicateBuilder
-  def build(attribute, value); end
+  def [](attr_name, value, operator=T.unsafe(nil)); end
+
+  def build(attribute, value, operator=T.unsafe(nil)); end
 
   def build_bind_attribute(column_name, value); end
 
-  def build_from_hash(attributes); end
+  def build_from_hash(attributes, &block); end
 
-  def expand_from_hash(attributes); end
+  def expand_from_hash(attributes, &block); end
 
   def initialize(table); end
 
   def register_handler(klass, handler); end
 
-  def resolve_column_aliases(*args, &block); end
+  def resolve_arel_attribute(table_name, column_name, &block); end
 end
 
 class ActiveRecord::PredicateBuilder::ArrayHandler
@@ -2426,14 +2800,7 @@ end
 class ActiveRecord::PredicateBuilder::AssociationQueryValue
 end
 
-class ActiveRecord::PredicateBuilder::BaseHandler
-  def call(attribute, value); end
-
-  def initialize(predicate_builder); end
-end
-
-class ActiveRecord::PredicateBuilder::BaseHandler
-end
+ActiveRecord::PredicateBuilder::BaseHandler = ActiveRecord::PredicateBuilder::BasicObjectHandler
 
 class ActiveRecord::PredicateBuilder::BasicObjectHandler
   def call(attribute, value); end
@@ -2492,10 +2859,9 @@ class ActiveRecord::PredicateBuilder
 end
 
 module ActiveRecord::QueryMethods
-  DEFAULT_VALUES = ::T.let(nil, ::T.untyped)
   FROZEN_EMPTY_ARRAY = ::T.let(nil, ::T.untyped)
   FROZEN_EMPTY_HASH = ::T.let(nil, ::T.untyped)
-  STRUCTURAL_OR_METHODS = ::T.let(nil, ::T.untyped)
+  STRUCTURAL_VALUE_METHODS = ::T.let(nil, ::T.untyped)
   VALID_DIRECTIONS = ::T.let(nil, ::T.untyped)
   VALID_UNSCOPING_VALUES = ::T.let(nil, ::T.untyped)
 end
@@ -2537,7 +2903,7 @@ class ActiveRecord::Result
 
   def cast_values(type_overrides=T.unsafe(nil)); end
 
-  def collect!(); end
+  def collect!(*args, &block); end
 
   def column_types(); end
 
@@ -2547,32 +2913,24 @@ class ActiveRecord::Result
 
   def empty?(); end
 
-  def first(); end
-
   def includes_column?(name); end
 
   def initialize(columns, rows, column_types=T.unsafe(nil)); end
 
-  def last(); end
+  def last(n=T.unsafe(nil)); end
 
   def length(); end
 
-  def map!(); end
+  def map!(*args, &block); end
 
   def rows(); end
 
   def to_a(); end
 
   def to_ary(); end
-
-  def to_hash(); end
 end
 
 class ActiveRecord::RuntimeRegistry
-  def connection_handler(); end
-
-  def connection_handler=(connection_handler); end
-
   def sql_runtime(); end
 
   def sql_runtime=(sql_runtime); end
@@ -2580,10 +2938,6 @@ end
 
 class ActiveRecord::RuntimeRegistry
   extend ::ActiveSupport::PerThreadRegistry
-  def self.connection_handler(); end
-
-  def self.connection_handler=(x); end
-
   def self.sql_runtime(); end
 
   def self.sql_runtime=(x); end
@@ -2628,6 +2982,10 @@ class ActiveRecord::Scoping::ScopeRegistry
   def self.value_for(*args, &block); end
 end
 
+module ActiveRecord::SecureToken
+  MINIMUM_TOKEN_LENGTH = ::T.let(nil, ::T.untyped)
+end
+
 class ActiveRecord::StatementCache
   def execute(params, connection, &block); end
 
@@ -2661,6 +3019,12 @@ class ActiveRecord::StatementCache::PartialQueryCollector
   def <<(str); end
 
   def add_bind(obj); end
+
+  def add_binds(binds); end
+
+  def preparable(); end
+
+  def preparable=(preparable); end
 
   def value(); end
 end
@@ -2698,158 +3062,36 @@ end
 class ActiveRecord::TableMetadata
   def aggregated_with?(aggregation_name); end
 
-  def arel_attribute(column_name); end
-
-  def associated_predicate_builder(table_name); end
+  def arel_table(); end
 
   def associated_table(table_name); end
 
-  def associated_with?(association_name); end
-
-  def association_foreign_key(*args, &block); end
-
-  def association_foreign_type(*args, &block); end
-
-  def association_join_foreign_key(*args, &block); end
-
-  def association_join_primary_key(*args, &block); end
+  def associated_with?(table_name); end
 
   def has_column?(column_name); end
 
-  def initialize(klass, arel_table, association=T.unsafe(nil), types=T.unsafe(nil)); end
+  def initialize(klass, arel_table, reflection=T.unsafe(nil)); end
+
+  def join_foreign_key(*args, &block); end
+
+  def join_foreign_type(*args, &block); end
+
+  def join_primary_key(*args, &block); end
 
   def polymorphic_association?(); end
 
   def predicate_builder(); end
 
+  def primary_key(); end
+
   def reflect_on_aggregation(aggregation_name); end
 
-  def resolve_column_aliases(hash); end
+  def through_association?(); end
 
   def type(column_name); end
 end
 
 class ActiveRecord::TableMetadata
-end
-
-module ActiveRecord::Tasks::DatabaseTasks
-  def cache_dump_filename(namespace); end
-
-  def charset(*arguments); end
-
-  def charset_current(environment=T.unsafe(nil), specification_name=T.unsafe(nil)); end
-
-  def check_protected_environments!(); end
-
-  def check_schema_file(filename); end
-
-  def check_target_version(); end
-
-  def collation(*arguments); end
-
-  def collation_current(environment=T.unsafe(nil), specification_name=T.unsafe(nil)); end
-
-  def create(*arguments); end
-
-  def create_all(); end
-
-  def create_current(environment=T.unsafe(nil), spec_name=T.unsafe(nil)); end
-
-  def current_config(options=T.unsafe(nil)); end
-
-  def current_config=(current_config); end
-
-  def database_configuration(); end
-
-  def database_configuration=(database_configuration); end
-
-  def db_dir(); end
-
-  def db_dir=(db_dir); end
-
-  def drop(*arguments); end
-
-  def drop_all(); end
-
-  def drop_current(environment=T.unsafe(nil)); end
-
-  def dump_filename(namespace, format=T.unsafe(nil)); end
-
-  def dump_schema(configuration, format=T.unsafe(nil), spec_name=T.unsafe(nil)); end
-
-  def dump_schema_cache(conn, filename); end
-
-  def env(); end
-
-  def env=(env); end
-
-  def fixtures_path(); end
-
-  def fixtures_path=(fixtures_path); end
-
-  def for_each(databases); end
-
-  def load_schema(configuration, format=T.unsafe(nil), file=T.unsafe(nil), environment=T.unsafe(nil), spec_name=T.unsafe(nil)); end
-
-  def load_schema_current(format=T.unsafe(nil), file=T.unsafe(nil), environment=T.unsafe(nil)); end
-
-  def load_seed(); end
-
-  def migrate(); end
-
-  def migrate_status(); end
-
-  def migrations_paths(); end
-
-  def migrations_paths=(migrations_paths); end
-
-  def purge(configuration); end
-
-  def purge_all(); end
-
-  def purge_current(environment=T.unsafe(nil)); end
-
-  def raise_for_multi_db(environment=T.unsafe(nil), command:); end
-
-  def reconstruct_from_schema(configuration, format=T.unsafe(nil), file=T.unsafe(nil), environment=T.unsafe(nil), spec_name=T.unsafe(nil)); end
-
-  def register_task(pattern, task); end
-
-  def root(); end
-
-  def root=(root); end
-
-  def schema_file(format=T.unsafe(nil)); end
-
-  def schema_file_type(format=T.unsafe(nil)); end
-
-  def schema_up_to_date?(configuration, format=T.unsafe(nil), file=T.unsafe(nil), environment=T.unsafe(nil), spec_name=T.unsafe(nil)); end
-
-  def seed_loader(); end
-
-  def seed_loader=(seed_loader); end
-
-  def setup_initial_database_yaml(); end
-
-  def spec(); end
-
-  def structure_dump(*arguments); end
-
-  def structure_load(*arguments); end
-
-  def target_version(); end
-
-  def truncate_all(environment=T.unsafe(nil)); end
-end
-
-module ActiveRecord::Tasks::DatabaseTasks
-  def self.structure_dump_flags(); end
-
-  def self.structure_dump_flags=(obj); end
-
-  def self.structure_load_flags(); end
-
-  def self.structure_load_flags=(obj); end
 end
 
 class ActiveRecord::Tasks::MySQLDatabaseTasks
@@ -2865,7 +3107,7 @@ class ActiveRecord::Tasks::MySQLDatabaseTasks
 
   def establish_connection(*args, &block); end
 
-  def initialize(configuration); end
+  def initialize(db_config); end
 
   def purge(); end
 
@@ -2876,6 +3118,7 @@ class ActiveRecord::Tasks::MySQLDatabaseTasks
 end
 
 class ActiveRecord::Tasks::MySQLDatabaseTasks
+  def self.using_database_configurations?(); end
 end
 
 class ActiveRecord::Tasks::PostgreSQLDatabaseTasks
@@ -2893,7 +3136,7 @@ class ActiveRecord::Tasks::PostgreSQLDatabaseTasks
 
   def establish_connection(*args, &block); end
 
-  def initialize(configuration); end
+  def initialize(db_config); end
 
   def purge(); end
 
@@ -2906,6 +3149,7 @@ class ActiveRecord::Tasks::PostgreSQLDatabaseTasks
 end
 
 class ActiveRecord::Tasks::PostgreSQLDatabaseTasks
+  def self.using_database_configurations?(); end
 end
 
 class ActiveRecord::Tasks::SQLiteDatabaseTasks
@@ -2919,7 +3163,7 @@ class ActiveRecord::Tasks::SQLiteDatabaseTasks
 
   def establish_connection(*args, &block); end
 
-  def initialize(configuration, root=T.unsafe(nil)); end
+  def initialize(db_config, root=T.unsafe(nil)); end
 
   def purge(); end
 
@@ -2929,6 +3173,7 @@ class ActiveRecord::Tasks::SQLiteDatabaseTasks
 end
 
 class ActiveRecord::Tasks::SQLiteDatabaseTasks
+  def self.using_database_configurations?(); end
 end
 
 module ActiveRecord::TestDatabases
@@ -2975,6 +3220,8 @@ module ActiveRecord::Transactions
   ACTIONS = ::T.let(nil, ::T.untyped)
 end
 
+ActiveRecord::Type::ImmutableString = ActiveModel::Type::ImmutableString
+
 module ActiveRecord::VERSION
   MAJOR = ::T.let(nil, ::T.untyped)
   MINOR = ::T.let(nil, ::T.untyped)
@@ -2991,6 +3238,8 @@ class ActiveStorage::LogSubscriber
   def service_download(event); end
 
   def service_exist(event); end
+
+  def service_mirror(event); end
 
   def service_streaming_download(event); end
 
@@ -3023,9 +3272,13 @@ class ActiveSupport::Cache::FileStore
   include ::ActiveSupport::Cache::Strategy::LocalCache
 end
 
+ActiveSupport::Cache::MemoryStore::DEFAULT_CODER = ActiveSupport::Cache::MemoryStore::DupCoder
+
 class ActiveSupport::Cache::NullStore
   include ::ActiveSupport::Cache::Strategy::LocalCache
 end
+
+ActiveSupport::Cache::Store::DEFAULT_CODER = Marshal
 
 module ActiveSupport::Callbacks
   CALLBACK_FILTER_TYPES = ::T.let(nil, ::T.untyped)
@@ -3073,18 +3326,30 @@ class ActiveSupport::Duration::ISO8601Parser
   TIME_TO_PART = ::T.let(nil, ::T.untyped)
 end
 
+class ActiveSupport::Duration::ISO8601Serializer
+  DATE_COMPONENTS = ::T.let(nil, ::T.untyped)
+end
+
 class ActiveSupport::EncryptedFile
   CIPHER = ::T.let(nil, ::T.untyped)
+end
+
+class ActiveSupport::EnvironmentInquirer
+  DEFAULT_ENVIRONMENTS = ::T.let(nil, ::T.untyped)
 end
 
 class ActiveSupport::ExecutionWrapper
   Null = ::T.let(nil, ::T.untyped)
 end
 
+module ActiveSupport::Inflector
+  ALLOWED_ENCODINGS_FOR_TRANSLITERATE = ::T.let(nil, ::T.untyped)
+end
+
 class ActiveSupport::LogSubscriber
   def colorize_logging(); end
 
-  def colorize_logging=(obj); end
+  def colorize_logging=(val); end
 
   def debug(progname=T.unsafe(nil), &block); end
 
@@ -3134,6 +3399,21 @@ module ActiveSupport::RangeWithFormat
   RANGE_FORMATS = ::T.let(nil, ::T.untyped)
 end
 
+class ActiveSupport::SecureCompareRotator
+  include ::ActiveSupport::SecurityUtils
+  include ::ActiveSupport::Messages::Rotator
+  def secure_compare!(other_value, on_rotation: T.unsafe(nil)); end
+end
+
+class ActiveSupport::SecureCompareRotator::InvalidMatch
+end
+
+class ActiveSupport::SecureCompareRotator::InvalidMatch
+end
+
+class ActiveSupport::SecureCompareRotator
+end
+
 class ActiveSupport::Subscriber
   def finish(name, id, payload); end
 
@@ -3157,6 +3437,7 @@ end
 class ActiveSupport::TimeWithZone
   include ::DateAndTime::Compatibility
   PRECISIONS = ::T.let(nil, ::T.untyped)
+  SECONDS_PER_DAY = ::T.let(nil, ::T.untyped)
 end
 
 class ActiveSupport::TimeZone
@@ -3283,6 +3564,27 @@ class AppendReleaseUsecase
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
+module ApplicationController::HelperMethods
+  include ::ActionController::Base::HelperMethods
+  include ::Webpacker::Helper
+  include ::ApplicationHelper
+  include ::AcceptanceHelper
+  include ::BootstrapHelper
+  include ::I18nHelper
+  include ::PbiHelper
+  include ::PblHelper
+  include ::PresentationHelper
+  include ::SblHelper
+  def current_product(*args, &block); end
+
+  def current_user(*args, &block); end
+
+  def signed_in?(*args, &block); end
+end
+
+module ApplicationController::HelperMethods
+end
+
 class ApplicationRecord
   include ::ApplicationRecord::GeneratedAttributeMethods
   include ::ApplicationRecord::GeneratedAssociationMethods
@@ -3307,14 +3609,8 @@ end
 
 Arel::Attribute = Arel::Attributes::Attribute
 
-Arel::Node = Arel::Nodes::Node
-
 class Arel::SelectManager
   STRING_OR_SYMBOL_CLASS = ::T.let(nil, ::T.untyped)
-end
-
-class Arel::Visitors::DepthFirst
-  DISPATCH = ::T.let(nil, ::T.untyped)
 end
 
 class Array
@@ -3375,6 +3671,12 @@ class Bootsnap::CompileCache::Uncompilable
 end
 
 class Bootsnap::CompileCache::Uncompilable
+end
+
+class Bootsnap::CompileCache::YAML::NoTagsVisitor
+end
+
+class Bootsnap::CompileCache::YAML::NoTagsVisitor
 end
 
 module Bootsnap::ExplicitRequire
@@ -5845,6 +6147,11 @@ class ChangeIssuePriorityUsecase
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
+class ChangeWorkPriorityUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class Class
   def json_creatable?(); end
 end
@@ -6086,6 +6393,11 @@ end
 class CodeRay::TokensProxy
 end
 
+class CompleteTaskUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 module Concurrent
   NULL = ::T.let(nil, ::T.untyped)
   NULL_LOGGER = ::T.let(nil, ::T.untyped)
@@ -6219,7 +6531,7 @@ class CreateIssueForm
   extend ::ActiveModel::Validations::HelperMethods
   def self.__callbacks(); end
 
-  def self.__callbacks=(val); end
+  def self.__callbacks=(value); end
 
   def self.__callbacks?(); end
 
@@ -6229,7 +6541,7 @@ class CreateIssueForm
 
   def self._validators(); end
 
-  def self._validators=(val); end
+  def self._validators=(value); end
 
   def self._validators?(); end
 end
@@ -6260,7 +6572,7 @@ class CreateProductForm
   extend ::ActiveModel::Validations::HelperMethods
   def self.__callbacks(); end
 
-  def self.__callbacks=(val); end
+  def self.__callbacks=(value); end
 
   def self.__callbacks?(); end
 
@@ -6270,7 +6582,7 @@ class CreateProductForm
 
   def self._validators(); end
 
-  def self._validators=(val); end
+  def self._validators=(value); end
 
   def self._validators?(); end
 end
@@ -6288,6 +6600,48 @@ end
 class CreateTeamUsecase
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+module CurrentSprint::IssuesController::HelperMethods
+  include ::ApplicationController::HelperMethods
+  include ::ActionController::Base::HelperMethods
+  include ::Webpacker::Helper
+  include ::ApplicationHelper
+  include ::AcceptanceHelper
+  include ::BootstrapHelper
+  include ::I18nHelper
+  include ::PbiHelper
+  include ::PblHelper
+  include ::PresentationHelper
+  include ::SblHelper
+  def current_team_member(*args, &block); end
+
+  def current_team_member_roles(*args, &block); end
+end
+
+module CurrentSprint::IssuesController::HelperMethods
+end
+
+module CurrentSprint::WorkPrioritiesController::HelperMethods
+  include ::ApplicationController::HelperMethods
+  include ::ActionController::Base::HelperMethods
+  include ::Webpacker::Helper
+  include ::ApplicationHelper
+  include ::AcceptanceHelper
+  include ::BootstrapHelper
+  include ::I18nHelper
+  include ::PbiHelper
+  include ::PblHelper
+  include ::PresentationHelper
+  include ::SblHelper
+  def current_product(*args, &block); end
+
+  def current_team_member(*args, &block); end
+
+  def current_team_member_roles(*args, &block); end
+end
+
+module CurrentSprint::WorkPrioritiesController::HelperMethods
 end
 
 class DRb::DRbArray
@@ -6500,9 +6854,21 @@ end
 class Dao::AssignedIssue
   include ::Dao::AssignedIssue::GeneratedAttributeMethods
   include ::Dao::AssignedIssue::GeneratedAssociationMethods
+  def autosave_associated_records_for_issue(*args); end
 end
 
 module Dao::AssignedIssue::GeneratedAssociationMethods
+  def build_issue(*args, &block); end
+
+  def create_issue(*args, &block); end
+
+  def create_issue!(*args, &block); end
+
+  def issue(); end
+
+  def issue=(value); end
+
+  def reload_issue(); end
 end
 
 module Dao::AssignedIssue::GeneratedAssociationMethods
@@ -6518,43 +6884,19 @@ end
 class Dao::Issue
   include ::Dao::Issue::GeneratedAttributeMethods
   include ::Dao::Issue::GeneratedAssociationMethods
-  def after_add_for_criteria(); end
-
-  def after_add_for_criteria=(val); end
-
-  def after_add_for_criteria?(); end
-
-  def after_remove_for_criteria(); end
-
-  def after_remove_for_criteria=(val); end
-
-  def after_remove_for_criteria?(); end
-
   def autosave_associated_records_for_criteria(*args); end
 
-  def autosave_associated_records_for_release_item(); end
-
-  def before_add_for_criteria(); end
-
-  def before_add_for_criteria=(val); end
-
-  def before_add_for_criteria?(); end
-
-  def before_remove_for_criteria(); end
-
-  def before_remove_for_criteria=(val); end
-
-  def before_remove_for_criteria?(); end
+  def autosave_associated_records_for_work(); end
 
   def validate_associated_records_for_criteria(*args); end
 end
 
 module Dao::Issue::GeneratedAssociationMethods
-  def build_release_item(*args, &block); end
+  def build_work(*args, &block); end
 
-  def create_release_item(*args, &block); end
+  def create_work(*args, &block); end
 
-  def create_release_item!(*args, &block); end
+  def create_work!(*args, &block); end
 
   def criteria(); end
 
@@ -6564,11 +6906,11 @@ module Dao::Issue::GeneratedAssociationMethods
 
   def criterion_ids=(ids); end
 
-  def release_item(); end
+  def reload_work(); end
 
-  def release_item=(value); end
+  def work(); end
 
-  def reload_release_item(); end
+  def work=(value); end
 end
 
 module Dao::Issue::GeneratedAssociationMethods
@@ -6584,59 +6926,27 @@ end
 class Dao::Issue
   def self.after_add_for_criteria(); end
 
-  def self.after_add_for_criteria=(val); end
-
-  def self.after_add_for_criteria?(); end
+  def self.after_add_for_criteria=(value); end
 
   def self.after_remove_for_criteria(); end
 
-  def self.after_remove_for_criteria=(val); end
-
-  def self.after_remove_for_criteria?(); end
+  def self.after_remove_for_criteria=(value); end
 
   def self.before_add_for_criteria(); end
 
-  def self.before_add_for_criteria=(val); end
-
-  def self.before_add_for_criteria?(); end
+  def self.before_add_for_criteria=(value); end
 
   def self.before_remove_for_criteria(); end
 
-  def self.before_remove_for_criteria=(val); end
-
-  def self.before_remove_for_criteria?(); end
+  def self.before_remove_for_criteria=(value); end
 end
 
 class Dao::Person
   include ::Dao::Person::GeneratedAttributeMethods
   include ::Dao::Person::GeneratedAssociationMethods
-  def after_add_for_team_members(); end
-
-  def after_add_for_team_members=(val); end
-
-  def after_add_for_team_members?(); end
-
-  def after_remove_for_team_members(); end
-
-  def after_remove_for_team_members=(val); end
-
-  def after_remove_for_team_members?(); end
-
   def autosave_associated_records_for_team_members(*args); end
 
   def autosave_associated_records_for_user_account(); end
-
-  def before_add_for_team_members(); end
-
-  def before_add_for_team_members=(val); end
-
-  def before_add_for_team_members?(); end
-
-  def before_remove_for_team_members(); end
-
-  def before_remove_for_team_members=(val); end
-
-  def before_remove_for_team_members?(); end
 
   def validate_associated_records_for_team_members(*args); end
 end
@@ -6676,57 +6986,25 @@ end
 class Dao::Person
   def self.after_add_for_team_members(); end
 
-  def self.after_add_for_team_members=(val); end
-
-  def self.after_add_for_team_members?(); end
+  def self.after_add_for_team_members=(value); end
 
   def self.after_remove_for_team_members(); end
 
-  def self.after_remove_for_team_members=(val); end
-
-  def self.after_remove_for_team_members?(); end
+  def self.after_remove_for_team_members=(value); end
 
   def self.before_add_for_team_members(); end
 
-  def self.before_add_for_team_members=(val); end
-
-  def self.before_add_for_team_members?(); end
+  def self.before_add_for_team_members=(value); end
 
   def self.before_remove_for_team_members(); end
 
-  def self.before_remove_for_team_members=(val); end
-
-  def self.before_remove_for_team_members?(); end
+  def self.before_remove_for_team_members=(value); end
 end
 
 class Dao::Product
   include ::Dao::Product::GeneratedAttributeMethods
   include ::Dao::Product::GeneratedAssociationMethods
-  def after_add_for_teams(); end
-
-  def after_add_for_teams=(val); end
-
-  def after_add_for_teams?(); end
-
-  def after_remove_for_teams(); end
-
-  def after_remove_for_teams=(val); end
-
-  def after_remove_for_teams?(); end
-
   def autosave_associated_records_for_teams(*args); end
-
-  def before_add_for_teams(); end
-
-  def before_add_for_teams=(val); end
-
-  def before_add_for_teams?(); end
-
-  def before_remove_for_teams(); end
-
-  def before_remove_for_teams=(val); end
-
-  def before_remove_for_teams?(); end
 
   def validate_associated_records_for_teams(*args); end
 end
@@ -6754,27 +7032,19 @@ end
 class Dao::Product
   def self.after_add_for_teams(); end
 
-  def self.after_add_for_teams=(val); end
-
-  def self.after_add_for_teams?(); end
+  def self.after_add_for_teams=(value); end
 
   def self.after_remove_for_teams(); end
 
-  def self.after_remove_for_teams=(val); end
-
-  def self.after_remove_for_teams?(); end
+  def self.after_remove_for_teams=(value); end
 
   def self.before_add_for_teams(); end
 
-  def self.before_add_for_teams=(val); end
-
-  def self.before_add_for_teams?(); end
+  def self.before_add_for_teams=(value); end
 
   def self.before_remove_for_teams(); end
 
-  def self.before_remove_for_teams=(val); end
-
-  def self.before_remove_for_teams?(); end
+  def self.before_remove_for_teams=(value); end
 end
 
 class Dao::Release
@@ -6798,31 +7068,7 @@ end
 class Dao::Sprint
   include ::Dao::Sprint::GeneratedAttributeMethods
   include ::Dao::Sprint::GeneratedAssociationMethods
-  def after_add_for_issues(); end
-
-  def after_add_for_issues=(val); end
-
-  def after_add_for_issues?(); end
-
-  def after_remove_for_issues(); end
-
-  def after_remove_for_issues=(val); end
-
-  def after_remove_for_issues?(); end
-
   def autosave_associated_records_for_issues(*args); end
-
-  def before_add_for_issues(); end
-
-  def before_add_for_issues=(val); end
-
-  def before_add_for_issues?(); end
-
-  def before_remove_for_issues(); end
-
-  def before_remove_for_issues=(val); end
-
-  def before_remove_for_issues?(); end
 
   def validate_associated_records_for_issues(*args); end
 end
@@ -6850,59 +7096,57 @@ end
 class Dao::Sprint
   def self.after_add_for_issues(); end
 
-  def self.after_add_for_issues=(val); end
-
-  def self.after_add_for_issues?(); end
+  def self.after_add_for_issues=(value); end
 
   def self.after_remove_for_issues(); end
 
-  def self.after_remove_for_issues=(val); end
-
-  def self.after_remove_for_issues?(); end
+  def self.after_remove_for_issues=(value); end
 
   def self.before_add_for_issues(); end
 
-  def self.before_add_for_issues=(val); end
-
-  def self.before_add_for_issues?(); end
+  def self.before_add_for_issues=(value); end
 
   def self.before_remove_for_issues(); end
 
-  def self.before_remove_for_issues=(val); end
+  def self.before_remove_for_issues=(value); end
+end
 
-  def self.before_remove_for_issues?(); end
+class Dao::Task
+  include ::Dao::Task::GeneratedAttributeMethods
+  include ::Dao::Task::GeneratedAssociationMethods
+  def autosave_associated_records_for_work(*args); end
+end
+
+module Dao::Task::GeneratedAssociationMethods
+  def build_work(*args, &block); end
+
+  def create_work(*args, &block); end
+
+  def create_work!(*args, &block); end
+
+  def reload_work(); end
+
+  def work(); end
+
+  def work=(value); end
+end
+
+module Dao::Task::GeneratedAssociationMethods
+end
+
+module Dao::Task::GeneratedAttributeMethods
+end
+
+module Dao::Task::GeneratedAttributeMethods
+  extend ::Mutex_m
 end
 
 class Dao::Team
   include ::Dao::Team::GeneratedAttributeMethods
   include ::Dao::Team::GeneratedAssociationMethods
-  def after_add_for_members(); end
-
-  def after_add_for_members=(val); end
-
-  def after_add_for_members?(); end
-
-  def after_remove_for_members(); end
-
-  def after_remove_for_members=(val); end
-
-  def after_remove_for_members?(); end
-
   def autosave_associated_records_for_members(*args); end
 
   def autosave_associated_records_for_product(*args); end
-
-  def before_add_for_members(); end
-
-  def before_add_for_members=(val); end
-
-  def before_add_for_members?(); end
-
-  def before_remove_for_members(); end
-
-  def before_remove_for_members=(val); end
-
-  def before_remove_for_members?(); end
 
   def validate_associated_records_for_members(*args); end
 end
@@ -6942,27 +7186,19 @@ end
 class Dao::Team
   def self.after_add_for_members(); end
 
-  def self.after_add_for_members=(val); end
-
-  def self.after_add_for_members?(); end
+  def self.after_add_for_members=(value); end
 
   def self.after_remove_for_members(); end
 
-  def self.after_remove_for_members=(val); end
-
-  def self.after_remove_for_members?(); end
+  def self.after_remove_for_members=(value); end
 
   def self.before_add_for_members(); end
 
-  def self.before_add_for_members=(val); end
-
-  def self.before_add_for_members?(); end
+  def self.before_add_for_members=(value); end
 
   def self.before_remove_for_members(); end
 
-  def self.before_remove_for_members=(val); end
-
-  def self.before_remove_for_members?(); end
+  def self.before_remove_for_members=(value); end
 end
 
 class Dao::TeamMember
@@ -7007,6 +7243,52 @@ end
 
 module Dao::TeamMember::GeneratedAttributeMethods
   extend ::Mutex_m
+end
+
+class Dao::Work
+  include ::Dao::Work::GeneratedAttributeMethods
+  include ::Dao::Work::GeneratedAssociationMethods
+  def autosave_associated_records_for_tasks(*args); end
+
+  def validate_associated_records_for_tasks(*args); end
+end
+
+module Dao::Work::GeneratedAssociationMethods
+  def task_ids(); end
+
+  def task_ids=(ids); end
+
+  def tasks(); end
+
+  def tasks=(value); end
+end
+
+module Dao::Work::GeneratedAssociationMethods
+end
+
+module Dao::Work::GeneratedAttributeMethods
+end
+
+module Dao::Work::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+class Dao::Work
+  def self.after_add_for_tasks(); end
+
+  def self.after_add_for_tasks=(value); end
+
+  def self.after_remove_for_tasks(); end
+
+  def self.after_remove_for_tasks=(value); end
+
+  def self.before_add_for_tasks(); end
+
+  def self.before_add_for_tasks=(value); end
+
+  def self.before_remove_for_tasks(); end
+
+  def self.before_remove_for_tasks=(value); end
 end
 
 class Date::Infinity
@@ -7138,11 +7420,21 @@ class Dir
   def self.exists?(_); end
 end
 
+class DissatisfyAcceptanceCriterionUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class DomainObjectArgumentError
   DEFAULT_I18N_SCOPE = ::T.let(nil, ::T.untyped)
 end
 
 class DropIssueUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class DropTaskUsecase
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
 end
@@ -7179,8 +7471,6 @@ end
 
 module Enumerable
   include ::ActiveSupport::ToJsonWithActiveSupportEncoder
-  def chain(*_); end
-
   def sum(identity=T.unsafe(nil), &block); end
 end
 
@@ -7705,84 +7995,8 @@ class Faraday::Adapter
   TIMEOUT_KEYS = ::T.let(nil, ::T.untyped)
 end
 
-class Faraday::Adapter::EMHttp
-  include ::Faraday::Adapter::EMHttp::Options
-  def create_request(env); end
-
-  def error_message(client); end
-
-  def parallel?(env); end
-
-  def perform_request(env); end
-
-  def perform_single_request(env); end
-
-  def raise_error(msg); end
-
-  def timeout_message?(msg); end
-end
-
-class Faraday::Adapter::EMHttp::Manager
-  def add(&block); end
-
-  def check_finished(); end
-
-  def perform_request(); end
-
-  def reset(); end
-
-  def run(); end
-
-  def running?(); end
-end
-
-class Faraday::Adapter::EMHttp::Manager
-end
-
-module Faraday::Adapter::EMHttp::Options
-  def configure_compression(options, env); end
-
-  def configure_proxy(options, env); end
-
-  def configure_socket(options, env); end
-
-  def configure_ssl(options, env); end
-
-  def configure_timeout(options, env); end
-
-  def connection_config(env); end
-
-  def read_body(env); end
-
-  def request_config(env); end
-
-  def request_options(env); end
-end
-
-module Faraday::Adapter::EMHttp::Options
-end
-
-class Faraday::Adapter::EMHttp
-  def self.setup_parallel_manager(_options=T.unsafe(nil)); end
-end
-
-class Faraday::Adapter::EMSynchrony
-  include ::Faraday::Adapter::EMHttp::Options
-  def create_request(env); end
-end
-
-class Faraday::Adapter::EMSynchrony
-  def self.setup_parallel_manager(_options=T.unsafe(nil)); end
-end
-
 class Faraday::Adapter::Excon
-  def build_connection(env); end
-
-  def read_body(env); end
   OPTS_KEYS = ::T.let(nil, ::T.untyped)
-end
-
-class Faraday::Adapter::Excon
 end
 
 class Faraday::Adapter::HTTPClient
@@ -7812,9 +8026,6 @@ end
 
 class Faraday::Adapter::NetHttpPersistent
   SSL_CONFIGURATIONS = ::T.let(nil, ::T.untyped)
-end
-
-class Faraday::Adapter::NetHttpPersistent
 end
 
 class Faraday::Adapter::Patron
@@ -7917,6 +8128,14 @@ module Faraday::DecodeMethods
   SUBKEYS_REGEX = ::T.let(nil, ::T.untyped)
 end
 
+module Faraday::EmHttp
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module Faraday::EmSynchrony
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
 class Faraday::Env
   ContentLength = ::T.let(nil, ::T.untyped)
   MethodsWithBodies = ::T.let(nil, ::T.untyped)
@@ -7924,9 +8143,17 @@ class Faraday::Env
   SuccessfulStatuses = ::T.let(nil, ::T.untyped)
 end
 
+module Faraday::Excon
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
 Faraday::FilePart = UploadIO
 
 module Faraday::NetHttp
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module Faraday::NetHttpPersistent
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
@@ -8020,6 +8247,28 @@ end
 
 class Faraday::Utils::Headers
   KeyMap = ::T.let(nil, ::T.untyped)
+end
+
+module FeatureEstimationsController::HelperMethods
+  include ::ApplicationController::HelperMethods
+  include ::ActionController::Base::HelperMethods
+  include ::Webpacker::Helper
+  include ::ApplicationHelper
+  include ::AcceptanceHelper
+  include ::BootstrapHelper
+  include ::I18nHelper
+  include ::PbiHelper
+  include ::PblHelper
+  include ::PresentationHelper
+  include ::SblHelper
+  def current_product(*args, &block); end
+
+  def current_team_member(*args, &block); end
+
+  def current_team_member_roles(*args, &block); end
+end
+
+module FeatureEstimationsController::HelperMethods
 end
 
 class Fiber
@@ -8740,7 +8989,7 @@ class Hash
 end
 
 class Hash
-  def self.from_xml(xml, disallowed_types=T.unsafe(nil)); end
+  def self.try_convert(_); end
 end
 
 module Hashie
@@ -9554,13 +9803,13 @@ class Integer
 end
 
 class Issue::AcceptanceCriteria
-  extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
+  extend ::T::Private::Methods::MethodHooks
 end
 
 class Issue::AcceptanceCriterion
-  extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
+  extend ::T::Private::Methods::MethodHooks
 end
 
 class Issue::Description
@@ -9589,6 +9838,10 @@ module Issue::Status
   extend ::T::Private::Abstract::Hooks
   extend ::T::InterfaceWrapper::Helpers
   extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class Issue::Statuses::Accepted
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
@@ -9636,6 +9889,30 @@ class IssueRepository::AR
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
+module IssuesController::HelperMethods
+  include ::ApplicationController::HelperMethods
+  include ::ActionController::Base::HelperMethods
+  include ::Webpacker::Helper
+  include ::ApplicationHelper
+  include ::AcceptanceHelper
+  include ::BootstrapHelper
+  include ::I18nHelper
+  include ::PbiHelper
+  include ::PblHelper
+  include ::PresentationHelper
+  include ::SblHelper
+  def current_product(*args, &block); end
+
+  def current_product_id(*args, &block); end
+
+  def current_team_member(*args, &block); end
+
+  def current_team_member_roles(*args, &block); end
+end
+
+module IssuesController::HelperMethods
+end
+
 class JSON::Ext::Generator::State
   def self.from_state(_); end
 end
@@ -9650,6 +9927,10 @@ JSON::State = JSON::Ext::Generator::State
 
 JSON::UnparserError = JSON::GeneratorError
 
+module JWT::Algos
+  ALGOS = ::T.let(nil, ::T.untyped)
+end
+
 module JWT::Algos::Ecdsa
   NAMED_CURVES = ::T.let(nil, ::T.untyped)
   SUPPORTED = ::T.let(nil, ::T.untyped)
@@ -9660,6 +9941,10 @@ module JWT::Algos::Eddsa
 end
 
 module JWT::Algos::Hmac
+  SUPPORTED = ::T.let(nil, ::T.untyped)
+end
+
+module JWT::Algos::None
   SUPPORTED = ::T.let(nil, ::T.untyped)
 end
 
@@ -9676,7 +9961,7 @@ module JWT::Algos::Unsupported
 end
 
 class JWT::ClaimsValidator
-  INTEGER_CLAIMS = ::T.let(nil, ::T.untyped)
+  NUMERIC_CLAIMS = ::T.let(nil, ::T.untyped)
 end
 
 module JWT::DefaultOptions
@@ -9688,17 +9973,22 @@ class JWT::Encode
   ALG_NONE = ::T.let(nil, ::T.untyped)
 end
 
-module JWT::JWK
-  MAPPINGS = ::T.let(nil, ::T.untyped)
+class JWT::JWK::EC
+  BINARY = ::T.let(nil, ::T.untyped)
+  KTY = ::T.let(nil, ::T.untyped)
+  KTYS = ::T.let(nil, ::T.untyped)
+end
+
+class JWT::JWK::HMAC
+  KTY = ::T.let(nil, ::T.untyped)
+  KTYS = ::T.let(nil, ::T.untyped)
 end
 
 class JWT::JWK::RSA
   BINARY = ::T.let(nil, ::T.untyped)
   KTY = ::T.let(nil, ::T.untyped)
-end
-
-module JWT::Signature
-  ALGOS = ::T.let(nil, ::T.untyped)
+  KTYS = ::T.let(nil, ::T.untyped)
+  RSA_KEY_ELEMENTS = ::T.let(nil, ::T.untyped)
 end
 
 class JWT::Verify
@@ -9716,6 +10006,8 @@ module Jbuilder::DependencyTrackerMethods
 end
 
 module Kernel
+  include ::ActiveSupport::ForkTracker::CoreExtPrivate
+  include ::ActiveSupport::ForkTracker::CoreExt
   def itself(); end
 
   def object_id(); end
@@ -9731,6 +10023,8 @@ module Kernel
   def self.at_exit(); end
 
   def self.autoload(_, _1); end
+
+  def self.fork(); end
 end
 
 class KeyError
@@ -10252,6 +10546,9 @@ end
 class Mail::POP3
 end
 
+class Mail::PartsList
+end
+
 class Mail::PhraseList
   def initialize(string); end
 
@@ -10414,6 +10711,24 @@ module Marshal
   extend ::ActiveSupport::MarshalWithAutoloading
 end
 
+module MembersController::HelperMethods
+  include ::ApplicationController::HelperMethods
+  include ::ActionController::Base::HelperMethods
+  include ::Webpacker::Helper
+  include ::ApplicationHelper
+  include ::AcceptanceHelper
+  include ::BootstrapHelper
+  include ::I18nHelper
+  include ::PbiHelper
+  include ::PblHelper
+  include ::PresentationHelper
+  include ::SblHelper
+  def available_team_roles(*args, &block); end
+end
+
+module MembersController::HelperMethods
+end
+
 module MessagePack
   DEFAULT_EMPTY_PARAMS = ::T.let(nil, ::T.untyped)
 end
@@ -10490,12 +10805,22 @@ class Minitest::Unit
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
+class ModifyAcceptanceCriterionUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class ModifyIssueUsecase
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 class ModifyReleaseDescriptionUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class ModifyTaskUsecase
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
 end
@@ -10629,8 +10954,6 @@ end
 class Net::HTTPAlreadyReported
 end
 
-Net::HTTPClientError::EXCEPTION_TYPE = Net::HTTPServerException
-
 Net::HTTPClientErrorCode = Net::HTTPClientError
 
 class Net::HTTPEarlyHints
@@ -10696,8 +11019,6 @@ end
 class Net::HTTPRangeNotSatisfiable
 end
 
-Net::HTTPRedirection::EXCEPTION_TYPE = Net::HTTPRetriableError
-
 Net::HTTPRedirectionCode = Net::HTTPRedirection
 
 Net::HTTPRequestURITooLarge = Net::HTTPURITooLong
@@ -10706,15 +11027,17 @@ Net::HTTPResponceReceiver = Net::HTTPResponse
 
 Net::HTTPRetriableCode = Net::HTTPRedirection
 
-Net::HTTPServerError::EXCEPTION_TYPE = Net::HTTPFatalError
-
 Net::HTTPServerErrorCode = Net::HTTPServerError
 
 Net::HTTPSession = Net::HTTP
 
-Net::HTTPSuccess::EXCEPTION_TYPE = Net::HTTPError
+class Net::HTTPSuccess
+end
 
-Net::HTTPSuccessCode = Net::HTTPSuccess
+Net::HTTPSuccessCode::EXCEPTION_TYPE = Net::HTTPError
+
+class Net::HTTPSuccess
+end
 
 class Net::HTTPURITooLong
   HAS_BODY = ::T.let(nil, ::T.untyped)
@@ -10950,6 +11273,7 @@ module Nokogiri
   LIBXML_COMPILED_VERSION = ::T.let(nil, ::T.untyped)
   LIBXML_ICONV_ENABLED = ::T.let(nil, ::T.untyped)
   LIBXML_LOADED_VERSION = ::T.let(nil, ::T.untyped)
+  LIBXML_MEMORY_MANAGEMENT = ::T.let(nil, ::T.untyped)
   LIBXSLT_COMPILED_VERSION = ::T.let(nil, ::T.untyped)
   LIBXSLT_LOADED_VERSION = ::T.let(nil, ::T.untyped)
   LIBXSLT_PATCHES = ::T.let(nil, ::T.untyped)
@@ -11233,6 +11557,8 @@ class Object
   include ::PP::ObjectMixin
   include ::ActiveSupport::ToJsonWithActiveSupportEncoder
   include ::ActiveSupport::Dependencies::ZeitwerkIntegration::RequireDependency
+  include ::ActiveSupport::ForkTracker::CoreExtPrivate
+  include ::ActiveSupport::ForkTracker::CoreExt
   def to_yaml(options=T.unsafe(nil)); end
   ARGF = ::T.let(nil, ::T.untyped)
   ARGV = ::T.let(nil, ::T.untyped)
@@ -13467,9 +13793,36 @@ class PlanRepository::AR
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
+class PlanTaskUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class PlannedIssueQuery
   extend ::T::Private::Methods::SingletonMethodHooks
   extend ::T::Private::Methods::MethodHooks
+end
+
+module PlansController::HelperMethods
+  include ::ApplicationController::HelperMethods
+  include ::ActionController::Base::HelperMethods
+  include ::Webpacker::Helper
+  include ::ApplicationHelper
+  include ::AcceptanceHelper
+  include ::BootstrapHelper
+  include ::I18nHelper
+  include ::PbiHelper
+  include ::PblHelper
+  include ::PresentationHelper
+  include ::SblHelper
+  def current_product(*args, &block); end
+
+  def current_team_member(*args, &block); end
+
+  def current_team_member_roles(*args, &block); end
+end
+
+module PlansController::HelperMethods
 end
 
 class Proc
@@ -13478,6 +13831,10 @@ class Proc
   def >>(_); end
 
   def clone(); end
+end
+
+module Process
+  def self.fork(); end
 end
 
 class Product::Product
@@ -13500,8 +13857,50 @@ class ProductBacklogQuery::ReleaseStruct
   def self.inherited(s); end
 end
 
+module ProductBacklogsController::HelperMethods
+  include ::ApplicationController::HelperMethods
+  include ::ActionController::Base::HelperMethods
+  include ::Webpacker::Helper
+  include ::ApplicationHelper
+  include ::AcceptanceHelper
+  include ::BootstrapHelper
+  include ::I18nHelper
+  include ::PbiHelper
+  include ::PblHelper
+  include ::PresentationHelper
+  include ::SblHelper
+  def current_product(*args, &block); end
+
+  def current_product_id(*args, &block); end
+
+  def current_team_member(*args, &block); end
+
+  def current_team_member_roles(*args, &block); end
+end
+
+module ProductBacklogsController::HelperMethods
+end
+
 module ProductRepository::AR
   extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+module ProductsController::HelperMethods
+  include ::ApplicationController::HelperMethods
+  include ::ActionController::Base::HelperMethods
+  include ::Webpacker::Helper
+  include ::ApplicationHelper
+  include ::AcceptanceHelper
+  include ::BootstrapHelper
+  include ::I18nHelper
+  include ::PbiHelper
+  include ::PblHelper
+  include ::PresentationHelper
+  include ::SblHelper
+  def all_team_roles(*args, &block); end
+end
+
+module ProductsController::HelperMethods
 end
 
 class Pry
@@ -13514,6 +13913,8 @@ class Pry
 end
 
 class Pry::BasicObject
+  include ::ActiveSupport::ForkTracker::CoreExtPrivate
+  include ::ActiveSupport::ForkTracker::CoreExt
   ENV = ::T.let(nil, ::T.untyped)
 end
 
@@ -15285,6 +15686,22 @@ Rack::Utils::ParameterTypeError = Rack::QueryParser::ParameterTypeError
 class Rails::ApplicationController
 end
 
+module Rails::ApplicationController::HelperMethods
+  include ::ActionController::Base::HelperMethods
+  include ::Webpacker::Helper
+  include ::AcceptanceHelper
+  include ::ApplicationHelper
+  include ::BootstrapHelper
+  include ::I18nHelper
+  include ::PbiHelper
+  include ::PblHelper
+  include ::PresentationHelper
+  include ::SblHelper
+end
+
+module Rails::ApplicationController::HelperMethods
+end
+
 class Rails::ApplicationController
 end
 
@@ -15294,10 +15711,7 @@ end
 
 class Rails::BacktraceCleaner
   APP_DIRS_PATTERN = ::T.let(nil, ::T.untyped)
-  DOT_SLASH = ::T.let(nil, ::T.untyped)
-  EMPTY_STRING = ::T.let(nil, ::T.untyped)
   RENDER_TEMPLATE_PATTERN = ::T.let(nil, ::T.untyped)
-  SLASH = ::T.let(nil, ::T.untyped)
 end
 
 module Rails::Html
@@ -15313,13 +15727,13 @@ Rails::Html::WhiteListSanitizer = Rails::Html::SafeListSanitizer
 module Rails::Info
   def properties(); end
 
-  def properties=(obj); end
+  def properties=(val); end
 end
 
 module Rails::Info
   def self.properties(); end
 
-  def self.properties=(obj); end
+  def self.properties=(val); end
 
   def self.property(name, value=T.unsafe(nil)); end
 
@@ -15327,8 +15741,6 @@ module Rails::Info
 end
 
 class Rails::InfoController
-  def _layout_from_proc(); end
-
   def index(); end
 
   def properties(); end
@@ -15343,6 +15755,26 @@ class Rails::MailersController
   def index(); end
 
   def preview(); end
+end
+
+module Rails::MailersController::HelperMethods
+  include ::Rails::ApplicationController::HelperMethods
+  include ::ActionController::Base::HelperMethods
+  include ::Webpacker::Helper
+  include ::AcceptanceHelper
+  include ::ApplicationHelper
+  include ::BootstrapHelper
+  include ::I18nHelper
+  include ::PbiHelper
+  include ::PblHelper
+  include ::PresentationHelper
+  include ::SblHelper
+  def locale_query(*args, &block); end
+
+  def part_query(*args, &block); end
+end
+
+module Rails::MailersController::HelperMethods
 end
 
 class Rails::MailersController
@@ -15438,7 +15870,7 @@ class ReleaseForm
   extend ::ActiveModel::Validations::HelperMethods
   def self.__callbacks(); end
 
-  def self.__callbacks=(val); end
+  def self.__callbacks=(value); end
 
   def self.__callbacks?(); end
 
@@ -15448,9 +15880,33 @@ class ReleaseForm
 
   def self._validators(); end
 
-  def self._validators=(val); end
+  def self._validators=(value); end
 
   def self._validators?(); end
+end
+
+module ReleasesController::HelperMethods
+  include ::ApplicationController::HelperMethods
+  include ::ActionController::Base::HelperMethods
+  include ::Webpacker::Helper
+  include ::ApplicationHelper
+  include ::AcceptanceHelper
+  include ::BootstrapHelper
+  include ::I18nHelper
+  include ::PbiHelper
+  include ::PblHelper
+  include ::PresentationHelper
+  include ::SblHelper
+  def current_product(*args, &block); end
+
+  def current_product_id(*args, &block); end
+
+  def current_team_member(*args, &block); end
+
+  def current_team_member_roles(*args, &block); end
+end
+
+module ReleasesController::HelperMethods
 end
 
 class RemoveAcceptanceCriterionUsecase
@@ -15464,6 +15920,16 @@ class RemoveReleaseUsecase
 end
 
 class RescheduleIssueUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class ResumeTaskUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class RevertIssueFromSprintUsecase
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
 end
@@ -16492,11 +16958,78 @@ module SassC::Util
   RUBY_VERSION_COMPONENTS = ::T.let(nil, ::T.untyped)
 end
 
+module SatisfiedAcceptanceCriteriaController::HelperMethods
+  include ::ApplicationController::HelperMethods
+  include ::ActionController::Base::HelperMethods
+  include ::Webpacker::Helper
+  include ::ApplicationHelper
+  include ::AcceptanceHelper
+  include ::BootstrapHelper
+  include ::I18nHelper
+  include ::PbiHelper
+  include ::PblHelper
+  include ::PresentationHelper
+  include ::SblHelper
+  def current_team_member(*args, &block); end
+
+  def current_team_member_roles(*args, &block); end
+end
+
+module SatisfiedAcceptanceCriteriaController::HelperMethods
+end
+
+class SatisfyAcceptanceCriterionUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 ScanError = StringScanner::Error
 
 module SecureRandom
   BASE36_ALPHABET = ::T.let(nil, ::T.untyped)
   BASE58_ALPHABET = ::T.let(nil, ::T.untyped)
+end
+
+module SemanticRange
+  ANY = ::T.let(nil, ::T.untyped)
+  BUILD = ::T.let(nil, ::T.untyped)
+  BUILDIDENTIFIER = ::T.let(nil, ::T.untyped)
+  CARET = ::T.let(nil, ::T.untyped)
+  CARETLOOSE = ::T.let(nil, ::T.untyped)
+  CARETTRIM = ::T.let(nil, ::T.untyped)
+  COMPARATOR = ::T.let(nil, ::T.untyped)
+  COMPARATORLOOSE = ::T.let(nil, ::T.untyped)
+  COMPARATORTRIM = ::T.let(nil, ::T.untyped)
+  FULL = ::T.let(nil, ::T.untyped)
+  FULLPLAIN = ::T.let(nil, ::T.untyped)
+  GTLT = ::T.let(nil, ::T.untyped)
+  HYPHENRANGE = ::T.let(nil, ::T.untyped)
+  HYPHENRANGELOOSE = ::T.let(nil, ::T.untyped)
+  LONECARET = ::T.let(nil, ::T.untyped)
+  LONETILDE = ::T.let(nil, ::T.untyped)
+  LOOSE = ::T.let(nil, ::T.untyped)
+  LOOSEPLAIN = ::T.let(nil, ::T.untyped)
+  MAINVERSION = ::T.let(nil, ::T.untyped)
+  MAINVERSIONLOOSE = ::T.let(nil, ::T.untyped)
+  MAX_LENGTH = ::T.let(nil, ::T.untyped)
+  NONNUMERICIDENTIFIER = ::T.let(nil, ::T.untyped)
+  NUMERICIDENTIFIER = ::T.let(nil, ::T.untyped)
+  NUMERICIDENTIFIERLOOSE = ::T.let(nil, ::T.untyped)
+  PRERELEASE = ::T.let(nil, ::T.untyped)
+  PRERELEASEIDENTIFIER = ::T.let(nil, ::T.untyped)
+  PRERELEASEIDENTIFIERLOOSE = ::T.let(nil, ::T.untyped)
+  PRERELEASELOOSE = ::T.let(nil, ::T.untyped)
+  STAR = ::T.let(nil, ::T.untyped)
+  TILDE = ::T.let(nil, ::T.untyped)
+  TILDELOOSE = ::T.let(nil, ::T.untyped)
+  TILDETRIM = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+  XRANGE = ::T.let(nil, ::T.untyped)
+  XRANGEIDENTIFIER = ::T.let(nil, ::T.untyped)
+  XRANGEIDENTIFIERLOOSE = ::T.let(nil, ::T.untyped)
+  XRANGELOOSE = ::T.let(nil, ::T.untyped)
+  XRANGEPLAIN = ::T.let(nil, ::T.untyped)
+  XRANGEPLAINLOOSE = ::T.let(nil, ::T.untyped)
 end
 
 class SessionsController
@@ -16746,6 +17279,16 @@ class SortedSet
   def self.setup(); end
 end
 
+class Sprint::AssignIssue
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class Sprint::RevertIssue
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class Sprint::Sprint
   extend ::T::Private::Methods::SingletonMethodHooks
   extend ::T::Private::Methods::MethodHooks
@@ -16758,8 +17301,58 @@ module Sprint::SprintRepository
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
+class SprintBacklogQuery::SprintBacklogStruct
+  def self.inherited(s); end
+end
+
+module SprintBacklogsController::HelperMethods
+  include ::ApplicationController::HelperMethods
+  include ::ActionController::Base::HelperMethods
+  include ::Webpacker::Helper
+  include ::ApplicationHelper
+  include ::AcceptanceHelper
+  include ::BootstrapHelper
+  include ::I18nHelper
+  include ::PbiHelper
+  include ::PblHelper
+  include ::PresentationHelper
+  include ::SblHelper
+  def current_product(*args, &block); end
+
+  def current_sprint(*args, &block); end
+
+  def current_team_member(*args, &block); end
+
+  def current_team_member_roles(*args, &block); end
+end
+
+module SprintBacklogsController::HelperMethods
+end
+
 class SprintRepository::AR
   extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+module SprintsController::HelperMethods
+  include ::ApplicationController::HelperMethods
+  include ::ActionController::Base::HelperMethods
+  include ::Webpacker::Helper
+  include ::ApplicationHelper
+  include ::AcceptanceHelper
+  include ::BootstrapHelper
+  include ::I18nHelper
+  include ::PbiHelper
+  include ::PblHelper
+  include ::PresentationHelper
+  include ::SblHelper
+  def current_product(*args, &block); end
+
+  def current_team_member(*args, &block); end
+
+  def current_team_member_roles(*args, &block); end
+end
+
+module SprintsController::HelperMethods
 end
 
 module Sprockets
@@ -16998,6 +17591,11 @@ class StartSprintUsecase
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
+class StartTaskUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class String
   include ::JSON::Ext::Generator::GeneratorMethods::String
   def parse_csv(**options); end
@@ -17027,17 +17625,58 @@ Struct::Passwd = Etc::Passwd
 
 Struct::Tms = Process::Tms
 
+class SuspendTaskUsecase
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class Symbol
   def self.from_msgpack_ext(data); end
 end
 
-class TZInfo::JulianDayOfYearTransitionRule
-  LEAP = ::T.let(nil, ::T.untyped)
-  YEAR = ::T.let(nil, ::T.untyped)
+module TZInfo
+  VERSION = ::T.let(nil, ::T.untyped)
 end
 
-class TZInfo::ZoneinfoTimezoneInfo
-  GENERATE_UP_TO = ::T.let(nil, ::T.untyped)
+class TaskForm
+  def __callbacks(); end
+
+  def __callbacks?(); end
+
+  def _run_validate_callbacks(&block); end
+
+  def _validate_callbacks(); end
+
+  def _validators(); end
+
+  def _validators?(); end
+
+  def model_name(*args, &block); end
+
+  def validation_context(); end
+end
+
+class TaskForm
+  extend ::ActiveModel::Callbacks
+  extend ::ActiveSupport::DescendantsTracker
+  extend ::ActiveModel::Translation
+  extend ::ActiveModel::Naming
+  extend ::ActiveModel::Validations::HelperMethods
+  def self.__callbacks(); end
+
+  def self.__callbacks=(value); end
+
+  def self.__callbacks?(); end
+
+  def self._validate_callbacks(); end
+
+  def self._validate_callbacks=(value); end
+
+  def self._validators(); end
+
+  def self._validators=(value); end
+
+  def self._validators?(); end
 end
 
 class Team::Member
@@ -17088,7 +17727,7 @@ class TeamForm
   extend ::ActiveModel::Validations::HelperMethods
   def self.__callbacks(); end
 
-  def self.__callbacks=(val); end
+  def self.__callbacks=(value); end
 
   def self.__callbacks?(); end
 
@@ -17098,7 +17737,7 @@ class TeamForm
 
   def self._validators(); end
 
-  def self._validators=(val); end
+  def self._validators=(value); end
 
   def self._validators?(); end
 end
@@ -17133,7 +17772,7 @@ class TeamMemberForm
   extend ::ActiveModel::Validations::HelperMethods
   def self.__callbacks(); end
 
-  def self.__callbacks=(val); end
+  def self.__callbacks=(value); end
 
   def self.__callbacks?(); end
 
@@ -17143,13 +17782,31 @@ class TeamMemberForm
 
   def self._validators(); end
 
-  def self._validators=(val); end
+  def self._validators=(value); end
 
   def self._validators?(); end
 end
 
 module TeamRepository::AR
   extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+module TeamsController::HelperMethods
+  include ::ApplicationController::HelperMethods
+  include ::ActionController::Base::HelperMethods
+  include ::Webpacker::Helper
+  include ::ApplicationHelper
+  include ::AcceptanceHelper
+  include ::BootstrapHelper
+  include ::I18nHelper
+  include ::PbiHelper
+  include ::PblHelper
+  include ::PresentationHelper
+  include ::SblHelper
+  def current_product(*args, &block); end
+end
+
+module TeamsController::HelperMethods
 end
 
 class Tempfile
@@ -17165,263 +17822,6 @@ class Tempfile::Remover
 end
 
 class Tempfile::Remover
-end
-
-module ThreadSafe
-  NULL = ::T.let(nil, ::T.untyped)
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-ThreadSafe::Array = Array
-
-class ThreadSafe::AtomicReferenceCacheBackend
-  def [](key); end
-
-  def []=(key, value); end
-
-  def clear(); end
-
-  def compute(key); end
-
-  def compute_if_absent(key); end
-
-  def compute_if_present(key); end
-
-  def delete(key); end
-
-  def delete_pair(key, value); end
-
-  def each_pair(); end
-
-  def empty?(); end
-
-  def get_and_set(key, value); end
-
-  def get_or_default(key, else_value=T.unsafe(nil)); end
-
-  def initialize(options=T.unsafe(nil)); end
-
-  def key?(key); end
-
-  def merge_pair(key, value); end
-
-  def replace_if_exists(key, new_value); end
-
-  def replace_pair(key, old_value, new_value); end
-
-  def size(); end
-  DEFAULT_CAPACITY = ::T.let(nil, ::T.untyped)
-  HASH_BITS = ::T.let(nil, ::T.untyped)
-  LOCKED = ::T.let(nil, ::T.untyped)
-  MAX_CAPACITY = ::T.let(nil, ::T.untyped)
-  MOVED = ::T.let(nil, ::T.untyped)
-  NOW_RESIZING = ::T.let(nil, ::T.untyped)
-  TRANSFER_BUFFER_SIZE = ::T.let(nil, ::T.untyped)
-  WAITING = ::T.let(nil, ::T.untyped)
-end
-
-class ThreadSafe::AtomicReferenceCacheBackend::Node
-  include ::ThreadSafe::Util::CheapLockable
-  def initialize(hash, key, value, next_node=T.unsafe(nil)); end
-
-  def key(); end
-
-  def key?(key); end
-
-  def locked?(); end
-
-  def matches?(key, hash); end
-
-  def pure_hash(); end
-
-  def try_await_lock(table, i); end
-
-  def try_lock_via_hash(node_hash=T.unsafe(nil)); end
-
-  def unlock_via_hash(locked_hash, node_hash); end
-  HASH_BITS = ::T.let(nil, ::T.untyped)
-  LOCKED = ::T.let(nil, ::T.untyped)
-  MOVED = ::T.let(nil, ::T.untyped)
-  SPIN_LOCK_ATTEMPTS = ::T.let(nil, ::T.untyped)
-  WAITING = ::T.let(nil, ::T.untyped)
-end
-
-class ThreadSafe::AtomicReferenceCacheBackend::Node
-  extend ::ThreadSafe::Util::Volatile
-  def self.locked_hash?(hash); end
-end
-
-class ThreadSafe::AtomicReferenceCacheBackend::Table
-  def cas_new_node(i, hash, key, value); end
-
-  def delete_node_at(i, node, predecessor_node); end
-
-  def try_lock_via_hash(i, node, node_hash); end
-
-  def try_to_cas_in_computed(i, hash, key); end
-end
-
-class ThreadSafe::AtomicReferenceCacheBackend::Table
-end
-
-class ThreadSafe::AtomicReferenceCacheBackend
-  extend ::ThreadSafe::Util::Volatile
-end
-
-ThreadSafe::ConcurrentCacheBackend = ThreadSafe::MriCacheBackend
-
-ThreadSafe::Hash = Hash
-
-class ThreadSafe::MriCacheBackend
-  WRITE_LOCK = ::T.let(nil, ::T.untyped)
-end
-
-class ThreadSafe::SynchronizedCacheBackend
-  include ::Mutex_m
-  def lock(); end
-
-  def locked?(); end
-
-  def synchronize(&block); end
-
-  def try_lock(); end
-
-  def unlock(); end
-end
-
-class ThreadSafe::SynchronizedCacheBackend
-end
-
-module ThreadSafe::Util
-  CPU_COUNT = ::T.let(nil, ::T.untyped)
-  FIXNUM_BIT_SIZE = ::T.let(nil, ::T.untyped)
-  MAX_INT = ::T.let(nil, ::T.untyped)
-end
-
-class ThreadSafe::Util::Adder
-  def add(x); end
-
-  def decrement(); end
-
-  def increment(); end
-
-  def reset(); end
-
-  def sum(); end
-end
-
-class ThreadSafe::Util::Adder
-end
-
-class ThreadSafe::Util::AtomicReference
-  def compare_and_set(old_value, new_value); end
-
-  def get(); end
-
-  def initialize(value=T.unsafe(nil)); end
-
-  def set(new_value); end
-
-  def value(); end
-
-  def value=(new_value); end
-end
-
-class ThreadSafe::Util::AtomicReference
-end
-
-module ThreadSafe::Util::CheapLockable
-  def cas_mutex(old_value, new_value); end
-
-  def compare_and_set_mutex(old_value, new_value); end
-
-  def lazy_set_mutex(value); end
-
-  def mutex(); end
-
-  def mutex=(value); end
-end
-
-module ThreadSafe::Util::CheapLockable
-  extend ::ThreadSafe::Util::Volatile
-end
-
-class ThreadSafe::Util::PowerOfTwoTuple
-  def hash_to_index(hash); end
-
-  def next_in_size_table(); end
-
-  def volatile_get_by_hash(hash); end
-
-  def volatile_set_by_hash(hash, value); end
-end
-
-class ThreadSafe::Util::PowerOfTwoTuple
-end
-
-class ThreadSafe::Util::Striped64
-  def busy?(); end
-
-  def initialize(); end
-
-  def retry_update(x, hash_code, was_uncontended); end
-  THREAD_LOCAL_KEY = ::T.let(nil, ::T.untyped)
-end
-
-class ThreadSafe::Util::Striped64::Cell
-  def cas(old_value, new_value); end
-
-  def cas_computed(); end
-
-  def padding_(); end
-end
-
-class ThreadSafe::Util::Striped64::Cell
-end
-
-class ThreadSafe::Util::Striped64
-  extend ::ThreadSafe::Util::Volatile
-end
-
-module ThreadSafe::Util::Volatile
-  def attr_volatile(*attr_names); end
-end
-
-module ThreadSafe::Util::Volatile
-end
-
-class ThreadSafe::Util::VolatileTuple
-  include ::Enumerable
-  def cas(i, old_value, new_value); end
-
-  def compare_and_set(i, old_value, new_value); end
-
-  def each(&blk); end
-
-  def initialize(size); end
-
-  def size(); end
-
-  def volatile_get(i); end
-
-  def volatile_set(i, value); end
-end
-
-class ThreadSafe::Util::VolatileTuple
-end
-
-module ThreadSafe::Util::XorShiftRandom
-  def get(); end
-
-  def xorshift(x); end
-  MAX_XOR_SHIFTABLE_INT = ::T.let(nil, ::T.untyped)
-end
-
-module ThreadSafe::Util::XorShiftRandom
-  extend ::ThreadSafe::Util::XorShiftRandom
-end
-
-module ThreadSafe::Util
 end
 
 module Tilt
@@ -17713,7 +18113,7 @@ class UpdateIssueForm
   extend ::ActiveModel::Validations::HelperMethods
   def self.__callbacks(); end
 
-  def self.__callbacks=(val); end
+  def self.__callbacks=(value); end
 
   def self.__callbacks?(); end
 
@@ -17723,7 +18123,7 @@ class UpdateIssueForm
 
   def self._validators(); end
 
-  def self._validators=(val); end
+  def self._validators=(value); end
 
   def self._validators?(); end
 end
@@ -17850,13 +18250,13 @@ class WebConsole::Template
 
   def template_paths(); end
 
-  def template_paths=(obj); end
+  def template_paths=(val); end
 end
 
 class WebConsole::Template
   def self.template_paths(); end
 
-  def self.template_paths=(obj); end
+  def self.template_paths=(val); end
 end
 
 class WebConsole::View
@@ -17884,10 +18284,8 @@ class WebConsole::WhinyRequest
 end
 
 class WebSocket::Driver
-  BINARY = ::T.let(nil, ::T.untyped)
   MAX_LENGTH = ::T.let(nil, ::T.untyped)
   STATES = ::T.let(nil, ::T.untyped)
-  UNICODE = ::T.let(nil, ::T.untyped)
 end
 
 class WebSocket::Driver::Client
@@ -18190,6 +18588,27 @@ end
 
 class Webpacker::Env
   DEFAULT = ::T.let(nil, ::T.untyped)
+end
+
+class Work::Task
+  extend ::T::Private::Methods::SingletonMethodHooks
+  extend ::T::Private::Methods::MethodHooks
+end
+
+class Work::Work
+  extend ::T::Private::Methods::SingletonMethodHooks
+  extend ::T::Private::Methods::MethodHooks
+end
+
+module Work::WorkRepository
+  extend ::T::Private::Abstract::Hooks
+  extend ::T::InterfaceWrapper::Helpers
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class WorkRepository::AR
+  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 module Zeitwerk::ExplicitNamespace

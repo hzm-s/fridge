@@ -7,72 +7,88 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/activestorage/all/activestorage.rbi
 #
-# activestorage-6.0.3.6
+# activestorage-6.1.3.2
 
 module ActiveStorage
   def analyzers; end
-  def analyzers=(obj); end
+  def analyzers=(val); end
   def binary_content_type; end
-  def binary_content_type=(obj); end
+  def binary_content_type=(val); end
   def content_types_allowed_inline; end
-  def content_types_allowed_inline=(obj); end
+  def content_types_allowed_inline=(val); end
   def content_types_to_serve_as_binary; end
-  def content_types_to_serve_as_binary=(obj); end
+  def content_types_to_serve_as_binary=(val); end
+  def draw_routes; end
+  def draw_routes=(val); end
   def logger; end
-  def logger=(obj); end
+  def logger=(val); end
   def paths; end
-  def paths=(obj); end
+  def paths=(val); end
   def previewers; end
-  def previewers=(obj); end
+  def previewers=(val); end
   def queues; end
-  def queues=(obj); end
+  def queues=(val); end
   def replace_on_assign_to_many; end
-  def replace_on_assign_to_many=(obj); end
+  def replace_on_assign_to_many=(val); end
+  def resolve_model_to_route; end
+  def resolve_model_to_route=(val); end
   def routes_prefix; end
-  def routes_prefix=(obj); end
+  def routes_prefix=(val); end
   def self.analyzers; end
-  def self.analyzers=(obj); end
+  def self.analyzers=(val); end
   def self.binary_content_type; end
-  def self.binary_content_type=(obj); end
+  def self.binary_content_type=(val); end
   def self.content_types_allowed_inline; end
-  def self.content_types_allowed_inline=(obj); end
+  def self.content_types_allowed_inline=(val); end
   def self.content_types_to_serve_as_binary; end
-  def self.content_types_to_serve_as_binary=(obj); end
+  def self.content_types_to_serve_as_binary=(val); end
+  def self.draw_routes; end
+  def self.draw_routes=(val); end
   def self.gem_version; end
   def self.logger; end
-  def self.logger=(obj); end
+  def self.logger=(val); end
   def self.paths; end
-  def self.paths=(obj); end
+  def self.paths=(val); end
   def self.previewers; end
-  def self.previewers=(obj); end
+  def self.previewers=(val); end
   def self.queues; end
-  def self.queues=(obj); end
+  def self.queues=(val); end
   def self.railtie_helpers_paths; end
   def self.railtie_namespace; end
   def self.railtie_routes_url_helpers(include_path_helpers = nil); end
   def self.replace_on_assign_to_many; end
-  def self.replace_on_assign_to_many=(obj); end
+  def self.replace_on_assign_to_many=(val); end
+  def self.resolve_model_to_route; end
+  def self.resolve_model_to_route=(val); end
   def self.routes_prefix; end
-  def self.routes_prefix=(obj); end
+  def self.routes_prefix=(val); end
   def self.service_urls_expire_in; end
-  def self.service_urls_expire_in=(obj); end
+  def self.service_urls_expire_in=(val); end
   def self.table_name_prefix; end
+  def self.track_variants; end
+  def self.track_variants=(val); end
   def self.use_relative_model_naming?; end
   def self.variable_content_types; end
-  def self.variable_content_types=(obj); end
+  def self.variable_content_types=(val); end
   def self.variant_processor; end
-  def self.variant_processor=(obj); end
+  def self.variant_processor=(val); end
   def self.verifier; end
-  def self.verifier=(obj); end
+  def self.verifier=(val); end
   def self.version; end
+  def self.web_image_content_types; end
+  def self.web_image_content_types=(val); end
   def service_urls_expire_in; end
-  def service_urls_expire_in=(obj); end
+  def service_urls_expire_in=(val); end
+  def track_variants; end
+  def track_variants=(val); end
   def variable_content_types; end
-  def variable_content_types=(obj); end
+  def variable_content_types=(val); end
   def variant_processor; end
-  def variant_processor=(obj); end
+  def variant_processor=(val); end
   def verifier; end
-  def verifier=(obj); end
+  def verifier=(val); end
+  def web_image_content_types; end
+  def web_image_content_types=(val); end
   extend ActiveSupport::Autoload
 end
 module ActiveStorage::VERSION
@@ -101,27 +117,27 @@ class ActiveStorage::Previewer
   def instrument(operation, payload = nil, &block); end
   def logger; end
   def open_tempfile; end
-  def preview; end
+  def preview(**options); end
   def self.accept?(blob); end
   def tmpdir; end
 end
 class ActiveStorage::Previewer::PopplerPDFPreviewer < ActiveStorage::Previewer
   def draw_first_page_from(file, &block); end
-  def preview; end
+  def preview(**options); end
   def self.accept?(blob); end
   def self.pdftoppm_exists?; end
   def self.pdftoppm_path; end
 end
 class ActiveStorage::Previewer::MuPDFPreviewer < ActiveStorage::Previewer
   def draw_first_page_from(file, &block); end
-  def preview; end
+  def preview(**options); end
   def self.accept?(blob); end
   def self.mutool_exists?; end
   def self.mutool_path; end
 end
 class ActiveStorage::Previewer::VideoPreviewer < ActiveStorage::Previewer
   def draw_relevant_frame_from(file, &block); end
-  def preview; end
+  def preview(**options); end
   def self.accept?(blob); end
   def self.ffmpeg_exists?; end
   def self.ffmpeg_path; end
@@ -133,6 +149,7 @@ class ActiveStorage::Analyzer
   def logger; end
   def metadata; end
   def self.accept?(blob); end
+  def self.analyze_later?; end
   def tmpdir; end
 end
 class ActiveStorage::Analyzer::ImageAnalyzer < ActiveStorage::Analyzer
@@ -144,6 +161,7 @@ end
 class ActiveStorage::Analyzer::VideoAnalyzer < ActiveStorage::Analyzer
   def angle; end
   def computed_height; end
+  def container; end
   def display_aspect_ratio; end
   def display_height_scale; end
   def duration; end
@@ -160,6 +178,47 @@ class ActiveStorage::Analyzer::VideoAnalyzer < ActiveStorage::Analyzer
   def tags; end
   def video_stream; end
   def width; end
+end
+class ActiveStorage::LogSubscriber < ActiveSupport::LogSubscriber
+end
+class ActiveStorage::Downloader
+  def download(key, file); end
+  def initialize(service); end
+  def open(key, checksum:, name: nil, tmpdir: nil); end
+  def open_tempfile(name, tmpdir = nil); end
+  def service; end
+  def verify_integrity_of(file, checksum:); end
+end
+class ActiveStorage::Service
+  def content_disposition_with(filename:, type: nil); end
+  def delete(key); end
+  def delete_prefixed(prefix); end
+  def download(key); end
+  def download_chunk(key, range); end
+  def exist?(key); end
+  def headers_for_direct_upload(key, filename:, content_type:, content_length:, checksum:); end
+  def instrument(operation, payload = nil, &block); end
+  def name; end
+  def name=(arg0); end
+  def open(*args, **options, &block); end
+  def private_url(key, expires_in:, filename:, disposition:, content_type:, **arg5); end
+  def public?; end
+  def public_url(key, **arg1); end
+  def self.build(configurator:, name:, service: nil, **service_config); end
+  def self.configure(service_name, configurations); end
+  def service_name; end
+  def update_metadata(key, **metadata); end
+  def upload(key, io, checksum: nil, **options); end
+  def url(key, **options); end
+  def url_for_direct_upload(key, expires_in:, content_type:, content_length:, checksum:); end
+  extend ActiveSupport::Autoload
+end
+class ActiveStorage::Service::Registry
+  def configurations; end
+  def configurator; end
+  def fetch(name); end
+  def initialize(configurations); end
+  def services; end
 end
 module ActiveStorage::Reflection
 end
@@ -185,12 +244,14 @@ end
 module ActiveStorage::Attached::Model
   def attachment_changes; end
   def changed_for_autosave?; end
+  def initialize_dup(*arg0); end
   def reload(*arg0); end
   extend ActiveSupport::Concern
 end
 module ActiveStorage::Attached::Model::ClassMethods
-  def has_many_attached(name, dependent: nil); end
-  def has_one_attached(name, dependent: nil); end
+  def has_many_attached(name, dependent: nil, service: nil, strict_loading: nil); end
+  def has_one_attached(name, dependent: nil, service: nil, strict_loading: nil); end
+  def validate_service_configuration(association_name, service); end
 end
 class ActiveStorage::Attached::One < ActiveStorage::Attached
   def attach(attachable); end
@@ -225,6 +286,7 @@ end
 class ActiveStorage::Attached::Changes::CreateOne
   def attachable; end
   def attachment; end
+  def attachment_service_name; end
   def blob; end
   def build_attachment; end
   def find_attachment; end
@@ -268,27 +330,6 @@ class ActiveStorage::Attached::Changes::DeleteMany
   def name; end
   def record; end
   def save; end
-end
-class ActiveStorage::LogSubscriber < ActiveSupport::LogSubscriber
-end
-class ActiveStorage::Service
-  def content_disposition_with(filename:, type: nil); end
-  def delete(key); end
-  def delete_prefixed(prefix); end
-  def download(key); end
-  def download_chunk(key, range); end
-  def exist?(key); end
-  def headers_for_direct_upload(key, filename:, content_type:, content_length:, checksum:); end
-  def instrument(operation, payload = nil, &block); end
-  def open(*args, **options, &block); end
-  def self.build(configurator:, service: nil, **service_config); end
-  def self.configure(service_name, configurations); end
-  def service_name; end
-  def update_metadata(key, **metadata); end
-  def upload(key, io, checksum: nil, **options); end
-  def url(key, expires_in:, disposition:, filename:, content_type:); end
-  def url_for_direct_upload(key, expires_in:, content_type:, content_length:, checksum:); end
-  extend ActiveSupport::Autoload
 end
 class ActiveStorage::Service::Configurator
   def build(service_name); end

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/omniauth/all/omniauth.rbi
 #
-# omniauth-2.0.3
+# omniauth-2.0.4
 
 module OmniAuth
   def self.config; end
@@ -126,7 +126,7 @@ module OmniAuth::Strategy
   def ssl?; end
   def uid; end
   def user_info; end
-  def warn_if_using_get; end
+  def warn_if_using_get_on_request_path; end
 end
 module OmniAuth::Strategy::ClassMethods
   def args(args = nil); end

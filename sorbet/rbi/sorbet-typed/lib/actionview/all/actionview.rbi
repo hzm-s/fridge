@@ -5,7 +5,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/edit/master/lib/actionview/all/actionview.rbi
 #
-# typed: strong
+# typed: false
 
 module ActionView
   class ActionViewError < StandardError; end
@@ -52,6 +52,11 @@ ActionView::Helpers::DateTimeSelector::DEFAULT_PREFIX = T.let(T.unsafe(nil), Str
 ActionView::Helpers::DateTimeSelector::POSITION = T.let(T.unsafe(nil), T::Hash[T.untyped, T.untyped])
 
 ActionView::Helpers::JavaScriptHelper::JS_ESCAPE_MAP = T.let(T.unsafe(nil), T::Hash[T.untyped, T.untyped])
+
+class ActionView::Helpers::FormBuilder
+  sig { returns(T.untyped) }
+  def object; end
+end
 
 module ActionView::Helpers::NumberHelper
   # These will return nil if given nil and a string otherwise. Ideally we'd be able to encode

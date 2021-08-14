@@ -17,11 +17,8 @@ class OmniAuth::RailsCsrfProtection::TokenVerifier
   def __callbacks; end
   def __callbacks?; end
   def _helper_methods; end
-  def _helper_methods=(val); end
+  def _helper_methods=(arg0); end
   def _helper_methods?; end
-  def _helpers; end
-  def _helpers=(val); end
-  def _helpers?; end
   def _process_action_callbacks; end
   def _run_process_action_callbacks(&block); end
   def allow_forgery_protection; end
@@ -42,14 +39,12 @@ class OmniAuth::RailsCsrfProtection::TokenVerifier
   def request_forgery_protection_token; end
   def request_forgery_protection_token=(value); end
   def self.__callbacks; end
-  def self.__callbacks=(val); end
+  def self.__callbacks=(value); end
   def self.__callbacks?; end
   def self._helper_methods; end
-  def self._helper_methods=(val); end
+  def self._helper_methods=(value); end
   def self._helper_methods?; end
   def self._helpers; end
-  def self._helpers=(val); end
-  def self._helpers?; end
   def self._process_action_callbacks; end
   def self._process_action_callbacks=(value); end
   def self.allow_forgery_protection; end
@@ -66,7 +61,10 @@ class OmniAuth::RailsCsrfProtection::TokenVerifier
   def self.per_form_csrf_tokens=(value); end
   def self.request_forgery_protection_token; end
   def self.request_forgery_protection_token=(value); end
+  def self.urlsafe_csrf_tokens; end
+  def self.urlsafe_csrf_tokens=(value); end
   def session(*args, &block); end
+  def urlsafe_csrf_tokens; end
   extend AbstractController::Callbacks::ClassMethods
   extend AbstractController::Helpers::ClassMethods
   extend ActionController::RequestForgeryProtection::ClassMethods
@@ -78,6 +76,10 @@ class OmniAuth::RailsCsrfProtection::TokenVerifier
   include ActionController::RequestForgeryProtection
   include ActiveSupport::Callbacks
   include ActiveSupport::Configurable
+end
+module OmniAuth::RailsCsrfProtection::TokenVerifier::HelperMethods
+  def form_authenticity_token(*args, &block); end
+  def protect_against_forgery?(*args, &block); end
 end
 class OmniAuth::RailsCsrfProtection::Railtie < Rails::Railtie
 end

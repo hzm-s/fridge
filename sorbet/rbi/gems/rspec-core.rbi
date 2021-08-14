@@ -575,6 +575,8 @@ module RSpec::Core::HashImitatable
   def collect_concat(*args, &block); end
   def compact!(*args, &block); end
   def compact(*args, &block); end
+  def compact_blank!(*args, &block); end
+  def compact_blank(*args, &block); end
   def compare_by_identity(*args, &block); end
   def compare_by_identity?(*args, &block); end
   def count(*args, &block); end
@@ -664,6 +666,7 @@ module RSpec::Core::HashImitatable
   def none?(*args, &block); end
   def one?(*args, &block); end
   def partition(*args, &block); end
+  def pick(*args, &block); end
   def pluck(*args, &block); end
   def rassoc(*args, &block); end
   def reduce(*args, &block); end

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/websocket-driver/all/websocket-driver.rbi
 #
-# websocket-driver-0.7.3
+# websocket-driver-0.7.4
 
 module WebSocket::Mask
   def self.mask(arg0, arg1); end

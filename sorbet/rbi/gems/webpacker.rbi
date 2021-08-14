@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/webpacker/all/webpacker.rbi
 #
-# webpacker-4.3.0
+# webpacker-5.4.0
 
 class Webpacker::Instance
   def commands; end
@@ -18,11 +18,11 @@ class Webpacker::Instance
   def env; end
   def initialize(root_path: nil, config_path: nil); end
   def logger; end
-  def logger=(obj); end
+  def logger=(val); end
   def manifest; end
   def root_path; end
   def self.logger; end
-  def self.logger=(obj); end
+  def self.logger=(val); end
 end
 class Webpacker::Env
   def available_environments; end
@@ -35,10 +35,11 @@ class Webpacker::Env
   def self.inquire(webpacker); end
 end
 class Webpacker::Configuration
+  def additional_paths; end
+  def additional_paths_globbed; end
   def cache_manifest?; end
   def cache_path; end
   def check_yarn_integrity=(value); end
-  def check_yarn_integrity?; end
   def compile?; end
   def config_path; end
   def data; end
@@ -55,7 +56,6 @@ class Webpacker::Configuration
   def public_output_path; end
   def public_path; end
   def resolved_paths; end
-  def resolved_paths_globbed; end
   def root_path; end
   def source_entry_path; end
   def source_path; end
@@ -71,7 +71,7 @@ class Webpacker::Manifest
   def dev_server(*args, &block); end
   def find(name); end
   def full_pack_name(name, pack_type); end
-  def handle_missing_entry(name); end
+  def handle_missing_entry(name, pack_type); end
   def initialize(webpacker); end
   def load; end
   def lookup!(name, pack_type = nil); end
@@ -91,7 +91,7 @@ class Webpacker::Compiler
   def config(*args, &block); end
   def default_watched_paths; end
   def env; end
-  def env=(obj); end
+  def env=(val); end
   def fresh?; end
   def initialize(webpacker); end
   def last_compilation_digest; end
@@ -99,19 +99,19 @@ class Webpacker::Compiler
   def record_compilation_digest; end
   def run_webpack; end
   def self.env; end
-  def self.env=(obj); end
+  def self.env=(val); end
   def self.watched_paths; end
-  def self.watched_paths=(obj); end
+  def self.watched_paths=(val); end
   def stale?; end
   def watched_files_digest; end
   def watched_paths; end
-  def watched_paths=(obj); end
+  def watched_paths=(val); end
   def webpack_env; end
   def webpacker; end
 end
 class Webpacker::Commands
   def bootstrap; end
-  def clean(count = nil); end
+  def clean(count = nil, age = nil); end
   def clobber; end
   def compile; end
   def compiler(*args, &block); end
@@ -125,7 +125,7 @@ end
 class Webpacker::DevServer
   def config; end
   def connect_timeout; end
-  def connect_timeout=(obj); end
+  def connect_timeout=(val); end
   def defaults; end
   def env_prefix; end
   def fetch(key); end
@@ -138,7 +138,7 @@ class Webpacker::DevServer
   def protocol; end
   def running?; end
   def self.connect_timeout; end
-  def self.connect_timeout=(obj); end
+  def self.connect_timeout=(val); end
 end
 module Webpacker::Helper
   def asset_pack_path(name, **options); end

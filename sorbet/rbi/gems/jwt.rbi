@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/jwt/all/jwt.rbi
 #
-# jwt-2.2.2
+# jwt-2.2.3
 
 module JWT
   def decode(jwt, key = nil, verify = nil, options = nil, &keyfinder); end
@@ -39,6 +39,9 @@ module JWT::SecurityUtils
   def verify_rsa(algorithm, public_key, signing_input, signature); end
 end
 module JWT::Algos
+  def find(algorithm); end
+  def indexed; end
+  extend JWT::Algos
 end
 module JWT::Algos::Hmac
   def self.sign(to_sign); end
@@ -71,6 +74,12 @@ module JWT::Algos::Ps
   def self.verify(to_verify); end
   def sign(to_sign); end
   def verify(to_verify); end
+end
+module JWT::Algos::None
+  def self.sign(*arg0); end
+  def self.verify(*arg0); end
+  def sign(*arg0); end
+  def verify(*arg0); end
 end
 module JWT::Algos::Unsupported
   def self.sign(*arg0); end
@@ -179,8 +188,8 @@ end
 class JWT::ClaimsValidator
   def initialize(payload); end
   def validate!; end
-  def validate_int_claims; end
-  def validate_is_int(claim); end
+  def validate_is_numeric(claim); end
+  def validate_numeric_claims; end
 end
 class JWT::Encode
   def combine(*parts); end
@@ -196,25 +205,66 @@ class JWT::Encode
   def segments; end
 end
 module JWT::JWK
+  def self.classes; end
   def self.create_from(keypair); end
+  def self.generate_mappings; end
   def self.import(jwk_data); end
+  def self.mappings; end
   def self.new(keypair); end
-end
-class JWT::JWK::RSA
-  def export; end
-  def initialize(keypair); end
-  def keypair; end
-  def kid; end
-  def private?; end
-  def public_key; end
-  def self.import(jwk_data); end
 end
 class JWT::JWK::KeyFinder
   def find_key(kid); end
   def initialize(options); end
   def jwks; end
+  def jwks_keys; end
   def key_for(kid); end
   def load_keys(opts = nil); end
   def reloadable?; end
   def resolve_key(kid); end
+end
+class JWT::JWK::KeyBase
+  def initialize(keypair, kid = nil); end
+  def keypair; end
+  def kid; end
+  def self.inherited(klass); end
+end
+class JWT::JWK::EC < JWT::JWK::KeyBase
+  def append_private_parts(the_hash); end
+  def encode_octets(octets); end
+  def encode_open_ssl_bn(key_part); end
+  def export(options = nil); end
+  def generate_kid(ec_keypair); end
+  def initialize(keypair, kid = nil); end
+  def keypair_components(ec_keypair); end
+  def private?; end
+  def public_key(*args, &block); end
+  def self.decode_octets(jwk_data); end
+  def self.decode_open_ssl_bn(jwk_data); end
+  def self.ec_pkey(jwk_crv, jwk_x, jwk_y, jwk_d); end
+  def self.import(jwk_data); end
+  def self.jwk_attrs(jwk_data, attrs); end
+  def self.to_openssl_curve(crv); end
+  extend Forwardable
+end
+class JWT::JWK::RSA < JWT::JWK::KeyBase
+  def append_private_parts(the_hash); end
+  def encode_open_ssl_bn(key_part); end
+  def export(options = nil); end
+  def generate_kid(public_key); end
+  def initialize(keypair, kid = nil); end
+  def private?; end
+  def public_key; end
+  def self.decode_open_ssl_bn(jwk_data); end
+  def self.import(jwk_data); end
+  def self.jwk_attributes(jwk_data, *attributes); end
+  def self.populate_key(rsa_key, rsa_parameters); end
+  def self.rsa_pkey(rsa_parameters); end
+end
+class JWT::JWK::HMAC < JWT::JWK::KeyBase
+  def export(options = nil); end
+  def generate_kid; end
+  def initialize(keypair, kid = nil); end
+  def private?; end
+  def public_key; end
+  def self.import(jwk_data); end
 end
