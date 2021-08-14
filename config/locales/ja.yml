@@ -206,6 +206,7 @@ ja:
       short: "%m/%d %H:%M"
     pm: 午後
   navs:
+    home: ホーム
     save: 保存する
     create: 作成する
     edit: 編集する
