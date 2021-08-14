@@ -117,4 +117,5 @@ ja:
       title: アイテムの受け入れ
       title_description: 説明
       title_ac: 受け入れ基準
-      accept: 受け入れ
+      accept: 受け入れる
+      confirm_accept: アイテムを受け入れますか？
