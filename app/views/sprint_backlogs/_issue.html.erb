@@ -1,4 +1,7 @@
 <div class="sbi-issue__container" test-sbi-<%= issue.id %>="1">
+  <span class="sbi-issue__type">
+    <%= pbl_item_type_icon(issue.type) %>
+  </span>
   <div class="sbi-issue__main">
     <%= simple_format(issue.description, class: 'sbi-issue__content') %>
     <% if show_ac %>

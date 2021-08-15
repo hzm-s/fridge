@@ -66,14 +66,21 @@
 .sbi-issue__container {
   flex-grow: 1;
   display: flex;
-  justify-content: space-between;
   border: 1px solid $gray-300;
   border-radius: .25rem;
-  padding: 0 .5rem;
+  padding: .125rem .5rem .25rem;
+}
+
+.sbi-issue__type {
+  font-size: .875rem;
+  color: $secondary;
+  padding-top: .25rem;
+  margin-right: .25rem;
 }
 
 .sbi-issue__main {
-  padding: .5rem .25rem .5rem 0;
+  flex-grow: 1;
+  padding-top: .25rem;
 }
 
 .sbi-issue__content {
@@ -83,7 +90,7 @@
 }
 
 .sbi-issue__ac-list {
-  margin-top: .5rem;
+  margin: .125rem 0 0;
   padding-left: 1rem;
 }
 
