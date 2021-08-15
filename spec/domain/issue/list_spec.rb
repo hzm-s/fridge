@@ -72,7 +72,7 @@ module Issue
         aggregate_failures do
           expect(list.index_of(0)).to eq issue_a
           expect(list.index_of(4)).to eq issue_e
-          expect{ list.index_of(5) }.to raise_error(NotFound)
+          expect{ list.index_of(5) }.to raise_error(List::NotFound)
         end
       end
     end

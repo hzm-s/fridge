@@ -5,6 +5,8 @@ module Issue
   class List
     extend T::Sig
 
+    class NotFound < StandardError; end
+
     sig {params(items: T::Array[Id]).void}
     def initialize(items = [])
       @items = items
