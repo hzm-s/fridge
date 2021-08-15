@@ -14,7 +14,7 @@ RSpec.describe '/work/:issue_id/task_statuses' do
 
   describe 'Start' do
     it do
-      patch work_task_status_path(issue_id: issue.id, number: 1, type: :start_task, format: :js)
+      patch work_task_status_path(issue_id: issue.id, number: 1, by: :start_task, format: :js)
       expect(response.body).to include %Q(test-task-status-#{issue.id}-1=\\"wip\\")
     end
   end
@@ -23,7 +23,7 @@ RSpec.describe '/work/:issue_id/task_statuses' do
     before { start_task(issue.id, 1) }
 
     it do
-      patch work_task_status_path(issue_id: issue.id, number: 1, type: :suspend_task, format: :js)
+      patch work_task_status_path(issue_id: issue.id, number: 1, by: :suspend_task, format: :js)
       expect(response.body).to include %Q(test-task-status-#{issue.id}-1=\\"wait\\")
     end
   end
@@ -35,7 +35,7 @@ RSpec.describe '/work/:issue_id/task_statuses' do
     end
 
     it do
-      patch work_task_status_path(issue_id: issue.id, number: 1, type: :resume_task, format: :js)
+      patch work_task_status_path(issue_id: issue.id, number: 1, by: :resume_task, format: :js)
       expect(response.body).to include %Q(test-task-status-#{issue.id}-1=\\"wip\\")
     end
   end
@@ -44,7 +44,7 @@ RSpec.describe '/work/:issue_id/task_statuses' do
     before { start_task(issue.id, 1) }
 
     it do
-      patch work_task_status_path(issue_id: issue.id, number: 1, type: :complete_task, format: :js)
+      patch work_task_status_path(issue_id: issue.id, number: 1, by: :complete_task, format: :js)
       expect(response.body).to include %Q(test-task-status-#{issue.id}-1=\\"done\\")
     end
   end
