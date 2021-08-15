@@ -1,7 +1,11 @@
 # typed: false
 module SharedDomainSupport
-  def activity_set(entries)
-    Activity::Set.from_symbols(entries)
+  def activity(name)
+    Activity::Activity.from_symbol(name)
+  end
+
+  def activity_set(names)
+    Activity::Set.from_symbols(names)
   end
 end
 

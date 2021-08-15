@@ -53,18 +53,23 @@ module Work
 
     sig {returns(Activity::Set)}
     def available_activities
-      activities =
-        case self
-        when Todo
-          [:start_task]
-        when Wip
-          [:complete_task, :suspend_task]
-        when Wait
-          [:resume_task]
-        else
-          []
-        end
-      Activity::Set.from_symbols(activities)
+      activities = [next_activity]
+      activities << Activity::Activity.from_symbol(:suspend_task) if self == Wip
+      Activity::Set.new(activities.compact)
+    end
+
+    sig {returns(T.nilable(Activity::Activity))}
+    def next_activity
+      case self
+      when Todo
+        Activity::Activity.from_symbol(:start_task)
+      when Wip
+        Activity::Activity.from_symbol(:complete_task)
+      when Wait
+        Activity::Activity.from_symbol(:resume_task)
+      else
+        nil
+      end
     end
 
     sig {returns(String)}
