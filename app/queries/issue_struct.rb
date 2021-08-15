@@ -8,7 +8,7 @@ class IssueStruct < SimpleDelegator
 
     @product_id = dao.dao_product_id
     @criteria = dao.read_acceptance_criteria
-    @criterion_structs = dao.criteria.map { |c| AcceptanceCriterionStruct.new(c) }
+    @criterion_structs = dao.criteria.map { |c| AcceptanceCriterionStruct.new(c) }.sort_by(&:number)
     @type = Issue::Types.from_string(dao.issue_type)
     @status = Issue::Statuses.from_string(dao.status)
   end
