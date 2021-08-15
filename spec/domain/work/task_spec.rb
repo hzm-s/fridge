@@ -58,7 +58,7 @@ module Work
       end
     end
 
-    describe 'Query available action' do
+    describe 'Query available activities' do
       let(:task) { described_class.create(1, 'Task') }
 
       context 'when todo' do
