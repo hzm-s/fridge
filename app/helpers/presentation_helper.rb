@@ -9,8 +9,8 @@ module PresentationHelper
 
   LOADING_ICON = '<i class="fas fa-spinner fa-spin"></i>'.freeze
 
-  def with_loader
-    { disable_with: LOADING_ICON.html_safe }
+  def with_loader(base = {})
+    base.merge(disable_with: LOADING_ICON.html_safe)
   end
 
   def user_avatar(initials:, fgcolor:, bgcolor:, size: nil)

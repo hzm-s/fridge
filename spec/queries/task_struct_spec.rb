@@ -16,8 +16,8 @@ RSpec.describe TaskStruct do
     aggregate_failures do
       expect(task.issue_id).to eq issue.id.to_s
       expect(task.number).to eq 1
-      expect(task.status).to eq 'todo'
       expect(task.content).to eq 'Task1'
+      expect(task.status).to eq Work::TaskStatus.from_string('todo')
       expect(task.available_activities).to match_array(['start_task'])
     end
   end

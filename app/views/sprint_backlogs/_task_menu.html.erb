@@ -3,10 +3,11 @@
     <i class="fas fa-ellipsis-h"></i>
   <% end -%>
   <div class="dropdown-menu dropdown-menu-right">
-    <% task.available_activities.each do |a| %>
-      <%= task_action_link(task, a, { class: 'dropdown-item' }) %>
-    <% end %>
-    <% if task.available_activities.size > 0 %>
+    <% if authorize(:suspend_task, task.status) %>
+      <%= link_to work_task_status_path(global_task_params(task, by: :suspend_task)), remote: true, method: :patch, class: 'dropdown-item', data: { task_dom_id(task, "test_suspend_task") => 1 } do %>
+        <i class="fas fa-pause"></i>
+        <%=t 'domain.task.suspend_task' %>
+      <% end %>
       <div class="dropdown-divider"></div>
     <% end %>
     <%= link_to '#', class: 'dropdown-item', data: { action: 'inline-edit#open' } do %>
