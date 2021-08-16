@@ -46,19 +46,6 @@ module SblHelper
     end
   end
 
-  def task_action_link(task, action, html_options)
-    url = work_task_status_path(global_task_params(task, type: action))
-    options =
-      { remote: true, method: :patch }
-        .merge(html_options)
-        .merge(data: { task_dom_id(task, "test_#{action}") => 1 })
-
-    link_to(url, options) do
-      concat content_tag(:i, nil, class: TASK_ACTION_CLASSES[action.to_sym], style: 'margin-right:0.3rem')
-      concat t(action, scope: 'domain.task')
-    end
-  end
-
   def sbl_task_status_classes(status)
     classes = %w(sbi-task__status)
     classes << TASK_STATUS_CLASSES[status.to_sym]
