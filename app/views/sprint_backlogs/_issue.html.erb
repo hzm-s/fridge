@@ -1,20 +1,18 @@
 <div class="sbi-issue__container" test-sbi-<%= issue.id %>="1">
-  <span class="sbi-issue__type">
-    <%= pbl_item_type_icon(issue.type) %>
-  </span>
-  <div class="sbi-issue__main">
+  <div class="sbi-issue__primary">
+    <span class="sbi-issue__type">
+      <%= pbl_item_type_icon(issue.type) %>
+    </span>
     <%= simple_format(issue.description, class: 'sbi-issue__content') %>
-    <% if show_ac %>
-      <ul class="sbi-issue__ac-list">
-        <% issue.criteria.each do |c| %>
-          <li class="sbi-issue__ac-item">
-            <%= c.content %>
-          </li>
-        <% end %>
-      </ul>
-    <% end %>
-  </div>
-  <div class="sbi-issue__actions">
     <%= render partial: 'item_menu', locals: { item: issue } %>
   </div>
+  <% if show_ac && issue.criteria.any? %>
+    <ul class="sbi-issue__ac-list">
+      <% issue.criteria.each do |c| %>
+        <li class="sbi-issue__ac-item">
+          <%= c.content %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
 </div>
