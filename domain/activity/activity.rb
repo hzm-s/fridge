@@ -33,6 +33,7 @@ module Activity
       CompleteTask = new('complete_task')
       AcceptFeature = new('accept_feature')
       AcceptTask = new('accept_task')
+      MarkIssueAsDone = new('mark_issue_as_done')
     end
 
     sig {params(set_providers: T::Array[SetProvider]).returns(T::Boolean)}
