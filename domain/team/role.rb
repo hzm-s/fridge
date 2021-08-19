@@ -38,6 +38,7 @@ module Team
             :update_sprint_issues,
             :accept_feature,
             :accept_task,
+            :mark_issue_as_done,
           ]
         when ScrumMaster
           [
