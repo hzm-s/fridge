@@ -1,15 +1,14 @@
+<% can_suspend = authorize(:suspend_task, task.status) %>
 <div class="dropdown">
   <%= link_to '#', dd_trigger_options(id: task_dom_id(task, 'dd-sbi-task'), class: 'context-menu') do %>
     <i class="fas fa-ellipsis-h"></i>
   <% end -%>
   <div class="dropdown-menu dropdown-menu-right">
-    <% if authorize(:suspend_task, task.status) %>
-      <%= link_to work_task_status_path(global_task_params(task, by: :suspend_task)), remote: true, method: :patch, class: 'dropdown-item', data: { task_dom_id(task, "test_suspend_task") => 1 } do %>
-        <i class="fas fa-pause"></i>
-        <%=t 'domain.task.suspend_task' %>
-      <% end %>
-      <div class="dropdown-divider"></div>
+    <%= link_to work_task_status_path(global_task_params(task, by: :suspend_task)), remote: true, method: :patch, class: dropdown_item_classes { can_suspend }, data: { task_dom_id(task, "test_suspend_task") => can_suspend } do %>
+      <i class="fas fa-pause"></i>
+      <%=t 'domain.task.suspend_task' %>
     <% end %>
+    <div class="dropdown-divider"></div>
     <%= link_to '#', class: 'dropdown-item', data: { action: 'inline-edit#open' } do %>
       <i class="fas fa-edit"></i>
       <%=t 'navs.edit' %>

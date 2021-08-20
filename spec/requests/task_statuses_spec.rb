@@ -15,7 +15,7 @@ RSpec.describe '/work/:issue_id/task_statuses' do
   describe 'Start' do
     it do
       patch work_task_status_path(issue_id: issue.id, number: 1, by: :start_task, format: :js)
-      expect(response.body).to include %Q(test-task-status-#{issue.id}-1=\\"wip\\")
+      expect(response.body).to include data_attr "test-task-status-#{issue.id}-1", 'wip', true
     end
   end
 
@@ -24,7 +24,7 @@ RSpec.describe '/work/:issue_id/task_statuses' do
 
     it do
       patch work_task_status_path(issue_id: issue.id, number: 1, by: :suspend_task, format: :js)
-      expect(response.body).to include %Q(test-task-status-#{issue.id}-1=\\"wait\\")
+      expect(response.body).to include data_attr "test-task-status-#{issue.id}-1", 'wait', true
     end
   end
 
@@ -36,7 +36,7 @@ RSpec.describe '/work/:issue_id/task_statuses' do
 
     it do
       patch work_task_status_path(issue_id: issue.id, number: 1, by: :resume_task, format: :js)
-      expect(response.body).to include %Q(test-task-status-#{issue.id}-1=\\"wip\\")
+      expect(response.body).to include data_attr "test-task-status-#{issue.id}-1", 'wip', true
     end
   end
 
@@ -45,7 +45,7 @@ RSpec.describe '/work/:issue_id/task_statuses' do
 
     it do
       patch work_task_status_path(issue_id: issue.id, number: 1, by: :complete_task, format: :js)
-      expect(response.body).to include %Q(test-task-status-#{issue.id}-1=\\"done\\")
+      expect(response.body).to include data_attr "test-task-status-#{issue.id}-1", 'done', true
     end
   end
 
@@ -60,8 +60,8 @@ RSpec.describe '/work/:issue_id/task_statuses' do
         aggregate_failures do
           expect(subject).to include %Q(test-start-task-#{issue.id}-1)
           expect(subject).to_not include %Q(test-complete-task-#{issue.id}-1)
-          expect(subject).to_not include %Q(test-suspend-task-#{issue.id}-1)
           expect(subject).to_not include %Q(test-resume-task-#{issue.id}-1)
+          expect(subject).to include data_attr "test-suspend-task-#{issue.id}-1", false
         end
       end
     end
@@ -72,8 +72,8 @@ RSpec.describe '/work/:issue_id/task_statuses' do
         aggregate_failures do
           expect(subject).to_not include %Q(test-start-task-#{issue.id}-1)
           expect(subject).to include %Q(test-complete-task-#{issue.id}-1)
-          expect(subject).to include %Q(test-suspend-task-#{issue.id}-1)
           expect(subject).to_not include %Q(test-resume-task-#{issue.id}-1)
+          expect(subject).to include data_attr "test-suspend-task-#{issue.id}-1", true
         end
       end
     end

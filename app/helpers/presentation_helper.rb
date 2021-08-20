@@ -27,4 +27,14 @@ module PresentationHelper
   def translate_team_member_roles(roles)
     roles.map { |role| t(role, scope: 'domain.team.role_short') }.join('/')
   end
+
+  def dropdown_item_classes(additional = '')
+    classes = ['dropdown-item'] + [additional]
+
+    if block_given? && !yield
+      classes << 'disabled'
+    end
+
+    classes.join(' ')
+  end
 end
