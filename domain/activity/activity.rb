@@ -27,6 +27,7 @@ module Activity
       AssignIssueToSprint = new('assign_issue_to_sprint')
       RevertIssueFromSprint = new('revert_issue_from_sprint')
       UpdateSprintIssues = new('update_sprint_issues')
+      UpdataTask = new('update_task')
       StartTask = new('start_task')
       SuspendTask = new('suspend_task')
       ResumeTask = new('resume_task')
