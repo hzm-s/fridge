@@ -13,7 +13,7 @@
       </h1>
       <div class="sheet__right">
         <% if authorize(:update_plan, current_team_member_roles) %>
-          <%= link_to t('.add_release'), new_product_release_path(product_id: current_product_id), class: 'btn btn-sm btn-outline-secondary', data: { test_new_release: 1 } %>
+          <%= link_to t('.add_release'), new_product_release_path(product_id: current_product.id), class: 'btn btn-sm btn-outline-secondary', data: { test_new_release: 1 } %>
         <% end %>
       </div>
     </div>

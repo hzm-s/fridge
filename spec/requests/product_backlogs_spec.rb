@@ -23,10 +23,12 @@ RSpec.describe 'product_backlogs' do
 
       aggregate_failures do
         expect(response.body).to include 'test-update-issues-in-release-1'
-        expect(response.body).to include "test-remove-issue-#{issue_preparation.id}"
-        expect(response.body).to include "test-new-release"
-        expect(response.body).to include "test-update-release-1"
-        expect(response.body).to include "test-assign-issue-to-sprint-#{issue_ready.id}"
+        expect(response.body).to include 'test-new-release'
+        expect(response.body).to include 'test-update-release-1'
+        expect(response.body).to include data_attr "test-remove-issue-#{issue_preparation.id}", true
+        expect(response.body).to include data_attr "test-remove-issue-#{issue_ready.id}", true
+        expect(response.body).to include data_attr "test-assign-issue-to-sprint-#{issue_preparation.id}", false
+        expect(response.body).to include data_attr "test-assign-issue-to-sprint-#{issue_ready.id}", true
         expect(response.body).to_not include "test-estimate-issue-#{issue_preparation.id}"
         expect(response.body).to_not include "test-estimate-issue-#{issue_ready.id}"
       end
@@ -41,10 +43,12 @@ RSpec.describe 'product_backlogs' do
 
       aggregate_failures do
         expect(response.body).to_not include 'test-update-issues-in-release-1'
-        expect(response.body).to_not include "test-remove-issue-#{issue_preparation.id}"
-        expect(response.body).to_not include "test-new-release"
-        expect(response.body).to_not include "test-update-release-1"
-        expect(response.body).to_not include "test-assign-issue-to-sprint-#{issue_ready.id}"
+        expect(response.body).to_not include 'test-new-release'
+        expect(response.body).to_not include 'test-update-release-1'
+        expect(response.body).to include data_attr "test-remove-issue-#{issue_preparation.id}", false
+        expect(response.body).to include data_attr "test-remove-issue-#{issue_ready.id}", false
+        expect(response.body).to include data_attr "test-assign-issue-to-sprint-#{issue_preparation.id}", false
+        expect(response.body).to include data_attr "test-assign-issue-to-sprint-#{issue_ready.id}", false
         expect(response.body).to include "test-estimate-issue-#{issue_preparation.id}"
         expect(response.body).to include "test-estimate-issue-#{issue_ready.id}"
       end

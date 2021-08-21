@@ -1,4 +1,5 @@
 class CurrentSprint::IssuesController < ApplicationController
+  include ProductHelper
   include TeamMemberHelper
 
   def create

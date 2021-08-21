@@ -196,15 +196,6 @@
     color: $body-color;
     text-decoration: none;
   }
-
-  &--disable {
-    color: $gray-500;
-
-    &:hover {
-      color: $gray-500;
-      text-decoration: none;
-    }
-  }
 }
 
 .pbl-item__ac {

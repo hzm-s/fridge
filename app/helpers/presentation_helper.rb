@@ -29,12 +29,12 @@ module PresentationHelper
   end
 
   def dropdown_item_classes(additional = '')
-    classes = ['dropdown-item'] + [additional]
+    classes = ['dropdown-item']
 
     if block_given? && !yield
       classes << 'disabled'
     end
 
-    classes.join(' ')
+    (classes + [additional]).join(' ')
   end
 end

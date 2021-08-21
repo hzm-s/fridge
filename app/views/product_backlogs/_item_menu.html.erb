@@ -1,27 +1,17 @@
 <% can_assign = authorize(:assign_issue_to_sprint, current_team_member_roles, item.status) %>
 <% can_remove = authorize(:remove_issue, current_team_member_roles, item.status) %>
 <div class="dropdown">
-  <% if [can_assign, can_remove].any? { |e| e == true } %>
-    <%= link_to '#', dd_trigger_options(id: "dd-pbi-#{item.id}", class: 'pbl-item__menu') do %>
-      <i class="fas fa-ellipsis-h"></i>
-    <% end -%>
-  <% else %>
-    <span class="pbl-item__menu pbl-item__menu--disable">
-      <i class="fas fa-ellipsis-h"></i>
-    </span>
-  <% end %>
+  <%= link_to '#', dd_trigger_options(id: "dd-pbi-#{item.id}", class: 'pbl-item__menu') do %>
+    <i class="fas fa-ellipsis-h"></i>
+  <% end -%>
   <div class="dropdown-menu dropdown-menu-right">
-    <% if can_assign %>
-      <%= button_to current_sprint_issues_path(product_id: current_product_id, issue_id: item.id.to_s), remote: true, class: 'dropdown-item', data: { "test_assign_issue_to_sprint_#{item.id}" => 1 } do %>
-        <i class="fas fa-share"></i>
-        <%=t 'domain.issue.assign_to_sprint' %>
-      <% end %>
+    <%= button_to current_sprint_issues_path(product_id: current_product.id, issue_id: item.id.to_s), remote: true, class: dropdown_item_classes { can_assign }, data: { "test_assign_issue_to_sprint_#{item.id}" => can_assign } do %>
+      <i class="fas fa-share"></i>
+      <%=t 'domain.issue.assign_to_sprint' %>
     <% end %>
-    <% if can_remove %>
-      <%= link_to issue_path(item.id), method: :delete, class: 'dropdown-item text-danger', data: { confirm: t('navs.confirm_delete'), "test_remove_issue_#{item.id}" => 1 } do %>
-        <i class="fas fa-trash-alt"></i>
-        <%=t 'navs.delete' %>
-      <% end %>
+    <%= link_to issue_path(item.id), method: :delete, class: dropdown_item_classes('danger-link') { can_remove }, data: { confirm: t('navs.confirm_delete'), "test_remove_issue_#{item.id}" => can_remove } do %>
+      <i class="fas fa-trash-alt"></i>
+      <%=t 'navs.delete' %>
     <% end %>
   </div>
 </div>

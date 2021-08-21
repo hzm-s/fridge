@@ -13,7 +13,7 @@
       <i class="fas fa-edit"></i>
       <%=t 'navs.edit' %>
     <% end %>
-    <%= link_to work_task_path(global_task_params(task)), method: :delete, remote: true, class: 'dropdown-item text-danger', data: { confirm: t('navs.confirm_delete'), "test_remove_task" => 1 } do %>
+    <%= link_to work_task_path(global_task_params(task)), method: :delete, remote: true, class: 'dropdown-item danger-link', data: { confirm: t('navs.confirm_delete'), "test_remove_task" => 1 } do %>
       <i class="fas fa-trash-alt"></i>
       <%=t 'navs.delete' %>
     <% end %>

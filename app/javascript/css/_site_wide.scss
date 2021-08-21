@@ -23,6 +23,14 @@
   }
 }
 
+.danger-link {
+  color: $danger;
+
+  &:hover {
+    color: darken($danger, 15%);
+  }
+}
+
 .silent-danger {
   color: $secondary;
 
