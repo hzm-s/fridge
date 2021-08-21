@@ -14,6 +14,7 @@ module Team
             :assign_issue_to_sprint,
             :revert_issue_from_sprint,
             :update_sprint_issues,
+            :update_task,
             :accept_feature,
             :accept_task,
             :mark_issue_as_done,
