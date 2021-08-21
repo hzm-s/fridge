@@ -54,6 +54,7 @@ module Work
     sig {returns(Activity::Set)}
     def available_activities
       activities = [next_activity]
+      activities << Activity::Activity.from_symbol(:update_task) unless self == Done
       activities << Activity::Activity.from_symbol(:suspend_task) if self == Wip
       Activity::Set.new(activities.compact)
     end

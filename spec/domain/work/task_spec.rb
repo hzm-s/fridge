@@ -63,7 +63,7 @@ module Work
 
       context 'when todo' do
         it do
-          expect(task.available_activities).to eq activity_set([:start_task])
+          expect(task.available_activities).to eq activity_set([:start_task, :update_task])
         end
       end
 
@@ -71,7 +71,7 @@ module Work
         before { task.start }
 
         it do
-          expect(task.available_activities).to eq activity_set([:complete_task, :suspend_task])
+          expect(task.available_activities).to eq activity_set([:complete_task, :suspend_task, :update_task])
         end
       end
 
@@ -82,7 +82,7 @@ module Work
         end
 
         it do
-          expect(task.available_activities).to eq activity_set([:resume_task])
+          expect(task.available_activities).to eq activity_set([:resume_task, :update_task])
         end
       end
 
