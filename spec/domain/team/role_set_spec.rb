@@ -36,7 +36,6 @@ module Team
         expect(roles.available_activities).to eq activity_set([
           :prepare_acceptance_criteria,
           :estimate_issue,
-          :update_task,
           :accept_task,
         ])
       end
@@ -50,7 +49,6 @@ module Team
           :assign_issue_to_sprint,
           :revert_issue_from_sprint,
           :update_sprint_issues,
-          :update_task,
           :accept_feature,
           :accept_task,
           :mark_issue_as_done,

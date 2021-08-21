@@ -41,11 +41,6 @@ module Activity
       self.entries == other.entries
     end
 
-    sig {returns(T::Array[Activity])}
-    def to_a
-      entries.to_a
-    end
-
     protected
 
     sig {returns(T::Set[Activity])}

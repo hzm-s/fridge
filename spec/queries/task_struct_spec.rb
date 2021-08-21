@@ -18,7 +18,6 @@ RSpec.describe TaskStruct do
       expect(task.number).to eq 1
       expect(task.content).to eq 'Task1'
       expect(task.status).to eq Work::TaskStatus.from_string('todo')
-      expect(task.available_activities).to match_array(['start_task', 'update_task'])
     end
   end
 end
