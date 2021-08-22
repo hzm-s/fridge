@@ -59,10 +59,5 @@ module Work
     def resume
       @status = @status.resume
     end
-
-    sig {returns(Activity::Set)}
-    def available_activities
-      @status.available_activities
-    end
   end
 end
