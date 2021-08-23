@@ -14,6 +14,10 @@ module WorkSupport
   def suspend_task(issue_id, task_number)
     SuspendTaskUsecase.perform(issue_id, task_number)
   end
+
+  def complete_task(issue_id, task_number)
+    CompleteTaskUsecase.perform(issue_id, task_number)
+  end
 end
 
 RSpec.configure do |c|

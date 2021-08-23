@@ -55,18 +55,19 @@ RSpec.describe '/work/:issue_id/task_statuses' do
       response.body
     end
 
-    context 'when Todo' do
+    context 'when todo' do
       it do
         aggregate_failures do
           expect(subject).to include %Q(test-start-task-#{issue.id}-1)
           expect(subject).to_not include %Q(test-complete-task-#{issue.id}-1)
           expect(subject).to_not include %Q(test-resume-task-#{issue.id}-1)
           expect(subject).to include data_attr "test-suspend-task-#{issue.id}-1", false
+          expect(subject).to include data_attr "test-update-task-#{issue.id}-1", true
         end
       end
     end
 
-    context 'when Wip' do
+    context 'when wip' do
       it do
         start_task(issue.id, 1)
         aggregate_failures do
@@ -74,6 +75,35 @@ RSpec.describe '/work/:issue_id/task_statuses' do
           expect(subject).to include %Q(test-complete-task-#{issue.id}-1)
           expect(subject).to_not include %Q(test-resume-task-#{issue.id}-1)
           expect(subject).to include data_attr "test-suspend-task-#{issue.id}-1", true
+          expect(subject).to include data_attr "test-update-task-#{issue.id}-1", true
+        end
+      end
+    end
+
+    context 'when wait' do
+      it do
+        start_task(issue.id, 1)
+        suspend_task(issue.id, 1)
+        aggregate_failures do
+          expect(subject).to_not include %Q(test-start-task-#{issue.id}-1)
+          expect(subject).to_not include %Q(test-complete-task-#{issue.id}-1)
+          expect(subject).to include %Q(test-resume-task-#{issue.id}-1)
+          expect(subject).to include data_attr "test-suspend-task-#{issue.id}-1", false
+          expect(subject).to include data_attr "test-update-task-#{issue.id}-1", true
+        end
+      end
+    end
+
+    context 'when done' do
+      it do
+        start_task(issue.id, 1)
+        complete_task(issue.id, 1)
+        aggregate_failures do
+          expect(subject).to_not include %Q(test-start-task-#{issue.id}-1)
+          expect(subject).to_not include %Q(test-complete-task-#{issue.id}-1)
+          expect(subject).to_not include %Q(test-resume-task-#{issue.id}-1)
+          expect(subject).to include data_attr "test-suspend-task-#{issue.id}-1", false
+          expect(subject).to include data_attr "test-update-task-#{issue.id}-1", false
         end
       end
     end
