@@ -19,21 +19,21 @@ module Plan
       end
 
       it do
-        r = described_class.create(1, 'Description')
+        r = described_class.create(1, 'MVP')
 
         aggregate_failures do
           expect(r.number).to eq 1
-          expect(r.description).to eq 'Description'
+          expect(r.title).to eq 'MVP'
           expect(r.issues).to eq issue_list
         end
       end
     end
 
-    describe 'Modify description' do
+    describe 'Modify title' do
       it do
         release = described_class.create(1, 'Initial')
-        expect { release.modify_description('Modified') }
-          .to change(release, :description)
+        expect { release.modify_title('Modified') }
+          .to change(release, :title)
           .from('Initial').to('Modified')
       end
     end

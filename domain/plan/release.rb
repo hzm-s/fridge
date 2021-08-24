@@ -8,14 +8,14 @@ module Plan
     class << self
       extend T::Sig
 
-      sig {params(number: Integer, description: T.nilable(String)).returns(T.attached_class)}
-      def create(number, description = nil)
-        new(number, description, Issue::List.new)
+      sig {params(number: Integer, title: T.nilable(String)).returns(T.attached_class)}
+      def create(number, title = nil)
+        new(number, title, Issue::List.new)
       end
 
-      sig {params(number: Integer, description: T.nilable(String), issues: Issue::List).returns(T.attached_class)}
-      def from_repository(number, description, issues)
-        new(number, description, issues)
+      sig {params(number: Integer, title: T.nilable(String), issues: Issue::List).returns(T.attached_class)}
+      def from_repository(number, title, issues)
+        new(number, title, issues)
       end
     end
 
@@ -23,15 +23,15 @@ module Plan
     attr_reader :number
 
     sig {returns(T.nilable(String))}
-    attr_reader :description
+    attr_reader :title
 
     sig {returns(Issue::List)}
     attr_reader :issues
 
-    sig {params(number: Integer, description: T.nilable(String), issues: Issue::List).void}
-    def initialize(number, description, issues)
+    sig {params(number: Integer, title: T.nilable(String), issues: Issue::List).void}
+    def initialize(number, title, issues)
       @number= number
-      @description = description
+      @title = title
       @issues = issues
     end
 
@@ -52,9 +52,9 @@ module Plan
       @issues = @issues.swap(from, to)
     end
 
-    sig {params(description: T.nilable(String)).void}
-    def modify_description(description)
-      @description = description
+    sig {params(title: T.nilable(String)).void}
+    def modify_title(title)
+      @title = title
     end
 
     sig {returns(T::Boolean)}
