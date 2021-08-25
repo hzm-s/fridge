@@ -30,7 +30,7 @@ RSpec.describe PlanRepository::AR do
         r.plan_issue(issue_a)
         r.plan_issue(issue_b)
         r.plan_issue(issue_c)
-        r.modify_description('R1')
+        r.modify_title('R1')
         plan.update_release(po_role, r)
       end
 
@@ -41,7 +41,7 @@ RSpec.describe PlanRepository::AR do
 
       aggregate_failures do
         expect(stored.releases.size).to eq 1
-        expect(stored.release_of(1).description).to eq 'R1'
+        expect(stored.release_of(1).title).to eq 'R1'
         expect(stored.release_of(1).issues).to eq issue_list(issue_a, issue_b, issue_c)
       end
     end
@@ -51,13 +51,13 @@ RSpec.describe PlanRepository::AR do
     it do
       plan.release_of(1).tap do |r|
         r.plan_issue(issue_b)
-        r.modify_description('R1')
+        r.modify_title('R1')
         plan.update_release(po_role, r)
       end
       described_class.store(plan)
 
       plan.release_of(1).tap do |r|
-        r.modify_description('MVP')
+        r.modify_title('MVP')
         plan.update_release(po_role, r)
       end
 
@@ -75,9 +75,9 @@ RSpec.describe PlanRepository::AR do
 
       aggregate_failures do
         expect(stored.releases.size).to eq 2
-        expect(stored.release_of(1).description).to eq 'MVP'
+        expect(stored.release_of(1).title).to eq 'MVP'
         expect(stored.release_of(1).issues).to eq issue_list(issue_b)
-        expect(stored.release_of(2).description).to be_nil
+        expect(stored.release_of(2).title).to be_nil
         expect(stored.release_of(2).issues).to eq issue_list(issue_c, issue_a)
       end
     end
