@@ -23,7 +23,7 @@ module ProductBacklogQuery
 
   class ReleaseStruct < T::Struct
     prop :number, Integer
-    prop :description, T.nilable(String)
+    prop :title, T.nilable(String)
     prop :issues, T::Array[::IssueStruct]
     prop :can_remove, T::Boolean
 
@@ -31,7 +31,7 @@ module ProductBacklogQuery
       def create(release, all_issues, plan)
         new(
           number: release.number,
-          description: release.description,
+          title: release.title,
           issues: release.issues.to_a.map { |ri| all_issues.find { |i| i.id == ri.to_s } },
           can_remove: plan.can_remove_release? && release.can_remove?,
         )
