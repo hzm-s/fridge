@@ -15,4 +15,12 @@ RSpec.describe AppendReleaseUsecase do
       expect(plan.release_of(2).issues).to eq issue_list
     end
   end
+
+  it do
+    described_class.perform(roles, product.id, nil)
+
+    plan = PlanRepository::AR.find_by_product_id(product.id)
+
+    expect(plan.release_of(2).title).to eq 'Release#2'
+  end
 end

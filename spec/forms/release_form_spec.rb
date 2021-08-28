@@ -14,6 +14,14 @@ RSpec.describe ReleaseForm do
   end
 
   it do
+    form = described_class.new(valid.merge(title: ''))
+    aggregate_failures do
+      expect(form).to be_valid
+      expect(form.title).to be_nil
+    end
+  end
+
+  it do
     form = described_class.new(valid.merge(title: 'a' * 101))
     aggregate_failures do
       expect(form).to_not be_valid

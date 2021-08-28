@@ -14,7 +14,7 @@ ja:
         roles: あなたの役割
 
       release_form:
-        description: 説明
+        title: 説明
 
       team_form:
         name: 名前

@@ -29,11 +29,11 @@ module Plan
       @releases = releases
     end
 
-    sig {params(roles: Team::RoleSet, description: T.nilable(String)).void}
-    def append_release(roles, description = nil)
+    sig {params(roles: Team::RoleSet, title: T.nilable(String)).void}
+    def append_release(roles, title = nil)
       raise PermissionDenied unless Activity.allow?(:update_plan, [roles])
 
-      @releases << Release.create(next_release_number, description)
+      @releases << Release.create(next_release_number, title)
     end
 
     sig {params(roles: Team::RoleSet, release: Release).void}

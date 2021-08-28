@@ -68,7 +68,6 @@ ja:
     issue_form:
       add: アイテムを追加する
     release:
-      title: "リリース#%{number}"
       empty: アイテムはありません
     point_form:
       point: アイテムの大きさ

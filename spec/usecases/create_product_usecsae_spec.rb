@@ -13,6 +13,7 @@ RSpec.describe CreateProductUsecase do
       expect(product.description).to eq 'xyz'
 
       expect(plan.recent_release.number).to eq 1
+      expect(plan.recent_release.title).to eq 'Release#1'
       expect(plan.recent_release.issues).to eq issue_list
     end
   end
