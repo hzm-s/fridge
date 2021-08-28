@@ -15,7 +15,7 @@ class ReleasesController < ApplicationController
         AppendReleaseUsecase.perform(
           current_team_member_roles,
           Product::Id.from_string(current_product_id),
-          @form.description
+          @form.title
         )
         redirect_to product_backlog_path(product_id: current_product_id), flash: flash_success('release.create')
     else
@@ -24,17 +24,17 @@ class ReleasesController < ApplicationController
   end
 
   def edit
-    @form = ReleaseForm.new(description: current_release.description)
+    @form = ReleaseForm.new(title: current_release.title)
   end
 
   def update
-    @form = ReleaseForm.new(description: params[:form][:description])
+    @form = ReleaseForm.new(title: params[:form][:title])
     if @form.valid?
-      ModifyReleaseDescriptionUsecase.perform(
+      ModifyReleaseTitleUsecase.perform(
         Product::Id.from_string(current_product_id),
         current_team_member_roles,
         release_number,
-        @form.description
+        @form.title
       )
       redirect_to product_backlog_path(product_id: current_product_id), flash: flash_success('release.update')
     else
@@ -72,6 +72,6 @@ class ReleasesController < ApplicationController
   end
 
   def permitted_params
-    params.require(:form).permit(:description)
+    params.require(:form).permit(:title)
   end
 end

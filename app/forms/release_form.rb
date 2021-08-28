@@ -2,9 +2,9 @@
 class ReleaseForm
   include ActiveModel::Model
 
-  attr_accessor :description
+  attr_accessor :title
 
-  validates :description,
+  validates :title,
     presence: true,
     length: { maximum: 100 }, allow_blank: true
 end
