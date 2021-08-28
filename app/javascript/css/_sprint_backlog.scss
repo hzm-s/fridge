@@ -41,7 +41,7 @@
 
 .sbl-item__issue {
   display: flex;
-  min-width: 50%;
+  width: 50%;
   box-sizing: border-box;
   padding-right: .25rem;
 }
@@ -89,7 +89,7 @@
 }
 
 .sbi-issue__ac-list {
-  margin: 0 0 .25rem 1.125rem;
+  margin: .25rem 0 .25rem 1.125rem;
   padding-left: 1rem;
 }
 
