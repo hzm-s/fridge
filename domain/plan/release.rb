@@ -10,6 +10,7 @@ module Plan
 
       sig {params(number: Integer, title: T.nilable(String)).returns(T.attached_class)}
       def create(number, title = nil)
+        title ||= "Release##{number}"
         new(number, title, Issue::List.new)
       end
 

@@ -14,6 +14,7 @@ module Plan
 
         aggregate_failures do
           expect(r.number).to eq 1
+          expect(r.title).to eq 'Release#1'
           expect(r.issues).to eq issue_list
         end
       end
