@@ -1,4 +1,4 @@
-# typed: strict
+# typed: false
 require 'sorbet-runtime'
 
 module TeamRepository
