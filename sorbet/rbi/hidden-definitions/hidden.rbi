@@ -16,6 +16,14 @@ class AcceptIssueUsecase
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
+class AcceptanceCriteriaController
+  def create(); end
+
+  def destroy(); end
+
+  def update(); end
+end
+
 module AcceptanceCriteriaController::HelperMethods
   include ::ApplicationController::HelperMethods
   include ::ActionController::Base::HelperMethods
@@ -32,6 +40,9 @@ module AcceptanceCriteriaController::HelperMethods
 end
 
 module AcceptanceCriteriaController::HelperMethods
+end
+
+class AcceptanceCriteriaController
 end
 
 class AcceptanceCriterionForm
@@ -75,6 +86,14 @@ class AcceptanceCriterionForm
   def self._validators?(); end
 end
 
+class AcceptancesController
+  include ::ProductHelper
+  include ::TeamMemberHelper
+  def show(); end
+
+  def update(); end
+end
+
 module AcceptancesController::HelperMethods
   include ::ApplicationController::HelperMethods
   include ::ActionController::Base::HelperMethods
@@ -95,6 +114,9 @@ module AcceptancesController::HelperMethods
 end
 
 module AcceptancesController::HelperMethods
+end
+
+class AcceptancesController
 end
 
 module ActionCable
@@ -3589,6 +3611,18 @@ class AppendReleaseUsecase
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
+class ApplicationController
+  include ::I18nHelper
+  include ::SessionHelper
+  def current_product(); end
+
+  def feedback_message(key); end
+
+  def flash_error(key); end
+
+  def flash_success(key); end
+end
+
 module ApplicationController::HelperMethods
   include ::ActionController::Base::HelperMethods
   include ::Webpacker::Helper
@@ -3608,6 +3642,15 @@ module ApplicationController::HelperMethods
 end
 
 module ApplicationController::HelperMethods
+end
+
+class ApplicationController
+end
+
+class ApplicationMailer
+end
+
+class ApplicationMailer
 end
 
 class ApplicationRecord
@@ -6621,6 +6664,17 @@ class CreateTeamUsecase
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
+module CurrentSprint
+end
+
+class CurrentSprint::IssuesController
+  include ::ProductHelper
+  include ::TeamMemberHelper
+  def create(); end
+
+  def destroy(); end
+end
+
 module CurrentSprint::IssuesController::HelperMethods
   include ::ApplicationController::HelperMethods
   include ::ActionController::Base::HelperMethods
@@ -6643,6 +6697,15 @@ end
 module CurrentSprint::IssuesController::HelperMethods
 end
 
+class CurrentSprint::IssuesController
+end
+
+class CurrentSprint::WorkPrioritiesController
+  include ::ProductHelper
+  include ::TeamMemberHelper
+  def update(); end
+end
+
 module CurrentSprint::WorkPrioritiesController::HelperMethods
   include ::ApplicationController::HelperMethods
   include ::ActionController::Base::HelperMethods
@@ -6663,6 +6726,12 @@ module CurrentSprint::WorkPrioritiesController::HelperMethods
 end
 
 module CurrentSprint::WorkPrioritiesController::HelperMethods
+end
+
+class CurrentSprint::WorkPrioritiesController
+end
+
+module CurrentSprint
 end
 
 class DRb::DRbArray
@@ -8252,6 +8321,12 @@ class Faraday::Utils::Headers
   KeyMap = ::T.let(nil, ::T.untyped)
 end
 
+class FeatureEstimationsController
+  include ::ProductHelper
+  include ::TeamMemberHelper
+  def update(); end
+end
+
 module FeatureEstimationsController::HelperMethods
   include ::ApplicationController::HelperMethods
   include ::ActionController::Base::HelperMethods
@@ -8272,6 +8347,9 @@ module FeatureEstimationsController::HelperMethods
 end
 
 module FeatureEstimationsController::HelperMethods
+end
+
+class FeatureEstimationsController
 end
 
 class Fiber
@@ -9894,6 +9972,18 @@ class IssueRepository::AR
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
+class IssuesController
+  include ::ProductHelper
+  include ::TeamMemberHelper
+  def create(); end
+
+  def destroy(); end
+
+  def edit(); end
+
+  def update(); end
+end
+
 module IssuesController::HelperMethods
   include ::ApplicationController::HelperMethods
   include ::ActionController::Base::HelperMethods
@@ -9916,6 +10006,9 @@ module IssuesController::HelperMethods
 end
 
 module IssuesController::HelperMethods
+end
+
+class IssuesController
 end
 
 class JSON::Ext::Generator::State
@@ -10716,6 +10809,13 @@ module Marshal
   extend ::ActiveSupport::MarshalWithAutoloading
 end
 
+class MembersController
+  include ::TeamHelper
+  def create(); end
+
+  def new(); end
+end
+
 module MembersController::HelperMethods
   include ::ApplicationController::HelperMethods
   include ::ActionController::Base::HelperMethods
@@ -10732,6 +10832,9 @@ module MembersController::HelperMethods
 end
 
 module MembersController::HelperMethods
+end
+
+class MembersController
 end
 
 module MessagePack
@@ -13830,6 +13933,12 @@ class PlannedIssueQuery
   extend ::T::Private::Methods::MethodHooks
 end
 
+class PlansController
+  include ::ProductHelper
+  include ::TeamMemberHelper
+  def update(); end
+end
+
 module PlansController::HelperMethods
   include ::ApplicationController::HelperMethods
   include ::ActionController::Base::HelperMethods
@@ -13850,6 +13959,9 @@ module PlansController::HelperMethods
 end
 
 module PlansController::HelperMethods
+end
+
+class PlansController
 end
 
 class Proc
@@ -13884,6 +13996,12 @@ class ProductBacklogQuery::ReleaseStruct
   def self.inherited(s); end
 end
 
+class ProductBacklogsController
+  include ::ProductHelper
+  include ::TeamMemberHelper
+  def show(); end
+end
+
 module ProductBacklogsController::HelperMethods
   include ::ApplicationController::HelperMethods
   include ::ActionController::Base::HelperMethods
@@ -13906,8 +14024,20 @@ end
 module ProductBacklogsController::HelperMethods
 end
 
+class ProductBacklogsController
+end
+
 module ProductRepository::AR
   extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class ProductsController
+  include ::TeamHelper
+  def create(); end
+
+  def index(); end
+
+  def new(); end
 end
 
 module ProductsController::HelperMethods
@@ -13926,6 +14056,9 @@ module ProductsController::HelperMethods
 end
 
 module ProductsController::HelperMethods
+end
+
+class ProductsController
 end
 
 class Pry
@@ -15930,6 +16063,22 @@ class ReleaseForm
   def self._validators?(); end
 end
 
+class ReleasesController
+  include ::ProductHelper
+  include ::TeamMemberHelper
+  def create(); end
+
+  def current_product_id(); end
+
+  def destroy(); end
+
+  def edit(); end
+
+  def new(); end
+
+  def update(); end
+end
+
 module ReleasesController::HelperMethods
   include ::ApplicationController::HelperMethods
   include ::ActionController::Base::HelperMethods
@@ -15952,6 +16101,9 @@ module ReleasesController::HelperMethods
 end
 
 module ReleasesController::HelperMethods
+end
+
+class ReleasesController
 end
 
 class RemoveAcceptanceCriterionUsecase
@@ -17003,6 +17155,13 @@ module SassC::Util
   RUBY_VERSION_COMPONENTS = ::T.let(nil, ::T.untyped)
 end
 
+class SatisfiedAcceptanceCriteriaController
+  include ::TeamMemberHelper
+  def create(); end
+
+  def destroy(); end
+end
+
 module SatisfiedAcceptanceCriteriaController::HelperMethods
   include ::ApplicationController::HelperMethods
   include ::ActionController::Base::HelperMethods
@@ -17021,6 +17180,9 @@ module SatisfiedAcceptanceCriteriaController::HelperMethods
 end
 
 module SatisfiedAcceptanceCriteriaController::HelperMethods
+end
+
+class SatisfiedAcceptanceCriteriaController
 end
 
 class SatisfyAcceptanceCriterionUsecase
@@ -17350,6 +17512,12 @@ class SprintBacklogQuery::SprintBacklogStruct
   def self.inherited(s); end
 end
 
+class SprintBacklogsController
+  include ::ProductHelper
+  include ::TeamMemberHelper
+  def show(); end
+end
+
 module SprintBacklogsController::HelperMethods
   include ::ApplicationController::HelperMethods
   include ::ActionController::Base::HelperMethods
@@ -17374,8 +17542,19 @@ end
 module SprintBacklogsController::HelperMethods
 end
 
+class SprintBacklogsController
+end
+
 class SprintRepository::AR
   extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class SprintsController
+  include ::ProductHelper
+  include ::TeamMemberHelper
+  def create(); end
+
+  def new(); end
 end
 
 module SprintsController::HelperMethods
@@ -17398,6 +17577,9 @@ module SprintsController::HelperMethods
 end
 
 module SprintsController::HelperMethods
+end
+
+class SprintsController
 end
 
 module Sprockets
@@ -17724,6 +17906,25 @@ class TaskForm
   def self._validators?(); end
 end
 
+class TaskStatusesController
+  def update(); end
+  USECASES = ::T.let(nil, ::T.untyped)
+end
+
+class TaskStatusesController
+end
+
+class TasksController
+  def create(); end
+
+  def destroy(); end
+
+  def update(); end
+end
+
+class TasksController
+end
+
 class Team::Member
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
@@ -17836,6 +18037,11 @@ module TeamRepository::AR
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
+class TeamsController
+  include ::ProductHelper
+  def show(); end
+end
+
 module TeamsController::HelperMethods
   include ::ApplicationController::HelperMethods
   include ::ActionController::Base::HelperMethods
@@ -17852,6 +18058,9 @@ module TeamsController::HelperMethods
 end
 
 module TeamsController::HelperMethods
+end
+
+class TeamsController
 end
 
 class Tempfile
