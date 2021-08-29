@@ -1,3 +1,4 @@
+# typed: ignore
 class TasksController < ApplicationController
   def create
     @issue_id = Issue::Id.from_string(params[:issue_id])

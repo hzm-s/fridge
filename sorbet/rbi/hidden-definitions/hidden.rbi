@@ -290,7 +290,7 @@ class ActionDispatch::DebugView
 
   def protect_against_forgery?(); end
 
-  def render(*_); end
+  def render(*arg); end
   RESCUES_TEMPLATE_PATH = ::T.let(nil, ::T.untyped)
 end
 
@@ -307,6 +307,9 @@ end
 
 class ActionDispatch::HostAuthorization
   DEFAULT_RESPONSE_APP = ::T.let(nil, ::T.untyped)
+  HOSTNAME = ::T.let(nil, ::T.untyped)
+  VALID_FORWARDED_HOST = ::T.let(nil, ::T.untyped)
+  VALID_ORIGIN_HOST = ::T.let(nil, ::T.untyped)
 end
 
 module ActionDispatch::Http::Cache::Response
@@ -432,7 +435,7 @@ class ActionDispatch::Integration::Session
 
   def host(); end
 
-  def host!(_); end
+  def host!(arg); end
 
   def host=(host); end
 
@@ -758,6 +761,9 @@ class ActionDispatch::Session::CacheStore
 end
 
 class ActionDispatch::Session::CacheStore
+end
+
+class ActionDispatch::Session::CookieStore::SessionId
 end
 
 class ActionDispatch::ShowExceptions
@@ -1171,7 +1177,7 @@ end
 class ActionView::OutputBuffer
   def append=(value); end
 
-  def initialize(*_); end
+  def initialize(*arg); end
 
   def safe_append=(value); end
 
@@ -1396,7 +1402,7 @@ end
 class ActiveJob::QueueAdapters::InlineAdapter
   def enqueue(job); end
 
-  def enqueue_at(*_); end
+  def enqueue_at(*arg); end
 end
 
 class ActiveJob::QueueAdapters::InlineAdapter
@@ -1516,7 +1522,7 @@ module ActiveModel::Attributes
 
   def freeze(); end
 
-  def initialize(*_); end
+  def initialize(*arg); end
 end
 
 module ActiveModel::Attributes::ClassMethods
@@ -1872,7 +1878,7 @@ class ActiveRecord::Associations::JoinDependency::Aliases::Column
 end
 
 class ActiveRecord::Associations::JoinDependency::Aliases::Column
-  def self.[](*_); end
+  def self.[](*arg); end
 
   def self.members(); end
 end
@@ -1890,7 +1896,7 @@ class ActiveRecord::Associations::JoinDependency::Aliases::Table
 end
 
 class ActiveRecord::Associations::JoinDependency::Aliases::Table
-  def self.[](*_); end
+  def self.[](*arg); end
 
   def self.members(); end
 end
@@ -1995,7 +2001,7 @@ class ActiveRecord::Associations::Preloader::Association
 end
 
 class ActiveRecord::Associations::Preloader::ThroughAssociation
-  def initialize(*_); end
+  def initialize(*arg); end
   PRELOADER = ::T.let(nil, ::T.untyped)
 end
 
@@ -2024,6 +2030,9 @@ module ActiveRecord::Associations::ThroughAssociation
 end
 
 module ActiveRecord::Associations::ThroughAssociation
+end
+
+class ActiveRecord::AttributeMethods::TimeZoneConversion::TimeZoneConverter
 end
 
 module ActiveRecord::Base::GeneratedAttributeMethods
@@ -2259,7 +2268,7 @@ class ActiveRecord::ConnectionAdapters::LegacyPoolManager
 
   def remove_pool_config(_, shard); end
 
-  def set_pool_config(_, shard, pool_config); end
+  def set_pool_config(role, shard, pool_config); end
 
   def shard_names(); end
 end
@@ -2292,6 +2301,9 @@ end
 
 class ActiveRecord::ConnectionAdapters::PostgreSQL::OID::Uuid
   ACCEPTABLE_UUID = ::T.let(nil, ::T.untyped)
+end
+
+class ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
 end
 
 class ActiveRecord::ConnectionAdapters::PostgreSQLAdapter
@@ -2436,6 +2448,10 @@ class ActiveRecord::ConnectionAdapters::TransactionState
 
   def initialize(state=T.unsafe(nil)); end
 
+  def invalidate!(); end
+
+  def invalidated?(); end
+
   def nullify!(); end
 
   def rollback!(); end
@@ -2505,6 +2521,9 @@ end
 
 module ActiveRecord::LegacyYamlAdapter
   def self.convert(klass, coder); end
+end
+
+class ActiveRecord::Locking::LockingType
 end
 
 class ActiveRecord::LogSubscriber
@@ -2839,7 +2858,7 @@ class ActiveRecord::PredicateBuilder::RangeHandler::RangeWithBinds
 end
 
 class ActiveRecord::PredicateBuilder::RangeHandler::RangeWithBinds
-  def self.[](*_); end
+  def self.[](*arg); end
 
   def self.members(); end
 end
@@ -3020,7 +3039,7 @@ class ActiveRecord::StatementCache::PartialQueryCollector
 
   def add_bind(obj); end
 
-  def add_binds(binds); end
+  def add_binds(binds, proc_for_binds=T.unsafe(nil)); end
 
   def preparable(); end
 
@@ -3221,6 +3240,12 @@ module ActiveRecord::Transactions
 end
 
 ActiveRecord::Type::ImmutableString = ActiveModel::Type::ImmutableString
+
+class ActiveRecord::Type::Serialized
+end
+
+class ActiveRecord::Type::Time::Value
+end
 
 module ActiveRecord::VERSION
   MAJOR = ::T.let(nil, ::T.untyped)
@@ -3673,12 +3698,6 @@ end
 class Bootsnap::CompileCache::Uncompilable
 end
 
-class Bootsnap::CompileCache::YAML::NoTagsVisitor
-end
-
-class Bootsnap::CompileCache::YAML::NoTagsVisitor
-end
-
 module Bootsnap::ExplicitRequire
   ARCHDIR = ::T.let(nil, ::T.untyped)
   DLEXT = ::T.let(nil, ::T.untyped)
@@ -3816,7 +3835,7 @@ class Bundler::Fetcher::CompactIndex::ClientFetcher
 end
 
 class Bundler::Fetcher::CompactIndex::ClientFetcher
-  def self.[](*_); end
+  def self.[](*arg); end
 
   def self.members(); end
 end
@@ -4107,7 +4126,7 @@ module Bundler::Plugin::API::Source
 
   def dependency_names=(dependency_names); end
 
-  def double_check_for(*_); end
+  def double_check_for(*arg); end
 
   def eql?(other); end
 
@@ -4646,11 +4665,11 @@ module Bundler::Thor::Base::ClassMethods
 
   def arguments(); end
 
-  def attr_accessor(*_); end
+  def attr_accessor(*arg); end
 
-  def attr_reader(*_); end
+  def attr_reader(*arg); end
 
-  def attr_writer(*_); end
+  def attr_writer(*arg); end
 
   def baseclass(); end
 
@@ -4878,9 +4897,9 @@ class Bundler::Thor::Group
 
   def self.invoke_from_option(*names, &block); end
 
-  def self.printable_commands(*_); end
+  def self.printable_commands(*arg); end
 
-  def self.printable_tasks(*_); end
+  def self.printable_tasks(*arg); end
 
   def self.remove_invocation(*names); end
 
@@ -5198,7 +5217,7 @@ class Bundler::Thor::Shell::Basic
 
   def say_status(status, message, log_status=T.unsafe(nil)); end
 
-  def set_color(string, *_); end
+  def set_color(string, *arg); end
 
   def show_diff(destination, content); end
 
@@ -5953,7 +5972,7 @@ class Bundler::VersionRanges::NEq
 end
 
 class Bundler::VersionRanges::NEq
-  def self.[](*_); end
+  def self.[](*arg); end
 
   def self.members(); end
 end
@@ -5988,13 +6007,13 @@ class Bundler::VersionRanges::ReqR::Endpoint
 end
 
 class Bundler::VersionRanges::ReqR::Endpoint
-  def self.[](*_); end
+  def self.[](*arg); end
 
   def self.members(); end
 end
 
 class Bundler::VersionRanges::ReqR
-  def self.[](*_); end
+  def self.[](*arg); end
 
   def self.members(); end
 end
@@ -6189,7 +6208,7 @@ class CodeRay::Duo
 end
 
 class CodeRay::Duo
-  def self.[](*_); end
+  def self.[](*arg); end
 end
 
 class CodeRay::Encoders::Encoder
@@ -6350,11 +6369,11 @@ class CodeRay::Tokens
 
   def split_into_parts(*sizes); end
 
-  def text_token(*_); end
+  def text_token(*arg); end
 
   def to_s(); end
 
-  def tokens(*_); end
+  def tokens(*arg); end
 end
 
 class CodeRay::Tokens
@@ -6614,6 +6633,8 @@ module CurrentSprint::IssuesController::HelperMethods
   include ::PblHelper
   include ::PresentationHelper
   include ::SblHelper
+  def current_product(*args, &block); end
+
   def current_team_member(*args, &block); end
 
   def current_team_member_roles(*args, &block); end
@@ -7356,7 +7377,7 @@ end
 class DidYouMean::NullChecker
   def corrections(); end
 
-  def initialize(*_); end
+  def initialize(*arg); end
 end
 
 class DidYouMean::PlainFormatter
@@ -7417,7 +7438,7 @@ class Dir
 end
 
 class Dir
-  def self.exists?(_); end
+  def self.exists?(arg); end
 end
 
 class DissatisfyAcceptanceCriterionUsecase
@@ -7458,15 +7479,15 @@ module ERB::Util
 end
 
 class Encoding
-  def _dump(*_); end
+  def _dump(*arg); end
 end
 
 class Encoding::Converter
-  def initialize(*_); end
+  def initialize(*arg); end
 end
 
 class Encoding
-  def self._load(_); end
+  def self._load(arg); end
 end
 
 module Enumerable
@@ -7475,7 +7496,7 @@ module Enumerable
 end
 
 class Enumerator
-  def +(_); end
+  def +(arg); end
 
   def each_with_index(); end
 end
@@ -7489,7 +7510,7 @@ class Enumerator::ArithmeticSequence
 
   def exclude_end?(); end
 
-  def last(*_); end
+  def last(*arg); end
 
   def step(); end
 end
@@ -7504,9 +7525,9 @@ class Enumerator::Chain
 end
 
 class Enumerator::Generator
-  def each(*_, &blk); end
+  def each(*arg, &blk); end
 
-  def initialize(*_); end
+  def initialize(*arg); end
 end
 
 class Errno::EAUTH
@@ -7688,7 +7709,7 @@ end
 
 class Etc::Group
   extend ::Enumerable
-  def self.[](*_); end
+  def self.[](*arg); end
 
   def self.each(&blk); end
 
@@ -7727,7 +7748,7 @@ end
 
 class Etc::Passwd
   extend ::Enumerable
-  def self.[](*_); end
+  def self.[](*arg); end
 
   def self.each(&blk); end
 
@@ -7999,27 +8020,6 @@ class Faraday::Adapter::Excon
   OPTS_KEYS = ::T.let(nil, ::T.untyped)
 end
 
-class Faraday::Adapter::HTTPClient
-  def build_connection(env); end
-
-  def configure_client(client); end
-
-  def configure_proxy(client, proxy); end
-
-  def configure_socket(client, bind); end
-
-  def configure_ssl(client, ssl); end
-
-  def configure_timeouts(client, req); end
-
-  def ssl_cert_store(ssl); end
-
-  def ssl_verify_mode(ssl); end
-end
-
-class Faraday::Adapter::HTTPClient
-end
-
 class Faraday::Adapter::NetHttp
   NET_HTTP_EXCEPTIONS = ::T.let(nil, ::T.untyped)
 end
@@ -8029,25 +8029,11 @@ class Faraday::Adapter::NetHttpPersistent
 end
 
 class Faraday::Adapter::Patron
-  def build_connection(env); end
-
-  def configure_proxy(session, proxy); end
-
-  def configure_ssl(session, ssl); end
-
-  def configure_timeouts(session, req); end
   CURL_TIMEOUT_MESSAGES = ::T.let(nil, ::T.untyped)
 end
 
-class Faraday::Adapter::Patron
-end
-
 class Faraday::Adapter::Rack
-  def initialize(faraday_app, rack_app); end
   SPECIAL_HEADERS = ::T.let(nil, ::T.untyped)
-end
-
-class Faraday::Adapter::Rack
 end
 
 class Faraday::Adapter::Test
@@ -8063,7 +8049,7 @@ end
 class Faraday::Adapter::Test::Stub
   def headers_match?(request_headers); end
 
-  def initialize(host, full, headers, body, block); end
+  def initialize(host, full, headers, body, strict_mode, block); end
 
   def matches?(request_host, request_uri, request_headers, request_body); end
 
@@ -8084,6 +8070,8 @@ class Faraday::Adapter::Test::Stubs
 
   def head(path, headers=T.unsafe(nil), &block); end
 
+  def initialize(strict_mode: T.unsafe(nil)); end
+
   def match(request_method, host, path, headers, body); end
 
   def matches?(stack, host, path, headers, body); end
@@ -8097,6 +8085,8 @@ class Faraday::Adapter::Test::Stubs
   def post(path, body=T.unsafe(nil), headers=T.unsafe(nil), &block); end
 
   def put(path, body=T.unsafe(nil), headers=T.unsafe(nil), &block); end
+
+  def strict_mode=(value); end
 
   def verify_stubbed_calls(); end
 end
@@ -8122,6 +8112,7 @@ end
 
 class Faraday::Connection
   METHODS = ::T.let(nil, ::T.untyped)
+  USER_AGENT = ::T.let(nil, ::T.untyped)
 end
 
 module Faraday::DecodeMethods
@@ -8149,6 +8140,10 @@ end
 
 Faraday::FilePart = UploadIO
 
+module Faraday::HTTPClient
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
 module Faraday::NetHttp
   VERSION = ::T.let(nil, ::T.untyped)
 end
@@ -8158,6 +8153,14 @@ module Faraday::NetHttpPersistent
 end
 
 Faraday::Parts = Parts
+
+module Faraday::Patron
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module Faraday::Rack
+  VERSION = ::T.let(nil, ::T.untyped)
+end
 
 class Faraday::RackBuilder
   LOCK_ERR = ::T.let(nil, ::T.untyped)
@@ -8272,7 +8275,7 @@ module FeatureEstimationsController::HelperMethods
 end
 
 class Fiber
-  def transfer(*_); end
+  def transfer(*arg); end
 end
 
 class Fiber
@@ -8280,7 +8283,9 @@ class Fiber
 end
 
 class File
-  def self.exists?(_); end
+  def self.atomic_write(file_name, temp_dir=T.unsafe(nil)); end
+
+  def self.exists?(arg); end
 end
 
 module FileUtils
@@ -8352,7 +8357,7 @@ module Forwardable
 end
 
 module GC
-  def garbage_collect(*_); end
+  def garbage_collect(*arg); end
 end
 
 module GC
@@ -8989,7 +8994,7 @@ class Hash
 end
 
 class Hash
-  def self.try_convert(_); end
+  def self.from_xml(xml, disallowed_types=T.unsafe(nil)); end
 end
 
 module Hashie
@@ -9491,9 +9496,9 @@ class IO
 
   def echo?(); end
 
-  def getch(*_); end
+  def getch(*arg); end
 
-  def getpass(*_); end
+  def getpass(*arg); end
 
   def goto(); end
 
@@ -9503,7 +9508,7 @@ class IO
 
   def noecho(); end
 
-  def nonblock(*_); end
+  def nonblock(*arg); end
 
   def nonblock=(nonblock); end
 
@@ -9513,21 +9518,21 @@ class IO
 
   def oflush(); end
 
-  def pathconf(_); end
+  def pathconf(arg); end
 
   def pressed?(); end
 
-  def raw(*_); end
+  def raw(*arg); end
 
-  def raw!(*_); end
+  def raw!(*arg); end
 
   def ready?(); end
 
-  def wait(*_); end
+  def wait(*arg); end
 
-  def wait_readable(*_); end
+  def wait_readable(*arg); end
 
-  def wait_writable(*_); end
+  def wait_writable(*arg); end
 
   def winsize(); end
 
@@ -9539,7 +9544,7 @@ IO::EWOULDBLOCKWaitReadable = IO::EAGAINWaitReadable
 IO::EWOULDBLOCKWaitWritable = IO::EAGAINWaitWritable
 
 class IO
-  def self.console(*_); end
+  def self.console(*arg); end
 
   def self.console_size(); end
 
@@ -9560,7 +9565,7 @@ module IRB
 end
 
 class IRB::Context
-  def __exit__(*_); end
+  def __exit__(*arg); end
 
   def __inspect__(); end
 
@@ -9587,7 +9592,7 @@ class IRB::DefaultEncodings
 end
 
 class IRB::DefaultEncodings
-  def self.[](*_); end
+  def self.[](*arg); end
 
   def self.members(); end
 end
@@ -9914,11 +9919,11 @@ module IssuesController::HelperMethods
 end
 
 class JSON::Ext::Generator::State
-  def self.from_state(_); end
+  def self.from_state(arg); end
 end
 
 class JSON::Ext::Parser
-  def initialize(*_); end
+  def initialize(*arg); end
 end
 
 JSON::Parser = JSON::Ext::Parser
@@ -10022,7 +10027,7 @@ end
 module Kernel
   def self.at_exit(); end
 
-  def self.autoload(_, _1); end
+  def self.autoload(arg, arg1); end
 
   def self.fork(); end
 end
@@ -10058,7 +10063,6 @@ end
 
 class Listen::Adapter::Linux
   DEFAULTS = ::T.let(nil, ::T.untyped)
-  INOTIFY_LIMIT_MESSAGE = ::T.let(nil, ::T.untyped)
   OS_REGEXP = ::T.let(nil, ::T.untyped)
   README_URL = ::T.let(nil, ::T.untyped)
 end
@@ -10162,6 +10166,7 @@ module Loofah::HTML5::Scrub
   CSS_IMPORTANT = ::T.let(nil, ::T.untyped)
   CSS_KEYWORDISH = ::T.let(nil, ::T.untyped)
   CSS_PROPERTY_STRING_WITHOUT_EMBEDDED_QUOTES = ::T.let(nil, ::T.untyped)
+  DATA_ATTRIBUTE_NAME = ::T.let(nil, ::T.untyped)
 end
 
 Loofah::HTML5::WhiteList = Loofah::HTML5::SafeList
@@ -10815,7 +10820,7 @@ class ModifyIssueUsecase
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
-class ModifyReleaseDescriptionUsecase
+class ModifyReleaseTitleUsecase
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
 end
@@ -10954,6 +10959,8 @@ end
 class Net::HTTPAlreadyReported
 end
 
+Net::HTTPClientError::EXCEPTION_TYPE = Net::HTTPServerException
+
 Net::HTTPClientErrorCode = Net::HTTPClientError
 
 class Net::HTTPEarlyHints
@@ -10965,13 +10972,7 @@ end
 
 Net::HTTPFatalErrorCode = Net::HTTPClientError
 
-class Net::HTTPInformation
-end
-
-Net::HTTPInformationCode::EXCEPTION_TYPE = Net::HTTPError
-
-class Net::HTTPInformation
-end
+Net::HTTPInformationCode = Net::HTTPInformation
 
 class Net::HTTPLoopDetected
   HAS_BODY = ::T.let(nil, ::T.untyped)
@@ -11027,17 +11028,13 @@ Net::HTTPResponceReceiver = Net::HTTPResponse
 
 Net::HTTPRetriableCode = Net::HTTPRedirection
 
+Net::HTTPServerError::EXCEPTION_TYPE = Net::HTTPFatalError
+
 Net::HTTPServerErrorCode = Net::HTTPServerError
 
 Net::HTTPSession = Net::HTTP
 
-class Net::HTTPSuccess
-end
-
-Net::HTTPSuccessCode::EXCEPTION_TYPE = Net::HTTPError
-
-class Net::HTTPSuccess
-end
+Net::HTTPSuccessCode = Net::HTTPSuccess
 
 class Net::HTTPURITooLong
   HAS_BODY = ::T.let(nil, ::T.untyped)
@@ -11275,6 +11272,7 @@ module Nokogiri
   LIBXML_LOADED_VERSION = ::T.let(nil, ::T.untyped)
   LIBXML_MEMORY_MANAGEMENT = ::T.let(nil, ::T.untyped)
   LIBXSLT_COMPILED_VERSION = ::T.let(nil, ::T.untyped)
+  LIBXSLT_DATETIME_ENABLED = ::T.let(nil, ::T.untyped)
   LIBXSLT_LOADED_VERSION = ::T.let(nil, ::T.untyped)
   LIBXSLT_PATCHES = ::T.let(nil, ::T.untyped)
   OTHER_LIBRARY_VERSIONS = ::T.let(nil, ::T.untyped)
@@ -11299,11 +11297,31 @@ module Nokogiri::Decorators::Slop
   XPATH_PREFIX = ::T.let(nil, ::T.untyped)
 end
 
-module Nokogiri::HTML
+module Nokogiri::Gumbo
+  DEFAULT_MAX_ATTRIBUTES = ::T.let(nil, ::T.untyped)
+  DEFAULT_MAX_ERRORS = ::T.let(nil, ::T.untyped)
+  DEFAULT_MAX_TREE_DEPTH = ::T.let(nil, ::T.untyped)
+end
+
+module Nokogiri::HTML4
+end
+
+class Nokogiri::HTML4::ElementDescription
+end
+
+Nokogiri::HTML::ElementDescription::Desc = Struct::HTMLElementDescription
+
+class Nokogiri::HTML4::ElementDescription
+end
+
+module Nokogiri::HTML4
+end
+
+module Nokogiri::HTML4
   NamedCharacters = ::T.let(nil, ::T.untyped)
 end
 
-class Nokogiri::HTML::ElementDescription
+class Nokogiri::HTML4::ElementDescription
   ACTION_ATTR = ::T.let(nil, ::T.untyped)
   ALIGN_ATTR = ::T.let(nil, ::T.untyped)
   ALT_ATTR = ::T.let(nil, ::T.untyped)
@@ -11414,7 +11432,14 @@ class Nokogiri::HTML::ElementDescription
   WIDTH_ATTR = ::T.let(nil, ::T.untyped)
 end
 
-Nokogiri::HTML::ElementDescription::Desc = Struct::HTMLElementDescription
+module Nokogiri::HTML5
+  HTML_NAMESPACE = ::T.let(nil, ::T.untyped)
+  MATHML_NAMESPACE = ::T.let(nil, ::T.untyped)
+  SVG_NAMESPACE = ::T.let(nil, ::T.untyped)
+  XLINK_NAMESPACE = ::T.let(nil, ::T.untyped)
+  XMLNS_NAMESPACE = ::T.let(nil, ::T.untyped)
+  XML_NAMESPACE = ::T.let(nil, ::T.untyped)
+end
 
 module Nokogiri::XML
   XML_C14N_1_0 = ::T.let(nil, ::T.untyped)
@@ -11456,6 +11481,7 @@ class Nokogiri::XML::EntityDecl
 end
 
 class Nokogiri::XML::Node
+  include ::Nokogiri::HTML5::Node
   ATTRIBUTE_DECL = ::T.let(nil, ::T.untyped)
   ATTRIBUTE_NODE = ::T.let(nil, ::T.untyped)
   CDATA_SECTION_NODE = ::T.let(nil, ::T.untyped)
@@ -11489,6 +11515,7 @@ class Nokogiri::XML::ParseOptions
   DEFAULT_HTML = ::T.let(nil, ::T.untyped)
   DEFAULT_SCHEMA = ::T.let(nil, ::T.untyped)
   DEFAULT_XML = ::T.let(nil, ::T.untyped)
+  DEFAULT_XSLT = ::T.let(nil, ::T.untyped)
   DTDATTR = ::T.let(nil, ::T.untyped)
   DTDLOAD = ::T.let(nil, ::T.untyped)
   DTDVALID = ::T.let(nil, ::T.untyped)
@@ -11680,7 +11707,7 @@ class OpenSSL::BN
 
   def -@(); end
 
-  def /(_); end
+  def /(arg); end
 
   def negative?(); end
 end
@@ -11695,11 +11722,11 @@ class OpenSSL::KDF::KDFError
 end
 
 module OpenSSL::KDF
-  def self.hkdf(*_); end
+  def self.hkdf(*arg); end
 
-  def self.pbkdf2_hmac(*_); end
+  def self.pbkdf2_hmac(*arg); end
 
-  def self.scrypt(*_); end
+  def self.scrypt(*arg); end
 end
 
 class OpenSSL::OCSP::Request
@@ -11713,7 +11740,7 @@ class OpenSSL::PKey::EC
 end
 
 class OpenSSL::PKey::EC::Point
-  def to_octet_string(_); end
+  def to_octet_string(arg); end
 end
 
 module OpenSSL::SSL
@@ -13734,11 +13761,11 @@ end
 ParseError = Racc::ParseError
 
 class Pathname
-  def fnmatch?(*_); end
+  def fnmatch?(*arg); end
 
-  def glob(*_); end
+  def glob(*arg); end
 
-  def make_symlink(_); end
+  def make_symlink(arg); end
 end
 
 class Person::Person
@@ -13826,9 +13853,9 @@ module PlansController::HelperMethods
 end
 
 class Proc
-  def <<(_); end
+  def <<(arg); end
 
-  def >>(_); end
+  def >>(arg); end
 
   def clone(); end
 end
@@ -13870,8 +13897,6 @@ module ProductBacklogsController::HelperMethods
   include ::PresentationHelper
   include ::SblHelper
   def current_product(*args, &block); end
-
-  def current_product_id(*args, &block); end
 
   def current_team_member(*args, &block); end
 
@@ -14055,8 +14080,12 @@ module Psych
 end
 
 module Puma
+  HAS_FORK = ::T.let(nil, ::T.untyped)
+  HAS_SSL = ::T.let(nil, ::T.untyped)
+  HAS_UNIX_SOCKET = ::T.let(nil, ::T.untyped)
   HTTP_STATUS_CODES = ::T.let(nil, ::T.untyped)
   IS_JRUBY = ::T.let(nil, ::T.untyped)
+  IS_MRI = ::T.let(nil, ::T.untyped)
   IS_WINDOWS = ::T.let(nil, ::T.untyped)
   Plugins = ::T.let(nil, ::T.untyped)
   STATUS_WITH_NO_ENTITY_BODY = ::T.let(nil, ::T.untyped)
@@ -14079,6 +14108,7 @@ module Puma::ConfigDefault
 end
 
 module Puma::Const
+  BANNED_HEADER_KEY = ::T.let(nil, ::T.untyped)
   CGI_VER = ::T.let(nil, ::T.untyped)
   CHUNKED = ::T.let(nil, ::T.untyped)
   CHUNK_SIZE = ::T.let(nil, ::T.untyped)
@@ -14092,6 +14122,7 @@ module Puma::Const
   CONTENT_LENGTH2 = ::T.let(nil, ::T.untyped)
   CONTENT_LENGTH_S = ::T.let(nil, ::T.untyped)
   CONTINUE = ::T.let(nil, ::T.untyped)
+  DQUOTE = ::T.let(nil, ::T.untyped)
   EARLY_HINTS = ::T.let(nil, ::T.untyped)
   ERROR_RESPONSE = ::T.let(nil, ::T.untyped)
   FAST_TRACK_KA_TIMEOUT = ::T.let(nil, ::T.untyped)
@@ -14111,17 +14142,18 @@ module Puma::Const
   HTTP_11_200 = ::T.let(nil, ::T.untyped)
   HTTP_CONNECTION = ::T.let(nil, ::T.untyped)
   HTTP_EXPECT = ::T.let(nil, ::T.untyped)
+  HTTP_HEADER_DELIMITER = ::T.let(nil, ::T.untyped)
   HTTP_HOST = ::T.let(nil, ::T.untyped)
-  HTTP_INJECTION_REGEX = ::T.let(nil, ::T.untyped)
   HTTP_VERSION = ::T.let(nil, ::T.untyped)
   HTTP_X_FORWARDED_FOR = ::T.let(nil, ::T.untyped)
   HTTP_X_FORWARDED_PROTO = ::T.let(nil, ::T.untyped)
   HTTP_X_FORWARDED_SCHEME = ::T.let(nil, ::T.untyped)
   HTTP_X_FORWARDED_SSL = ::T.let(nil, ::T.untyped)
+  ILLEGAL_HEADER_KEY_REGEX = ::T.let(nil, ::T.untyped)
+  ILLEGAL_HEADER_VALUE_REGEX = ::T.let(nil, ::T.untyped)
   KEEP_ALIVE = ::T.let(nil, ::T.untyped)
   LINE_END = ::T.let(nil, ::T.untyped)
   LOCALHOST = ::T.let(nil, ::T.untyped)
-  LOCALHOST_ADDR = ::T.let(nil, ::T.untyped)
   LOCALHOST_IP = ::T.let(nil, ::T.untyped)
   MAX_BODY = ::T.let(nil, ::T.untyped)
   MAX_FAST_INLINE = ::T.let(nil, ::T.untyped)
@@ -14159,6 +14191,10 @@ module Puma::Const
   WRITE_TIMEOUT = ::T.let(nil, ::T.untyped)
 end
 
+class Puma::ErrorLogger
+  REQUEST_FORMAT = ::T.let(nil, ::T.untyped)
+end
+
 class Puma::Events
   DEFAULT = ::T.let(nil, ::T.untyped)
 end
@@ -14169,16 +14205,25 @@ end
 class Puma::HttpParserError
 end
 
+module Puma::JSONSerialization
+  BACKSLASH = ::T.let(nil, ::T.untyped)
+  CHAR_TO_ESCAPE = ::T.let(nil, ::T.untyped)
+  CONTROL_CHAR_TO_ESCAPE = ::T.let(nil, ::T.untyped)
+  QUOTE = ::T.let(nil, ::T.untyped)
+end
+
 class Puma::Launcher
   KEYS_NOT_TO_PERSIST_IN_STATE = ::T.let(nil, ::T.untyped)
 end
 
 module Puma::MiniSSL
+  HAS_TLS1_3 = ::T.let(nil, ::T.untyped)
   OPENSSL_LIBRARY_VERSION = ::T.let(nil, ::T.untyped)
   OPENSSL_NO_SSL3 = ::T.let(nil, ::T.untyped)
   OPENSSL_NO_TLS1 = ::T.let(nil, ::T.untyped)
   OPENSSL_NO_TLS1_1 = ::T.let(nil, ::T.untyped)
   OPENSSL_VERSION = ::T.let(nil, ::T.untyped)
+  VERIFICATION_FLAGS = ::T.let(nil, ::T.untyped)
   VERIFY_FAIL_IF_NO_PEER_CERT = ::T.let(nil, ::T.untyped)
   VERIFY_NONE = ::T.let(nil, ::T.untyped)
   VERIFY_PEER = ::T.let(nil, ::T.untyped)
@@ -14194,11 +14239,8 @@ class Puma::Plugin
   CALLER_FILE = ::T.let(nil, ::T.untyped)
 end
 
-class Puma::Reactor
-  DefaultSleepFor = ::T.let(nil, ::T.untyped)
-end
-
 class Puma::Server
+  STAT_METHODS = ::T.let(nil, ::T.untyped)
   ThreadLocalKey = ::T.let(nil, ::T.untyped)
 end
 
@@ -14671,7 +14713,7 @@ class Rack::Auth::Digest::Request
 
   def nonce(); end
 
-  def respond_to?(sym, *_); end
+  def respond_to?(sym, *arg); end
 end
 
 class Rack::Auth::Digest::Request
@@ -15196,7 +15238,7 @@ class Rack::Multipart::Parser::MultipartInfo
 end
 
 class Rack::Multipart::Parser::MultipartInfo
-  def self.[](*_); end
+  def self.[](*arg); end
 
   def self.members(); end
 end
@@ -15340,7 +15382,7 @@ class Rack::Protection::EscapedParams
 
   def handle(hash); end
 
-  def initialize(*_); end
+  def initialize(*arg); end
 end
 
 class Rack::Protection::EscapedParams
@@ -15562,6 +15604,9 @@ end
 
 class Rack::Session::Abstract::SessionHash
   Unspecified = ::T.let(nil, ::T.untyped)
+end
+
+class Rack::Session::Cookie::SessionId
 end
 
 class Rack::Session::Pool
@@ -15807,7 +15852,7 @@ module Rake::FileUtilsExt
 end
 
 class Random
-  def self.bytes(_); end
+  def self.bytes(arg); end
 end
 
 class Range
@@ -15815,7 +15860,7 @@ class Range
   include ::ActiveSupport::CompareWithRange
   include ::ActiveSupport::IncludeTimeWithZone
   include ::ActiveSupport::EachTimeWithZone
-  def %(_); end
+  def %(arg); end
 
   def entries(); end
 
@@ -16903,13 +16948,13 @@ end
 module RubyVM::MJIT
   def self.enabled?(); end
 
-  def self.pause(*_); end
+  def self.pause(*arg); end
 
   def self.resume(); end
 end
 
 class RubyVM
-  def self.resolve_feature_path(_); end
+  def self.resolve_feature_path(arg); end
 end
 
 module SassC
@@ -17610,13 +17655,13 @@ end
 class StringScanner
   def bol?(); end
 
-  def initialize(*_); end
+  def initialize(*arg); end
   Id = ::T.let(nil, ::T.untyped)
   Version = ::T.let(nil, ::T.untyped)
 end
 
 class Struct
-  def filter(*_); end
+  def filter(*arg); end
 end
 
 Struct::Group = Etc::Group
@@ -17954,7 +17999,7 @@ class Time
 end
 
 class TracePoint
-  def __enable(_, _1); end
+  def __enable(arg, arg1); end
 
   def eval_script(); end
 
@@ -18264,7 +18309,7 @@ class WebConsole::View
 
   def only_on_regular_page(*args); end
 
-  def render(*_); end
+  def render(*arg); end
 
   def render_inlined_string(template); end
 
@@ -18616,17 +18661,17 @@ module Zeitwerk::ExplicitNamespace
 end
 
 class Zlib::Deflate
-  def initialize(*_); end
+  def initialize(*arg); end
 end
 
 class Zlib::GzipReader
-  def initialize(*_); end
+  def initialize(*arg); end
 end
 
 class Zlib::GzipWriter
-  def initialize(*_); end
+  def initialize(*arg); end
 end
 
 class Zlib::Inflate
-  def initialize(*_); end
+  def initialize(*arg); end
 end

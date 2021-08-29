@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/faraday-net_http_persistent/all/faraday-net_http_persistent.rbi
 #
-# faraday-net_http_persistent-1.1.0
+# faraday-net_http_persistent-1.2.0
 
 module Faraday
 end

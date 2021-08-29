@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/faraday/all/faraday.rbi
 #
-# faraday-1.4.2
+# faraday-1.7.0
 
 module Faraday
   def self.default_adapter; end

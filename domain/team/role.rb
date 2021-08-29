@@ -23,7 +23,7 @@ module Team
       Developer = new('developer')
       ScrumMaster = new('scrum_master')
     end
-    
+
     sig {override.returns(Activity::Set)}
     def available_activities
       activities =
@@ -56,7 +56,7 @@ module Team
             :accept_task,
           ]
         end
-      Activity::Set.from_symbols(T.must(activities))
+      Activity::Set.from_symbols(activities)
     end
 
     sig {returns(String)}

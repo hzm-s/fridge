@@ -1,3 +1,4 @@
+# typed: ignore
 class SprintsController < ApplicationController
   include ProductHelper
   include TeamMemberHelper

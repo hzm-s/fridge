@@ -1,3 +1,4 @@
+# typed: ignore
 class SatisfiedAcceptanceCriteriaController < ApplicationController
   include TeamMemberHelper
 

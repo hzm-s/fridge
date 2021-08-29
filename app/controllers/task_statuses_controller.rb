@@ -1,3 +1,4 @@
+# typed: ignore
 class TaskStatusesController < ApplicationController
   USECASES = {
     start_task: StartTaskUsecase,

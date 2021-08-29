@@ -1,3 +1,4 @@
+# typed: ignore
 class CurrentSprint::IssuesController < ApplicationController
   include ProductHelper
   include TeamMemberHelper

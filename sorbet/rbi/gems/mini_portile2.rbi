@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/mini_portile2/all/mini_portile2.rbi
 #
-# mini_portile2-2.5.3
+# mini_portile2-2.6.1
 
 class MiniPortile
   def activate; end
@@ -55,9 +55,12 @@ class MiniPortile
   def patch_files=(arg0); end
   def path; end
   def port_path; end
+  def prepare_build_directory; end
   def self.mingw?; end
   def self.mswin?; end
   def self.windows?; end
+  def source_directory; end
+  def source_directory=(path); end
   def tar_compression_switch(filename); end
   def tar_exe; end
   def target; end

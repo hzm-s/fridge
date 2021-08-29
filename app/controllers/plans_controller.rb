@@ -1,4 +1,4 @@
-# typed: false
+# typed: ignore
 class PlansController < ApplicationController
   include ProductHelper
   include TeamMemberHelper

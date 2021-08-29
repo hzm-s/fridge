@@ -1,4 +1,4 @@
-# typed: false
+# typed: ignore
 class SprintBacklogsController < ApplicationController
   include ProductHelper
   include TeamMemberHelper

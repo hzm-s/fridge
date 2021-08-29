@@ -1,4 +1,4 @@
-# typed: false
+# typed: true
 module TeamHelper
   def available_team_roles(team_id)
     Team::Id.from_string(team_id)

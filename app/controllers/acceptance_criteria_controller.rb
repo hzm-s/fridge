@@ -1,4 +1,4 @@
-# typed: false
+# typed: ignore
 class AcceptanceCriteriaController < ApplicationController
   helper_method :issue_id
 

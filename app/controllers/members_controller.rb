@@ -1,4 +1,4 @@
-# typed: false
+# typed: ignore
 class MembersController < ApplicationController
   include TeamHelper
 

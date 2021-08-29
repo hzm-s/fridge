@@ -1,4 +1,4 @@
-# typed: false
+# typed: ignore
 class ApplicationController < ActionController::Base
   include I18nHelper
   include SessionHelper

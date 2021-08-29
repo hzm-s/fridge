@@ -1,4 +1,4 @@
-# typed: false
+# typed: ignore
 class ReleasesController < ApplicationController
   include ProductHelper
   include TeamMemberHelper

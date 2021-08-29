@@ -1,3 +1,4 @@
+# typed: ignore
 class CurrentSprint::WorkPrioritiesController < ApplicationController
   include ProductHelper
   include TeamMemberHelper

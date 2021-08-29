@@ -1,3 +1,4 @@
+# typed: ignore
 class AcceptancesController < ApplicationController
   include ProductHelper
   include TeamMemberHelper

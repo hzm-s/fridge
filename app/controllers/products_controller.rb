@@ -1,4 +1,4 @@
-# typed: false
+# typed: ignore
 class ProductsController < ApplicationController
   include TeamHelper
 

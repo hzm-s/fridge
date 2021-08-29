@@ -1,4 +1,4 @@
-# typed: false
+# typed: ignore
 class FeatureEstimationsController < ApplicationController
   include ProductHelper
   include TeamMemberHelper

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/activesupport/all/activesupport.rbi
 #
-# activesupport-6.1.3.2
+# activesupport-6.1.4.1
 
 class Hash
   def _deep_transform_keys_in_object!(object, &block); end
@@ -39,7 +39,7 @@ class Hash
   def reverse_merge(other_hash); end
   def reverse_update(other_hash); end
   def self.from_trusted_xml(xml); end
-  def self.from_xml(xml, disallowed_types = nil); end
+  def self.try_convert(arg0); end
   def slice!(*keys); end
   def stringify_keys!; end
   def stringify_keys; end
@@ -342,7 +342,7 @@ class Time
   def seconds_since_midnight; end
   def seconds_until_end_of_day; end
   def self.===(other); end
-  def self.at_with_coercion(*args, **kwargs); end
+  def self.at_with_coercion(*args); end
   def self.at_without_coercion(*arg0); end
   def self.current; end
   def self.days_in_month(month, year = nil); end
@@ -1540,121 +1540,6 @@ class ActiveSupport::Messages::RotationConfiguration
   def rotate(kind, *args, **options); end
   def signed; end
 end
-module URI
-  def self.parser; end
-end
-module ActiveSupport::Multibyte::Unicode
-  def compose(codepoints); end
-  def decompose(type, codepoints); end
-  def default_normalization_form; end
-  def default_normalization_form=(_); end
-  def recode_windows1252_chars(string); end
-  def tidy_bytes(string, force = nil); end
-  extend ActiveSupport::Multibyte::Unicode
-end
-class ERB
-end
-module ERB::Util
-  def html_escape_once(s); end
-  def json_escape(s); end
-  def self.html_escape_once(s); end
-  def self.json_escape(s); end
-  def self.unwrapped_html_escape(s); end
-  def unwrapped_html_escape(s); end
-end
-class ActiveSupport::SafeBuffer < String
-  def %(args); end
-  def *(*arg0); end
-  def +(other); end
-  def <<(value); end
-  def [](*args); end
-  def []=(*args); end
-  def capitalize!(*args); end
-  def capitalize(*args, &block); end
-  def chomp!(*args); end
-  def chomp(*args, &block); end
-  def chop!(*args); end
-  def chop(*args, &block); end
-  def clone_empty; end
-  def concat(value); end
-  def delete!(*args); end
-  def delete(*args, &block); end
-  def delete_prefix!(*args); end
-  def delete_prefix(*args, &block); end
-  def delete_suffix!(*args); end
-  def delete_suffix(*args, &block); end
-  def downcase!(*args); end
-  def downcase(*args, &block); end
-  def encode_with(coder); end
-  def gsub!(*args, &block); end
-  def gsub(*args, &block); end
-  def html_escape_interpolated_argument(arg); end
-  def html_safe?; end
-  def initialize(str = nil); end
-  def initialize_copy(other); end
-  def insert(index, value); end
-  def lstrip!(*args); end
-  def lstrip(*args, &block); end
-  def next!(*args); end
-  def next(*args, &block); end
-  def original_concat(*arg0); end
-  def prepend(value); end
-  def replace(value); end
-  def reverse!(*args); end
-  def reverse(*args, &block); end
-  def rstrip!(*args); end
-  def rstrip(*args, &block); end
-  def safe_concat(value); end
-  def scrub!(*args); end
-  def scrub(*args, &block); end
-  def set_block_back_references(block, match_data); end
-  def slice!(*args); end
-  def slice(*args, &block); end
-  def squeeze!(*args); end
-  def squeeze(*args, &block); end
-  def strip!(*args); end
-  def strip(*args, &block); end
-  def sub!(*args, &block); end
-  def sub(*args, &block); end
-  def succ!(*args); end
-  def succ(*args, &block); end
-  def swapcase!(*args); end
-  def swapcase(*args, &block); end
-  def to_param; end
-  def to_s; end
-  def tr!(*args); end
-  def tr(*args, &block); end
-  def tr_s!(*args); end
-  def tr_s(*args, &block); end
-  def unicode_normalize!(*args); end
-  def unicode_normalize(*args, &block); end
-  def upcase!(*args); end
-  def upcase(*args, &block); end
-end
-class ActiveSupport::SafeBuffer::SafeConcatError < StandardError
-  def initialize; end
-end
-module Benchmark
-  def self.ms(&block); end
-end
-module ActiveSupport::Benchmarkable
-  def benchmark(message = nil, options = nil); end
-end
-module Module::Concerning
-  def concern(topic, &module_definition); end
-  def concerning(topic, prepend: nil, &block); end
-end
-module ActiveSupport::NumberHelper
-  def number_to_currency(number, options = nil); end
-  def number_to_delimited(number, options = nil); end
-  def number_to_human(number, options = nil); end
-  def number_to_human_size(number, options = nil); end
-  def number_to_percentage(number, options = nil); end
-  def number_to_phone(number, options = nil); end
-  def number_to_rounded(number, options = nil); end
-  extend ActiveSupport::Autoload
-  extend ActiveSupport::NumberHelper
-end
 class ActiveSupport::Duration
   def %(other); end
   def *(other); end
@@ -1885,6 +1770,130 @@ module DateAndTime::Calculations
   def years_since(years); end
   def yesterday; end
   def yesterday?; end
+end
+class Integer < Numeric
+  def month; end
+  def months; end
+  def multiple_of?(number); end
+  def ordinal; end
+  def ordinalize; end
+  def year; end
+  def years; end
+end
+module URI
+  def self.parser; end
+end
+module ActiveSupport::Multibyte::Unicode
+  def compose(codepoints); end
+  def decompose(type, codepoints); end
+  def default_normalization_form; end
+  def default_normalization_form=(_); end
+  def recode_windows1252_chars(string); end
+  def tidy_bytes(string, force = nil); end
+  extend ActiveSupport::Multibyte::Unicode
+end
+class ERB
+end
+module ERB::Util
+  def html_escape_once(s); end
+  def json_escape(s); end
+  def self.html_escape_once(s); end
+  def self.json_escape(s); end
+  def self.unwrapped_html_escape(s); end
+  def unwrapped_html_escape(s); end
+end
+class ActiveSupport::SafeBuffer < String
+  def %(args); end
+  def *(*arg0); end
+  def +(other); end
+  def <<(value); end
+  def [](*args); end
+  def []=(*args); end
+  def capitalize!(*args); end
+  def capitalize(*args, &block); end
+  def chomp!(*args); end
+  def chomp(*args, &block); end
+  def chop!(*args); end
+  def chop(*args, &block); end
+  def clone_empty; end
+  def concat(value); end
+  def delete!(*args); end
+  def delete(*args, &block); end
+  def delete_prefix!(*args); end
+  def delete_prefix(*args, &block); end
+  def delete_suffix!(*args); end
+  def delete_suffix(*args, &block); end
+  def downcase!(*args); end
+  def downcase(*args, &block); end
+  def encode_with(coder); end
+  def gsub!(*args, &block); end
+  def gsub(*args, &block); end
+  def html_escape_interpolated_argument(arg); end
+  def html_safe?; end
+  def initialize(str = nil); end
+  def initialize_copy(other); end
+  def insert(index, value); end
+  def lstrip!(*args); end
+  def lstrip(*args, &block); end
+  def next!(*args); end
+  def next(*args, &block); end
+  def original_concat(*arg0); end
+  def prepend(value); end
+  def replace(value); end
+  def reverse!(*args); end
+  def reverse(*args, &block); end
+  def rstrip!(*args); end
+  def rstrip(*args, &block); end
+  def safe_concat(value); end
+  def scrub!(*args); end
+  def scrub(*args, &block); end
+  def set_block_back_references(block, match_data); end
+  def slice!(*args); end
+  def slice(*args, &block); end
+  def squeeze!(*args); end
+  def squeeze(*args, &block); end
+  def strip!(*args); end
+  def strip(*args, &block); end
+  def sub!(*args, &block); end
+  def sub(*args, &block); end
+  def succ!(*args); end
+  def succ(*args, &block); end
+  def swapcase!(*args); end
+  def swapcase(*args, &block); end
+  def to_param; end
+  def to_s; end
+  def tr!(*args); end
+  def tr(*args, &block); end
+  def tr_s!(*args); end
+  def tr_s(*args, &block); end
+  def unicode_normalize!(*args); end
+  def unicode_normalize(*args, &block); end
+  def upcase!(*args); end
+  def upcase(*args, &block); end
+end
+class ActiveSupport::SafeBuffer::SafeConcatError < StandardError
+  def initialize; end
+end
+module Benchmark
+  def self.ms(&block); end
+end
+module ActiveSupport::Benchmarkable
+  def benchmark(message = nil, options = nil); end
+end
+module Module::Concerning
+  def concern(topic, &module_definition); end
+  def concerning(topic, prepend: nil, &block); end
+end
+module ActiveSupport::NumberHelper
+  def number_to_currency(number, options = nil); end
+  def number_to_delimited(number, options = nil); end
+  def number_to_human(number, options = nil); end
+  def number_to_human_size(number, options = nil); end
+  def number_to_percentage(number, options = nil); end
+  def number_to_phone(number, options = nil); end
+  def number_to_rounded(number, options = nil); end
+  extend ActiveSupport::Autoload
+  extend ActiveSupport::NumberHelper
 end
 class ActiveSupport::FileUpdateChecker
   def compile_ext(array); end
@@ -2173,15 +2182,6 @@ class ActiveSupport::Reloader < ActiveSupport::ExecutionWrapper
   def self.to_prepare(*args, &block); end
   def self.wrap; end
 end
-class Integer < Numeric
-  def month; end
-  def months; end
-  def multiple_of?(number); end
-  def ordinal; end
-  def ordinalize; end
-  def year; end
-  def years; end
-end
 module ActiveSupport::ForkTracker
   def self.after_fork(&block); end
   def self.check!; end
@@ -2225,7 +2225,7 @@ module Digest::UUID
   def self.uuid_v5(uuid_namespace, name); end
 end
 class File < IO
-  def self.atomic_write(file_name, temp_dir = nil); end
+  def self.empty?(arg0); end
   def self.probe_stat_in(dir); end
 end
 module ActiveSupport::MarshalWithAutoloading
@@ -2634,7 +2634,7 @@ class ActiveSupport::Cache::FileStore < ActiveSupport::Cache::Store
   def ensure_cache_path(path); end
   def file_path_key(path); end
   def increment(name, amount = nil, **options); end
-  def initialize(cache_path, options = nil); end
+  def initialize(cache_path, **options); end
   def lock_file(file_name, &block); end
   def modify_value(name, amount, options); end
   def normalize_key(key, options); end

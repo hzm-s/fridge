@@ -1,3 +1,4 @@
+# typed: false
 class Dao::Work < ApplicationRecord
   has_many :tasks, -> { order(:number) },
     class_name: 'Dao::Task', foreign_key: :dao_work_id,
