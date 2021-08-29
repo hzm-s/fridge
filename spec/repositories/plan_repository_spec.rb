@@ -77,7 +77,7 @@ RSpec.describe PlanRepository::AR do
         expect(stored.releases.size).to eq 2
         expect(stored.release_of(1).title).to eq 'MVP'
         expect(stored.release_of(1).issues).to eq issue_list(issue_b)
-        expect(stored.release_of(2).title).to be_nil
+        expect(stored.release_of(2).title).to eq 'Release#2'
         expect(stored.release_of(2).issues).to eq issue_list(issue_c, issue_a)
       end
     end

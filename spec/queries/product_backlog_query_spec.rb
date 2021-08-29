@@ -24,7 +24,7 @@ describe ProductBacklogQuery do
 
       aggregate_failures do
         expect(pbl.releases[0].number).to eq 1
-        expect(pbl.releases[0].title).to be_nil
+        expect(pbl.releases[0].title).to eq 'Release#1'
         expect(pbl.releases[0].issues.map(&:id)).to eq [issue_a, issue_b].map(&:to_s)
         expect(pbl.releases[0]).to_not be_can_remove
         expect(pbl.releases[1].number).to eq 2
@@ -32,7 +32,7 @@ describe ProductBacklogQuery do
         expect(pbl.releases[1].issues.map(&:id)).to eq [issue_c, issue_d, issue_e].map(&:to_s)
         expect(pbl.releases[1]).to_not be_can_remove
         expect(pbl.releases[2].number).to eq 3
-        expect(pbl.releases[0].title).to be_nil
+        expect(pbl.releases[0].title).to eq 'Release#1'
         expect(pbl.releases[2].issues).to be_empty
         expect(pbl.releases[2]).to be_can_remove
       end
