@@ -1,3 +1,4 @@
+# typed: ignore
 class CreateDaoSprints < ActiveRecord::Migration[6.0]
   def change
     create_table :dao_sprints, id: :uuid do |t|

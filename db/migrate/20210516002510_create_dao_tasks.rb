@@ -1,3 +1,4 @@
+# typed: ignore
 class CreateDaoTasks < ActiveRecord::Migration[6.0]
   def change
     create_table :dao_tasks do |t|

@@ -1,4 +1,4 @@
-# typed: false
+# typed: ignore
 class CreateDaoPeople < ActiveRecord::Migration[6.0]
   def change
     create_table :dao_people, id: :uuid do |t|

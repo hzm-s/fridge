@@ -1,3 +1,4 @@
+# typed: ignore
 class CreateDaoAssignedIssues < ActiveRecord::Migration[6.0]
   def change
     create_table :dao_assigned_issues do |t|
