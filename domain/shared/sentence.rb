@@ -17,6 +17,24 @@ module Shared
       @content
     end
 
+    sig {returns(Integer)}
+    def hash
+      @content.hash
+    end
+
+    sig {params(other: T.nilable(T.self_type)).returns(T::Boolean)}
+    def eql?(other)
+      self == other
+    end
+
+    sig {params(other: T.nilable(T.self_type)).returns(T::Boolean)}
+    def ==(other)
+      return false unless other
+
+      self.instance_of?(other.class) &&
+        self.to_s == other.to_s
+    end
+
     private
 
     sig {params(content: String).void}
