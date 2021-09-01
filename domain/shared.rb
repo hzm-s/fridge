@@ -5,4 +5,5 @@ module Shared
 
   autoload :Identifier, 'shared/identifier'
   autoload :ShortSentence, 'shared/short_sentence'
+  autoload :LongSentence, 'shared/long_sentence'
 end
