@@ -1,5 +1,13 @@
 # typed: false
 module SharedDomainSupport
+  def s_sentence(content)
+    Shared::ShortSentence.new(content)
+  end
+
+  def l_sentence(content)
+    Shared::LongSentence.new(content)
+  end
+
   def activity(name)
     Activity::Activity.from_symbol(name)
   end

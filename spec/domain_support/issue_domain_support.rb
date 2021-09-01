@@ -1,9 +1,5 @@
 # typed: false
 module IssueDomainSupport
-  def issue_description(desc)
-    Issue::Description.new(desc)
-  end
-
   def acceptance_criterion(content)
     Issue::AcceptanceCriterion.new(1, content)
   end

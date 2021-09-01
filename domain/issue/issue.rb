@@ -8,7 +8,7 @@ module Issue
     class << self
       extend T::Sig
 
-      sig {params(product_id: Product::Id, type: Type, description: Description).returns(T.attached_class)}
+      sig {params(product_id: Product::Id, type: Type, description: Shared::LongSentence).returns(T.attached_class)}
       def create(product_id, type, description)
         new(
           Id.create,
@@ -21,7 +21,15 @@ module Issue
         )
       end
 
-      sig {params(id: Id, product_id: Product::Id, type: Type, status: Status, description: Description, size: StoryPoint, acceptance_criteria: AcceptanceCriteria).returns(T.attached_class)}
+      sig {params(
+        id: Id,
+        product_id: Product::Id,
+        type: Type,
+        status: Status,
+        description: Shared::LongSentence,
+        size: StoryPoint,
+        acceptance_criteria: AcceptanceCriteria
+      ).returns(T.attached_class)}
       def from_repository(id, product_id, type, status, description, size, acceptance_criteria)
         new(id, product_id, type, status, description, size, acceptance_criteria)
       end
@@ -39,7 +47,7 @@ module Issue
     sig {returns(Status)}
     attr_reader :status
 
-    sig {returns(Description)}
+    sig {returns(Shared::LongSentence)}
     attr_reader :description
 
     sig {returns(StoryPoint)}
@@ -53,7 +61,7 @@ module Issue
       product_id: Product::Id,
       type: Type,
       status: Status,
-      description: Description,
+      description: Shared::LongSentence,
       size: StoryPoint,
       acceptance_criteria: AcceptanceCriteria
     ).void}
@@ -68,7 +76,7 @@ module Issue
     end
     private_class_method :new
 
-    sig {params(description: Description).void}
+    sig {params(description: Shared::LongSentence).void}
     def modify_description(description)
       @description = description
     end

@@ -4,7 +4,7 @@ require 'domain_helper'
 module Issue
   RSpec.describe Issue do
     let(:product_id) { Product::Id.create }
-    let(:description) { issue_description('A user story') }
+    let(:description) { l_sentence('A user story') }
     let(:dev_role) { team_roles(:dev) }
     let(:po_role) { team_roles(:po) }
     let(:sm_role) { team_roles(:sm) }
@@ -26,10 +26,10 @@ module Issue
     end
 
     describe 'Modify description' do
-      let(:issue) { described_class.create(product_id, Types::Feature, issue_description('Origin')) }
+      let(:issue) { described_class.create(product_id, Types::Feature, l_sentence('Origin')) }
 
       it do
-        new_desc = issue_description('Modified')
+        new_desc = l_sentence('Modified')
         issue.modify_description(new_desc)
         expect(issue.description).to eq new_desc
       end
@@ -158,7 +158,7 @@ module Issue
       let(:criteria) { acceptance_criteria(%w(AC1 AC2 AC3)) }
 
       it do
-        issue.modify_description(issue_description('NEW user story'))
+        issue.modify_description(l_sentence('NEW user story'))
         expect(issue.status).to eq Statuses::Preparation
 
         issue.prepare_acceptance_criteria(criteria)
@@ -195,7 +195,7 @@ module Issue
       it do
         expect(issue.status).to eq Statuses::Ready
 
-        issue.modify_description(issue_description('NEW task'))
+        issue.modify_description(l_sentence('NEW task'))
         expect(issue.status).to eq Statuses::Ready
 
         issue.prepare_acceptance_criteria(criteria)
