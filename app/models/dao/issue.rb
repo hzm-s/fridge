@@ -53,7 +53,7 @@ class Dao::Issue < ApplicationRecord
   end
 
   def read_description
-    Issue::Description.new(description)
+    Shared::LongSentence.new(description)
   end
 
   def read_story_point

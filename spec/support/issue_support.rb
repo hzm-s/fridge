@@ -53,7 +53,7 @@ module IssueSupport
   private
 
   def perform_plan_issue(product_id, type, desc, release_number)
-    Issue::Description.new(desc)
+    l_sentence(desc)
       .then { |d| PlanIssueUsecase.perform(product_id, type, d, release_number) }
       .then { |id| IssueRepository::AR.find_by_id(id) }
   end

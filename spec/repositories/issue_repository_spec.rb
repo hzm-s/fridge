@@ -7,7 +7,7 @@ RSpec.describe IssueRepository::AR do
 
   describe 'Add' do
     it do
-      issue = Issue::Issue.create(product.id, Issue::Types::Feature, Issue::Description.new('ABC'))
+      issue = Issue::Issue.create(product.id, Issue::Types::Feature, l_sentence('ABC'))
 
       expect { described_class.store(issue) }
         .to change { Dao::Issue.count }.by(1)
@@ -26,7 +26,7 @@ RSpec.describe IssueRepository::AR do
   end
 
   describe 'Update' do
-    let(:issue) { Issue::Issue.create(product.id, Issue::Types::Feature, Issue::Description.new('ABC')) }
+    let(:issue) { Issue::Issue.create(product.id, Issue::Types::Feature, l_sentence('ABC')) }
 
     before { described_class.store(issue) }
 
@@ -91,7 +91,7 @@ RSpec.describe IssueRepository::AR do
 
   describe 'Remove' do
     it do
-      issue = Issue::Issue.create(product.id, Issue::Types::Feature, Issue::Description.new('ABC'))
+      issue = Issue::Issue.create(product.id, Issue::Types::Feature, l_sentence('ABC'))
       issue.prepare_acceptance_criteria(acceptance_criteria(%w(AC1 AC2 AC3)))
       described_class.store(issue)
 
