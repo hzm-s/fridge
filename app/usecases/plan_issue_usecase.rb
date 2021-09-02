@@ -10,7 +10,7 @@ class PlanIssueUsecase < UsecaseBase
     @plan_repository = T.let(PlanRepository::AR, Plan::PlanRepository)
   end
 
-  sig {params(product_id: Product::Id, type: Issue::Type, description: Issue::Description, release_number: T.nilable(Integer)).returns(Issue::Id)}
+  sig {params(product_id: Product::Id, type: Issue::Type, description: Shared::LongSentence, release_number: T.nilable(Integer)).returns(Issue::Id)}
   def perform(product_id, type, description, release_number = nil)
     issue = Issue::Issue.create(product_id, type, description)
 

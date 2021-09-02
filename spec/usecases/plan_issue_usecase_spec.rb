@@ -8,7 +8,7 @@ RSpec.describe PlanIssueUsecase do
     append_release(product.id)
   end
 
-  let(:description) { issue_description('ABC') }
+  let(:description) { l_sentence('ABC') }
 
   it do
     issue_id = described_class.perform(product.id, Issue::Types::Feature, description)

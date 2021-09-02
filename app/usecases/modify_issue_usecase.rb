@@ -9,7 +9,7 @@ class ModifyIssueUsecase < UsecaseBase
     @repository = T.let(IssueRepository::AR, Issue::IssueRepository)
   end
 
-  sig {params(issue_id: Issue::Id, description: Issue::Description).void}
+  sig {params(issue_id: Issue::Id, description: Shared::LongSentence).void}
   def perform(issue_id, description)
     issue = @repository.find_by_id(issue_id)
     issue.modify_description(description)
