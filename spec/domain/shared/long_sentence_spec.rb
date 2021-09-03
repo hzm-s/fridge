@@ -18,10 +18,10 @@ module Shared
 
     it do
       aggregate_failures do
-        expect { described_class.new('a' * 1) }.to raise_error SentenceIsTooShort
+        expect { described_class.new('a' * 1) }.to raise_error InvalidLongSentence
         expect { described_class.new('a' * 3) }.to_not raise_error
         expect { described_class.new('a' * 500) }.to_not raise_error
-        expect { described_class.new('a' * 501) }.to raise_error SentenceIsTooLong
+        expect { described_class.new('a' * 501) }.to raise_error InvalidLongSentence
       end
     end
   end

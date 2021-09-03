@@ -10,8 +10,7 @@ module Shared
 
     sig {params(content: String).void}
     def validate_content(content)
-      raise SentenceIsTooShort if content.size < 3
-      raise SentenceIsTooLong if content.size > 500
+      raise InvalidLongSentence unless (3..500).include?(content.size)
     end
   end
 end
