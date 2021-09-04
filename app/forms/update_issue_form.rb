@@ -9,7 +9,7 @@ class UpdateIssueForm
 
   validates :description,
     presence: true,
-    domain_object: { object_class: Issue::Description, message: t_domain_error(Issue::InvalidDescription), allow_blank: true }
+    domain_object: { object_class: Shared::LongSentence, message: t_domain_error(Shared::InvalidLongSentence), allow_blank: true }
 
   def initialize(attrs)
     @type = attrs.delete(:type)

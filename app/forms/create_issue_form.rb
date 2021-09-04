@@ -12,7 +12,7 @@ class CreateIssueForm
 
   validates :description,
     presence: true,
-    domain_object: { object_class: Issue::Description, message: t_domain_error(Issue::InvalidDescription), allow_blank: true }
+    domain_object: { object_class: Shared::LongSentence, message: t_domain_error(Shared::InvalidLongSentence), allow_blank: true }
 
   validates :release_number,
     numericality: { only_integer: true }, allow_blank: true
