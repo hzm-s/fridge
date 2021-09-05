@@ -5,11 +5,9 @@ RSpec.describe 'issues' do
   let!(:user_account) { sign_up }
   let!(:product) { create_product(person: user_account.person_id) }
 
-  before do
-    sign_in(user_account)
-  end
-
   describe 'create' do
+    before { sign_in(user_account) }
+
     context 'given valid params' do
       let(:params) { { form: { type: 'feature', description: 'ABC' } } }
 
@@ -48,6 +46,8 @@ RSpec.describe 'issues' do
   end
 
   describe 'edit' do
+    before { sign_in(user_account) }
+
     it do
       issue = plan_issue(product.id, 'XYZ')
       append_acceptance_criteria(issue, %w(AC_123))
@@ -80,6 +80,8 @@ RSpec.describe 'issues' do
   end
 
   describe 'update' do
+    before { sign_in(user_account) }
+
     let!(:issue) { plan_issue(product.id, 'ABC') }
 
     context '入力内容が正しい場合' do
@@ -100,6 +102,8 @@ RSpec.describe 'issues' do
   end
 
   describe 'destroy' do
+    before { sign_in(user_account) }
+
     it do
       issue = plan_issue(product.id, 'YOHKYU')
 
@@ -109,4 +113,9 @@ RSpec.describe 'issues' do
       expect(response.body).to_not include 'YOHKYU'
     end
   end
+
+  it_behaves_like('sign_in_guard') { let(:r) { post product_issues_path(product_id: 1, format: :js) } }
+  it_behaves_like('sign_in_guard') { let(:r) { get edit_issue_path(1) } }
+  it_behaves_like('sign_in_guard') { let(:r) { patch issue_path(1, format: :js) } }
+  it_behaves_like('sign_in_guard') { let(:r) { delete issue_path(1) } }
 end

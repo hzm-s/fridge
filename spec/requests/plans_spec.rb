@@ -6,10 +6,6 @@ RSpec.describe 'plans' do
   let!(:product) { create_product(person: user_account.person_id, roles: roles) }
   let(:roles) { team_roles(:dev, :sm) }
 
-  before do
-    sign_in(user_account)
-  end
-
   let!(:issue_a) { plan_issue(product.id, release: 1).id }
   let!(:issue_b) { plan_issue(product.id, release: 1).id }
   let!(:issue_c) { plan_issue(product.id, release: 1).id }
@@ -17,6 +13,8 @@ RSpec.describe 'plans' do
   let!(:issue_e) { plan_issue(product.id, release: 2).id }
 
   describe '#update' do
+    before { sign_in(user_account) }
+
     context 'when change priority' do
       it do
         patch product_plan_path(product_id: product.id.to_s, format: :json),
@@ -45,4 +43,6 @@ RSpec.describe 'plans' do
       end
     end
   end
+
+  it_behaves_like('sign_in_guard') { let(:r) { patch product_plan_path(product_id: 1, format: :json) } }
 end

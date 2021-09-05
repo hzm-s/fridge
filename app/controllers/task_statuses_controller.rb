@@ -7,6 +7,8 @@ class TaskStatusesController < ApplicationController
     complete_task: CompleteTaskUsecase,
   }
 
+  before_action :require_user
+
   def update
     issue_id = Issue::Id.from_string(params[:issue_id])
     task_number = params[:number].to_i

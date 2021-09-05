@@ -3,6 +3,7 @@ class SprintBacklogsController < ApplicationController
   include ProductHelper
   include TeamMemberHelper
 
+  before_action :require_user
   before_action :ensure_current_sprint, only: [:show]
 
   helper_method :current_sprint

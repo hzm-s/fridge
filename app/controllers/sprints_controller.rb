@@ -3,8 +3,7 @@ class SprintsController < ApplicationController
   include ProductHelper
   include TeamMemberHelper
 
-  def new
-  end
+  before_action :require_user
 
   def create
     StartSprintUsecase.perform(Product::Id.from_string(params[:product_id]))

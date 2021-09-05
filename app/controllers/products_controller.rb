@@ -2,6 +2,8 @@
 class ProductsController < ApplicationController
   include TeamHelper
 
+  before_action :require_user
+
   helper_method :all_team_roles
 
   def index

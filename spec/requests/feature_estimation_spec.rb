@@ -6,11 +6,9 @@ RSpec.describe 'feature_estimation' do
   let!(:product) { create_product(person: user_account.person_id, roles: team_roles(:dev)) }
   let!(:feature) { plan_issue(product.id, type: :feature) }
 
-  before do
-    sign_in(user_account)
-  end
-
   describe '#update' do
+    before { sign_in(user_account) }
+
     it do
       put feature_estimation_path(feature.id, format: :js), params: { form: { point: '8' } }
 
@@ -30,4 +28,6 @@ RSpec.describe 'feature_estimation' do
       expect(response.body).to_not include 'test-item-movable'
     end
   end
+
+  it_behaves_like('sign_in_guard') { let(:r) { put feature_estimation_path(1, format: :js) } }
 end

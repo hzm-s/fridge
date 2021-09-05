@@ -7,26 +7,13 @@ RSpec.describe 'team_members' do
   let!(:team) { resolve_team(product.id) }
 
   describe '#new' do
-    context 'when signed in' do
-      before { sign_in(new_member) }
+    before { sign_in(new_member) }
 
-      it do
-        get new_team_member_path(team_id: team.id.to_s)
+    it do
+      get new_team_member_path(team_id: team.id.to_s)
 
-        expect(response.body).to include 'developer'
-        expect(response.body).to include 'scrum_master'
-      end
-    end
-
-    context 'when NOT signed in' do
-      it do
-        get new_team_member_path(team_id: team.id.to_s)
-        sign_in(new_member)
-        follow_redirect!
-
-        expect(response.body).to include 'developer'
-        expect(response.body).to include 'scrum_master'
-      end
+      expect(response.body).to include 'developer'
+      expect(response.body).to include 'scrum_master'
     end
   end
 
@@ -55,4 +42,7 @@ RSpec.describe 'team_members' do
       end
     end
   end
+
+  it_behaves_like('sign_in_guard') { let(:r) { get new_team_member_path(team_id: 1) } }
+  it_behaves_like('sign_in_guard') { let(:r) { post team_members_path(team_id: 1) } }
 end

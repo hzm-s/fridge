@@ -86,9 +86,7 @@ RSpec.describe 'sprint_backlogs' do
   describe 'Issue status' do
     let!(:issue) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1, assign: true) }
 
-    before do
-      sign_in(user_account_po)
-    end
+    before { sign_in(user_account_po) }
 
     context 'when NOT accepted' do
       it do
@@ -116,4 +114,6 @@ RSpec.describe 'sprint_backlogs' do
       end
     end
   end
+
+  it_behaves_like('sign_in_guard') { let(:r) { get sprint_backlog_path(1) } }
 end

@@ -3,6 +3,8 @@ class AcceptancesController < ApplicationController
   include ProductHelper
   include TeamMemberHelper
 
+  before_action :require_user
+
   def show
     @issue = IssueQuery.call(params[:issue_id])
   end

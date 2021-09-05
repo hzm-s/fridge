@@ -2,6 +2,8 @@
 class TeamsController < ApplicationController
   include ProductHelper
 
+  before_action :require_user
+
   def show
     @team = TeamQuery.call(params[:id])
   end

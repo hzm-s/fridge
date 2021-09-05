@@ -5,11 +5,9 @@ RSpec.describe 'releases' do
   let!(:user_account) { sign_up }
   let!(:product) { create_product(person: user_account.person_id) }
 
-  before do
-    sign_in(user_account)
-  end
-
   describe 'create' do
+    before { sign_in(user_account) }
+
     context 'given valid params' do
       it do
         post product_releases_path(product_id: product.id.to_s), params: { form: { title: 'MVP' } }
@@ -34,6 +32,8 @@ RSpec.describe 'releases' do
   end
 
   describe 'edit' do
+    before { sign_in(user_account) }
+
     before do
       update_release(product.id, 1) { |r| r.modify_title('ファーストリリース') }
     end
@@ -45,6 +45,8 @@ RSpec.describe 'releases' do
   end
 
   describe 'update' do
+    before { sign_in(user_account) }
+
     before do
       update_release(product.id, 1) { |r| r.modify_title('MVP') }
       append_release(product.id, 2, title: 'Extra')
@@ -72,6 +74,8 @@ RSpec.describe 'releases' do
   end
 
   describe 'destroy' do
+    before { sign_in(user_account) }
+
     it do
       append_release(product.id)
 
@@ -82,4 +86,9 @@ RSpec.describe 'releases' do
       expect(pbl.releases.map(&:number)).to eq [1]
     end
   end
+
+  it_behaves_like('sign_in_guard') { let(:r) { post product_releases_path(product_id: 1) } }
+  it_behaves_like('sign_in_guard') { let(:r) { get edit_product_release_path(product_id: 1, number: 1) } }
+  it_behaves_like('sign_in_guard') { let(:r) { patch product_release_path(product_id: 1, number: 2) } }
+  it_behaves_like('sign_in_guard') { let(:r) { delete product_release_path(product_id: 1, number: 2) } }
 end

@@ -4,11 +4,9 @@ require 'rails_helper'
 RSpec.describe 'products' do
   let(:user_account) { sign_up }
 
-  before do
-    sign_in(user_account)
-  end
-
   describe '#create' do
+    before { sign_in(user_account) }
+
     context 'given valid params' do
       it do
         params = { form: { name: 'fridge', description: 'setsumei_of_product', roles: ['', 'scrum_master', ''] } }
@@ -31,4 +29,6 @@ RSpec.describe 'products' do
       end
     end
   end
+
+  it_behaves_like('sign_in_guard') { let(:r) { post products_path(format: :js) } }
 end

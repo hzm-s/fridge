@@ -1,5 +1,7 @@
 # typed: ignore
 class AcceptanceCriteriaController < ApplicationController
+  before_action :require_user
+
   helper_method :issue_id
 
   def create

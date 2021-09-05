@@ -6,11 +6,9 @@ RSpec.describe 'acceptances' do
   let!(:product) { create_product(person: user_account.person_id) }
   let!(:issue) { plan_issue(product.id, 'AITEMU_NO_SETSUMEI', acceptance_criteria: %w(AC1 AC2 AC3), size: 3, assign: true) }
 
-  before do
-    sign_in(user_account)
-  end
-
   describe 'show' do
+    before { sign_in(user_account) }
+
     it do
       get issue_acceptance_path(issue_id: issue.id.to_s)
 
@@ -53,6 +51,8 @@ RSpec.describe 'acceptances' do
   end
 
   describe 'update' do
+    before { sign_in(user_account) }
+
     before do
       satisfy_acceptance_criteria(issue.id, [1, 2, 3])
     end
@@ -67,4 +67,7 @@ RSpec.describe 'acceptances' do
       end
     end
   end
+
+  it_behaves_like('sign_in_guard') { let(:r) { get issue_acceptance_path(issue_id: 1) } }
+  it_behaves_like('sign_in_guard') { let(:r) { patch issue_acceptance_path(issue_id: 1) } }
 end

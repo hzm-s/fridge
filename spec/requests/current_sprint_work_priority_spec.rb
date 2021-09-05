@@ -5,11 +5,9 @@ RSpec.describe 'current_sprint/:product_id/work_priority' do
   let!(:user_account) { sign_up }
   let!(:product) { create_product(person: user_account.person_id, roles: team_roles(:po)) }
 
-  before do
-    sign_in(user_account)
-  end
-
   describe 'Update' do
+    before { sign_in(user_account) }
+
     let!(:issue_a) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1) }
     let!(:issue_b) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1) }
     let!(:issue_c) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1) }
@@ -29,4 +27,6 @@ RSpec.describe 'current_sprint/:product_id/work_priority' do
       expect(sbl.issues.map(&:id)).to eq [issue_c.id, issue_a.id, issue_b.id].map(&:to_s)
     end
   end
+
+  it_behaves_like('sign_in_guard') { let(:r) { patch current_sprint_work_priority_path(product_id: 1, format: :json) } }
 end

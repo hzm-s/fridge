@@ -5,11 +5,9 @@ RSpec.describe 'current_sprint/:product_id/issues' do
   let!(:user_account) { sign_up }
   let!(:product) { create_product(person: user_account.person_id, roles: team_roles(:po)) }
 
-  before do
-    sign_in(user_account)
-  end
-
   describe 'Create' do
+    before { sign_in(user_account) }
+
     let!(:issue) { plan_issue(product.id, 'KINOU', acceptance_criteria: %w(UKEIRE), size: 3, release: 1) }
 
     context 'sprint started' do
@@ -41,6 +39,8 @@ RSpec.describe 'current_sprint/:product_id/issues' do
   end
 
   describe 'Destroy' do
+    before { sign_in(user_account) }
+
     let!(:issue) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1, assign: true) }
 
     it do
@@ -56,4 +56,7 @@ RSpec.describe 'current_sprint/:product_id/issues' do
       end
     end
   end
+
+  it_behaves_like('sign_in_guard') { let(:r) { post current_sprint_issues_path(product_id: 1, format: :js) } }
+  it_behaves_like('sign_in_guard') { let(:r) { delete current_sprint_issue_path(product_id: 1, id: 1) } }
 end

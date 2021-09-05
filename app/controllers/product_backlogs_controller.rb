@@ -3,6 +3,8 @@ class ProductBacklogsController < ApplicationController
   include ProductHelper
   include TeamMemberHelper
 
+  before_action :require_user
+
   def show
     @pbl = ProductBacklogQuery.call(params[:product_id])
     @form = CreateIssueForm.new

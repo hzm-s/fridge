@@ -8,11 +8,11 @@ RSpec.describe '/work/:issue_id/task_statuses' do
 
   before do
     plan_task(issue.id, %w(Task))
-
-    sign_in(user_account)
   end
 
   describe 'Start' do
+    before { sign_in(user_account) }
+
     it do
       patch work_task_status_path(issue_id: issue.id, number: 1, by: :start_task, format: :js)
       expect(response.body).to include data_attr "test-task-status-#{issue.id}-1", 'wip', true
@@ -20,6 +20,7 @@ RSpec.describe '/work/:issue_id/task_statuses' do
   end
 
   describe 'Suspend' do
+    before { sign_in(user_account) }
     before { start_task(issue.id, 1) }
 
     it do
@@ -29,6 +30,8 @@ RSpec.describe '/work/:issue_id/task_statuses' do
   end
 
   describe 'Resume' do
+    before { sign_in(user_account) }
+
     before do
       start_task(issue.id, 1)
       suspend_task(issue.id, 1)
@@ -41,6 +44,7 @@ RSpec.describe '/work/:issue_id/task_statuses' do
   end
 
   describe 'Complete' do
+    before { sign_in(user_account) }
     before { start_task(issue.id, 1) }
 
     it do
@@ -50,6 +54,8 @@ RSpec.describe '/work/:issue_id/task_statuses' do
   end
 
   describe 'Available actions' do
+    before { sign_in(user_account) }
+
     subject do
       get sprint_backlog_path(product.id)
       response.body
@@ -108,4 +114,7 @@ RSpec.describe '/work/:issue_id/task_statuses' do
       end
     end
   end
+
+  it_behaves_like('sign_in_guard') { let(:r) { patch work_task_status_path(issue_id: 1, number: 1, by: :start_task, format: :js) } }
+  it_behaves_like('sign_in_guard') { let(:r) { get sprint_backlog_path(1) } }
 end

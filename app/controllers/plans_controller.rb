@@ -3,6 +3,8 @@ class PlansController < ApplicationController
   include ProductHelper
   include TeamMemberHelper
 
+  before_action :require_user
+
   def update
     product_id = Product::Id.from_string(current_product_id)
     roles = current_team_member_roles

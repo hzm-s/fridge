@@ -1,5 +1,7 @@
 # typed: ignore
 class TasksController < ApplicationController
+  before_action :require_user
+
   def create
     @issue_id = Issue::Id.from_string(params[:issue_id])
     @form = TaskForm.new(task_params)

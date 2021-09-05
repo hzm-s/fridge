@@ -6,11 +6,9 @@ RSpec.describe '/work/:issue_id/tasks' do
   let!(:product) { create_product(person: user_account.person_id, roles: team_roles(:dev)) }
   let!(:issue) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1, assign: true) }
 
-  before do
-    sign_in(user_account)
-  end
-
   describe 'create' do
+    before { sign_in(user_account) }
+
     context 'given valid params' do
       it do
         post work_tasks_path(issue_id: issue.id, format: :js), params: { form: { content: 'Design API' } }
@@ -30,6 +28,8 @@ RSpec.describe '/work/:issue_id/tasks' do
   end
 
   describe 'update' do
+    before { sign_in(user_account) }
+
     before do
       plan_task(issue.id, %w(Tasuku1 Tasuku2 Tasuku3))
     end
@@ -55,6 +55,8 @@ RSpec.describe '/work/:issue_id/tasks' do
   end
 
   describe 'destroy' do
+    before { sign_in(user_account) }
+
     before do
       plan_task(issue.id, %w(Tasuku1 Tasuku2 Tasuku3))
     end
@@ -65,4 +67,8 @@ RSpec.describe '/work/:issue_id/tasks' do
       expect(response.body).to_not include 'Tasuku2'
     end
   end
+
+  it_behaves_like('sign_in_guard') { let(:r) { post work_tasks_path(issue_id: 1, format: :js) } }
+  it_behaves_like('sign_in_guard') { let(:r) { patch work_task_path(issue_id: 1, number: 2, format: :js) } }
+  it_behaves_like('sign_in_guard') { let(:r) { delete work_task_path(issue_id: 1, number: 2, format: :js) } }
 end

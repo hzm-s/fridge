@@ -3,7 +3,7 @@ class MembersController < ApplicationController
   include TeamHelper
 
   before_action :store_referer
-  before_action :require_user, only: [:new]
+  before_action :require_user
 
   helper_method :available_team_roles
 

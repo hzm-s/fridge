@@ -3,6 +3,8 @@ class ReleasesController < ApplicationController
   include ProductHelper
   include TeamMemberHelper
 
+  before_action :require_user
+
   helper_method :current_product_id
 
   def new

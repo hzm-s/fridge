@@ -54,4 +54,6 @@ RSpec.describe 'product_backlogs' do
       end
     end
   end
+
+  it_behaves_like('sign_in_guard') { let(:r) { get product_backlog_path(product_id: 1) } }
 end

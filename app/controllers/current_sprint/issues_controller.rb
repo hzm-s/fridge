@@ -3,6 +3,8 @@ class CurrentSprint::IssuesController < ApplicationController
   include ProductHelper
   include TeamMemberHelper
 
+  before_action :require_user
+
   def create
     issue_id = Issue::Id.from_string(params[:issue_id])
     AssignIssueToSprintUsecase.perform(

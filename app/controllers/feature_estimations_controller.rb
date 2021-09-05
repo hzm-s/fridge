@@ -3,6 +3,8 @@ class FeatureEstimationsController < ApplicationController
   include ProductHelper
   include TeamMemberHelper
 
+  before_action :require_user
+
   def update
     issue_id = Issue::Id.from_string(params[:id])
     point = build_point(params[:form][:point])
