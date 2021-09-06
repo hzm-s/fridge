@@ -2,7 +2,6 @@
 module Issue
   class NotFound < StandardError; end
   class InvalidType < ArgumentError; end
-  class InvalidDescription < ArgumentError; end
   class CanNotPrepare < StandardError; end
   class CanNotEstimate < StandardError; end
   class CanNotAssignToSprint < StandardError; end
