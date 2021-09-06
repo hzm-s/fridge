@@ -13,7 +13,6 @@ module Shared
       b = described_class.new('bbb')
       expect(a).to eq described_class.new(a.to_s)
       expect(a).to_not eq b
-      expect(a).to_not eq a.to_s
     end
 
     it do
