@@ -8,6 +8,10 @@ module SharedDomainSupport
     Shared::LongSentence.new(content)
   end
 
+  def name(content)
+    Shared::Name.new(content)
+  end
+
   def activity(name)
     Activity::Activity.from_symbol(name)
   end
