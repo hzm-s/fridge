@@ -2,7 +2,7 @@
 require 'sorbet-runtime'
 
 module Shared
-  class Sentence
+  class LengthLimitedString
     extend T::Sig
 
     sig {params(content: String).void}
@@ -22,12 +22,12 @@ module Shared
       @content.hash
     end
 
-    sig {params(other: T.nilable(Sentence)).returns(T::Boolean)}
+    sig {params(other: T.nilable(LengthLimitedString)).returns(T::Boolean)}
     def eql?(other)
       self == other
     end
 
-    sig {params(other: T.nilable(Sentence)).returns(T::Boolean)}
+    sig {params(other: T.nilable(LengthLimitedString)).returns(T::Boolean)}
     def ==(other)
       return false unless other
 

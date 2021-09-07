@@ -1,9 +1,9 @@
 # typed: strict
 require 'sorbet-runtime'
-require 'shared/sentence'
+require 'shared/length_limited_string'
 
 module Shared
-  class LongSentence < Sentence
+  class LongSentence < LengthLimitedString
     extend T::Sig
 
     private
