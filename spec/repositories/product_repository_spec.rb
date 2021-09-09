@@ -4,7 +4,7 @@ require 'rails_helper'
 RSpec.describe ProductRepository::AR do
   describe 'add' do
     it do
-      product = Product::Product.create('abc', 'xyz')
+      product = Product::Product.create(name('abc'), 'xyz')
 
       described_class.store(product)
       stored = described_class.find_by_id(product.id)

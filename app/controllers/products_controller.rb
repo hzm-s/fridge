@@ -20,7 +20,7 @@ class ProductsController < ApplicationController
       CreateProductWithTeamUsecase.perform(
         current_user.person_id,
         @form.domain_objects[:roles],
-        @form.name,
+        @form.domain_objects[:name],
         @form.description,
       )
       redirect_to products_path, flash: flash_success('product.create')

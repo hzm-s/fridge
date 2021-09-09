@@ -10,11 +10,11 @@ class CreateProductWithTeamUsecase < UsecaseBase
     @team_repository = T.let(TeamRepository::AR, Team::TeamRepository)
   end
 
-  sig {params(person_id: Person::Id, roles: Team::RoleSet, name: String, description: T.nilable(String)).returns(Product::Id)}
+  sig {params(person_id: Person::Id, roles: Team::RoleSet, name: Shared::Name, description: T.nilable(String)).returns(Product::Id)}
   def perform(person_id, roles, name, description = nil)
     product_id = CreateProductUsecase.perform(name, description)
 
-    team_id = CreateTeamUsecase.perform(person_id, roles, name)
+    team_id = CreateTeamUsecase.perform(person_id, roles, name.to_s)
     team = @team_repository.find_by_id(team_id)
     team.develop(product_id)
     @team_repository.store(team)

@@ -28,7 +28,7 @@ class Dao::Product < ApplicationRecord
   end
 
   def read_name
-    name
+    Shared::Name.new(name)
   end
 
   def read_description

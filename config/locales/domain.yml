@@ -36,6 +36,7 @@ ja:
 
     errors:
       shared:
+        invalid_name: 1~50文字で入力してください
         invalid_short_sentence: 2~100文字で入力してください
         invalid_long_sentence: 3~500文字で入力してください
 
