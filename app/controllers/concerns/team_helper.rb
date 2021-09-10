@@ -7,6 +7,6 @@ module TeamHelper
   end
 
   def all_team_roles
-    Team::Team.create('dummy').available_roles
+    Team::Role.all
   end
 end

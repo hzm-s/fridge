@@ -7,7 +7,7 @@ module ProductSpport
   def create_product(person: sign_up_as_person.id, roles: default_roles, name: 'xyz', description: 'desc', members: [])
     product =
       CreateProductWithTeamUsecase
-        .perform(person, roles, name, description)
+        .perform(person, roles, name(name), description)
         .then { |id| ProductRepository::AR.find_by_id(id) }
 
     return product if members.empty?

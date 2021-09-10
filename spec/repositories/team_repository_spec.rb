@@ -4,7 +4,7 @@ require 'rails_helper'
 RSpec.describe TeamRepository::AR, type: :repository do
   let(:product) do
     Product::Product
-      .create('abc')
+      .create(name('abc'))
       .tap { |p| ProductRepository::AR.store(p) }
   end
   let(:person_a) { sign_up }
@@ -14,7 +14,7 @@ RSpec.describe TeamRepository::AR, type: :repository do
 
   describe 'add' do
     it do
-      team = Team::Team.create('The Team')
+      team = Team::Team.create(name('The Team'))
       team.develop(product.id)
       team.add_member(po_member(person_a.person_id))
       team.add_member(team_member(person_b.person_id, :sm, :dev))
@@ -40,7 +40,7 @@ RSpec.describe TeamRepository::AR, type: :repository do
 
   describe 'update' do
     it do
-      team = Team::Team.create('The Team')
+      team = Team::Team.create(name('The Team'))
       team.develop(product.id)
       team.add_member(po_member(person_a.person_id))
       team.add_member(dev_member(person_b.person_id))
@@ -71,7 +71,7 @@ RSpec.describe TeamRepository::AR, type: :repository do
 
   describe 'find' do
     it do
-      team = Team::Team.create('The Team')
+      team = Team::Team.create(name('The Team'))
       team.develop(product.id)
       team.add_member(team_member(person_a.person_id, :po, :sm))
       team.add_member(dev_member(person_b.person_id))
@@ -81,6 +81,7 @@ RSpec.describe TeamRepository::AR, type: :repository do
       found = described_class.find_by_id(team.id)
 
       aggregate_failures do
+        expect(found.name.to_s).to eq 'The Team'
         expect(found.members[0]).to eq team_member(person_a.person_id, :po, :sm)
         expect(found.members[1]).to eq dev_member(person_b.person_id)
         expect(found.members[2]).to eq dev_member(person_c.person_id)

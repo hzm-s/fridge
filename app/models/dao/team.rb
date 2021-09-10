@@ -36,7 +36,7 @@ class Dao::Team < ApplicationRecord
   end
 
   def read_name
-    name
+    Shared::Name.new(name)
   end
 
   def read_product_id

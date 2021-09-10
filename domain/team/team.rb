@@ -16,12 +16,12 @@ module Team
     class << self
       extend T::Sig
 
-      sig {params(name: String).returns(T.attached_class)}
+      sig {params(name: Shared::Name).returns(T.attached_class)}
       def create(name)
         new(Id.create, name, nil, [])
       end
 
-      sig {params(id: Id, name: String, product: T.nilable(Product::Id), members: Members).returns(T.attached_class)}
+      sig {params(id: Id, name: Shared::Name, product: T.nilable(Product::Id), members: Members).returns(T.attached_class)}
       def from_repository(id, name, product, members)
         new(id, name, product, members)
       end
@@ -30,7 +30,7 @@ module Team
     sig {returns(Id)}
     attr_reader :id
 
-    sig {returns(String)}
+    sig {returns(Shared::Name)}
     attr_reader :name
 
     sig {returns(Members)}
@@ -39,7 +39,7 @@ module Team
     sig {returns(T.nilable(Product::Id))}
     attr_reader :product
 
-    sig {params(id: Id, name: String, product: T.nilable(Product::Id), members: Members).void}
+    sig {params(id: Id, name: Shared::Name, product: T.nilable(Product::Id), members: Members).void}
     def initialize(id, name, product, members)
       @id = id
       @name = name

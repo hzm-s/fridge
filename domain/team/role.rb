@@ -16,6 +16,11 @@ module Team
       rescue KeyError => e
         raise InvalidRole
       end
+
+      sig {returns(T::Array[Role])}
+      def all
+        [ProductOwner, ScrumMaster, Developer]
+      end
     end
 
     enums do

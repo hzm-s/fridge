@@ -25,7 +25,7 @@ RSpec.describe 'team_members' do
         post team_members_path(team_id: team.id.to_s), params: { form: { roles: ['', 'scrum_master', 'developer'] } }
         follow_redirect!
 
-        expect(response.body).to include product.name
+        expect(response.body).to include product.name.to_s
 
         get team_path(team.id.to_s)
         expect(response.body).to include new_member.name

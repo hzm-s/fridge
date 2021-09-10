@@ -3,19 +3,19 @@ require 'domain_helper'
 
 module Team
   RSpec.describe Team do
-    let(:team) { described_class.create('The Team') }
-
     describe 'create' do
       it do
-        team = described_class.create('ABC')
+        team = described_class.create(name('ABC'))
 
         aggregate_failures do
           expect(team.id).to_not be_nil
-          expect(team.name).to eq 'ABC'
+          expect(team.name.to_s).to eq 'ABC'
           expect(team.members).to be_empty
         end
       end
     end
+
+    let(:team) { described_class.create(name('The Team')) }
 
     describe 'develop' do
       let(:product_id) { Product::Id.create }
