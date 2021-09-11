@@ -9,7 +9,7 @@ class AppendAcceptanceCriterionUsecase < UsecaseBase
     @repository = T.let(IssueRepository::AR, Issue::IssueRepository)
   end
 
-  sig {params(issue_id: Issue::Id, content: String).void}
+  sig {params(issue_id: Issue::Id, content: Shared::ShortSentence).void}
   def perform(issue_id, content)
     issue = @repository.find_by_id(issue_id)
 

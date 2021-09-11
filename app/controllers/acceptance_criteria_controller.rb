@@ -7,7 +7,7 @@ class AcceptanceCriteriaController < ApplicationController
   def create
     @form = AcceptanceCriterionForm.new(acceptance_criterion_params)
     if @form.valid?
-      AppendAcceptanceCriterionUsecase.perform(issue_id, @form.content)
+      AppendAcceptanceCriterionUsecase.perform(issue_id, @form.domain_objects[:content])
       redirect_to edit_issue_path(id: issue_id.to_s)
     else
       render :new
@@ -20,7 +20,7 @@ class AcceptanceCriteriaController < ApplicationController
       ModifyAcceptanceCriterionUsecase.perform(
         issue_id,
         params[:number].to_i,
-        acceptance_criterion_params[:content],
+        @form.domain_objects[:content],
       )
       redirect_to edit_issue_path(id: issue_id.to_s)
     else

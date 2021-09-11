@@ -9,7 +9,7 @@ class ModifyAcceptanceCriterionUsecase < UsecaseBase
     @repository = T.let(IssueRepository::AR, Issue::IssueRepository)
   end
 
-  sig {params(issue_id: Issue::Id, number: Integer, content: String).void}
+  sig {params(issue_id: Issue::Id, number: Integer, content: Shared::ShortSentence).void}
   def perform(issue_id, number, content)
     issue = @repository.find_by_id(issue_id)
 

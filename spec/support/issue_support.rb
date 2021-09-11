@@ -20,7 +20,7 @@ module IssueSupport
 
   def append_acceptance_criteria(issue, contents)
     contents.each do |c|
-      AppendAcceptanceCriterionUsecase.perform(issue.id, c)
+      AppendAcceptanceCriterionUsecase.perform(issue.id, s_sentence(c))
     end
   end
 

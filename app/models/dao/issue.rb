@@ -62,7 +62,7 @@ class Dao::Issue < ApplicationRecord
 
   def read_acceptance_criteria
     criteria
-      .map { |c| Issue::AcceptanceCriterion.from_repository(c.number, c.content, c.satisfied) }
+      .map { |c| Issue::AcceptanceCriterion.from_repository(c.number, Shared::ShortSentence.new(c.content), c.satisfied) }
       .then { |criteria| Issue::AcceptanceCriteria.from_repository(criteria) }
   end
 end
