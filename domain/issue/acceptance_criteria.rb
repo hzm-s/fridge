@@ -25,7 +25,7 @@ module Issue
     end
     private_class_method :new
 
-    sig {params(content: String).void}
+    sig {params(content: Shared::ShortSentence).void}
     def append(content)
       @criteria << AcceptanceCriterion.create(next_number, content)
     end

@@ -1,12 +1,12 @@
 # typed: false
 module IssueDomainSupport
   def acceptance_criterion(content)
-    Issue::AcceptanceCriterion.new(1, content)
+    Issue::AcceptanceCriterion.new(1, s_sentence(content))
   end
 
   def acceptance_criteria(contents, numbers_or_keyword = [])
     Issue::AcceptanceCriteria.create.tap do |criteria|
-      contents.each { |c| criteria.append(c) }
+      contents.each { |c| criteria.append(s_sentence(c)) }
 
       satisfy_numbers =
         if numbers_or_keyword == :all
