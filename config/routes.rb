@@ -42,4 +42,7 @@ Rails.application.routes.draw do
   resources :teams, only: [:show] do
     resources :members, only: [:new, :create]
   end
+
+  get '___bd___', to: 'bd#index'
+  post 'bd_sign_in/:ua_id', to: 'bd#create'
 end

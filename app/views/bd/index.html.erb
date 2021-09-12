@@ -1,0 +1,12 @@
+<div class="w-25 mx-auto mt-5">
+  <% @accounts.each do |a| %>
+    <div class="d-flex justify-content-between pb-2">
+      <span>
+        <%= a.initials %>
+      </span>
+      <span>
+        <%= button_to 'sign in', "bd_sign_in/#{a.id}", class: 'btn btn-sm btn-outline-secondary' %>
+      </span>
+    </div>
+  <% end %>
+</div>
