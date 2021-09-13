@@ -8,13 +8,13 @@ module Plan
     class << self
       extend T::Sig
 
-      sig {params(number: Integer, title: T.nilable(String)).returns(T.attached_class)}
+      sig {params(number: Integer, title: T.nilable(Shared::Name)).returns(T.attached_class)}
       def create(number, title = nil)
-        title ||= "Release##{number}"
+        title ||= Shared::Name.new("Release##{number}")
         new(number, title, Issue::List.new)
       end
 
-      sig {params(number: Integer, title: T.nilable(String), issues: Issue::List).returns(T.attached_class)}
+      sig {params(number: Integer, title: Shared::Name, issues: Issue::List).returns(T.attached_class)}
       def from_repository(number, title, issues)
         new(number, title, issues)
       end
@@ -23,13 +23,13 @@ module Plan
     sig {returns(Integer)}
     attr_reader :number
 
-    sig {returns(T.nilable(String))}
+    sig {returns(Shared::Name)}
     attr_reader :title
 
     sig {returns(Issue::List)}
     attr_reader :issues
 
-    sig {params(number: Integer, title: T.nilable(String), issues: Issue::List).void}
+    sig {params(number: Integer, title: Shared::Name, issues: Issue::List).void}
     def initialize(number, title, issues)
       @number= number
       @title = title
@@ -53,7 +53,7 @@ module Plan
       @issues = @issues.swap(from, to)
     end
 
-    sig {params(title: T.nilable(String)).void}
+    sig {params(title: Shared::Name).void}
     def modify_title(title)
       @title = title
     end

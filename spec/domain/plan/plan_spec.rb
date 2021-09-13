@@ -38,7 +38,7 @@ module Plan
     describe 'Append release' do
       it do
         plan.append_release(po_role)
-        plan.append_release(po_role, 'R3')
+        plan.append_release(po_role, name('R3'))
         plan.append_release(po_role)
         plan.append_release(po_role)
         plan.remove_release(po_role, 4)
@@ -46,7 +46,7 @@ module Plan
 
         aggregate_failures do
           expect(plan.releases.map(&:number)).to match_array [1, 2, 3, 5, 6]
-          expect(plan.release_of(3).title).to eq 'R3'
+          expect(plan.release_of(3).title.to_s).to eq 'R3'
         end
       end
 
@@ -67,13 +67,13 @@ module Plan
         r.plan_issue(issue_a)
         r.plan_issue(issue_b)
         r.plan_issue(issue_c)
-        r.modify_title('Updated')
+        r.modify_title(name('Updated'))
 
         plan.update_release(po_role, r)
 
         aggregate_failures do
           expect(plan.release_of(1).issues).to eq issue_list(issue_a, issue_b, issue_c)
-          expect(plan.release_of(1).title).to eq 'Updated'
+          expect(plan.release_of(1).title.to_s).to eq 'Updated'
           expect(plan.release_of(2).issues).to eq issue_list
         end
       end

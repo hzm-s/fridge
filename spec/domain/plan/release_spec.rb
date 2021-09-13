@@ -14,17 +14,17 @@ module Plan
 
         aggregate_failures do
           expect(r.number).to eq 1
-          expect(r.title).to eq 'Release#1'
+          expect(r.title.to_s).to eq 'Release#1'
           expect(r.issues).to eq issue_list
         end
       end
 
       it do
-        r = described_class.create(1, 'MVP')
+        r = described_class.create(1, name('MVP'))
 
         aggregate_failures do
           expect(r.number).to eq 1
-          expect(r.title).to eq 'MVP'
+          expect(r.title.to_s).to eq 'MVP'
           expect(r.issues).to eq issue_list
         end
       end
@@ -32,10 +32,9 @@ module Plan
 
     describe 'Modify title' do
       it do
-        release = described_class.create(1, 'Initial')
-        expect { release.modify_title('Modified') }
-          .to change(release, :title)
-          .from('Initial').to('Modified')
+        release = described_class.create(1, name('Initial'))
+        release.modify_title(name('Modified'))
+        expect(release.title.to_s).to eq 'Modified'
       end
     end
 
