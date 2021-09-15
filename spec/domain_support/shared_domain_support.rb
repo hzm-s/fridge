@@ -9,6 +9,8 @@ module SharedDomainSupport
   end
 
   def name(content)
+    return nil unless content
+
     Shared::Name.new(content)
   end
 

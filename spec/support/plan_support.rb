@@ -26,7 +26,7 @@ module PlanSupport
     plan = plan_of(product_id)
     return if number && find_release_by_number(plan, number)
 
-    AppendReleaseUsecase.perform(team_roles(:po), product_id, title)
+    AppendReleaseUsecase.perform(team_roles(:po), product_id, name(title))
       .then { plan_of(product_id).releases.last }
   end
 

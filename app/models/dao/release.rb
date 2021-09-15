@@ -26,7 +26,7 @@ class Dao::Release < ApplicationRecord
   def read
     Plan::Release.from_repository(
       number.to_i,
-      title,
+      Shared::Name.new(title),
       issues.map { |i| Issue::Id.from_string(i) }.then { |l| Issue::List.new(l) }
     )
   end

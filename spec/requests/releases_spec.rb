@@ -24,9 +24,9 @@ RSpec.describe 'releases' do
 
     context 'given invalid params' do
       it do
-        post product_releases_path(product_id: product.id.to_s), params: { form: { title: 'a' * 101 } }
+        post product_releases_path(product_id: product.id.to_s), params: { form: { title: 'a' * 51 } }
 
-        expect(response.body).to include(I18n.t('errors.messages.too_long', count: 100))
+        expect(response.body).to include(I18n.t('domain.errors.shared.invalid_name'))
       end
     end
   end
@@ -35,7 +35,7 @@ RSpec.describe 'releases' do
     before { sign_in(user_account) }
 
     before do
-      update_release(product.id, 1) { |r| r.modify_title('ファーストリリース') }
+      update_release(product.id, 1) { |r| r.modify_title(name('ファーストリリース')) }
     end
 
     it do
@@ -48,7 +48,7 @@ RSpec.describe 'releases' do
     before { sign_in(user_account) }
 
     before do
-      update_release(product.id, 1) { |r| r.modify_title('MVP') }
+      update_release(product.id, 1) { |r| r.modify_title(name('MVP')) }
       append_release(product.id, 2, title: 'Extra')
     end
 
@@ -66,9 +66,9 @@ RSpec.describe 'releases' do
 
     context 'given invalid params' do
       it do
-        patch product_release_path(product_id: product.id, number: 1), params: { form: { title: 'a' * 101 } }
+        patch product_release_path(product_id: product.id, number: 1), params: { form: { title: 'a' * 51 } }
 
-        expect(response.body).to include(I18n.t('errors.messages.too_long', count: 100))
+        expect(response.body).to include(I18n.t('domain.errors.shared.invalid_name'))
       end
     end
   end

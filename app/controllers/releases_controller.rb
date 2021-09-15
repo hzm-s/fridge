@@ -14,12 +14,12 @@ class ReleasesController < ApplicationController
   def create
     @form = ReleaseForm.new(permitted_params)
     if @form.valid?
-        AppendReleaseUsecase.perform(
-          current_team_member_roles,
-          Product::Id.from_string(current_product_id),
-          @form.title
-        )
-        redirect_to product_backlog_path(product_id: current_product_id), flash: flash_success('release.create')
+      AppendReleaseUsecase.perform(
+        current_team_member_roles,
+        Product::Id.from_string(current_product_id),
+        @form.domain_objects[:title]
+      )
+      redirect_to product_backlog_path(product_id: current_product_id), flash: flash_success('release.create')
     else
       render :new
     end
@@ -36,7 +36,7 @@ class ReleasesController < ApplicationController
         Product::Id.from_string(current_product_id),
         current_team_member_roles,
         release_number,
-        @form.title
+        @form.domain_objects[:title]
       )
       redirect_to product_backlog_path(product_id: current_product_id), flash: flash_success('release.update')
     else

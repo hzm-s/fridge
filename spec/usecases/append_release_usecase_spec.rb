@@ -6,12 +6,12 @@ RSpec.describe AppendReleaseUsecase do
   let(:roles) { team_roles(:po) }
 
   it do
-    described_class.perform(roles, product.id, 'MVP')
+    described_class.perform(roles, product.id, name('MVP'))
 
     plan = PlanRepository::AR.find_by_product_id(product.id)
 
     aggregate_failures do
-      expect(plan.release_of(2).title).to eq 'MVP'
+      expect(plan.release_of(2).title.to_s).to eq 'MVP'
       expect(plan.release_of(2).issues).to eq issue_list
     end
   end
@@ -21,6 +21,6 @@ RSpec.describe AppendReleaseUsecase do
 
     plan = PlanRepository::AR.find_by_product_id(product.id)
 
-    expect(plan.release_of(2).title).to eq 'Release#2'
+    expect(plan.release_of(2).title.to_s).to eq 'Release#2'
   end
 end

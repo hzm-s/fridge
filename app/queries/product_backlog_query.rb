@@ -31,7 +31,7 @@ module ProductBacklogQuery
       def create(release, all_issues, plan)
         new(
           number: release.number,
-          title: release.title,
+          title: release.title.to_s,
           issues: release.issues.to_a.map { |ri| all_issues.find { |i| i.id == ri.to_s } },
           can_remove: plan.can_remove_release? && release.can_remove?,
         )
