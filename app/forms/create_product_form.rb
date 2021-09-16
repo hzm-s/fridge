@@ -11,7 +11,7 @@ class CreateProductForm
     domain_object: { object_class: Shared::Name, message: t_domain_error(Shared::InvalidName), allow_blank: true }
 
   validates :description,
-    length: { in: 1..200, allow_blank: true }
+    domain_object: { object_class: Shared::ShortSentence, message: t_domain_error(Shared::InvalidShortSentence), allow_blank: true }
 
   validates :roles, team_roles: true
 end

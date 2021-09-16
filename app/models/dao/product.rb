@@ -32,6 +32,6 @@ class Dao::Product < ApplicationRecord
   end
 
   def read_description
-    description
+    Shared::ShortSentence.new(description)
   end
 end

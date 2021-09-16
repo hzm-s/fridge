@@ -21,7 +21,7 @@ class ProductsController < ApplicationController
         current_user.person_id,
         @form.domain_objects[:roles],
         @form.domain_objects[:name],
-        @form.description,
+        @form.domain_objects[:description],
       )
       redirect_to products_path, flash: flash_success('product.create')
     else

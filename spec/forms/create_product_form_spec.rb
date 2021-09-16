@@ -33,10 +33,10 @@ RSpec.describe CreateProductForm do
   end
 
   it do
-    form = described_class.new(valid.merge(description: 'a' * 201))
+    form = described_class.new(valid.merge(description: 'a' * 101))
     aggregate_failures do
       expect(form).to_not be_valid
-      expect(form.errors[:description]).to include(I18n.t('errors.messages.too_long', count: 200))
+      expect(form.errors[:description]).to include(I18n.t('domain.errors.shared.invalid_short_sentence'))
     end
   end
 
