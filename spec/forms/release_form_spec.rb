@@ -24,7 +24,7 @@ RSpec.describe ReleaseForm do
     form = described_class.new(valid.merge(title: 'a' * 51))
     aggregate_failures do
       expect(form).to_not be_valid
-      expect(form.errors[:title]).to include(I18n.t('domain.errors.shared.invalid_name'))
+      expect_to_include_domain_shared_error(form, :title, :invalid_name)
     end
   end
 end

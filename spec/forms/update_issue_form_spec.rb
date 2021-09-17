@@ -30,7 +30,7 @@ RSpec.describe UpdateIssueForm do
     form = described_class.new(valid.merge(description: 'a' * 1000))
     aggregate_failures do
       expect(form).to_not be_valid
-      expect(form.errors[:description]).to include(I18n.t('domain.errors.shared.invalid_long_sentence'))
+      expect_to_include_domain_shared_error(form, :description, :invalid_long_sentence)
     end
   end
 end

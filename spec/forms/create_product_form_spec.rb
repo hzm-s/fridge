@@ -23,7 +23,7 @@ RSpec.describe CreateProductForm do
     form = described_class.new(valid.merge(name: 'a' * 51))
     aggregate_failures do
       expect(form).to_not be_valid
-      expect(form.errors[:name]).to include(I18n.t('domain.errors.shared.invalid_name'))
+      expect_to_include_domain_shared_error(form, :name, :invalid_name)
     end
   end
 
@@ -36,7 +36,7 @@ RSpec.describe CreateProductForm do
     form = described_class.new(valid.merge(description: 'a' * 101))
     aggregate_failures do
       expect(form).to_not be_valid
-      expect(form.errors[:description]).to include(I18n.t('domain.errors.shared.invalid_short_sentence'))
+      expect_to_include_domain_shared_error(form, :description, :invalid_short_sentence)
     end
   end
 
