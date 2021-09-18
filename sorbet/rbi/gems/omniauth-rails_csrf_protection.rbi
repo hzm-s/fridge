@@ -32,7 +32,7 @@ class OmniAuth::RailsCsrfProtection::TokenVerifier
   def forgery_protection_strategy=(value); end
   def log_warning_on_csrf_failure; end
   def log_warning_on_csrf_failure=(value); end
-  def params(*args, &block); end
+  def params(**, &&); end
   def per_form_csrf_tokens; end
   def per_form_csrf_tokens=(value); end
   def request; end
@@ -63,7 +63,7 @@ class OmniAuth::RailsCsrfProtection::TokenVerifier
   def self.request_forgery_protection_token=(value); end
   def self.urlsafe_csrf_tokens; end
   def self.urlsafe_csrf_tokens=(value); end
-  def session(*args, &block); end
+  def session(**, &&); end
   def urlsafe_csrf_tokens; end
   extend AbstractController::Callbacks::ClassMethods
   extend AbstractController::Helpers::ClassMethods

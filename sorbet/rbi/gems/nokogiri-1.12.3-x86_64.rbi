@@ -553,7 +553,6 @@ class Nokogiri::VersionInfo
   def loaded_libxslt_version; end
   def ruby_minor; end
   def self.allocate; end
-  def self.instance; end
   def self.new(*arg0); end
   def to_hash; end
   def to_markdown; end

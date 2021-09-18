@@ -11,6 +11,8 @@
 
 module TZInfo
 end
+module TZInfo::UntaintExt
+end
 class TZInfo::StringDeduper
   def create_hash(&block); end
   def dedupe(string); end

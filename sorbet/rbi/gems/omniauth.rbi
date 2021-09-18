@@ -53,7 +53,6 @@ class OmniAuth::Configuration
   def self.allocate; end
   def self.default_logger; end
   def self.defaults; end
-  def self.instance; end
   def self.new(*arg0); end
   def silence_get_warning; end
   def silence_get_warning=(arg0); end

@@ -44,7 +44,7 @@ module ActionMailer::DeliveryMethods
 end
 module ActionMailer::DeliveryMethods::ClassMethods
   def add_delivery_method(symbol, klass, default_options = nil); end
-  def deliveries(*args, &block); end
+  def deliveries(**, &&); end
   def deliveries=(arg); end
   def wrap_delivery_behavior(mail, method = nil, options = nil); end
 end

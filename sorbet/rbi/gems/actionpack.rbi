@@ -87,7 +87,7 @@ class ActionController::Parameters
   def always_permitted_parameters; end
   def always_permitted_parameters=(val); end
   def array_of_permitted_scalars?(value); end
-  def as_json(*args, &block); end
+  def as_json(**, &&); end
   def compact!; end
   def compact; end
   def compact_blank!; end
@@ -104,28 +104,28 @@ class ActionController::Parameters
   def dig(*keys); end
   def each(&block); end
   def each_element(object, &block); end
-  def each_key(*args, &block); end
+  def each_key(**, &&); end
   def each_nested_attribute; end
   def each_pair(&block); end
   def each_value(&block); end
-  def empty?(*args, &block); end
+  def empty?(**, &&); end
   def eql?(other); end
   def except(*keys); end
   def extract!(*keys); end
   def fetch(key, *args); end
-  def has_key?(*args, &block); end
-  def has_value?(*args, &block); end
+  def has_key?(**, &&); end
+  def has_value?(**, &&); end
   def hash; end
   def hash_filter(params, filter); end
-  def include?(*args, &block); end
+  def include?(**, &&); end
   def init_with(coder); end
   def initialize(parameters = nil); end
   def initialize_copy(source); end
   def inspect; end
   def keep_if(&block); end
-  def key?(*args, &block); end
-  def keys(*args, &block); end
-  def member?(*args, &block); end
+  def key?(**, &&); end
+  def keys(**, &&); end
+  def member?(**, &&); end
   def merge!(other_hash); end
   def merge(other_hash); end
   def nested_attributes?; end
@@ -163,7 +163,7 @@ class ActionController::Parameters
   def to_hash; end
   def to_param(*args); end
   def to_query(*args); end
-  def to_s(*args, &block); end
+  def to_s(**, &&); end
   def to_unsafe_h; end
   def to_unsafe_hash; end
   def transform_keys!(&block); end
@@ -172,8 +172,8 @@ class ActionController::Parameters
   def transform_values; end
   def unpermitted_keys(params); end
   def unpermitted_parameters!(params); end
-  def value?(*args, &block); end
-  def values(*args, &block); end
+  def value?(**, &&); end
+  def values(**, &&); end
   def values_at(*keys); end
   def with_defaults!(other_hash); end
   def with_defaults(other_hash); end
@@ -259,7 +259,6 @@ class Mime::AllType < Mime::Type
   def html?; end
   def initialize; end
   def self.allocate; end
-  def self.instance; end
   def self.new(*arg0); end
   extend Singleton::SingletonClassMethods
   include Singleton
@@ -270,7 +269,6 @@ class Mime::NullType
   def ref; end
   def respond_to_missing?(method, _); end
   def self.allocate; end
-  def self.instance; end
   def self.new(*arg0); end
   def to_s; end
   extend Singleton::SingletonClassMethods
@@ -2227,8 +2225,8 @@ module ActionDispatch::Http::FilterRedirect
   def location_filters; end
 end
 class ActionDispatch::Response
-  def [](*args, &block); end
-  def []=(*args, &block); end
+  def [](**, &&); end
+  def []=(**, &&); end
   def _cache_control; end
   def _cache_control=(v); end
   def abort; end
@@ -2396,15 +2394,15 @@ class ActionController::MiddlewareStack::Middleware < ActionDispatch::Middleware
   def valid?(action); end
 end
 class ActionController::Metal < AbstractController::Base
-  def content_type(*args, &block); end
+  def content_type(**, &&); end
   def content_type=(arg); end
   def controller_name; end
   def dispatch(name, request, response); end
-  def headers(*args, &block); end
+  def headers(**, &&); end
   def initialize; end
-  def location(*args, &block); end
+  def location(**, &&); end
   def location=(arg); end
-  def media_type(*args, &block); end
+  def media_type(**, &&); end
   def middleware_stack; end
   def middleware_stack=(arg0); end
   def middleware_stack?; end
@@ -2417,7 +2415,7 @@ class ActionController::Metal < AbstractController::Base
   def response; end
   def response=(arg0); end
   def response_body=(body); end
-  def response_code(*args, &block); end
+  def response_code(**, &&); end
   def self.action(name); end
   def self.action_encoding_template(action); end
   def self.controller_name; end
@@ -2429,10 +2427,10 @@ class ActionController::Metal < AbstractController::Base
   def self.middleware_stack=(value); end
   def self.middleware_stack?; end
   def self.use(*args, &block); end
-  def session(*args, &block); end
+  def session(**, &&); end
   def set_request!(request); end
   def set_response!(response); end
-  def status(*args, &block); end
+  def status(**, &&); end
   def status=(arg); end
   def to_a; end
   def url_for(string); end
@@ -2519,7 +2517,7 @@ module ActionController::Rendering
 end
 module ActionController::Rendering::ClassMethods
   def inherited(klass); end
-  def render(*args, &block); end
+  def render(**, &&); end
   def renderer; end
   def setup_renderer!; end
 end
@@ -3070,7 +3068,7 @@ class ActionController::Base < ActionController::Metal
   def etaggers; end
   def etaggers=(arg0); end
   def etaggers?; end
-  def flash(*args, &block); end
+  def flash(**, &&); end
   def forgery_protection_origin_check; end
   def forgery_protection_origin_check=(value); end
   def forgery_protection_strategy; end

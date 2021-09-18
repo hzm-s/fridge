@@ -581,6 +581,7 @@ module RSpec::Core::HashImitatable
   def compare_by_identity?(*args, &block); end
   def count(*args, &block); end
   def cycle(*args, &block); end
+  def deconstruct_keys(*args, &block); end
   def deep_merge!(*args, &block); end
   def deep_merge(*args, &block); end
   def deep_stringify_keys!(*args, &block); end
@@ -624,6 +625,7 @@ module RSpec::Core::HashImitatable
   def fetch_values(*args, &block); end
   def filter!(*args, &block); end
   def filter(*args, &block); end
+  def filter_map(*args, &block); end
   def find(*args, &block); end
   def find_all(*args, &block); end
   def find_index(*args, &block); end
@@ -699,6 +701,7 @@ module RSpec::Core::HashImitatable
   def symbolize_keys(*args, &block); end
   def take(*args, &block); end
   def take_while(*args, &block); end
+  def tally(*args, &block); end
   def to_a(*args, &block); end
   def to_h; end
   def to_hash(*args, &block); end
@@ -981,6 +984,8 @@ class RSpec::Core::OutputWrapper
   def binmode?(*args, &block); end
   def bytes(*args, &block); end
   def chars(*args, &block); end
+  def check_winsize_changed(*args, &block); end
+  def clear_screen(*args, &block); end
   def close(*args, &block); end
   def close_on_exec=(*args, &block); end
   def close_on_exec?(*args, &block); end
@@ -988,10 +993,16 @@ class RSpec::Core::OutputWrapper
   def close_write(*args, &block); end
   def closed?(*args, &block); end
   def codepoints(*args, &block); end
+  def console_mode(*args, &block); end
+  def console_mode=(*args, &block); end
   def cooked!(*args, &block); end
   def cooked(*args, &block); end
   def cursor(*args, &block); end
   def cursor=(*args, &block); end
+  def cursor_down(*args, &block); end
+  def cursor_left(*args, &block); end
+  def cursor_right(*args, &block); end
+  def cursor_up(*args, &block); end
   def each(*args, &block); end
   def each_byte(*args, &block); end
   def each_char(*args, &block); end
@@ -1001,6 +1012,8 @@ class RSpec::Core::OutputWrapper
   def echo?(*args, &block); end
   def eof(*args, &block); end
   def eof?(*args, &block); end
+  def erase_line(*args, &block); end
+  def erase_screen(*args, &block); end
   def external_encoding(*args, &block); end
   def fcntl(*args, &block); end
   def fdatasync(*args, &block); end
@@ -1013,6 +1026,7 @@ class RSpec::Core::OutputWrapper
   def getpass(*args, &block); end
   def gets(*args, &block); end
   def goto(*args, &block); end
+  def goto_column(*args, &block); end
   def iflush(*args, &block); end
   def initialize(output); end
   def inspect(*args, &block); end
@@ -1056,8 +1070,11 @@ class RSpec::Core::OutputWrapper
   def reopen(*args, &block); end
   def respond_to?(name, priv = nil); end
   def rewind(*args, &block); end
+  def scroll_backward(*args, &block); end
+  def scroll_forward(*args, &block); end
   def seek(*args, &block); end
   def set_encoding(*args, &block); end
+  def set_encoding_by_bom(*args, &block); end
   def stat(*args, &block); end
   def sync(*args, &block); end
   def sync=(*args, &block); end
@@ -1709,7 +1726,7 @@ module RSpec::Support
   def self.require_rspec_core(f); end
 end
 class RSpec::Core::Time
-  def self.now; end
+  def self.now(*arg0); end
 end
 class Module
   def context(*a, &b); end
