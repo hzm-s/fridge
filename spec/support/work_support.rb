@@ -3,7 +3,7 @@
 module WorkSupport
   def plan_task(issue_id, task_contents)
     task_contents.each do |content|
-      PlanTaskUsecase.perform(issue_id, content)
+      PlanTaskUsecase.perform(issue_id, s_sentence(content))
     end
   end
 

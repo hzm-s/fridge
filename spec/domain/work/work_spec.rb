@@ -20,38 +20,38 @@ module Work
 
     describe 'Append and Remove task' do
       it do
-        work.append_task('Task_A')
+        work.append_task(s_sentence('Task_A'))
         work.remove_task(1)
-        work.append_task('Task_A')
-        work.append_task('Task_B')
-        work.append_task('Task_C')
-        work.append_task('Task_D')
-        work.append_task('Task_E')
+        work.append_task(s_sentence('Task_A'))
+        work.append_task(s_sentence('Task_B'))
+        work.append_task(s_sentence('Task_C'))
+        work.append_task(s_sentence('Task_D'))
+        work.append_task(s_sentence('Task_E'))
         work.remove_task(4)
-        work.append_task('Task_F')
+        work.append_task(s_sentence('Task_F'))
 
         aggregate_failures do
-          expect(work.task_of(1).content).to eq 'Task_A'
-          expect(work.task_of(2).content).to eq 'Task_B'
-          expect(work.task_of(3).content).to eq 'Task_C'
-          expect(work.task_of(5).content).to eq 'Task_E'
-          expect(work.task_of(6).content).to eq 'Task_F'
+          expect(work.task_of(1).content.to_s).to eq 'Task_A'
+          expect(work.task_of(2).content.to_s).to eq 'Task_B'
+          expect(work.task_of(3).content.to_s).to eq 'Task_C'
+          expect(work.task_of(5).content.to_s).to eq 'Task_E'
+          expect(work.task_of(6).content.to_s).to eq 'Task_F'
         end
       end
     end
 
     describe 'Modify task' do
       it do
-        work.append_task('Task_A')
-        work.append_task('Task_B')
-        work.append_task('Task_C')
+        work.append_task(s_sentence('Task_A'))
+        work.append_task(s_sentence('Task_B'))
+        work.append_task(s_sentence('Task_C'))
 
-        work.modify_task(2, 'Task_V')
+        work.modify_task(2, s_sentence('Task_V'))
 
         aggregate_failures do
-          expect(work.task_of(1).content).to eq 'Task_A'
-          expect(work.task_of(2).content).to eq 'Task_V'
-          expect(work.task_of(3).content).to eq 'Task_C'
+          expect(work.task_of(1).content.to_s).to eq 'Task_A'
+          expect(work.task_of(2).content.to_s).to eq 'Task_V'
+          expect(work.task_of(3).content.to_s).to eq 'Task_C'
         end
       end
     end
@@ -59,8 +59,8 @@ module Work
     describe 'Update task status' do
       it do
         aggregate_failures do
-          work.append_task('Task_A')
-          work.append_task('Task_B')
+          work.append_task(s_sentence('Task_A'))
+          work.append_task(s_sentence('Task_B'))
 
           work.start_task(2)
           expect(work.task_of(1).status.to_s).to eq 'todo'

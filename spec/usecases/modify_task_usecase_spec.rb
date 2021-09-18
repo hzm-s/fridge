@@ -8,14 +8,14 @@ RSpec.describe ModifyTaskUsecase do
   it do
     plan_task(issue.id, %w(Task1 Task2 Task3))
 
-    described_class.perform(issue.id, 2, 'Task02')
+    described_class.perform(issue.id, 2, s_sentence('Task02'))
 
     work = WorkRepository::AR.find_by_issue_id(issue.id)
 
     aggregate_failures do
-      expect(work.task_of(1).content).to eq 'Task1'
-      expect(work.task_of(2).content).to eq 'Task02'
-      expect(work.task_of(3).content).to eq 'Task3'
+      expect(work.task_of(1).content.to_s).to eq 'Task1'
+      expect(work.task_of(2).content.to_s).to eq 'Task02'
+      expect(work.task_of(3).content.to_s).to eq 'Task3'
     end
   end
 end

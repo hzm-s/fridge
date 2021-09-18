@@ -7,7 +7,7 @@ class TasksController < ApplicationController
     @form = TaskForm.new(task_params)
 
     if @form.valid?
-      PlanTaskUsecase.perform(@issue_id, @form.content)
+      PlanTaskUsecase.perform(@issue_id, @form.domain_objects[:content])
 
       @form = @form.renew
       @tasks = TaskListQuery.call(@issue_id.to_s)
@@ -22,7 +22,7 @@ class TasksController < ApplicationController
     task_number = params[:number].to_i
 
     if @form.valid?
-      ModifyTaskUsecase.perform(@issue_id, task_number, @form.content)
+      ModifyTaskUsecase.perform(@issue_id, task_number, @form.domain_objects[:content])
       @task = TaskQuery.call(@issue_id.to_s, task_number)
     else
       @task = TaskQuery.call(@issue_id.to_s, task_number)

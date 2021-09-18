@@ -11,7 +11,7 @@ class Dao::Work < ApplicationRecord
 
     self.tasks.each(&:mark_for_destruction)
     work.tasks.to_a.each do |t|
-      self.tasks.build(number: t.number, content: t.content, status: t.status.to_s)
+      self.tasks.build(number: t.number, content: t.content.to_s, status: t.status.to_s)
     end
   end
 
@@ -28,7 +28,7 @@ class Dao::Work < ApplicationRecord
     tasks.map do |t|
       Work::Task.from_repository(
         t.number,
-        t.content,
+        Shared::ShortSentence.new(t.content),
         Work::TaskStatus.from_string(t.status),
       )
     end

@@ -9,7 +9,7 @@ class PlanTaskUsecase < UsecaseBase
     @repository = T.let(WorkRepository::AR, Work::WorkRepository)
   end
 
-  sig {params(issue_id: Issue::Id, content: String).void}
+  sig {params(issue_id: Issue::Id, content: Shared::ShortSentence).void}
   def perform(issue_id, content)
     work = fetch_or_create_work(issue_id)
     work.append_task(content)

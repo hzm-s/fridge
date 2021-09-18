@@ -8,12 +8,12 @@ module Work
     class << self
       extend T::Sig
 
-      sig {params(number: Integer, content: String).returns(T.attached_class)}
+      sig {params(number: Integer, content: Shared::ShortSentence).returns(T.attached_class)}
       def create(number, content)
         new(number, content, TaskStatus::Todo)
       end
 
-      sig {params(number: Integer, content: String, status: TaskStatus).returns(T.attached_class)}
+      sig {params(number: Integer, content: Shared::ShortSentence, status: TaskStatus).returns(T.attached_class)}
       def from_repository(number, content, status)
         new(number, content, status)
       end
@@ -22,20 +22,20 @@ module Work
     sig {returns(Integer)}
     attr_reader :number
 
-    sig {returns(String)}
+    sig {returns(Shared::ShortSentence)}
     attr_reader :content
 
     sig {returns(TaskStatus)}
     attr_reader :status
 
-    sig {params(number: Integer, content: String, status: TaskStatus).void}
+    sig {params(number: Integer, content: Shared::ShortSentence, status: TaskStatus).void}
     def initialize(number, content, status)
       @number = number
       @content = content
       @status = status
     end
 
-    sig {params(new_content: String).void}
+    sig {params(new_content: Shared::ShortSentence).void}
     def modify(new_content)
       @content = new_content
     end

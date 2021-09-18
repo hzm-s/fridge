@@ -3,9 +3,7 @@ require 'rails_helper'
 
 RSpec.describe TaskForm do
   let(:valid) do
-    {
-      content: 'Desgin API'
-    }
+    { content: 'Desgin API' }
   end
 
   it do
@@ -17,23 +15,15 @@ RSpec.describe TaskForm do
     form = described_class.new(valid.merge(content: ''))
     aggregate_failures do
       expect(form).to_not be_valid
-      expect(form.errors[:content]).to include(I18n.t('errors.messages.too_short', count: 2))
+      expect(form.errors[:content]).to include(I18n.t('errors.messages.blank'))
     end
   end
 
   it do
-    form = described_class.new(valid.merge(content: 'a'))
+    form = described_class.new(valid.merge(content: 'a' * 101))
     aggregate_failures do
       expect(form).to_not be_valid
-      expect(form.errors[:content]).to include(I18n.t('errors.messages.too_short', count: 2))
-    end
-  end
-
-  it do
-    form = described_class.new(valid.merge(content: 'a' * 51))
-    aggregate_failures do
-      expect(form).to_not be_valid
-      expect(form.errors[:content]).to include(I18n.t('errors.messages.too_long', count: 50))
+      expect_to_include_domain_shared_error(form, :content, :invalid_short_sentence)
     end
   end
 end

@@ -31,13 +31,13 @@ module Work
       @tasks = tasks
     end
 
-    sig {params(content: String).void}
+    sig {params(content: Shared::ShortSentence).void}
     def append_task(content)
       number = (@tasks.last&.number).to_i + 1
       @tasks << Task.create(number, content)
     end
 
-    sig {params(number: Integer, content: String).void}
+    sig {params(number: Integer, content: Shared::ShortSentence).void}
     def modify_task(number, content)
       T.must(task_of(number)).modify(content)
     end
