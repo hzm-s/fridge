@@ -7,7 +7,7 @@ module Issue
       describe '.available_activities' do
         it do
           a = described_class.available_activities
-          expect(a).to eq activity_set([])
+          expect(a).to eq activity_set([:revert_issue_from_sprint])
         end
       end
 
@@ -31,7 +31,7 @@ module Issue
 
       describe '.revert_from_sprint' do
         it do
-          expect { described_class.revert_from_sprint }.to raise_error CanNotRevertFromSprint
+          expect(described_class.revert_from_sprint).to eq Ready
         end
       end
 

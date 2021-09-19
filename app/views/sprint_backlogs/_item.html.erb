@@ -1,7 +1,14 @@
 <%= content_tag :div, class: 'sbl-item', data: { id: item.id } do %>
-  <% if item.accepted? %>
-    <%= render partial: 'item_accepted', locals: { item: item } %>
-  <% else %>
-    <%= render partial: 'item_wip', locals: { item: item, can_move: can_move } %>
-  <% end %>
+  <span class="<%= sbl_item_grip_css_classes(true) %>">
+    <i class="fas fa-grip-vertical"></i>
+  </span>
+  <div class="sbl-item__body">
+    <div class="sbl-item__issue">
+      <%= render partial: 'issue', locals: { issue: item, show_ac: true } %>
+    </div>
+    <div class="sbl-item__task">
+      <%= render partial: 'task_list', locals: { issue_id: item.id, tasks: item.tasks } %>
+      <%= render partial: 'task_form', locals: { issue_id: item.id, form: nil } %>
+    </div>
+  </div>
 <% end %>

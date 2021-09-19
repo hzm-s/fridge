@@ -10,6 +10,9 @@ RSpec.describe RevertIssueFromSprintUsecase do
   let!(:roles) { team_roles(:po) }
 
   it do
+    accept_issue(issue_a)
+
+    described_class.perform(product.id, roles, issue_a.id)
     described_class.perform(product.id, roles, issue_b.id)
 
     stored_sprint = SprintRepository::AR.current(product.id)
@@ -18,8 +21,8 @@ RSpec.describe RevertIssueFromSprintUsecase do
     stored_issue_c = IssueRepository::AR.find_by_id(issue_c.id)
 
     aggregate_failures do
-      expect(stored_sprint.issues).to eq issue_list(issue_a.id, issue_c.id)
-      expect(stored_issue_a.status).to be Issue::Statuses::Wip
+      expect(stored_sprint.issues).to eq issue_list(issue_c.id)
+      expect(stored_issue_a.status).to be Issue::Statuses::Ready
       expect(stored_issue_b.status).to be Issue::Statuses::Ready
       expect(stored_issue_c.status).to be Issue::Statuses::Wip
     end
@@ -28,12 +31,6 @@ RSpec.describe RevertIssueFromSprintUsecase do
   it '着手していないアイテムは取り消しできないこと' do
     expect { described_class.perform(product.id, roles, issue_d.id) }
       .to raise_error(Issue::CanNotRevertFromSprint)
-  end
-
-  it '受け入れ済みアイテムは取り消しできないこと' do
-    accept_issue(issue_a)
-    expect { described_class.perform(product.id, roles, issue_a.id) }
-      .to raise_error(Issue::AlreadyAccepted)
   end
 
   it 'スプリントが終了している場合は取り消しできないこと' do

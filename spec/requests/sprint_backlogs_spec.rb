@@ -93,7 +93,6 @@ RSpec.describe 'sprint_backlogs' do
         get sprint_backlog_path(product.id)
 
         aggregate_failures do
-          expect(response.body).to include "test-task-form-#{issue.id}"
           expect(response.body).to include "test-task-list-#{issue.id}"
           expect(response.body).to include data_attr 'test-revert-issue', 'true'
         end
@@ -107,9 +106,8 @@ RSpec.describe 'sprint_backlogs' do
         get sprint_backlog_path(product.id)
 
         aggregate_failures do
-          expect(response.body).to_not include "test-task-form-#{issue.id}"
-          expect(response.body).to_not include "test-task-list-#{issue.id}"
-          expect(response.body).to include data_attr 'test-revert-issue', 'false'
+          expect(response.body).to include "test-task-list-#{issue.id}"
+          expect(response.body).to include data_attr 'test-revert-issue', 'true'
         end
       end
     end
