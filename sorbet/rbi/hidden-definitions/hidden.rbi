@@ -24879,12 +24879,6 @@ end
 class Bootsnap::CompileCache::Uncompilable
 end
 
-class Bootsnap::CompileCache::YAML::NoTagsVisitor
-end
-
-class Bootsnap::CompileCache::YAML::NoTagsVisitor
-end
-
 module Bootsnap::ExplicitRequire
   ARCHDIR = ::T.let(nil, ::T.untyped)
   DLEXT = ::T.let(nil, ::T.untyped)
@@ -33261,19 +33255,7 @@ module Nokogiri::Gumbo
   DEFAULT_MAX_TREE_DEPTH = ::T.let(nil, ::T.untyped)
 end
 
-module Nokogiri::HTML4
-end
-
-class Nokogiri::HTML4::ElementDescription
-end
-
-Nokogiri::HTML::ElementDescription::Desc = Struct::HTMLElementDescription
-
-class Nokogiri::HTML4::ElementDescription
-end
-
-module Nokogiri::HTML4
-end
+Nokogiri::HTML = Nokogiri::HTML4
 
 module Nokogiri::HTML4
   NamedCharacters = ::T.let(nil, ::T.untyped)
@@ -33389,6 +33371,8 @@ class Nokogiri::HTML4::ElementDescription
   VERSION_ATTR = ::T.let(nil, ::T.untyped)
   WIDTH_ATTR = ::T.let(nil, ::T.untyped)
 end
+
+Nokogiri::HTML4::ElementDescription::Desc = Struct::HTMLElementDescription
 
 module Nokogiri::HTML5
   HTML_NAMESPACE = ::T.let(nil, ::T.untyped)

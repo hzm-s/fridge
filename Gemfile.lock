@@ -231,10 +231,10 @@ GEM
       sprockets-rails
       tilt
     semantic_range (3.0.0)
-    sorbet (0.5.9088)
-      sorbet-static (= 0.5.9088)
+    sorbet (0.5.9151)
+      sorbet-static (= 0.5.9151)
     sorbet-runtime (0.5.9088)
-    sorbet-static (0.5.9088-universal-darwin-14)
+    sorbet-static (0.5.9151-universal-darwin-14)
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
