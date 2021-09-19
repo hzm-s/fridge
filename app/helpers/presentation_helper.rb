@@ -13,9 +13,9 @@ module PresentationHelper
     base.merge(disable_with: LOADING_ICON.html_safe)
   end
 
-  def user_avatar(initials:, fgcolor:, bgcolor:, size: nil)
+  def user_avatar(ua, size: nil)
     css_class = size ? "avatar-#{size}" : 'avatar'
-    content_tag(:span, initials, class: css_class, style: "background-color: #{bgcolor}; color: #{fgcolor}").html_safe
+    content_tag(:span, ua[:initials], class: css_class, style: "background-color: #{ua[:bgcolor]}; color: #{ua[:fgcolor]}").html_safe
   end
 
   def team_member_roles_label
