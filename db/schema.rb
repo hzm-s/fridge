@@ -1,4 +1,3 @@
-# typed: ignore
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -60,6 +59,7 @@ ActiveRecord::Schema.define(version: 2021_05_16_002510) do
     t.uuid "dao_product_id"
     t.string "issue_type", null: false
     t.string "status", null: false
+    t.boolean "accepted", default: false, null: false
     t.string "description", null: false
     t.integer "size"
     t.datetime "created_at", precision: 6, null: false

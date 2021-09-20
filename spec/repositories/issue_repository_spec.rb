@@ -19,6 +19,7 @@ RSpec.describe IssueRepository::AR do
         expect(dao.dao_product_id).to eq issue.product_id.to_s
         expect(dao.issue_type).to eq issue.type.to_s
         expect(dao.status).to eq issue.status.to_s
+        expect(dao).to_not be_accepted
         expect(dao.description).to eq issue.description.to_s
         expect(dao.size).to be_nil
       end
