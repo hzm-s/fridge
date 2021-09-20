@@ -46,13 +46,6 @@ module Issue
           expect { described_class.revert_from_sprint }.to raise_error CanNotRevertFromSprint
         end
       end
-
-      describe '.update_by_acceptance' do
-        it do
-          criteria = acceptance_criteria(%w(CRT))
-          expect(described_class.update_by_acceptance(Types::Feature, criteria)).to eq Preparation
-        end
-      end
     end
   end
 end

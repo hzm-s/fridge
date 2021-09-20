@@ -51,22 +51,6 @@ module Issue
           expect(described_class.revert_from_sprint).to eq Ready
         end
       end
-
-      describe '.update_by_acceptance' do
-        context 'when all satisfied' do
-          it do
-            criteria = acceptance_criteria(%w(AC1 AC2 AC3), [1, 2, 3])
-            expect(described_class.update_by_acceptance(Types::Feature, criteria)).to eq Accepted
-          end
-        end
-
-        context 'when NOT all satisfied' do
-          it do
-            criteria = acceptance_criteria(%w(AC1 AC2 AC3), [1, 3])
-            expect(described_class.update_by_acceptance(Types::Feature, criteria)).to eq Wip
-          end
-        end
-      end
     end
   end
 end

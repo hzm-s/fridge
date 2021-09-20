@@ -57,7 +57,31 @@ module Issue
       it do
         criteria = acceptance_criteria(%w(AC1 AC2 AC3), [1, 3])
         issue.update_acceptance(po_role, criteria)
-        expect(issue.acceptance_criteria).to eq criteria
+
+        aggregate_failures do
+          expect(issue.acceptance_criteria).to eq criteria
+          expect(issue.status).to eq Statuses::Wip
+        end
+      end
+    end
+
+    describe 'Accept' do
+      let(:issue) { described_class.create(product_id, Types::Feature, description) }
+
+      before do
+        issue.prepare_acceptance_criteria(acceptance_criteria(%w(CRT)))
+        issue.estimate(dev_role, StoryPoint.new(3))
+        issue.assign_to_sprint(po_role)
+        issue.update_acceptance(po_role, acceptance_criteria(%w(CRT), :all))
+      end
+
+      it do
+        issue.accept(po_role)
+
+        aggregate_failures do
+          expect(issue).to be_accepted
+          expect(issue.status).to eq Statuses::Wip
+        end
       end
     end
 
@@ -104,7 +128,7 @@ module Issue
       it { expect { issue.revert_from_sprint(sm_role) }.to_not raise_error }
     end
 
-    describe 'to update acceptance' do
+    describe 'to update acceptance permission' do
       context 'when Feature' do
         let(:issue) { described_class.create(product_id, Types::Feature, description) }
         let(:criteria) { acceptance_criteria(%w(CRT)) }
@@ -136,7 +160,7 @@ module Issue
       end
     end
 
-    describe 'to accept' do
+    describe 'to accept permission' do
       context 'when Feature' do
         let(:issue) { described_class.create(product_id, Types::Feature, description) }
 
@@ -148,6 +172,21 @@ module Issue
         end
 
         it { expect { issue.accept(dev_role) }.to raise_error CanNotAccept }
+        it { expect { issue.accept(po_role) }.to_not raise_error }
+        it { expect { issue.accept(sm_role) }.to raise_error CanNotAccept }
+      end
+
+      context 'when Task' do
+        let(:issue) { described_class.create(product_id, Types::Task, description) }
+
+        before do
+          issue.prepare_acceptance_criteria(acceptance_criteria(%w(CRT)))
+          issue.estimate(dev_role, StoryPoint.new(5))
+          issue.assign_to_sprint(po_role)
+          issue.update_acceptance(po_role, acceptance_criteria(%w(CRT), :all))
+        end
+
+        it { expect { issue.accept(dev_role) }.to_not raise_error }
         it { expect { issue.accept(po_role) }.to_not raise_error }
         it { expect { issue.accept(sm_role) }.to raise_error CanNotAccept }
       end
@@ -182,7 +221,7 @@ module Issue
         expect(issue.status).to eq Statuses::Wip
 
         issue.accept(po_role)
-        expect(issue.status).to eq Statuses::Accepted
+        expect(issue.status).to eq Statuses::Wip
 
         expect { issue.prepare_acceptance_criteria(criteria) }.to raise_error AlreadyAccepted
       end
@@ -221,7 +260,7 @@ module Issue
         expect(issue.status).to eq Statuses::Wip
 
         issue.accept(dev_role)
-        expect(issue.status).to eq Statuses::Accepted
+        expect(issue.status).to eq Statuses::Wip
 
         expect { issue.prepare_acceptance_criteria(criteria) }.to raise_error AlreadyAccepted
       end

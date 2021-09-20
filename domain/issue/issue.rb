@@ -15,6 +15,7 @@ module Issue
           product_id,
           type,
           type.initial_status,
+          false,
           description,
           StoryPoint.unknown,
           AcceptanceCriteria.create,
@@ -61,15 +62,17 @@ module Issue
       product_id: Product::Id,
       type: Type,
       status: Status,
+      acceptance_status: T::Boolean,
       description: Shared::LongSentence,
       size: StoryPoint,
       acceptance_criteria: AcceptanceCriteria
     ).void}
-    def initialize(id, product_id, type, status, description, size, acceptance_criteria)
+    def initialize(id, product_id, type, status, acceptance_status, description, size, acceptance_criteria)
       @id = id
       @product_id = product_id
       @type = type
       @status = status
+      @acceptance_status = acceptance_status
       @description = description
       @size = size
       @acceptance_criteria = acceptance_criteria
@@ -83,7 +86,7 @@ module Issue
 
     sig {params(criteria: AcceptanceCriteria).void}
     def prepare_acceptance_criteria(criteria)
-      raise AlreadyAccepted unless Activity.allow?(:prepare_acceptance_criteria, [status])
+      raise AlreadyAccepted if accepted?
 
       @acceptance_criteria = criteria
       @status = @status.update_by_preparation(@type, acceptance_criteria, size)
@@ -121,8 +124,14 @@ module Issue
     sig {params(roles: Team::RoleSet).void}
     def accept(roles)
       raise CanNotAccept unless Activity.allow?(@type.accept_issue_activity.to_sym, [roles])
+      raise CanNotAccept unless @type.can_accept?(@acceptance_criteria)
 
-      @status = @status.update_by_acceptance(@type, acceptance_criteria)
+      @acceptance_status = true
+    end
+
+    sig {returns(T::Boolean)}
+    def accepted?
+      @acceptance_status
     end
   end
 end

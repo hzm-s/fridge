@@ -33,13 +33,6 @@ module Issue
           Ready
         end
 
-        sig {override.params(type: Type, criteria: AcceptanceCriteria).returns(Status)}
-        def update_by_acceptance(type, criteria)
-          return self unless type.can_accept?(criteria)
-
-          Accepted
-        end
-
         sig {override.returns(String)}
         def to_s
           'wip'
