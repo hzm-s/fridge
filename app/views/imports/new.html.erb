@@ -1,0 +1,12 @@
+<div class="w-50 mx-auto mt-3">
+  <h1 class="page-title">
+    Import data
+  </h1>
+  <div class="my-3">
+    <%= form_with scope: :form, url: data_import_path, remote: false do |f| %>
+      <%= f.text_area :data, rows: 15, class: 'form-control' %>
+      <%= f.button :import, class: 'mt-2 btn btn-sm btn-outline-secondary' %>
+    <% end %>
+  </div>
+  <%= link_to 'back', data_path %>
+</div>

@@ -43,6 +43,13 @@ Rails.application.routes.draw do
     resources :members, only: [:new, :create]
   end
 
+  # util
+  resource :data, only: [:show] do
+    resource :export, only: [:new, :create]
+    resource :import, only: [:new, :create]
+  end
+
+  # for demo
   get '___bd___', to: 'bd#index'
   post 'bd_sign_in/:ua_id', to: 'bd#create'
 end

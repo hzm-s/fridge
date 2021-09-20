@@ -1,0 +1,16 @@
+<div class="w-50 mx-auto mt-3">
+  <h1 class="page-title">
+    Export data
+  </h1>
+  <div class="my-3">
+    <% @products.each do |p| %>
+      <div class="d-flex justify-content-between">
+        <span>
+          <%= p.name %>
+        </span>
+        <%= button_to 'export', data_export_path(product_id: p.id, format: :json), class: 'btn btn-sm btn-outline-secondary mr-1' %>
+      </div>
+    <% end %>
+  </div>
+  <%= link_to 'back', data_path %>
+</div>
