@@ -18,6 +18,7 @@ module Issue
           expect(issue.product_id).to eq product_id
           expect(issue.type).to eq Types::Feature
           expect(issue.status).to eq Statuses::Preparation
+          expect(issue).to_not be_accepted
           expect(issue.description).to eq description
           expect(issue.size).to eq StoryPoint.unknown
           expect(issue.acceptance_criteria).to be_empty
@@ -69,13 +70,17 @@ module Issue
       let(:issue) { described_class.create(product_id, Types::Feature, description) }
 
       before do
-        issue.prepare_acceptance_criteria(acceptance_criteria(%w(CRT)))
+        issue.prepare_acceptance_criteria(acceptance_criteria(%w(AC1 AC2 AC3)))
         issue.estimate(dev_role, StoryPoint.new(3))
         issue.assign_to_sprint(po_role)
-        issue.update_acceptance(po_role, acceptance_criteria(%w(CRT), :all))
       end
 
       it do
+        expect { issue.accept(po_role) }.to raise_error CanNotAccept
+      end
+
+      it do
+        issue.update_acceptance(po_role, acceptance_criteria(%w(AC1 AC2 AC3), :all))
         issue.accept(po_role)
 
         aggregate_failures do
