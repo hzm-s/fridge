@@ -22,7 +22,7 @@ class IssueStruct < SimpleDelegator
   end
 
   def can_accept?
-    type.can_accept?(@criteria)
+    type.can_accept?(accepted?, @criteria)
   end
 
   def accept_issue_activity

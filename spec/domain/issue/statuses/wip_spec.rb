@@ -8,7 +8,6 @@ module Issue
         it do
           a = described_class.available_activities
           expect(a).to eq activity_set([
-            :prepare_acceptance_criteria,
             :revert_issue_from_sprint,
             :accept_feature,
             :accept_task,

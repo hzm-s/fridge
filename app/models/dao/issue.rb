@@ -10,6 +10,7 @@ class Dao::Issue < ApplicationRecord
       dao_product_id: issue.product_id.to_s,
       issue_type: issue.type.to_s,
       status: issue.status.to_s,
+      accepted: issue.accepted?,
       description: issue.description.to_s,
       size: issue.size.to_i,
     }
@@ -30,6 +31,7 @@ class Dao::Issue < ApplicationRecord
       read_product_id,
       read_type,
       read_status,
+      accepted?,
       read_description,
       read_story_point,
       read_acceptance_criteria

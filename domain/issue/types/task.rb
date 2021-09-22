@@ -18,8 +18,9 @@ module Issue
           true
         end
 
-        sig {override.params(criteria: AcceptanceCriteria).returns(T::Boolean)}
-        def can_accept?(criteria)
+        sig {override.params(accepted: T::Boolean, criteria: AcceptanceCriteria).returns(T::Boolean)}
+        def can_accept?(accepted, criteria)
+          return false if accepted
           return true if criteria.empty?
 
           criteria.satisfied?

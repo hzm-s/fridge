@@ -15,7 +15,7 @@ describe ProductBacklogQuery do
     before do
       append_release(product.id)
       update_release(product.id, 2) do |r|
-        r.modify_title('2nd')
+        r.modify_title(name('2nd'))
       end
     end
 

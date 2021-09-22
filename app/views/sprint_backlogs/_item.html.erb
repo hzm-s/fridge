@@ -4,7 +4,7 @@
   </span>
   <div class="sbl-item__body">
     <div class="sbl-item__issue">
-      <%= render partial: 'issue', locals: { issue: item, show_ac: true } %>
+      <%= render partial: 'issue', locals: { issue: item } %>
     </div>
     <div class="sbl-item__task">
       <%= render partial: 'task_list', locals: { issue_id: item.id, tasks: item.tasks } %>

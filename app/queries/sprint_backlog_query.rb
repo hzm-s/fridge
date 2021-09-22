@@ -26,10 +26,6 @@ module SprintBacklogQuery
       super(issue_struct)
       @tasks = tasks.map { |t| TaskStruct.new(issue_struct.id, t) }.sort_by(&:number)
     end
-
-    def accepted?
-      status == Issue::Statuses::Accepted
-    end
   end
 
   class SprintBacklogStruct < T::Struct

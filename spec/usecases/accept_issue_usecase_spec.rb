@@ -12,6 +12,9 @@ RSpec.describe AcceptIssueUsecase do
     described_class.perform(roles, issue.id)
     stored = IssueRepository::AR.find_by_id(issue.id)
 
-    expect(stored.status).to eq Issue::Statuses::Accepted
+    aggregate_failures do
+      expect(stored.status).to eq Issue::Statuses::Wip
+      expect(stored).to be_accepted
+    end
   end
 end

@@ -3,7 +3,6 @@ require 'rails_helper'
 
 RSpec.describe IssueRepository::AR do
   let!(:product) { create_product }
-  let(:dev_role) { team_roles(:dev) }
 
   describe 'Add' do
     it do
@@ -80,13 +79,15 @@ RSpec.describe IssueRepository::AR do
 
     it do
       issue.prepare_acceptance_criteria(acceptance_criteria(%w(CRT)))
-      described_class.store(issue)
-      issue.estimate(dev_role, Issue::StoryPoint.new(5))
+      issue.estimate(team_roles(:dev), Issue::StoryPoint.new(5))
 
       described_class.store(issue)
       updated = described_class.find_by_id(issue.id)
 
-      expect(updated.status).to eq issue.status
+      aggregate_failures do
+        expect(updated.status).to eq issue.status
+        expect(updated.accepted?).to eq issue.accepted?
+      end
     end
   end
 

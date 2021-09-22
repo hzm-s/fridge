@@ -27,12 +27,13 @@ module Issue
         product_id: Product::Id,
         type: Type,
         status: Status,
+        acceptance_status: T::Boolean,
         description: Shared::LongSentence,
         size: StoryPoint,
         acceptance_criteria: AcceptanceCriteria
       ).returns(T.attached_class)}
-      def from_repository(id, product_id, type, status, description, size, acceptance_criteria)
-        new(id, product_id, type, status, false, description, size, acceptance_criteria)
+      def from_repository(id, product_id, type, status, acceptance_status, description, size, acceptance_criteria)
+        new(id, product_id, type, status, acceptance_status, description, size, acceptance_criteria)
       end
     end
 
@@ -124,7 +125,7 @@ module Issue
     sig {params(roles: Team::RoleSet).void}
     def accept(roles)
       raise CanNotAccept unless Activity.allow?(@type.accept_issue_activity.to_sym, [roles])
-      raise CanNotAccept unless @type.can_accept?(@acceptance_criteria)
+      raise CanNotAccept unless @type.can_accept?(accepted?, @acceptance_criteria)
 
       @acceptance_status = true
     end
