@@ -22,7 +22,7 @@ module Issue
 
         sig {override.returns(Status)}
         def assign_to_sprint
-          Wip
+          Wip.new
         end
 
         sig {override.returns(Status)}
