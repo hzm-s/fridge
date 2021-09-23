@@ -37,7 +37,7 @@ module Issue
 
       describe '.assign_to_sprint' do
         it do
-          expect(described_class.assign_to_sprint).to eq Wip.new
+          expect(described_class.assign_to_sprint).to eq Wip
         end
       end
 

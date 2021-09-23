@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/faraday/all/faraday.rbi
 #
-# faraday-1.8.0
+# faraday-1.7.0
 
 module Faraday
   def self.default_adapter; end
@@ -370,7 +370,6 @@ class Faraday::Connection
   def scheme(*args, &block); end
   def scheme=(*args, &block); end
   def set_authorization_header(header_type, *args); end
-  def set_basic_auth(user, password); end
   def ssl; end
   def support_parallel?(adapter); end
   def token_auth(token, options = nil); end

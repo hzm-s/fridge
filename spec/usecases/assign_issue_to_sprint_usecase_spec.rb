@@ -24,9 +24,9 @@ RSpec.describe AssignIssueToSprintUsecase do
 
     aggregate_failures do
       expect(stored_sprint.issues).to eq issue_list(issue_c.id, issue_a.id, issue_b.id)
-      expect(stored_issue_a.status.to_s).to eq 'wip'
-      expect(stored_issue_b.status.to_s).to eq 'wip'
-      expect(stored_issue_c.status.to_s).to eq 'wip'
+      expect(stored_issue_a.status).to be Issue::Statuses::Wip
+      expect(stored_issue_b.status).to be Issue::Statuses::Wip
+      expect(stored_issue_c.status).to be Issue::Statuses::Wip
     end
   end
 

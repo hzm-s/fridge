@@ -22,9 +22,9 @@ RSpec.describe RevertIssueFromSprintUsecase do
 
     aggregate_failures do
       expect(stored_sprint.issues).to eq issue_list(issue_c.id)
-      expect(stored_issue_a.status.to_s).to eq 'ready'
-      expect(stored_issue_b.status.to_s).to eq 'ready'
-      expect(stored_issue_c.status.to_s).to eq 'wip'
+      expect(stored_issue_a.status).to be Issue::Statuses::Ready
+      expect(stored_issue_b.status).to be Issue::Statuses::Ready
+      expect(stored_issue_c.status).to be Issue::Statuses::Wip
     end
   end
 

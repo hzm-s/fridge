@@ -61,7 +61,7 @@ module Issue
 
         aggregate_failures do
           expect(issue.acceptance_criteria).to eq criteria
-          expect(issue.status).to eq Statuses::Wip.new
+          expect(issue.status).to eq Statuses::Wip
         end
       end
     end
@@ -85,7 +85,7 @@ module Issue
 
         aggregate_failures do
           expect(issue).to be_accepted
-          expect(issue.status).to eq Statuses::Wip.new
+          expect(issue.status).to eq Statuses::Wip
         end
       end
     end
@@ -216,17 +216,17 @@ module Issue
 
         issue.prepare_acceptance_criteria(criteria)
         issue.assign_to_sprint(po_role)
-        expect(issue.status).to eq Statuses::Wip.new
+        expect(issue.status).to eq Statuses::Wip
 
         issue.revert_from_sprint(po_role)
         expect(issue.status).to eq Statuses::Ready
 
         issue.assign_to_sprint(po_role)
         issue.update_acceptance(po_role, acceptance_criteria(%w(CRT), :all))
-        expect(issue.status).to eq Statuses::Wip.new
+        expect(issue.status).to eq Statuses::Wip
 
         issue.accept(po_role)
-        expect(issue.status).to eq Statuses::Wip.new
+        expect(issue.status).to eq Statuses::Wip
 
         expect { issue.prepare_acceptance_criteria(criteria) }.to raise_error AlreadyAccepted
       end
@@ -255,17 +255,17 @@ module Issue
         expect(issue.status).to eq Statuses::Ready
 
         issue.assign_to_sprint(po_role)
-        expect(issue.status).to eq Statuses::Wip.new
+        expect(issue.status).to eq Statuses::Wip
 
         issue.revert_from_sprint(po_role)
         expect(issue.status).to eq Statuses::Ready
 
         issue.assign_to_sprint(po_role)
         issue.update_acceptance(dev_role, criteria)
-        expect(issue.status).to eq Statuses::Wip.new
+        expect(issue.status).to eq Statuses::Wip
 
         issue.accept(dev_role)
-        expect(issue.status).to eq Statuses::Wip.new
+        expect(issue.status).to eq Statuses::Wip
 
         expect { issue.prepare_acceptance_criteria(criteria) }.to raise_error AlreadyAccepted
       end

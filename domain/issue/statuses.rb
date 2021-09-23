@@ -19,12 +19,7 @@ module Issue
       sig {params(str: String).returns(Status)}
       def from_string(str)
         raise ArgumentError unless MAP.key?(str)
-
-        if str == 'wip'
-          Wip.new
-        else
-          T.cast(MAP[str], Status)
-        end
+        T.cast(MAP[str], Status)
       end
 
       sig {returns(T::Array[Status])}

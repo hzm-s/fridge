@@ -13,7 +13,7 @@ RSpec.describe AcceptIssueUsecase do
     stored = IssueRepository::AR.find_by_id(issue.id)
 
     aggregate_failures do
-      expect(stored.status.to_s).to eq 'wip'
+      expect(stored.status).to eq Issue::Statuses::Wip
       expect(stored).to be_accepted
     end
   end

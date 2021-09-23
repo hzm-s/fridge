@@ -28557,9 +28557,6 @@ class Dao::Work
   def self.before_remove_for_tasks=(value); end
 end
 
-class DataController
-end
-
 class Date
   include ::DateAndTime::Zones
   def acts_like_date?(); end
@@ -29248,9 +29245,6 @@ end
 class ExitCalledError
 end
 
-class ExportsController
-end
-
 module FFI
   CURRENT_PROCESS = ::T.let(nil, ::T.untyped)
   SizeTypes = ::T.let(nil, ::T.untyped)
@@ -29511,9 +29505,11 @@ end
 class Faraday::Adapter::Test::Stub
   def headers_match?(request_headers); end
 
-  def matches?(env); end
+  def initialize(host, full, headers, body, strict_mode, block); end
 
-  def params_match?(env); end
+  def matches?(request_host, request_uri, request_headers, request_body); end
+
+  def params_match?(request_params); end
 
   def path_match?(request_path, meta); end
 end
@@ -29532,9 +29528,9 @@ class Faraday::Adapter::Test::Stubs
 
   def initialize(strict_mode: T.unsafe(nil)); end
 
-  def match(env); end
+  def match(request_method, host, path, headers, body); end
 
-  def matches?(stack, env); end
+  def matches?(stack, host, path, headers, body); end
 
   def new_stub(request_method, path, headers=T.unsafe(nil), body=T.unsafe(nil), &block); end
 
@@ -29632,9 +29628,7 @@ class Faraday::RackBuilder::Handler
 end
 
 class Faraday::Request::Authorization
-  def initialize(app, type, param); end
-
-  def on_request(env); end
+  def initialize(app, type, token); end
   KEY = ::T.let(nil, ::T.untyped)
 end
 
@@ -31441,9 +31435,6 @@ module IRB
   def self.setup(ap_path, argv: T.unsafe(nil)); end
 end
 
-class ImportsController
-end
-
 class Integer
   include ::JSON::Ext::Generator::GeneratorMethods::Integer
   include ::ActiveSupport::NumericWithFormat
@@ -31491,6 +31482,10 @@ module Issue::Status
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
+class Issue::Statuses::Accepted
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 module Issue::Statuses::Preparation
   extend ::T::Private::Methods::SingletonMethodHooks
 end
@@ -31499,8 +31494,7 @@ module Issue::Statuses::Ready
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
-class Issue::Statuses::Wip
-  extend ::T::Private::Methods::MethodHooks
+module Issue::Statuses::Wip
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
@@ -33393,10 +33387,6 @@ module Nokogiri::XML
   XML_C14N_1_0 = ::T.let(nil, ::T.untyped)
   XML_C14N_1_1 = ::T.let(nil, ::T.untyped)
   XML_C14N_EXCLUSIVE_1_0 = ::T.let(nil, ::T.untyped)
-end
-
-class Nokogiri::XML::Builder
-  DEFAULT_DOCUMENT_OPTIONS = ::T.let(nil, ::T.untyped)
 end
 
 class Nokogiri::XML::Document
