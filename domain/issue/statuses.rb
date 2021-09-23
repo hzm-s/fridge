@@ -21,7 +21,7 @@ module Issue
         raise ArgumentError unless MAP.key?(str)
 
         if str == 'wip'
-          MAP[str].new
+          Wip.new
         else
           T.cast(MAP[str], Status)
         end
