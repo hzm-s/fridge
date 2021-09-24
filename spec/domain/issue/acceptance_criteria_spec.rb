@@ -5,74 +5,32 @@ module Issue
   RSpec.describe AcceptanceCriteria do
     describe 'Create' do
       it do
-        criteria = described_class.create
+        criteria = described_class.new
         expect(criteria).to be_empty
       end
     end
 
     describe 'Append and Remove' do
       it do
-        criteria = described_class.create
-        criteria.append(s_sentence('AC_A'))
-        criteria.remove(1)
-        criteria.append(s_sentence('AC_A'))
-        criteria.append(s_sentence('AC_B'))
-        criteria.append(s_sentence('AC_C'))
-        criteria.append(s_sentence('AC_D'))
-        criteria.append(s_sentence('AC_E'))
-        criteria.remove(4)
-        criteria.append(s_sentence('AC_F'))
+        criteria =
+          described_class.new
+           .then { |c| c.append(s_sentence('AC_A')) }
+           .then { |c| c.remove(1) }
+           .then { |c| c.append(s_sentence('AC_A')) }
+           .then { |c| c.append(s_sentence('AC_B')) }
+           .then { |c| c.append(s_sentence('AC_C')) }
+           .then { |c| c.append(s_sentence('AC_D')) }
+           .then { |c| c.append(s_sentence('AC_E')) }
+           .then { |c| c.remove(4) }
+           .then { |c| c.append(s_sentence('AC_F')) }
 
-        aggregate_failures do
-          expect(criteria.of(1).content.to_s).to eq 'AC_A'
-          expect(criteria.of(2).content.to_s).to eq 'AC_B'
-          expect(criteria.of(3).content.to_s).to eq 'AC_C'
-          expect(criteria.of(5).content.to_s).to eq 'AC_E'
-          expect(criteria.of(6).content.to_s).to eq 'AC_F'
-        end
-      end
-    end
-
-    describe 'Update' do
-      it do
-        criteria = described_class.create
-        criteria.append(s_sentence('AC1'))
-        criteria.append(s_sentence('AC2'))
-        criteria.append(s_sentence('AC3'))
-
-        target = criteria.of(2)
-        target.modify_content(s_sentence('Modified_AC2'))
-        criteria.update(target)
-
-        target = criteria.of(3)
-        target.satisfy
-        criteria.update(target)
-
-        aggregate_failures do
-          updated = criteria.to_a
-          expect(updated.size).to eq 3
-          expect(updated.map(&:number)).to eq [1, 2, 3]
-          expect(updated.map(&:content).map(&:to_s)).to eq %w(AC1 Modified_AC2 AC3)
-          expect(updated.map(&:satisfied?)).to eq [false, false, true]
-        end
-      end
-    end
-
-    describe 'Query to all satisfied' do
-      it do
-        criteria = described_class.create
-        criteria.append(s_sentence('AC1'))
-        criteria.append(s_sentence('AC2'))
-        criteria.append(s_sentence('AC3'))
-
-        criteria.update(criteria.of(2).tap { |c| c.satisfy })
-        expect(criteria.satisfied?).to be false
-
-        criteria.update(criteria.of(1).tap { |c| c.satisfy })
-        expect(criteria.satisfied?).to be false
-
-        criteria.update(criteria.of(3).tap { |c| c.satisfy })
-        expect(criteria.satisfied?).to be true
+        expect(criteria.to_a).to eq [
+          'AC_A',
+          'AC_B',
+          'AC_C',
+          'AC_E',
+          'AC_F',
+        ]
       end
     end
   end

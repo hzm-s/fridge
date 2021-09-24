@@ -5,51 +5,19 @@ module Issue
   class AcceptanceCriteria
     extend T::Sig
 
-    class << self
-      extend T::Sig
-
-      sig {returns(T.attached_class)}
-      def create
-        new([])
-      end
-
-      sig {params(criteria: T::Array[AcceptanceCriterion]).returns(T.attached_class)}
-      def from_repository(criteria)
-        new(criteria)
-      end
-    end
-
-    sig {params(criteria: T::Array[AcceptanceCriterion]).void}
-    def initialize(criteria)
+    sig {params(criteria: T::Array[Shared::ShortSentence]).void}
+    def initialize(criteria = [])
       @criteria = criteria
     end
-    private_class_method :new
 
-    sig {params(content: Shared::ShortSentence).void}
+    sig {params(content: Shared::ShortSentence).returns(T.self_type)}
     def append(content)
-      @criteria << AcceptanceCriterion.create(next_number, content)
+      self.class.new(@criteria + [content])
     end
 
-    sig {params(criterion: AcceptanceCriterion).void}
-    def update(criterion)
-      @criteria.map! do |c|
-        c.same?(criterion.number) ? criterion : c
-      end
-    end
-
-    sig {params(number: Integer).void}
+    sig {params(number: Integer).returns(T.self_type)}
     def remove(number)
-      @criteria.reject! { |c| c.same?(number) }
-    end
-
-    sig {params(number: Integer).returns(T.nilable(AcceptanceCriterion))}
-    def of(number)
-      @criteria.find { |c| c.same?(number) }.dup
-    end
-
-    sig {returns(T::Boolean)}
-    def satisfied?
-      @criteria.all?(&:satisfied?)
+      self.class.new(@criteria.reject.with_index(1) { |_c, n| n == number })
     end
 
     sig {returns(T::Boolean)}
@@ -62,23 +30,14 @@ module Issue
       @criteria.size
     end
 
-    sig {returns(T::Array[AcceptanceCriterion])}
+    sig {returns(T::Array[String])}
     def to_a
-      @criteria.sort_by(&:number).dup
+      @criteria.map(&:to_s)
     end
 
     sig {params(other: AcceptanceCriteria).returns(T::Boolean)}
     def ==(other)
       self.to_a == other.to_a
-    end
-
-    private
-
-    sig {returns(Integer)}
-    def next_number
-      return 1 if @criteria.empty?
-
-      T.must(@criteria.last).number + 1
     end
   end
 end
