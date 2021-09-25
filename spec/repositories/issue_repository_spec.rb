@@ -18,7 +18,6 @@ RSpec.describe IssueRepository::AR do
         expect(dao.dao_product_id).to eq issue.product_id.to_s
         expect(dao.issue_type).to eq issue.type.to_s
         expect(dao.status).to eq issue.status.to_s
-        expect(dao).to_not be_accepted
         expect(dao.description).to eq issue.description.to_s
         expect(dao.size).to be_nil
       end
@@ -31,35 +30,11 @@ RSpec.describe IssueRepository::AR do
     before { described_class.store(issue) }
 
     it do
-      criteria = acceptance_criteria(%w(AC1 AC2))
-      criterion = criteria.of(2)
-      criterion.satisfy
-      criteria.update(criterion)
-      issue.prepare_acceptance_criteria(criteria)
-
-      expect { described_class.store(issue) }
-        .to change { Dao::Issue.count }.by(0)
-        .and change { Dao::AcceptanceCriterion.count }.by(2)
-
-      aggregate_failures do
-        dao = Dao::AcceptanceCriterion.all
-        expect(dao.size).to eq 2
-        expect(dao[0].number).to eq 1
-        expect(dao[0].content).to eq 'AC1'
-        expect(dao[0].satisfied).to be false
-        expect(dao[1].number).to eq 2
-        expect(dao[1].content).to eq 'AC2'
-        expect(dao[1].satisfied).to be true
-      end
-    end
-
-    it do
       criteria = acceptance_criteria(%w(AC1 AC2 AC3 AC4))
       issue.prepare_acceptance_criteria(criteria)
       described_class.store(issue)
 
-      criteria.remove(4)
-      issue.prepare_acceptance_criteria(criteria)
+      issue.prepare_acceptance_criteria(criteria.remove(4))
 
       expect { described_class.store(issue) }
         .to change { Dao::Issue.count }.by(0)
@@ -68,11 +43,8 @@ RSpec.describe IssueRepository::AR do
       aggregate_failures do
         dao = Dao::AcceptanceCriterion.all
         expect(dao.size).to eq 3
-        expect(dao[0].number).to eq 1
         expect(dao[0].content).to eq 'AC1'
-        expect(dao[1].number).to eq 2
         expect(dao[1].content).to eq 'AC2'
-        expect(dao[2].number).to eq 3
         expect(dao[2].content).to eq 'AC3'
       end
     end
@@ -84,10 +56,7 @@ RSpec.describe IssueRepository::AR do
       described_class.store(issue)
       updated = described_class.find_by_id(issue.id)
 
-      aggregate_failures do
-        expect(updated.status).to eq issue.status
-        expect(updated.accepted?).to eq issue.accepted?
-      end
+      expect(updated.status).to eq issue.status
     end
   end
 
