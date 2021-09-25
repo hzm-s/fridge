@@ -38,6 +38,7 @@ module Work
 
         aggregate_failures do
           expect { work.satisfy_acceptance_criterion(criteria, 4) }.to raise_error AcceptanceCriterionNotFound
+          expect { work.dissatisfy_acceptance_criterion(criteria, 4) }.to raise_error AcceptanceCriterionNotFound
           expect { work.dissatisfy_acceptance_criterion(criteria, 1) }.to raise_error NotSatisfied
 
           work.satisfy_acceptance_criterion(criteria, 1)
@@ -51,6 +52,9 @@ module Work
           expect(work.satisfied_acceptance_criteria).to eq [1, 2, 3].to_set
           expect(work.status).to eq Status::Acceptable
 
+          work.dissatisfy_acceptance_criterion(criteria, 2)
+          expect(work.satisfied_acceptance_criteria).to eq [1, 3].to_set
+          expect(work.status).to eq Status::NotAccepted
         end
       end
     end

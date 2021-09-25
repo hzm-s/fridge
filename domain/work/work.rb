@@ -62,5 +62,14 @@ module Work
       @satisfied_acceptance_criteria << number
       @status = @status.update(@satisfied_acceptance_criteria, criteria)
     end
+
+    sig {params(criteria: Issue::AcceptanceCriteria, number: Integer).void}
+    def dissatisfy_acceptance_criterion(criteria, number)
+      raise AcceptanceCriterionNotFound unless criteria.include?(number)
+      raise NotSatisfied unless @satisfied_acceptance_criteria.include?(number)
+
+      @satisfied_acceptance_criteria.delete(number)
+      @status = @status.update(@satisfied_acceptance_criteria, criteria)
+    end
   end
 end

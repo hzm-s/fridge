@@ -24,16 +24,35 @@ module Work
 
     sig {params(current: T::Set[Integer], master: Issue::AcceptanceCriteria).returns(T.self_type)}
     def update(current, master)
-      if current.size == master.size
-        return Acceptable
+      case self
+      when NotAccepted
+        update_when_not_accepted(current, master)
+      when Acceptable
+        update_when_acceptable(current, master)
       else
-        self
+        raise InvalidStatus
       end
     end
 
     sig {returns(String)}
     def to_s
       serialize
+    end
+
+    private
+
+    sig {params(current: T::Set[Integer], master: Issue::AcceptanceCriteria).returns(T.self_type)}
+    def update_when_not_accepted(current, master)
+      return self unless current.size == master.size
+
+      Acceptable
+    end
+
+    sig {params(current: T::Set[Integer], master: Issue::AcceptanceCriteria).returns(T.self_type)}
+    def update_when_acceptable(current, master)
+      return self if current.size == master.size
+
+      NotAccepted
     end
   end
 end
