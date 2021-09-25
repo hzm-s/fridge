@@ -13,7 +13,6 @@ module Issue
   autoload :Id, 'issue/id'
   autoload :Issue, 'issue/issue'
   autoload :Types, 'issue/types'
-  autoload :AcceptanceCriterion, 'issue/acceptance_criterion'
   autoload :AcceptanceCriteria, 'issue/acceptance_criteria'
   autoload :StoryPoint, 'issue/story_point'
   autoload :Statuses, 'issue/statuses'
