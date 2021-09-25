@@ -51,6 +51,7 @@ module Work
 
     sig {params(criterion_number: Integer).void}
     def dissatisfy_acceptance_criterion(criterion_number)
+      @acceptance = @acceptance.dissatisfy(criterion_number)
     end
   end
 end

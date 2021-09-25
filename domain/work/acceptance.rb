@@ -29,7 +29,9 @@ module Work
     end
 
     def status
-      Status::NotAccepted
+      return Status::NotAccepted unless all_satisfied?
+
+      Status::Acceptable
     end
 
     sig {params(other: Acceptance).returns(T::Boolean)}
@@ -51,6 +53,10 @@ module Work
     attr_reader :satisfied_criteria
 
     private
+
+    def all_satisfied?
+      @satisfied_criteria.size == @criteria.size
+    end
 
     sig {params(criterion_number: Integer).void}
     def ensure_criterion_included!(criterion_number)

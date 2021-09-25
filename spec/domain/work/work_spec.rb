@@ -43,21 +43,6 @@ module Work
 
           work.dissatisfy_acceptance_criterion(1)
           expect(work.acceptance.status).to eq Status::NotAccepted
-
-          #work.satisfy_acceptance_criterion(criteria, 1)
-          #expect(work.satisfied_acceptance_criteria).to eq [1].to_set
-          #expect(work.status).to eq Status::NotAccepted
-
-          #expect { work.satisfy_acceptance_criterion(criteria, 1) }.to raise_error AlreadySatisfied
-
-          #work.satisfy_acceptance_criterion(criteria, 2)
-          #work.satisfy_acceptance_criterion(criteria, 3)
-          #expect(work.satisfied_acceptance_criteria).to eq [1, 2, 3].to_set
-          #expect(work.status).to eq Status::Acceptable
-
-          #work.dissatisfy_acceptance_criterion(criteria, 2)
-          #expect(work.satisfied_acceptance_criteria).to eq [1, 3].to_set
-          #expect(work.status).to eq Status::NotAccepted
         end
       end
     end
