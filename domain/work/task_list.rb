@@ -31,14 +31,14 @@ module Work
       @tasks.empty?
     end
 
-    sig {params(other: TaskList).returns(T::Boolean)}
-    def ==(other)
-      self.tasks == other.tasks
+    sig {returns(T::Array[Task])}
+    def to_a
+      @tasks
     end
 
-    protected
-
-    sig {returns(T::Array[Task])}
-    attr_reader :tasks
+    sig {params(other: TaskList).returns(T::Boolean)}
+    def ==(other)
+      self.to_a == other.to_a
+    end
   end
 end

@@ -1,4 +1,5 @@
 # typed: false
+require_relative '../domain_support/work_domain_support'
 
 module WorkSupport
   def plan_task(issue_id, task_contents)

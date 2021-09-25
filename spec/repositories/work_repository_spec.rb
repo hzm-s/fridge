@@ -23,9 +23,7 @@ RSpec.describe WorkRepository::AR do
       work = Work::Work.create(issue.id)
       described_class.store(work)
 
-      work.append_task(s_sentence('T1'))
-      work.append_task(s_sentence('T2'))
-      work.append_task(s_sentence('T3'))
+      work.update_tasks(tasks(%w(T1 T2 T3)))
 
       expect { described_class.store(work) }
         .to change { Dao::Work.count }.by(0)
