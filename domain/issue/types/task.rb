@@ -18,22 +18,9 @@ module Issue
           true
         end
 
-        sig {override.params(accepted: T::Boolean, criteria: AcceptanceCriteria).returns(T::Boolean)}
-        def can_accept?(accepted, criteria)
-          return false if accepted
-          return true if criteria.empty?
-
-          criteria.satisfied?
-        end
-
         sig {override.returns(T::Boolean)}
         def must_have_acceptance_criteria?
           false
-        end
-
-        sig {override.returns(Symbol)}
-        def accept_issue_activity
-          :accept_task
         end
 
         sig {override.returns(String)}

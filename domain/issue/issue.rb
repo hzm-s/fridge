@@ -15,10 +15,9 @@ module Issue
           product_id,
           type,
           type.initial_status,
-          false,
           description,
           StoryPoint.unknown,
-          AcceptanceCriteria.create,
+          AcceptanceCriteria.new,
         )
       end
 
@@ -27,13 +26,12 @@ module Issue
         product_id: Product::Id,
         type: Type,
         status: Status,
-        acceptance_status: T::Boolean,
         description: Shared::LongSentence,
         size: StoryPoint,
         acceptance_criteria: AcceptanceCriteria
       ).returns(T.attached_class)}
-      def from_repository(id, product_id, type, status, acceptance_status, description, size, acceptance_criteria)
-        new(id, product_id, type, status, acceptance_status, description, size, acceptance_criteria)
+      def from_repository(id, product_id, type, status, description, size, acceptance_criteria)
+        new(id, product_id, type, status, description, size, acceptance_criteria)
       end
     end
 
@@ -63,17 +61,15 @@ module Issue
       product_id: Product::Id,
       type: Type,
       status: Status,
-      acceptance_status: T::Boolean,
       description: Shared::LongSentence,
       size: StoryPoint,
       acceptance_criteria: AcceptanceCriteria
     ).void}
-    def initialize(id, product_id, type, status, acceptance_status, description, size, acceptance_criteria)
+    def initialize(id, product_id, type, status, description, size, acceptance_criteria)
       @id = id
       @product_id = product_id
       @type = type
       @status = status
-      @acceptance_status = acceptance_status
       @description = description
       @size = size
       @acceptance_criteria = acceptance_criteria
@@ -87,8 +83,6 @@ module Issue
 
     sig {params(criteria: AcceptanceCriteria).void}
     def prepare_acceptance_criteria(criteria)
-      raise AlreadyAccepted if accepted?
-
       @acceptance_criteria = criteria
       @status = @status.update_by_preparation(@type, acceptance_criteria, size)
     end
@@ -113,26 +107,6 @@ module Issue
       raise CanNotRevertFromSprint unless Activity.allow?(:revert_issue_from_sprint, [roles, status])
 
       @status = @status.revert_from_sprint
-    end
-
-    sig {params(roles: Team::RoleSet, acceptance_criteria: AcceptanceCriteria).void}
-    def update_acceptance(roles, acceptance_criteria)
-      raise CanNotUpdateAcceptance unless Activity.allow?(@type.accept_issue_activity.to_sym, [roles])
-
-      @acceptance_criteria = acceptance_criteria
-    end
-
-    sig {params(roles: Team::RoleSet).void}
-    def accept(roles)
-      raise CanNotAccept unless Activity.allow?(@type.accept_issue_activity.to_sym, [roles])
-      raise CanNotAccept unless @type.can_accept?(accepted?, @acceptance_criteria)
-
-      @acceptance_status = true
-    end
-
-    sig {returns(T::Boolean)}
-    def accepted?
-      @acceptance_status
     end
   end
 end

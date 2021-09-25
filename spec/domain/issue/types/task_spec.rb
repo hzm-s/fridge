@@ -39,42 +39,8 @@ module Issue
         end
       end
 
-      describe '.can_accept?' do
-        context 'when accepted' do
-          it do
-            criteria = acceptance_criteria(%w(AC1 AC2 AC3), :all)
-            expect(described_class.can_accept?(true, criteria)).to be false
-          end
-        end
-
-        context 'when NOT accepted, criteria are satisfied' do
-          it do
-            criteria = acceptance_criteria(%w(AC1 AC2 AC3), :all)
-            expect(described_class.can_accept?(false, criteria)).to be true
-          end
-        end
-
-        context 'when NOT accepted, criteria are NOT satisfied' do
-          it do
-            criteria = acceptance_criteria(%w(AC1 AC2 AC3), [1, 3])
-            expect(described_class.can_accept?(false, criteria)).to be false
-          end
-        end
-
-        context 'when NOT accepted, empty criteria' do
-          it do
-            criteria = acceptance_criteria([])
-            expect(described_class.can_accept?(false, criteria)).to be true
-          end
-        end
-      end
-
       describe '.must_have_acceptance_criteria?' do
         it { expect(described_class).to_not be_must_have_acceptance_criteria }
-      end
-
-      describe '.accept_issue_activity' do
-        it { expect(described_class.accept_issue_activity).to eq :accept_task }
       end
     end
   end
