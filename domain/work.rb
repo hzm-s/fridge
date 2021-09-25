@@ -8,6 +8,7 @@ module Work
   class NotSatisfied < StandardError; end
 
   autoload :Work, 'work/work'
+  autoload :Acceptance, 'work/acceptance'
   autoload :Task, 'work/task'
   autoload :TaskList, 'work/task_list'
   autoload :TaskStatus, 'work/task_status'

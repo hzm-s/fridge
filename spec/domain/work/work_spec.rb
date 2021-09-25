@@ -4,22 +4,23 @@ require 'domain_helper'
 module Work
   RSpec.describe Work do
     let(:issue_id) { Issue::Id.create }
+    let(:criteria) { acceptance_criteria(%w(CRT)) }
 
     describe 'Create' do
       it do
-        work = described_class.create(issue_id)
+        work = described_class.create(issue_id, Issue::Types::Feature, criteria)
 
         aggregate_failures do
           expect(work.issue_id).to eq issue_id
+          expect(work.acceptance.status).to eq Status::NotAccepted
           expect(work.tasks).to be_empty
-          expect(work.status).to eq Status::NotAccepted
         end
       end
     end
 
-    let(:work) { described_class.create(issue_id) }
-
     describe 'Update tasks' do
+      let(:work) { described_class.create(issue_id, Issue::Types::Feature, criteria) }
+
       it do
         tasks = TaskList.new
           .append(s_sentence('Task_1'))
@@ -33,28 +34,33 @@ module Work
     end
 
     describe 'Status' do
+      let(:work) { described_class.create(issue_id, Issue::Types::Feature, acceptance_criteria(%w(CRT))) }
+
       it do
-        criteria = acceptance_criteria(%w(AC1 AC2 AC3))
-
         aggregate_failures do
-          expect { work.satisfy_acceptance_criterion(criteria, 4) }.to raise_error AcceptanceCriterionNotFound
-          expect { work.dissatisfy_acceptance_criterion(criteria, 4) }.to raise_error AcceptanceCriterionNotFound
-          expect { work.dissatisfy_acceptance_criterion(criteria, 1) }.to raise_error NotSatisfied
+          work.satisfy_acceptance_criterion(1)
+          expect(work.acceptance.status).to eq Status::Acceptable
 
-          work.satisfy_acceptance_criterion(criteria, 1)
-          expect(work.satisfied_acceptance_criteria).to eq [1].to_set
-          expect(work.status).to eq Status::NotAccepted
+          work.dissatisfy_acceptance_criterion(1)
+          expect(work.acceptance.status).to eq Status::NotAccepted
+          #expect { work.satisfy_acceptance_criterion(criteria, 4) }.to raise_error AcceptanceCriterionNotFound
+          #expect { work.dissatisfy_acceptance_criterion(criteria, 4) }.to raise_error AcceptanceCriterionNotFound
+          #expect { work.dissatisfy_acceptance_criterion(criteria, 1) }.to raise_error NotSatisfied
 
-          expect { work.satisfy_acceptance_criterion(criteria, 1) }.to raise_error AlreadySatisfied
+          #work.satisfy_acceptance_criterion(criteria, 1)
+          #expect(work.satisfied_acceptance_criteria).to eq [1].to_set
+          #expect(work.status).to eq Status::NotAccepted
 
-          work.satisfy_acceptance_criterion(criteria, 2)
-          work.satisfy_acceptance_criterion(criteria, 3)
-          expect(work.satisfied_acceptance_criteria).to eq [1, 2, 3].to_set
-          expect(work.status).to eq Status::Acceptable
+          #expect { work.satisfy_acceptance_criterion(criteria, 1) }.to raise_error AlreadySatisfied
 
-          work.dissatisfy_acceptance_criterion(criteria, 2)
-          expect(work.satisfied_acceptance_criteria).to eq [1, 3].to_set
-          expect(work.status).to eq Status::NotAccepted
+          #work.satisfy_acceptance_criterion(criteria, 2)
+          #work.satisfy_acceptance_criterion(criteria, 3)
+          #expect(work.satisfied_acceptance_criteria).to eq [1, 2, 3].to_set
+          #expect(work.status).to eq Status::Acceptable
+
+          #work.dissatisfy_acceptance_criterion(criteria, 2)
+          #expect(work.satisfied_acceptance_criteria).to eq [1, 3].to_set
+          #expect(work.status).to eq Status::NotAccepted
         end
       end
     end

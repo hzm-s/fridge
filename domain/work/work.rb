@@ -8,44 +8,34 @@ module Work
     class << self
       extend T::Sig
 
-      sig {params(issue_id: Issue::Id).returns(T.attached_class)}
-      def create(issue_id)
-        new(issue_id, Status::NotAccepted, [].to_set, TaskList.new)
+      sig {params(issue_id: Issue::Id, issue_type: Issue::Type, criteria: Issue::AcceptanceCriteria).returns(T.attached_class)}
+      def create(issue_id, issue_type, criteria)
+        new(
+          issue_id,
+          Acceptance.new(issue_type, criteria, [].to_set),
+          TaskList.new,
+        )
       end
 
-      sig {params(
-        issue_id: Issue::Id,
-        status: Status,
-        satisfied_acceptance_criteria: T::Set[Integer],
-        tasks: TaskList,
-      ).returns(T.attached_class)}
-      def from_repository(issue_id, status, satisfied_acceptance_criteria, tasks)
-        new(issue_id, status, satisfied_acceptance_criteria, tasks)
+      sig {params(issue_id: Issue::Id, acceptance: Acceptance, tasks: TaskList).returns(T.attached_class)}
+      def from_repository(issue_id, acceptance, tasks)
+        new(issue_id, acceptance, tasks)
       end
     end
 
     sig {returns(Issue::Id)}
     attr_reader :issue_id
 
-    sig {returns(Status)}
-    attr_reader :status
-
-    sig {returns(T::Set[Integer])}
-    attr_reader :satisfied_acceptance_criteria
+    sig {returns(Acceptance)}
+    attr_reader :acceptance
 
     sig {returns(TaskList)}
     attr_reader :tasks
 
-    sig {params(
-      issue_id: Issue::Id,
-      status: Status,
-      satisfied_acceptance_criteria: T::Set[Integer],
-      tasks: TaskList,
-    ).void}
-    def initialize(issue_id, status, satisfied_acceptance_criteria, tasks)
+    sig {params(issue_id: Issue::Id, acceptance: Acceptance, tasks: TaskList).void}
+    def initialize(issue_id, acceptance, tasks)
       @issue_id = issue_id
-      @status = status
-      @satisfied_acceptance_criteria = satisfied_acceptance_criteria
+      @acceptance = acceptance
       @tasks = tasks
     end
 
@@ -54,22 +44,13 @@ module Work
       @tasks = tasks
     end
 
-    sig {params(criteria: Issue::AcceptanceCriteria, number: Integer).void}
-    def satisfy_acceptance_criterion(criteria, number)
-      raise AcceptanceCriterionNotFound unless criteria.include?(number)
-      raise AlreadySatisfied if @satisfied_acceptance_criteria.include?(number)
-
-      @satisfied_acceptance_criteria << number
-      @status = @status.update(@satisfied_acceptance_criteria, criteria)
+    sig {params(criterion_number: Integer).void}
+    def satisfy_acceptance_criterion(criterion_number)
+      @acceptance = @acceptance.satisfy(criterion_number)
     end
 
-    sig {params(criteria: Issue::AcceptanceCriteria, number: Integer).void}
-    def dissatisfy_acceptance_criterion(criteria, number)
-      raise AcceptanceCriterionNotFound unless criteria.include?(number)
-      raise NotSatisfied unless @satisfied_acceptance_criteria.include?(number)
-
-      @satisfied_acceptance_criteria.delete(number)
-      @status = @status.update(@satisfied_acceptance_criteria, criteria)
+    sig {params(criterion_number: Integer).void}
+    def dissatisfy_acceptance_criterion(criterion_number)
     end
   end
 end
