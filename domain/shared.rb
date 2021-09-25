@@ -1,4 +1,7 @@
 # typed: strict
+require 'active_support'
+require 'active_support/core_ext/object/deep_dup'
+
 module Shared
   class InvalidName < ArgumentError; end
   class InvalidShortSentence < ArgumentError; end

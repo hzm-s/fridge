@@ -12,7 +12,10 @@ class PlanTaskUsecase < UsecaseBase
   sig {params(issue_id: Issue::Id, content: Shared::ShortSentence).void}
   def perform(issue_id, content)
     work = fetch_or_create_work(issue_id)
-    work.append_task(content)
+
+    work.tasks.append(content)
+      .then { |tasks| work.update_tasks(tasks) }
+
     @repository.store(work)
   end
 

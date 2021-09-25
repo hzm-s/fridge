@@ -12,7 +12,9 @@ class ResumeTaskUsecase < UsecaseBase
   sig {params(issue_id: Issue::Id, task_number: Integer).void}
   def perform(issue_id, task_number)
     work = T.must(@repository.find_by_issue_id(issue_id))
-    work.resume_task(task_number)
+
+    work.tasks.of(task_number).resume
+
     @repository.store(work)
   end
 end

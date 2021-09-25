@@ -13,10 +13,10 @@ RSpec.describe PlanTaskUsecase do
     work = WorkRepository::AR.find_by_issue_id(issue.id)
 
     aggregate_failures do
-      expect(work.task_of(1).content.to_s).to eq 'Task1'
-      expect(work.task_of(2).content.to_s).to eq 'Task2'
-      expect(work.task_of(3).content.to_s).to eq 'Task3'
-      expect(work.tasks.map(&:status).uniq).to eq [Work::TaskStatus::Todo]
+      expect(work.tasks.of(1).content.to_s).to eq 'Task1'
+      expect(work.tasks.of(2).content.to_s).to eq 'Task2'
+      expect(work.tasks.of(3).content.to_s).to eq 'Task3'
+      expect(work.tasks.to_a.map(&:status).uniq).to eq [Work::TaskStatus::Todo]
     end
   end
 end

@@ -13,6 +13,6 @@ RSpec.describe SuspendTaskUsecase do
 
     work = WorkRepository::AR.find_by_issue_id(issue.id)
 
-    expect(work.task_of(1).status.to_s).to eq 'wait'
+    expect(work.tasks.of(1).status.to_s).to eq 'wait'
   end
 end

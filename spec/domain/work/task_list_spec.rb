@@ -32,8 +32,7 @@ module Work
           .append(s_sentence('Task_A'))
           .append(s_sentence('Task_B'))
           .append(s_sentence('Task_C'))
-
-        list.of(2).modify(s_sentence('Task_V'))
+          .modify_content(2, s_sentence('Task_V'))
 
         aggregate_failures do
           expect(list.of(1).content.to_s).to eq 'Task_A'
@@ -49,13 +48,17 @@ module Work
           .append(s_sentence('Task_A'))
           .append(s_sentence('Task_B'))
           .append(s_sentence('Task_C'))
-
-        list.of(2).start
+          .append(s_sentence('Task_D'))
+          .append(s_sentence('Task_E'))
+          .start(1).complete(1)
+          .start(2).suspend(2)
+          .start(3).suspend(3).resume(3)
 
         aggregate_failures do
-          expect(list.of(1).status.to_s).to eq 'todo'
-          expect(list.of(2).status.to_s).to eq 'wip'
-          expect(list.of(3).status.to_s).to eq 'todo'
+          expect(list.of(1).status.to_s).to eq 'done'
+          expect(list.of(2).status.to_s).to eq 'wait'
+          expect(list.of(3).status.to_s).to eq 'wip'
+          expect(list.of(4).status.to_s).to eq 'todo'
         end
       end
     end

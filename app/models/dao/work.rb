@@ -32,5 +32,6 @@ class Dao::Work < ApplicationRecord
         Work::TaskStatus.from_string(t.status),
       )
     end
+      .then { |objs| Work::TaskList.new(objs) }
   end
 end

@@ -9,10 +9,12 @@ class ModifyTaskUsecase < UsecaseBase
     @repository = T.let(WorkRepository::AR, Work::WorkRepository)
   end
 
-  sig {params(issue_id: Issue::Id, number: Integer, content: Shared::ShortSentence).void}
-  def perform(issue_id, number, content)
+  sig {params(issue_id: Issue::Id, task_number: Integer, content: Shared::ShortSentence).void}
+  def perform(issue_id, task_number, content)
     work = T.must(@repository.find_by_issue_id(issue_id))
-    work.modify_task(number, content)
+
+    work.tasks.of(task_number).modify(content)
+
     @repository.store(work)
   end
 end

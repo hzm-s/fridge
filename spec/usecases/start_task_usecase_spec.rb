@@ -12,6 +12,6 @@ RSpec.describe StartTaskUsecase do
 
     work = WorkRepository::AR.find_by_issue_id(issue.id)
 
-    expect(work.task_of(1).status.to_s).to eq 'wip'
+    expect(work.tasks.of(1).status.to_s).to eq 'wip'
   end
 end

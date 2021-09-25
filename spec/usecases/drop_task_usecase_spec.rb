@@ -13,9 +13,9 @@ RSpec.describe DropTaskUsecase do
     work = WorkRepository::AR.find_by_issue_id(issue.id)
 
     aggregate_failures do
-      expect(work.task_of(1).content.to_s).to eq 'Task1'
-      expect(work.task_of(2)).to be_nil
-      expect(work.task_of(3).content.to_s).to eq 'Task3'
+      expect(work.tasks.of(1).content.to_s).to eq 'Task1'
+      expect(work.tasks.of(2)).to be_nil
+      expect(work.tasks.of(3).content.to_s).to eq 'Task3'
     end
   end
 end

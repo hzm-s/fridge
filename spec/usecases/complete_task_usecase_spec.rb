@@ -13,6 +13,6 @@ RSpec.describe CompleteTaskUsecase do
 
     work = WorkRepository::AR.find_by_issue_id(issue.id)
 
-    expect(work.task_of(1).status.to_s).to eq 'done'
+    expect(work.tasks.of(1).status.to_s).to eq 'done'
   end
 end
