@@ -51,7 +51,7 @@ RSpec.describe SprintBacklogQuery do
     end
   end
 
-  it do
+  xit do
     accept_issue(issue_c)
     accept_issue(issue_b)
     sbl = described_class.call(sprint.id)

@@ -6,7 +6,7 @@ RSpec.describe AcceptIssueUsecase do
   let!(:issue) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, assign: true) }
   let!(:roles) { team_roles(:po) }
 
-  it do
+  xit do
     satisfy_acceptance_criteria(issue.id, [1])
 
     described_class.perform(roles, issue.id)

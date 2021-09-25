@@ -58,7 +58,7 @@ module Work
 
     sig {returns(T::Array[Task])}
     def to_a
-      @tasks
+      @tasks.deep_dup
     end
 
     sig {params(other: TaskList).returns(T::Boolean)}

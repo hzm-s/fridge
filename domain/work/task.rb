@@ -59,5 +59,10 @@ module Work
     def resume
       @status = @status.resume
     end
+
+    sig {params(other: Task).returns(T::Boolean)}
+    def ==(other)
+      self.number == other.number
+    end
   end
 end
