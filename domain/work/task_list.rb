@@ -25,5 +25,20 @@ module Work
     def of(number)
       @tasks.find { |t| t.number == number }
     end
+
+    sig {returns(T::Boolean)}
+    def empty?
+      @tasks.empty?
+    end
+
+    sig {params(other: TaskList).returns(T::Boolean)}
+    def ==(other)
+      self.tasks == other.tasks
+    end
+
+    protected
+
+    sig {returns(T::Array[Task])}
+    attr_reader :tasks
   end
 end
