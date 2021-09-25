@@ -12,6 +12,7 @@ module Work
         aggregate_failures do
           expect(work.issue_id).to eq issue_id
           expect(work.tasks).to be_empty
+          expect(work.status).to eq Status::NotAccepted
         end
       end
     end
@@ -28,6 +29,29 @@ module Work
         work.update_tasks(tasks)
 
         expect(work.tasks).to eq tasks
+      end
+    end
+
+    describe 'Status' do
+      it do
+        criteria = acceptance_criteria(%w(AC1 AC2 AC3))
+
+        aggregate_failures do
+          expect { work.satisfy_acceptance_criterion(criteria, 4) }.to raise_error AcceptanceCriterionNotFound
+          expect { work.dissatisfy_acceptance_criterion(criteria, 1) }.to raise_error NotSatisfied
+
+          work.satisfy_acceptance_criterion(criteria, 1)
+          expect(work.satisfied_acceptance_criteria).to eq [1].to_set
+          expect(work.status).to eq Status::NotAccepted
+
+          expect { work.satisfy_acceptance_criterion(criteria, 1) }.to raise_error AlreadySatisfied
+
+          work.satisfy_acceptance_criterion(criteria, 2)
+          work.satisfy_acceptance_criterion(criteria, 3)
+          expect(work.satisfied_acceptance_criteria).to eq [1, 2, 3].to_set
+          expect(work.status).to eq Status::Acceptable
+
+        end
       end
     end
   end

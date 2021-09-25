@@ -39,6 +39,11 @@ module Issue
       @criteria.size
     end
 
+    sig {params(number: Integer).returns(T::Boolean)}
+    def include?(number)
+      !!@criteria.at(number - 1)
+    end
+
     sig {returns(T::Array[String])}
     def to_a
       @criteria.map(&:to_s)
