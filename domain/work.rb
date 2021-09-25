@@ -5,6 +5,7 @@ module Work
 
   autoload :Work, 'work/work'
   autoload :Task, 'work/task'
+  autoload :TaskList, 'work/task_list'
   autoload :TaskStatus, 'work/task_status'
   autoload :WorkRepository, 'work/work_repository'
 end

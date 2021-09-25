@@ -14,15 +14,15 @@ module Issue
       it do
         criteria =
           described_class.new
-           .then { |c| c.append(s_sentence('AC_A')) }
-           .then { |c| c.remove(1) }
-           .then { |c| c.append(s_sentence('AC_A')) }
-           .then { |c| c.append(s_sentence('AC_B')) }
-           .then { |c| c.append(s_sentence('AC_C')) }
-           .then { |c| c.append(s_sentence('AC_D')) }
-           .then { |c| c.append(s_sentence('AC_E')) }
-           .then { |c| c.remove(4) }
-           .then { |c| c.append(s_sentence('AC_F')) }
+           .append(s_sentence('AC_A'))
+           .remove(1)
+           .append(s_sentence('AC_A'))
+           .append(s_sentence('AC_B'))
+           .append(s_sentence('AC_C'))
+           .append(s_sentence('AC_D'))
+           .append(s_sentence('AC_E'))
+           .remove(4)
+           .append(s_sentence('AC_F'))
 
         expect(criteria.to_a).to eq [
           'AC_A',
