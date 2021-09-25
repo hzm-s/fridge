@@ -9,10 +9,6 @@ RSpec.describe RemoveAcceptanceCriterionUsecase do
     described_class.perform(issue.id, 2)
     stored = IssueRepository::AR.find_by_id(issue.id)
 
-    aggregate_failures do
-      expect(stored.acceptance_criteria.of(1).content.to_s).to eq 'AC1'
-      expect(stored.acceptance_criteria.of(2)).to be_nil
-      expect(stored.acceptance_criteria.of(3).content.to_s).to eq 'AC3'
-    end
+    expect(stored.acceptance_criteria.to_a).to eq %w(AC1 AC3)
   end
 end

@@ -13,12 +13,9 @@ class ModifyAcceptanceCriterionUsecase < UsecaseBase
   def perform(issue_id, number, content)
     issue = @repository.find_by_id(issue_id)
 
-    issue.acceptance_criteria.tap do |criteria|
-      criterion = criteria.of(number)
-      criterion.modify_content(content)
-      criteria.update(criterion)
-      issue.prepare_acceptance_criteria(criteria)
-    end
+    issue.acceptance_criteria
+      .then { |c| c.modify(number, content) }
+      .then { |c| issue.prepare_acceptance_criteria(c) }
 
     @repository.store(issue)
   end

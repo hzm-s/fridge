@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe DissatisfyAcceptanceCriterionUsecase do
+RSpec.xdescribe DissatisfyAcceptanceCriterionUsecase do
   let!(:product) { create_product }
   let!(:issue) { plan_issue(product.id, acceptance_criteria: %w(AC1 AC2 AC3)) }
   let!(:roles) { team_roles(:po) }

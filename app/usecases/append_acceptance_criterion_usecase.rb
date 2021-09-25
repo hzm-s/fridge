@@ -13,9 +13,9 @@ class AppendAcceptanceCriterionUsecase < UsecaseBase
   def perform(issue_id, content)
     issue = @repository.find_by_id(issue_id)
 
-    criteria = issue.acceptance_criteria
-    criteria.append(content)
-    issue.prepare_acceptance_criteria(criteria)
+    issue.acceptance_criteria
+      .then { |c| c.append(content) }
+      .then { |c| issue.prepare_acceptance_criteria(c) }
 
     @repository.store(issue)
   end

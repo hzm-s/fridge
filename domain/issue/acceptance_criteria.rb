@@ -20,6 +20,15 @@ module Issue
       self.class.new(@criteria.reject.with_index(1) { |_c, n| n == number })
     end
 
+    sig {params(number: Integer, content: Shared::ShortSentence).returns(T.self_type)}
+    def modify(number, content)
+      new_contents =
+        @criteria.map.with_index(1) do |c, n|
+          n == number ? content : c
+        end
+      self.class.new(new_contents)
+    end
+
     sig {returns(T::Boolean)}
     def empty?
       @criteria.empty?

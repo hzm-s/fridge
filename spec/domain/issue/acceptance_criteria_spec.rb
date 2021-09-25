@@ -10,7 +10,7 @@ module Issue
       end
     end
 
-    describe 'Append and Remove' do
+    describe 'Append and Remove criterion' do
       it do
         criteria =
           described_class.new
@@ -30,6 +30,24 @@ module Issue
           'AC_C',
           'AC_E',
           'AC_F',
+        ]
+      end
+    end
+
+    describe 'Modify content' do
+      it do
+        criteria = described_class.new([
+          s_sentence('AC1'),
+          s_sentence('AC2'),
+          s_sentence('AC3'),
+        ])
+
+        modified = criteria.modify(2, s_sentence('Modified AC2'))
+
+        expect(modified.to_a).to eq [
+          'AC1',
+          'Modified AC2',
+          'AC3',
         ]
       end
     end

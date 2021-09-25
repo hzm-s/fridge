@@ -7,13 +7,11 @@ RSpec.describe AppendAcceptanceCriterionUsecase do
 
   it do
     described_class.perform(issue.id, s_sentence('AC1'))
-    stored = IssueRepository::AR.find_by_id(issue.id)
-    expect(stored.acceptance_criteria.of(1).content.to_s).to eq 'AC1'
-
     described_class.perform(issue.id, s_sentence('AC2'))
     described_class.perform(issue.id, s_sentence('AC3'))
+
     stored = IssueRepository::AR.find_by_id(issue.id)
-    expect(stored.acceptance_criteria.of(2).content.to_s).to eq 'AC2'
-    expect(stored.acceptance_criteria.of(3).content.to_s).to eq 'AC3'
+
+    expect(stored.acceptance_criteria.to_a).to eq %w(AC1 AC2 AC3)
   end
 end
