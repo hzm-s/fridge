@@ -13,7 +13,8 @@ class ModifyTaskUsecase < UsecaseBase
   def perform(issue_id, task_number, content)
     work = T.must(@repository.find_by_issue_id(issue_id))
 
-    work.tasks.of(task_number).modify(content)
+    work.tasks.modify_content(task_number, content)
+      .then { |tasks| work.update_tasks(tasks) }
 
     @repository.store(work)
   end

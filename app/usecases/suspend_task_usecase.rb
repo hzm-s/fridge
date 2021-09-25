@@ -13,7 +13,8 @@ class SuspendTaskUsecase < UsecaseBase
   def perform(issue_id, task_number)
     work = T.must(@repository.find_by_issue_id(issue_id))
 
-    work.tasks.of(task_number).suspend
+    work.tasks.suspend(task_number)
+      .then { |tasks| work.update_tasks(tasks) }
 
     @repository.store(work)
   end
