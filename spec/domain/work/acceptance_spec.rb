@@ -16,6 +16,11 @@ module Work
         a = described_class.new(Issue::Types::Feature, criteria, [].to_set)
         expect { a.satisfy(7) }.to raise_error AcceptanceCriterionNotFound
       end
+
+      it do
+        a = described_class.new(Issue::Types::Feature, criteria, [1, 2].to_set)
+        expect { a.satisfy(1) }.to raise_error AlreadySatisfied
+      end
     end
 
     describe 'Dissatisfy' do
@@ -25,9 +30,14 @@ module Work
         expect(a.dissatisfy(2)).to eq described_class.new(type, criteria, [1, 3].to_set)
       end
 
-      xit do
-        a = described_class.new(Issue::Types::Feature, criteria, [].to_set)
-        expect { a.satisfy(7) }.to raise_error AcceptanceCriterionNotFound
+      it do
+        a = described_class.new(Issue::Types::Feature, criteria, [1, 2, 3].to_set)
+        expect { a.dissatisfy(7) }.to raise_error AcceptanceCriterionNotFound
+      end
+
+      it do
+        a = described_class.new(Issue::Types::Feature, criteria, [3].to_set)
+        expect { a.dissatisfy(1) }.to raise_error NotSatisfied
       end
     end
   end

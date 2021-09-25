@@ -43,9 +43,6 @@ module Work
 
           work.dissatisfy_acceptance_criterion(1)
           expect(work.acceptance.status).to eq Status::NotAccepted
-          #expect { work.satisfy_acceptance_criterion(criteria, 4) }.to raise_error AcceptanceCriterionNotFound
-          #expect { work.dissatisfy_acceptance_criterion(criteria, 4) }.to raise_error AcceptanceCriterionNotFound
-          #expect { work.dissatisfy_acceptance_criterion(criteria, 1) }.to raise_error NotSatisfied
 
           #work.satisfy_acceptance_criterion(criteria, 1)
           #expect(work.satisfied_acceptance_criteria).to eq [1].to_set

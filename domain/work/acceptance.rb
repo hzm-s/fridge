@@ -14,9 +14,18 @@ module Work
 
     sig {params(criterion_number: Integer).returns(T.self_type)}
     def satisfy(criterion_number)
-      raise AcceptanceCriterionNotFound unless @criteria.include?(criterion_number)
+      ensure_criterion_included!(criterion_number)
+      raise AlreadySatisfied if @satisfied_criteria.include?(criterion_number)
 
       self.class.new(@issue_type, @criteria, @satisfied_criteria + [criterion_number])
+    end
+
+    sig {params(criterion_number: Integer).returns(T.self_type)}
+    def dissatisfy(criterion_number)
+      ensure_criterion_included!(criterion_number)
+      raise NotSatisfied unless @satisfied_criteria.include?(criterion_number)
+
+      self.class.new(@issue_type, @criteria, @satisfied_criteria - [criterion_number])
     end
 
     def status
@@ -40,5 +49,12 @@ module Work
 
     sig {returns(T::Set[Integer])}
     attr_reader :satisfied_criteria
+
+    private
+
+    sig {params(criterion_number: Integer).void}
+    def ensure_criterion_included!(criterion_number)
+      raise AcceptanceCriterionNotFound unless @criteria.include?(criterion_number)
+    end
   end
 end
