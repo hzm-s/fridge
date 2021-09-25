@@ -1,5 +1,4 @@
 # typed: false
-
 class IssueStruct < SimpleDelegator
   attr_reader :product_id, :type, :status
 
@@ -7,29 +6,28 @@ class IssueStruct < SimpleDelegator
     super(dao)
 
     @product_id = dao.dao_product_id
-    @criteria = dao.read_acceptance_criteria
-    @criterion_structs = dao.criteria.map { |c| AcceptanceCriterionStruct.new(c) }.sort_by(&:number)
+    @criteria = dao.criteria.map.with_index(1) { |c, n| AcceptanceCriterionStruct.new(c, n) }.sort_by(&:number)
     @type = Issue::Types.from_string(dao.issue_type)
     @status = Issue::Statuses.from_string(dao.status)
   end
 
   def criteria
-    @criterion_structs
+    @criteria
   end
 
   def must_have_acceptance_criteria?
     type.must_have_acceptance_criteria?
   end
 
-  def can_accept?
-    type.can_accept?(accepted?, @criteria)
-  end
-
-  def accept_issue_activity
-    type.accept_issue_activity.to_s.to_sym
-  end
-
   class AcceptanceCriterionStruct < SimpleDelegator
+    attr_reader :number
+
+    def initialize(criterion, number)
+      super(criterion)
+
+      @number = number
+    end
+
     def issue_id
       dao_issue_id
     end
