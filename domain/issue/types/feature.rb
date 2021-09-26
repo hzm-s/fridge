@@ -23,9 +23,9 @@ module Issue
           true
         end
 
-        sig {override.returns(Activity::Set)}
-        def acceptance_activities
-          Activity::Set.from_symbols([:accept_feature])
+        sig {override.returns(Activity::Activity)}
+        def acceptance_activity
+          Activity::Activity.from_string('accept_feature')
         end
 
         sig {override.returns(String)}

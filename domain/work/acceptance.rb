@@ -31,14 +31,16 @@ module Work
       self.class.new(@issue_type, @criteria, @satisfied_criteria - [criterion_number])
     end
 
+    sig {returns(Status)}
     def status
       return Status::NotAccepted unless all_satisfied?
 
       Status::Acceptable
     end
 
+    sig {returns(Activity::Set)}
     def avaiable_activities
-      @issue_type.acceptance_activities
+      Activity::Set.new([@issue_type.acceptance_activity])
     end
 
     sig {params(other: Acceptance).returns(T::Boolean)}
