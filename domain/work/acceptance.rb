@@ -39,7 +39,7 @@ module Work
     end
 
     sig {returns(Activity::Set)}
-    def avaiable_activities
+    def available_activities
       Activity::Set.new([@issue_type.acceptance_activity])
     end
 
