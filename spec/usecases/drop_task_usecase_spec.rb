@@ -3,7 +3,7 @@ require 'rails_helper'
 
 RSpec.describe DropTaskUsecase do
   let(:product) { create_product }
-  let!(:issue) { plan_issue(product.id) }
+  let!(:issue) { plan_issue(product.id, assign: true) }
 
   it do
     plan_task(issue.id, %w(Task1 Task2 Task3))

@@ -5,6 +5,12 @@ module IssueSupport
   include IssueDomainSupport
 
   def plan_issue(product_id, description = 'DESC', type: :feature, acceptance_criteria: [], size: nil, release: nil, assign: false)
+    if assign
+      acceptance_criteria = %w(Criterion) if acceptance_criteria.empty?
+      size ||= 3
+      release ||= 1
+    end
+
     append_release(product_id, release) if release
 
     issue = perform_plan_issue(product_id, Issue::Types.from_string(type.to_s), description, release)
