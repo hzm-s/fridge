@@ -49,35 +49,55 @@ module Work
       context 'type = feature, all satisfied = no' do
         it do
           a = described_class.new(Issue::Types::Feature, criteria, [1, 3].to_set)
-          expect(a.status).to eq Status::NotAccepted
+
+          aggregate_failures do
+            expect(a.status).to eq Status::NotAccepted
+            expect(a.avaiable_activities).to eq activity_set([:accept_feature])
+          end
         end
       end
 
       context 'type = feature, all satisfied = yes' do
         it do
           a = described_class.new(Issue::Types::Feature, criteria, [1, 2, 3].to_set)
-          expect(a.status).to eq Status::Acceptable
+
+          aggregate_failures do
+            expect(a.status).to eq Status::Acceptable
+            expect(a.avaiable_activities).to eq activity_set([:accept_feature])
+          end
         end
       end
 
       context 'type = task, size >= 1, all satisfied = no' do
         it do
           a = described_class.new(Issue::Types::Task, criteria, [3].to_set)
-          expect(a.status).to eq Status::NotAccepted
+
+          aggregate_failures do
+            expect(a.status).to eq Status::NotAccepted
+            expect(a.avaiable_activities).to eq activity_set([:accept_task])
+          end
         end
       end
 
       context 'type = task, size >= 1, all satisfied = yes' do
         it do
           a = described_class.new(Issue::Types::Task, criteria, [1, 2, 3].to_set)
-          expect(a.status).to eq Status::Acceptable
+
+          aggregate_failures do
+            expect(a.status).to eq Status::Acceptable
+            expect(a.avaiable_activities).to eq activity_set([:accept_task])
+          end
         end
       end
 
       context 'type = task, size = 0' do
         it do
           a = described_class.new(Issue::Types::Task, acceptance_criteria([]), [].to_set)
-          expect(a.status).to eq Status::Acceptable
+
+          aggregate_failures do
+            expect(a.status).to eq Status::Acceptable
+            expect(a.avaiable_activities).to eq activity_set([:accept_task])
+          end
         end
       end
     end

@@ -17,6 +17,9 @@ module Issue
     sig {abstract.returns(T::Boolean)}
     def must_have_acceptance_criteria?; end
 
+    sig {returns(Activity::Set)}
+    def acceptance_activities; end
+
     sig {abstract.returns(String)}
     def to_s; end
   end

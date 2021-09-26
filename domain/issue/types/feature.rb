@@ -23,6 +23,11 @@ module Issue
           true
         end
 
+        sig {override.returns(Activity::Set)}
+        def acceptance_activities
+          Activity::Set.from_symbols([:accept_feature])
+        end
+
         sig {override.returns(String)}
         def to_s
           'feature'

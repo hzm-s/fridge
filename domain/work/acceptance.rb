@@ -37,6 +37,10 @@ module Work
       Status::Acceptable
     end
 
+    def avaiable_activities
+      @issue_type.acceptance_activities
+    end
+
     sig {params(other: Acceptance).returns(T::Boolean)}
     def ==(other)
       self.issue_type == other.issue_type &&
