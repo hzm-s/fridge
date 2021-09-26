@@ -18,7 +18,7 @@ module Work
     sig {params(criterion_number: Integer).returns(T.self_type)}
     def satisfy(criterion_number)
       ensure_criterion_included!(criterion_number)
-      raise AlreadySatisfied if @satisfied_criteria.include?(criterion_number)
+      raise AlreadySatisfied if satisfied?(criterion_number)
 
       self.class.new(@issue_type, @criteria, @satisfied_criteria + [criterion_number])
     end
@@ -26,7 +26,7 @@ module Work
     sig {params(criterion_number: Integer).returns(T.self_type)}
     def dissatisfy(criterion_number)
       ensure_criterion_included!(criterion_number)
-      raise NotSatisfied unless @satisfied_criteria.include?(criterion_number)
+      raise NotSatisfied unless satisfied?(criterion_number)
 
       self.class.new(@issue_type, @criteria, @satisfied_criteria - [criterion_number])
     end
@@ -36,6 +36,11 @@ module Work
       return Status::NotAccepted unless all_satisfied?
 
       Status::Acceptable
+    end
+
+    sig {params(criterion_number: Integer).returns(T::Boolean)}
+    def satisfied?(criterion_number)
+      @satisfied_criteria.include?(criterion_number)
     end
 
     sig {returns(Activity::Set)}
