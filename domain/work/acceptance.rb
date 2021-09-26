@@ -5,6 +5,9 @@ module Work
   class Acceptance
     extend T::Sig
 
+    sig {returns(T::Set[Integer])}
+    attr_reader :satisfied_criteria
+
     sig {params(issue_type: Issue::Type, criteria: Issue::AcceptanceCriteria, satisfied_criteria: T::Set[Integer]).void}
     def initialize(issue_type, criteria, satisfied_criteria)
       @issue_type = issue_type
@@ -48,9 +51,6 @@ module Work
 
     sig {returns(Issue::AcceptanceCriteria)}
     attr_reader :criteria
-
-    sig {returns(T::Set[Integer])}
-    attr_reader :satisfied_criteria
 
     private
 

@@ -56,7 +56,6 @@ ActiveRecord::Schema.define(version: 2021_05_16_002510) do
     t.uuid "dao_product_id"
     t.string "issue_type", null: false
     t.string "status", null: false
-    t.boolean "accepted", default: false, null: false
     t.string "description", null: false
     t.integer "size"
     t.datetime "created_at", precision: 6, null: false
@@ -129,10 +128,14 @@ ActiveRecord::Schema.define(version: 2021_05_16_002510) do
   end
 
   create_table "dao_works", force: :cascade do |t|
+    t.uuid "dao_sprint_id"
     t.uuid "dao_issue_id"
+    t.integer "satisfied_criterion_numbers", array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["dao_issue_id"], name: "index_dao_works_on_dao_issue_id"
+    t.index ["dao_sprint_id", "dao_issue_id"], name: "index_dao_works_on_dao_sprint_id_and_dao_issue_id", unique: true
+    t.index ["dao_sprint_id"], name: "index_dao_works_on_dao_sprint_id"
   end
 
   add_foreign_key "app_user_accounts", "dao_people"
@@ -147,4 +150,5 @@ ActiveRecord::Schema.define(version: 2021_05_16_002510) do
   add_foreign_key "dao_team_members", "dao_teams"
   add_foreign_key "dao_teams", "dao_products"
   add_foreign_key "dao_works", "dao_issues"
+  add_foreign_key "dao_works", "dao_sprints"
 end

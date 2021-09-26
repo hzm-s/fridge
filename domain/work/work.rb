@@ -8,11 +8,11 @@ module Work
     class << self
       extend T::Sig
 
-      sig {params(issue_id: Issue::Id, issue_type: Issue::Type, criteria: Issue::AcceptanceCriteria).returns(T.attached_class)}
-      def create(issue_id, issue_type, criteria)
+      sig {params(issue: Issue::Issue).returns(T.attached_class)}
+      def create(issue)
         new(
-          issue_id,
-          Acceptance.new(issue_type, criteria, [].to_set),
+          issue.id,
+          Acceptance.new(issue.type, issue.acceptance_criteria, [].to_set),
           TaskList.new,
         )
       end
