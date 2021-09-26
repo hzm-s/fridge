@@ -11,6 +11,7 @@ module SprintBacklogQuery
       issues = assigned_issues.map do |ai|
         SprintBacklogItemStruct.new(
           IssueStruct.new(ai.issue),
+          ai.issue.work.read_acceptance,
           Array(ai.issue.work&.tasks),
         )
       end
@@ -20,11 +21,17 @@ module SprintBacklogQuery
   end
 
   class SprintBacklogItemStruct < SimpleDelegator
-    attr_reader :tasks
+    attr_reader :acceptance, :tasks
 
-    def initialize(issue_struct, tasks)
+    def initialize(issue_struct, acceptance, tasks)
       super(issue_struct)
+
+      @acceptance = acceptance
       @tasks = tasks.map { |t| TaskStruct.new(issue_struct.id, t) }.sort_by(&:number)
+    end
+
+    def acceptance_activity_name
+      type.acceptance_activity.to_s.to_sym
     end
   end
 

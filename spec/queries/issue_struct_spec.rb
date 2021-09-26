@@ -30,25 +30,6 @@ RSpec.describe IssueStruct do
     expect(s.status).to eq issue.status
   end
 
-  xit 'returns criteria satisfaction' do
-    issue = plan_issue(product.id, acceptance_criteria: %w(AC1 AC2))
-    satisfy_acceptance_criteria(issue.id, [1])
-
-    s = build_struct { issue }
-
-    expect(s).to_not be_can_accept
-  end
-
-  xit 'returns accept issue activity' do
-    feature = build_struct { plan_issue(product.id, type: :feature) }
-    task = build_struct { plan_issue(product.id, type: :task) }
-
-    aggregate_failures do
-      expect(feature.accept_issue_activity).to eq :accept_feature
-      expect(task.accept_issue_activity).to eq :accept_task
-    end
-  end
-
   private
 
   def build_struct

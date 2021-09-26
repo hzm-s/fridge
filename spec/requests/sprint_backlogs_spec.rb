@@ -99,7 +99,7 @@ RSpec.describe 'sprint_backlogs' do
       end
     end
 
-    context 'when accepted' do
+    xcontext 'when accepted' do
       before { accept_issue(issue) }
 
       it do

@@ -4,7 +4,7 @@ require 'rails_helper'
 RSpec.describe SprintBacklogQuery do
   let!(:product) { create_product }
   let!(:issue_a) { plan_issue(product.id, acceptance_criteria: %w(CRT_A), size: 3, release: 1) }
-  let!(:issue_b) { plan_issue(product.id, acceptance_criteria: %w(CRT_B), size: 3, release: 1) }
+  let!(:issue_b) { plan_issue(product.id, type: :task, acceptance_criteria: %w(CRT_B), size: 3, release: 1) }
   let!(:issue_c) { plan_issue(product.id, acceptance_criteria: %w(CRT_C1 CRT_C2 CRT_C3), size: 3, release: 1) }
   let!(:sprint) { start_sprint(product.id) }
 
@@ -20,6 +20,13 @@ RSpec.describe SprintBacklogQuery do
     aggregate_failures do
       expect(sbl.issues.map(&:id)).to eq [issue_c, issue_a, issue_b].map(&:id).map(&:to_s)
       expect(sbl.issues.map(&:type)).to eq [issue_c, issue_a, issue_b].map(&:type)
+
+      expect(sbl.issues[0].acceptance_activity_name).to eq :accept_feature
+      expect(sbl.issues[0].acceptance).to eq Work::Work.create(issue_c).acceptance
+      expect(sbl.issues[1].acceptance_activity_name).to eq :accept_feature
+      expect(sbl.issues[1].acceptance).to eq Work::Work.create(issue_a).acceptance
+      expect(sbl.issues[2].acceptance_activity_name).to eq :accept_task
+      expect(sbl.issues[2].acceptance).to eq Work::Work.create(issue_b).acceptance
     end
   end
 
