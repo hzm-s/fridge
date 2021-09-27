@@ -1,4 +1,4 @@
 <div class="acceptance__criterion">
-  <%= render partial: 'criterion_status', locals: { issue_id: issue_id, criterion: criterion, can_update: can_update } %>
+  <%= render partial: 'criterion_status', locals: { issue_id: issue_id, criterion: criterion, permitted: permitted } %>
   <%= render_acceptance_criterion_content(criterion, class: 'acceptance-criterion__content') %>
 </div>

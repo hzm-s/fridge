@@ -19,6 +19,10 @@ module AcceptanceQuery
       @criteria = issue.criteria.map.with_index(1) { |c, n| CriterionStruct.create(n, c, detail) }
     end
 
+    def issue_id
+      id
+    end
+
     def issue_description
       description
     end

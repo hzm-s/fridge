@@ -10,18 +10,18 @@
       <label>
         <%= t '.title_description' %>
       </label>
-      <%= simple_format(@issue.description, class: 'nf mb-0') %>
+      <%= simple_format(@acceptance.issue_description, class: 'nf mb-0') %>
     </div>
     <div>
       <label>
         <%= t '.title_ac' %>
       </label>
       <div class="mt-1 mb-1">
-        <% can_update = authorize(@issue.accept_issue_activity, current_team_member_roles, @issue.status) %>
-        <%= render partial: 'criterion', collection: @issue.criteria, locals: { issue_id: @issue.id, can_update: can_update } %>
+        <% permitted = authorize(@acceptance.activity_name, current_team_member_roles, @acceptance.detail) %>
+        <%= render partial: 'criterion', collection: @acceptance.criteria, locals: { issue_id: @acceptance.issue_id, permitted: permitted } %>
       </div>
-      <% if can_update && @issue.can_accept? %>
-        <%= button_to t('.accept'), issue_acceptance_path(issue_id: @issue.id.to_s), method: :patch, data: { test_accept: 1, confirm: t('.confirm_accept') }, class: 'mt-2 btn btn-success' %>
+      <% if permitted && @acceptance.can_accept? %>
+        <%= button_to t('.accept'), issue_acceptance_path(issue_id: @acceptance.issue_id), method: :patch, data: { test_accept: 1, confirm: t('.confirm_accept') }, class: 'mt-2 btn btn-success' %>
       <% end %>
     </div>
   </div>

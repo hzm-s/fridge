@@ -6,7 +6,7 @@ class AcceptancesController < ApplicationController
   before_action :require_user
 
   def show
-    @issue = IssueQuery.call(params[:issue_id])
+    @acceptance = AcceptanceQuery.call(params[:issue_id])
   end
 
   def update
