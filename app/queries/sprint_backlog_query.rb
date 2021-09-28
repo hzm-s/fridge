@@ -6,7 +6,7 @@ module SprintBacklogQuery
         Dao::AssignedIssue
           .eager_load(issue: [:criteria, { work: :tasks }])
           .where(dao_sprint_id: sprint_id)
-          .order(:id)
+          .order('dao_assigned_issues.id, dao_acceptance_criteria.id')
 
       issues = assigned_issues.map do |ai|
         SprintBacklogItemStruct.new(
