@@ -19,17 +19,11 @@ module Issue
            .append(s_sentence('AC_A'))
            .append(s_sentence('AC_B'))
            .append(s_sentence('AC_C'))
-           .append(s_sentence('AC_D'))
-           .append(s_sentence('AC_E'))
-           .remove(4)
-           .append(s_sentence('AC_F'))
 
-        expect(criteria.to_a).to eq [
-          'AC_A',
-          'AC_B',
-          'AC_C',
-          'AC_E',
-          'AC_F',
+        expect(criteria.to_a_with_number).to eq [
+          [1, 'AC_A'],
+          [2, 'AC_B'],
+          [3, 'AC_C'],
         ]
       end
     end
@@ -44,10 +38,10 @@ module Issue
 
         modified = criteria.modify(2, s_sentence('Modified AC2'))
 
-        expect(modified.to_a).to eq [
-          'AC1',
-          'Modified AC2',
-          'AC3',
+        expect(modified.to_a_with_number).to eq [
+          [1, 'AC1'],
+          [2, 'Modified AC2'],
+          [3, 'AC3'],
         ]
       end
     end

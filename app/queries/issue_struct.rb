@@ -6,7 +6,7 @@ class IssueStruct < SimpleDelegator
     super(dao)
 
     @product_id = dao.dao_product_id
-    @criteria = dao.criteria.map.with_index(1) { |c, n| AcceptanceCriterionStruct.new(c, n) }
+    @criteria = AcceptanceCriterionStruct.create_list(id, dao.read_acceptance_criteria)
     @type = Issue::Types.from_string(dao.issue_type)
     @status = Issue::Statuses.from_string(dao.status)
   end
@@ -19,17 +19,21 @@ class IssueStruct < SimpleDelegator
     type.must_have_acceptance_criteria?
   end
 
-  class AcceptanceCriterionStruct < SimpleDelegator
-    attr_reader :number
+  class AcceptanceCriterionStruct < T::Struct
+    prop :issue_id, String
+    prop :number, Integer
+    prop :content, String
 
-    def initialize(criterion, number)
-      super(criterion)
-
-      @number = number
-    end
-
-    def issue_id
-      dao_issue_id
+    class << self
+      def create_list(issue_id, criteria)
+        criteria.to_a_with_number.map do |n, c|
+          new(
+            issue_id: issue_id,
+            number: n,
+            content: c,
+          )
+        end
+      end
     end
   end
 end

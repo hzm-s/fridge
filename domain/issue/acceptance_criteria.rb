@@ -46,7 +46,12 @@ module Issue
 
     sig {returns(T::Array[String])}
     def to_a
-      @criteria.map(&:to_s)
+      @criteria.map(&:to_s).deep_dup
+    end
+
+    sig {returns(T::Array[[Integer, String]])}
+    def to_a_with_number
+      to_a.map.with_index(1) { |c, n| [n, c] }
     end
 
     sig {params(other: AcceptanceCriteria).returns(T::Boolean)}

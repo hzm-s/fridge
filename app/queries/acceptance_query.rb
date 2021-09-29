@@ -16,7 +16,7 @@ module AcceptanceQuery
 
       @type = read_type
       @detail = detail
-      @criteria = issue.criteria.map.with_index(1) { |c, n| CriterionStruct.create(n, c, detail) }
+      @criteria = CriterionStruct.create_list(read_acceptance_criteria, detail)
     end
 
     def issue_id
@@ -42,10 +42,16 @@ module AcceptanceQuery
     prop :is_satisfied, T::Boolean
 
     class << self
-      def create(number, dao, acceptance)
+      def create_list(criteria, acceptance)
+        criteria.to_a_with_number.map do |n, c|
+          create(n, c, acceptance)
+        end
+      end
+
+      def create(number, content, acceptance)
         new(
           number: number,
-          content: dao.content,
+          content: content,
           is_satisfied: acceptance.satisfied?(number),
         )
       end
