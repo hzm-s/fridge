@@ -20,6 +20,6 @@ class AcceptancesController < ApplicationController
   private
 
   def current_product_id
-    IssueQuery.call(params[:issue_id]).product_id
+    resolve_product_id_by_issue_id(params[:issue_id])
   end
 end

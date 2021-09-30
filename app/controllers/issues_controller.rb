@@ -65,6 +65,6 @@ class IssuesController < ApplicationController
     product_id = params[:product_id]
     return product_id if product_id
 
-    IssueQuery.call(params[:id]).product_id
+    resolve_product_id_by_issue_id(params[:id])
   end
 end

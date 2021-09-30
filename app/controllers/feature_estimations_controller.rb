@@ -21,6 +21,6 @@ class FeatureEstimationsController < ApplicationController
   end
 
   def current_product_id
-    IssueQuery.call(params[:id]).product_id
+    resolve_product_id_by_issue_id(params[id])
   end
 end

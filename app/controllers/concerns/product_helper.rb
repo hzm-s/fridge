@@ -15,4 +15,8 @@ module ProductHelper
 
     Dao::Product.find_by(id: current_product_id.to_s)
   end
+
+  def resolve_product_id_by_issue_id(issue_id)
+    Dao::Issue.find(issue_id).dao_product_id
+  end
 end
