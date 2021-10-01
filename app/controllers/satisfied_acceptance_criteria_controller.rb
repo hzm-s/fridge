@@ -24,6 +24,6 @@ class SatisfiedAcceptanceCriteriaController < ApplicationController
   private
 
   def current_product_id
-    resolve_product_id_by_issue_id(params[:issue_id])
+    @__current_product_id ||= resolve_product_id_by_issue_id(params[:issue_id])
   end
 end

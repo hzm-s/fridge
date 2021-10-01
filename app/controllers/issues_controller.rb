@@ -62,6 +62,10 @@ class IssuesController < ApplicationController
   end
 
   def current_product_id
+    @__current_product_id ||= detect_product_id
+  end
+
+  def detect_product_id
     product_id = params[:product_id]
     return product_id if product_id
 
