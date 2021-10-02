@@ -8,11 +8,17 @@ module Work
     sig {returns(T::Set[Integer])}
     attr_reader :satisfied_criteria
 
-    sig {params(issue_type: Issue::Type, criteria: Issue::AcceptanceCriteria, satisfied_criteria: T::Set[Integer]).void}
-    def initialize(issue_type, criteria, satisfied_criteria)
+    sig {params(
+      issue_type: Issue::Type,
+      criteria: Issue::AcceptanceCriteria,
+      satisfied_criteria: T::Set[Integer],
+      completed: T::Boolean,
+    ).void}
+    def initialize(issue_type, criteria, satisfied_criteria, completed)
       @issue_type = issue_type
       @criteria = criteria
       @satisfied_criteria = satisfied_criteria
+      @completed = completed
     end
 
     sig {params(criterion_number: Integer).returns(T.self_type)}
@@ -20,7 +26,7 @@ module Work
       ensure_criterion_included!(criterion_number)
       raise AlreadySatisfied if satisfied?(criterion_number)
 
-      self.class.new(@issue_type, @criteria, @satisfied_criteria + [criterion_number])
+      renew_with_satisfied_criteria(@satisfied_criteria + [criterion_number])
     end
 
     sig {params(criterion_number: Integer).returns(T.self_type)}
@@ -28,7 +34,11 @@ module Work
       ensure_criterion_included!(criterion_number)
       raise NotSatisfied unless satisfied?(criterion_number)
 
-      self.class.new(@issue_type, @criteria, @satisfied_criteria - [criterion_number])
+      renew_with_satisfied_criteria(@satisfied_criteria - [criterion_number])
+    end
+
+    sig {returns(T.self_type)}
+    def complete
     end
 
     sig {returns(Status)}
@@ -65,8 +75,14 @@ module Work
 
     private
 
+    sig {returns(T::Boolean)}
     def all_satisfied?
       @satisfied_criteria.size == @criteria.size
+    end
+
+    sig {params(satisfied_criteria: T::Set[Integer]).returns(T.self_type)}
+    def renew_with_satisfied_criteria(satisfied_criteria)
+      self.class.new(@issue_type, @criteria, satisfied_criteria, @completed)
     end
 
     sig {params(criterion_number: Integer).void}
