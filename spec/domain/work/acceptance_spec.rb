@@ -43,18 +43,14 @@ module Work
       end
     end
 
-    xdescribe 'Complete' do
+    describe 'Complete' do
+      let(:issue_type) { Issue::Types::Feature }
       let(:criteria) { acceptance_criteria(%w(CRT)) }
       let(:satisfied_numbers) { [1].to_set }
 
       it do
-        a = described_class.new(Issue::Types::Feature, criteria, satisfied_numbers)
-        a.complete
-
-        aggregate_failures do
-          expect(a.status).to eq Status::Accepted
-          expect(a.available_activities).to eq activity_set([])
-        end
+        a = described_class.new(issue_type, criteria, satisfied_numbers, false)
+        expect(a.complete).to eq described_class.new(issue_type, criteria, satisfied_numbers, true)
       end
     end
 
@@ -112,6 +108,17 @@ module Work
           aggregate_failures do
             expect(a.status).to eq Status::Acceptable
             expect(a.available_activities).to eq activity_set([:accept_task])
+          end
+        end
+      end
+
+      context 'completed' do
+        it do
+          a = described_class.new(Issue::Types::Feature, criteria, [1, 2, 3].to_set, true)
+
+          aggregate_failures do
+            expect(a.status).to eq Status::Accepted
+            expect(a.available_activities).to eq activity_set([])
           end
         end
       end

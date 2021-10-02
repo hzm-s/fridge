@@ -8,6 +8,9 @@ module Work
     sig {returns(T::Set[Integer])}
     attr_reader :satisfied_criteria
 
+    sig {returns(T::Boolean)}
+    attr_reader :completed
+
     sig {params(
       issue_type: Issue::Type,
       criteria: Issue::AcceptanceCriteria,
@@ -39,13 +42,7 @@ module Work
 
     sig {returns(T.self_type)}
     def complete
-    end
-
-    sig {returns(Status)}
-    def status
-      return Status::NotAccepted unless all_satisfied?
-
-      Status::Acceptable
+      self.class.new(@issue_type, @criteria, @satisfied_criteria, true)
     end
 
     sig {params(criterion_number: Integer).returns(T::Boolean)}
@@ -53,8 +50,18 @@ module Work
       @satisfied_criteria.include?(criterion_number)
     end
 
+    sig {returns(Status)}
+    def status
+      return Status::NotAccepted unless all_satisfied?
+      return Status::Acceptable unless @completed
+
+      Status::Accepted
+    end
+
     sig {returns(Activity::Set)}
     def available_activities
+      return Activity::Set.new([]) if status == Status::Accepted
+
       Activity::Set.new([@issue_type.acceptance_activity])
     end
 
@@ -62,7 +69,8 @@ module Work
     def ==(other)
       self.issue_type == other.issue_type &&
         self.criteria == other.criteria &&
-        self.satisfied_criteria == other.satisfied_criteria
+        self.satisfied_criteria == other.satisfied_criteria &&
+        self.completed == other.completed
     end
 
     protected
