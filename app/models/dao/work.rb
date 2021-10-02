@@ -6,6 +6,8 @@ class Dao::Work < ApplicationRecord
     class_name: 'Dao::Task', foreign_key: :dao_work_id,
     dependent: :destroy, autosave: true
 
+  scope :as_aggregate, -> { eager_load(:tasks, issue: :criteria) }
+
   def write(work)
     self.attributes = {
       dao_issue_id: work.issue_id.to_s,

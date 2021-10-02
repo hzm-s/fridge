@@ -5,6 +5,8 @@ class Dao::Team < ApplicationRecord
     class_name: 'Dao::TeamMember', foreign_key: :dao_team_id,
     dependent: :destroy, autosave: true
 
+  scope :as_aggregate, -> { eager_load(:members) }
+
   def read
     Team::Team.from_repository(
       read_id,

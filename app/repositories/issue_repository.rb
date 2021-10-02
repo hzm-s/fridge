@@ -9,7 +9,7 @@ module IssueRepository
 
       sig {override.params(id: Issue::Id).returns(Issue::Issue)}
       def find_by_id(id)
-        Dao::Issue.eager_load(:criteria).find(id.to_s).read
+        Dao::Issue.as_aggregate.find(id.to_s).read
       rescue ActiveRecord::RecordNotFound
         raise Issue::NotFound
       end

@@ -5,6 +5,8 @@ class Dao::Issue < ApplicationRecord
     dependent: :destroy, autosave: true
   has_one :work, class_name: 'Dao::Work', foreign_key: :dao_issue_id, dependent: :destroy
 
+  scope :as_aggregate, -> { eager_load(:criteria) }
+
   def write(issue)
     self.attributes = {
       dao_product_id: issue.product_id.to_s,

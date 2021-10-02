@@ -9,7 +9,7 @@ module TeamRepository
 
       sig {override.params(id: Team::Id).returns(Team::Team)}
       def find_by_id(id)
-        Dao::Team.eager_load(:members).find(id).read
+        Dao::Team.as_aggregate.find(id).read
       end
 
       sig {override.params(team: Team::Team).void}

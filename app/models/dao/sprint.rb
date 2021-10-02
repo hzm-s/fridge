@@ -4,6 +4,8 @@ class Dao::Sprint < ApplicationRecord
     class_name: 'Dao::AssignedIssue', foreign_key: :dao_sprint_id,
     dependent: :destroy, autosave: true
 
+  scope :as_aggregate, -> { eager_load(:issues) }
+
   def write(sprint)
     self.attributes = {
       dao_product_id: sprint.product_id.to_s,
