@@ -12,5 +12,6 @@ module Work
   autoload :TaskList, 'work/task_list'
   autoload :TaskStatus, 'work/task_status'
   autoload :WorkRepository, 'work/work_repository'
+  autoload :Status, 'work/status' 
   autoload :Statuses, 'work/statuses' 
 end

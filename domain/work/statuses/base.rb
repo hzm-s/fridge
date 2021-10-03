@@ -7,6 +7,9 @@ module Work
       extend T::Sig
       include Status
 
+      sig {returns(Issue::Type)}
+      attr_reader :issue_type
+
       sig {params(issue_type: Issue::Type).void}
       def initialize(issue_type)
         @issue_type = issue_type
@@ -15,6 +18,12 @@ module Work
       sig {override.returns(Activity::Set)}
       def available_activities
         Activity::Set.new([@issue_type.acceptance_activity])
+      end
+
+      sig {params(other: Status).returns(T::Boolean)}
+      def ==(other)
+        self.class == other.class &&
+          self.issue_type == other.issue_type
       end
     end
   end

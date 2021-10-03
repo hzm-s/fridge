@@ -11,16 +11,11 @@ module Work
     class << self
       extend T::Sig
 
-      MAP = T.let({
-        'not_accepted' => NotAccepted,
-        'acceptable' => Acceptable,
-        'accepted' => Accepted
-      }, T::Hash[String, Status])
+      sig {params(issue_type: Issue::Type, criteria: Issue::AcceptanceCriteria).returns(Status)}
+      def initial(issue_type, criteria)
+        return Acceptable.new(issue_type) if criteria.empty?
 
-      sig {params(str: String).returns(Status)}
-      def from_string(str)
-        raise ArgumentError unless MAP.key?(str)
-        T.cast(MAP[str], Status)
+        NotAccepted.new(issue_type)
       end
     end
   end
