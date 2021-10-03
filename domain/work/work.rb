@@ -13,7 +13,7 @@ module Work
         new(
           issue.id,
           Statuses.initial(issue.type, issue.acceptance_criteria),
-          Acceptance.new(issue.type, issue.acceptance_criteria, [].to_set),
+          Acceptance.new(issue.acceptance_criteria, [].to_set),
           TaskList.new,
         )
       end
