@@ -2,29 +2,14 @@
 require 'sorbet-runtime'
 
 module Work
-  class Status < T::Enum
+  module Status
     extend T::Sig
+    extend T::Helpers
+    interface!
 
-    class << self
-      extend T::Sig
+    include Activity::SetProvider
 
-      sig {params(str: String).returns(T.attached_class)}
-      def from_string(str)
-        deserialize(str)
-      rescue KeyError => e
-        raise InvalidStatus
-      end
-    end
-
-    enums do
-      NotAccepted = new('not_accepted')
-      Acceptable = new('acceptable')
-      Accepted = new('accepted')
-    end
-
-    sig {returns(String)}
-    def to_s
-      serialize
-    end
+    sig {abstract.returns(String)}
+    def to_s; end
   end
 end

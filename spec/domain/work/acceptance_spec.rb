@@ -63,7 +63,6 @@ module Work
 
           aggregate_failures do
             expect(a.status).to eq Status::NotAccepted
-            expect(a.available_activities).to eq activity_set([:accept_feature])
           end
         end
       end
@@ -74,7 +73,6 @@ module Work
 
           aggregate_failures do
             expect(a.status).to eq Status::Acceptable
-            expect(a.available_activities).to eq activity_set([:accept_feature])
           end
         end
       end
@@ -85,7 +83,6 @@ module Work
 
           aggregate_failures do
             expect(a.status).to eq Status::NotAccepted
-            expect(a.available_activities).to eq activity_set([:accept_task])
           end
         end
       end
@@ -96,7 +93,6 @@ module Work
 
           aggregate_failures do
             expect(a.status).to eq Status::Acceptable
-            expect(a.available_activities).to eq activity_set([:accept_task])
           end
         end
       end
@@ -107,7 +103,6 @@ module Work
 
           aggregate_failures do
             expect(a.status).to eq Status::Acceptable
-            expect(a.available_activities).to eq activity_set([:accept_task])
           end
         end
       end
@@ -118,7 +113,6 @@ module Work
 
           aggregate_failures do
             expect(a.status).to eq Status::Accepted
-            expect(a.available_activities).to eq activity_set([])
           end
         end
       end
