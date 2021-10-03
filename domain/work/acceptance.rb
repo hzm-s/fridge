@@ -8,20 +8,15 @@ module Work
     sig {returns(T::Set[Integer])}
     attr_reader :satisfied_criteria
 
-    sig {returns(T::Boolean)}
-    attr_reader :completed
-
     sig {params(
       issue_type: Issue::Type,
       criteria: Issue::AcceptanceCriteria,
       satisfied_criteria: T::Set[Integer],
-      completed: T::Boolean,
     ).void}
-    def initialize(issue_type, criteria, satisfied_criteria, completed)
+    def initialize(issue_type, criteria, satisfied_criteria)
       @issue_type = issue_type
       @criteria = criteria
       @satisfied_criteria = satisfied_criteria
-      @completed = completed
     end
 
     sig {params(criterion_number: Integer).returns(T.self_type)}
@@ -40,37 +35,16 @@ module Work
       renew_with_satisfied_criteria(@satisfied_criteria - [criterion_number])
     end
 
-    sig {returns(T.self_type)}
-    def complete
-      self.class.new(@issue_type, @criteria, @satisfied_criteria, true)
-    end
-
     sig {params(criterion_number: Integer).returns(T::Boolean)}
     def satisfied?(criterion_number)
       @satisfied_criteria.include?(criterion_number)
-    end
-
-    sig {returns(Status)}
-    def status
-      return Status::NotAccepted unless all_satisfied?
-      return Status::Acceptable unless @completed
-
-      Status::Accepted
-    end
-
-    sig {returns(Activity::Set)}
-    def available_activities
-      return Activity::Set.new([]) if status == Status::Accepted
-
-      Activity::Set.new([@issue_type.acceptance_activity])
     end
 
     sig {params(other: Acceptance).returns(T::Boolean)}
     def ==(other)
       self.issue_type == other.issue_type &&
         self.criteria == other.criteria &&
-        self.satisfied_criteria == other.satisfied_criteria &&
-        self.completed == other.completed
+        self.satisfied_criteria == other.satisfied_criteria
     end
 
     protected
@@ -90,7 +64,7 @@ module Work
 
     sig {params(satisfied_criteria: T::Set[Integer]).returns(T.self_type)}
     def renew_with_satisfied_criteria(satisfied_criteria)
-      self.class.new(@issue_type, @criteria, satisfied_criteria, @completed)
+      self.class.new(@issue_type, @criteria, satisfied_criteria)
     end
 
     sig {params(criterion_number: Integer).void}
