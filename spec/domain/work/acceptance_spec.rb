@@ -7,18 +7,17 @@ module Work
       let(:criteria) { acceptance_criteria(%w(AC1 AC2 AC3)) }
 
       it do
-        type = Issue::Types::Feature
-        a = described_class.new(type, criteria, [].to_set)
-        expect(a.satisfy(2)).to eq described_class.new(type, criteria, [2].to_set)
+        a = described_class.new(criteria, [].to_set)
+        expect(a.satisfy(2)).to eq described_class.new(criteria, [2].to_set)
       end
 
       it do
-        a = described_class.new(Issue::Types::Feature, criteria, [].to_set)
+        a = described_class.new(criteria, [].to_set)
         expect { a.satisfy(7) }.to raise_error AcceptanceCriterionNotFound
       end
 
       it do
-        a = described_class.new(Issue::Types::Feature, criteria, [1, 2].to_set)
+        a = described_class.new(criteria, [1, 2].to_set)
         expect { a.satisfy(1) }.to raise_error AlreadySatisfied
       end
     end
@@ -27,18 +26,17 @@ module Work
       let(:criteria) { acceptance_criteria(%w(AC1 AC2 AC3)) }
 
       it do
-        type = Issue::Types::Feature
-        a = described_class.new(type, criteria, [1, 2, 3].to_set)
-        expect(a.dissatisfy(2)).to eq described_class.new(type, criteria, [1, 3].to_set)
+        a = described_class.new(criteria, [1, 2, 3].to_set)
+        expect(a.dissatisfy(2)).to eq described_class.new(criteria, [1, 3].to_set)
       end
 
       it do
-        a = described_class.new(Issue::Types::Feature, criteria, [1, 2, 3].to_set)
+        a = described_class.new(criteria, [1, 2, 3].to_set)
         expect { a.dissatisfy(7) }.to raise_error AcceptanceCriterionNotFound
       end
 
       it do
-        a = described_class.new(Issue::Types::Feature, criteria, [3].to_set)
+        a = described_class.new(criteria, [3].to_set)
         expect { a.dissatisfy(1) }.to raise_error NotSatisfied
       end
     end
