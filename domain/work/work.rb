@@ -49,23 +49,9 @@ module Work
       @tasks = tasks
     end
 
-    #def update_acceptance(acceptance)
-    #  @acceptance = acceptance
-    #  @status = @status.update_by_acceptance(@acceptance)
-    #end
-
-    #def accept
-    #  @status = @status.accept
-    #end
-
-    sig {params(criterion_number: Integer).void}
-    def satisfy_acceptance_criterion(criterion_number)
-      @acceptance = @acceptance.satisfy(criterion_number)
-    end
-
-    sig {params(criterion_number: Integer).void}
-    def dissatisfy_acceptance_criterion(criterion_number)
-      @acceptance = @acceptance.dissatisfy(criterion_number)
+    def update_acceptance(acceptance)
+      @acceptance = acceptance
+      @status = @status.update_by_acceptance(@acceptance)
     end
   end
 end

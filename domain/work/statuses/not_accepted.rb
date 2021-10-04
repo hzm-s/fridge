@@ -7,9 +7,11 @@ module Work
       extend T::Sig
       include Status
 
-      sig {override.returns(String)}
-      def to_s
-        'not_accepted'
+      sig {override.params(acceptance: Acceptance).returns(Status)}
+      def update_by_acceptance(acceptance)
+        return self unless acceptance.all_satisfied?
+
+        Acceptable.new(issue_type)
       end
     end
   end

@@ -41,66 +41,28 @@ module Work
       end
     end
 
-    xdescribe 'Status' do
+    describe 'Query to all satisfied' do
       let(:criteria) { acceptance_criteria(%w(AC1 AC2 AC3)) }
+      let(:empty_criteria) { acceptance_criteria([]) }
 
-      context 'type = feature, all satisfied = no' do
+      context 'criteira = any, all satisfied = no' do
         it do
-          a = described_class.new(Issue::Types::Feature, criteria, [1, 3].to_set)
-
-          aggregate_failures do
-            expect(a.status).to eq Statuses::NotAccepted
-          end
+          a = described_class.new(criteria, [1, 3].to_set)
+          expect(a).to_not be_all_satisfied
         end
       end
 
-      context 'type = feature, all satisfied = yes' do
+      context 'criteria = any, all satisfied = yes' do
         it do
-          a = described_class.new(Issue::Types::Feature, criteria, [1, 2, 3].to_set)
-
-          aggregate_failures do
-            expect(a.status).to eq Statuses::Acceptable
-          end
+          a = described_class.new(criteria, [1, 2, 3].to_set)
+          expect(a).to be_all_satisfied
         end
       end
 
-      context 'type = task, size >= 1, all satisfied = no' do
+      context 'criteria = empty' do
         it do
-          a = described_class.new(Issue::Types::Task, criteria, [3].to_set)
-
-          aggregate_failures do
-            expect(a.status).to eq Statuses::NotAccepted
-          end
-        end
-      end
-
-      context 'type = task, size >= 1, all satisfied = yes' do
-        it do
-          a = described_class.new(Issue::Types::Task, criteria, [1, 2, 3].to_set)
-
-          aggregate_failures do
-            expect(a.status).to eq Statuses::Acceptable
-          end
-        end
-      end
-
-      context 'type = task, size = 0' do
-        it do
-          a = described_class.new(Issue::Types::Task, acceptance_criteria([]), [].to_set)
-
-          aggregate_failures do
-            expect(a.status).to eq Statuses::Acceptable
-          end
-        end
-      end
-
-      context 'completed' do
-        it do
-          a = described_class.new(Issue::Types::Feature, criteria, [1, 2, 3].to_set)
-
-          aggregate_failures do
-            expect(a.status).to eq Statuses::Accepted
-          end
+          a = described_class.new(acceptance_criteria([]), [].to_set)
+          expect(a).to be_all_satisfied
         end
       end
     end

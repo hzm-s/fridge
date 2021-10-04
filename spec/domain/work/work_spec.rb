@@ -23,7 +23,7 @@ module Work
       end
     end
 
-    xdescribe 'Update tasks' do
+    describe 'Update tasks' do
       let(:work) { described_class.create(issue) }
 
       it do
@@ -38,16 +38,28 @@ module Work
       end
     end
 
-    xdescribe 'Status' do
+    describe 'Update acceptance' do
       let(:work) { described_class.create(issue) }
 
       it do
-        aggregate_failures do
-          work.satisfy_acceptance_criterion(1)
-          expect(work.acceptance.status).to eq Status::Acceptable
+        acceptance = Acceptance.new(issue.acceptance_criteria, [1].to_set)
+        work.update_acceptance(acceptance)
+        expect(work.acceptance).to eq acceptance
+      end
+    end
 
-          work.dissatisfy_acceptance_criterion(1)
-          expect(work.acceptance.status).to eq Status::NotAccepted
+    describe 'Status' do
+      let(:work) { described_class.create(issue) }
+      let(:all_satisfied) { Acceptance.new(issue.acceptance_criteria, [1].to_set) }
+      let(:not_all_satisfied) { Acceptance.new(issue.acceptance_criteria, [].to_set) }
+
+      it do
+        aggregate_failures do
+          work.update_acceptance(all_satisfied)
+          expect(work.status).to eq Statuses::Acceptable.new(issue.type)
+
+          work.update_acceptance(not_all_satisfied)
+          expect(work.status).to eq Statuses::NotAccepted.new(issue.type)
         end
       end
     end

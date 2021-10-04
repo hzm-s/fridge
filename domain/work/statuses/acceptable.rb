@@ -6,9 +6,11 @@ module Work
     class Acceptable < Base
       extend T::Sig
 
-      sig {override.returns(String)}
-      def to_s
-        'acceptable'
+      sig {override.params(acceptance: Acceptance).returns(Status)}
+      def update_by_acceptance(acceptance)
+        return self if acceptance.all_satisfied?
+
+        NotAccepted.new(issue_type)
       end
     end
   end

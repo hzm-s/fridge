@@ -35,6 +35,11 @@ module Work
       @satisfied_criteria.include?(criterion_number)
     end
 
+    sig {returns(T::Boolean)}
+    def all_satisfied?
+      @criteria.to_a_with_number.all? { |number, _| satisfied?(number) }
+    end
+
     sig {params(other: Acceptance).returns(T::Boolean)}
     def ==(other)
       self.criteria == other.criteria &&
@@ -47,11 +52,6 @@ module Work
     attr_reader :criteria
 
     private
-
-    sig {returns(T::Boolean)}
-    def all_satisfied?
-      @satisfied_criteria.size == @criteria.size
-    end
 
     sig {params(criterion_number: Integer).void}
     def ensure_criterion_included!(criterion_number)
