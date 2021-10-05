@@ -16,12 +16,13 @@ RSpec.describe WorkRepository::AR do
       dao = Dao::Work.last
       aggregate_failures do
         expect(dao.dao_issue_id).to eq issue.id.to_s
+        expect(dao.status).to eq eq issue.status.to_s
         expect(dao.satisfied_criterion_numbers).to be_empty
       end
     end
   end
 
-  describe 'Update' do
+  xdescribe 'Update' do
     it do
       work = Work::Work.create(issue)
       described_class.store(work)

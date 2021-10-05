@@ -18,9 +18,9 @@ module Work
         )
       end
 
-      sig {params(issue_id: Issue::Id, acceptance: Acceptance, tasks: TaskList).returns(T.attached_class)}
-      def from_repository(issue_id, acceptance, tasks)
-        new(issue_id, acceptance, tasks)
+      sig {params(issue_id: Issue::Id, status: Status, acceptance: Acceptance, tasks: TaskList).returns(T.attached_class)}
+      def from_repository(issue_id, status, acceptance, tasks)
+        new(issue_id, status, acceptance, tasks)
       end
     end
 

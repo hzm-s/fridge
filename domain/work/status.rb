@@ -11,5 +11,8 @@ module Work
 
     sig {abstract.params(acceptance: Acceptance).returns(Status)}
     def update_by_acceptance(acceptance); end
+
+    sig {abstract.returns(String)}
+    def to_s; end
   end
 end

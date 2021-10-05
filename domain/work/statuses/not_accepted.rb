@@ -13,6 +13,11 @@ module Work
 
         Acceptable.new(issue_type)
       end
+
+      sig {override.returns(String)}
+      def to_s
+        'not_accepted'
+      end
     end
   end
 end

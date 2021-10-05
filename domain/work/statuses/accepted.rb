@@ -6,9 +6,14 @@ module Work
     class Accepted < Base
       extend T::Sig
 
+      sig {override.returns(Activity::Set)}
+      def available_activities
+        Activity::Set.new([])
+      end
+
       sig {override.returns(String)}
       def to_s
-        'acceptable'
+        'accepted'
       end
     end
   end

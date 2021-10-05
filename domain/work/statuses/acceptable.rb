@@ -12,6 +12,11 @@ module Work
 
         NotAccepted.new(issue_type)
       end
+
+      sig {override.returns(String)}
+      def to_s
+        'acceptable'
+      end
     end
   end
 end
