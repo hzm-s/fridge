@@ -130,6 +130,7 @@ ActiveRecord::Schema.define(version: 2021_05_16_002510) do
   create_table "dao_works", force: :cascade do |t|
     t.uuid "dao_sprint_id"
     t.uuid "dao_issue_id"
+    t.string "status", null: false
     t.integer "satisfied_criterion_numbers", array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
