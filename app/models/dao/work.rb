@@ -11,6 +11,7 @@ class Dao::Work < ApplicationRecord
   def write(work)
     self.attributes = {
       dao_issue_id: work.issue_id.to_s,
+      status: work.status.to_s,
       satisfied_criterion_numbers: work.acceptance.satisfied_criteria.to_a,
     }
 
