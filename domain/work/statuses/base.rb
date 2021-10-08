@@ -7,7 +7,7 @@ module Work
       extend T::Sig
       include Status
 
-      sig {returns(Issue::Type)}
+      sig {override.returns(Issue::Type)}
       attr_reader :issue_type
 
       sig {params(issue_type: Issue::Type).void}
@@ -22,7 +22,7 @@ module Work
 
       sig {params(other: Status).returns(T::Boolean)}
       def ==(other)
-        self.class == other.class &&
+        self.to_s == other.to_s &&
           self.issue_type == other.issue_type
       end
     end

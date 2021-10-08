@@ -24,14 +24,18 @@ class Dao::Work < ApplicationRecord
   def read
     Work::Work.from_repository(
       Issue::Id.from_string(dao_issue_id),
+      read_status,
       read_acceptance,
       read_tasks,
     )
   end
 
+  def read_status
+    Work::Statuses.resolve(status).new(issue.read_type)
+  end
+
   def read_acceptance
     Work::Acceptance.new(
-      issue.read_type,
       issue.read_acceptance_criteria,
       satisfied_criterion_numbers.to_set,
     )

@@ -16,13 +16,13 @@ RSpec.describe WorkRepository::AR do
       dao = Dao::Work.last
       aggregate_failures do
         expect(dao.dao_issue_id).to eq issue.id.to_s
-        expect(dao.status).to eq eq issue.status.to_s
+        expect(dao.status).to eq work.status.to_s
         expect(dao.satisfied_criterion_numbers).to be_empty
       end
     end
   end
 
-  xdescribe 'Update' do
+  describe 'Update' do
     it do
       work = Work::Work.create(issue)
       described_class.store(work)
@@ -50,18 +50,35 @@ RSpec.describe WorkRepository::AR do
     it do
       work = Work::Work.create(issue)
 
-      work.satisfy_acceptance_criterion(1)
+      work.update_acceptance(work.acceptance.satisfy(1))
       described_class.store(work)
 
-      work.satisfy_acceptance_criterion(2)
-      work.satisfy_acceptance_criterion(3)
+      work.update_acceptance(work.acceptance.satisfy(2))
+      work.update_acceptance(work.acceptance.satisfy(3))
       described_class.store(work)
 
-      work.dissatisfy_acceptance_criterion(2)
+      work.update_acceptance(work.acceptance.dissatisfy(2))
       described_class.store(work)
 
       dao = Dao::Work.last
-      expect(dao.satisfied_criterion_numbers).to eq [1, 3]
+      aggregate_failures do
+        expect(dao.satisfied_criterion_numbers).to eq [1, 3]
+        expect(dao.status).to eq work.status.to_s
+      end
+    end
+  end
+
+  describe 'Find (Restore status)' do
+    it do
+      work = Work::Work.create(issue)
+
+      [1, 2, 3].each do |n|
+        work.update_acceptance(work.acceptance.satisfy(n))
+      end
+      described_class.store(work)
+
+      stored = described_class.find_by_issue_id(work.issue_id)
+      expect(stored.status).to eq Work::Statuses::Acceptable.new(issue.type)
     end
   end
 end
