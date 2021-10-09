@@ -13,7 +13,8 @@ class DissatisfyAcceptanceCriterionUsecase < UsecaseBase
   def perform(roles, issue_id, criterion_number)
     work = @repository.find_by_issue_id(issue_id)
 
-    work.dissatisfy_acceptance_criterion(criterion_number)
+    work.acceptance.dissatisfy(criterion_number)
+      .then { |a| work.update_acceptance(a) }
 
     @repository.store(work)
   end
