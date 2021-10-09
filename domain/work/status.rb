@@ -12,9 +12,6 @@ module Work
     sig {abstract.returns(Issue::Type)}
     def issue_type; end
 
-    sig {abstract.returns(Activity::Set)}
-    def available_activities; end
-
     sig {abstract.params(acceptance: Acceptance).returns(Status)}
     def update_by_acceptance(acceptance); end
 

@@ -5,7 +5,6 @@ module Work
   module Statuses
     class NotAccepted < Base
       extend T::Sig
-      include Status
 
       sig {override.params(acceptance: Acceptance).returns(Status)}
       def update_by_acceptance(acceptance)

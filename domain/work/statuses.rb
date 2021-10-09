@@ -1,6 +1,7 @@
 # typed: strict
 require 'sorbet-runtime'
 require 'work/status'
+require 'work/statuses/base'
 require 'work/statuses/not_accepted'
 require 'work/statuses/acceptable'
 require 'work/statuses/accepted'
