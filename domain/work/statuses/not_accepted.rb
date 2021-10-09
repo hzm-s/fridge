@@ -13,6 +13,11 @@ module Work
         Acceptable.new(issue_type)
       end
 
+      sig {override.returns(T::Boolean)}
+      def can_accept?
+        false
+      end
+
       sig {override.returns(String)}
       def to_s
         'not_accepted'

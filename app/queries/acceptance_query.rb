@@ -3,20 +3,20 @@ module AcceptanceQuery
   class << self
     def call(issue_id)
       issue = Dao::Issue.eager_load(:criteria, :work).find(issue_id)
-
-      AcceptanceStruct.new(issue, issue.work.read_acceptance)
+      AcceptanceStruct.new(issue, issue.work)
     end
   end
 
   class AcceptanceStruct < SimpleDelegator
     attr_reader :detail, :criteria
 
-    def initialize(issue, detail)
+    def initialize(issue, work)
       super(issue)
 
       @type = read_type
-      @detail = detail
-      @criteria = CriterionStruct.create_list(read_acceptance_criteria, detail)
+      @status = work.read_status
+      @detail = work.read_acceptance
+      @criteria = CriterionStruct.create_list(read_acceptance_criteria, @detail)
     end
 
     def issue_id
@@ -32,7 +32,7 @@ module AcceptanceQuery
     end
 
     def can_accept?
-      detail.status == Work::Status::Acceptable
+      @status.can_accept?
     end
   end
 

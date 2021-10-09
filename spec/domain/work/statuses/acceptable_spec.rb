@@ -4,16 +4,12 @@ require 'domain_helper'
 module Work
   module Statuses
     RSpec.describe Acceptable do
-      let(:feature) { described_class.new(Issue::Types::Feature) }
-      let(:task) { described_class.new(Issue::Types::Task) }
+      let(:issue_type) { Issue::Types::Feature }
+      let(:status) { described_class.new(issue_type) }
 
       describe '#available_activities' do
         it do
-          expect(feature.available_activities).to eq activity_set([:accept_feature])
-        end
-
-        it do
-          expect(task.available_activities).to eq activity_set([:accept_task])
+          expect(status.available_activities).to eq Activity::Set.new([issue_type.acceptance_activity])
         end
       end
 
@@ -24,15 +20,19 @@ module Work
 
         context 'all_satisfied = yes' do
           it do
-            expect(feature.update_by_acceptance(all_satisfied)).to eq feature
+            expect(status.update_by_acceptance(all_satisfied)).to eq status
           end
         end
 
         context 'all_satisfied = no' do
           it do
-            expect(feature.update_by_acceptance(not_all_satisfied)).to eq NotAccepted.new(feature.issue_type)
+            expect(status.update_by_acceptance(not_all_satisfied)).to eq NotAccepted.new(issue_type)
           end
         end
+      end
+
+      describe '#can_accept?' do
+        it { expect(status).to be_can_accept }
       end
     end
   end
