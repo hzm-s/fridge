@@ -21,6 +21,6 @@ class FeatureEstimationsController < ApplicationController
   end
 
   def current_product_id
-    @__currect_product_id ||= resolve_product_id_by_issue_id(params[id])
+    @__currect_product_id ||= resolve_product_id_by_issue_id(params[:id])
   end
 end
