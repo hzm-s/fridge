@@ -17,7 +17,7 @@
         <%= t '.title_ac' %>
       </label>
       <div class="mt-1 mb-1">
-        <% permitted = authorize(@acceptance.activity_name, current_team_member_roles, @acceptance.detail) %>
+        <% permitted = authorize(@acceptance.activity_name, current_team_member_roles, @acceptance.work_status) %>
         <%= render partial: 'criterion', collection: @acceptance.criteria, locals: { issue_id: @acceptance.issue_id, permitted: permitted } %>
       </div>
       <% if permitted && @acceptance.can_accept? %>

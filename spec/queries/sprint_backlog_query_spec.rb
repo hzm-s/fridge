@@ -15,18 +15,14 @@ RSpec.describe SprintBacklogQuery do
   end
 
   it do
-    sbl = described_class.call(sprint.id)
+    sbl_issues = described_class.call(sprint.id).issues
+    issues = [issue_c, issue_a, issue_b]
 
     aggregate_failures do
-      expect(sbl.issues.map(&:id)).to eq [issue_c, issue_a, issue_b].map(&:id).map(&:to_s)
-      expect(sbl.issues.map(&:type)).to eq [issue_c, issue_a, issue_b].map(&:type)
-
-      expect(sbl.issues[0].acceptance_activity_name).to eq :accept_feature
-      expect(sbl.issues[0].acceptance).to eq Work::Work.create(issue_c).acceptance
-      expect(sbl.issues[1].acceptance_activity_name).to eq :accept_feature
-      expect(sbl.issues[1].acceptance).to eq Work::Work.create(issue_a).acceptance
-      expect(sbl.issues[2].acceptance_activity_name).to eq :accept_task
-      expect(sbl.issues[2].acceptance).to eq Work::Work.create(issue_b).acceptance
+      expect(sbl_issues.map(&:id)).to eq issues.map(&:id).map(&:to_s)
+      expect(sbl_issues.map(&:type)).to eq issues.map(&:type)
+      expect(sbl_issues.map(&:acceptance_activity_name)).to eq issues.map { |i| i.type.acceptance_activity.to_s.to_sym }
+      expect(sbl_issues.map(&:work_status)).to eq issues.map { |i| Work::Work.create(i).status }
     end
   end
 

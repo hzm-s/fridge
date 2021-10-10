@@ -8,15 +8,14 @@ module AcceptanceQuery
   end
 
   class AcceptanceStruct < SimpleDelegator
-    attr_reader :detail, :criteria
+    attr_reader :work_status, :criteria
 
     def initialize(issue, work)
       super(issue)
 
       @type = read_type
-      @status = work.read_status
-      @detail = work.read_acceptance
-      @criteria = CriterionStruct.create_list(read_acceptance_criteria, @detail)
+      @work_status = work.read_status
+      @criteria = CriterionStruct.create_list(read_acceptance_criteria, work.read_acceptance)
     end
 
     def issue_id
@@ -32,7 +31,7 @@ module AcceptanceQuery
     end
 
     def can_accept?
-      @status.can_accept?
+      work_status.can_accept?
     end
   end
 

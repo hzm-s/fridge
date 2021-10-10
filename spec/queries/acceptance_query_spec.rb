@@ -13,7 +13,7 @@ RSpec.describe AcceptanceQuery do
       expect(a.issue_id).to eq issue.id.to_s
       expect(a.issue_description).to eq issue.description.to_s
       expect(a.activity_name).to eq :accept_feature
-      expect(a.detail).to eq work.acceptance
+      expect(a.work_status).to eq work.status
     end
   end
 
