@@ -31,7 +31,7 @@ class Dao::Work < ApplicationRecord
   end
 
   def read_status
-    Work::Statuses.resolve(status).new(issue.read_type)
+    Work::Statuses.from_string(status)
   end
 
   def read_acceptance

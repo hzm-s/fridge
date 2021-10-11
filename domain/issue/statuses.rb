@@ -19,6 +19,7 @@ module Issue
       sig {params(str: String).returns(Status)}
       def from_string(str)
         raise ArgumentError unless MAP.key?(str)
+
         T.cast(MAP[str], Status)
       end
 

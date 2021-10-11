@@ -10,6 +10,7 @@ module Team
           expect(a).to eq activity_set([
             :prepare_acceptance_criteria,
             :estimate_issue,
+            :update_task_acceptance,
             :accept_task,
           ])
         end

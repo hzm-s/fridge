@@ -12,7 +12,7 @@ RSpec.describe AcceptanceQuery do
     aggregate_failures do
       expect(a.issue_id).to eq issue.id.to_s
       expect(a.issue_description).to eq issue.description.to_s
-      expect(a.activity_name).to eq :accept_feature
+      expect(a.activities).to eq issue.type.acceptance_activities
       expect(a.work_status).to eq work.status
     end
   end

@@ -17,7 +17,7 @@ module Work
 
         aggregate_failures do
           expect(work.issue_id).to eq issue.id
-          expect(work.status).to eq Statuses.initial(issue.type, issue.acceptance_criteria)
+          expect(work.status).to eq Statuses.initial(issue.acceptance_criteria)
           expect(work.tasks).to be_empty
         end
       end
@@ -56,10 +56,10 @@ module Work
       it do
         aggregate_failures do
           work.update_acceptance(all_satisfied)
-          expect(work.status).to eq Statuses::Acceptable.new(issue.type)
+          expect(work.status).to eq Statuses.from_string('acceptable')
 
           work.update_acceptance(not_all_satisfied)
-          expect(work.status).to eq Statuses::NotAccepted.new(issue.type)
+          expect(work.status).to eq Statuses.from_string('not_accepted')
         end
       end
     end

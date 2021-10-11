@@ -30,8 +30,8 @@ module SprintBacklogQuery
       @tasks = tasks.map { |t| TaskStruct.new(issue_struct.id, t) }.sort_by(&:number)
     end
 
-    def acceptance_activity_name
-      type.acceptance_activity.to_s.to_sym
+    def acceptance_activities
+      type.acceptance_activities
     end
   end
 

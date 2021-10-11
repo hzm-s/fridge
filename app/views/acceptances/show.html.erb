@@ -17,10 +17,10 @@
         <%= t '.title_ac' %>
       </label>
       <div class="mt-1 mb-1">
-        <% permitted = authorize(@acceptance.activity_name, current_team_member_roles, @acceptance.work_status) %>
+        <% permitted = authorize_any(@acceptance.activities, current_team_member_roles, @acceptance.work_status) %>
         <%= render partial: 'criterion', collection: @acceptance.criteria, locals: { issue_id: @acceptance.issue_id, permitted: permitted } %>
       </div>
-      <% if permitted && @acceptance.can_accept? %>
+      <% if authorize_any([:accept_feature, :accept_task], current_team_member_roles, @acceptance.work_status) %>
         <%= button_to t('.accept'), issue_acceptance_path(issue_id: @acceptance.issue_id), method: :patch, data: { test_accept: 1, confirm: t('.confirm_accept') }, class: 'mt-2 btn btn-success' %>
       <% end %>
     </div>

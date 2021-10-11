@@ -12,7 +12,7 @@ module Work
       def create(issue)
         new(
           issue.id,
-          Statuses.initial(issue.type, issue.acceptance_criteria),
+          Statuses.initial(issue.acceptance_criteria),
           Acceptance.new(issue.acceptance_criteria, [].to_set),
           TaskList.new,
         )

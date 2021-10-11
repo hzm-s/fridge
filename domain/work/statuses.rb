@@ -1,7 +1,6 @@
 # typed: strict
 require 'sorbet-runtime'
 require 'work/status'
-require 'work/statuses/base'
 require 'work/statuses/not_accepted'
 require 'work/statuses/acceptable'
 require 'work/statuses/accepted'
@@ -11,22 +10,24 @@ module Work
     class << self
       extend T::Sig
 
-      CLASSES = T.let({
+      MAP = T.let({
         'not_accepted' => NotAccepted,
         'acceptable' => Acceptable,
         'accepted' => Accepted,
       }, T::Hash[String, Status])
 
-      sig {params(status: String).returns(Class)}
-      def resolve(status)
-        CLASSES[status]
+      sig {params(str: String).returns(Status)}
+      def from_string(str)
+        raise ArgumentError unless MAP.key?(str)
+
+        T.cast(MAP[str], Status)
       end
 
-      sig {params(issue_type: Issue::Type, criteria: Issue::AcceptanceCriteria).returns(Status)}
-      def initial(issue_type, criteria)
-        return Acceptable.new(issue_type) if criteria.empty?
+      sig {params(criteria: Issue::AcceptanceCriteria).returns(Status)}
+      def initial(criteria)
+        return Acceptable if criteria.empty?
 
-        NotAccepted.new(issue_type)
+        NotAccepted
       end
     end
   end

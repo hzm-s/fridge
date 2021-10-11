@@ -26,8 +26,8 @@ module AcceptanceQuery
       description
     end
 
-    def activity_name
-      @type.acceptance_activity.to_s.to_sym
+    def activities
+      @type.acceptance_activities
     end
 
     def can_accept?

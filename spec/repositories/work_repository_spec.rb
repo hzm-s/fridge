@@ -67,18 +67,4 @@ RSpec.describe WorkRepository::AR do
       end
     end
   end
-
-  describe 'Find (Restore status)' do
-    it do
-      work = Work::Work.create(issue)
-
-      [1, 2, 3].each do |n|
-        work.update_acceptance(work.acceptance.satisfy(n))
-      end
-      described_class.store(work)
-
-      stored = described_class.find_by_issue_id(work.issue_id)
-      expect(stored.status).to eq Work::Statuses::Acceptable.new(issue.type)
-    end
-  end
 end

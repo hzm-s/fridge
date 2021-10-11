@@ -9,9 +9,6 @@ module Work
 
     include Activity::SetProvider
 
-    sig {abstract.returns(Issue::Type)}
-    def issue_type; end
-
     sig {abstract.params(acceptance: Acceptance).returns(Status)}
     def update_by_acceptance(acceptance); end
 

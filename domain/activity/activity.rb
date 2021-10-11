@@ -32,6 +32,8 @@ module Activity
       SuspendTask = new('suspend_task')
       ResumeTask = new('resume_task')
       CompleteTask = new('complete_task')
+      UpdateFeatureAcceptance = new('update_feature_acceptance')
+      UpdateTaskAcceptance = new('update_task_acceptance')
       AcceptFeature = new('accept_feature')
       AcceptTask = new('accept_task')
       MarkIssueAsDone = new('mark_issue_as_done')
@@ -47,6 +49,11 @@ module Activity
     sig {returns(String)}
     def to_s
       serialize
+    end
+
+    sig {returns(Symbol)}
+    def to_sym
+      to_s.to_sym
     end
   end
 end

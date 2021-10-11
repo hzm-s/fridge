@@ -21,7 +21,7 @@ RSpec.describe SprintBacklogQuery do
     aggregate_failures do
       expect(sbl_issues.map(&:id)).to eq issues.map(&:id).map(&:to_s)
       expect(sbl_issues.map(&:type)).to eq issues.map(&:type)
-      expect(sbl_issues.map(&:acceptance_activity_name)).to eq issues.map { |i| i.type.acceptance_activity.to_s.to_sym }
+      expect(sbl_issues.map(&:acceptance_activities)).to eq issues.map { |i| i.type.acceptance_activities }
       expect(sbl_issues.map(&:work_status)).to eq issues.map { |i| Work::Work.create(i).status }
     end
   end

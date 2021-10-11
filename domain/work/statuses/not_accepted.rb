@@ -3,24 +3,32 @@ require 'sorbet-runtime'
 
 module Work
   module Statuses
-    class NotAccepted < Base
-      extend T::Sig
+    class NotAccepted
+      class << self
+        extend T::Sig
+        include Status
 
-      sig {override.params(acceptance: Acceptance).returns(Status)}
-      def update_by_acceptance(acceptance)
-        return self unless acceptance.all_satisfied?
+        sig {override.params(acceptance: Acceptance).returns(Status)}
+        def update_by_acceptance(acceptance)
+          return self unless acceptance.all_satisfied?
 
-        Acceptable.new(issue_type)
-      end
+          Acceptable
+        end
 
-      sig {override.returns(T::Boolean)}
-      def can_accept?
-        false
-      end
+        sig {override.returns(Activity::Set)}
+        def available_activities
+          Activity::Set.from_symbols([:update_feature_acceptance, :update_task_acceptance])
+        end
 
-      sig {override.returns(String)}
-      def to_s
-        'not_accepted'
+        sig {override.returns(T::Boolean)}
+        def can_accept?
+          false
+        end
+
+        sig {override.returns(String)}
+        def to_s
+          'not_accepted'
+        end
       end
     end
   end

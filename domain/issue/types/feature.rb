@@ -23,9 +23,12 @@ module Issue
           true
         end
 
-        sig {override.returns(Activity::Activity)}
-        def acceptance_activity
-          Activity::Activity.from_string('accept_feature')
+        sig {override.returns(T::Array[Activity::Activity])}
+        def acceptance_activities
+          [
+            Activity::Activity.from_string('update_feature_acceptance'),
+            Activity::Activity.from_string('accept_feature'),
+          ]
         end
 
         sig {override.returns(String)}
