@@ -419,6 +419,14 @@ class AcceptanceCriterionForm
   def self._validators?(); end
 end
 
+class AcceptanceQuery::AcceptanceStruct
+  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
+end
+
+class AcceptanceQuery::CriterionStruct
+  def self.inherited(s); end
+end
+
 class AcceptancesController
   include ::ProductHelper
   include ::TeamMemberHelper
@@ -28198,6 +28206,8 @@ class Dao::Issue
 
   def self.after_remove_for_criteria=(value); end
 
+  def self.as_aggregate(*args); end
+
   def self.before_add_for_criteria(); end
 
   def self.before_add_for_criteria=(value); end
@@ -28368,6 +28378,8 @@ class Dao::Sprint
 
   def self.after_remove_for_issues=(value); end
 
+  def self.as_aggregate(*args); end
+
   def self.before_add_for_issues(); end
 
   def self.before_add_for_issues=(value); end
@@ -28458,6 +28470,8 @@ class Dao::Team
 
   def self.after_remove_for_members=(value); end
 
+  def self.as_aggregate(*args); end
+
   def self.before_add_for_members(); end
 
   def self.before_add_for_members=(value); end
@@ -28514,12 +28528,26 @@ end
 class Dao::Work
   include ::Dao::Work::GeneratedAttributeMethods
   include ::Dao::Work::GeneratedAssociationMethods
+  def autosave_associated_records_for_issue(*args); end
+
   def autosave_associated_records_for_tasks(*args); end
 
   def validate_associated_records_for_tasks(*args); end
 end
 
 module Dao::Work::GeneratedAssociationMethods
+  def build_issue(*args, &block); end
+
+  def create_issue(*args, &block); end
+
+  def create_issue!(*args, &block); end
+
+  def issue(); end
+
+  def issue=(value); end
+
+  def reload_issue(); end
+
   def task_ids(); end
 
   def task_ids=(ids); end
@@ -28548,6 +28576,8 @@ class Dao::Work
 
   def self.after_remove_for_tasks=(value); end
 
+  def self.as_aggregate(*args); end
+
   def self.before_add_for_tasks(); end
 
   def self.before_add_for_tasks=(value); end
@@ -28555,6 +28585,9 @@ class Dao::Work
   def self.before_remove_for_tasks(); end
 
   def self.before_remove_for_tasks=(value); end
+end
+
+class DataController
 end
 
 class Date
@@ -29245,6 +29278,9 @@ end
 class ExitCalledError
 end
 
+class ExportsController
+end
+
 module FFI
   CURRENT_PROCESS = ::T.let(nil, ::T.untyped)
   SizeTypes = ::T.let(nil, ::T.untyped)
@@ -29505,11 +29541,9 @@ end
 class Faraday::Adapter::Test::Stub
   def headers_match?(request_headers); end
 
-  def initialize(host, full, headers, body, strict_mode, block); end
+  def matches?(env); end
 
-  def matches?(request_host, request_uri, request_headers, request_body); end
-
-  def params_match?(request_params); end
+  def params_match?(env); end
 
   def path_match?(request_path, meta); end
 end
@@ -29528,9 +29562,9 @@ class Faraday::Adapter::Test::Stubs
 
   def initialize(strict_mode: T.unsafe(nil)); end
 
-  def match(request_method, host, path, headers, body); end
+  def match(env); end
 
-  def matches?(stack, host, path, headers, body); end
+  def matches?(stack, env); end
 
   def new_stub(request_method, path, headers=T.unsafe(nil), body=T.unsafe(nil), &block); end
 
@@ -29628,7 +29662,9 @@ class Faraday::RackBuilder::Handler
 end
 
 class Faraday::Request::Authorization
-  def initialize(app, type, token); end
+  def initialize(app, type, param); end
+
+  def on_request(env); end
   KEY = ::T.let(nil, ::T.untyped)
 end
 
@@ -31435,6 +31471,9 @@ module IRB
   def self.setup(ap_path, argv: T.unsafe(nil)); end
 end
 
+class ImportsController
+end
+
 class Integer
   include ::JSON::Ext::Generator::GeneratorMethods::Integer
   include ::ActiveSupport::NumericWithFormat
@@ -31449,13 +31488,8 @@ class Integer
 end
 
 class Issue::AcceptanceCriteria
-  extend ::T::Private::Methods::SingletonMethodHooks
   extend ::T::Private::Methods::MethodHooks
-end
-
-class Issue::AcceptanceCriterion
   extend ::T::Private::Methods::SingletonMethodHooks
-  extend ::T::Private::Methods::MethodHooks
 end
 
 class Issue::Issue
@@ -31479,10 +31513,6 @@ module Issue::Status
   extend ::T::Private::Abstract::Hooks
   extend ::T::InterfaceWrapper::Helpers
   extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
-class Issue::Statuses::Accepted
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
@@ -31535,7 +31565,7 @@ class IssueStruct
 end
 
 class IssueStruct::AcceptanceCriterionStruct
-  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
+  def self.inherited(s); end
 end
 
 class IssuesController
@@ -33387,6 +33417,10 @@ module Nokogiri::XML
   XML_C14N_1_0 = ::T.let(nil, ::T.untyped)
   XML_C14N_1_1 = ::T.let(nil, ::T.untyped)
   XML_C14N_EXCLUSIVE_1_0 = ::T.let(nil, ::T.untyped)
+end
+
+class Nokogiri::XML::Builder
+  DEFAULT_DOCUMENT_OPTIONS = ::T.let(nil, ::T.untyped)
 end
 
 class Nokogiri::XML::Document
@@ -40624,6 +40658,7 @@ module SassC::Util
 end
 
 class SatisfiedAcceptanceCriteriaController
+  include ::ProductHelper
   include ::TeamMemberHelper
   def create(); end
 
@@ -40642,6 +40677,8 @@ module SatisfiedAcceptanceCriteriaController::HelperMethods
   include ::PblHelper
   include ::PresentationHelper
   include ::SblHelper
+  def current_product(*args, &block); end
+
   def current_team_member(*args, &block); end
 
   def current_team_member_roles(*args, &block); end
@@ -42895,9 +42932,47 @@ module Webpacker
   extend ::Webpacker
 end
 
+class Work::Acceptance
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+module Work::Status
+  extend ::T::Private::Abstract::Hooks
+  extend ::T::InterfaceWrapper::Helpers
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+module Work::Statuses::Acceptable
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class Work::Statuses::Accepted
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class Work::Statuses::Base
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class Work::Statuses::NotAccepted
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+module Work::Statuses
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class Work::Task
   extend ::T::Private::Methods::SingletonMethodHooks
   extend ::T::Private::Methods::MethodHooks
+end
+
+class Work::TaskList
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 class Work::Work
