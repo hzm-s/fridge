@@ -7,7 +7,7 @@ module Work
     extend T::Helpers
     interface!
 
-    sig {abstract.params(issue_id: Issue::Id).returns(T.nilable(Work))}
+    sig {abstract.params(issue_id: Issue::Id).returns(Work)}
     def find_by_issue_id(issue_id); end
 
     sig {abstract.params(work: Work).void}

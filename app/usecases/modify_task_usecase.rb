@@ -11,7 +11,7 @@ class ModifyTaskUsecase < UsecaseBase
 
   sig {params(issue_id: Issue::Id, task_number: Integer, content: Shared::ShortSentence).void}
   def perform(issue_id, task_number, content)
-    work = T.must(@repository.find_by_issue_id(issue_id))
+    work = @repository.find_by_issue_id(issue_id)
 
     work.tasks.modify_content(task_number, content)
       .then { |tasks| work.update_tasks(tasks) }
