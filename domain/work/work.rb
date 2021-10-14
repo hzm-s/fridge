@@ -49,9 +49,15 @@ module Work
       @tasks = tasks
     end
 
+    sig {params(acceptance: Acceptance).void}
     def update_acceptance(acceptance)
       @acceptance = acceptance
       @status = @status.update_by_acceptance(@acceptance)
+    end
+
+    sig {void}
+    def accept
+      @status = @status.accept
     end
   end
 end

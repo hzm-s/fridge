@@ -10,6 +10,10 @@ module Work
         end
       end
 
+      describe '.accept' do
+        it { expect(described_class.accept).to eq described_class }
+      end
+
       describe '#can_accept?' do
         it { expect(described_class).to_not be_can_accept }
       end

@@ -15,6 +15,11 @@ module Work
           NotAccepted
         end
 
+        sig {override.returns(Status)}
+        def accept
+          Accepted
+        end
+
         sig {override.returns(Activity::Set)}
         def available_activities
           Activity::Set.from_symbols([:accept_feature, :accept_task])

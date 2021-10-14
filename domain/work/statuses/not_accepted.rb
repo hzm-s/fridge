@@ -15,6 +15,11 @@ module Work
           Acceptable
         end
 
+        sig {override.returns(Status)}
+        def accept
+          self
+        end
+
         sig {override.returns(Activity::Set)}
         def available_activities
           Activity::Set.from_symbols([:update_feature_acceptance, :update_task_acceptance])

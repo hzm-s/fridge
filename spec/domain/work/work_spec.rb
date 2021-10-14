@@ -10,6 +10,8 @@ module Work
       end
     end
     let(:criteria) { acceptance_criteria(%w(CRT)) }
+    let(:all_satisfied) { Acceptance.new(issue.acceptance_criteria, [1].to_set) }
+    let(:not_all_satisfied) { Acceptance.new(issue.acceptance_criteria, [].to_set) }
 
     describe 'Create' do
       it do
@@ -42,16 +44,24 @@ module Work
       let(:work) { described_class.create(issue) }
 
       it do
-        acceptance = Acceptance.new(issue.acceptance_criteria, [1].to_set)
-        work.update_acceptance(acceptance)
-        expect(work.acceptance).to eq acceptance
+        work.update_acceptance(all_satisfied)
+        expect(work.acceptance).to eq all_satisfied
+      end
+    end
+
+    describe 'Accept' do
+      let(:work) { described_class.create(issue) }
+
+      before { work.update_acceptance(all_satisfied) }
+
+      it do
+        work.accept
+        expect(work.status).to eq Statuses.from_string('accepted')
       end
     end
 
     describe 'Status' do
       let(:work) { described_class.create(issue) }
-      let(:all_satisfied) { Acceptance.new(issue.acceptance_criteria, [1].to_set) }
-      let(:not_all_satisfied) { Acceptance.new(issue.acceptance_criteria, [].to_set) }
 
       it do
         aggregate_failures do

@@ -4,7 +4,7 @@ require 'domain_helper'
 module Work
   module Statuses
     RSpec.describe NotAccepted do
-      describe '#available_activities' do
+      describe '.available_activities' do
         it do
           expect(described_class.available_activities).to eq activity_set([
             :update_feature_acceptance,
@@ -13,7 +13,7 @@ module Work
         end
       end
 
-      describe '#update_by_acceptance' do
+      describe '.update_by_acceptance' do
         let(:criteria) { acceptance_criteria(%w(CRT)) }
         let(:all_satisfied) { Acceptance.new(criteria, [1].to_set) }
         let(:not_all_satisfied) { Acceptance.new(criteria, [].to_set) }
@@ -31,7 +31,11 @@ module Work
         end
       end
 
-      describe '#can_accept?' do
+      describe '.accept' do
+        it { expect(described_class.accept).to eq described_class }
+      end
+
+      describe '.can_accept?' do
         it { expect(described_class).to_not be_can_accept }
       end
     end
