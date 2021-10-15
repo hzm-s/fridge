@@ -35,6 +35,10 @@ module Work
         it { expect(described_class.accept).to eq described_class }
       end
 
+      describe '.accepted?' do
+        it { expect(described_class).to_not be_accepted }
+      end
+
       describe '.can_accept?' do
         it { expect(described_class).to_not be_can_accept }
       end

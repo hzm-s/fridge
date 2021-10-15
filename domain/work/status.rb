@@ -15,6 +15,9 @@ module Work
     sig {returns(Status)}
     def accept; end
 
+    sig {returns(T::Boolean)}
+    def accepted?; end
+
     # TODO: omit
     sig {abstract.returns(T::Boolean)}
     def can_accept?; end

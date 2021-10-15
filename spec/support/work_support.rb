@@ -26,12 +26,12 @@ module WorkSupport
     end
   end
 
-  def accept_issue(issue)
+  def accept_work(issue)
     satisfy_acceptance_criteria(
       issue.id,
-      (1..issue.acceptance_criteria.size - 1).to_a,
+      issue.acceptance_criteria.to_a_with_number.map { |n, _| n },
     )
-    AcceptIssueUsecase.perform(team_roles(:po), issue.id)
+    AcceptWorkUsecase.perform(team_roles(:po), issue.id)
   end
 end
 

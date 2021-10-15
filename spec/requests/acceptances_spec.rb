@@ -40,7 +40,7 @@ RSpec.describe 'acceptances' do
 
     context 'when accepted' do
       before do
-        accept_issue(issue)
+        accept_work(issue)
       end
 
       it do

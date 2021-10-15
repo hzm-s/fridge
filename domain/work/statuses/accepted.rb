@@ -23,6 +23,10 @@ module Work
           Activity::Set.new([])
         end
 
+        def accepted?
+          true
+        end
+
         sig {override.returns(T::Boolean)}
         def can_accept?
           false

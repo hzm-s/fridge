@@ -15,54 +15,55 @@ RSpec.describe SprintBacklogQuery do
   end
 
   it do
-    sbl_issues = described_class.call(sprint.id).issues
+    items = described_class.call(sprint.id).items
+    item_issues = items.map(&:issue)
     issues = [issue_c, issue_a, issue_b]
 
     aggregate_failures do
-      expect(sbl_issues.map(&:id)).to eq issues.map(&:id).map(&:to_s)
-      expect(sbl_issues.map(&:type)).to eq issues.map(&:type)
-      expect(sbl_issues.map(&:acceptance_activities)).to eq issues.map { |i| i.type.acceptance_activities }
-      expect(sbl_issues.map(&:work_status)).to eq issues.map { |i| Work::Work.create(i).status }
+      expect(item_issues.map(&:id)).to eq issues.map(&:id).map(&:to_s)
+      expect(item_issues.map(&:type)).to eq issues.map(&:type)
+      expect(items.map(&:acceptance_activities)).to eq issues.map { |i| i.type.acceptance_activities }
+      expect(items.map(&:status)).to eq issues.map { |i| Work::Work.create(i).status }
     end
   end
 
   it do
     sbl = described_class.call(sprint.id)
-    issue = sbl.issues.first
-    expect(issue.criteria.map(&:content)).to eq %w(CRT_C1 CRT_C2 CRT_C3)
+    item_issue = sbl.items.first.issue
+    expect(item_issue.criteria.map(&:content)).to eq %w(CRT_C1 CRT_C2 CRT_C3)
   end
 
   it do
     sbl = described_class.call(sprint.id)
-    issue = sbl.issues.first
-    expect(issue.tasks).to be_empty
+    item = sbl.items.first
+    expect(item.tasks).to be_empty
   end
 
   it do
     plan_task(issue_c.id, %w(Task1 Task2 Task3))
     sbl = described_class.call(sprint.id)
-    issue = sbl.issues.first
+    tasks = sbl.items.first.tasks
 
     aggregate_failures do
-      expect(issue.tasks.map(&:issue_id).uniq).to eq [issue_c.id.to_s]
-      expect(issue.tasks[0].number).to eq 1
-      expect(issue.tasks[0].content).to eq 'Task1'
-      expect(issue.tasks[1].number).to eq 2
-      expect(issue.tasks[1].content).to eq 'Task2'
-      expect(issue.tasks[2].number).to eq 3
-      expect(issue.tasks[2].content).to eq 'Task3'
+      expect(tasks.map(&:issue_id).uniq).to eq [issue_c.id.to_s]
+      expect(tasks[0].number).to eq 1
+      expect(tasks[0].content).to eq 'Task1'
+      expect(tasks[1].number).to eq 2
+      expect(tasks[1].content).to eq 'Task2'
+      expect(tasks[2].number).to eq 3
+      expect(tasks[2].content).to eq 'Task3'
     end
   end
 
-  xit do
-    accept_issue(issue_c)
-    accept_issue(issue_b)
+  it do
+    accept_work(issue_c)
+    accept_work(issue_b)
     sbl = described_class.call(sprint.id)
 
     aggregate_failures do
-      expect(sbl.issues[0]).to be_accepted
-      expect(sbl.issues[1]).to_not be_accepted
-      expect(sbl.issues[2]).to be_accepted
+      expect(sbl.item[0]).to be_accepted
+      expect(sbl.item[1]).to_not be_accepted
+      expect(sbl.item[2]).to be_accepted
     end
   end
 end

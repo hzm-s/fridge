@@ -10,7 +10,7 @@ class AcceptancesController < ApplicationController
   end
 
   def update
-    AcceptIssueUsecase.perform(
+    AcceptWorkUsecase.perform(
       current_team_member_roles,
       Issue::Id.from_string(params[:issue_id])
     )

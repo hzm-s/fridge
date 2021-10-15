@@ -33,6 +33,10 @@ module SprintBacklogQuery
     def acceptance_activities
       type.acceptance_activities
     end
+
+    def accepted?
+      @work_status.accepted?
+    end
   end
 
   class SprintBacklogStruct < T::Struct
