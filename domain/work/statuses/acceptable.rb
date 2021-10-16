@@ -25,6 +25,7 @@ module Work
           Activity::Set.from_symbols([:accept_feature, :accept_task])
         end
 
+        sig {override.returns(T::Boolean)}
         def accepted?
           false
         end

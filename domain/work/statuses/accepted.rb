@@ -13,7 +13,7 @@ module Work
           self
         end
 
-        sig {returns(Status)}
+        sig {override.returns(Status)}
         def accept
           self
         end
@@ -23,6 +23,7 @@ module Work
           Activity::Set.new([])
         end
 
+        sig {override.returns(T::Boolean)}
         def accepted?
           true
         end

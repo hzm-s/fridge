@@ -25,6 +25,7 @@ module Work
           Activity::Set.from_symbols([:update_feature_acceptance, :update_task_acceptance])
         end
 
+        sig {override.returns(T::Boolean)}
         def accepted?
           false
         end

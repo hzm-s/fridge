@@ -12,10 +12,10 @@ module Work
     sig {abstract.params(acceptance: Acceptance).returns(Status)}
     def update_by_acceptance(acceptance); end
 
-    sig {returns(Status)}
+    sig {abstract.returns(Status)}
     def accept; end
 
-    sig {returns(T::Boolean)}
+    sig {abstract.returns(T::Boolean)}
     def accepted?; end
 
     # TODO: omit
