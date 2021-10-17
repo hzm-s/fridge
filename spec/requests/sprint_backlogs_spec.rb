@@ -99,8 +99,8 @@ RSpec.describe 'sprint_backlogs' do
       end
     end
 
-    xcontext 'when accepted' do
-      before { accept_issue(issue) }
+    context 'when accepted' do
+      before { accept_work(issue) }
 
       it do
         get sprint_backlog_path(product.id)

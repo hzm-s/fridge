@@ -4,11 +4,11 @@
   </span>
   <div class="sbl-item__body">
     <div class="sbl-item__issue">
-      <%= render partial: 'issue', locals: { issue: item } %>
+      <%= render partial: 'issue', locals: { item: item, issue: item.issue } %>
     </div>
     <div class="sbl-item__task">
-      <%= render partial: 'task_list', locals: { issue_id: item.id, tasks: item.tasks } %>
-      <%= render partial: 'task_form', locals: { issue_id: item.id, form: nil } %>
+      <%= render partial: 'task_list', locals: { issue_id: item.issue_id, tasks: item.tasks } %>
+      <%= render partial: 'task_form', locals: { issue_id: item.issue_id, form: nil } %>
     </div>
   </div>
 <% end %>

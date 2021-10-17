@@ -4,9 +4,9 @@
       <%= pbl_item_type_icon(issue.type) %>
     </span>
     <%= simple_format(issue.description, class: 'sbi-issue__content') %>
-    <%= render partial: 'item_menu', locals: { item: issue } %>
+    <%= render partial: 'item_menu', locals: { item: item, issue: issue } %>
   </div>
-  <% if issue.accepted? %>
+  <% if item.accepted? %>
     <div class="sbl-item__accepted-status">
       <i class="fas fa-check-circle sbl-item__accepted-status-icon"></i>
       <span>

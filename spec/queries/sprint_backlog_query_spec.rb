@@ -61,9 +61,9 @@ RSpec.describe SprintBacklogQuery do
     sbl = described_class.call(sprint.id)
 
     aggregate_failures do
-      expect(sbl.item[0]).to be_accepted
-      expect(sbl.item[1]).to_not be_accepted
-      expect(sbl.item[2]).to be_accepted
+      expect(sbl.items[0]).to be_accepted
+      expect(sbl.items[1]).to_not be_accepted
+      expect(sbl.items[2]).to be_accepted
     end
   end
 end

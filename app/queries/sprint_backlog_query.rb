@@ -8,38 +8,43 @@ module SprintBacklogQuery
           .where(dao_sprint_id: sprint_id)
           .order('dao_assigned_issues.id, dao_acceptance_criteria.id')
 
-      issues = assigned_issues.map do |ai|
+      items = assigned_issues.map do |ai|
         SprintBacklogItemStruct.new(
+          ai.issue.work,
           IssueStruct.new(ai.issue),
-          ai.issue.work.read_status,
-          Array(ai.issue.work&.tasks),
         )
       end
 
-      SprintBacklogStruct.new(issues: issues)
+      SprintBacklogStruct.new(items: items)
     end
   end
 
   class SprintBacklogItemStruct < SimpleDelegator
-    attr_reader :work_status, :tasks
+    attr_reader :issue
 
-    def initialize(issue_struct, work_status, tasks)
-      super(issue_struct)
+    delegate :accepted?, to: :status
+    delegate :id, to: :issue, prefix: true
 
-      @work_status = work_status
-      @tasks = tasks.map { |t| TaskStruct.new(issue_struct.id, t) }.sort_by(&:number)
+    def initialize(dao_work, issue)
+      super(dao_work)
+
+      @issue = issue
+    end
+
+    def status
+      @__status ||= read_status
+    end
+
+    def tasks
+      @__tasks ||= super.map { |t| TaskStruct.new(issue.id, t) }.sort_by(&:number)
     end
 
     def acceptance_activities
-      type.acceptance_activities
-    end
-
-    def accepted?
-      @work_status.accepted?
+      issue.type.acceptance_activities
     end
   end
 
   class SprintBacklogStruct < T::Struct
-    prop :issues, T::Array[SprintBacklogItemStruct]
+    prop :items, T::Array[SprintBacklogItemStruct]
   end
 end

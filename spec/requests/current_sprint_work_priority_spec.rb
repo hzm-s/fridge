@@ -24,7 +24,7 @@ RSpec.describe 'current_sprint/:product_id/work_priority' do
 
       sbl = SprintBacklogQuery.call(sprint.id)
 
-      expect(sbl.issues.map(&:id)).to eq [issue_c.id, issue_a.id, issue_b.id].map(&:to_s)
+      expect(sbl.items.map(&:issue_id)).to eq [issue_c.id, issue_a.id, issue_b.id].map(&:to_s)
     end
   end
 
