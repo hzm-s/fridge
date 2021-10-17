@@ -88,61 +88,29 @@ module Issue
       it { expect { issue.revert_from_sprint(sm_role) }.to_not raise_error }
     end
 
-    #describe 'to update acceptance permission' do
-    #  context 'when Feature' do
-    #    let(:issue) { described_class.create(product_id, Types::Feature, description) }
-    #    let(:criteria) { acceptance_criteria(%w(CRT)) }
-
-    #    before do
-    #      issue.prepare_acceptance_criteria(criteria)
-    #      issue.estimate(dev_role, StoryPoint.new(5))
-    #      issue.assign_to_sprint(po_role)
-    #    end
-
-    #    it { expect { issue.update_acceptance(dev_role, criteria) }.to raise_error CanNotUpdateAcceptance }
-    #    it { expect { issue.update_acceptance(po_role, criteria) }.to_not raise_error }
-    #    it { expect { issue.update_acceptance(sm_role, criteria) }.to raise_error CanNotUpdateAcceptance }
-    #  end
-
-    #  context 'when Task' do
-    #    let(:issue) { described_class.create(product_id, Types::Task, description) }
-    #    let(:criteria) { acceptance_criteria(%w(CRT)) }
-
-    #    before do
-    #      issue.prepare_acceptance_criteria(criteria)
-    #      issue.estimate(dev_role, StoryPoint.new(5))
-    #      issue.assign_to_sprint(po_role)
-    #    end
-
-    #    it { expect { issue.update_acceptance(dev_role, criteria) }.to_not raise_error }
-    #    it { expect { issue.update_acceptance(po_role, criteria) }.to_not raise_error }
-    #    it { expect { issue.update_acceptance(sm_role, criteria) }.to raise_error CanNotUpdateAcceptance }
-    #  end
-    #end
-
     describe 'Feature issue status' do
       let(:issue) { described_class.create(product_id, Types::Feature, description) }
       let(:criteria) { acceptance_criteria(%w(AC1 AC2 AC3)) }
 
       it do
         issue.modify_description(l_sentence('NEW user story'))
-        expect(issue.status).to eq Statuses::Preparation
+        expect(issue.status).to eq Statuses.from_string('preparation')
 
         issue.prepare_acceptance_criteria(criteria)
-        expect(issue.status).to eq Statuses::Preparation
+        expect(issue.status).to eq Statuses.from_string('preparation')
 
         issue.estimate(dev_role, StoryPoint.new(3))
-        expect(issue.status).to eq Statuses::Ready
+        expect(issue.status).to eq Statuses.from_string('ready')
 
         issue.prepare_acceptance_criteria(acceptance_criteria([]))
-        expect(issue.status).to eq Statuses::Preparation
+        expect(issue.status).to eq Statuses.from_string('preparation')
 
         issue.prepare_acceptance_criteria(criteria)
         issue.assign_to_sprint(po_role)
-        expect(issue.status).to eq Statuses::Wip
+        expect(issue.status).to eq Statuses.from_string('wip')
 
         issue.revert_from_sprint(po_role)
-        expect(issue.status).to eq Statuses::Ready
+        expect(issue.status).to eq Statuses.from_string('ready')
       end
     end
 
@@ -151,28 +119,28 @@ module Issue
       let(:criteria) { acceptance_criteria([]) }
 
       it do
-        expect(issue.status).to eq Statuses::Ready
+        expect(issue.status).to eq Statuses.from_string('ready')
 
         issue.modify_description(l_sentence('NEW task'))
-        expect(issue.status).to eq Statuses::Ready
+        expect(issue.status).to eq Statuses.from_string('ready')
 
         issue.prepare_acceptance_criteria(criteria)
-        expect(issue.status).to eq Statuses::Ready
+        expect(issue.status).to eq Statuses.from_string('ready')
 
         issue.estimate(dev_role, StoryPoint.new(3))
-        expect(issue.status).to eq Statuses::Ready
+        expect(issue.status).to eq Statuses.from_string('ready')
 
         issue.prepare_acceptance_criteria(criteria)
-        expect(issue.status).to eq Statuses::Ready
+        expect(issue.status).to eq Statuses.from_string('ready')
 
         issue.estimate(dev_role, StoryPoint.unknown)
-        expect(issue.status).to eq Statuses::Ready
+        expect(issue.status).to eq Statuses.from_string('ready')
 
         issue.assign_to_sprint(po_role)
-        expect(issue.status).to eq Statuses::Wip
+        expect(issue.status).to eq Statuses.from_string('wip')
 
         issue.revert_from_sprint(po_role)
-        expect(issue.status).to eq Statuses::Ready
+        expect(issue.status).to eq Statuses.from_string('ready')
       end
     end
   end
