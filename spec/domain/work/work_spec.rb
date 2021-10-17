@@ -47,6 +47,16 @@ module Work
         work.update_acceptance(all_satisfied)
         expect(work.acceptance).to eq all_satisfied
       end
+
+      it do
+        aggregate_failures do
+          work.update_acceptance(all_satisfied)
+          expect(work.status).to eq Statuses.from_string('acceptable')
+
+          work.update_acceptance(not_all_satisfied)
+          expect(work.status).to eq Statuses.from_string('not_accepted')
+        end
+      end
     end
 
     describe 'Accept' do
@@ -57,20 +67,6 @@ module Work
       it do
         work.accept
         expect(work.status).to eq Statuses.from_string('accepted')
-      end
-    end
-
-    describe 'Status' do
-      let(:work) { described_class.create(issue) }
-
-      it do
-        aggregate_failures do
-          work.update_acceptance(all_satisfied)
-          expect(work.status).to eq Statuses.from_string('acceptable')
-
-          work.update_acceptance(not_all_satisfied)
-          expect(work.status).to eq Statuses.from_string('not_accepted')
-        end
       end
     end
   end
