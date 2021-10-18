@@ -49,7 +49,7 @@ module Issue
       let(:issue) { described_class.create(product_id, Types::Feature, description) }
 
       it do
-        expect { issue.estimate(dev_role, StoryPoint.new(2)) }.to_not raise_error 
+        expect { issue.estimate(dev_role, StoryPoint.new(2)) }.to_not raise_error
       end
 
       it do
