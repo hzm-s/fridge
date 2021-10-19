@@ -5,7 +5,7 @@ module Issue
   module Types
     RSpec.describe Task do
       describe '.initial_status' do
-        it { expect(described_class.initial_status).to eq ::Issue::Statuses::Ready }
+        it { expect(described_class.initial_status).to eq ::Issue::Statuses::Preparation }
       end
 
       describe '.prepared?' do

@@ -10,7 +10,7 @@ module Issue
 
         sig {override.returns(Status)}
         def initial_status
-          Statuses::Ready
+          Statuses::Preparation
         end
 
         sig {override.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(T::Boolean)}
