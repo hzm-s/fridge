@@ -116,23 +116,22 @@ module Issue
 
     describe 'Task issue status' do
       let(:issue) { described_class.create(product_id, Types::Task, description) }
-      let(:criteria) { acceptance_criteria([]) }
+      let(:criteria) { acceptance_criteria(%w(AC1 AC2 AC3)) }
 
       it do
-        expect(issue.status).to eq Statuses.from_string('ready')
-
         issue.modify_description(l_sentence('NEW task'))
-        expect(issue.status).to eq Statuses.from_string('ready')
-
-        issue.prepare_acceptance_criteria(criteria)
-        expect(issue.status).to eq Statuses.from_string('ready')
+        expect(issue.status).to eq Statuses.from_string('preparation')
 
         issue.estimate(dev_role, StoryPoint.new(3))
-        expect(issue.status).to eq Statuses.from_string('ready')
+        expect(issue.status).to eq Statuses.from_string('preparation')
 
         issue.prepare_acceptance_criteria(criteria)
         expect(issue.status).to eq Statuses.from_string('ready')
 
+        issue.prepare_acceptance_criteria(acceptance_criteria([]))
+        expect(issue.status).to eq Statuses.from_string('preparation')
+
+        issue.prepare_acceptance_criteria(criteria)
         issue.estimate(dev_role, StoryPoint.unknown)
         expect(issue.status).to eq Statuses.from_string('ready')
 
