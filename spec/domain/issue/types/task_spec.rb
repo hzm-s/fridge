@@ -28,13 +28,13 @@ module Issue
 
         context 'cirteira == 0 and size != unknown' do
           it do
-            expect(described_class.prepared?(criteria_empty, size_any)).to be true
+            expect(described_class.prepared?(criteria_empty, size_any)).to be false
           end
         end
 
         context 'cirteira == 0 and size == unknown' do
           it do
-            expect(described_class.prepared?(criteria_empty, size_unknown)).to be true
+            expect(described_class.prepared?(criteria_empty, size_unknown)).to be false
           end
         end
       end

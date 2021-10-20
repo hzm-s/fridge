@@ -15,7 +15,7 @@ module Issue
 
         sig {override.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(T::Boolean)}
         def prepared?(criteria, size)
-          true
+          !criteria.empty?
         end
 
         sig {override.returns(T::Boolean)}
