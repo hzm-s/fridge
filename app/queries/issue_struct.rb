@@ -15,10 +15,6 @@ class IssueStruct < SimpleDelegator
     @criteria
   end
 
-  def must_have_acceptance_criteria?
-    type.must_have_acceptance_criteria?
-  end
-
   class AcceptanceCriterionStruct < T::Struct
     prop :issue_id, String
     prop :number, Integer

@@ -14,9 +14,6 @@ module Issue
     sig {abstract.params(criteria: AcceptanceCriteria, size: StoryPoint).returns(T::Boolean)}
     def prepared?(criteria, size); end
 
-    sig {abstract.returns(T::Boolean)}
-    def must_have_acceptance_criteria?; end
-
     sig {abstract.returns(T::Array[Activity::Activity])}
     def acceptance_activities; end
 

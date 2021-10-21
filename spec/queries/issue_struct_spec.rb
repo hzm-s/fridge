@@ -19,11 +19,6 @@ RSpec.describe IssueStruct do
     end
   end
 
-  it 'returns requirement to have acceptance criteria' do
-    s = build_struct { plan_issue(product.id, type: :task) }
-    expect(s).to_not be_must_have_acceptance_criteria
-  end
-
   it 'returns status' do
     issue = plan_issue(product.id)
     s = build_struct { issue }

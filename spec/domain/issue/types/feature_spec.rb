@@ -38,10 +38,6 @@ module Issue
           end
         end
       end
-
-      describe '.must_have_acceptance_criteria?' do
-        it { expect(described_class).to be_must_have_acceptance_criteria }
-      end
     end
   end
 end
