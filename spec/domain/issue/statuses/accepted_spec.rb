@@ -3,15 +3,11 @@ require 'domain_helper'
 
 module Issue
   module Statuses
-    RSpec.describe Wip do
+    RSpec.describe Accepted do
       describe '.available_activities' do
         it do
           a = described_class.available_activities
-          expect(a).to eq activity_set([
-            :revert_issue_from_sprint,
-            :accept_feature,
-            :accept_task,
-          ])
+          expect(a).to eq activity_set([])
         end
       end
 
@@ -33,13 +29,13 @@ module Issue
 
       describe '.revert_from_sprint' do
         it do
-          expect(described_class.revert_from_sprint).to eq Ready
+          expect { described_class.revert_from_sprint }.to raise_error CanNotRevertFromSprint
         end
       end
 
       describe '.accept' do
         it do
-          expect(described_class.accept).to eq Accepted
+          expect(described_class.accept).to eq described_class
         end
       end
     end

@@ -4,6 +4,7 @@ require 'issue/status'
 require 'issue/statuses/preparation'
 require 'issue/statuses/ready'
 require 'issue/statuses/wip'
+require 'issue/statuses/accepted'
 
 module Issue
   module Statuses
@@ -14,6 +15,7 @@ module Issue
         'preparation' => Preparation,
         'ready' => Ready,
         'wip' => Wip,
+        'accepted' => Accepted,
       }, T::Hash[String, Status])
 
       sig {params(str: String).returns(Status)}

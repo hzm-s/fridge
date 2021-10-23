@@ -6,6 +6,7 @@ module Issue
   class CanNotEstimate < StandardError; end
   class CanNotAssignToSprint < StandardError; end
   class CanNotRevertFromSprint < StandardError; end
+  class CanNotAccept < StandardError; end
 
   autoload :Id, 'issue/id'
   autoload :Issue, 'issue/issue'

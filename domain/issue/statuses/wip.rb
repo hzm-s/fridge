@@ -19,7 +19,7 @@ module Issue
 
         sig {override.params(type: Type, criteria: AcceptanceCriteria, size: StoryPoint).returns(Status)}
         def update_by_preparation(type, criteria, size)
-          self
+          raise CanNotPrepare
         end
 
         sig {override.returns(Status)}
@@ -30,6 +30,11 @@ module Issue
         sig {override.returns(Status)}
         def revert_from_sprint
           Ready
+        end
+
+        sig {override.returns(Status)}
+        def accept
+          Accepted
         end
 
         sig {override.returns(String)}

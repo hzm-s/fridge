@@ -30,6 +30,11 @@ module Issue
           raise CanNotRevertFromSprint
         end
 
+        sig {override.returns(Status)}
+        def accept
+          raise CanNotAccept
+        end
+
         sig {override.returns(String)}
         def to_s
           'ready'

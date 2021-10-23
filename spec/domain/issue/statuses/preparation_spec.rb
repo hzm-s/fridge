@@ -46,6 +46,12 @@ module Issue
           expect { described_class.revert_from_sprint }.to raise_error CanNotRevertFromSprint
         end
       end
+
+      describe '.accept' do
+        it do
+          expect { described_class.accept }.to raise_error CanNotAccept
+        end
+      end
     end
   end
 end
