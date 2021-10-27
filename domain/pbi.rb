@@ -4,4 +4,6 @@ module Pbi
   autoload :Id, 'pbi/id'
   autoload :Types, 'pbi/types'
   autoload :Statuses, 'pbi/statuses'
+  autoload :StoryPoint, 'pbi/story_point'
+  #autoload :AcceptanceCriteria, 'pbi/story_point'
 end
