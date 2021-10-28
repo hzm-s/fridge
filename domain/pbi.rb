@@ -5,5 +5,5 @@ module Pbi
   autoload :Types, 'pbi/types'
   autoload :Statuses, 'pbi/statuses'
   autoload :StoryPoint, 'pbi/story_point'
-  #autoload :AcceptanceCriteria, 'pbi/story_point'
+  autoload :AcceptanceCriteria, 'pbi/acceptance_criteria'
 end
