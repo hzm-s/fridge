@@ -36,31 +36,31 @@ ActiveRecord::Schema.define(version: 2021_05_16_002510) do
   end
 
   create_table "dao_acceptance_criteria", force: :cascade do |t|
-    t.uuid "dao_issue_id"
+    t.uuid "dao_pbi_id"
     t.string "content", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["dao_issue_id"], name: "index_dao_acceptance_criteria_on_dao_issue_id"
+    t.index ["dao_pbi_id"], name: "index_dao_acceptance_criteria_on_dao_pbi_id"
   end
 
-  create_table "dao_assigned_issues", force: :cascade do |t|
+  create_table "dao_assigned_pbis", force: :cascade do |t|
     t.uuid "dao_sprint_id"
-    t.uuid "dao_issue_id"
+    t.uuid "dao_pbi_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["dao_issue_id"], name: "index_dao_assigned_issues_on_dao_issue_id"
-    t.index ["dao_sprint_id"], name: "index_dao_assigned_issues_on_dao_sprint_id"
+    t.index ["dao_pbi_id"], name: "index_dao_assigned_pbis_on_dao_pbi_id"
+    t.index ["dao_sprint_id"], name: "index_dao_assigned_pbis_on_dao_sprint_id"
   end
 
-  create_table "dao_issues", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "dao_pbis", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "dao_product_id"
-    t.string "issue_type", null: false
+    t.string "pbi_type", null: false
     t.string "status", null: false
     t.string "description", null: false
     t.integer "size"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["dao_product_id"], name: "idx_product_id_on_issues"
+    t.index ["dao_product_id"], name: "idx_product_id_on_pbis"
   end
 
   create_table "dao_people", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -82,11 +82,23 @@ ActiveRecord::Schema.define(version: 2021_05_16_002510) do
     t.uuid "dao_product_id"
     t.string "title"
     t.integer "number", null: false
-    t.uuid "issues", array: true
+    t.uuid "pbis", array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["dao_product_id", "number"], name: "index_dao_releases_on_dao_product_id_and_number", unique: true
     t.index ["dao_product_id"], name: "index_dao_releases_on_dao_product_id"
+  end
+
+  create_table "dao_sbis", force: :cascade do |t|
+    t.uuid "dao_sprint_id"
+    t.uuid "dao_pbi_id"
+    t.string "status", null: false
+    t.integer "satisfied_criterion_numbers", array: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["dao_pbi_id"], name: "index_dao_sbis_on_dao_pbi_id"
+    t.index ["dao_sprint_id", "dao_pbi_id"], name: "index_dao_sbis_on_dao_sprint_id_and_dao_pbi_id", unique: true
+    t.index ["dao_sprint_id"], name: "index_dao_sbis_on_dao_sprint_id"
   end
 
   create_table "dao_sprints", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -100,14 +112,14 @@ ActiveRecord::Schema.define(version: 2021_05_16_002510) do
   end
 
   create_table "dao_tasks", force: :cascade do |t|
-    t.bigint "dao_work_id"
+    t.bigint "dao_sbi_id"
     t.integer "number", null: false
     t.string "status", null: false
     t.string "content", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["dao_work_id", "number"], name: "index_dao_tasks_on_dao_work_id_and_number", unique: true
-    t.index ["dao_work_id"], name: "index_dao_tasks_on_dao_work_id"
+    t.index ["dao_sbi_id", "number"], name: "index_dao_tasks_on_dao_sbi_id_and_number", unique: true
+    t.index ["dao_sbi_id"], name: "index_dao_tasks_on_dao_sbi_id"
   end
 
   create_table "dao_team_members", force: :cascade do |t|
@@ -127,29 +139,17 @@ ActiveRecord::Schema.define(version: 2021_05_16_002510) do
     t.index ["dao_product_id"], name: "index_dao_teams_on_dao_product_id"
   end
 
-  create_table "dao_works", force: :cascade do |t|
-    t.uuid "dao_sprint_id"
-    t.uuid "dao_issue_id"
-    t.string "status", null: false
-    t.integer "satisfied_criterion_numbers", array: true
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["dao_issue_id"], name: "index_dao_works_on_dao_issue_id"
-    t.index ["dao_sprint_id", "dao_issue_id"], name: "index_dao_works_on_dao_sprint_id_and_dao_issue_id", unique: true
-    t.index ["dao_sprint_id"], name: "index_dao_works_on_dao_sprint_id"
-  end
-
   add_foreign_key "app_user_accounts", "dao_people"
   add_foreign_key "app_user_profiles", "app_user_accounts"
-  add_foreign_key "dao_acceptance_criteria", "dao_issues"
-  add_foreign_key "dao_assigned_issues", "dao_issues"
-  add_foreign_key "dao_assigned_issues", "dao_sprints"
-  add_foreign_key "dao_issues", "dao_products"
+  add_foreign_key "dao_acceptance_criteria", "dao_pbis"
+  add_foreign_key "dao_assigned_pbis", "dao_pbis"
+  add_foreign_key "dao_assigned_pbis", "dao_sprints"
+  add_foreign_key "dao_pbis", "dao_products"
   add_foreign_key "dao_releases", "dao_products"
+  add_foreign_key "dao_sbis", "dao_pbis"
+  add_foreign_key "dao_sbis", "dao_sprints"
   add_foreign_key "dao_sprints", "dao_products"
-  add_foreign_key "dao_tasks", "dao_works"
+  add_foreign_key "dao_tasks", "dao_sbis"
   add_foreign_key "dao_team_members", "dao_teams"
   add_foreign_key "dao_teams", "dao_products"
-  add_foreign_key "dao_works", "dao_issues"
-  add_foreign_key "dao_works", "dao_sprints"
 end

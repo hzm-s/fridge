@@ -5,7 +5,7 @@ class CreateDaoReleases < ActiveRecord::Migration[6.0]
       t.references :dao_product, type: :uuid, foreign_key: true
       t.string :title
       t.integer :number, null: false
-      t.uuid :issues, array: true
+      t.uuid :pbis, array: true
 
       t.timestamps
     end
