@@ -15,6 +15,7 @@ module Pbi
           expect(pbi.id).to_not be_nil
           expect(pbi.product_id).to eq product_id
           expect(pbi.type).to eq type
+          expect(pbi.status).to eq Statuses.from_string('preparation')
           expect(pbi.description).to eq description
           expect(pbi.size).to eq StoryPoint.unknown
           expect(pbi.acceptance_criteria).to be_empty

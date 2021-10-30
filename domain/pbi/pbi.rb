@@ -10,7 +10,7 @@ module Pbi
 
       sig {params(product_id: Product::Id, type: Types, description: Shared::LongSentence).returns(T.attached_class)}
       def draft(product_id, type, description)
-        new(Id.create, product_id, type, description, StoryPoint.unknown, AcceptanceCriteria.new)
+        new(Id.create, product_id, type, Statuses.from_string('preparation'), description, StoryPoint.unknown, AcceptanceCriteria.new)
       end
     end
 
@@ -22,6 +22,9 @@ module Pbi
 
     sig {returns(Types)}
     attr_reader :type
+
+    sig {returns(Statuses)}
+    attr_reader :status
 
     sig {returns(Shared::LongSentence)}
     attr_reader :description
@@ -36,14 +39,16 @@ module Pbi
       id: Id,
       product_id: Product::Id,
       type: Types,
+      status: Statuses,
       description: Shared::LongSentence,
       size: StoryPoint,
       acceptance_criteria: AcceptanceCriteria
     ).void}
-    def initialize(id, product_id, type, description, size, acceptance_criteria)
+    def initialize(id, product_id, type, status, description, size, acceptance_criteria)
       @id = id
       @product_id = product_id
       @type = type
+      @status = status
       @description = description
       @size = size
       @acceptance_criteria = acceptance_criteria
