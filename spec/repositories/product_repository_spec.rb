@@ -2,7 +2,7 @@
 require 'rails_helper'
 
 RSpec.describe ProductRepository::AR do
-  describe 'add' do
+  describe 'Add' do
     it do
       product = Product::Product.create(name('abc'), s_sentence('xyz'))
 
