@@ -6,4 +6,5 @@ module Pbi
   autoload :Statuses, 'pbi/statuses'
   autoload :StoryPoint, 'pbi/story_point'
   autoload :AcceptanceCriteria, 'pbi/acceptance_criteria'
+  autoload :PbiRepository, 'pbi/pbi_repository'
 end
