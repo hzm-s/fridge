@@ -16,7 +16,7 @@ class Dao::Release < ApplicationRecord
 
   def write(release)
     self.title = release.title
-    self.issues = release.issues.to_a.map(&:to_s)
+    self.pbis = release.issues.to_a.map(&:to_s)
   end
 
   def read_product_id
@@ -27,7 +27,7 @@ class Dao::Release < ApplicationRecord
     Plan::Release.from_repository(
       number.to_i,
       Shared::Name.new(title),
-      issues.map { |i| Issue::Id.from_string(i) }.then { |l| Issue::List.new(l) }
+      pbis.map { |i| Pbi::Id.from_string(i) }.then { |l| Issue::List.new(l) }
     )
   end
 end
