@@ -54,5 +54,10 @@ module Pbi
       @acceptance_criteria = acceptance_criteria
     end
     private_class_method :new
+
+    sig {params(description: Shared::LongSentence).void}
+    def modify_description(description)
+      @description = description
+    end
   end
 end
