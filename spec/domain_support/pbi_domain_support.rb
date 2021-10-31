@@ -1,8 +1,8 @@
 # typed: false
-module IssueDomainSupport
+module PbiDomainSupport
   def acceptance_criteria(contents)
     contents.map { |c| s_sentence(c) }
-      .then { |c| Issue::AcceptanceCriteria.new(c) }
+      .then { |c| Pbi::AcceptanceCriteria.new(c) }
   end
 
   def issue_list(*issue_ids)
@@ -11,5 +11,5 @@ module IssueDomainSupport
 end
 
 RSpec.configure do |c|
-  c.include IssueDomainSupport
+  c.include PbiDomainSupport
 end

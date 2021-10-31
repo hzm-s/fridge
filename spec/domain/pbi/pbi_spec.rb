@@ -32,5 +32,15 @@ module Pbi
         expect(pbi.description).to eq description
       end
     end
+
+    describe 'Prepare acceptance criteria' do
+      let(:pbi) { described_class.draft(product_id, Types.from_string('feature'), description) }
+
+      it do
+        criteria = acceptance_criteria(%w(AC1 AC2 AC3))
+        pbi.prepare_acceptance_criteria(criteria)
+        expect(pbi.acceptance_criteria).to eq criteria
+      end
+    end
   end
 end

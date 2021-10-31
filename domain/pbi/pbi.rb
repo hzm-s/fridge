@@ -59,5 +59,10 @@ module Pbi
     def modify_description(description)
       @description = description
     end
+
+    sig {params(acceptance_criteria: AcceptanceCriteria).void}
+    def prepare_acceptance_criteria(acceptance_criteria)
+      @acceptance_criteria = acceptance_criteria
+    end
   end
 end
