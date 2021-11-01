@@ -1,8 +1,8 @@
 # typed: ignore
-require_relative '../domain_support/issue_domain_support'
+require_relative '../domain_support/pbi_domain_support'
 
 module IssueSupport
-  include IssueDomainSupport
+  include PbiDomainSupport
 
   def plan_issue(product_id, description = 'DESC', type: :feature, acceptance_criteria: [], size: nil, release: nil, assign: false)
     if assign

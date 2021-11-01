@@ -9,8 +9,8 @@ RSpec.describe PbiRepository::AR do
       pbi = Pbi::Pbi.draft(product.id, Pbi::Types.from_string('feature'), l_sentence('feat'))
 
       expect { described_class.store(pbi) }
-        .to change { Dao::Pbi.count }.by(1)
-        .and change { Dao::AcceptanceCriterion.count }.by(0)
+        .to change(Dao::Pbi, :count).by(1)
+        .and change(Dao::AcceptanceCriterion, :count).by(0)
 
       aggregate_failures do
         dao = Dao::Pbi.last
@@ -21,6 +21,32 @@ RSpec.describe PbiRepository::AR do
         expect(dao.description).to eq pbi.description.to_s
         expect(dao.size).to be_nil
         expect(dao.criteria).to be_empty
+      end
+    end
+  end
+
+  describe 'Update' do
+    let(:pbi) { Pbi::Pbi.draft(product.id, Pbi::Types.from_string('feature'), l_sentence('ABC')) }
+    let(:criteria) { acceptance_criteria(%w(AC1 AC2 AC3)) }
+
+    it do
+      pbi.prepare_acceptance_criteria(criteria)
+
+      expect { described_class.store(pbi) }
+        .to change(Dao::Pbi, :count).by(1)
+        .and change(Dao::AcceptanceCriterion, :count).by(3)
+
+      pbi.prepare_acceptance_criteria(criteria.remove(2))
+
+      expect { described_class.store(pbi) }
+        .to change(Dao::Pbi, :count).by(0)
+        .and change(Dao::AcceptanceCriterion, :count).by(-1)
+
+      aggregate_failures do
+        dao = Dao::AcceptanceCriterion.all
+        expect(dao.size).to eq 2
+        expect(dao[0].content).to eq 'AC1'
+        expect(dao[1].content).to eq 'AC3'
       end
     end
   end
