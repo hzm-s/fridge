@@ -4,9 +4,9 @@ require 'domain_helper'
 module Plan
   RSpec.describe Release do
     let(:product_id) { Product::Id.create }
-    let(:issue_a) { Issue::Id.create }
-    let(:issue_b) { Issue::Id.create }
-    let(:issue_c) { Issue::Id.create }
+    let(:pbi_a) { Pbi::Id.create }
+    let(:pbi_b) { Pbi::Id.create }
+    let(:pbi_c) { Pbi::Id.create }
 
     describe 'Create' do
       it do
@@ -15,7 +15,7 @@ module Plan
         aggregate_failures do
           expect(r.number).to eq 1
           expect(r.title.to_s).to eq 'Release#1'
-          expect(r.issues).to eq issue_list
+          expect(r.items).to eq pbi_list
         end
       end
 
@@ -25,7 +25,7 @@ module Plan
         aggregate_failures do
           expect(r.number).to eq 1
           expect(r.title.to_s).to eq 'MVP'
-          expect(r.issues).to eq issue_list
+          expect(r.items).to eq pbi_list
         end
       end
     end
@@ -40,41 +40,41 @@ module Plan
 
     let(:release) { described_class.create(1) }
 
-    describe 'Plan issue' do
+    describe 'Plan item' do
       it do
-        release.plan_issue(issue_c)
+        release.plan_item(pbi_c)
 
-        expect(release.issues).to eq issue_list(issue_c)
+        expect(release.items).to eq pbi_list(pbi_c)
       end
 
       it do
-        release.plan_issue(issue_a)
+        release.plan_item(pbi_a)
 
-        expect { release.plan_issue(issue_a) }.to raise_error DuplicatedIssue
-      end
-    end
-
-    describe 'Drop issue' do
-      it do
-        release.plan_issue(issue_a)
-        release.plan_issue(issue_b)
-        release.plan_issue(issue_c)
-
-        release.drop_issue(issue_b)
-
-        expect(release.issues).to eq issue_list(issue_a, issue_c)
+        expect { release.plan_item(pbi_a) }.to raise_error DuplicatedItem
       end
     end
 
-    describe 'Change issue priority' do
+    describe 'Drop item' do
       it do
-        release.plan_issue(issue_a)
-        release.plan_issue(issue_b)
-        release.plan_issue(issue_c)
+        release.plan_item(pbi_a)
+        release.plan_item(pbi_b)
+        release.plan_item(pbi_c)
 
-        release.change_issue_priority(issue_c, issue_a)
+        release.drop_item(pbi_b)
 
-        expect(release.issues).to eq issue_list(issue_c, issue_a, issue_b)
+        expect(release.items).to eq pbi_list(pbi_a, pbi_c)
+      end
+    end
+
+    describe 'Change item priority' do
+      it do
+        release.plan_item(pbi_a)
+        release.plan_item(pbi_b)
+        release.plan_item(pbi_c)
+
+        release.change_item_priority(pbi_c, pbi_a)
+
+        expect(release.items).to eq pbi_list(pbi_c, pbi_a, pbi_b)
       end
     end
   end

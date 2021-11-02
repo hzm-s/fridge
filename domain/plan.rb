@@ -2,7 +2,7 @@
 module Plan
   class ReleaseIsNotEmpty < StandardError; end
   class NeedAtLeastOneRelease < StandardError; end
-  class DuplicatedIssue < StandardError; end
+  class DuplicatedItem < StandardError; end
   class PermissionDenied < StandardError; end
   class ReleaseNotFound < StandardError; end
 

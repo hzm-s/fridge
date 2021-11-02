@@ -11,12 +11,12 @@ module Plan
       sig {params(number: Integer, title: T.nilable(Shared::Name)).returns(T.attached_class)}
       def create(number, title = nil)
         title ||= Shared::Name.new("Release##{number}")
-        new(number, title, Issue::List.new)
+        new(number, title, Pbi::List.new)
       end
 
-      sig {params(number: Integer, title: Shared::Name, issues: Issue::List).returns(T.attached_class)}
-      def from_repository(number, title, issues)
-        new(number, title, issues)
+      sig {params(number: Integer, title: Shared::Name, items: Pbi::List).returns(T.attached_class)}
+      def from_repository(number, title, items)
+        new(number, title, items)
       end
     end
 
@@ -26,31 +26,31 @@ module Plan
     sig {returns(Shared::Name)}
     attr_reader :title
 
-    sig {returns(Issue::List)}
-    attr_reader :issues
+    sig {returns(Pbi::List)}
+    attr_reader :items
 
-    sig {params(number: Integer, title: Shared::Name, issues: Issue::List).void}
-    def initialize(number, title, issues)
+    sig {params(number: Integer, title: Shared::Name, items: Pbi::List).void}
+    def initialize(number, title, items)
       @number= number
       @title = title
-      @issues = issues
+      @items = items
     end
 
-    sig {params(issue: Issue::Id).void}
-    def plan_issue(issue)
-      raise DuplicatedIssue if @issues.include?(issue)
+    sig {params(item: Pbi::Id).void}
+    def plan_item(item)
+      raise DuplicatedItem if @items.include?(item)
 
-      @issues = @issues.append(issue)
+      @items = @items.append(item)
     end
 
-    sig {params(issue: Issue::Id).void}
-    def drop_issue(issue)
-      @issues = @issues.remove(issue)
+    sig {params(item: Pbi::Id).void}
+    def drop_item(item)
+      @items = @items.remove(item)
     end
 
-    sig {params(from: Issue::Id, to: Issue::Id).void}
-    def change_issue_priority(from, to)
-      @issues = @issues.swap(from, to)
+    sig {params(from: Pbi::Id, to: Pbi::Id).void}
+    def change_item_priority(from, to)
+      @items = @items.swap(from, to)
     end
 
     sig {params(title: Shared::Name).void}
@@ -60,12 +60,12 @@ module Plan
 
     sig {returns(T::Boolean)}
     def can_remove?
-      @issues.empty?
+      @items.empty?
     end
 
-    sig {params(issue: Issue::Id).returns(T::Boolean)}
-    def planned?(issue)
-      @issues.include?(issue)
+    sig {params(item: Pbi::Id).returns(T::Boolean)}
+    def planned?(item)
+      @items.include?(item)
     end
 
     sig {params(other: Release).returns(T::Boolean)}
