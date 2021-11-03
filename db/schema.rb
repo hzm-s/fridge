@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(version: 2021_05_16_002510) do
     t.uuid "dao_product_id"
     t.string "title"
     t.integer "number", null: false
-    t.uuid "pbis", array: true
+    t.uuid "items", array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["dao_product_id", "number"], name: "index_dao_releases_on_dao_product_id_and_number", unique: true
