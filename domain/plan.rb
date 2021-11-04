@@ -9,4 +9,5 @@ module Plan
   autoload :Plan, 'plan/plan'
   autoload :Release, 'plan/release'
   autoload :PlanRepository, 'plan/plan_repository'
+  autoload :AppendItem, 'plan/append_item'
 end
