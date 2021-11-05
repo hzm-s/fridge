@@ -1,18 +1,18 @@
 # typed: strict
 require 'sorbet-runtime'
 
-class PlanIssueUsecase < UsecaseBase
+class DraftPbiUsecase < UsecaseBase
   extend T::Sig
 
   sig {void}
   def initialize
-    @issue_repository = T.let(IssueRepository::AR, Issue::IssueRepository)
+    @pbi_repository = T.let(PbiRepository::AR, Pbi::PbiRepository)
     @plan_repository = T.let(PlanRepository::AR, Plan::PlanRepository)
   end
 
-  sig {params(product_id: Product::Id, type: Issue::Type, description: Shared::LongSentence, release_number: T.nilable(Integer)).returns(Issue::Id)}
+  sig {params(product_id: Product::Id, type: Pbi::Types, description: Shared::LongSentence, release_number: T.nilable(Integer)).returns(Pbi::Id)}
   def perform(product_id, type, description, release_number = nil)
-    issue = Issue::Issue.create(product_id, type, description)
+    pbi = Pbi::Pbi.draft(product_id, type, description)
 
     plan = @plan_repository.find_by_product_id(product_id)
     release = detect_release(plan, release_number)
@@ -20,11 +20,11 @@ class PlanIssueUsecase < UsecaseBase
     roles = Team::RoleSet.new([Team::Role::ProductOwner])
 
     transaction do
-      Plan::AppendIssue.new(@issue_repository, @plan_repository)
-        .append(roles, plan, release, issue)
+      Plan::AppendItem.new(@pbi_repository, @plan_repository)
+        .append(roles, plan, release, pbi)
     end
 
-    issue.id
+    pbi.id
   end
 
   private

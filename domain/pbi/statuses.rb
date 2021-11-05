@@ -21,5 +21,10 @@ module Pbi
       Accepted = new('accepted')
       Done = new('done')
     end
+
+    sig {returns(String)}
+    def to_s
+      serialize
+    end
   end
 end

@@ -19,5 +19,10 @@ module Pbi
       Task = new('task')
       Issue = new('issue')
     end
+
+    sig {returns(String)}
+    def to_s
+      serialize
+    end
   end
 end

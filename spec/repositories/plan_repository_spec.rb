@@ -4,9 +4,9 @@ require 'rails_helper'
 RSpec.describe PlanRepository::AR do
   let(:product_id) { Product::Id.create }
   let(:other_product_id) { Product::Id.create }
-  let!(:issue_a) { Issue::Id.create }
-  let!(:issue_b) { Issue::Id.create }
-  let!(:issue_c) { Issue::Id.create }
+  let!(:pbi_a) { Pbi::Id.create }
+  let!(:pbi_b) { Pbi::Id.create }
+  let!(:pbi_c) { Pbi::Id.create }
   let!(:po_role) { team_roles(:po) }
 
   before do
@@ -20,16 +20,16 @@ RSpec.describe PlanRepository::AR do
     Dao::Release.create!(
       dao_product_id: other_product_id.to_s,
       number: 2,
-      issues: [Issue::Id.create]
+      items: [Pbi::Id.create]
     )
   end
 
   describe 'Append' do
     it do
       plan.release_of(1).tap do |r|
-        r.plan_issue(issue_a)
-        r.plan_issue(issue_b)
-        r.plan_issue(issue_c)
+        r.plan_item(pbi_a)
+        r.plan_item(pbi_b)
+        r.plan_item(pbi_c)
         r.modify_title(name('R1'))
         plan.update_release(po_role, r)
       end
@@ -42,7 +42,7 @@ RSpec.describe PlanRepository::AR do
       aggregate_failures do
         expect(stored.releases.size).to eq 1
         expect(stored.release_of(1).title.to_s).to eq 'R1'
-        expect(stored.release_of(1).issues).to eq issue_list(issue_a, issue_b, issue_c)
+        expect(stored.release_of(1).items).to eq pbi_list(pbi_a, pbi_b, pbi_c)
       end
     end
   end
@@ -50,7 +50,7 @@ RSpec.describe PlanRepository::AR do
   describe 'Update' do
     it do
       plan.release_of(1).tap do |r|
-        r.plan_issue(issue_b)
+        r.plan_item(pbi_b)
         r.modify_title(name('R1'))
         plan.update_release(po_role, r)
       end
@@ -63,8 +63,8 @@ RSpec.describe PlanRepository::AR do
 
       plan.append_release(po_role)
       plan.release_of(2).tap do |r|
-        r.plan_issue(issue_c)
-        r.plan_issue(issue_a)
+        r.plan_item(pbi_c)
+        r.plan_item(pbi_a)
         plan.update_release(po_role, r)
       end
 
@@ -76,9 +76,9 @@ RSpec.describe PlanRepository::AR do
       aggregate_failures do
         expect(stored.releases.size).to eq 2
         expect(stored.release_of(1).title.to_s).to eq 'MVP'
-        expect(stored.release_of(1).issues).to eq issue_list(issue_b)
+        expect(stored.release_of(1).items).to eq pbi_list(pbi_b)
         expect(stored.release_of(2).title.to_s).to eq 'Release#2'
-        expect(stored.release_of(2).issues).to eq issue_list(issue_c, issue_a)
+        expect(stored.release_of(2).items).to eq pbi_list(pbi_c, pbi_a)
       end
     end
   end
@@ -86,7 +86,7 @@ RSpec.describe PlanRepository::AR do
   describe 'Remove' do
     it do
       plan.release_of(1).tap do |r|
-        r.plan_issue(issue_a)
+        r.plan_item(pbi_a)
         plan.update_release(po_role, r)
       end
 
@@ -94,8 +94,8 @@ RSpec.describe PlanRepository::AR do
 
       plan.append_release(po_role)
       plan.release_of(3).tap do |r|
-        r.plan_issue(issue_b)
-        r.plan_issue(issue_c)
+        r.plan_item(pbi_b)
+        r.plan_item(pbi_c)
         plan.update_release(po_role, r)
       end
 
@@ -112,8 +112,8 @@ RSpec.describe PlanRepository::AR do
         expect(other_release_dao.reload).to_not be_nil
 
         expect(stored.releases.size).to eq 2
-        expect(stored.release_of(1).issues).to eq issue_list(issue_a)
-        expect(stored.release_of(3).issues).to eq issue_list(issue_b, issue_c)
+        expect(stored.release_of(1).items).to eq pbi_list(pbi_a)
+        expect(stored.release_of(3).items).to eq pbi_list(pbi_b, pbi_c)
       end
     end
   end

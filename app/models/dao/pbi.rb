@@ -22,45 +22,45 @@ class Dao::Pbi < ApplicationRecord
     end
   end
 
-  #def read
-  #  Issue::Issue.from_repository(
-  #    read_issue_id,
-  #    read_product_id,
-  #    read_type,
-  #    read_status,
-  #    read_description,
-  #    read_story_point,
-  #    read_acceptance_criteria
-  #  )
-  #end
+  def read
+    Pbi::Pbi.from_repository(
+      read_pbi_id,
+      read_product_id,
+      read_type,
+      read_status,
+      read_description,
+      read_story_point,
+      read_acceptance_criteria
+    )
+  end
 
-  #def read_issue_id
-  #  Issue::Id.from_string(id)
-  #end
+  def read_pbi_id
+    Pbi::Id.from_string(id)
+  end
 
-  #def read_product_id
-  #  Product::Id.from_string(dao_product_id)
-  #end
+  def read_product_id
+    Product::Id.from_string(dao_product_id)
+  end
 
-  #def read_type
-  #  Issue::Types.from_string(issue_type)
-  #end
+  def read_type
+    Pbi::Types.from_string(pbi_type)
+  end
 
-  #def read_status
-  #  Issue::Statuses.from_string(status)
-  #end
+  def read_status
+    Pbi::Statuses.from_string(status)
+  end
 
-  #def read_description
-  #  Shared::LongSentence.new(description)
-  #end
+  def read_description
+    Shared::LongSentence.new(description)
+  end
 
-  #def read_story_point
-  #  Issue::StoryPoint.new(size)
-  #end
+  def read_story_point
+    Pbi::StoryPoint.new(size)
+  end
 
-  #def read_acceptance_criteria
-  #  criteria
-  #    .map { |c| Shared::ShortSentence.new(c.content) }
-  #    .then { |list| Issue::AcceptanceCriteria.new(list) }
-  #end
+  def read_acceptance_criteria
+    criteria
+      .map { |c| Shared::ShortSentence.new(c.content) }
+      .then { |list| Pbi::AcceptanceCriteria.new(list) }
+  end
 end

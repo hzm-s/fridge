@@ -12,6 +12,19 @@ module Pbi
       def draft(product_id, type, description)
         new(Id.create, product_id, type, Statuses.from_string('preparation'), description, StoryPoint.unknown, AcceptanceCriteria.new)
       end
+
+      sig {params(
+        id: Id,
+        product_id: Product::Id,
+        type: Types,
+        status: Statuses,
+        description: Shared::LongSentence,
+        size: StoryPoint,
+        acceptance_criteria: AcceptanceCriteria
+      ).returns(T.attached_class)}
+      def from_repository(id, product_id, type, status, description, size, acceptance_criteria)
+        new(id, product_id, type, status, description, size, acceptance_criteria)
+      end
     end
 
     sig {returns(Id)}

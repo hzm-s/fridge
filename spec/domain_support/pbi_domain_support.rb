@@ -8,6 +8,10 @@ module PbiDomainSupport
   def issue_list(*issue_ids)
     Issue::List.new(issue_ids)
   end
+
+  def pbi_list(*item_ids)
+    Pbi::List.new(item_ids)
+  end
 end
 
 RSpec.configure do |c|
