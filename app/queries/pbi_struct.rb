@@ -1,5 +1,5 @@
 # typed: false
-class IssueStruct < SimpleDelegator
+class PbiStruct < SimpleDelegator
   attr_reader :product_id, :type, :status
 
   def initialize(dao)
