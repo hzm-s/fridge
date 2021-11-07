@@ -113,8 +113,8 @@ RSpec.describe 'pbis' do
     end
   end
 
-  it_behaves_like('sign_in_guard') { let(:r) { post product_issues_path(product_id: 1, format: :js) } }
-  it_behaves_like('sign_in_guard') { let(:r) { get edit_issue_path(1) } }
-  it_behaves_like('sign_in_guard') { let(:r) { patch issue_path(1, format: :js) } }
-  it_behaves_like('sign_in_guard') { let(:r) { delete issue_path(1) } }
+  it_behaves_like('sign_in_guard') { let(:r) { post product_pbis_path(product_id: 1, format: :js) } }
+  #it_behaves_like('sign_in_guard') { let(:r) { get edit_pbi_path(1) } }
+  #it_behaves_like('sign_in_guard') { let(:r) { patch pbi_path(1, format: :js) } }
+  #it_behaves_like('sign_in_guard') { let(:r) { delete pbi_path(1) } }
 end
