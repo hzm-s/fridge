@@ -11,6 +11,6 @@
     </div>
   </div>
   <%= content_tag :div, data: plan_updatable && pbl_sortable_options(current_product.id, release.number) do %>
-    <%= render partial: 'item', collection: release.issues %>
+    <%= render partial: 'item', collection: release.items %>
   <% end %>
 </div>

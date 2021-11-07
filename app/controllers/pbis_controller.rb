@@ -1,5 +1,5 @@
 # typed: ignore
-class IssuesController < ApplicationController
+class PbisController < ApplicationController
   include ProductHelper
   include TeamMemberHelper
 
@@ -8,7 +8,7 @@ class IssuesController < ApplicationController
   helper_method :current_product_id
 
   def create
-    @form = CreateIssueForm.new(create_params)
+    @form = CreatePbiForm.new(create_params)
 
     if @form.valid?
       product_id = Product::Id.from_string(params[:product_id])
@@ -16,7 +16,7 @@ class IssuesController < ApplicationController
       description = @form.domain_objects[:description]
       release_number = @form.release_number&.to_i
 
-      PlanIssueUsecase.perform(product_id, type, description, release_number)
+      DraftPbiUsecase.perform(product_id, type, description, release_number)
 
       redirect_to product_backlog_path(product_id: params[:product_id]), flash: flash_success('issue.create')
     else

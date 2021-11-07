@@ -10,6 +10,8 @@ module Pbi
 
       sig {params(str: String).returns(T.attached_class)}
       def from_string(str)
+        raise InvalidType unless values.map(&:to_s).include?(str)
+
         deserialize(str)
       end
     end

@@ -7,7 +7,7 @@ class ProductBacklogsController < ApplicationController
 
   def show
     @pbl = ProductBacklogQuery.call(params[:product_id])
-    @form = CreateIssueForm.new
+    @form = CreatePbiForm.new
   end
 
   private

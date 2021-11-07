@@ -1,5 +1,5 @@
 <div id="js-issue-form">
-  <%= form_with model: form, scope: :form, url: product_issues_path(current_product.id), method: :post do |f| %>
+  <%= form_with model: form, scope: :form, url: product_pbis_path(current_product.id), method: :post do |f| %>
     <div class="mb-2">
       <%= f.label :description %>
       <%= f.text_area :description, rows: 3, class: 'form-control' %>
