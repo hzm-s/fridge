@@ -2,18 +2,18 @@
 module ProductBacklogQuery
   class << self
     def call(product_id)
-      issues = fetch_issues(product_id).map { |i| IssueStruct.new(i) }
+      items = fetch_pbis(product_id).map { |p| PbiStruct.new(p) }
       plan = fetch_plan(product_id)
 
-      releases = plan.releases.map { |r| ReleaseStruct.create(r, issues, plan) }
+      releases = plan.releases.map { |r| ReleaseStruct.create(r, items, plan) }
 
       ProductBacklog.new(releases: releases)
     end
 
     private
 
-    def fetch_issues(product_id)
-      Dao::Issue.eager_load(:criteria).where(dao_product_id: product_id)
+    def fetch_pbis(product_id)
+      Dao::Pbi.eager_load(:criteria).where(dao_product_id: product_id)
     end
 
     def fetch_plan(product_id)
@@ -24,15 +24,15 @@ module ProductBacklogQuery
   class ReleaseStruct < T::Struct
     prop :number, Integer
     prop :title, T.nilable(String)
-    prop :issues, T::Array[::IssueStruct]
+    prop :items, T::Array[::PbiStruct]
     prop :can_remove, T::Boolean
 
     class << self
-      def create(release, all_issues, plan)
+      def create(release, all_items, plan)
         new(
           number: release.number,
           title: release.title.to_s,
-          issues: release.issues.to_a.map { |ri| all_issues.find { |i| i.id == ri.to_s } },
+          items: release.items.to_a.map { |ri| all_items.find { |i| i.id == ri.to_s } },
           can_remove: plan.can_remove_release? && release.can_remove?,
         )
       end
