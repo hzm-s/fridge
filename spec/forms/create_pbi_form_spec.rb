@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe CreateIssueForm do
+RSpec.describe CreatePbiForm do
   let(:valid) do
     {
       type: 'feature',
@@ -40,7 +40,7 @@ RSpec.describe CreateIssueForm do
     form = described_class.new(valid.merge(type: 'epic'))
     aggregate_failures do
       expect(form).to_not be_valid
-      expect(form.errors[:type]).to include(I18n.t('domain.errors.issue.invalid_type'))
+      expect(form.errors[:type]).to include(I18n.t('domain.errors.pbi.invalid_type'))
     end
   end
 
