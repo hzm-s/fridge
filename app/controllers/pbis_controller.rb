@@ -18,7 +18,7 @@ class PbisController < ApplicationController
 
       DraftPbiUsecase.perform(product_id, type, description, release_number)
 
-      redirect_to product_backlog_path(product_id: params[:product_id]), flash: flash_success('issue.create')
+      redirect_to product_backlog_path(product_id: params[:product_id]), flash: flash_success('pbi.create')
     else
       @releases = ProductBacklogQuery.call(params[:product_id]).releases
       render :new
@@ -26,20 +26,20 @@ class PbisController < ApplicationController
   end
 
   def edit
-    @issue = IssueQuery.call(params[:id])
-    @form = UpdateIssueForm.new(type: @issue.type.to_s, description: @issue.description.to_s)
+    @pbi = PbiQuery.call(params[:id])
+    @form = UpdatePbiForm.new(type: @pbi.type.to_s, description: @pbi.description.to_s)
   end
 
   def update
-    @issue_id = params[:id]
-    @form = UpdateIssueForm.new(update_params)
+    @pbi_id = params[:id]
+    @form = UpdatePbiForm.new(update_params)
 
     if @form.valid?
-      ModifyIssueUsecase.perform(
-        Issue::Id.from_string(@issue_id),
+      ModifyPbiUsecase.perform(
+        Pbi::Id.from_string(@pbi_id),
         @form.domain_objects[:description]
       )
-      redirect_to edit_issue_path(@issue_id), flash: flash_success('issue.update')
+      redirect_to edit_pbi_path(@pbi_id), flash: flash_success('pbi.update')
     else
       render :edit
     end
@@ -69,6 +69,6 @@ class PbisController < ApplicationController
     product_id = params[:product_id]
     return product_id if product_id
 
-    resolve_product_id_by_issue_id(params[:id])
+    resolve_product_id_by_pbi_id(params[:id])
   end
 end

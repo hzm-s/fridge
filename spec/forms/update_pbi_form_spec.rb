@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe UpdateIssueForm do
+RSpec.describe UpdatePbiForm do
   let(:valid) do
     {
       description: 'ABC',

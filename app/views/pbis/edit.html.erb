@@ -6,25 +6,25 @@
         <%=t '.title' %>
       </h1>
       <div class="pbi-edit__status">
-        <span class="pbi__status-label pbi__status-label--<%= @issue.status %>">
-          <%=t @issue.status, scope: 'domain.issue.statuses' %>
+        <span class="pbi__status-label pbi__status-label--<%= @pbi.status %>">
+          <%=t @pbi.status, scope: 'domain.pbi.statuses' %>
         <span>
       </div>
     </div>
-    <%= render partial: 'form', locals: { form: @form, issue_id: @issue.id } %>
+    <%= render partial: 'form', locals: { form: @form, pbi_id: @pbi.id } %>
     <hr>
-    <% can_prepare_criteria = authorize(:prepare_acceptance_criteria, @issue.status) %>
+    <% can_prepare_criteria = true || authorize(:prepare_acceptance_criteria, @pbi.status) %>
     <div>
       <label>
         <%= t '.title_ac' %>
       </label>
       <div class="pbi__ac">
-        <%= render partial: 'acceptance_criteria', locals: { issue_id: @issue.id, criteria: @issue.criteria, can_update: can_prepare_criteria } %>
+        <%= render partial: 'acceptance_criteria', locals: { pbi_id: @pbi.id, criteria: @pbi.criteria, can_update: can_prepare_criteria } %>
       </div>
     </div>
     <% if can_prepare_criteria %>
       <div class="mt-2">
-        <%= render partial: 'acceptance_criteria/form', locals: { issue_id: @issue.id } %>
+        <%= render partial: 'acceptance_criteria/form', locals: { pbi_id: @pbi.id } %>
       </div>
     <% end %>
   </div>

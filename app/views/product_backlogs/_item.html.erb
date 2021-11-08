@@ -1,13 +1,13 @@
 <% can_move = authorize(:update_plan, current_team_member_roles) %>
-<%= content_tag :div, id: "js-pbl-item-#{item.id}", class: pbl_item_css_classes(item), data: { id: item.id, "test-issue-#{item.id}-#{item.status}": 1 } do %>
+<%= content_tag :div, id: "js-pbl-item-#{item.id}", class: pbl_item_css_classes(item), data: { id: item.id, "test-pbi-#{item.id}-#{item.status}": 1 } do %>
   <div class="pbl-item">
     <span class="<%= pbl_item_grip_css_classes(can_move) %>"<%= can_move && ' data-test-item-movable=1' %>>
       <i class="fas fa-grip-vertical"></i>
     </span>
-    <span class="pbl-item__issue-type">
+    <span class="pbl-item__pbi-type">
       <%= pbl_item_type_icon(item.type) %>
     </span>
-    <%= link_to edit_issue_path(item.id), class: 'pbl-item__description-link' do %>
+    <%= link_to edit_pbi_path(item.id), class: 'pbl-item__description-link' do %>
       <%= simple_format(item.description, class: 'pbl-item__description') %>
     <% end %>
     <div class="pbl-item__actions">

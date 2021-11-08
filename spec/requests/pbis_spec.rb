@@ -45,14 +45,14 @@ RSpec.describe 'pbis' do
     end
   end
 
-  xdescribe 'edit' do
+  describe 'edit' do
     before { sign_in(user_account) }
 
     it do
-      issue = plan_issue(product.id, 'XYZ')
-      append_acceptance_criteria(issue, %w(AC_123))
+      pbi = add_pbi(product.id, 'XYZ')
+      append_acceptance_criteria(pbi, %w(AC_123))
 
-      get edit_issue_path(issue.id.to_s)
+      get edit_pbi_path(pbi.id.to_s)
 
       aggregate_failures do
         expect(response.body).to include('XYZ')
@@ -65,9 +65,9 @@ RSpec.describe 'pbis' do
 
     xcontext 'when wip' do
       it do
-        issue = plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1, assign: true)
+        pbi = add_pbi(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1, assign: true)
 
-        get edit_issue_path(issue.id.to_s)
+        get edit_pbi_path(pbi.id.to_s)
 
         aggregate_failures do
           expect(response.body).to_not include 'test-append-acceptance-criterion'
@@ -78,14 +78,14 @@ RSpec.describe 'pbis' do
     end
   end
 
-  xdescribe 'update' do
+  describe 'update' do
     before { sign_in(user_account) }
 
-    let!(:issue) { plan_issue(product.id, 'ABC') }
+    let!(:pbi) { add_pbi(product.id, 'ABC') }
 
-    context '入力内容が正しい場合' do
+    xcontext '入力内容が正しい場合' do
       it do
-        patch issue_path(issue.id, format: :js), params: { form: { type: 'task', description: 'XYZ' } }
+        patch pbi_path(pbi.id, format: :js), params: { form: { type: 'task', description: 'XYZ' } }
         follow_redirect!
 
         expect(response.body).to include('XYZ')
@@ -94,7 +94,7 @@ RSpec.describe 'pbis' do
 
     context '入力内容が正しくない場合' do
       it do
-        patch issue_path(issue.id, format: :js), params: { form: { type: 'task', description: '' } }
+        patch pbi_path(pbi.id, format: :js), params: { form: { type: 'task', description: '' } }
         expect(response.body).to include(I18n.t('errors.messages.blank'))
       end
     end

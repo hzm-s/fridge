@@ -1,12 +1,12 @@
-<div id="js-issue-form">
-  <%= form_with model: form, scope: :form, url: issue_path(issue_id), method: :patch do |f| %>
+<div id="js-pbi-form">
+  <%= form_with model: form, scope: :form, url: pbi_path(pbi_id), method: :patch do |f| %>
     <div class="mb-2">
       <%= f.label :description %>
       <%= f.text_area :description, rows: 3, class: 'form-control' %>
     </div>
     <div class="row">
       <div class="col-lg-5">
-        <%= f.select :type, all_issue_types.map { |type| [t(type.to_s, scope: 'domain.issue.types'), type.to_s] }, { prompt: true }, { class: 'form-control', disabled: true }  %>
+        <%= f.select :type, all_pbi_types.map { |type| [t(type.to_s, scope: 'domain.pbi.types'), type.to_s] }, { prompt: true }, { class: 'form-control', disabled: true }  %>
       </div>
     </div>
     <div class="mt-2">
