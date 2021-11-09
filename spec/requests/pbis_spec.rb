@@ -83,7 +83,7 @@ RSpec.describe 'pbis' do
 
     let!(:pbi) { add_pbi(product.id, 'ABC') }
 
-    xcontext '入力内容が正しい場合' do
+    context '入力内容が正しい場合' do
       it do
         patch pbi_path(pbi.id, format: :js), params: { form: { type: 'task', description: 'XYZ' } }
         follow_redirect!
