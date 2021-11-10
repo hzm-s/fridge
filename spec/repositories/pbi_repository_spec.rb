@@ -50,4 +50,28 @@ RSpec.describe PbiRepository::AR do
       end
     end
   end
+
+  describe 'Remove' do
+    before do
+      Pbi::Pbi.draft(product.id, Pbi::Types.from_string('feature'), l_sentence('not remove')).tap do |pbi|
+        pbi.prepare_acceptance_criteria(acceptance_criteria(%w(criterion)))
+        described_class.store(pbi)
+      end
+    end
+
+    it do
+      pbi = Pbi::Pbi.draft(product.id, Pbi::Types.from_string('feature'), l_sentence('ABC'))
+      pbi.prepare_acceptance_criteria(acceptance_criteria(%w(AC1 AC2 AC3)))
+      described_class.store(pbi)
+
+      described_class.remove(pbi.id)
+
+      aggregate_failures do
+        expect(Dao::Pbi.find_by(id: pbi.id.to_s)).to be_nil
+        expect(Dao::AcceptanceCriterion.where(dao_pbi_id: pbi.id.to_s)).to be_empty
+        expect(Dao::Pbi.count).to eq 1
+        expect(Dao::AcceptanceCriterion.count).to eq 1
+      end
+    end
+  end
 end

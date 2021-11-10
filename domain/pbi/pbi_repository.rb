@@ -12,5 +12,8 @@ module Pbi
 
     sig {abstract.params(pbi: Pbi).void}
     def store(pbi); end
+
+    sig {abstract.params(id: Id).void}
+    def remove(id); end
   end
 end

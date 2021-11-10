@@ -1,5 +1,6 @@
 # typed: strict
 module Pbi
+  class NotFound < StandardError; end
   class InvalidType < ArgumentError; end
 
   autoload :Pbi, 'pbi/pbi'
