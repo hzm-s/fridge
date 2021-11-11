@@ -10,6 +10,8 @@ module PbiRepository
       sig {override.params(id: Pbi::Id).returns(Pbi::Pbi)}
       def find_by_id(id)
         Dao::Pbi.as_aggregate.find(id.to_s).read
+      rescue ActiveRecord::RecordNotFound
+        raise Pbi::NotFound
       end
 
       sig {override.params(pbi: Pbi::Pbi).void}

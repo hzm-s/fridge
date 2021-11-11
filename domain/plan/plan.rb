@@ -63,9 +63,9 @@ module Plan
       release.dup
     end
 
-    sig {params(issue: Issue::Id).returns(Release)}
-    def release_by_issue(issue)
-      release = @releases.find { |r| r.planned?(issue) }
+    sig {params(item: Pbi::Id).returns(Release)}
+    def release_by_item(item)
+      release = @releases.find { |r| r.planned?(item) }
       raise ReleaseNotFound unless release
 
       release.dup

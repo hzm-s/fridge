@@ -31,9 +31,9 @@ module Plan
     end
 
     let(:plan) { described_class.create(product_id) }
-    let(:issue_a) { Issue::Id.create }
-    let(:issue_b) { Issue::Id.create }
-    let(:issue_c) { Issue::Id.create }
+    let(:pbi_a) { Pbi::Id.create }
+    let(:pbi_b) { Pbi::Id.create }
+    let(:pbi_c) { Pbi::Id.create }
 
     describe 'Append release' do
       it do
@@ -64,17 +64,17 @@ module Plan
         plan.append_release(po_role)
 
         r = plan.release_of(1)
-        r.plan_issue(issue_a)
-        r.plan_issue(issue_b)
-        r.plan_issue(issue_c)
+        r.plan_item(pbi_a)
+        r.plan_item(pbi_b)
+        r.plan_item(pbi_c)
         r.modify_title(name('Updated'))
 
         plan.update_release(po_role, r)
 
         aggregate_failures do
-          expect(plan.release_of(1).issues).to eq issue_list(issue_a, issue_b, issue_c)
+          expect(plan.release_of(1).items).to eq pbi_list(pbi_a, pbi_b, pbi_c)
           expect(plan.release_of(1).title.to_s).to eq 'Updated'
-          expect(plan.release_of(2).issues).to eq issue_list
+          expect(plan.release_of(2).items).to eq pbi_list
         end
       end
 
@@ -103,7 +103,7 @@ module Plan
 
       it do
         r = plan.release_of(2)
-        r.plan_issue(issue_a)
+        r.plan_item(pbi_a)
         plan.update_release(po_role, r)
 
         expect { plan.remove_release(po_role, 2) }.to raise_error ReleaseIsNotEmpty
@@ -125,25 +125,25 @@ module Plan
       end
     end
 
-    describe 'Query release by issue' do
+    describe 'Query release by pbi' do
       it do
         plan.append_release(po_role)
 
         plan.release_of(1).tap do |r|
-          r.plan_issue(issue_a)
+          r.plan_item(pbi_a)
           plan.update_release(po_role, r)
         end
 
         plan.release_of(2).tap do |r|
-          r.plan_issue(issue_b)
-          r.plan_issue(issue_c)
+          r.plan_item(pbi_b)
+          r.plan_item(pbi_c)
           plan.update_release(po_role, r)
         end
 
         aggregate_failures do
-          expect(plan.release_by_issue(issue_a).number).to eq 1
-          expect(plan.release_by_issue(issue_b).number).to eq 2
-          expect(plan.release_by_issue(issue_c).number).to eq 2
+          expect(plan.release_by_item(pbi_a).number).to eq 1
+          expect(plan.release_by_item(pbi_b).number).to eq 2
+          expect(plan.release_by_item(pbi_c).number).to eq 2
         end
       end
     end
