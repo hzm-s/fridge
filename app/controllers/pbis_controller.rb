@@ -46,9 +46,9 @@ class PbisController < ApplicationController
   end
 
   def destroy
-    issue = IssueRepository::AR.find_by_id(Issue::Id.from_string(params[:id]))
-    DropIssueUsecase.perform(issue.product_id, current_team_member_roles, issue.id)
-    redirect_to product_backlog_path(product_id: issue.product_id), flash: flash_success('issue.destroy')
+    pbi = PbiRepository::AR.find_by_id(Pbi::Id.from_string(params[:id]))
+    DropPbiUsecase.perform(pbi.product_id, current_team_member_roles, pbi.id)
+    redirect_to product_backlog_path(product_id: pbi.product_id), flash: flash_success('pbi.destroy')
   end
 
   private

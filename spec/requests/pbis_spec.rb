@@ -100,13 +100,13 @@ RSpec.describe 'pbis' do
     end
   end
 
-  xdescribe 'destroy' do
+  describe 'destroy' do
     before { sign_in(user_account) }
 
     it do
-      issue = plan_issue(product.id, 'YOHKYU')
+      pbi = add_pbi(product.id, 'YOHKYU')
 
-      delete issue_path(issue.id)
+      delete pbi_path(pbi.id)
       follow_redirect!
 
       expect(response.body).to_not include 'YOHKYU'
@@ -114,7 +114,7 @@ RSpec.describe 'pbis' do
   end
 
   it_behaves_like('sign_in_guard') { let(:r) { post product_pbis_path(product_id: 1, format: :js) } }
-  #it_behaves_like('sign_in_guard') { let(:r) { get edit_pbi_path(1) } }
-  #it_behaves_like('sign_in_guard') { let(:r) { patch pbi_path(1, format: :js) } }
-  #it_behaves_like('sign_in_guard') { let(:r) { delete pbi_path(1) } }
+  it_behaves_like('sign_in_guard') { let(:r) { get edit_pbi_path(1) } }
+  it_behaves_like('sign_in_guard') { let(:r) { patch pbi_path(1, format: :js) } }
+  it_behaves_like('sign_in_guard') { let(:r) { delete pbi_path(1) } }
 end
