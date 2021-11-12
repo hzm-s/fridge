@@ -25,19 +25,23 @@ module Pbi
 
     describe 'Modify description' do
       let(:pbi) { described_class.draft(product_id, Types.from_string('feature'), l_sentence('Origin')) }
+      let(:description) { l_sentence('Modified') }
 
       it do
-        description = l_sentence('Modified')
         pbi.modify_description(description)
         expect(pbi.description).to eq description
+      end
+
+      it 'does NOT change status' do
+        expect { pbi.modify_description(description) }.to_not change(pbi, :status)
       end
     end
 
     describe 'Prepare acceptance criteria' do
       let(:pbi) { described_class.draft(product_id, Types.from_string('feature'), description) }
+      let(:criteria) { acceptance_criteria(%w(AC1 AC2 AC3)) }
 
       it do
-        criteria = acceptance_criteria(%w(AC1 AC2 AC3))
         pbi.prepare_acceptance_criteria(criteria)
         expect(pbi.acceptance_criteria).to eq criteria
       end
