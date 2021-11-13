@@ -6,17 +6,17 @@ class ModifyAcceptanceCriterionUsecase < UsecaseBase
 
   sig {void}
   def initialize
-    @repository = T.let(IssueRepository::AR, Issue::IssueRepository)
+    @repository = T.let(PbiRepository::AR, Pbi::PbiRepository)
   end
 
-  sig {params(issue_id: Issue::Id, number: Integer, content: Shared::ShortSentence).void}
-  def perform(issue_id, number, content)
-    issue = @repository.find_by_id(issue_id)
+  sig {params(pbi_id: Pbi::Id, number: Integer, content: Shared::ShortSentence).void}
+  def perform(pbi_id, number, content)
+    pbi = @repository.find_by_id(pbi_id)
 
-    issue.acceptance_criteria
+    pbi.acceptance_criteria
       .then { |c| c.modify(number, content) }
-      .then { |c| issue.prepare_acceptance_criteria(c) }
+      .then { |c| pbi.prepare_acceptance_criteria(c) }
 
-    @repository.store(issue)
+    @repository.store(pbi)
   end
 end
