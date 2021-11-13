@@ -6,16 +6,16 @@ class RemoveAcceptanceCriterionUsecase < UsecaseBase
 
   sig {void}
   def initialize
-    @repository = T.let(IssueRepository::AR, Issue::IssueRepository)
+    @repository = T.let(PbiRepository::AR, Pbi::PbiRepository)
   end
 
-  sig {params(issue_id: Issue::Id, number: Integer).void}
-  def perform(issue_id, number)
-    issue = @repository.find_by_id(issue_id)
+  sig {params(pbi_id: Pbi::Id, number: Integer).void}
+  def perform(pbi_id, number)
+    pbi = @repository.find_by_id(pbi_id)
 
-    criteria = issue.acceptance_criteria
-    issue.prepare_acceptance_criteria(criteria.remove(number))
+    criteria = pbi.acceptance_criteria
+    pbi.prepare_acceptance_criteria(criteria.remove(number))
 
-    @repository.store(issue)
+    @repository.store(pbi)
   end
 end
