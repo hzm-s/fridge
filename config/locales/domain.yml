@@ -1,9 +1,10 @@
 ja:
   domain:
-    issue:
+    pbi:
       types:
         feature: フィーチャー
-        task: 作業
+        task: タスク
+        issue: 課題
       statuses:
         draft: 下書き
         preparation: 準備中
@@ -40,7 +41,7 @@ ja:
         invalid_short_sentence: 2~100文字で入力してください
         invalid_long_sentence: 3~500文字で入力してください
 
-      issue:
+      pbi:
         invalid_type: 不正なアイテムタイプです
         invalid_acceptance_criterion: 3~100文字で入力してください
       team:

@@ -1,4 +1,4 @@
-<% if true || authorize(:estimate_issue, current_team_member_roles, item.status) %>
+<% if true || authorize(:estimate_pbi, current_team_member_roles, item.status) %>
   <%= render partial: 'product_backlogs/point_form', locals: { item: item } %>
 <% else %>
   <%= content_tag :span, present_story_point(item.size), class: 'pbl-item__point pbl-item__point--disabled' %>

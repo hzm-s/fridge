@@ -2,10 +2,10 @@ ja:
   activemodel:
     attributes:
 
-      create_issue_form:
+      create_pbi_form:
         description: 新しいアイテム
 
-      update_issue_form:
+      update_pbi_form:
         description: 説明
 
       create_product_form:

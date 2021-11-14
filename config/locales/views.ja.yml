@@ -5,7 +5,7 @@ ja:
     signed_out: ログアウトしました
     require_sign_in: ログインしてください
     already_signed_in: ログインしています
-    issue:
+    pbi:
       create: アイテムをプロダクトバックログに追加しました
       update: アイテムを更新しました
       destroy: アイテムを削除しました
@@ -65,14 +65,14 @@ ja:
       title: プロダクトバックログ
       add_release: リリースを追加する
       add: アイテムを追加する
-    issue_form:
+    pbi_form:
       add: アイテムを追加する
     release:
       empty: アイテムはありません
     point_form:
       point: アイテムの大きさ
 
-  issues:
+  pbis:
     edit:
       title: アイテムの編集
       title_ac: 受け入れ基準

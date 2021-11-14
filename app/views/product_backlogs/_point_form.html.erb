@@ -1,4 +1,4 @@
-<div class="dropdown" data-test-estimate-issue-<%= item.id %>="1">
+<div class="dropdown" data-test-estimate-pbi-<%= item.id %>="1">
   <%= content_tag :span, present_story_point(item.size), dd_trigger_options(id: "dd-pbi-point-#{item.id}", class: 'pbl-item__point') %>
   <div class="dropdown-menu dropdown-menu-right p-3 py-2">
     <%= form_with scope: :form, url: feature_estimation_path(item.id), method: :put do |f| %>

@@ -1,4 +1,4 @@
-<div id="js-issue-form">
+<div id="js-pbi-form">
   <%= form_with model: form, scope: :form, url: product_pbis_path(current_product.id), method: :post do |f| %>
     <div class="mb-2">
       <%= f.label :description %>
@@ -6,7 +6,7 @@
     </div>
     <div class="row">
       <div class="col-lg-5">
-        <%= f.select :type, all_pbi_types.map { |type| [t(type.to_s, scope: 'domain.issue.types'), type.to_s] }, { prompt: true }, { class: 'form-control' } %>
+        <%= f.select :type, all_pbi_types.map { |type| [t(type.to_s, scope: 'domain.pbi.types'), type.to_s] }, { prompt: true }, { class: 'form-control' } %>
       </div>
       <div class="col-lg-7">
         <%= f.select :release_number, releases.map { |r| [r.title, r.number] }, {}, { class: 'form-control' } %>
