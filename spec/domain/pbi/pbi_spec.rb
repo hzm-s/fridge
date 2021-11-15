@@ -5,6 +5,9 @@ module Pbi
   RSpec.describe Pbi do
     let(:product_id) { Product::Id.create }
     let(:description) { l_sentence('A user story') }
+    let(:dev_role) { team_roles(:dev) }
+    let(:po_role) { team_roles(:po) }
+    let(:sm_role) { team_roles(:sm) }
 
     describe 'Draft' do
       it do
@@ -45,6 +48,18 @@ module Pbi
         pbi.prepare_acceptance_criteria(criteria)
         expect(pbi.acceptance_criteria).to eq criteria
       end
+    end
+
+    describe 'Estimate size' do
+      let(:pbi) { described_class.draft(product_id, Types.from_string('feature'), description) }
+      let(:size) { StoryPoint.new(8) }
+
+      it do
+        pbi.estimate(dev_role, size)
+        expect(pbi.size).to eq size
+      end
+
+      it { expect_activity_permission_error([po_role, sm_role]) { |role| pbi.estimate(role, size) } }
     end
   end
 end

@@ -77,5 +77,12 @@ module Pbi
     def prepare_acceptance_criteria(acceptance_criteria)
       @acceptance_criteria = acceptance_criteria
     end
+
+    sig {params(roles: Team::RoleSet, size: StoryPoint).void}
+    def estimate(roles, size)
+      Activity.check_permission!(:estimate_issue, [roles])
+
+      @size = size
+    end
   end
 end
