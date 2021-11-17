@@ -16,11 +16,10 @@ Rails.application.routes.draw do
 
   resources :pbis, only: [:edit, :update, :destroy] do
     resources :acceptance_criteria, param: :number, only: [:create, :update, :destroy]
+    resource :estimation, only: [:update]
     resource :acceptance, only: [:show, :update]
     resources :satisfied_acceptance_criteria, param: :number, only: [:create, :destroy]
   end
-
-  resources :feature_estimations, only: [:update]
 
   resources :sprints, only: [:new, :create]
   resources :sprint_backlogs, param: :product_id, only: [:show]
