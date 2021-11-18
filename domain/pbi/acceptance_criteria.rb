@@ -35,6 +35,11 @@ module Pbi
       @criteria.empty?
     end
 
+    sig {returns(T::Boolean)}
+    def any?
+      !empty?
+    end
+
     sig {returns(Integer)}
     def size
       @criteria.size

@@ -22,6 +22,18 @@ module Pbi
       Issue = new('issue')
     end
 
+    sig {params(acceptance_criteria: AcceptanceCriteria, size: StoryPoint).returns(T::Boolean)}
+    def prepared?(acceptance_criteria, size)
+      case self
+      when Feature
+        acceptance_criteria.any? && size.any?
+      when Task
+        acceptance_criteria.any?
+      when Issue
+        true
+      end
+    end
+
     sig {returns(String)}
     def to_s
       serialize

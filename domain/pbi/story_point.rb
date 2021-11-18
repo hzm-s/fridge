@@ -27,6 +27,11 @@ module Pbi
       @value = value
     end
 
+    sig {returns(T::Boolean)}
+    def any?
+      !!to_i
+    end
+
     sig {returns(T.nilable(Integer))}
     def to_i
       @value
