@@ -22,6 +22,16 @@ module Pbi
       Done = new('done')
     end
 
+    sig {params(type: Types, acceptance_criteria: AcceptanceCriteria, size: StoryPoint).returns(T.self_type)}
+    def update_by_preparation(type, acceptance_criteria, size)
+      case self
+      when Preparation
+        type.prepared?(acceptance_criteria, size) ? Ready : self
+      when Ready
+        type.prepared?(acceptance_criteria, size) ? self : Preparation
+      end
+    end
+
     sig {returns(String)}
     def to_s
       serialize

@@ -76,6 +76,7 @@ module Pbi
     sig {params(acceptance_criteria: AcceptanceCriteria).void}
     def prepare_acceptance_criteria(acceptance_criteria)
       @acceptance_criteria = acceptance_criteria
+      update_status_by_preparation
     end
 
     sig {params(roles: Team::RoleSet, size: StoryPoint).void}
@@ -83,6 +84,14 @@ module Pbi
       Activity.check_permission!(:estimate_issue, [roles])
 
       @size = size
+      update_status_by_preparation
+    end
+
+    private
+
+    sig {void}
+    def update_status_by_preparation
+      @status = @status.update_by_preparation(@type, @acceptance_criteria, @size)
     end
   end
 end
