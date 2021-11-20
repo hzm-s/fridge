@@ -35,7 +35,7 @@ module Team
         roles = described_class.new([Role::Developer])
         expect(roles.available_activities).to eq activity_set([
           :prepare_acceptance_criteria,
-          :estimate_issue,
+          :estimate_pbi,
           :update_task_acceptance,
           :accept_task,
         ])
@@ -45,16 +45,16 @@ module Team
         roles = described_class.new([Role::ScrumMaster, Role::ProductOwner])
         expect(roles.available_activities).to eq activity_set([
           :prepare_acceptance_criteria,
-          :remove_issue,
+          :remove_pbi,
           :update_plan,
-          :assign_issue_to_sprint,
-          :revert_issue_from_sprint,
-          :update_sprint_issues,
+          :assign_pbi_to_sprint,
+          :revert_pbi_from_sprint,
+          :update_sprint_pbis,
           :update_task_acceptance,
           :update_feature_acceptance,
           :accept_feature,
           :accept_task,
-          :mark_issue_as_done,
+          :mark_pbi_as_done,
         ])
       end
     end

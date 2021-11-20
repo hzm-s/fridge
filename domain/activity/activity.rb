@@ -21,12 +21,12 @@ module Activity
 
     enums do
       PrepareAcceptanceCriteria = new('prepare_acceptance_criteria')
-      EstimateIssue = new('estimate_issue')
-      RemoveIssue = new('remove_issue')
+      EstimatePbi = new('estimate_pbi')
+      RemovePbi = new('remove_pbi')
       UpdatePlan = new('update_plan')
-      AssignIssueToSprint = new('assign_issue_to_sprint')
-      RevertIssueFromSprint = new('revert_issue_from_sprint')
-      UpdateSprintIssues = new('update_sprint_issues')
+      AssignPbiToSprint = new('assign_pbi_to_sprint')
+      RevertPbiFromSprint = new('revert_pbi_from_sprint')
+      UpdateSprintPbis = new('update_sprint_pbis')
       UpdataTask = new('update_task')
       StartTask = new('start_task')
       SuspendTask = new('suspend_task')
@@ -36,7 +36,7 @@ module Activity
       UpdateTaskAcceptance = new('update_task_acceptance')
       AcceptFeature = new('accept_feature')
       AcceptTask = new('accept_task')
-      MarkIssueAsDone = new('mark_issue_as_done')
+      MarkPbiAsDone = new('mark_pbi_as_done')
     end
 
     sig {params(set_providers: T::Array[SetProvider]).returns(T::Boolean)}

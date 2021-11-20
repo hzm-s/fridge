@@ -9,11 +9,11 @@ module Team
           a = described_class.available_activities
           expect(a).to eq activity_set([
             :prepare_acceptance_criteria,
-            :remove_issue,
+            :remove_pbi,
             :update_plan,
-            :assign_issue_to_sprint,
-            :revert_issue_from_sprint,
-            :update_sprint_issues,
+            :assign_pbi_to_sprint,
+            :revert_pbi_from_sprint,
+            :update_sprint_pbis,
           ])
         end
       end

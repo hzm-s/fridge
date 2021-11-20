@@ -9,7 +9,7 @@ module Team
           a = described_class.available_activities
           expect(a).to eq activity_set([
             :prepare_acceptance_criteria,
-            :estimate_issue,
+            :estimate_pbi,
             :update_task_acceptance,
             :accept_task,
           ])
