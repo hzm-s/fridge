@@ -81,7 +81,7 @@ module Pbi
 
     sig {params(roles: Team::RoleSet, size: StoryPoint).void}
     def estimate(roles, size)
-      Activity.check_permission!(:estimate_issue, [roles])
+      Activity.check_permission!(:estimate_pbi, [roles])
 
       @size = size
       update_status_by_preparation
