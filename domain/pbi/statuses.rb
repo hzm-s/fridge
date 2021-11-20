@@ -4,6 +4,7 @@ require 'sorbet-runtime'
 module Pbi
   class Statuses < T::Enum
     extend T::Sig
+    include Activity::SetProvider
 
     class << self
       extend T::Sig
@@ -30,6 +31,18 @@ module Pbi
       when Ready
         type.prepared?(acceptance_criteria, size) ? self : Preparation
       end
+    end
+
+    sig {override.returns(Activity::Set)}
+    def available_activities
+      activities =
+        case self
+        when Preparation
+          [:prepare_acceptance_criteria, :remove_pbi, :estimate_pbi]
+        when Ready
+          [:prepare_acceptance_criteria, :remove_pbi, :estimate_pbi, :assign_pbi_to_sprint]
+        end
+      Activity::Set.from_symbols(activities)
     end
 
     sig {returns(String)}

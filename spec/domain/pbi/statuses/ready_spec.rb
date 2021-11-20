@@ -4,6 +4,17 @@ require 'domain_helper'
 module Pbi
   class Statuses
     RSpec.describe Ready do
+      describe 'available activities' do
+        it do
+          expect(described_class.available_activities).to eq activity_set([
+            :prepare_acceptance_criteria,
+            :remove_pbi,
+            :estimate_pbi,
+            :assign_pbi_to_sprint,
+          ])
+        end
+      end
+
       describe 'update by preparation' do
         let(:type) { Types.from_string('feature') }
         let(:criteria) { acceptance_criteria(%w(AC1 AC2 AC3)) }
