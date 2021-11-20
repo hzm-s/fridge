@@ -13,7 +13,7 @@
     </div>
     <%= render partial: 'form', locals: { form: @form, pbi_id: @pbi.id } %>
     <hr>
-    <% can_prepare_criteria = true || authorize(:prepare_acceptance_criteria, @pbi.status) %>
+    <% can_prepare_criteria = authorize(:prepare_acceptance_criteria, @pbi.status) %>
     <div>
       <label>
         <%= t '.title_ac' %>

@@ -1,4 +1,4 @@
-<% can_revert = authorize(:revert_issue_from_sprint, current_team_member_roles, issue.status) %>
+<% can_revert = authorize(:revert_pbi_from_sprint, current_team_member_roles, issue.status) %>
 <% can_accept = authorize_any(item.acceptance_activities, current_team_member_roles, item.status) %>
 <div class="dropdown">
   <%= link_to '#', dd_trigger_options(id: "sbi-menu-#{issue.id}", class: 'context-menu') do %>
