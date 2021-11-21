@@ -1,13 +1,13 @@
 # typed: strict
 require 'sorbet-runtime'
 
-class PlannedIssueQuery
+class PlannedPbiQuery
   extend T::Sig
 
   class << self
     extend T::Sig
 
-    sig {params(plan: Plan::Plan, release_number: Integer, index: Integer).returns(T.nilable(Issue::Id))}
+    sig {params(plan: Plan::Plan, release_number: Integer, index: Integer).returns(T.nilable(Pbi::Id))}
     def call(plan, release_number, index)
       new(plan).call(release_number, index)
     end
@@ -18,12 +18,12 @@ class PlannedIssueQuery
     @plan = plan
   end
 
-  sig {params(release_number: Integer, index: Integer).returns(T.nilable(Issue::Id))}
+  sig {params(release_number: Integer, index: Integer).returns(T.nilable(Pbi::Id))}
   def call(release_number, index)
     release = find_release(release_number)
     return nil unless release
 
-    release.issues.to_a[index]
+    release.items.to_a[index]
   end
 
   private
