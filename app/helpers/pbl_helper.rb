@@ -10,7 +10,7 @@ module PblHelper
       controller: 'sort-list',
       sort_list_url: product_plan_path(product_id),
       sort_list_group: release_number,
-      "test_update_issues_in_release_#{release_number}" => 1,
+      "test_update_items_in_release_#{release_number}" => 1,
     }
   end
 

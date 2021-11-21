@@ -25,7 +25,7 @@ export default class extends Controller {
         const payload = {
           from: e.from.dataset.sortListGroup,
           to: e.to.dataset.sortListGroup,
-          issue_id: e.item.dataset.id,
+          item_id: e.item.dataset.id,
           to_index: e.newIndex,
         }
         $.ajax({ type: 'PATCH', url: url, dataType: 'json', data: payload })
