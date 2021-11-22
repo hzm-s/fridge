@@ -1,8 +1,9 @@
 # typed: false
 module PblHelper
-  ISSUE_TYPE_ICONS = {
+  PBI_TYPE_ICONS = {
     feature: 'fas fa-flag',
     task: 'fas fa-hammer',
+    issue: 'fa fa-file',
   }
 
   def pbl_sortable_options(product_id, release_number)
@@ -25,8 +26,8 @@ module PblHelper
     "#{base} pbl-item__grip--disabled"
   end
 
-  def pbl_item_type_icon(issue_type)
-    "<i class='#{ISSUE_TYPE_ICONS[issue_type.to_s.to_sym]}'></i>".html_safe
+  def pbl_item_type_icon(pbi_type)
+    "<i class='#{PBI_TYPE_ICONS[pbi_type.to_s.to_sym]}'></i>".html_safe
   end
 
   def pbl_item_criteria_css_classes(item)
