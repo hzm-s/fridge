@@ -30,6 +30,8 @@ module Pbi
         type.prepared?(acceptance_criteria, size) ? Ready : self
       when Ready
         type.prepared?(acceptance_criteria, size) ? self : Preparation
+      when Wip
+        self
       end
     end
 
@@ -41,6 +43,8 @@ module Pbi
           [:prepare_acceptance_criteria, :remove_pbi, :estimate_pbi]
         when Ready
           [:prepare_acceptance_criteria, :remove_pbi, :estimate_pbi, :assign_pbi_to_sprint]
+        when Wip
+          [:revert_pbi_from_sprint]
         end
       Activity::Set.from_symbols(activities)
     end
