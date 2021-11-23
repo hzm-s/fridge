@@ -22,6 +22,13 @@ module Pbi
           expect(status).to eq described_class
         end
       end
+
+      describe 'assign to sprint' do
+        it do
+          status = described_class.assign_to_sprint
+          expect(status).to eq described_class
+        end
+      end
     end
   end
 end

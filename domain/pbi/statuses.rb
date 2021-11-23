@@ -35,6 +35,13 @@ module Pbi
       end
     end
 
+    sig {returns(T.self_type)}
+    def assign_to_sprint
+      return self unless self == Ready
+
+      Wip
+    end
+
     sig {override.returns(Activity::Set)}
     def available_activities
       activities =

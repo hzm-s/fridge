@@ -87,6 +87,13 @@ module Pbi
       update_status_by_preparation
     end
 
+    sig {params(roles: Team::RoleSet).void}
+    def assign_to_sprint(roles)
+      Activity.check_permission!(:assign_pbi_to_sprint, [roles])
+
+      @status = @status.assign_to_sprint
+    end
+
     private
 
     sig {void}

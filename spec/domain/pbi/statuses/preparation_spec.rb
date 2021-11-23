@@ -35,6 +35,13 @@ module Pbi
           end
         end
       end
+
+      describe 'assign to sprint' do
+        it do
+          status = described_class.assign_to_sprint
+          expect(status).to eq Preparation
+        end
+      end
     end
   end
 end
