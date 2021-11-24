@@ -23,7 +23,7 @@ module Work
         T.cast(MAP[str], Status)
       end
 
-      sig {params(criteria: Issue::AcceptanceCriteria).returns(Status)}
+      sig {params(criteria: Pbi::AcceptanceCriteria).returns(Status)}
       def initial(criteria)
         return Acceptable if criteria.empty?
 

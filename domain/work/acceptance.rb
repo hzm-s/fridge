@@ -8,7 +8,7 @@ module Work
     sig {returns(T::Set[Integer])}
     attr_reader :satisfied_criteria
 
-    sig {params(criteria: Issue::AcceptanceCriteria, satisfied_criteria: T::Set[Integer]).void}
+    sig {params(criteria: Pbi::AcceptanceCriteria, satisfied_criteria: T::Set[Integer]).void}
     def initialize(criteria, satisfied_criteria)
       @criteria = criteria
       @satisfied_criteria = satisfied_criteria
@@ -48,7 +48,7 @@ module Work
 
     protected
 
-    sig {returns(Issue::AcceptanceCriteria)}
+    sig {returns(Pbi::AcceptanceCriteria)}
     attr_reader :criteria
 
     private

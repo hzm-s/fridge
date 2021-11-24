@@ -26,7 +26,7 @@ module Activity
       UpdatePlan = new('update_plan')
       AssignPbiToSprint = new('assign_pbi_to_sprint')
       RevertPbiFromSprint = new('revert_pbi_from_sprint')
-      UpdateSprintPbis = new('update_sprint_pbis')
+      UpdateSprintItems = new('update_sprint_items')
       UpdataTask = new('update_task')
       StartTask = new('start_task')
       SuspendTask = new('suspend_task')

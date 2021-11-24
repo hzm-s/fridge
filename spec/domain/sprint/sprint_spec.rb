@@ -31,38 +31,38 @@ module Sprint
     end
 
     let(:sprint) { described_class.start(product_id, 1) }
-    let(:issues) { issue_list(issue_a, issue_b, issue_c) }
-    let(:issue_a) { Issue::Id.create }
-    let(:issue_b) { Issue::Id.create }
-    let(:issue_c) { Issue::Id.create }
+    let(:items) { pbi_list(pbi_a, pbi_b, pbi_c) }
+    let(:pbi_a) { Pbi::Id.create }
+    let(:pbi_b) { Pbi::Id.create }
+    let(:pbi_c) { Pbi::Id.create }
     let(:dev_roles) { team_roles(:dev) }
     let(:po_roles) { team_roles(:po) }
     let(:sm_roles) { team_roles(:sm) }
 
-    describe 'Update issue list' do
+    describe 'Update pbi list' do
       it do
-        sprint.update_issues(po_roles, issues)
-        expect(sprint.issues).to eq issues
+        sprint.update_items(po_roles, items)
+        expect(sprint.items).to eq items
       end
 
       context 'when finished' do
         before { sprint.finish }
 
         it do
-          expect { sprint.update_issues(po_roles, issues) }.to raise_error(AlreadyFinished)
+          expect { sprint.update_items(po_roles, items) }.to raise_error(AlreadyFinished)
         end
       end
 
-      it 'PO can update issues' do
-        expect { sprint.update_issues(po_roles, issues) }.to_not raise_error
+      it 'PO can update items' do
+        expect { sprint.update_items(po_roles, items) }.to_not raise_error
       end
 
-      it 'Dev can NOT update issues' do
-        expect { sprint.update_issues(dev_roles, issues) }.to raise_error PermissonDenied
+      it 'Dev can NOT update items' do
+        expect { sprint.update_items(dev_roles, items) }.to raise_error PermissonDenied
       end
 
-      it 'SM can update issues' do
-        expect { sprint.update_issues(sm_roles, issues) }.to_not raise_error
+      it 'SM can update items' do
+        expect { sprint.update_items(sm_roles, items) }.to_not raise_error
       end
     end
   end

@@ -31,7 +31,7 @@ module PbiSupport
   end
 
   def estimate_pbi(pbi_id, size)
-    EstimateFeatureUsecase.perform(pbi_id, team_roles(:dev), Pbi::StoryPoint.new(size))
+    EstimatePbiUsecase.perform(pbi_id, team_roles(:dev), Pbi::StoryPoint.new(size))
   end
 
   def remove_pbi(pbi_id)

@@ -3,23 +3,23 @@ require 'domain_helper'
 
 module Work
   RSpec.describe Work do
-    let(:issue) do
-      Issue::Issue.create(Product::Id.create, Issue::Types::Feature, l_sentence('DESC')).tap do |i|
+    let(:pbi) do
+      Pbi::Pbi.create(Product::Id.create, Pbi::Types::Feature, l_sentence('DESC')).tap do |i|
         i.prepare_acceptance_criteria(criteria)
-        i.estimate(team_roles(:dev), Issue::StoryPoint.new(5))
+        i.estimate(team_roles(:dev), Pbi::StoryPoint.new(5))
       end
     end
     let(:criteria) { acceptance_criteria(%w(CRT)) }
-    let(:all_satisfied) { Acceptance.new(issue.acceptance_criteria, [1].to_set) }
-    let(:not_all_satisfied) { Acceptance.new(issue.acceptance_criteria, [].to_set) }
+    let(:all_satisfied) { Acceptance.new(pbi.acceptance_criteria, [1].to_set) }
+    let(:not_all_satisfied) { Acceptance.new(pbi.acceptance_criteria, [].to_set) }
 
     describe 'Create' do
       it do
-        work = described_class.create(issue)
+        work = described_class.create(pbi)
 
         aggregate_failures do
-          expect(work.issue_id).to eq issue.id
-          expect(work.status).to eq Statuses.initial(issue.acceptance_criteria)
+          expect(work.pbi_id).to eq pbi.id
+          expect(work.status).to eq Statuses.initial(pbi.acceptance_criteria)
           expect(work.tasks).to be_empty
         end
       end

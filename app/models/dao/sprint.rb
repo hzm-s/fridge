@@ -1,10 +1,10 @@
 # typed: false
 class Dao::Sprint < ApplicationRecord
-  has_many :issues, -> { order(:id) },
-    class_name: 'Dao::AssignedIssue', foreign_key: :dao_sprint_id,
+  has_many :items, -> { order(:id) },
+    class_name: 'Dao::AssignedPbi', foreign_key: :dao_sprint_id,
     dependent: :destroy, autosave: true
 
-  scope :as_aggregate, -> { eager_load(:issues) }
+  scope :as_aggregate, -> { eager_load(:items) }
 
   def write(sprint)
     self.attributes = {
@@ -13,9 +13,9 @@ class Dao::Sprint < ApplicationRecord
       is_finished: sprint.finished?,
     }
 
-    self.issues.each(&:mark_for_destruction)
-    sprint.issues.to_a.each do |i|
-      self.issues.build(dao_issue_id: i.to_s)
+    self.items.each(&:mark_for_destruction)
+    sprint.items.to_a.each do |i|
+      self.items.build(dao_pbi_id: i.to_s)
     end
   end
 
@@ -25,14 +25,14 @@ class Dao::Sprint < ApplicationRecord
       Product::Id.from_string(dao_product_id),
       number,
       is_finished,
-      read_issues,
+      read_items,
     )
   end
 
   private
 
-  def read_issues
-    issues.map { |i| Issue::Id.from_string(i.dao_issue_id) }
-      .then { |ids| Issue::List.new(ids) }
+  def read_items
+    items.map { |i| Pbi::Id.from_string(i.dao_pbi_id) }
+      .then { |ids| Pbi::List.new(ids) }
   end
 end

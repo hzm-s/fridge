@@ -13,7 +13,7 @@ module Team
             :update_plan,
             :assign_pbi_to_sprint,
             :revert_pbi_from_sprint,
-            :update_sprint_pbis,
+            :update_sprint_items,
             :update_feature_acceptance,
             :update_task_acceptance,
             :accept_feature,

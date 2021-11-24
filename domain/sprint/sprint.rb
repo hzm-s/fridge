@@ -10,12 +10,12 @@ module Sprint
 
       sig {params(product_id: Product::Id, number: Integer).returns(T.attached_class)}
       def start(product_id, number)
-        new(Id.create, product_id, number, false, Issue::List.new)
+        new(Id.create, product_id, number, false, Pbi::List.new)
       end
 
-      sig {params(id: Id, product_id: Product::Id, number: Integer, is_finished: T::Boolean, issues: Issue::List).returns(T.attached_class)}
-      def from_repository(id, product_id, number, is_finished, issues)
-        new(id, product_id, number, is_finished, issues)
+      sig {params(id: Id, product_id: Product::Id, number: Integer, is_finished: T::Boolean, items: Pbi::List).returns(T.attached_class)}
+      def from_repository(id, product_id, number, is_finished, items)
+        new(id, product_id, number, is_finished, items)
       end
     end
 
@@ -28,24 +28,24 @@ module Sprint
     sig {returns(Integer)}
     attr_reader :number
 
-    sig {returns(Issue::List)}
-    attr_reader :issues
+    sig {returns(Pbi::List)}
+    attr_reader :items
 
-    sig {params(id: Id, product_id: Product::Id, number: Integer, is_finished: T::Boolean, issues: Issue::List).void}
-    def initialize(id, product_id, number, is_finished, issues)
+    sig {params(id: Id, product_id: Product::Id, number: Integer, is_finished: T::Boolean, items: Pbi::List).void}
+    def initialize(id, product_id, number, is_finished, items)
       @id = id
       @product_id = product_id
       @number = number
       @is_finished = is_finished
-      @issues = issues
+      @items = items
     end
 
-    sig {params(roles: Team::RoleSet, issues: Issue::List).void}
-    def update_issues(roles, issues)
-      raise PermissonDenied unless Activity.allow?(:update_sprint_issues, [roles])
+    sig {params(roles: Team::RoleSet, items: Pbi::List).void}
+    def update_items(roles, items)
+      raise PermissonDenied unless Activity.allow?(:update_sprint_items, [roles])
       raise AlreadyFinished if finished?
 
-      @issues = issues
+      @items = items
     end
 
     sig {void}

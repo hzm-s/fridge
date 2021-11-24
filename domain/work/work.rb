@@ -8,24 +8,24 @@ module Work
     class << self
       extend T::Sig
 
-      sig {params(issue: Issue::Issue).returns(T.attached_class)}
-      def create(issue)
+      sig {params(pbi: Pbi::Pbi).returns(T.attached_class)}
+      def create(pbi)
         new(
-          issue.id,
-          Statuses.initial(issue.acceptance_criteria),
-          Acceptance.new(issue.acceptance_criteria, [].to_set),
+          pbi.id,
+          Statuses.initial(pbi.acceptance_criteria),
+          Acceptance.new(pbi.acceptance_criteria, [].to_set),
           TaskList.new,
         )
       end
 
-      sig {params(issue_id: Issue::Id, status: Status, acceptance: Acceptance, tasks: TaskList).returns(T.attached_class)}
-      def from_repository(issue_id, status, acceptance, tasks)
-        new(issue_id, status, acceptance, tasks)
+      sig {params(pbi_id: pbi::Id, status: Status, acceptance: Acceptance, tasks: TaskList).returns(T.attached_class)}
+      def from_repository(pbi_id, status, acceptance, tasks)
+        new(pbi_id, status, acceptance, tasks)
       end
     end
 
-    sig {returns(Issue::Id)}
-    attr_reader :issue_id
+    sig {returns(Pbi::Id)}
+    attr_reader :pbi_id
 
     sig {returns(Status)}
     attr_reader :status
@@ -36,9 +36,9 @@ module Work
     sig {returns(TaskList)}
     attr_reader :tasks
 
-    sig {params(issue_id: Issue::Id, status: Status, acceptance: Acceptance, tasks: TaskList).void}
-    def initialize(issue_id, status, acceptance, tasks)
-      @issue_id = issue_id
+    sig {params(pbi_id: Pbi::Id, status: Status, acceptance: Acceptance, tasks: TaskList).void}
+    def initialize(pbi_id, status, acceptance, tasks)
+      @pbi_id = pbi_id
       @status = status
       @acceptance = acceptance
       @tasks = tasks
