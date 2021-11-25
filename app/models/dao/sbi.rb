@@ -1,16 +1,16 @@
 # typed: false
-class Dao::Work < ApplicationRecord
-  belongs_to :issue, class_name: 'Dao::Issue', foreign_key: :dao_issue_id
+class Dao::Sbi < ApplicationRecord
+  belongs_to :pbi, class_name: 'Dao::Pbi', foreign_key: :dao_pbi_id
 
   has_many :tasks, -> { order(:number) },
-    class_name: 'Dao::Task', foreign_key: :dao_work_id,
+    class_name: 'Dao::Task', foreign_key: :dao_sbi_id,
     dependent: :destroy, autosave: true
 
-  scope :as_aggregate, -> { eager_load(:tasks, issue: :criteria) }
+  scope :as_aggregate, -> { eager_load(:tasks, pbi: :criteria) }
 
   def write(work)
     self.attributes = {
-      dao_issue_id: work.issue_id.to_s,
+      dao_pbi_id: work.pbi_id.to_s,
       status: work.status.to_s,
       satisfied_criterion_numbers: work.acceptance.satisfied_criteria.to_a,
     }
@@ -23,7 +23,7 @@ class Dao::Work < ApplicationRecord
 
   def read
     Work::Work.from_repository(
-      Issue::Id.from_string(dao_issue_id),
+      Pbi::Id.from_string(dao_pbi_id),
       read_status,
       read_acceptance,
       read_tasks,
@@ -36,7 +36,7 @@ class Dao::Work < ApplicationRecord
 
   def read_acceptance
     Work::Acceptance.new(
-      issue.read_acceptance_criteria,
+      pbi.read_acceptance_criteria,
       satisfied_criterion_numbers.to_set,
     )
   end

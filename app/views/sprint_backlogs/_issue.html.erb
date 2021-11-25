@@ -6,7 +6,8 @@
     <%= simple_format(issue.description, class: 'sbi-issue__content') %>
     <%= render partial: 'item_menu', locals: { item: item, issue: issue } %>
   </div>
-  <% if item.accepted? %>
+  <%# if item.accepted? %>
+  <% if false %>
     <div class="sbl-item__accepted-status">
       <i class="fas fa-check-circle sbl-item__accepted-status-icon"></i>
       <span>

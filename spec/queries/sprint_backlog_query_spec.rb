@@ -3,34 +3,34 @@ require 'rails_helper'
 
 RSpec.describe SprintBacklogQuery do
   let!(:product) { create_product }
-  let!(:issue_a) { plan_issue(product.id, acceptance_criteria: %w(CRT_A), size: 3, release: 1) }
-  let!(:issue_b) { plan_issue(product.id, type: :task, acceptance_criteria: %w(CRT_B), size: 3, release: 1) }
-  let!(:issue_c) { plan_issue(product.id, acceptance_criteria: %w(CRT_C1 CRT_C2 CRT_C3), size: 3, release: 1) }
+  let!(:pbi_a) { add_pbi(product.id, acceptance_criteria: %w(CRT_A), size: 3, release: 1) }
+  let!(:pbi_b) { add_pbi(product.id, type: :task, acceptance_criteria: %w(CRT_B), size: 3, release: 1) }
+  let!(:pbi_c) { add_pbi(product.id, acceptance_criteria: %w(CRT_C1 CRT_C2 CRT_C3), size: 3, release: 1) }
   let!(:sprint) { start_sprint(product.id) }
 
   before do
-    assign_issue_to_sprint(product.id, issue_c.id)
-    assign_issue_to_sprint(product.id, issue_a.id)
-    assign_issue_to_sprint(product.id, issue_b.id)
+    assign_pbi_to_sprint(product.id, pbi_c.id)
+    assign_pbi_to_sprint(product.id, pbi_a.id)
+    assign_pbi_to_sprint(product.id, pbi_b.id)
   end
 
   it do
     items = described_class.call(sprint.id).items
-    item_issues = items.map(&:issue)
-    issues = [issue_c, issue_a, issue_b]
+    item_pbis = items.map(&:pbi)
+    pbis = [pbi_c, pbi_a, pbi_b]
 
     aggregate_failures do
-      expect(item_issues.map(&:id)).to eq issues.map(&:id).map(&:to_s)
-      expect(item_issues.map(&:type)).to eq issues.map(&:type)
-      expect(items.map(&:acceptance_activities)).to eq issues.map { |i| i.type.acceptance_activities }
-      expect(items.map(&:status)).to eq issues.map { |i| Work::Work.create(i).status }
+      expect(item_pbis.map(&:id)).to eq pbis.map(&:id).map(&:to_s)
+      expect(item_pbis.map(&:type)).to eq pbis.map(&:type)
+      expect(items.map(&:acceptance_activities)).to eq pbis.map { |i| i.type.acceptance_activities }
+      expect(items.map(&:status)).to eq pbis.map { |i| Work::Work.create(i).status }
     end
   end
 
   it do
     sbl = described_class.call(sprint.id)
-    item_issue = sbl.items.first.issue
-    expect(item_issue.criteria.map(&:content)).to eq %w(CRT_C1 CRT_C2 CRT_C3)
+    item_pbi = sbl.items.first.pbi
+    expect(item_pbi.criteria.map(&:content)).to eq %w(CRT_C1 CRT_C2 CRT_C3)
   end
 
   it do
@@ -40,12 +40,12 @@ RSpec.describe SprintBacklogQuery do
   end
 
   it do
-    plan_task(issue_c.id, %w(Task1 Task2 Task3))
+    plan_task(pbi_c.id, %w(Task1 Task2 Task3))
     sbl = described_class.call(sprint.id)
     tasks = sbl.items.first.tasks
 
     aggregate_failures do
-      expect(tasks.map(&:issue_id).uniq).to eq [issue_c.id.to_s]
+      expect(tasks.map(&:pbi_id).uniq).to eq [pbi_c.id.to_s]
       expect(tasks[0].number).to eq 1
       expect(tasks[0].content).to eq 'Task1'
       expect(tasks[1].number).to eq 2
@@ -56,8 +56,8 @@ RSpec.describe SprintBacklogQuery do
   end
 
   it do
-    accept_work(issue_c)
-    accept_work(issue_b)
+    accept_work(pbi_c)
+    accept_work(pbi_b)
     sbl = described_class.call(sprint.id)
 
     aggregate_failures do

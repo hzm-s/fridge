@@ -1,0 +1,2 @@
+$('#js-pbl-item-<%= @pbi.id %>').replaceWith('<%=j render partial: 'product_backlogs/item', locals: { item: @pbi } %>')
+<%= render 'replace_flash' %>

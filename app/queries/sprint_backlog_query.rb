@@ -2,16 +2,16 @@
 module SprintBacklogQuery
   class << self
     def call(sprint_id)
-      assigned_issues =
-        Dao::AssignedIssue
-          .eager_load(issue: [:criteria, { work: :tasks }])
+      assigned_pbis =
+        Dao::AssignedPbi
+          .eager_load(pbi: [:criteria, { sbi: :tasks }])
           .where(dao_sprint_id: sprint_id)
-          .order('dao_assigned_issues.id, dao_acceptance_criteria.id')
+          .order('dao_assigned_pbis.id, dao_acceptance_criteria.id')
 
-      items = assigned_issues.map do |ai|
+      items = assigned_pbis.map do |ai|
         SprintBacklogItemStruct.new(
-          ai.issue.work,
-          IssueStruct.new(ai.issue),
+          ai.pbi.sbi,
+          PbiStruct.new(ai.pbi),
         )
       end
 
@@ -20,15 +20,15 @@ module SprintBacklogQuery
   end
 
   class SprintBacklogItemStruct < SimpleDelegator
-    attr_reader :issue
+    attr_reader :pbi
 
     delegate :accepted?, to: :status
-    delegate :id, to: :issue, prefix: true
+    delegate :id, to: :pbi, prefix: true
 
-    def initialize(dao_work, issue)
-      super(dao_work)
+    def initialize(dao_sbi, pbi)
+      super(dao_sbi)
 
-      @issue = issue
+      @pbi = pbi
     end
 
     def status
@@ -36,11 +36,11 @@ module SprintBacklogQuery
     end
 
     def tasks
-      @__tasks ||= super.map { |t| TaskStruct.new(issue.id, t) }.sort_by(&:number)
+      @__tasks ||= super.map { |t| TaskStruct.new(pbi.id, t) }.sort_by(&:number)
     end
 
     def acceptance_activities
-      issue.type.acceptance_activities
+      pbi.type.acceptance_activities
     end
   end
 

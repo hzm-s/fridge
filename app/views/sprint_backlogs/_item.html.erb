@@ -1,14 +1,14 @@
-<%= content_tag :div, class: 'sbl-item', data: { id: item.issue_id } do %>
+<%= content_tag :div, class: 'sbl-item', data: { id: item.pbi_id } do %>
   <span class="<%= sbl_item_grip_css_classes(true) %>">
     <i class="fas fa-grip-vertical"></i>
   </span>
   <div class="sbl-item__body">
     <div class="sbl-item__issue">
-      <%= render partial: 'issue', locals: { item: item, issue: item.issue } %>
+      <%= render partial: 'issue', locals: { item: item, issue: item.pbi } %>
     </div>
     <div class="sbl-item__task">
-      <%= render partial: 'task_list', locals: { issue_id: item.issue_id, tasks: item.tasks } %>
-      <%= render partial: 'task_form', locals: { issue_id: item.issue_id, form: nil } %>
+      <%#= render partial: 'task_list', locals: { issue_id: item.pbi_id, tasks: item.tasks } %>
+      <%= render partial: 'task_form', locals: { issue_id: item.pbi_id, form: nil } %>
     </div>
   </div>
 <% end %>

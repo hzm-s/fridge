@@ -12,6 +12,9 @@ Rails.application.routes.draw do
     resources :pbis, only: [:create]
     resources :releases, param: :number, only: [:new, :create, :edit, :update, :destroy]
     resource :plan, only: [:update]
+
+    # TODO: /sprints/:sprint_id/items
+    resources :sbis, only: [:create, :destroy]
   end
 
   resources :pbis, only: [:edit, :update, :destroy] do
@@ -25,7 +28,6 @@ Rails.application.routes.draw do
   resources :sprint_backlogs, param: :product_id, only: [:show]
 
   scope 'current_sprint/:product_id', as: :current_sprint, module: :current_sprint do
-    resources :issues, only: [:create, :destroy]
     resource :work_priority, only: [:update]
   end
 
