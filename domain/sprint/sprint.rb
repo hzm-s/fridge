@@ -10,10 +10,10 @@ module Sprint
 
       sig {params(product_id: Product::Id, number: Integer).returns(T.attached_class)}
       def start(product_id, number)
-        new(Id.create, product_id, number, false, Pbi::List.new)
+        new(Id.create, product_id, number, false, Shared::SortableList.new)
       end
 
-      sig {params(id: Id, product_id: Product::Id, number: Integer, is_finished: T::Boolean, items: Pbi::List).returns(T.attached_class)}
+      sig {params(id: Id, product_id: Product::Id, number: Integer, is_finished: T::Boolean, items: Shared::SortableList).returns(T.attached_class)}
       def from_repository(id, product_id, number, is_finished, items)
         new(id, product_id, number, is_finished, items)
       end
@@ -28,10 +28,10 @@ module Sprint
     sig {returns(Integer)}
     attr_reader :number
 
-    sig {returns(Pbi::List)}
+    sig {returns(Shared::SortableList)}
     attr_reader :items
 
-    sig {params(id: Id, product_id: Product::Id, number: Integer, is_finished: T::Boolean, items: Pbi::List).void}
+    sig {params(id: Id, product_id: Product::Id, number: Integer, is_finished: T::Boolean, items: Shared::SortableList).void}
     def initialize(id, product_id, number, is_finished, items)
       @id = id
       @product_id = product_id
@@ -40,7 +40,7 @@ module Sprint
       @items = items
     end
 
-    sig {params(roles: Team::RoleSet, items: Pbi::List).void}
+    sig {params(roles: Team::RoleSet, items: Shared::SortableList).void}
     def update_items(roles, items)
       raise PermissonDenied unless Activity.allow?(:update_sprint_items, [roles])
       raise AlreadyFinished if finished?

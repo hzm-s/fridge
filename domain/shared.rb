@@ -8,6 +8,10 @@ module Shared
   class InvalidLongSentence < ArgumentError; end
 
   autoload :Identifier, 'shared/identifier'
+
+  autoload :Sortable, 'shared/sortable'
+  autoload :SortableList, 'shared/sortable_list'
+
   autoload :Name, 'shared/name'
   autoload :ShortSentence, 'shared/short_sentence'
   autoload :LongSentence, 'shared/long_sentence'

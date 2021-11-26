@@ -27,7 +27,7 @@ class Dao::Release < ApplicationRecord
     Plan::Release.from_repository(
       number.to_i,
       Shared::Name.new(title),
-      items.map { |i| Pbi::Id.from_string(i) }.then { |l| Pbi::List.new(l) }
+      items.map { |i| Pbi::Id.from_string(i) }.then { |l| Shared::SortableList.new(l) }
     )
   end
 end

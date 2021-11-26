@@ -10,5 +10,4 @@ module Pbi
   autoload :StoryPoint, 'pbi/story_point'
   autoload :AcceptanceCriteria, 'pbi/acceptance_criteria'
   autoload :PbiRepository, 'pbi/pbi_repository'
-  autoload :List, 'pbi/list'
 end

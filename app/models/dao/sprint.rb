@@ -33,6 +33,6 @@ class Dao::Sprint < ApplicationRecord
 
   def read_items
     items.map { |i| Pbi::Id.from_string(i.dao_pbi_id) }
-      .then { |ids| Pbi::List.new(ids) }
+      .then { |ids| Shared::SortableList.new(ids) }
   end
 end

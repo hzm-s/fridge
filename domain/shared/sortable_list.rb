@@ -1,28 +1,28 @@
 # typed: strict
 require 'sorbet-runtime'
 
-module Pbi
-  class List
+module Shared
+  class SortableList
     extend T::Sig
 
     class NotFound < StandardError; end
 
-    sig {params(items: T::Array[Id]).void}
+    sig {params(items: T::Array[Sortable]).void}
     def initialize(items = [])
       @items = items
     end
 
-    sig {params(item: Id).returns(T.self_type)}
+    sig {params(item: Sortable).returns(T.self_type)}
     def append(item)
       self.class.new(@items + [item])
     end
 
-    sig {params(item: Id).returns(T.self_type)}
+    sig {params(item: Sortable).returns(T.self_type)}
     def remove(item)
       self.class.new(@items.reject { |i| i == item })
     end
 
-    sig {params(from: Id, to: Id).returns(T.self_type)}
+    sig {params(from: Sortable, to: Sortable).returns(T.self_type)}
     def swap(from, to)
       return self if from == to
 
@@ -38,37 +38,37 @@ module Pbi
       to_a.empty?
     end
 
-    sig {params(item_id: Id).returns(T::Boolean)}
+    sig {params(item_id: Sortable).returns(T::Boolean)}
     def include?(item_id)
       to_a.include?(item_id)
     end
 
-    sig {params(index: Integer).returns(Id)}
+    sig {params(index: Integer).returns(Sortable)}
     def index_of(index)
       raise NotFound unless found = to_a[index]
 
       found
     end
 
-    sig {returns(T::Array[Id])}
+    sig {returns(T::Array[Sortable])}
     def to_a
       @items.dup
     end
 
-    sig {params(other: List).returns(T::Boolean)}
+    sig {params(other: SortableList).returns(T::Boolean)}
     def ==(other)
       self.to_a == other.to_a
     end
 
     protected
 
-    sig {params(item: Id, to: Id).returns(T.self_type)}
+    sig {params(item: Sortable, to: Sortable).returns(T.self_type)}
     def insert_before(item, to)
       index = T.must(@items.index(to))
       self.class.new(@items.insert(index, item))
     end
 
-    sig {params(item: Id, to: Id).returns(T.self_type)}
+    sig {params(item: Sortable, to: Sortable).returns(T.self_type)}
     def insert_after(item, to)
       index = 0 - (@items.size - T.must(@items.index(to)))
       self.class.new(@items.insert(index, item))

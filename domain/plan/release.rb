@@ -11,10 +11,10 @@ module Plan
       sig {params(number: Integer, title: T.nilable(Shared::Name)).returns(T.attached_class)}
       def create(number, title = nil)
         title ||= Shared::Name.new("Release##{number}")
-        new(number, title, Pbi::List.new)
+        new(number, title, Shared::SortableList.new)
       end
 
-      sig {params(number: Integer, title: Shared::Name, items: Pbi::List).returns(T.attached_class)}
+      sig {params(number: Integer, title: Shared::Name, items: Shared::SortableList).returns(T.attached_class)}
       def from_repository(number, title, items)
         new(number, title, items)
       end
@@ -26,10 +26,10 @@ module Plan
     sig {returns(Shared::Name)}
     attr_reader :title
 
-    sig {returns(Pbi::List)}
+    sig {returns(Shared::SortableList)}
     attr_reader :items
 
-    sig {params(number: Integer, title: Shared::Name, items: Pbi::List).void}
+    sig {params(number: Integer, title: Shared::Name, items: Shared::SortableList).void}
     def initialize(number, title, items)
       @number= number
       @title = title

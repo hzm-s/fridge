@@ -1,13 +1,13 @@
 # typed: false
 require 'domain_helper'
 
-module Pbi
-  RSpec.describe List do
-    let(:item_a) { Id.create }
-    let(:item_b) { Id.create }
-    let(:item_c) { Id.create }
-    let(:item_d) { Id.create }
-    let(:item_e) { Id.create }
+module Shared
+  RSpec.describe SortableList do
+    let(:item_a) { Pbi::Id.create }
+    let(:item_b) { Pbi::Id.create }
+    let(:item_c) { Pbi::Id.create }
+    let(:item_d) { Pbi::Id.create }
+    let(:item_e) { Pbi::Id.create }
 
     describe 'Append' do
       it do
@@ -72,7 +72,7 @@ module Pbi
         aggregate_failures do
           expect(list.index_of(0)).to eq item_a
           expect(list.index_of(4)).to eq item_e
-          expect{ list.index_of(5) }.to raise_error(List::NotFound)
+          expect{ list.index_of(5) }.to raise_error SortableList::NotFound
         end
       end
     end
