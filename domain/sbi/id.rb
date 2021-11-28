@@ -2,6 +2,6 @@
 require 'sorbet-runtime'
 
 module Sbi
-  autoload :Id, 'sbi/id'
-  autoload :Sbi, 'sbi/sbi'
+  class Id < Shared::Identifier
+  end
 end
