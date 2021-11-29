@@ -8,15 +8,13 @@ class Dao::Sbi < ApplicationRecord
 
   scope :as_aggregate, -> { eager_load(:tasks, pbi: :criteria) }
 
-  def write(work)
+  def write(sbi)
     self.attributes = {
-      dao_pbi_id: work.pbi_id.to_s,
-      status: work.status.to_s,
-      satisfied_criterion_numbers: work.acceptance.satisfied_criteria.to_a,
+      dao_pbi_id: sbi.pbi_id.to_s,
     }
 
     self.tasks.each(&:mark_for_destruction)
-    work.tasks.to_a.each do |t|
+    sbi.tasks.to_a.each do |t|
       self.tasks.build(number: t.number, content: t.content.to_s, status: t.status.to_s)
     end
   end

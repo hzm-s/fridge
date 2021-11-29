@@ -43,15 +43,6 @@ ActiveRecord::Schema.define(version: 2021_05_16_002510) do
     t.index ["dao_pbi_id"], name: "index_dao_acceptance_criteria_on_dao_pbi_id"
   end
 
-  create_table "dao_assigned_pbis", force: :cascade do |t|
-    t.uuid "dao_sprint_id"
-    t.uuid "dao_pbi_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["dao_pbi_id"], name: "index_dao_assigned_pbis_on_dao_pbi_id"
-    t.index ["dao_sprint_id"], name: "index_dao_assigned_pbis_on_dao_sprint_id"
-  end
-
   create_table "dao_pbis", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "dao_product_id"
     t.string "pbi_type", null: false
@@ -89,22 +80,18 @@ ActiveRecord::Schema.define(version: 2021_05_16_002510) do
     t.index ["dao_product_id"], name: "index_dao_releases_on_dao_product_id"
   end
 
-  create_table "dao_sbis", force: :cascade do |t|
-    t.uuid "dao_sprint_id"
+  create_table "dao_sbis", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "dao_pbi_id"
-    t.string "status", null: false
-    t.integer "satisfied_criterion_numbers", array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["dao_pbi_id"], name: "index_dao_sbis_on_dao_pbi_id"
-    t.index ["dao_sprint_id", "dao_pbi_id"], name: "index_dao_sbis_on_dao_sprint_id_and_dao_pbi_id", unique: true
-    t.index ["dao_sprint_id"], name: "index_dao_sbis_on_dao_sprint_id"
   end
 
   create_table "dao_sprints", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "dao_product_id"
     t.integer "number", null: false
     t.boolean "is_finished", null: false
+    t.uuid "items", array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["dao_product_id", "number"], name: "index_dao_sprints_on_dao_product_id_and_number", unique: true
@@ -112,7 +99,7 @@ ActiveRecord::Schema.define(version: 2021_05_16_002510) do
   end
 
   create_table "dao_tasks", force: :cascade do |t|
-    t.bigint "dao_sbi_id"
+    t.uuid "dao_sbi_id"
     t.integer "number", null: false
     t.string "status", null: false
     t.string "content", null: false
@@ -142,12 +129,9 @@ ActiveRecord::Schema.define(version: 2021_05_16_002510) do
   add_foreign_key "app_user_accounts", "dao_people"
   add_foreign_key "app_user_profiles", "app_user_accounts"
   add_foreign_key "dao_acceptance_criteria", "dao_pbis"
-  add_foreign_key "dao_assigned_pbis", "dao_pbis"
-  add_foreign_key "dao_assigned_pbis", "dao_sprints"
   add_foreign_key "dao_pbis", "dao_products"
   add_foreign_key "dao_releases", "dao_products"
   add_foreign_key "dao_sbis", "dao_pbis"
-  add_foreign_key "dao_sbis", "dao_sprints"
   add_foreign_key "dao_sprints", "dao_products"
   add_foreign_key "dao_tasks", "dao_sbis"
   add_foreign_key "dao_team_members", "dao_teams"
