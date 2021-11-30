@@ -10,7 +10,7 @@ module Sbi
 
       sig {params(pbi_id: Pbi::Id).returns(T.attached_class)}
       def plan(pbi_id)
-        new(Id.create, pbi_id, Work::TaskList.new)
+        new(Id.create, pbi_id, TaskList.new)
       end
     end
 
@@ -20,10 +20,10 @@ module Sbi
     sig {returns(Pbi::Id)}
     attr_reader :pbi_id
 
-    sig {returns(Work::TaskList)}
+    sig {returns(TaskList)}
     attr_reader :tasks
 
-    sig {params(id: Id, pbi_id: Pbi::Id, tasks: Work::TaskList).void}
+    sig {params(id: Id, pbi_id: Pbi::Id, tasks: TaskList).void}
     def initialize(id, pbi_id, tasks)
       @id = id
       @pbi_id = pbi_id
