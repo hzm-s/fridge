@@ -31,15 +31,15 @@ module Sprint
     end
 
     let(:sprint) { described_class.start(product_id, 1) }
-    let(:items) { pbi_list(pbi_a, pbi_b, pbi_c) }
-    let(:pbi_a) { Pbi::Id.create }
-    let(:pbi_b) { Pbi::Id.create }
-    let(:pbi_c) { Pbi::Id.create }
+    let(:items) { sbi_list(sbi_a, sbi_b, sbi_c) }
+    let(:sbi_a) { Sbi::Id.create }
+    let(:sbi_b) { Sbi::Id.create }
+    let(:sbi_c) { Sbi::Id.create }
     let(:dev_roles) { team_roles(:dev) }
     let(:po_roles) { team_roles(:po) }
     let(:sm_roles) { team_roles(:sm) }
 
-    describe 'Update pbi list' do
+    describe 'Update items' do
       it do
         sprint.update_items(po_roles, items)
         expect(sprint.items).to eq items

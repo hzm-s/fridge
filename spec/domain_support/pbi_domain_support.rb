@@ -9,8 +9,8 @@ module PbiDomainSupport
     Issue::List.new(issue_ids)
   end
 
-  def pbi_list(*item_ids)
-    Shared::SortableList.new(item_ids)
+  def pbi_list(*pbi_ids)
+    Shared::SortableList.new(pbi_ids)
   end
 end
 
