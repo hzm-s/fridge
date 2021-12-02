@@ -10,45 +10,42 @@ RSpec.describe SprintRepository::AR do
 
       expect { described_class.store(sprint) }
         .to change { Dao::Sprint.count }.by(1)
-        .and change { Dao::AssignedIssue.count }.by(0)
 
       aggregate_failures do
         dao = Dao::Sprint.last
         expect(dao.dao_product_id).to eq product.id.to_s
         expect(dao.number).to eq 11
         expect(dao.is_finished).to be false
-        expect(dao.issues).to be_empty
+        expect(dao.items).to be_empty
       end
     end
   end
 
   describe 'Update' do
-    let(:issue_a) { plan_issue(product.id).id }
-    let(:issue_b) { plan_issue(product.id).id }
-    let(:issue_c) { plan_issue(product.id).id }
+    let(:sbi_a) { Sbi::Id.create }
+    let(:sbi_b) { Sbi::Id.create }
+    let(:sbi_c) { Sbi::Id.create }
     let(:po_roles) { team_roles(:po) }
 
     it do
       sprint = Sprint::Sprint.start(product.id, 11)
       described_class.store(sprint)
 
-      sprint.update_issues(po_roles, sprint.issues.append(issue_a))
+      sprint.update_items(po_roles, sprint.items.append(sbi_a))
       expect { described_class.store(sprint) }
         .to change { Dao::Sprint.count }.by(0)
-        .and change { Dao::AssignedIssue.count }.from(0).to(1)
 
-      sprint.update_issues(po_roles, sprint.issues.append(issue_b))
-      sprint.update_issues(po_roles, sprint.issues.append(issue_c))
+      sprint.update_items(po_roles, sprint.items.append(sbi_b))
+      sprint.update_items(po_roles, sprint.items.append(sbi_c))
       expect { described_class.store(sprint) }
         .to change { Dao::Sprint.count }.by(0)
-        .and change { Dao::AssignedIssue.count }.from(1).to(3)
 
       aggregate_failures do
         dao = Dao::Sprint.last
         expect(dao.dao_product_id).to eq product.id.to_s
         expect(dao.number).to eq 11
         expect(dao.is_finished).to be false
-        expect(dao.issues.map(&:dao_issue_id)).to eq [issue_a, issue_b, issue_c].map(&:to_s)
+        expect(dao.items).to eq [sbi_a, sbi_b, sbi_c].map(&:to_s)
       end
     end
   end

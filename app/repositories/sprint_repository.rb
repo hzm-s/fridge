@@ -18,7 +18,6 @@ module SprintRepository
       sig {override.params(product_id: Product::Id).returns(T.nilable(Sprint::Sprint))}
       def current(product_id)
         Dao::Sprint
-          .as_aggregate
           .where(dao_product_id: product_id.to_s, is_finished: false)
           .order(number: :desc)
           .first
@@ -27,7 +26,7 @@ module SprintRepository
 
       sig {override.params(id: Sprint::Id).returns(Sprint::Sprint)}
       def find_by_id(id)
-        Dao::Sprint.as_aggregate.find(id).read
+        Dao::Sprint.find(id).read
       end
 
       sig {override.params(sprint: Sprint::Sprint).void}
