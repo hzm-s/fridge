@@ -8,7 +8,7 @@ class AssignPbiToSprintUsecase < UsecaseBase
   def initialize
     @sprint_repository = T.let(SprintRepository::AR, Sprint::SprintRepository)
     @pbi_repository = T.let(PbiRepository::AR, Pbi::PbiRepository)
-    @work_repository = T.let(WorkRepository::AR, Work::WorkRepository)
+    @sbi_repository = T.let(SbiRepository::AR, Sbi::SbiRepository)
   end
 
   sig {params(product_id: Product::Id, roles: Team::RoleSet, pbi_id: Pbi::Id).void}
@@ -18,7 +18,7 @@ class AssignPbiToSprintUsecase < UsecaseBase
 
     transaction do
       Sprint::AssignPbi
-        .new(@sprint_repository, @pbi_repository, @work_repository)
+        .new(@sprint_repository, @pbi_repository, @sbi_repository)
         .assign(roles, sprint, pbi)
     end
   end

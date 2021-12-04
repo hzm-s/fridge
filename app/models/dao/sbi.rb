@@ -20,33 +20,21 @@ class Dao::Sbi < ApplicationRecord
   end
 
   def read
-    Work::Work.from_repository(
+    Sbi::Sbi.from_repository(
+      Sbi::Id.from_string(id),
       Pbi::Id.from_string(dao_pbi_id),
-      read_status,
-      read_acceptance,
       read_tasks,
-    )
-  end
-
-  def read_status
-    Work::Statuses.from_string(status)
-  end
-
-  def read_acceptance
-    Work::Acceptance.new(
-      pbi.read_acceptance_criteria,
-      satisfied_criterion_numbers.to_set,
     )
   end
 
   def read_tasks
     tasks.map do |t|
-      Work::Task.from_repository(
+      Sbi::Task.from_repository(
         t.number,
         Shared::ShortSentence.new(t.content),
-        Work::TaskStatus.from_string(t.status),
+        Sbi::TaskStatus.from_string(t.status),
       )
     end
-      .then { |objs| Work::TaskList.new(objs) }
+      .then { |objs| Sbi::TaskList.new(objs) }
   end
 end

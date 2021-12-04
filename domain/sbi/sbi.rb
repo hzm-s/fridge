@@ -12,6 +12,11 @@ module Sbi
       def plan(pbi_id)
         new(Id.create, pbi_id, TaskList.new)
       end
+
+      sig {params(id: Id, pbi_id: Pbi::Id, tasks: TaskList).returns(T.attached_class)}
+      def from_repository(id, pbi_id, tasks)
+        new(id, pbi_id, tasks)
+      end
     end
 
     sig {returns(Id)}
