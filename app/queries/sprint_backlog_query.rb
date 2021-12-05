@@ -2,20 +2,13 @@
 module SprintBacklogQuery
   class << self
     def call(sprint_id)
-      assigned_pbis =
-        Dao::AssignedPbi
-          .eager_load(pbi: [:criteria, { sbi: :tasks }])
-          .where(dao_sprint_id: sprint_id)
-          .order('dao_assigned_pbis.id, dao_acceptance_criteria.id')
+      sbi_ids = Dao::Sprint.find_by(id: sprint_id).items
+      sbis = Dao::Sbi.where(id: sbi_ids)
 
-      items = assigned_pbis.map do |ai|
-        SprintBacklogItemStruct.new(
-          ai.pbi.sbi,
-          PbiStruct.new(ai.pbi),
-        )
-      end
-
-      SprintBacklogStruct.new(items: items)
+      sbi_ids
+        .map { |id| sbis.find { |sbi| sbi.id == id } }
+        .map { |sbi| SprintBacklogItemStruct.new(sbi, PbiStruct.new(sbi.pbi)) }
+        .then { |items| SprintBacklogStruct.new(items: items) }
     end
   end
 
