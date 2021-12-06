@@ -5,10 +5,10 @@
     <i class="fas fa-ellipsis-h"></i>
   <% end -%>
   <div class="dropdown-menu dropdown-menu-right">
-    <%#= button_to current_sprint_pbis_path(product_id: current_product.id, pbi_id: item.id.to_s), remote: true, class: dropdown_item_classes { can_assign }, data: { "test_assign_pbi_to_sprint_#{item.id}" => can_assign } do %>
+    <%= button_to product_sbis_path(product_id: current_product.id, pbi_id: item.id.to_s), remote: true, class: dropdown_item_classes { can_assign }, data: { "test_assign_pbi_to_sprint_#{item.id}" => can_assign } do %>
       <i class="fas fa-share"></i>
-      <%#=t 'domain.pbi.assign_to_sprint' %>
-    <%# end %>
+      <%=t 'domain.pbi.assign_to_sprint' %>
+    <% end %>
     <%= link_to pbi_path(item.id), method: :delete, class: dropdown_item_classes('danger-link') { can_remove }, data: { confirm: t('navs.confirm_delete'), "test_remove_pbi_#{item.id}" => can_remove } do %>
       <i class="fas fa-trash-alt"></i>
       <%=t 'navs.delete' %>
