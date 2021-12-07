@@ -17,7 +17,7 @@ module SblHelper
   def sbl_task_list_classes(tasks)
     classes = %w(sbi-task__list)
     classes << 'sbi-task__list--empty' if tasks.empty?
-    
+
     classes.join(' ')
   end
 
@@ -78,6 +78,6 @@ module SblHelper
     }
     return base unless can_update
 
-    base.merge(test_change_work_priority: 1)
+    base.merge(test_change_item_priority: 1)
   end
 end

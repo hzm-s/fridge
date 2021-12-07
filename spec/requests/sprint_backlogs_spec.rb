@@ -38,7 +38,7 @@ RSpec.describe 'sprint_backlogs' do
   end
 
   describe 'Permission of actions' do
-    let!(:issue) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1, assign: true) }
+    let!(:pbi) { add_pbi(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1, assign: true) }
 
     context 'when PO' do
       before { sign_in(user_account_po) }
@@ -47,9 +47,9 @@ RSpec.describe 'sprint_backlogs' do
         get sprint_backlog_path(product.id)
 
         aggregate_failures do
-          expect(response.body).to include data_attr 'test-revert-issue', 'true'
-          expect(response.body).to include data_attr 'test-accept-issue', 'true'
-          expect(response.body).to include 'test-change-work-priority'
+          expect(response.body).to include data_attr 'test-revert-item', 'true'
+          #expect(response.body).to include data_attr 'test-accept-item', 'true'
+          expect(response.body).to include 'test-change-item-priority'
         end
       end
     end
@@ -61,9 +61,9 @@ RSpec.describe 'sprint_backlogs' do
         get sprint_backlog_path(product.id)
 
         aggregate_failures do
-          expect(response.body).to include data_attr 'test-revert-issue', 'false'
-          expect(response.body).to include data_attr 'test-accept-issue', 'false'
-          expect(response.body).to_not include 'test-change-work-priority'
+          expect(response.body).to include data_attr 'test-revert-item', 'false'
+          #expect(response.body).to include data_attr 'test-accept-item', 'false'
+          expect(response.body).to_not include 'test-change-item-priority'
         end
       end
     end
@@ -75,16 +75,16 @@ RSpec.describe 'sprint_backlogs' do
         get sprint_backlog_path(product.id)
 
         aggregate_failures do
-          expect(response.body).to include data_attr 'test-revert-issue', 'true'
-          expect(response.body).to include data_attr 'test-accept-issue', 'false'
-          expect(response.body).to include 'test-change-work-priority'
+          expect(response.body).to include data_attr 'test-revert-item', 'true'
+          #expect(response.body).to include data_attr 'test-accept-item', 'false'
+          expect(response.body).to include 'test-change-item-priority'
         end
       end
     end
   end
 
-  describe 'Issue status' do
-    let!(:issue) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1, assign: true) }
+  xdescribe 'Sbi status' do
+    let!(:pbi) { plan_pbi(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1, assign: true) }
 
     before { sign_in(user_account_po) }
 
@@ -93,21 +93,21 @@ RSpec.describe 'sprint_backlogs' do
         get sprint_backlog_path(product.id)
 
         aggregate_failures do
-          expect(response.body).to include "test-task-list-#{issue.id}"
-          expect(response.body).to include data_attr 'test-revert-issue', 'true'
+          expect(response.body).to include "test-task-list-#{pbi.id}"
+          expect(response.body).to include data_attr 'test-revert-pbi', 'true'
         end
       end
     end
 
     context 'when accepted' do
-      before { accept_work(issue) }
+      before { accept_work(pbi) }
 
       it do
         get sprint_backlog_path(product.id)
 
         aggregate_failures do
-          expect(response.body).to include "test-task-list-#{issue.id}"
-          expect(response.body).to include data_attr 'test-revert-issue', 'true'
+          expect(response.body).to include "test-task-list-#{pbi.id}"
+          expect(response.body).to include data_attr 'test-revert-pbi', 'true'
         end
       end
     end

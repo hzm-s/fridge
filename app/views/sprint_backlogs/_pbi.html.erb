@@ -1,0 +1,28 @@
+<div class="sbi-pbi__container" test-sbi-<%= pbi.id %>="1">
+  <div class="sbi-pbi__primary">
+    <span class="sbi-pbi__type">
+      <%= pbl_item_type_icon(pbi.type) %>
+    </span>
+    <%= simple_format(pbi.description, class: 'sbi-pbi__content') %>
+    <%= render partial: 'item_menu', locals: { item: item, pbi: pbi } %>
+  </div>
+  <%# if item.accepted? %>
+  <% if false %>
+    <div class="sbl-item__accepted-status">
+      <i class="fas fa-check-circle sbl-item__accepted-status-icon"></i>
+      <span>
+        <%=t 'domain.pbi.statuses.accepted' %>
+      </span>
+    </div>
+  <% else %>
+    <% if pbi.criteria.any? %>
+      <ul class="sbi-pbi__ac-list">
+        <% pbi.criteria.each do |c| %>
+          <li class="sbi-pbi__ac-item">
+            <%= c.content %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  <% end %>
+</div>

@@ -3,11 +3,11 @@
     <i class="fas fa-grip-vertical"></i>
   </span>
   <div class="sbl-item__body">
-    <div class="sbl-item__issue">
-      <%= render partial: 'issue', locals: { item: item, issue: item.pbi } %>
+    <div class="sbl-item__pbi">
+      <%= render partial: 'pbi', locals: { item: item, pbi: item.pbi } %>
     </div>
     <div class="sbl-item__task">
-      <%#= render partial: 'task_list', locals: { issue_id: item.pbi_id, tasks: item.tasks } %>
+      <%= render partial: 'task_list', locals: { issue_id: item.pbi_id, tasks: item.tasks } %>
       <%= render partial: 'task_form', locals: { issue_id: item.pbi_id, form: nil } %>
     </div>
   </div>
