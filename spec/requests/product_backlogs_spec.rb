@@ -12,8 +12,8 @@ RSpec.describe 'product_backlogs' do
     )
   end
 
-  let!(:issue_preparation) { plan_issue(product.id, release: 1) }
-  let!(:issue_ready) { plan_issue(product.id, release: 1, acceptance_criteria: %w(AC1), size: 3 ) }
+  let!(:pbi_preparation) { add_pbi(product.id, release: 1) }
+  let!(:pbi_ready) { add_pbi(product.id, release: 1, acceptance_criteria: %w(AC1), size: 3 ) }
 
   context 'when PO' do
     before { sign_in(user_account_po) }
@@ -22,15 +22,15 @@ RSpec.describe 'product_backlogs' do
       get product_backlog_path(product_id: product.id)
 
       aggregate_failures do
-        expect(response.body).to include 'test-update-issues-in-release-1'
+        expect(response.body).to include 'test-update-items-in-release-1'
         expect(response.body).to include 'test-new-release'
         expect(response.body).to include 'test-update-release-1'
-        expect(response.body).to include data_attr "test-remove-issue-#{issue_preparation.id}", true
-        expect(response.body).to include data_attr "test-remove-issue-#{issue_ready.id}", true
-        expect(response.body).to include data_attr "test-assign-issue-to-sprint-#{issue_preparation.id}", false
-        expect(response.body).to include data_attr "test-assign-issue-to-sprint-#{issue_ready.id}", true
-        expect(response.body).to_not include "test-estimate-issue-#{issue_preparation.id}"
-        expect(response.body).to_not include "test-estimate-issue-#{issue_ready.id}"
+        expect(response.body).to include data_attr "test-remove-pbi-#{pbi_preparation.id}", true
+        expect(response.body).to include data_attr "test-remove-pbi-#{pbi_ready.id}", true
+        expect(response.body).to include data_attr "test-assign-pbi-to-sprint-#{pbi_preparation.id}", false
+        expect(response.body).to include data_attr "test-assign-pbi-to-sprint-#{pbi_ready.id}", true
+        expect(response.body).to_not include "test-estimate-pbi-#{pbi_preparation.id}"
+        expect(response.body).to_not include "test-estimate-pbi-#{pbi_ready.id}"
       end
     end
   end
@@ -42,15 +42,15 @@ RSpec.describe 'product_backlogs' do
       get product_backlog_path(product_id: product.id)
 
       aggregate_failures do
-        expect(response.body).to_not include 'test-update-issues-in-release-1'
+        expect(response.body).to_not include 'test-update-items-in-release-1'
         expect(response.body).to_not include 'test-new-release'
         expect(response.body).to_not include 'test-update-release-1'
-        expect(response.body).to include data_attr "test-remove-issue-#{issue_preparation.id}", false
-        expect(response.body).to include data_attr "test-remove-issue-#{issue_ready.id}", false
-        expect(response.body).to include data_attr "test-assign-issue-to-sprint-#{issue_preparation.id}", false
-        expect(response.body).to include data_attr "test-assign-issue-to-sprint-#{issue_ready.id}", false
-        expect(response.body).to include "test-estimate-issue-#{issue_preparation.id}"
-        expect(response.body).to include "test-estimate-issue-#{issue_ready.id}"
+        expect(response.body).to include data_attr "test-remove-pbi-#{pbi_preparation.id}", false
+        expect(response.body).to include data_attr "test-remove-pbi-#{pbi_ready.id}", false
+        expect(response.body).to include data_attr "test-assign-pbi-to-sprint-#{pbi_preparation.id}", false
+        expect(response.body).to include data_attr "test-assign-pbi-to-sprint-#{pbi_ready.id}", false
+        expect(response.body).to include "test-estimate-pbi-#{pbi_preparation.id}"
+        expect(response.body).to include "test-estimate-pbi-#{pbi_ready.id}"
       end
     end
   end

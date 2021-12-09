@@ -63,7 +63,7 @@ RSpec.describe 'pbis' do
       end
     end
 
-    xcontext 'when wip' do
+    context 'when wip' do
       it do
         pbi = add_pbi(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1, assign: true)
 
