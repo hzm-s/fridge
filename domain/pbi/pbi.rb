@@ -94,6 +94,13 @@ module Pbi
       @status = @status.assign_to_sprint
     end
 
+    sig {params(roles: Team::RoleSet).void}
+    def revert_from_sprint(roles)
+      Activity.check_permission!(:revert_pbi_from_sprint, [roles])
+
+      @status = @status.revert_from_sprint
+    end
+
     private
 
     sig {void}

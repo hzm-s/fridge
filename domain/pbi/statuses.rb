@@ -42,6 +42,13 @@ module Pbi
       Wip
     end
 
+    sig {returns(T.self_type)}
+    def revert_from_sprint
+      raise NotAssigned unless self == Wip
+
+      Ready
+    end
+
     sig {override.returns(Activity::Set)}
     def available_activities
       activities =

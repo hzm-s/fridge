@@ -94,17 +94,32 @@ module Pbi
       end
     end
 
-    describe 'Assign to sprint' do
-      let(:pbi) do
-        described_class.draft(product_id, Types.from_string('feature'), description).tap do |pbi|
-          pbi.prepare_acceptance_criteria(criteria)
-          pbi.estimate(dev_role, point)
-        end
+    let(:ready_pbi) do
+      described_class.draft(product_id, Types.from_string('feature'), description).tap do |pbi|
+        pbi.prepare_acceptance_criteria(criteria)
+        pbi.estimate(dev_role, point)
       end
+    end
+
+    describe 'Assign to sprint' do
+      let(:pbi) { ready_pbi }
 
       it do
         pbi.assign_to_sprint(po_role)
         expect(pbi.status).to eq Statuses.from_string('wip')
+      end
+
+      it { expect_activity_permission_error([dev_role]) { |role| pbi.assign_to_sprint(role) } }
+    end
+
+    describe 'Revert from sprint' do
+      let(:pbi) { ready_pbi }
+
+      before { pbi.assign_to_sprint(po_role) }
+
+      it do
+        pbi.revert_from_sprint(po_role)
+        expect(pbi.status).to eq Statuses.from_string('ready')
       end
 
       it { expect_activity_permission_error([dev_role]) { |role| pbi.assign_to_sprint(role) } }

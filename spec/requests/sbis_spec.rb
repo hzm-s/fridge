@@ -38,18 +38,19 @@ RSpec.describe 'sbis' do
     end
   end
 
-  xdescribe 'Destroy' do
+  describe 'Destroy' do
     before { sign_in(user_account) }
 
     let!(:pbi) { add_pbi(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1, assign: true) }
+    let(:sbi) { resolve_sbi(pbi.id) }
 
     it do
-      delete product_sbi_path(product_id: product.id.to_s, id: pbi.id.to_s)
+      delete product_sbi_path(product_id: product.id.to_s, id: sbi.id.to_s)
 
       aggregate_failures do
         follow_redirect!
         expect(response.body).to include I18n.t('feedbacks.pbi.revert_from_sprint')
-        expect(response.body).to_not include "test-sbi-#{pbi.id}"
+        expect(response.body).to_not include "test-sbi-#{sbi.id}"
 
         get product_backlog_path(product.id)
         expect(response.body).to include "test-pbi-#{pbi.id}-ready"
@@ -57,6 +58,6 @@ RSpec.describe 'sbis' do
     end
   end
 
-  #it_behaves_like('sign_in_guard') { let(:r) { post product_sbis_path(product_id: 1, format: :js) } }
-  #it_behaves_like('sign_in_guard') { let(:r) { delete product_sbi_path(product_id: 1, id: 1) } }
+  it_behaves_like('sign_in_guard') { let(:r) { post product_sbis_path(product_id: 1, format: :js) } }
+  it_behaves_like('sign_in_guard') { let(:r) { delete product_sbi_path(product_id: 1, id: 1) } }
 end

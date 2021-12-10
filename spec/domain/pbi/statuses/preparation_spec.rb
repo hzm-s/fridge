@@ -39,7 +39,13 @@ module Pbi
       describe 'assign to sprint' do
         it do
           status = described_class.assign_to_sprint
-          expect(status).to eq Preparation
+          expect(status).to eq described_class
+        end
+      end
+
+      describe 'revert from sprint' do
+        it do
+          expect { described_class.revert_from_sprint }.to raise_error(NotAssigned)
         end
       end
     end

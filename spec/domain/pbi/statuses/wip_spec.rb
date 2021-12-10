@@ -29,6 +29,13 @@ module Pbi
           expect(status).to eq described_class
         end
       end
+
+      describe 'revert from sprint' do
+        it do
+          status = described_class.revert_from_sprint
+          expect(status).to eq Ready
+        end
+      end
     end
   end
 end

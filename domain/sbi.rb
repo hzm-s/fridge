@@ -2,6 +2,7 @@
 require 'sorbet-runtime'
 
 module Sbi
+  class NotFound < StandardError; end
   class InvalidTaskStatus < StandardError; end
   class InvalidTaskStatusUpdate < StandardError; end
 

@@ -43,6 +43,12 @@ module Pbi
           expect(status).to eq Wip
         end
       end
+
+      describe 'revert from sprint' do
+        it do
+          expect { described_class.revert_from_sprint }.to raise_error(NotAssigned)
+        end
+      end
     end
   end
 end
