@@ -10,28 +10,24 @@ module Sbi
 
       sig {params(pbi_id: Pbi::Id).returns(T.attached_class)}
       def plan(pbi_id)
-        new(Id.create, pbi_id, TaskList.new)
+        new(pbi_id, TaskList.new)
       end
 
-      sig {params(id: Id, pbi_id: Pbi::Id, tasks: TaskList).returns(T.attached_class)}
-      def from_repository(id, pbi_id, tasks)
-        new(id, pbi_id, tasks)
+      sig {params(id: Pbi::Id, tasks: TaskList).returns(T.attached_class)}
+      def from_repository(id, tasks)
+        new(id, tasks)
       end
     end
 
-    sig {returns(Id)}
-    attr_reader :id
-
     sig {returns(Pbi::Id)}
-    attr_reader :pbi_id
+    attr_reader :id
 
     sig {returns(TaskList)}
     attr_reader :tasks
 
-    sig {params(id: Id, pbi_id: Pbi::Id, tasks: TaskList).void}
-    def initialize(id, pbi_id, tasks)
+    sig {params(id: Pbi::Id, tasks: TaskList).void}
+    def initialize(id, tasks)
       @id = id
-      @pbi_id = pbi_id
       @tasks = tasks
     end
   end

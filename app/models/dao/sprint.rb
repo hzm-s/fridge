@@ -22,7 +22,7 @@ class Dao::Sprint < ApplicationRecord
   private
 
   def read_items
-    items.map { |i| Sbi::Id.from_string(i) }
+    items.map { |i| Pbi::Id.from_string(i) }
       .then { |ids| Shared::SortableList.new(ids) }
   end
 end

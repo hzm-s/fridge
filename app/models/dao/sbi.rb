@@ -10,7 +10,7 @@ class Dao::Sbi < ApplicationRecord
 
   def write(sbi)
     self.attributes = {
-      dao_pbi_id: sbi.pbi_id.to_s,
+      dao_pbi_id: sbi.id.to_s,
     }
 
     self.tasks.each(&:mark_for_destruction)
@@ -21,7 +21,6 @@ class Dao::Sbi < ApplicationRecord
 
   def read
     Sbi::Sbi.from_repository(
-      Sbi::Id.from_string(id),
       Pbi::Id.from_string(dao_pbi_id),
       read_tasks,
     )

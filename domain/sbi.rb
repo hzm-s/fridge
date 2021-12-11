@@ -6,7 +6,6 @@ module Sbi
   class InvalidTaskStatus < StandardError; end
   class InvalidTaskStatusUpdate < StandardError; end
 
-  autoload :Id, 'sbi/id'
   autoload :Sbi, 'sbi/sbi'
   autoload :SbiRepository, 'sbi/sbi_repository'
   autoload :Task, 'sbi/task'

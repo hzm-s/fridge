@@ -22,21 +22,21 @@ RSpec.describe SprintRepository::AR do
   end
 
   describe 'Update' do
-    let(:sbi_a) { Sbi::Id.create }
-    let(:sbi_b) { Sbi::Id.create }
-    let(:sbi_c) { Sbi::Id.create }
+    let(:pbi_a) { Pbi::Id.create }
+    let(:pbi_b) { Pbi::Id.create }
+    let(:pbi_c) { Pbi::Id.create }
     let(:po_roles) { team_roles(:po) }
 
     it do
       sprint = Sprint::Sprint.start(product.id, 11)
       described_class.store(sprint)
 
-      sprint.update_items(po_roles, sprint.items.append(sbi_a))
+      sprint.update_items(po_roles, sprint.items.append(pbi_a))
       expect { described_class.store(sprint) }
         .to change { Dao::Sprint.count }.by(0)
 
-      sprint.update_items(po_roles, sprint.items.append(sbi_b))
-      sprint.update_items(po_roles, sprint.items.append(sbi_c))
+      sprint.update_items(po_roles, sprint.items.append(pbi_b))
+      sprint.update_items(po_roles, sprint.items.append(pbi_c))
       expect { described_class.store(sprint) }
         .to change { Dao::Sprint.count }.by(0)
 
@@ -45,7 +45,7 @@ RSpec.describe SprintRepository::AR do
         expect(dao.dao_product_id).to eq product.id.to_s
         expect(dao.number).to eq 11
         expect(dao.is_finished).to be false
-        expect(dao.items).to eq [sbi_a, sbi_b, sbi_c].map(&:to_s)
+        expect(dao.items).to eq [pbi_a, pbi_b, pbi_c].map(&:to_s)
       end
     end
   end

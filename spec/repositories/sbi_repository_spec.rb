@@ -14,9 +14,19 @@ RSpec.describe SbiRepository::AR do
 
       aggregate_failures do
         dao = Dao::Sbi.last
-        expect(dao.id).to eq sbi.id.to_s
-        expect(dao.dao_pbi_id).to eq sbi.pbi_id.to_s
+        expect(dao.dao_pbi_id).to eq sbi.id.to_s
       end
+    end
+  end
+
+  describe 'Update' do
+    it do
+      sbi = Sbi::Sbi.plan(pbi.id)
+
+      described_class.store(sbi)
+
+      expect { described_class.store(sbi) }
+        .to change { Dao::Sbi.count }.by(0)
     end
   end
 end

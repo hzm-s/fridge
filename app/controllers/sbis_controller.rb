@@ -23,7 +23,7 @@ class SbisController < ApplicationController
     RevertPbiFromSprintUsecase.perform(
       Product::Id.from_string(current_product_id),
       current_team_member_roles,
-      Sbi::Id.from_string(params[:id]),
+      Pbi::Id.from_string(params[:id]),
     )
     redirect_to sprint_backlog_path(product_id: current_product_id), flash: flash_success('pbi.revert_from_sprint')
   end

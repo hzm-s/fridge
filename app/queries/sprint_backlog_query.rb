@@ -2,11 +2,11 @@
 module SprintBacklogQuery
   class << self
     def call(sprint_id)
-      sbi_ids = Dao::Sprint.find_by(id: sprint_id).items
-      sbis = Dao::Sbi.where(id: sbi_ids)
+      pbi_ids = Dao::Sprint.find_by(id: sprint_id).items
+      sbis = Dao::Sbi.where(dao_pbi_id: pbi_ids)
 
-      sbi_ids
-        .map { |id| sbis.find { |sbi| sbi.id == id } }
+      pbi_ids
+        .map { |pbi_id| sbis.find { |sbi| sbi.dao_pbi_id == pbi_id } }
         .map { |sbi| SprintBacklogItemStruct.new(sbi, PbiStruct.new(sbi.pbi)) }
         .then { |items| SprintBacklogStruct.new(items: items) }
     end

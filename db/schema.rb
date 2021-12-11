@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 2021_05_16_002510) do
     t.index ["dao_product_id"], name: "index_dao_releases_on_dao_product_id"
   end
 
-  create_table "dao_sbis", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "dao_sbis", force: :cascade do |t|
     t.uuid "dao_pbi_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -99,7 +99,7 @@ ActiveRecord::Schema.define(version: 2021_05_16_002510) do
   end
 
   create_table "dao_tasks", force: :cascade do |t|
-    t.uuid "dao_sbi_id"
+    t.bigint "dao_sbi_id"
     t.integer "number", null: false
     t.string "status", null: false
     t.string "content", null: false

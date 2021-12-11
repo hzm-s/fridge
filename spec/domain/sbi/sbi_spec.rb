@@ -10,8 +10,7 @@ module Sbi
         sbi = described_class.plan(pbi_id)
 
         aggregate_failures do
-          expect(sbi.id).to_not be_nil
-          expect(sbi.pbi_id)
+          expect(sbi.id).to eq pbi_id
           expect(sbi.tasks).to be_empty
         end
       end
