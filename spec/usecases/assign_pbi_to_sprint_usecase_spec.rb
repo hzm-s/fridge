@@ -34,13 +34,13 @@ RSpec.describe AssignPbiToSprintUsecase do
     end
   end
 
-  xit do
+  it do
     described_class.perform(product.id, roles, pbi_b.id)
     RevertPbiFromSprintUsecase.perform(product.id, roles, pbi_b.id)
 
     expect {
       described_class.perform(product.id, roles, pbi_b.id)
-    }.to_not change(Dao::Work, :count)
+    }.to_not change(Dao::Sbi, :count)
   end
 
   it do
