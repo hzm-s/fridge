@@ -12,8 +12,5 @@ module Sbi
 
     sig {abstract.params(sbi: Sbi).void}
     def store(sbi); end
-
-    sig {abstract.params(id: Id).void}
-    def remove(id); end
   end
 end

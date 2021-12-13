@@ -21,11 +21,6 @@ module SbiRepository
           dao.save!
         end
       end
-
-      sig {override.params(id: Pbi::Id).void}
-      def remove(id)
-        Dao::Sbi.destroy(id.to_s)
-      end
     end
   end
 end
