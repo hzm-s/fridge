@@ -5,7 +5,7 @@ module Sbi
   RSpec.describe Sbi do
     let(:pbi_id) { Pbi::Id.create }
 
-    context 'Plan' do
+    describe 'Plan' do
       it do
         sbi = described_class.plan(pbi_id)
 
@@ -13,6 +13,21 @@ module Sbi
           expect(sbi.id).to eq pbi_id
           expect(sbi.tasks).to be_empty
         end
+      end
+    end
+
+    describe 'Update tasks' do
+      let(:sbi) { described_class.plan(pbi_id) }
+
+      it do
+        tasks = TaskList.new
+          .append(s_sentence('Task_A'))
+          .append(s_sentence('Task_B'))
+          .append(s_sentence('Task_C'))
+
+        sbi.update_tasks(tasks)
+
+        expect(sbi.tasks).to eq tasks
       end
     end
   end

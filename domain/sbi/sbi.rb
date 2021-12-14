@@ -30,5 +30,10 @@ module Sbi
       @id = id
       @tasks = tasks
     end
+
+    sig {params(tasks: TaskList).void}
+    def update_tasks(tasks)
+      @tasks = tasks
+    end
   end
 end
