@@ -1,7 +1,9 @@
 # typed: false
 module SbiDomainSupport
-  def sbi_list(*sbi_ids)
-    Shared::SortableList.new(sbi_ids)
+  def tasks(contents)
+    contents.reduce(Sbi::TaskList.new) do |list, c|
+      list.append(s_sentence(c))
+    end
   end
 end
 
