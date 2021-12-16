@@ -1,5 +1,5 @@
-<%= content_tag :div, id: "js-task-form-#{issue_id}", class: 'sbi-task__form', data: { "test-task-form-#{issue_id}" => 1 } do %>
-  <%= form_with model: form || new_task_form, scope: :form, url: work_tasks_path(issue_id: issue_id) do |f| %>
+<%= content_tag :div, id: "js-task-form-#{sbi_id}", class: 'sbi-task__form', data: { "test-task-form-#{sbi_id}" => 1 } do %>
+  <%= form_with model: form || new_task_form, scope: :form, url: sbi_tasks_path(sbi_id: sbi_id) do |f| %>
     <div class="d-flex">
       <%= f.text_field :content, class: 'form-control', placeholder: t('.placeholder'), autocomplete: 'off' %>
       <button class="ml-1 btn btn-success btn-lean btn-combined">

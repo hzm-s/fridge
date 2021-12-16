@@ -32,14 +32,14 @@ module SblHelper
     disabled = action.size == 0
 
     button_to(
-      work_task_status_path(global_task_params(task, by: action)),
+      sbi_task_status_path(global_task_params(task, by: action)),
       remote: true,
       method: :patch,
       class: 'sbi-task__status-trigger',
       disabled: disabled,
       data: with_loader({
         task_dom_id(task, "test_#{action}") => 1,
-        "test_task_status_#{task.issue_id}_#{task.number}" => task.status.to_s,
+        "test_task_status_#{task.sbi_id}_#{task.number}" => task.status.to_s,
       })
     ) do
       content_tag(:i, nil, class: sbl_task_status_classes(task.status.to_s))
@@ -63,11 +63,11 @@ module SblHelper
   end
 
   def global_task_params(task, extras = {})
-    { issue_id: task.issue_id, number: task.number }.merge(extras)
+    { sbi_id: task.sbi_id, number: task.number }.merge(extras)
   end
 
   def task_dom_id(task, prefix)
-    "#{prefix}-#{task.issue_id}-#{task.number}"
+    "#{prefix}-#{task.sbi_id}-#{task.number}"
   end
 
   def sbl_sortable_options(product_id, can_update)

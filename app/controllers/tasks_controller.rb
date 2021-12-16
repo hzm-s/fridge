@@ -3,14 +3,14 @@ class TasksController < ApplicationController
   before_action :require_user
 
   def create
-    @issue_id = Issue::Id.from_string(params[:issue_id])
+    @sbi_id = Pbi::Id.from_string(params[:sbi_id])
     @form = TaskForm.new(task_params)
 
     if @form.valid?
-      PlanTaskUsecase.perform(@issue_id, @form.domain_objects[:content])
+      PlanTaskUsecase.perform(@sbi_id, @form.domain_objects[:content])
 
       @form = @form.renew
-      @tasks = TaskListQuery.call(@issue_id.to_s)
+      @tasks = TaskListQuery.call(@sbi_id.to_s)
     else
       render :new
     end

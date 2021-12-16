@@ -7,8 +7,8 @@
       <%= render partial: 'pbi', locals: { item: item, pbi: item.pbi } %>
     </div>
     <div class="sbl-item__task">
-      <%= render partial: 'task_list', locals: { issue_id: item.pbi_id, tasks: item.tasks } %>
-      <%= render partial: 'task_form', locals: { issue_id: item.pbi_id, form: nil } %>
+      <%= render partial: 'task_list', locals: { sbi_id: item.pbi_id, tasks: item.tasks } %>
+      <%= render partial: 'task_form', locals: { sbi_id: item.pbi_id, form: nil } %>
     </div>
   </div>
 <% end %>

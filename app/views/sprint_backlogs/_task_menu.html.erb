@@ -5,7 +5,7 @@
     <i class="fas fa-ellipsis-h"></i>
   <% end -%>
   <div class="dropdown-menu dropdown-menu-right">
-    <%= link_to work_task_status_path(global_task_params(task, by: :suspend_task)), remote: true, method: :patch, class: dropdown_item_classes { can_suspend }, data: { task_dom_id(task, 'test_suspend_task') => can_suspend } do %>
+    <%= link_to sbi_task_status_path(global_task_params(task, by: :suspend_task)), remote: true, method: :patch, class: dropdown_item_classes { can_suspend }, data: { task_dom_id(task, 'test_suspend_task') => can_suspend } do %>
       <i class="fas fa-pause"></i>
       <%=t 'domain.task.suspend_task' %>
     <% end %>
@@ -14,7 +14,7 @@
       <i class="fas fa-edit"></i>
       <%=t 'navs.edit' %>
     <% end %>
-    <%= link_to work_task_path(global_task_params(task)), method: :delete, remote: true, class: 'dropdown-item danger-link', data: { confirm: t('navs.confirm_delete'), 'test_remove_task' => 1 } do %>
+    <%= link_to sbi_task_path(global_task_params(task)), method: :delete, remote: true, class: 'dropdown-item danger-link', data: { confirm: t('navs.confirm_delete'), 'test_remove_task' => 1 } do %>
       <i class="fas fa-trash-alt"></i>
       <%=t 'navs.delete' %>
     <% end %>

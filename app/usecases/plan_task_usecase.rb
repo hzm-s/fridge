@@ -6,16 +6,16 @@ class PlanTaskUsecase < UsecaseBase
 
   sig {void}
   def initialize
-    @repository = T.let(WorkRepository::AR, Work::WorkRepository)
+    @repository = T.let(SbiRepository::AR, Sbi::SbiRepository)
   end
 
-  sig {params(issue_id: Issue::Id, content: Shared::ShortSentence).void}
-  def perform(issue_id, content)
-    work = @repository.find_by_issue_id(issue_id)
+  sig {params(pbi_id: Pbi::Id, content: Shared::ShortSentence).void}
+  def perform(pbi_id, content)
+    sbi = @repository.find_by_id(pbi_id)
 
-    work.tasks.append(content)
-      .then { |tasks| work.update_tasks(tasks) }
+    sbi.tasks.append(content)
+      .then { |tasks| sbi.update_tasks(tasks) }
 
-    @repository.store(work)
+    @repository.store(sbi)
   end
 end
