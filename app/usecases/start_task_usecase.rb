@@ -6,16 +6,16 @@ class StartTaskUsecase < UsecaseBase
 
   sig {void}
   def initialize
-    @repository = T.let(WorkRepository::AR, Work::WorkRepository)
+    @repository = T.let(SbiRepository::AR, Sbi::SbiRepository)
   end
 
-  sig {params(issue_id: Issue::Id, task_number: Integer).void}
-  def perform(issue_id, task_number)
-    work = @repository.find_by_issue_id(issue_id)
+  sig {params(sbi_id: Pbi::Id, task_number: Integer).void}
+  def perform(sbi_id, task_number)
+    sbi = @repository.find_by_id(sbi_id)
 
-    work.tasks.start(task_number)
-      .then { |tasks| work.update_tasks(tasks) }
+    sbi.tasks.start(task_number)
+      .then { |tasks| sbi.update_tasks(tasks) }
 
-    @repository.store(work)
+    @repository.store(sbi)
   end
 end

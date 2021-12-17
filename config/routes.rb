@@ -31,7 +31,7 @@ Rails.application.routes.draw do
     resource :work_priority, only: [:update]
   end
 
-  scope 'works/:issue_id', as: :work do
+  scope 'sbis/:sbi_id', as: :sbi do
     resources :tasks, param: :number, only: [:create, :update, :destroy]
     resources :task_statuses, param: :number, only: [:update]
     resources :start_tasks, param: :number, only: [:create]

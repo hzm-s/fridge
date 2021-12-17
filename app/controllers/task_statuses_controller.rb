@@ -10,9 +10,9 @@ class TaskStatusesController < ApplicationController
   before_action :require_user
 
   def update
-    issue_id = Issue::Id.from_string(params[:issue_id])
+    sbi_id = Pbi::Id.from_string(params[:sbi_id])
     task_number = params[:number].to_i
-    USECASES[params[:by].to_sym].perform(issue_id, task_number)
-    @task = TaskQuery.call(issue_id.to_s, task_number)
+    USECASES[params[:by].to_sym].perform(sbi_id, task_number)
+    @task = TaskQuery.call(sbi_id.to_s, task_number)
   end
 end

@@ -3,15 +3,21 @@ require 'rails_helper'
 
 RSpec.describe StartTaskUsecase do
   let(:product) { create_product }
-  let!(:issue) { plan_issue(product.id, assign: true) }
+  let!(:pbi) { add_pbi(product.id, assign: true) }
 
   it do
-    plan_task(issue.id, %w(Task))
+    plan_task(pbi.id, %w(Task1))
+    plan_task(pbi.id, %w(Task2))
+    plan_task(pbi.id, %w(Task3))
 
-    described_class.perform(issue.id, 1)
+    described_class.perform(pbi.id, 2)
 
-    work = WorkRepository::AR.find_by_issue_id(issue.id)
+    sbi = SbiRepository::AR.find_by_id(pbi.id)
 
-    expect(work.tasks.of(1).status.to_s).to eq 'wip'
+    aggregate_failures do
+      expect(sbi.tasks.of(1).status.to_s).to eq 'todo'
+      expect(sbi.tasks.of(2).status.to_s).to eq 'wip'
+      expect(sbi.tasks.of(3).status.to_s).to eq 'todo'
+    end
   end
 end
