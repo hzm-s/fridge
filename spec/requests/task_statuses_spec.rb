@@ -14,7 +14,7 @@ RSpec.describe '/sbi/:sbi_id/task_statuses' do
     before { sign_in(user_account) }
 
     it do
-      patch sbi_task_status_path(sbi_id: pbi.id, number: 1, by: :start_task, format: :js)
+      patch sbi_task_status_path(pbi_id: pbi.id, number: 1, by: :start_task, format: :js)
       expect(response.body).to include data_attr "test-task-status-#{pbi.id}-1", 'wip', true
     end
   end
@@ -115,5 +115,5 @@ RSpec.describe '/sbi/:sbi_id/task_statuses' do
     end
   end
 
-  it_behaves_like('sign_in_guard') { let(:r) { patch sbi_task_status_path(sbi_id: 1, number: 1, by: :start_task, format: :js) } }
+  it_behaves_like('sign_in_guard') { let(:r) { patch sbi_task_status_path(pbi_id: 1, number: 1, by: :start_task, format: :js) } }
 end

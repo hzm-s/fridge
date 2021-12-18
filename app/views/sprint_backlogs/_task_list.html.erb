@@ -1,4 +1,4 @@
-<%= content_tag :div, id: "js-task-list-#{sbi_id}", class: sbl_task_list_classes(tasks), data: { "test-task-list-#{sbi_id}" => 1 } do %>
+<%= content_tag :div, id: "js-task-list-#{pbi_id}", class: sbl_task_list_classes(tasks), data: { "test-task-list-#{pbi_id}" => 1 } do %>
   <% if tasks.any? %>
       <%= render partial: 'sprint_backlogs/task', collection: tasks %>
   <% end %>

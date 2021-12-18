@@ -6,16 +6,16 @@ class DropTaskUsecase < UsecaseBase
 
   sig {void}
   def initialize
-    @repository = T.let(WorkRepository::AR, Work::WorkRepository)
+    @repository = T.let(SbiRepository::AR, Sbi::SbiRepository)
   end
 
-  sig {params(issue_id: Issue::Id, task_number: Integer).void}
-  def perform(issue_id, task_number)
-    work = @repository.find_by_issue_id(issue_id)
+  sig {params(pbi_id: Pbi::Id, task_number: Integer).void}
+  def perform(pbi_id, task_number)
+    sbi = @repository.find_by_pbi_id(pbi_id)
 
-    work.tasks.remove(task_number)
-      .then { |tasks| work.update_tasks(tasks) }
+    sbi.tasks.remove(task_number)
+      .then { |tasks| sbi.update_tasks(tasks) }
 
-    @repository.store(work)
+    @repository.store(sbi)
   end
 end

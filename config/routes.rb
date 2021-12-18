@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     resource :plan, only: [:update]
 
     # TODO: /sprints/:sprint_id/items
-    resources :sbis, only: [:create, :destroy]
+    resources :sbis, param: :pbi_id, only: [:create, :destroy]
   end
 
   resources :pbis, only: [:edit, :update, :destroy] do
@@ -31,7 +31,7 @@ Rails.application.routes.draw do
     resource :work_priority, only: [:update]
   end
 
-  scope 'sbis/:sbi_id', as: :sbi do
+  scope 'sbis/:pbi_id', as: :sbi do
     resources :tasks, param: :number, only: [:create, :update, :destroy]
     resources :task_statuses, param: :number, only: [:update]
     resources :start_tasks, param: :number, only: [:create]

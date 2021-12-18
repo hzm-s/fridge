@@ -9,9 +9,9 @@ class StartTaskUsecase < UsecaseBase
     @repository = T.let(SbiRepository::AR, Sbi::SbiRepository)
   end
 
-  sig {params(sbi_id: Pbi::Id, task_number: Integer).void}
-  def perform(sbi_id, task_number)
-    sbi = @repository.find_by_id(sbi_id)
+  sig {params(pbi_id: Pbi::Id, task_number: Integer).void}
+  def perform(pbi_id, task_number)
+    sbi = @repository.find_by_pbi_id(pbi_id)
 
     sbi.tasks.start(task_number)
       .then { |tasks| sbi.update_tasks(tasks) }

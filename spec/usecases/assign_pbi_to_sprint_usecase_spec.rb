@@ -21,9 +21,9 @@ RSpec.describe AssignPbiToSprintUsecase do
     stored_pbi_a = PbiRepository::AR.find_by_id(pbi_a.id)
     stored_pbi_b = PbiRepository::AR.find_by_id(pbi_b.id)
     stored_pbi_c = PbiRepository::AR.find_by_id(pbi_c.id)
-    sbi_a = SbiRepository::AR.find_by_id(pbi_a.id)
-    sbi_b = SbiRepository::AR.find_by_id(pbi_b.id)
-    sbi_c = SbiRepository::AR.find_by_id(pbi_c.id)
+    sbi_a = SbiRepository::AR.find_by_pbi_id(pbi_a.id)
+    sbi_b = SbiRepository::AR.find_by_pbi_id(pbi_b.id)
+    sbi_c = SbiRepository::AR.find_by_pbi_id(pbi_c.id)
 
     aggregate_failures do
       expect(stored_sprint.items).to eq pbi_list(pbi_c.id, pbi_a.id, pbi_b.id)

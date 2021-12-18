@@ -6,16 +6,16 @@ class ModifyTaskUsecase < UsecaseBase
 
   sig {void}
   def initialize
-    @repository = T.let(WorkRepository::AR, Work::WorkRepository)
+    @repository = T.let(SbiRepository::AR, Sbi::SbiRepository)
   end
 
-  sig {params(issue_id: Issue::Id, task_number: Integer, content: Shared::ShortSentence).void}
-  def perform(issue_id, task_number, content)
-    work = @repository.find_by_issue_id(issue_id)
+  sig {params(pbi_id: Pbi::Id, task_number: Integer, content: Shared::ShortSentence).void}
+  def perform(pbi_id, task_number, content)
+    sbi = @repository.find_by_pbi_id(pbi_id)
 
-    work.tasks.modify_content(task_number, content)
-      .then { |tasks| work.update_tasks(tasks) }
+    sbi.tasks.modify_content(task_number, content)
+      .then { |tasks| sbi.update_tasks(tasks) }
 
-    @repository.store(work)
+    @repository.store(sbi)
   end
 end

@@ -44,7 +44,7 @@ RSpec.describe 'sbis' do
     let!(:pbi) { add_pbi(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1, assign: true) }
 
     it do
-      delete product_sbi_path(product_id: product.id.to_s, id: pbi.id.to_s)
+      delete product_sbi_path(product_id: product.id.to_s, pbi_id: pbi.id.to_s)
 
       aggregate_failures do
         follow_redirect!
@@ -58,5 +58,5 @@ RSpec.describe 'sbis' do
   end
 
   it_behaves_like('sign_in_guard') { let(:r) { post product_sbis_path(product_id: 1, format: :js) } }
-  it_behaves_like('sign_in_guard') { let(:r) { delete product_sbi_path(product_id: 1, id: 1) } }
+  it_behaves_like('sign_in_guard') { let(:r) { delete product_sbi_path(product_id: 1, pbi_id: 1) } }
 end

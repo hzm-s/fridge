@@ -12,7 +12,7 @@ RSpec.describe StartTaskUsecase do
 
     described_class.perform(pbi.id, 2)
 
-    sbi = SbiRepository::AR.find_by_id(pbi.id)
+    sbi = SbiRepository::AR.find_by_pbi_id(pbi.id)
 
     aggregate_failures do
       expect(sbi.tasks.of(1).status.to_s).to eq 'todo'

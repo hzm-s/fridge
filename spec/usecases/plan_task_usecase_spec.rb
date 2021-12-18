@@ -10,7 +10,7 @@ RSpec.describe PlanTaskUsecase do
     described_class.perform(pbi.id, s_sentence('Task2'))
     described_class.perform(pbi.id, s_sentence('Task3'))
 
-    sbi = SbiRepository::AR.find_by_id(pbi.id)
+    sbi = SbiRepository::AR.find_by_pbi_id(pbi.id)
 
     aggregate_failures do
       expect(sbi.tasks.of(1).content.to_s).to eq 'Task1'

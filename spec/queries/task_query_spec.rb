@@ -11,7 +11,7 @@ RSpec.describe TaskQuery do
     task = described_class.call(pbi.id.to_s, 3)
 
     aggregate_failures do
-      expect(task.sbi_id).to eq pbi.id.to_s
+      expect(task.pbi_id).to eq pbi.id.to_s
       expect(task.number).to eq 3
       expect(task.content).to eq 'Task3'
     end

@@ -1,11 +1,11 @@
 # typed: false
 class TaskStruct < SimpleDelegator
-  attr_reader :sbi_id, :status
+  attr_reader :pbi_id, :status
 
-  def initialize(sbi_id, task)
+  def initialize(pbi_id, task)
     super(task)
 
-    @sbi_id = sbi_id
+    @pbi_id = pbi_id
     @status = Work::TaskStatus.from_string(task.status)
   end
 

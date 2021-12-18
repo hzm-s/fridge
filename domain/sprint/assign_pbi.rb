@@ -20,9 +20,9 @@ module Sprint
     def assign(roles, sprint, pbi)
       raise NotStarted unless sprint
 
-      sbi = Sbi::Sbi.plan(pbi.id)
-      sprint.update_items(roles, sprint.items.append(sbi.id))
+      sprint.update_items(roles, sprint.items.append(pbi.id))
       pbi.assign_to_sprint(roles)
+      sbi = Sbi::Sbi.plan(pbi.id)
 
       @pbi_repository.store(pbi)
       @sprint_repository.store(sprint)

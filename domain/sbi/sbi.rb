@@ -13,21 +13,21 @@ module Sbi
         new(pbi_id, TaskList.new)
       end
 
-      sig {params(id: Pbi::Id, tasks: TaskList).returns(T.attached_class)}
-      def from_repository(id, tasks)
-        new(id, tasks)
+      sig {params(pbi_id: Pbi::Id, tasks: TaskList).returns(T.attached_class)}
+      def from_repository(pbi_id, tasks)
+        new(pbi_id, tasks)
       end
     end
 
     sig {returns(Pbi::Id)}
-    attr_reader :id
+    attr_reader :pbi_id
 
     sig {returns(TaskList)}
     attr_reader :tasks
 
-    sig {params(id: Pbi::Id, tasks: TaskList).void}
-    def initialize(id, tasks)
-      @id = id
+    sig {params(pbi_id: Pbi::Id, tasks: TaskList).void}
+    def initialize(pbi_id, tasks)
+      @pbi_id = pbi_id
       @tasks = tasks
     end
 

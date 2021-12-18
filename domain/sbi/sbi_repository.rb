@@ -7,8 +7,8 @@ module Sbi
     extend T::Helpers
     interface!
 
-    sig {abstract.params(id: Pbi::Id).returns(Sbi)}
-    def find_by_id(id); end
+    sig {abstract.params(pbi_id: Pbi::Id).returns(Sbi)}
+    def find_by_pbi_id(pbi_id); end
 
     sig {abstract.params(sbi: Sbi).void}
     def store(sbi); end
