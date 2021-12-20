@@ -19,13 +19,13 @@ RSpec.describe '/sbi/:sbi_id/task_statuses' do
     end
   end
 
-  xdescribe 'Suspend' do
+  describe 'Suspend' do
     before { sign_in(user_account) }
-    before { start_task(issue.id, 1) }
+    before { start_task(pbi.id, 1) }
 
     it do
-      patch work_task_status_path(issue_id: issue.id, number: 1, by: :suspend_task, format: :js)
-      expect(response.body).to include data_attr "test-task-status-#{issue.id}-1", 'wait', true
+      patch sbi_task_status_path(pbi_id: pbi.id, number: 1, by: :suspend_task, format: :js)
+      expect(response.body).to include data_attr "test-task-status-#{pbi.id}-1", 'wait', true
     end
   end
 
