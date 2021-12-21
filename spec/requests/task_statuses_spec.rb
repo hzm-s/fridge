@@ -29,17 +29,17 @@ RSpec.describe '/sbi/:sbi_id/task_statuses' do
     end
   end
 
-  xdescribe 'Resume' do
+  describe 'Resume' do
     before { sign_in(user_account) }
 
     before do
-      start_task(issue.id, 1)
-      suspend_task(issue.id, 1)
+      start_task(pbi.id, 1)
+      suspend_task(pbi.id, 1)
     end
 
     it do
-      patch work_task_status_path(issue_id: issue.id, number: 1, by: :resume_task, format: :js)
-      expect(response.body).to include data_attr "test-task-status-#{issue.id}-1", 'wip', true
+      patch sbi_task_status_path(pbi_id: pbi.id, number: 1, by: :resume_task, format: :js)
+      expect(response.body).to include data_attr "test-task-status-#{pbi.id}-1", 'wip', true
     end
   end
 
@@ -53,7 +53,7 @@ RSpec.describe '/sbi/:sbi_id/task_statuses' do
     end
   end
 
-  xdescribe 'Available actions' do
+  describe 'Available actions' do
     before { sign_in(user_account) }
 
     subject do
@@ -64,52 +64,52 @@ RSpec.describe '/sbi/:sbi_id/task_statuses' do
     context 'when todo' do
       it do
         aggregate_failures do
-          expect(subject).to include %Q(test-start-task-#{issue.id}-1)
-          expect(subject).to_not include %Q(test-complete-task-#{issue.id}-1)
-          expect(subject).to_not include %Q(test-resume-task-#{issue.id}-1)
-          expect(subject).to include data_attr "test-suspend-task-#{issue.id}-1", false
-          expect(subject).to include data_attr "test-update-task-#{issue.id}-1", true
+          expect(subject).to include %Q(test-start-task-#{pbi.id}-1)
+          expect(subject).to_not include %Q(test-complete-task-#{pbi.id}-1)
+          expect(subject).to_not include %Q(test-resume-task-#{pbi.id}-1)
+          expect(subject).to include data_attr "test-suspend-task-#{pbi.id}-1", false
+          expect(subject).to include data_attr "test-update-task-#{pbi.id}-1", true
         end
       end
     end
 
     context 'when wip' do
       it do
-        start_task(issue.id, 1)
+        start_task(pbi.id, 1)
         aggregate_failures do
-          expect(subject).to_not include %Q(test-start-task-#{issue.id}-1)
-          expect(subject).to include %Q(test-complete-task-#{issue.id}-1)
-          expect(subject).to_not include %Q(test-resume-task-#{issue.id}-1)
-          expect(subject).to include data_attr "test-suspend-task-#{issue.id}-1", true
-          expect(subject).to include data_attr "test-update-task-#{issue.id}-1", true
+          expect(subject).to_not include %Q(test-start-task-#{pbi.id}-1)
+          expect(subject).to include %Q(test-complete-task-#{pbi.id}-1)
+          expect(subject).to_not include %Q(test-resume-task-#{pbi.id}-1)
+          expect(subject).to include data_attr "test-suspend-task-#{pbi.id}-1", true
+          expect(subject).to include data_attr "test-update-task-#{pbi.id}-1", true
         end
       end
     end
 
     context 'when wait' do
       it do
-        start_task(issue.id, 1)
-        suspend_task(issue.id, 1)
+        start_task(pbi.id, 1)
+        suspend_task(pbi.id, 1)
         aggregate_failures do
-          expect(subject).to_not include %Q(test-start-task-#{issue.id}-1)
-          expect(subject).to_not include %Q(test-complete-task-#{issue.id}-1)
-          expect(subject).to include %Q(test-resume-task-#{issue.id}-1)
-          expect(subject).to include data_attr "test-suspend-task-#{issue.id}-1", false
-          expect(subject).to include data_attr "test-update-task-#{issue.id}-1", true
+          expect(subject).to_not include %Q(test-start-task-#{pbi.id}-1)
+          expect(subject).to_not include %Q(test-complete-task-#{pbi.id}-1)
+          expect(subject).to include %Q(test-resume-task-#{pbi.id}-1)
+          expect(subject).to include data_attr "test-suspend-task-#{pbi.id}-1", false
+          expect(subject).to include data_attr "test-update-task-#{pbi.id}-1", true
         end
       end
     end
 
     context 'when done' do
       it do
-        start_task(issue.id, 1)
-        complete_task(issue.id, 1)
+        start_task(pbi.id, 1)
+        complete_task(pbi.id, 1)
         aggregate_failures do
-          expect(subject).to_not include %Q(test-start-task-#{issue.id}-1)
-          expect(subject).to_not include %Q(test-complete-task-#{issue.id}-1)
-          expect(subject).to_not include %Q(test-resume-task-#{issue.id}-1)
-          expect(subject).to include data_attr "test-suspend-task-#{issue.id}-1", false
-          expect(subject).to include data_attr "test-update-task-#{issue.id}-1", false
+          expect(subject).to_not include %Q(test-start-task-#{pbi.id}-1)
+          expect(subject).to_not include %Q(test-complete-task-#{pbi.id}-1)
+          expect(subject).to_not include %Q(test-resume-task-#{pbi.id}-1)
+          expect(subject).to include data_attr "test-suspend-task-#{pbi.id}-1", false
+          expect(subject).to include data_attr "test-update-task-#{pbi.id}-1", false
         end
       end
     end
