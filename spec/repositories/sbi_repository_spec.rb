@@ -20,7 +20,7 @@ RSpec.describe SbiRepository::AR do
     end
   end
 
-  xdescribe 'Update' do
+  describe 'Update' do
     it do
       sbi = Sbi::Sbi.plan(pbi.id)
       described_class.store(sbi)

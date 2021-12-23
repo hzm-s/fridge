@@ -8,23 +8,18 @@ RSpec.describe 'current_sprint/:product_id/work_priority' do
   describe 'Update' do
     before { sign_in(user_account) }
 
-    let!(:issue_a) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1) }
-    let!(:issue_b) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1) }
-    let!(:issue_c) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1) }
-    let(:sprint) { start_sprint(product.id) }
-
-    before do
-      sprint
-      assign_issue_to_sprint(product.id, issue_a.id, issue_b.id, issue_c.id)
-    end
+    let!(:pbi_a) { add_pbi(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1, assign: true) }
+    let!(:pbi_b) { add_pbi(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1, assign: true) }
+    let!(:pbi_c) { add_pbi(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1, assign: true) }
+    let(:sprint) { SprintRepository::AR.current(product.id) }
 
     it do
       patch current_sprint_work_priority_path(product_id: product.id.to_s, format: :json),
-        params: { issue_id: issue_c.id.to_s, to_index: 0 }
+        params: { item_id: pbi_c.id.to_s, to_index: 0 }
 
       sbl = SprintBacklogQuery.call(sprint.id)
 
-      expect(sbl.items.map(&:issue_id)).to eq [issue_c.id, issue_a.id, issue_b.id].map(&:to_s)
+      expect(sbl.items.map(&:pbi_id)).to eq [pbi_c.id, pbi_a.id, pbi_b.id].map(&:to_s)
     end
   end
 
