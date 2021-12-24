@@ -1,11 +1,11 @@
 # typed: true
 module PbiHelper
   def present_story_point(point)
-    Issue::StoryPoint.new(point).to_s
+    Pbi::StoryPoint.new(point).to_s
   end
 
   def all_story_points
-    Issue::StoryPoint.all.map(&:to_s)
+    Pbi::StoryPoint.all.map(&:to_s)
   end
 
   def all_pbi_types
@@ -13,7 +13,7 @@ module PbiHelper
   end
 
   def all_pbi_statuses
-    Issue::Statuses.all.map(&:to_s)
+    Pbi::Statuses.all.map(&:to_s)
   end
 
   def global_criterion_params(criterion, extras = {})

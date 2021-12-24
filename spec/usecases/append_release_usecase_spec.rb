@@ -12,7 +12,7 @@ RSpec.describe AppendReleaseUsecase do
 
     aggregate_failures do
       expect(plan.release_of(2).title.to_s).to eq 'MVP'
-      expect(plan.release_of(2).issues).to eq issue_list
+      expect(plan.release_of(2).items).to eq pbi_list
     end
   end
 

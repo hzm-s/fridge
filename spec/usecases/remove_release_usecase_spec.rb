@@ -7,7 +7,7 @@ RSpec.describe RemoveReleaseUsecase do
 
   before do
     append_release(product.id)
-    plan_issue(product.id, release: 1)
+    add_pbi(product.id, release: 1)
   end
 
   it do

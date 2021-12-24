@@ -17,7 +17,7 @@ RSpec.describe 'releases' do
         aggregate_failures do
           expect(pbl.releases[1].number).to eq 2
           expect(pbl.releases[1].title).to eq 'MVP'
-          expect(pbl.releases[1].issues).to be_empty
+          expect(pbl.releases[1].items).to be_empty
         end
       end
     end

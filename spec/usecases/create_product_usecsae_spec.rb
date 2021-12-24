@@ -14,7 +14,7 @@ RSpec.describe CreateProductUsecase do
 
       expect(plan.recent_release.number).to eq 1
       expect(plan.recent_release.title.to_s).to eq 'Release#1'
-      expect(plan.recent_release.issues).to eq issue_list
+      expect(plan.recent_release.items).to eq pbi_list
     end
   end
 end
