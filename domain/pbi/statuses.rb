@@ -13,6 +13,11 @@ module Pbi
       def from_string(str)
         deserialize(str)
       end
+
+      sig {returns(T::Array[T.attached_class])}
+      def all
+        values
+      end
     end
 
     enums do

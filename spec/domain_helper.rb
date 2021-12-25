@@ -11,6 +11,5 @@ require 'team'
 require 'pbi'
 require 'sprint'
 require 'sbi'
-require 'work'
 
 Dir[File.join(File.expand_path('./domain_support', __dir__), '**', '*.rb')].sort.each { |f| require f }
