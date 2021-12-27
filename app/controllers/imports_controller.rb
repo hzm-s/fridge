@@ -9,24 +9,25 @@ class ImportsController < ApplicationController
   def import(data)
     product_id = Product::Id.from_string(data[:product_id])
 
-    data[:issues].each do |issue|
-      issue_id = plan_issue(product_id, issue)
-      append_criteria(issue_id, issue[:criteria])
+    data[:pbis].each do |pbi|
+      pbi_id = draft_pbi(product_id, pbi)
+      append_criteria(pbi_id, pbi[:criteria])
     end
   end
 
-  def plan_issue(product_id, issue)
-    PlanIssueUsecase.perform(
+  def draft_pbi(product_id, pbi)
+    DraftPbiUsecase.perform(
       product_id,
-      Issue::Types.from_string(issue[:issue_type]),
-      Shared::LongSentence.new(issue[:description]),
+      Pbi::Types.from_string(pbi[:pbi_type]),
+      Shared::LongSentence.new(pbi[:description]),
+      pbi[:release_number].to_i,
     )
   end
 
-  def append_criteria(issue_id, criteria)
+  def append_criteria(pbi_id, criteria)
     criteria.each do |c|
       AppendAcceptanceCriterionUsecase.perform(
-        issue_id,
+        pbi_id,
         Shared::ShortSentence.new(c[:content]),
       )
     end
