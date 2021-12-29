@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe StartSprintUsecase do
+describe StartSprintUsecase do
   let!(:product) { create_product }
 
   it do

@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe 'sign_in' do
+describe 'sign_in' do
   let(:user_auth_hash) { mock_auth_hash }
   let(:other_user_auth_hash) { mock_auth_hash }
 

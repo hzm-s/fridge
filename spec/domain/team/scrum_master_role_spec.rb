@@ -3,7 +3,7 @@ require 'domain_helper'
 
 module Team
   class Role
-    RSpec.describe ScrumMaster do
+    describe ScrumMaster do
       describe '#available_activities' do
         it do
           a = described_class.available_activities

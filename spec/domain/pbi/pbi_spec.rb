@@ -2,7 +2,7 @@
 require 'domain_helper'
 
 module Pbi
-  RSpec.describe Pbi do
+  describe Pbi do
     let(:product_id) { Product::Id.create }
     let(:description) { l_sentence('A user story') }
     let(:criteria) { acceptance_criteria(%w(AC1 AC2 AC3)) }

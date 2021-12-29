@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe 'sessions' do
+describe 'sessions' do
   let(:user) { sign_up }
 
   describe '#new' do

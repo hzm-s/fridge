@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe CreateProductForm do
+describe CreateProductForm do
   let(:valid) do
     { name: 'ABC', description: 'XYZ', roles: ['', 'scrum_master', ''] }
   end

@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe AddTeamMemberUsecase do
+describe AddTeamMemberUsecase do
   let!(:product) { create_product(members: [sm_member(sign_up_as_person.id)]) }
   let(:team) { resolve_team(product.id) }
   let(:new_person) { sign_up_as_person }

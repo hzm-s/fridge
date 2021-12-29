@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe TeamForm do
+describe TeamForm do
   let(:valid) do
     {
       product_id: Product::Id.create.to_s,

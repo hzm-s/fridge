@@ -2,7 +2,7 @@
 require 'domain_helper'
 
 module Sprint
-  RSpec.describe Sprint do
+  describe Sprint do
     let(:product_id) { Product::Id.create }
 
     describe 'Start' do

@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe RegisterOrFindPersonUsecase do
+describe RegisterOrFindPersonUsecase do
   let(:name) { 'User Name' }
   let(:email) { 'user@example.com' }
   let(:oauth_account) { { provider: 'google_oauth2', uid: '123' } }

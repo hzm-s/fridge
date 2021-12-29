@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe TeamMemberForm do
+describe TeamMemberForm do
   let(:valid) do
     { roles: ['', 'scrum_master', ''] }
   end

@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe ReschedulePbiUsecase do
+describe ReschedulePbiUsecase do
   let(:product) { create_product }
   let!(:pbi_a) { add_pbi(product.id, release: 1).id }
   let!(:pbi_b) { add_pbi(product.id, release: 1).id }

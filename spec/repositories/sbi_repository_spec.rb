@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe SbiRepository::AR do
+describe SbiRepository::AR do
   let(:product) { create_product }
   let!(:pbi) { add_pbi(product.id, acceptance_criteria: %w(AC1 AC2 AC3)) }
 

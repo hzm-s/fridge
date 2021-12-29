@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe PbiRepository::AR do
+describe PbiRepository::AR do
   let!(:product) { create_product }
 
   describe 'Add' do

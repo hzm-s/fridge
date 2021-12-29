@@ -2,7 +2,7 @@
 require 'domain_helper'
 
 module Pbi
-  RSpec.describe AcceptanceCriteria do
+  describe AcceptanceCriteria do
     describe 'Create' do
       it do
         criteria = described_class.new

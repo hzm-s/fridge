@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe CreateProductUsecase do
+describe CreateProductUsecase do
   it do
     product_id = described_class.perform(name('abc'), s_sentence('xyz'))
 

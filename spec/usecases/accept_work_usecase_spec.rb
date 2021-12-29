@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe AcceptWorkUsecase do
+describe AcceptWorkUsecase do
   let!(:product) { create_product }
   let!(:issue) { plan_issue(product.id, acceptance_criteria: %w(CRT), size: 3, assign: true) }
   let!(:roles) { team_roles(:po) }

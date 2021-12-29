@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe 'acceptance_criteria' do
+describe 'acceptance_criteria' do
   let!(:user_account) { sign_up }
   let!(:product) { create_product(person: user_account.person_id) }
   let!(:pbi) { add_pbi(product.id) }

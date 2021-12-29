@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe RemoveReleaseUsecase do
+describe RemoveReleaseUsecase do
   let(:product) { create_product }
   let(:roles) { team_roles(:po) }
 

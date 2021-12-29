@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe DraftPbiUsecase do
+describe DraftPbiUsecase do
   let!(:product) { create_product }
 
   before do

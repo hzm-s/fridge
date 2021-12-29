@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe 'sbis' do
+describe 'sbis' do
   let!(:user_account) { sign_up }
   let!(:product) { create_product(person: user_account.person_id, roles: team_roles(:po)) }
 

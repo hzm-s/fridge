@@ -2,7 +2,7 @@
 require 'domain_helper'
 
 module Shared
-  RSpec.describe LongSentence do
+  describe LongSentence do
     it do
       s = described_class.new('long sentence')
       expect(s.to_s).to eq 'long sentence'

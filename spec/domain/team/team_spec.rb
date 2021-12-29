@@ -2,7 +2,7 @@
 require 'domain_helper'
 
 module Team
-  RSpec.describe Team do
+  describe Team do
     describe 'create' do
       it do
         team = described_class.create(name('ABC'))

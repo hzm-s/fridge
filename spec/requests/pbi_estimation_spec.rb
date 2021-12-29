@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe 'pbi_estimation' do
+describe 'pbi_estimation' do
   let!(:user_account) { sign_up }
   let!(:product) { create_product(person: user_account.person_id, roles: team_roles(:dev)) }
   let!(:pbi) { add_pbi(product.id, type: :feature) }

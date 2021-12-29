@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe ReleaseForm do
+describe ReleaseForm do
   let(:valid) do
     { title: 'MVP' }
   end

@@ -2,7 +2,7 @@
 require 'domain_helper'
 
 module Shared
-  RSpec.describe SortableList do
+  describe SortableList do
     let(:item_a) { Pbi::Id.create }
     let(:item_b) { Pbi::Id.create }
     let(:item_c) { Pbi::Id.create }

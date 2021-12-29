@@ -2,7 +2,7 @@
 require 'domain_helper'
 
 module Product
-  RSpec.describe Product do
+  describe Product do
     describe 'Create product' do
       it do
         product = described_class.create(name('ABC'), s_sentence('DESC_ABC'))

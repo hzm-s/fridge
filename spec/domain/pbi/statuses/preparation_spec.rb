@@ -3,7 +3,7 @@ require 'domain_helper'
 
 module Pbi
   class Statuses
-    RSpec.describe Preparation do
+    describe Preparation do
       describe 'available activities' do
         it do
           expect(described_class.available_activities).to eq activity_set([

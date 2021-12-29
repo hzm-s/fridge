@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe CreatePbiForm do
+describe CreatePbiForm do
   let(:valid) do
     {
       type: 'feature',

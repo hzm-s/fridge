@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe 'products' do
+describe 'products' do
   let(:user_account) { sign_up }
 
   describe '#create' do

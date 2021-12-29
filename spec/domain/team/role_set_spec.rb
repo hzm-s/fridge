@@ -2,7 +2,7 @@
 require 'domain_helper'
 
 module Team
-  RSpec.describe RoleSet do
+  describe RoleSet do
     describe 'create' do
       it do
         expect { described_class.new([Role::Developer]) }

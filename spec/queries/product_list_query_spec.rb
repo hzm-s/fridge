@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe ProductListQuery do
+describe ProductListQuery do
   let!(:person_a) { sign_up_as_person }
   let!(:person_b) { sign_up_as_person }
   let!(:person_c) { sign_up_as_person }

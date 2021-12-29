@@ -2,7 +2,7 @@
 require 'domain_helper'
 
 module Plan
-  RSpec.describe Plan do
+  describe Plan do
     let(:product_id) { Product::Id.create }
     let(:po_role) { team_roles(:po) }
     let(:dev_role) { team_roles(:dev) }

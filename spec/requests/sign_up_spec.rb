@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe 'sign_up' do
+describe 'sign_up' do
   context 'when NOT signed up' do
     let(:auth_hash) { mock_auth_hash }
 

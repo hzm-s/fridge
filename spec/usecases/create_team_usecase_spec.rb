@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe CreateTeamUsecase do
+describe CreateTeamUsecase do
   let(:person) { sign_up_as_person }
 
   it do

@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe 'sprints' do
+describe 'sprints' do
   let!(:user_account) { sign_up }
   let!(:product) { create_product(person: user_account.person_id) }
 

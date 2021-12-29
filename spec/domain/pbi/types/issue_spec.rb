@@ -3,7 +3,7 @@ require 'domain_helper'
 
 module Pbi
   class Types
-    RSpec.describe Issue do
+    describe Issue do
       describe 'query to prepared' do
         let(:criteria_any) { acceptance_criteria(%w(CRT)) }
         let(:criteria_empty) { acceptance_criteria([]) }

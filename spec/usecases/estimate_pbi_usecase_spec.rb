@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe EstimatePbiUsecase do
+describe EstimatePbiUsecase do
   let!(:product) { create_product }
   let(:roles) { team_roles(:dev) }
   let(:pbi) { add_pbi(product.id, 'ABC') }

@@ -2,7 +2,7 @@
 require 'domain_helper'
 
 module Pbi
-  RSpec.describe StoryPoint do
+  describe StoryPoint do
     it do
       points = described_class.all
       expect(points.map(&:to_i)).to eq [0, 1, 2, 3, 5, 8, 13, nil]

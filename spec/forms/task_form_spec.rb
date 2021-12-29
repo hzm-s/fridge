@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe TaskForm do
+describe TaskForm do
   let(:valid) do
     { content: 'Desgin API' }
   end

@@ -2,7 +2,7 @@
 require 'domain_helper'
 
 module Activity
-  RSpec.describe Activity do
+  describe Activity do
     it do
       r = Activity::EstimatePbi.allow?([
         Pbi::Statuses.from_string('preparation'),

@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe PlanRepository::AR do
+describe PlanRepository::AR do
   let(:product_id) { Product::Id.create }
   let(:other_product_id) { Product::Id.create }
   let!(:pbi_a) { Pbi::Id.create }

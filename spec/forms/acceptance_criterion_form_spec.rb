@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe AcceptanceCriterionForm do
+describe AcceptanceCriterionForm do
   let(:valid) do
     { content: 'Acceptance criterion' }
   end

@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe ModifyTaskUsecase do
+describe ModifyTaskUsecase do
   let(:product) { create_product }
   let!(:pbi) { add_pbi(product.id, assign: true) }
 

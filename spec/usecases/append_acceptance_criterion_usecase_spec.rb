@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe AppendAcceptanceCriterionUsecase do
+describe AppendAcceptanceCriterionUsecase do
   let!(:product) { create_product }
   let!(:pbi) { add_pbi(product.id) }
 

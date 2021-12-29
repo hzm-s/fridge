@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe TeamRepository::AR, type: :repository do
+describe TeamRepository::AR, type: :repository do
   let(:product) do
     Product::Product
       .create(name('abc'))

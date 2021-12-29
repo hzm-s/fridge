@@ -2,7 +2,7 @@
 require 'domain_helper'
 
 module Shared
-  RSpec.describe ShortSentence do
+  describe ShortSentence do
     it do
       s = described_class.new('short sentence')
       expect(s.to_s).to eq 'short sentence'

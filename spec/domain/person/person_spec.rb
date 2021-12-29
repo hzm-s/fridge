@@ -2,7 +2,7 @@
 require 'domain_helper'
 
 module Person
-  RSpec.describe Person do
+  describe Person do
     describe '.create' do
       it do
         user = described_class.create('user', 'user@example.com')

@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe ModifyPbiUsecase do
+describe ModifyPbiUsecase do
   let!(:product) { create_product }
 
   it do

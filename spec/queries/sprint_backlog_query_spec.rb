@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe SprintBacklogQuery do
+describe SprintBacklogQuery do
   let!(:product) { create_product }
   let!(:pbi_a) { add_pbi(product.id, acceptance_criteria: %w(CRT_A), size: 3, release: 1) }
   let!(:pbi_b) { add_pbi(product.id, type: :task, acceptance_criteria: %w(CRT_B), size: 3, release: 1) }

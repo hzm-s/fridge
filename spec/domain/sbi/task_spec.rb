@@ -2,7 +2,7 @@
 require 'domain_helper'
 
 module Sbi
-  RSpec.describe Task do
+  describe Task do
     describe 'Create' do
       it do
         task = described_class.create(1, s_sentence('Task_A'))

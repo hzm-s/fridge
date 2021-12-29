@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe PbiQuery do
+describe PbiQuery do
   let!(:product) { create_product }
   let(:pbi) { add_pbi(product.id, acceptance_criteria: %w(ac1)) }
 

@@ -2,7 +2,7 @@
 require 'domain_helper'
 
 module Team
-  RSpec.describe Member do
+  describe Member do
     let(:person_a) { register_person }
     let(:person_b) { register_person }
 

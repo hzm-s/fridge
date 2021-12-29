@@ -2,7 +2,7 @@
 require 'domain_helper'
 
 module Sbi
-  RSpec.describe TaskStatus do
+  describe TaskStatus do
     describe 'Query next activity' do
       subject { status.next_activity }
 

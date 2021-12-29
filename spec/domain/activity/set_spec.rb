@@ -2,7 +2,7 @@
 require 'domain_helper'
 
 module Activity
-  RSpec.describe Set do
+  describe Set do
     it do
       a = described_class.new([Activity::RemovePbi, Activity::UpdatePlan])
       b = described_class.new([Activity::UpdatePlan])

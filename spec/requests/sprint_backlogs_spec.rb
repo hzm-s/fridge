@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe 'sprint_backlogs' do
+describe 'sprint_backlogs' do
   let!(:user_account_po) { sign_up }
   let!(:user_account_dev) { sign_up }
   let!(:user_account_sm) { sign_up }

@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe 'satisfied_acceptance_criterion' do
+describe 'satisfied_acceptance_criterion' do
   let!(:user_account) { sign_up }
   let!(:product) { create_product(person: user_account.person_id) }
   let!(:issue) { plan_issue(product.id, acceptance_criteria: %w(AC1 AC2 AC3), size: 3, assign: true) }

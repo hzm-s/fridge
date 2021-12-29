@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe AcceptanceQuery do
+describe AcceptanceQuery do
   let!(:product) { create_product }
   let!(:issue) { plan_issue(product.id, acceptance_criteria: %w(CRT_A CRT_B CRT_C), size: 3, release: 1, assign: true) }
   let(:work) { WorkRepository::AR.find_by_issue_id(issue.id) }

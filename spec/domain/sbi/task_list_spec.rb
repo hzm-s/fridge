@@ -2,7 +2,7 @@
 require 'domain_helper'
 
 module Sbi
-  RSpec.describe TaskList do
+  describe TaskList do
     describe 'Append and Remove' do
       it do
         list = described_class.new

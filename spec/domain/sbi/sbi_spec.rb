@@ -2,7 +2,7 @@
 require 'domain_helper'
 
 module Sbi
-  RSpec.describe Sbi do
+  describe Sbi do
     let(:pbi_id) { Pbi::Id.create }
 
     describe 'Plan' do

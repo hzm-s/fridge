@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe '/sbi/:pbi_id/tasks' do
+describe '/sbi/:pbi_id/tasks' do
   let!(:user_account) { sign_up }
   let!(:product) { create_product(person: user_account.person_id, roles: team_roles(:dev)) }
   let!(:pbi) { add_pbi(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1, assign: true) }

@@ -2,7 +2,7 @@
 require 'domain_helper'
 
 module Shared
-  RSpec.describe Name do
+  describe Name do
     it do
       s = described_class.new('fridge')
       expect(s.to_s).to eq 'fridge'

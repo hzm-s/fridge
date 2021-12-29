@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe 'team_members' do
+describe 'team_members' do
   let!(:new_member) { sign_up }
   let!(:product) { create_product(members: [dev_member(sign_up.person_id)]) }
   let!(:team) { resolve_team(product.id) }

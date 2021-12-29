@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe ChangePbiPriorityUsecase do
+describe ChangePbiPriorityUsecase do
   let(:product) { create_product }
   let!(:pbi_a) { add_pbi(product.id).id }
   let!(:pbi_b) { add_pbi(product.id).id }

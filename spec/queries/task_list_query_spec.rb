@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-RSpec.describe TaskListQuery do
+describe TaskListQuery do
   let!(:product) { create_product }
   let!(:pbi) { add_pbi(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1, assign: true) }
   let!(:other_pbi) { add_pbi(product.id, acceptance_criteria: %w(CRT), size: 5, release: 1, assign: true) }
