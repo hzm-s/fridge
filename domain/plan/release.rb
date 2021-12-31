@@ -36,26 +36,26 @@ module Plan
       @items = items
     end
 
-    sig {params(item: Pbi::Id).void}
+    sig {params(item: Pbi::Id).returns(T.self_type)}
     def plan_item(item)
-      raise DuplicatedItem if @items.include?(item)
+      raise DuplicatedItem if items.include?(item)
 
-      @items = @items.append(item)
+      self.class.new(number, title, items.append(item))
     end
 
-    sig {params(item: Pbi::Id).void}
+    sig {params(item: Pbi::Id).returns(T.self_type)}
     def drop_item(item)
-      @items = @items.remove(item)
+      self.class.new(number, title, items.remove(item))
     end
 
-    sig {params(from: Pbi::Id, to: Pbi::Id).void}
+    sig {params(from: Pbi::Id, to: Pbi::Id).returns(T.self_type)}
     def change_item_priority(from, to)
-      @items = @items.swap(from, to)
+      self.class.new(number, title, items.swap(from, to))
     end
 
-    sig {params(title: Shared::Name).void}
+    sig {params(title: Shared::Name).returns(T.self_type)}
     def modify_title(title)
-      @title = title
+      self.class.new(number, title, items)
     end
 
     sig {returns(T::Boolean)}

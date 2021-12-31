@@ -63,13 +63,14 @@ module Plan
       it do
         plan.append_release(po_role)
 
-        r = plan.release_of(1)
-        r.plan_item(pbi_a)
-        r.plan_item(pbi_b)
-        r.plan_item(pbi_c)
-        r.modify_title(name('Updated'))
+        updated =
+          plan.release_of(1)
+            .plan_item(pbi_a)
+            .plan_item(pbi_b)
+            .plan_item(pbi_c)
+            .modify_title(name('Updated'))
 
-        plan.update_release(po_role, r)
+        plan.update_release(po_role, updated)
 
         aggregate_failures do
           expect(plan.release_of(1).items).to eq pbi_list(pbi_a, pbi_b, pbi_c)
@@ -102,9 +103,9 @@ module Plan
       end
 
       it do
-        r = plan.release_of(2)
-        r.plan_item(pbi_a)
-        plan.update_release(po_role, r)
+        plan.release_of(2)
+          .plan_item(pbi_a)
+          .then { |r| plan.update_release(po_role, r) }
 
         expect { plan.remove_release(po_role, 2) }.to raise_error ReleaseIsNotEmpty
       end
@@ -129,16 +130,14 @@ module Plan
       it do
         plan.append_release(po_role)
 
-        plan.release_of(1).tap do |r|
-          r.plan_item(pbi_a)
-          plan.update_release(po_role, r)
-        end
+        plan.release_of(1)
+          .plan_item(pbi_a)
+          .then { |r| plan.update_release(po_role, r) }
 
-        plan.release_of(2).tap do |r|
-          r.plan_item(pbi_b)
-          r.plan_item(pbi_c)
-          plan.update_release(po_role, r)
-        end
+        plan.release_of(2)
+          .plan_item(pbi_b)
+          .plan_item(pbi_c)
+          .then { |r| plan.update_release(po_role, r) }
 
         aggregate_failures do
           expect(plan.release_by_item(pbi_a).number).to eq 1

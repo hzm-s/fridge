@@ -33,8 +33,8 @@ module Plan
     describe 'Modify title' do
       it do
         release = described_class.create(1, name('Initial'))
-        release.modify_title(name('Modified'))
-        expect(release.title.to_s).to eq 'Modified'
+        modified = release.modify_title(name('Modified'))
+        expect(modified.title.to_s).to eq 'Modified'
       end
     end
 
@@ -42,39 +42,43 @@ module Plan
 
     describe 'Plan item' do
       it do
-        release.plan_item(pbi_c)
+        updated = release.plan_item(pbi_c)
 
-        expect(release.items).to eq pbi_list(pbi_c)
+        expect(updated.items).to eq pbi_list(pbi_c)
       end
 
       it do
-        release.plan_item(pbi_a)
+        updated = release.plan_item(pbi_a)
 
-        expect { release.plan_item(pbi_a) }.to raise_error DuplicatedItem
+        expect { updated.plan_item(pbi_a) }.to raise_error DuplicatedItem
       end
     end
 
     describe 'Drop item' do
       it do
-        release.plan_item(pbi_a)
-        release.plan_item(pbi_b)
-        release.plan_item(pbi_c)
+        initial =
+          release
+            .plan_item(pbi_a)
+            .plan_item(pbi_b)
+            .plan_item(pbi_c)
 
-        release.drop_item(pbi_b)
+        updated = initial.drop_item(pbi_b)
 
-        expect(release.items).to eq pbi_list(pbi_a, pbi_c)
+        expect(updated.items).to eq pbi_list(pbi_a, pbi_c)
       end
     end
 
     describe 'Change item priority' do
       it do
-        release.plan_item(pbi_a)
-        release.plan_item(pbi_b)
-        release.plan_item(pbi_c)
+        initial =
+          release
+            .plan_item(pbi_a)
+            .plan_item(pbi_b)
+            .plan_item(pbi_c)
 
-        release.change_item_priority(pbi_c, pbi_a)
+        updated = initial.change_item_priority(pbi_c, pbi_a)
 
-        expect(release.items).to eq pbi_list(pbi_c, pbi_a, pbi_b)
+        expect(updated.items).to eq pbi_list(pbi_c, pbi_a, pbi_b)
       end
     end
   end
