@@ -10,7 +10,7 @@ module Plan
 
       sig {params(product_id: Product::Id).returns(T.attached_class)}
       def create(product_id)
-        new(product_id, [Release.create(1)])
+        new(product_id, [Release.new(1)])
       end
 
       sig {params(product_id: Product::Id, releases: T::Array[Release]).returns(T.attached_class)}
@@ -35,7 +35,7 @@ module Plan
     def append_release(roles, title = nil)
       raise PermissionDenied unless Activity.allow?(:update_plan, [roles])
 
-      @releases << Release.create(next_release_number, title)
+      @releases << Release.new(next_release_number, title)
     end
 
     sig {params(roles: Team::RoleSet, release: Release).void}

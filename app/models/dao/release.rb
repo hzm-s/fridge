@@ -24,7 +24,7 @@ class Dao::Release < ApplicationRecord
   end
 
   def read
-    Plan::Release.from_repository(
+    Plan::Release.new(
       number.to_i,
       Shared::Name.new(title),
       items.map { |i| Pbi::Id.from_string(i) }.then { |l| Shared::SortableList.new(l) }

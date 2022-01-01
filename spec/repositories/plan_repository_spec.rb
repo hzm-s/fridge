@@ -26,13 +26,12 @@ describe PlanRepository::AR do
 
   describe 'Append' do
     it do
-      plan.release_of(1).tap do |r|
-        r.plan_item(pbi_a)
-        r.plan_item(pbi_b)
-        r.plan_item(pbi_c)
-        r.modify_title(name('R1'))
-        plan.update_release(po_role, r)
-      end
+      plan.release_of(1)
+        .plan_item(pbi_a)
+        .plan_item(pbi_b)
+        .plan_item(pbi_c)
+        .modify_title(name('R1'))
+        .then { |r| plan.update_release(po_role, r) }
 
       expect { described_class.store(plan) }
         .to change { Dao::Release.count }.from(1).to(2)
@@ -49,24 +48,21 @@ describe PlanRepository::AR do
 
   describe 'Update' do
     it do
-      plan.release_of(1).tap do |r|
-        r.plan_item(pbi_b)
-        r.modify_title(name('R1'))
-        plan.update_release(po_role, r)
-      end
+      plan.release_of(1)
+        .plan_item(pbi_b)
+        .modify_title(name('R1'))
+        .then { |r| plan.update_release(po_role, r) }
       described_class.store(plan)
 
-      plan.release_of(1).tap do |r|
-        r.modify_title(name('MVP'))
-        plan.update_release(po_role, r)
-      end
+      plan.release_of(1)
+        .modify_title(name('MVP'))
+        .then { |r| plan.update_release(po_role, r) }
 
       plan.append_release(po_role)
-      plan.release_of(2).tap do |r|
-        r.plan_item(pbi_c)
-        r.plan_item(pbi_a)
-        plan.update_release(po_role, r)
-      end
+      plan.release_of(2)
+        .plan_item(pbi_c)
+        .plan_item(pbi_a)
+        .then { |r| plan.update_release(po_role, r) }
 
       expect { described_class.store(plan) }
         .to change { Dao::Release.count }.from(2).to(3)
@@ -85,19 +81,17 @@ describe PlanRepository::AR do
 
   describe 'Remove' do
     it do
-      plan.release_of(1).tap do |r|
-        r.plan_item(pbi_a)
-        plan.update_release(po_role, r)
-      end
+      plan.release_of(1)
+        .plan_item(pbi_a)
+        .then { |r| plan.update_release(po_role, r) }
 
       plan.append_release(po_role)
 
       plan.append_release(po_role)
-      plan.release_of(3).tap do |r|
-        r.plan_item(pbi_b)
-        r.plan_item(pbi_c)
-        plan.update_release(po_role, r)
-      end
+      plan.release_of(3)
+        .plan_item(pbi_b)
+        .plan_item(pbi_c)
+        .then { |r| plan.update_release(po_role, r) }
 
       described_class.store(plan)
 
