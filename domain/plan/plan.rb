@@ -1,4 +1,6 @@
 # typed: strict
+require 'sorbet-runtime'
+
 module Plan
   class Plan
     extend T::Sig
