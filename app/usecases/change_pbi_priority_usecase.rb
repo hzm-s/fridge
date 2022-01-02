@@ -15,8 +15,9 @@ class ChangePbiPriorityUsecase < UsecaseBase
 
     release = plan.release_by_item(pbi_id)
     opposite = T.must(PlannedPbiQuery.call(plan, release.number, to_index))
+
     release.change_item_priority(pbi_id, opposite)
-    plan.update_release(roles, release)
+      .then { |release| plan.update_release(roles, release) }
 
     @repository.store(plan)
   end

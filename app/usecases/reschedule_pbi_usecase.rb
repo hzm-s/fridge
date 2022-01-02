@@ -17,13 +17,16 @@ class ReschedulePbiUsecase < UsecaseBase
     to = plan.release_of(release_number)
 
     from.drop_item(pbi_id)
-    plan.update_release(roles, from)
+      .then { |r| plan.update_release(roles, r) }
 
-    to.plan_item(pbi_id)
-    if opposite = PlannedPbiQuery.call(plan, release_number, to_index)
-      to.change_item_priority(pbi_id, opposite)
+    to.plan_item(pbi_id).then do |planned|
+      if opposite = PlannedPbiQuery.call(plan, release_number, to_index)
+        planned.change_item_priority(pbi_id, opposite)
+      else
+        planned
+      end
     end
-    plan.update_release(roles, to)
+      .then { |r| plan.update_release(roles, r) }
 
     @repository.store(plan)
   end
