@@ -9,16 +9,13 @@ class ChangePbiPriorityUsecase < UsecaseBase
     @repository = T.let(PlanRepository::AR, Plan::PlanRepository)
   end
 
-  sig {params(product_id: Product::Id, roles: Team::RoleSet, pbi_id: Pbi::Id, to_index: Integer).void}
-  def perform(product_id, roles, pbi_id, to_index)
-    plan = @repository.find_by_product_id(product_id)
+  sig {params(product_id: Product::Id, roles: Team::RoleSet, from: Pbi::Id, to: Pbi::Id).void}
+  def perform(product_id, roles, from, to)
+    new_plan =
+      @repository.find_by_product_id(product_id)
+        .then { |plan| Plan::PriorityChange.new(plan, roles) }
+        .then { |change| change.sort(from, to) }
 
-    release = plan.release_by_item(pbi_id)
-    opposite = T.must(PlannedPbiQuery.call(plan, release.number, to_index))
-
-    release.change_item_priority(pbi_id, opposite)
-      .then { |release| plan.update_release(roles, release) }
-
-    @repository.store(plan)
+    @repository.store(new_plan)
   end
 end

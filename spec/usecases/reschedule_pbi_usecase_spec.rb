@@ -15,7 +15,7 @@ describe ReschedulePbiUsecase do
   end
 
   it do
-    described_class.perform(product.id, roles, pbi_c, 1, 1)
+    described_class.perform(product.id, roles, pbi_c, 1, pbi_b)
 
     plan = plan_of(product.id)
     aggregate_failures do
@@ -26,7 +26,7 @@ describe ReschedulePbiUsecase do
   end
 
   it do
-    described_class.perform(product.id, roles, pbi_d, 3, 0)
+    described_class.perform(product.id, roles, pbi_d, 3, nil)
 
     plan = plan_of(product.id)
     aggregate_failures do
@@ -37,7 +37,7 @@ describe ReschedulePbiUsecase do
   end
 
   it do
-    described_class.perform(product.id, roles, pbi_c, 1, 2)
+    described_class.perform(product.id, roles, pbi_c, 1, nil)
 
     plan = plan_of(product.id)
     aggregate_failures do

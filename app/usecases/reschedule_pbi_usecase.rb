@@ -9,19 +9,19 @@ class ReschedulePbiUsecase < UsecaseBase
     @repository = T.let(PlanRepository::AR, Plan::PlanRepository)
   end
 
-  sig {params(product_id: Product::Id, roles: Team::RoleSet, pbi_id: Pbi::Id, release_number: Integer, to_index: Integer).void}
-  def perform(product_id, roles, pbi_id, release_number, to_index)
+  sig {params(product_id: Product::Id, roles: Team::RoleSet, from: Pbi::Id, release_number: Integer, to: T.nilable(Pbi::Id)).void}
+  def perform(product_id, roles, from, release_number, to)
     plan = @repository.find_by_product_id(product_id)
 
-    from = plan.release_by_item(pbi_id)
-    to = plan.release_of(release_number)
+    from_release = plan.release_by_item(from)
+    to_release = plan.release_of(release_number)
 
-    from.drop_item(pbi_id)
+    from_release.drop_item(from)
       .then { |r| plan.update_release(roles, r) }
 
-    to.plan_item(pbi_id).then do |planned|
-      if opposite = PlannedPbiQuery.call(plan, release_number, to_index)
-        planned.change_item_priority(pbi_id, opposite)
+    to_release.plan_item(from).then do |planned|
+      if to
+        planned.change_item_priority(from, to)
       else
         planned
       end

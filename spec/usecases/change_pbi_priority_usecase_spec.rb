@@ -9,7 +9,7 @@ describe ChangePbiPriorityUsecase do
   let(:roles) { team_roles(:po) }
 
   it do
-    described_class.perform(product.id, roles, pbi_a, 2)
+    described_class.perform(product.id, roles, pbi_a, pbi_c)
 
     plan = plan_of(product.id)
 
