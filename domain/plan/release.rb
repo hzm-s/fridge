@@ -5,21 +5,6 @@ module Plan
   class Release
     extend T::Sig
 
-    #class << self
-    #  extend T::Sig
-
-    #  sig {params(number: Integer, title: T.nilable(Shared::Name)).returns(T.attached_class)}
-    #  def create(number, title = nil)
-    #    title ||= Shared::Name.new("Release##{number}")
-    #    new(number, title, Shared::SortableList.new)
-    #  end
-
-    #  sig {params(number: Integer, title: Shared::Name, items: Shared::SortableList).returns(T.attached_class)}
-    #  def from_repository(number, title, items)
-    #    new(number, title, items)
-    #  end
-    #end
-
     sig {returns(Integer)}
     attr_reader :number
 
