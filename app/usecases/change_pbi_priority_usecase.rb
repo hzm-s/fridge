@@ -13,8 +13,8 @@ class ChangePbiPriorityUsecase < UsecaseBase
   def perform(product_id, roles, from, to)
     new_plan =
       @repository.find_by_product_id(product_id)
-        .then { |plan| Plan::PriorityChange.new(plan, roles) }
-        .then { |change| change.sort(from, to) }
+        .then { |plan| [plan, Plan::ChangePlan.new(roles)] }
+        .then { |plan, c| c.change_item_priority(plan, from, to) }
 
     @repository.store(new_plan)
   end
