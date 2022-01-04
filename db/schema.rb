@@ -80,13 +80,6 @@ ActiveRecord::Schema.define(version: 2021_05_16_002510) do
     t.index ["dao_product_id"], name: "index_dao_releases_on_dao_product_id"
   end
 
-  create_table "dao_sbis", force: :cascade do |t|
-    t.uuid "dao_pbi_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["dao_pbi_id"], name: "index_dao_sbis_on_dao_pbi_id"
-  end
-
   create_table "dao_sprints", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "dao_product_id"
     t.integer "number", null: false
@@ -99,14 +92,14 @@ ActiveRecord::Schema.define(version: 2021_05_16_002510) do
   end
 
   create_table "dao_tasks", force: :cascade do |t|
-    t.bigint "dao_sbi_id"
+    t.bigint "dao_work_id"
     t.integer "number", null: false
     t.string "status", null: false
     t.string "content", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["dao_sbi_id", "number"], name: "index_dao_tasks_on_dao_sbi_id_and_number", unique: true
-    t.index ["dao_sbi_id"], name: "index_dao_tasks_on_dao_sbi_id"
+    t.index ["dao_work_id", "number"], name: "index_dao_tasks_on_dao_work_id_and_number", unique: true
+    t.index ["dao_work_id"], name: "index_dao_tasks_on_dao_work_id"
   end
 
   create_table "dao_team_members", force: :cascade do |t|
@@ -126,14 +119,21 @@ ActiveRecord::Schema.define(version: 2021_05_16_002510) do
     t.index ["dao_product_id"], name: "index_dao_teams_on_dao_product_id"
   end
 
+  create_table "dao_works", force: :cascade do |t|
+    t.uuid "dao_pbi_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["dao_pbi_id"], name: "index_dao_works_on_dao_pbi_id"
+  end
+
   add_foreign_key "app_user_accounts", "dao_people"
   add_foreign_key "app_user_profiles", "app_user_accounts"
   add_foreign_key "dao_acceptance_criteria", "dao_pbis"
   add_foreign_key "dao_pbis", "dao_products"
   add_foreign_key "dao_releases", "dao_products"
-  add_foreign_key "dao_sbis", "dao_pbis"
   add_foreign_key "dao_sprints", "dao_products"
-  add_foreign_key "dao_tasks", "dao_sbis"
+  add_foreign_key "dao_tasks", "dao_works"
   add_foreign_key "dao_team_members", "dao_teams"
   add_foreign_key "dao_teams", "dao_products"
+  add_foreign_key "dao_works", "dao_pbis"
 end

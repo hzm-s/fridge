@@ -83,7 +83,7 @@ describe 'sprint_backlogs' do
     end
   end
 
-  xdescribe 'Sbi status' do
+  xdescribe 'Work status' do
     let!(:pbi) { plan_pbi(product.id, acceptance_criteria: %w(CRT), size: 3, release: 1, assign: true) }
 
     before { sign_in(user_account_po) }

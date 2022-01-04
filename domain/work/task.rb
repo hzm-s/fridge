@@ -1,7 +1,7 @@
 # typed: strict
 require 'sorbet-runtime'
 
-module Sbi
+module Work
   class Task
     extend T::Sig
 

@@ -1,37 +1,37 @@
 # typed: false
 require 'rails_helper'
 
-describe SbiRepository::AR do
+describe WorkRepository::AR do
   let(:product) { create_product }
   let!(:pbi) { add_pbi(product.id, acceptance_criteria: %w(AC1 AC2 AC3)) }
 
   describe 'Add' do
     it do
-      sbi = Sbi::Sbi.plan(pbi.id)
+      work = Work::Work.plan(pbi.id)
 
-      expect { described_class.store(sbi) }
-        .to change { Dao::Sbi.count }.from(0).to(1)
+      expect { described_class.store(work) }
+        .to change { Dao::Work.count }.from(0).to(1)
         .and change { Dao::Task.count }.by(0)
 
       aggregate_failures do
-        dao = Dao::Sbi.last
-        expect(dao.dao_pbi_id).to eq sbi.pbi_id.to_s
+        dao = Dao::Work.last
+        expect(dao.dao_pbi_id).to eq work.pbi_id.to_s
       end
     end
   end
 
   describe 'Update' do
     it do
-      sbi = Sbi::Sbi.plan(pbi.id)
-      described_class.store(sbi)
+      work = Work::Work.plan(pbi.id)
+      described_class.store(work)
 
-      sbi.update_tasks(tasks(%w(T1 T2 T3)))
+      work.update_tasks(tasks(%w(T1 T2 T3)))
 
-      expect { described_class.store(sbi) }
-        .to change { Dao::Sbi.count }.by(0)
+      expect { described_class.store(work) }
+        .to change { Dao::Work.count }.by(0)
         .and change { Dao::Task.count }.from(0).to(3)
 
-      dao = Dao::Sbi.last
+      dao = Dao::Work.last
       aggregate_failures do
         expect(dao.tasks[0].number).to eq 1
         expect(dao.tasks[0].content.to_s).to eq 'T1'

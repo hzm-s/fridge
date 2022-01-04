@@ -1,7 +1,7 @@
 # typed: false
 require 'domain_helper'
 
-module Sbi
+module Work
   describe TaskList do
     describe 'Append and Remove' do
       it do

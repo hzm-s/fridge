@@ -1,7 +1,7 @@
 # typed: false
 require 'domain_helper'
 
-module Sbi
+module Work
   describe TaskStatus do
     describe 'Query next activity' do
       subject { status.next_activity }

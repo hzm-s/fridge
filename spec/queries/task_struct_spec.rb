@@ -17,7 +17,7 @@ describe TaskStruct do
       expect(task.pbi_id).to eq pbi.id.to_s
       expect(task.number).to eq 1
       expect(task.content).to eq 'Task1'
-      expect(task.status).to eq Sbi::TaskStatus.from_string('todo')
+      expect(task.status).to eq Work::TaskStatus.from_string('todo')
     end
   end
 end

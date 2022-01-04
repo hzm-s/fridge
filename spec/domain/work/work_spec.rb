@@ -1,23 +1,23 @@
 # typed: false
 require 'domain_helper'
 
-module Sbi
-  describe Sbi do
+module Work
+  describe Work do
     let(:pbi_id) { Pbi::Id.create }
 
     describe 'Plan' do
       it do
-        sbi = described_class.plan(pbi_id)
+        work = described_class.plan(pbi_id)
 
         aggregate_failures do
-          expect(sbi.pbi_id).to eq pbi_id
-          expect(sbi.tasks).to be_empty
+          expect(work.pbi_id).to eq pbi_id
+          expect(work.tasks).to be_empty
         end
       end
     end
 
     describe 'Update tasks' do
-      let(:sbi) { described_class.plan(pbi_id) }
+      let(:work) { described_class.plan(pbi_id) }
 
       it do
         tasks = TaskList.new
@@ -25,9 +25,9 @@ module Sbi
           .append(s_sentence('Task_B'))
           .append(s_sentence('Task_C'))
 
-        sbi.update_tasks(tasks)
+        work.update_tasks(tasks)
 
-        expect(sbi.tasks).to eq tasks
+        expect(work.tasks).to eq tasks
       end
     end
   end

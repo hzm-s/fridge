@@ -2,7 +2,7 @@
 class CreateDaoTasks < ActiveRecord::Migration[6.0]
   def change
     create_table :dao_tasks do |t|
-      t.references :dao_sbi, foreign_key: true
+      t.references :dao_work, foreign_key: true
       t.integer :number, null: false
       t.string :status, null: false
       t.string :content, null: false
@@ -10,6 +10,6 @@ class CreateDaoTasks < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    add_index :dao_tasks, [:dao_sbi_id, :number], unique: true
+    add_index :dao_tasks, [:dao_work_id, :number], unique: true
   end
 end

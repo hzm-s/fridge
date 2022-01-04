@@ -10,12 +10,12 @@ describe DropTaskUsecase do
 
     described_class.perform(pbi.id, 2)
 
-    sbi = SbiRepository::AR.find_by_pbi_id(pbi.id)
+    work = WorkRepository::AR.find_by_pbi_id(pbi.id)
 
     aggregate_failures do
-      expect(sbi.tasks.of(1).content.to_s).to eq 'Task1'
-      expect(sbi.tasks.of(2)).to be_nil
-      expect(sbi.tasks.of(3).content.to_s).to eq 'Task3'
+      expect(work.tasks.of(1).content.to_s).to eq 'Task1'
+      expect(work.tasks.of(2)).to be_nil
+      expect(work.tasks.of(3).content.to_s).to eq 'Task3'
     end
   end
 end

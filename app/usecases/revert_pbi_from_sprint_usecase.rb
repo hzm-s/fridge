@@ -8,7 +8,7 @@ class RevertPbiFromSprintUsecase < UsecaseBase
   def initialize
     @sprint_repository = T.let(SprintRepository::AR, Sprint::SprintRepository)
     @pbi_repository = T.let(PbiRepository::AR, Pbi::PbiRepository)
-    @sbi_repository = T.let(SbiRepository::AR, Sbi::SbiRepository)
+    @work_repository = T.let(WorkRepository::AR, Work::WorkRepository)
   end
 
   sig {params(product_id: Product::Id, roles: Team::RoleSet, pbi_id: Pbi::Id).void}

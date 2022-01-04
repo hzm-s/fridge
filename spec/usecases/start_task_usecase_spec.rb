@@ -12,12 +12,12 @@ describe StartTaskUsecase do
 
     described_class.perform(pbi.id, 2)
 
-    sbi = SbiRepository::AR.find_by_pbi_id(pbi.id)
+    work = WorkRepository::AR.find_by_pbi_id(pbi.id)
 
     aggregate_failures do
-      expect(sbi.tasks.of(1).status.to_s).to eq 'todo'
-      expect(sbi.tasks.of(2).status.to_s).to eq 'wip'
-      expect(sbi.tasks.of(3).status.to_s).to eq 'todo'
+      expect(work.tasks.of(1).status.to_s).to eq 'todo'
+      expect(work.tasks.of(2).status.to_s).to eq 'wip'
+      expect(work.tasks.of(3).status.to_s).to eq 'todo'
     end
   end
 end

@@ -1,8 +1,8 @@
 # typed: strict
 require 'sorbet-runtime'
 
-module Sbi
-  class Sbi
+module Work
+  class Work
     extend T::Sig
 
     class << self

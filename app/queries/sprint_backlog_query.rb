@@ -3,7 +3,7 @@ module SprintBacklogQuery
   class << self
     def call(sprint_id)
       pbi_ids = Dao::Sprint.find_by(id: sprint_id).items
-      sbis = Dao::Sbi.where(dao_pbi_id: pbi_ids)
+      sbis = Dao::Work.where(dao_pbi_id: pbi_ids)
 
       pbi_ids
         .map { |pbi_id| sbis.find { |sbi| sbi.dao_pbi_id == pbi_id } }

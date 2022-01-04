@@ -11,8 +11,8 @@ describe CompleteTaskUsecase do
 
     described_class.perform(pbi.id, 1)
 
-    sbi = SbiRepository::AR.find_by_pbi_id(pbi.id)
+    work = WorkRepository::AR.find_by_pbi_id(pbi.id)
 
-    expect(sbi.tasks.of(1).status.to_s).to eq 'done'
+    expect(work.tasks.of(1).status.to_s).to eq 'done'
   end
 end

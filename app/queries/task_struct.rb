@@ -6,7 +6,7 @@ class TaskStruct < SimpleDelegator
     super(task)
 
     @pbi_id = pbi_id
-    @status = Sbi::TaskStatus.from_string(task.status)
+    @status = Work::TaskStatus.from_string(task.status)
   end
 
   def available_activities

@@ -1,7 +1,7 @@
 # typed: false
 require 'domain_helper'
 
-module Sbi
+module Work
   describe Task do
     describe 'Create' do
       it do
