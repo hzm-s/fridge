@@ -10,7 +10,7 @@ module Pbi
 
       sig {params(product_id: Product::Id, type: Types, description: Shared::LongSentence).returns(T.attached_class)}
       def draft(product_id, type, description)
-        new(Id.create, product_id, type, Statuses.from_string('preparation'), description, StoryPoint.unknown, AcceptanceCriteria.new)
+        new(Id.create, product_id, type, Statuses::Preparation, description, StoryPoint.unknown, AcceptanceCriteria.new)
       end
 
       sig {params(
