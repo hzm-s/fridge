@@ -10,7 +10,7 @@ module Work
 
       sig {params(pbi_id: Pbi::Id, sprint_id: Sprint::Id).returns(T.attached_class)}
       def assign(pbi_id, sprint_id)
-        new(pbi_id, sprint_id, TaskList.new)
+        new(pbi_id, sprint_id, Statuses::Assigned, TaskList.new)
       end
 
       sig {params(pbi_id: Pbi::Id, tasks: TaskList).returns(T.attached_class)}
@@ -25,13 +25,17 @@ module Work
     sig {returns(Sprint::Id)}
     attr_reader :sprint_id
 
+    sig {returns(Statuses)}
+    attr_reader :status
+
     sig {returns(TaskList)}
     attr_reader :tasks
 
-    sig {params(pbi_id: Pbi::Id, sprint_id: Sprint::Id, tasks: TaskList).void}
-    def initialize(pbi_id, sprint_id, tasks)
+    sig {params(pbi_id: Pbi::Id, sprint_id: Sprint::Id, status: Statuses, tasks: TaskList).void}
+    def initialize(pbi_id, sprint_id, status, tasks)
       @pbi_id = pbi_id
       @sprint_id = sprint_id
+      @status = status
       @tasks = tasks
     end
 

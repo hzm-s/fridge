@@ -13,6 +13,7 @@ module Work
         aggregate_failures do
           expect(work.pbi_id).to eq pbi_id
           expect(work.sprint_id).to eq sprint_id
+          expect(work.status).to eq Statuses.from_string('assigned')
           expect(work.tasks).to be_empty
         end
       end

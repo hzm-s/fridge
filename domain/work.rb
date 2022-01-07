@@ -7,6 +7,7 @@ module Work
   class InvalidTaskStatusUpdate < StandardError; end
 
   autoload :Work, 'work/work'
+  autoload :Statuses, 'work/statuses'
   autoload :WorkRepository, 'work/work_repository'
   autoload :Task, 'work/task'
   autoload :TaskList, 'work/task_list'
