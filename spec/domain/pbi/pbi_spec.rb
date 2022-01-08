@@ -101,16 +101,6 @@ module Pbi
       end
     end
 
-    describe 'Update with work' do
-      let(:pbi) { ready_pbi }
-      let(:work) { Work::Work.assign(pbi.id, Sprint::Id.create) }
-
-      it do
-        pbi.update_with_work(work)
-        expect(pbi.status).to eq Statuses.from_string('wip')
-      end
-    end
-
     describe 'Assign to sprint' do
       let(:pbi) { ready_pbi }
 
