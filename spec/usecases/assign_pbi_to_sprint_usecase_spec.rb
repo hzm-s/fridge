@@ -21,16 +21,12 @@ describe AssignPbiToSprintUsecase do
     stored_pbi_a = PbiRepository::AR.find_by_id(pbi_a.id)
     stored_pbi_b = PbiRepository::AR.find_by_id(pbi_b.id)
     stored_pbi_c = PbiRepository::AR.find_by_id(pbi_c.id)
-    work_a = WorkRepository::AR.find_by_pbi_id(pbi_a.id)
-    work_b = WorkRepository::AR.find_by_pbi_id(pbi_b.id)
-    work_c = WorkRepository::AR.find_by_pbi_id(pbi_c.id)
 
     aggregate_failures do
       expect(stored_sprint.items).to eq pbi_list(pbi_c.id, pbi_a.id, pbi_b.id)
       expect(stored_pbi_a.status).to be Pbi::Statuses.from_string('wip')
       expect(stored_pbi_b.status).to be Pbi::Statuses.from_string('wip')
       expect(stored_pbi_c.status).to be Pbi::Statuses.from_string('wip')
-      expect([work_a, work_b, work_c].all?(&:present?)).to be true
     end
   end
 
@@ -40,7 +36,7 @@ describe AssignPbiToSprintUsecase do
 
     expect {
       described_class.perform(product.id, roles, pbi_b.id)
-    }.to_not change(Dao::Sbi, :count)
+    }.to_not change(Dao::Work, :count)
   end
 
   it do
