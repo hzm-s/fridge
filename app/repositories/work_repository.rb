@@ -8,6 +8,10 @@ module WorkRepository
       include Work::WorkRepository
 
       sig {override.params(pbi_id: Pbi::Id).returns(Work::Work)}
+      def find_or_assign_by_pbi_id(pbi_id)
+      end
+
+      sig {override.params(pbi_id: Pbi::Id).returns(Work::Work)}
       def find_by_pbi_id(pbi_id)
         Dao::Work.find_by!(dao_pbi_id: pbi_id.to_s).read
       rescue ActiveRecord::RecordNotFound

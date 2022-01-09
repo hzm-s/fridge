@@ -8,6 +8,9 @@ module Work
     interface!
 
     sig {abstract.params(pbi_id: Pbi::Id).returns(Work)}
+    def find_or_assign_by_pbi_id(pbi_id); end
+
+    sig {abstract.params(pbi_id: Pbi::Id).returns(Work)}
     def find_by_pbi_id(pbi_id); end
 
     sig {abstract.params(work: Work).void}

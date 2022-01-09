@@ -5,9 +5,18 @@ describe WorkRepository::AR do
   let(:product) { create_product }
   let!(:pbi) { add_pbi(product.id, acceptance_criteria: %w(AC1 AC2 AC3)) }
 
+  xdescribe 'Find or assign' do
+    context 'when work is not assigned' do
+      it do
+        work = described_class.find_or_assign_by_pbi_id(pbi.id)
+        expect(work).to_not be_nil
+      end
+    end
+  end
+
   describe 'Add' do
     it do
-      work = Work::Work.plan(pbi.id)
+      work = Work::Work.assign(pbi.id)
 
       expect { described_class.store(work) }
         .to change { Dao::Work.count }.from(0).to(1)
@@ -22,7 +31,7 @@ describe WorkRepository::AR do
 
   describe 'Update' do
     it do
-      work = Work::Work.plan(pbi.id)
+      work = Work::Work.assign(pbi.id)
       described_class.store(work)
 
       work.update_tasks(tasks(%w(T1 T2 T3)))
