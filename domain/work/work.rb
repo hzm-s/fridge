@@ -8,9 +8,9 @@ module Work
     class << self
       extend T::Sig
 
-      sig {params(pbi_id: Pbi::Id, sprint_id: Sprint::Id).returns(T.attached_class)}
-      def assign(pbi_id, sprint_id)
-        new(pbi_id, sprint_id, Statuses::Assigned, TaskList.new)
+      sig {params(pbi_id: Pbi::Id).returns(T.attached_class)}
+      def assign(pbi_id)
+        new(pbi_id, Statuses::Assigned, TaskList.new)
       end
 
       sig {params(pbi_id: Pbi::Id, tasks: TaskList).returns(T.attached_class)}
@@ -22,19 +22,15 @@ module Work
     sig {returns(Pbi::Id)}
     attr_reader :pbi_id
 
-    sig {returns(Sprint::Id)}
-    attr_reader :sprint_id
-
     sig {returns(Statuses)}
     attr_reader :status
 
     sig {returns(TaskList)}
     attr_reader :tasks
 
-    sig {params(pbi_id: Pbi::Id, sprint_id: Sprint::Id, status: Statuses, tasks: TaskList).void}
-    def initialize(pbi_id, sprint_id, status, tasks)
+    sig {params(pbi_id: Pbi::Id, status: Statuses, tasks: TaskList).void}
+    def initialize(pbi_id, status, tasks)
       @pbi_id = pbi_id
-      @sprint_id = sprint_id
       @status = status
       @tasks = tasks
     end
