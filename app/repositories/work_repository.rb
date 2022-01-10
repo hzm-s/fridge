@@ -9,6 +9,9 @@ module WorkRepository
 
       sig {override.params(pbi_id: Pbi::Id).returns(Work::Work)}
       def find_or_assign_by_pbi_id(pbi_id)
+        find_by_pbi_id(pbi_id)
+      rescue Work::NotFound
+        Work::Work.assign(pbi_id)
       end
 
       sig {override.params(pbi_id: Pbi::Id).returns(Work::Work)}
