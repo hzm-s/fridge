@@ -12,13 +12,15 @@ class AssignPbiToSprintUsecase < UsecaseBase
 
   sig {params(product_id: Product::Id, roles: Team::RoleSet, pbi_id: Pbi::Id).void}
   def perform(product_id, roles, pbi_id)
-    pbi = @pbi_repository.find_by_id(pbi_id)
     sprint = @sprint_repository.current(product_id)
+    raise Sprint::NotStarted unless sprint
 
-    transaction do
-      Sprint::AssignPbi
-        .new(@sprint_repository, @pbi_repository)
-        .assign(roles, sprint, pbi)
-    end
+    pbi = @pbi_repository.find_by_id(pbi_id)
+
+    sprint.update_items(roles, sprint.items.append(pbi.id))
+    pbi.assign_to_sprint(roles)
+
+    @sprint_repository.store(sprint)
+    @pbi_repository.store(pbi)
   end
 end
