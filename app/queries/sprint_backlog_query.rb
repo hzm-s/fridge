@@ -3,11 +3,11 @@ module SprintBacklogQuery
   class << self
     def call(sprint_id)
       pbi_ids = Dao::Sprint.find_by(id: sprint_id).items
-      sbis = Dao::Work.where(dao_pbi_id: pbi_ids)
+      pbis = Dao::Pbi.preload(:criteria, { work: :tasks }).where(id: pbi_ids)
 
       pbi_ids
-        .map { |pbi_id| sbis.find { |sbi| sbi.dao_pbi_id == pbi_id } }
-        .map { |sbi| SprintBacklogItemStruct.new(sbi, PbiStruct.new(sbi.pbi)) }
+        .map { |pbi_id| pbis.find { |pbi| pbi.id == pbi_id } }
+        .map { |pbi| SprintBacklogItemStruct.new(PbiStruct.new(pbi), pbi.work || Dao::Work.new) }
         .then { |items| SprintBacklogStruct.new(items: items) }
     end
   end
@@ -15,11 +15,11 @@ module SprintBacklogQuery
   class SprintBacklogItemStruct < SimpleDelegator
     attr_reader :pbi
 
-    delegate :accepted?, to: :status
+    delegate :accepted?, to: :status, allow_nil: true
     delegate :id, to: :pbi, prefix: true
 
-    def initialize(dao_sbi, pbi)
-      super(dao_sbi)
+    def initialize(pbi, dao_work)
+      super(dao_work)
 
       @pbi = pbi
     end

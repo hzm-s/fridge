@@ -3,7 +3,8 @@ class Dao::Pbi < ApplicationRecord
   has_many :criteria, -> { order :id },
     class_name: 'Dao::AcceptanceCriterion', foreign_key: :dao_pbi_id,
     dependent: :destroy, autosave: true
-  has_one :sbi, class_name: 'Dao::Sbi', foreign_key: :dao_pbi_id, dependent: :destroy
+  has_one :work, -> { order :id },
+    class_name: 'Dao::Work', foreign_key: :dao_pbi_id, dependent: :destroy
 
   scope :as_aggregate, -> { eager_load(:criteria) }
 
