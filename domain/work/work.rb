@@ -15,7 +15,7 @@ module Work
 
       sig {params(pbi_id: Pbi::Id, tasks: TaskList).returns(T.attached_class)}
       def from_repository(pbi_id, tasks)
-        new(pbi_id, tasks)
+        new(pbi_id, Statuses::Assigned, tasks)
       end
     end
 

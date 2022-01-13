@@ -11,7 +11,7 @@ class PlanTaskUsecase < UsecaseBase
 
   sig {params(pbi_id: Pbi::Id, content: Shared::ShortSentence).void}
   def perform(pbi_id, content)
-    work = @repository.find_by_pbi_id(pbi_id)
+    work = @repository.find_or_assign_by_pbi_id(pbi_id)
 
     work.tasks.append(content)
       .then { |tasks| work.update_tasks(tasks) }
