@@ -17,8 +17,8 @@ module PlanSupport
   def update_release(product_id, release_number)
     update_plan(product_id) do |plan|
       release = plan.release_of(release_number)
-      yield(release)
-      plan.update_release(team_roles(:po), release)
+      new_release = yield(release)
+      plan.update_release(team_roles(:po), new_release)
     end
   end
 
