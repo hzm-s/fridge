@@ -121,6 +121,7 @@ ActiveRecord::Schema.define(version: 2021_05_16_002510) do
 
   create_table "dao_works", force: :cascade do |t|
     t.uuid "dao_pbi_id"
+    t.string "status", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["dao_pbi_id"], name: "index_dao_works_on_dao_pbi_id"

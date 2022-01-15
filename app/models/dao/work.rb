@@ -11,6 +11,7 @@ class Dao::Work < ApplicationRecord
   def write(work)
     self.attributes = {
       dao_pbi_id: work.pbi_id.to_s,
+      status: work.status.to_s,
     }
 
     self.tasks.each(&:mark_for_destruction)

@@ -16,6 +16,7 @@ describe WorkRepository::AR do
       aggregate_failures do
         dao = Dao::Work.last
         expect(dao.dao_pbi_id).to eq work.pbi_id.to_s
+        expect(dao.status).to eq work.status.to_s
       end
     end
   end
@@ -33,6 +34,7 @@ describe WorkRepository::AR do
 
       dao = Dao::Work.last
       aggregate_failures do
+        expect(dao.status).to eq work.status.to_s
         expect(dao.tasks[0].number).to eq 1
         expect(dao.tasks[0].content.to_s).to eq 'T1'
         expect(dao.tasks[0].status).to eq 'todo'
