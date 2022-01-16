@@ -1,8 +1,8 @@
 # typed: false
 require 'domain_helper'
 
-module Plan
-  describe ChangePlan do
+module Roadmap
+  describe ChangeRoadmap do
     let(:product_id) { Product::Id.create }
     let(:pbi_a) { Pbi::Id.create }
     let(:pbi_b) { Pbi::Id.create }
@@ -11,22 +11,22 @@ module Plan
     let(:pbi_e) { Pbi::Id.create }
     let(:roles) { team_roles(:po) }
 
-    let(:plan) do
-      Plan.create(product_id).tap do |plan|
-        plan.append_release(roles)
-        plan.release_of(1)
+    let(:roadmap) do
+      Roadmap.create(product_id).tap do |roadmap|
+        roadmap.append_release(roles)
+        roadmap.release_of(1)
           .plan_item(pbi_a)
           .plan_item(pbi_b)
-          .then { |r| plan.update_release(roles, r) }
+          .then { |r| roadmap.update_release(roles, r) }
 
-        plan.append_release(roles)
-        plan.release_of(2)
+        roadmap.append_release(roles)
+        roadmap.release_of(2)
           .plan_item(pbi_c)
           .plan_item(pbi_d)
           .plan_item(pbi_e)
-          .then { |r| plan.update_release(roles, r) }
+          .then { |r| roadmap.update_release(roles, r) }
 
-        plan.append_release(roles)
+        roadmap.append_release(roles)
       end
     end
 
@@ -34,7 +34,7 @@ module Plan
 
     describe 'Change item priority' do
       it do
-        changed = change.change_item_priority(plan, pbi_e, pbi_c)
+        changed = change.change_item_priority(roadmap, pbi_e, pbi_c)
 
         aggregate_failures do
           expect(changed.release_of(1).items).to eq pbi_list(pbi_a, pbi_b)
@@ -46,7 +46,7 @@ module Plan
 
     describe 'Reschedule item' do
       it do
-        changed = change.reschedule(plan, pbi_c, 1, pbi_b)
+        changed = change.reschedule(roadmap, pbi_c, 1, pbi_b)
 
         aggregate_failures do
           expect(changed.release_of(1).items).to eq pbi_list(pbi_a, pbi_c, pbi_b)
@@ -56,7 +56,7 @@ module Plan
       end
 
       it do
-        changed = change.reschedule(plan, pbi_d, 3, nil)
+        changed = change.reschedule(roadmap, pbi_d, 3, nil)
 
         aggregate_failures do
           expect(changed.release_of(1).items).to eq pbi_list(pbi_a, pbi_b)
@@ -66,7 +66,7 @@ module Plan
       end
 
       it do
-        changed = change.reschedule(plan, pbi_c, 1, nil)
+        changed = change.reschedule(roadmap, pbi_c, 1, nil)
 
         aggregate_failures do
           expect(changed.release_of(1).items).to eq pbi_list(pbi_a, pbi_b, pbi_c)

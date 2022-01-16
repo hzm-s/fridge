@@ -1,7 +1,7 @@
 # typed: strict
 require 'sorbet-runtime'
 
-module Plan
+module Roadmap
   class Release
     extend T::Sig
 

@@ -1,8 +1,8 @@
 # typed: strict
 require 'sorbet-runtime'
 
-module Plan
-  class Plan
+module Roadmap
+  class Roadmap
     extend T::Sig
 
     class << self

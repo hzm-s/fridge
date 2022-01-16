@@ -1,7 +1,7 @@
 # typed: false
 require 'domain_helper'
 
-module Plan
+module Roadmap
   describe Release do
     let(:pbi_a) { Pbi::Id.create }
     let(:pbi_b) { Pbi::Id.create }

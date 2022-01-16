@@ -1,13 +1,13 @@
 # typed: strict
-module Plan
+module Roadmap
   class ReleaseIsNotEmpty < StandardError; end
   class NeedAtLeastOneRelease < StandardError; end
   class DuplicatedItem < StandardError; end
   class PermissionDenied < StandardError; end
   class ReleaseNotFound < StandardError; end
 
-  autoload :Plan, 'plan/plan'
-  autoload :Release, 'plan/release'
-  autoload :PlanRepository, 'plan/plan_repository'
-  autoload :ChangePlan, 'plan/change_plan'
+  autoload :Roadmap, 'roadmap/roadmap'
+  autoload :Release, 'roadmap/release'
+  autoload :RoadmapRepository, 'roadmap/roadmap_repository'
+  autoload :ChangeRoadmap, 'roadmap/change_roadmap'
 end
