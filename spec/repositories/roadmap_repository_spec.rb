@@ -1,7 +1,7 @@
 # typed: false
 require 'rails_helper'
 
-describe PlanRepository::AR do
+describe RoadmapRepository::AR do
   let(:product_id) { Product::Id.create }
   let(:other_product_id) { Product::Id.create }
   let!(:pbi_a) { Pbi::Id.create }
@@ -14,7 +14,7 @@ describe PlanRepository::AR do
     Dao::Product.create!(id: other_product_id.to_s, name: 'other')
   end
 
-  let(:plan) { Plan::Plan.create(product_id) }
+  let(:roadmap) { Roadmap::Roadmap.create(product_id) }
 
   let!(:other_release_dao) do
     Dao::Release.create!(
@@ -26,14 +26,14 @@ describe PlanRepository::AR do
 
   describe 'Append' do
     it do
-      plan.release_of(1)
+      roadmap.release_of(1)
         .plan_item(pbi_a)
         .plan_item(pbi_b)
         .plan_item(pbi_c)
         .modify_title(name('R1'))
-        .then { |r| plan.update_release(po_role, r) }
+        .then { |r| roadmap.update_release(po_role, r) }
 
-      expect { described_class.store(plan) }
+      expect { described_class.store(roadmap) }
         .to change { Dao::Release.count }.from(1).to(2)
 
       stored = described_class.find_by_product_id(product_id)
@@ -48,23 +48,23 @@ describe PlanRepository::AR do
 
   describe 'Update' do
     it do
-      plan.release_of(1)
+      roadmap.release_of(1)
         .plan_item(pbi_b)
         .modify_title(name('R1'))
-        .then { |r| plan.update_release(po_role, r) }
-      described_class.store(plan)
+        .then { |r| roadmap.update_release(po_role, r) }
+      described_class.store(roadmap)
 
-      plan.release_of(1)
+      roadmap.release_of(1)
         .modify_title(name('MVP'))
-        .then { |r| plan.update_release(po_role, r) }
+        .then { |r| roadmap.update_release(po_role, r) }
 
-      plan.append_release(po_role)
-      plan.release_of(2)
+      roadmap.append_release(po_role)
+      roadmap.release_of(2)
         .plan_item(pbi_c)
         .plan_item(pbi_a)
-        .then { |r| plan.update_release(po_role, r) }
+        .then { |r| roadmap.update_release(po_role, r) }
 
-      expect { described_class.store(plan) }
+      expect { described_class.store(roadmap) }
         .to change { Dao::Release.count }.from(2).to(3)
 
       stored = described_class.find_by_product_id(product_id)
@@ -81,23 +81,23 @@ describe PlanRepository::AR do
 
   describe 'Remove' do
     it do
-      plan.release_of(1)
+      roadmap.release_of(1)
         .plan_item(pbi_a)
-        .then { |r| plan.update_release(po_role, r) }
+        .then { |r| roadmap.update_release(po_role, r) }
 
-      plan.append_release(po_role)
+      roadmap.append_release(po_role)
 
-      plan.append_release(po_role)
-      plan.release_of(3)
+      roadmap.append_release(po_role)
+      roadmap.release_of(3)
         .plan_item(pbi_b)
         .plan_item(pbi_c)
-        .then { |r| plan.update_release(po_role, r) }
+        .then { |r| roadmap.update_release(po_role, r) }
 
-      described_class.store(plan)
+      described_class.store(roadmap)
 
-      plan.remove_release(po_role, 2)
+      roadmap.remove_release(po_role, 2)
 
-      expect { described_class.store(plan) }
+      expect { described_class.store(roadmap) }
         .to change { Dao::Release.count }.from(4).to(3)
 
       stored = described_class.find_by_product_id(product_id)

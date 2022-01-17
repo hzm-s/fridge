@@ -2,7 +2,7 @@
 class Dao::Release < ApplicationRecord
   class << self
     def read(daos)
-      Plan::Plan.from_repository(
+      Roadmap::Roadmap.from_repository(
         daos.first.read_product_id,
         daos.map(&:read)
       )
@@ -24,7 +24,7 @@ class Dao::Release < ApplicationRecord
   end
 
   def read
-    Plan::Release.new(
+    Roadmap::Release.new(
       number.to_i,
       Shared::Name.new(title),
       items.map { |i| Pbi::Id.from_string(i) }.then { |l| Shared::SortableList.new(l) }
