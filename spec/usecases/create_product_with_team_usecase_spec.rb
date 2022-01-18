@@ -10,7 +10,7 @@ describe CreateProductWithTeamUsecase do
 
     product = ProductRepository::AR.find_by_id(product_id)
     team = resolve_team(product.id)
-    plan = PlanRepository::AR.find_by_product_id(product_id)
+    roadmap = RoadmapRepository::AR.find_by_product_id(product_id)
 
     aggregate_failures do
       expect(product.name.to_s).to eq 'fridge'
@@ -18,7 +18,7 @@ describe CreateProductWithTeamUsecase do
 
       expect(team.member(person.id).roles).to eq roles
 
-      expect(plan).to_not be_nil
+      expect(roadmap).to_not be_nil
     end
   end
 end
