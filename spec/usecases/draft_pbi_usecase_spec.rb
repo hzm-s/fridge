@@ -14,7 +14,7 @@ describe DraftPbiUsecase do
     pbi_id = described_class.perform(product.id, Pbi::Types.from_string('feature'), description)
 
     pbi = PbiRepository::AR.find_by_id(pbi_id)
-    plan = plan_of(product.id)
+    roadmap = roadmap_of(product.id)
 
     aggregate_failures do
       expect(pbi.product_id).to eq product.id
@@ -24,8 +24,8 @@ describe DraftPbiUsecase do
       expect(pbi.size).to eq Pbi::StoryPoint.unknown
       expect(pbi.acceptance_criteria).to be_empty
 
-      expect(plan.release_of(1).items).to eq pbi_list(pbi_id)
-      expect(plan.release_of(2).items).to eq pbi_list
+      expect(roadmap.release_of(1).items).to eq pbi_list(pbi_id)
+      expect(roadmap.release_of(2).items).to eq pbi_list
     end
   end
 
@@ -34,11 +34,11 @@ describe DraftPbiUsecase do
       pbi_id = described_class.perform(product.id, Pbi::Types::Feature, description, 2)
 
       pbi = PbiRepository::AR.find_by_id(pbi_id)
-      plan = plan_of(product.id)
+      roadmap = roadmap_of(product.id)
 
       aggregate_failures do
-        expect(plan.release_of(1).items).to eq pbi_list
-        expect(plan.release_of(2).items).to eq pbi_list(pbi_id)
+        expect(roadmap.release_of(1).items).to eq pbi_list
+        expect(roadmap.release_of(2).items).to eq pbi_list(pbi_id)
       end
     end
   end

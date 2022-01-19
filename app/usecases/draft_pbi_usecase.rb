@@ -7,7 +7,7 @@ class DraftPbiUsecase < UsecaseBase
   sig {void}
   def initialize
     @pbi_repository = T.let(PbiRepository::AR, Pbi::PbiRepository)
-    @plan_repository = T.let(PlanRepository::AR, Plan::PlanRepository)
+    @roadmap_repository = T.let(RoadmapRepository::AR, Roadmap::RoadmapRepository)
     @roles = Team::RoleSet.new([Team::Role::ProductOwner])
   end
 
@@ -15,24 +15,24 @@ class DraftPbiUsecase < UsecaseBase
   def perform(product_id, type, description, release_number = nil)
     pbi = Pbi::Pbi.draft(product_id, type, description)
 
-    plan = @plan_repository.find_by_product_id(product_id)
+    roadmap = @roadmap_repository.find_by_product_id(product_id)
 
-    detect_release(plan, release_number)
+    detect_release(roadmap, release_number)
       .then { |release| release.plan_item(pbi.id) }
-      .then { |release| plan.update_release(@roles, release) }
+      .then { |release| roadmap.update_release(@roles, release) }
 
     @pbi_repository.store(pbi)
-    @plan_repository.store(plan)
+    @roadmap_repository.store(roadmap)
 
     pbi.id
   end
 
   private
 
-  sig {params(plan: Plan::Plan, release_number: T.nilable(Integer)).returns(Plan::Release)}
-  def detect_release(plan, release_number = nil)
-    return plan.recent_release unless release_number
+  sig {params(roadmap: Roadmap::Roadmap, release_number: T.nilable(Integer)).returns(Roadmap::Release)}
+  def detect_release(roadmap, release_number = nil)
+    return roadmap.recent_release unless release_number
 
-    plan.release_of(release_number)
+    roadmap.release_of(release_number)
   end
 end
