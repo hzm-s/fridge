@@ -13,13 +13,13 @@ describe RemoveReleaseUsecase do
   it do
     described_class.perform(product.id, roles, 2)
 
-    plan = plan_of(product.id)
+    roadmap = roadmap_of(product.id)
 
-    expect(plan.releases.map(&:number)).to match_array [1]
+    expect(roadmap.releases.map(&:number)).to match_array [1]
   end
 
   it do
     expect { described_class.perform(product.id, roles, 1) }
-      .to raise_error(Plan::ReleaseIsNotEmpty)
+      .to raise_error(Roadmap::ReleaseIsNotEmpty)
   end
 end

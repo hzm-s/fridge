@@ -6,15 +6,15 @@ class RemoveReleaseUsecase < UsecaseBase
 
   sig {void}
   def initialize
-    @repository = T.let(PlanRepository::AR, Plan::PlanRepository)
+    @repository = T.let(RoadmapRepository::AR, Roadmap::RoadmapRepository)
   end
 
   sig {params(product_id: Product::Id, roles: Team::RoleSet, release_number: Integer).void}
   def perform(product_id, roles, release_number)
-    plan = @repository.find_by_product_id(product_id)
+    roadmap = @repository.find_by_product_id(product_id)
 
-    plan.remove_release(roles, release_number)
+    roadmap.remove_release(roles, release_number)
 
-    @repository.store(plan)
+    @repository.store(roadmap)
   end
 end

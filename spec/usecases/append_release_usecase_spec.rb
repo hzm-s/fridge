@@ -8,19 +8,19 @@ describe AppendReleaseUsecase do
   it do
     described_class.perform(roles, product.id, name('MVP'))
 
-    plan = PlanRepository::AR.find_by_product_id(product.id)
+    roadmap = RoadmapRepository::AR.find_by_product_id(product.id)
 
     aggregate_failures do
-      expect(plan.release_of(2).title.to_s).to eq 'MVP'
-      expect(plan.release_of(2).items).to eq pbi_list
+      expect(roadmap.release_of(2).title.to_s).to eq 'MVP'
+      expect(roadmap.release_of(2).items).to eq pbi_list
     end
   end
 
   it do
     described_class.perform(roles, product.id, nil)
 
-    plan = PlanRepository::AR.find_by_product_id(product.id)
+    roadmap = RoadmapRepository::AR.find_by_product_id(product.id)
 
-    expect(plan.release_of(2).title.to_s).to eq 'Release#2'
+    expect(roadmap.release_of(2).title.to_s).to eq 'Release#2'
   end
 end
