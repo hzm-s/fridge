@@ -37,7 +37,7 @@ module Team
           [
             :prepare_acceptance_criteria,
             :remove_pbi,
-            :update_plan,
+            :update_roadmap,
             :assign_pbi_to_sprint,
             :revert_pbi_from_sprint,
             :update_sprint_items,
@@ -51,7 +51,7 @@ module Team
           [
             :prepare_acceptance_criteria,
             :remove_pbi,
-            :update_plan,
+            :update_roadmap,
             :assign_pbi_to_sprint,
             :revert_pbi_from_sprint,
             :update_sprint_items,

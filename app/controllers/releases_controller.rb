@@ -50,7 +50,7 @@ class ReleasesController < ApplicationController
       current_team_member_roles,
       current_release.number
     )
-  rescue Plan::ReleaseIsNotEmpty
+  rescue Roadmap::ReleaseIsNotEmpty
     redirect_to product_backlog_path(product_id: current_product_id), flash: flash_error('release.not_empty')
   else
     redirect_to product_backlog_path(product_id: current_product_id), flash: flash_success('release.destroy')

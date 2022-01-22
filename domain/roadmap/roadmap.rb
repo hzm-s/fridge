@@ -33,14 +33,14 @@ module Roadmap
 
     sig {params(roles: Team::RoleSet, title: T.nilable(Shared::Name)).void}
     def append_release(roles, title = nil)
-      raise PermissionDenied unless Activity.allow?(:update_plan, [roles])
+      raise PermissionDenied unless Activity.allow?(:update_roadmap, [roles])
 
       @releases << Release.new(next_release_number, title)
     end
 
     sig {params(roles: Team::RoleSet, release: Release).void}
     def update_release(roles, release)
-      raise PermissionDenied unless Activity.allow?(:update_plan, [roles])
+      raise PermissionDenied unless Activity.allow?(:update_roadmap, [roles])
 
       index = T.must(@releases.find_index { |r| r.number == release.number })
       @releases[index] = release
@@ -48,7 +48,7 @@ module Roadmap
 
     sig {params(roles: Team::RoleSet, release_number: Integer).void}
     def remove_release(roles, release_number)
-      raise PermissionDenied unless Activity.allow?(:update_plan, [roles])
+      raise PermissionDenied unless Activity.allow?(:update_roadmap, [roles])
       raise NeedAtLeastOneRelease unless can_remove_release?
 
       release = release_of(release_number)

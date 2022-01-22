@@ -1,16 +1,16 @@
-<% plan_updatable = authorize(:update_plan, current_team_member_roles) %>
+<% roadmap_updatable = authorize(:update_roadmap, current_team_member_roles) %>
 <div class="pbl-release">
   <div class="pbl-release__header">
     <span class="pbl-release__title">
       <%= release.title %>
     </span>
     <div class="pbl-release__actions">
-      <% if plan_updatable %>
+      <% if roadmap_updatable %>
         <%= render partial: 'release_menu', locals: { release: release } %>
       <% end %>
     </div>
   </div>
-  <%= content_tag :div, data: plan_updatable && pbl_sortable_options(current_product.id, release.number) do %>
+  <%= content_tag :div, data: roadmap_updatable && pbl_sortable_options(current_product.id, release.number) do %>
     <%= render partial: 'item', collection: release.items %>
   <% end %>
 </div>

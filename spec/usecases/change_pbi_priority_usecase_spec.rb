@@ -11,8 +11,8 @@ describe ChangePbiPriorityUsecase do
   it do
     described_class.perform(product.id, roles, pbi_a, pbi_c)
 
-    plan = plan_of(product.id)
+    roadmap = roadmap_of(product.id)
 
-    expect(plan.release_of(1).items).to eq pbi_list(pbi_b, pbi_c, pbi_a)
+    expect(roadmap.release_of(1).items).to eq pbi_list(pbi_b, pbi_c, pbi_a)
   end
 end

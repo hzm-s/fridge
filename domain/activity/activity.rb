@@ -23,7 +23,7 @@ module Activity
       PrepareAcceptanceCriteria = new('prepare_acceptance_criteria')
       EstimatePbi = new('estimate_pbi')
       RemovePbi = new('remove_pbi')
-      UpdatePlan = new('update_plan')
+      UpdateRoadmap = new('update_roadmap')
       AssignPbiToSprint = new('assign_pbi_to_sprint')
       RevertPbiFromSprint = new('revert_pbi_from_sprint')
       UpdateSprintItems = new('update_sprint_items')

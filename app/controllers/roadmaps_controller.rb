@@ -1,5 +1,5 @@
 # typed: ignore
-class PlansController < ApplicationController
+class RoadmapsController < ApplicationController
   include ProductHelper
   include TeamMemberHelper
 

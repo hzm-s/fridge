@@ -11,7 +11,7 @@ describe ReschedulePbiUsecase do
   it do
     described_class.perform(product.id, roles, pbi_c, 1, pbi_b)
 
-    plan = plan_of(product.id)
-    expect(plan.release_of(1).items).to eq pbi_list(pbi_a, pbi_c, pbi_b)
+    roadmap = roadmap_of(product.id)
+    expect(roadmap.release_of(1).items).to eq pbi_list(pbi_a, pbi_c, pbi_b)
   end
 end

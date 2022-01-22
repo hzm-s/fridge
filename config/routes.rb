@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   resources :products, only: [:new, :create, :index] do
     resources :pbis, only: [:create]
     resources :releases, param: :number, only: [:new, :create, :edit, :update, :destroy]
-    resource :plan, only: [:update]
+    resource :roadmap, only: [:update]
 
     # TODO: /sprints/:sprint_id/items
     resources :sbis, param: :pbi_id, only: [:create, :destroy]
