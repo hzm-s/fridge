@@ -14,6 +14,6 @@ describe AcceptanceCriterionForm do
   it do
     form = described_class.new(valid.merge(content: 'a' * 101))
     expect(form).to_not be_valid
-    expect_to_include_domain_shared_error(form, :content, :invalid_short_sentence)
+    expect_to_include_domain_error(form, :content, [:shared, :invalid_short_sentence])
   end
 end
