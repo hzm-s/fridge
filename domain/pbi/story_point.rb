@@ -24,6 +24,7 @@ module Pbi
     sig {params(value: T.nilable(Integer)).void}
     def initialize(value)
       raise ArgumentError if value && !AVAILABLE_VALUES.include?(value)
+
       @value = value
     end
 

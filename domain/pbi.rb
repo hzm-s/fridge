@@ -2,6 +2,7 @@
 module Pbi
   class NotFound < StandardError; end
   class InvalidType < ArgumentError; end
+  class InvalidStoryPoint < ArgumentError; end
   class NotAssigned < StandardError; end
 
   autoload :Pbi, 'pbi/pbi'

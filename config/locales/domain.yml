@@ -43,6 +43,7 @@ ja:
 
       pbi:
         invalid_type: 不正なアイテムタイプです
+        invalid_story_point: 不正なストーリーポイントです
         invalid_acceptance_criterion: 3~100文字で入力してください
       team:
         duplicated_product_owner: すでにプロダクトオーナーがいます
