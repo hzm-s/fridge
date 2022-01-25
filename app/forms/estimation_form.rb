@@ -4,8 +4,14 @@ class EstimationForm
   extend I18nHelper
 
   attr_accessor :point
+  attr_accessor :domain_objects
 
   validates :point,
     presence: true,
-    domain_object: { object_class: Pbi::StoryPoint, message: t_domain_error(Pbi::InvalidStoryPoint), allow_blank: true }
+    domain_object: {
+      object_class: Pbi::StoryPoint,
+      by: ->(klass, v) { v == '?' ? klass.unknown : klass.new(v.to_i) },
+      message: t_domain_error(Pbi::InvalidStoryPoint),
+      allow_blank: true
+    }
 end
