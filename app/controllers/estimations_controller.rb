@@ -6,20 +6,25 @@ class EstimationsController < ApplicationController
   before_action :require_user
 
   def update
-    pbi_id = Pbi::Id.from_string(params[:pbi_id])
-    EstimatePbiUsecase.perform(
-      pbi_id,
-      current_team_member_roles,
-      build_point(params[:form][:point]),
-    )
-    @pbi = PbiQuery.call(pbi_id.to_s)
+    @form = EstimationForm.new(estimation_params)
+
+    if @form.valid?
+      pbi_id = Pbi::Id.from_string(params[:pbi_id])
+      EstimatePbiUsecase.perform(
+        pbi_id,
+        current_team_member_roles,
+        @form.domain_objects[:point],
+      )
+      @pbi = PbiQuery.call(pbi_id.to_s)
+    else
+      redirect_to product_backlog_path(product_id: current_product_id), flash: { error: @form.errors[:point].join(' ') }
+    end
   end
 
   private
 
-  def build_point(point)
-    point_as_i = point == '?' ? nil : point.to_i
-    Pbi::StoryPoint.new(point_as_i)
+  def estimation_params
+    params.require(:form).permit(:point)
   end
 
   def current_product_id
