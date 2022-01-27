@@ -69,8 +69,8 @@ ja:
       add: アイテムを追加する
     release:
       empty: アイテムはありません
-    point_form:
-      point: アイテムの大きさ
+    estimation_form:
+      size: アイテムの大きさ
 
   pbis:
     edit:

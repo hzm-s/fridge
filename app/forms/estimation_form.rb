@@ -3,10 +3,10 @@ class EstimationForm
   include ActiveModel::Model
   extend I18nHelper
 
-  attr_accessor :point
+  attr_accessor :size
   attr_accessor :domain_objects
 
-  validates :point,
+  validates :size,
     presence: true,
     domain_object: {
       object_class: Pbi::StoryPoint,

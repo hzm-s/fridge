@@ -11,14 +11,14 @@ describe 'estimation' do
 
     context 'given valid params' do
       it do
-        put pbi_estimation_path(pbi_id: pbi.id, format: :js), params: { form: { point: '8' } }
+        put pbi_estimation_path(pbi_id: pbi.id, format: :js), params: { form: { size: '8' } }
 
         stored = PbiRepository::AR.find_by_id(pbi.id)
         expect(stored.size.to_i).to eq 8
       end
 
       it do
-        put pbi_estimation_path(pbi_id: pbi.id, format: :js), params: { form: { point: '?' } }
+        put pbi_estimation_path(pbi_id: pbi.id, format: :js), params: { form: { size: '?' } }
 
         stored = PbiRepository::AR.find_by_id(pbi.id)
         expect(stored.size.to_i).to be_nil
@@ -27,7 +27,7 @@ describe 'estimation' do
 
     context 'given invalid params' do
       it do
-        put pbi_estimation_path(pbi_id: pbi.id, format: :js), params: { form: { point: '100' } }
+        put pbi_estimation_path(pbi_id: pbi.id, format: :js), params: { form: { size: '100' } }
         follow_redirect!
 
         expect(response.body).to include(I18n.t('domain.errors.pbi.invalid_story_point'))
@@ -35,7 +35,7 @@ describe 'estimation' do
     end
 
     it do
-      put pbi_estimation_path(pbi_id: pbi.id, format: :js), params: { form: { point: '2' } }
+      put pbi_estimation_path(pbi_id: pbi.id, format: :js), params: { form: { size: '2' } }
       expect(response.body).to_not include 'test-item-movable'
     end
   end

@@ -13,18 +13,18 @@ class EstimationsController < ApplicationController
       EstimatePbiUsecase.perform(
         pbi_id,
         current_team_member_roles,
-        @form.domain_objects[:point],
+        @form.domain_objects[:size],
       )
       @pbi = PbiQuery.call(pbi_id.to_s)
     else
-      redirect_to product_backlog_path(product_id: current_product_id), flash: { error: @form.errors[:point].join(' ') }
+      redirect_to product_backlog_path(product_id: current_product_id), flash: { error: @form.errors[:size].join(' ') }
     end
   end
 
   private
 
   def estimation_params
-    params.require(:form).permit(:point)
+    params.require(:form).permit(:size)
   end
 
   def current_product_id
