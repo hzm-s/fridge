@@ -17,7 +17,7 @@ class EstimationsController < ApplicationController
       )
       @pbi = PbiQuery.call(pbi_id.to_s)
     else
-      redirect_to product_backlog_path(product_id: current_product_id), flash: { error: @form.errors[:size].join(' ') }
+      redirect_to product_backlog_path(product_id: current_product_id), flash: { error: @form.errors.full_messages.join(' ') }
     end
   end
 

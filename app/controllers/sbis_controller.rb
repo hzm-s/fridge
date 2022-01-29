@@ -13,9 +13,9 @@ class SbisController < ApplicationController
       pbi_id,
     )
   rescue Sprint::NotStarted => e
-    redirect_to sprint_backlog_path(product_id: current_product_id), flash: flash_success('sprint.not_started')
+    redirect_to sprint_backlog_path(product_id: current_product_id), flash: flash_success([:sprint, :not_started])
   else
-    flash.now[:success] = feedback_message('pbi.assign_to_sprint')
+    flash.now[:success] = feedback_message([:pbi, :assign_to_sprint])
     @pbi = PbiQuery.call(pbi_id)
   end
 
@@ -25,7 +25,7 @@ class SbisController < ApplicationController
       current_team_member_roles,
       Pbi::Id.from_string(params[:pbi_id]),
     )
-    redirect_to sprint_backlog_path(product_id: current_product_id), flash: flash_success('pbi.revert_from_sprint')
+    redirect_to sprint_backlog_path(product_id: current_product_id), flash: flash_success([:pbi, :revert_from_sprint])
   end
 
   private

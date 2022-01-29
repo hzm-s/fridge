@@ -19,7 +19,7 @@ class ReleasesController < ApplicationController
         Product::Id.from_string(current_product_id),
         @form.domain_objects[:title]
       )
-      redirect_to product_backlog_path(product_id: current_product_id), flash: flash_success('release.create')
+      redirect_to product_backlog_path(product_id: current_product_id), flash: flash_success([:release, :create])
     else
       render :new
     end
@@ -38,7 +38,7 @@ class ReleasesController < ApplicationController
         release_number,
         @form.domain_objects[:title]
       )
-      redirect_to product_backlog_path(product_id: current_product_id), flash: flash_success('release.update')
+      redirect_to product_backlog_path(product_id: current_product_id), flash: flash_success([:release, :update])
     else
       render :edit
     end
@@ -51,9 +51,9 @@ class ReleasesController < ApplicationController
       current_release.number
     )
   rescue Roadmap::ReleaseIsNotEmpty
-    redirect_to product_backlog_path(product_id: current_product_id), flash: flash_error('release.not_empty')
+    redirect_to product_backlog_path(product_id: current_product_id), flash: flash_error([:release, :not_empty])
   else
-    redirect_to product_backlog_path(product_id: current_product_id), flash: flash_success('release.destroy')
+    redirect_to product_backlog_path(product_id: current_product_id), flash: flash_success([:release, :destroy])
   end
 
   protected

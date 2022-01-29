@@ -15,7 +15,7 @@ class OauthCallbacksController < ApplicationController
   end
 
   def redirect(is_register)
-    message = is_register ? 'signed_up' : 'signed_in'
+    message = is_register ? :signed_up : :signed_in
     redirect_to redirect_path, flash: flash_success(message)
   end
 

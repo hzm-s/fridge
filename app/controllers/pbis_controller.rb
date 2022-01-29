@@ -18,7 +18,7 @@ class PbisController < ApplicationController
 
       DraftPbiUsecase.perform(product_id, type, description, release_number)
 
-      redirect_to product_backlog_path(product_id: params[:product_id]), flash: flash_success('pbi.create')
+      redirect_to product_backlog_path(product_id: params[:product_id]), flash: flash_success([:pbi, :create])
     else
       @releases = ProductBacklogQuery.call(params[:product_id]).releases
       render :new
@@ -39,7 +39,7 @@ class PbisController < ApplicationController
         Pbi::Id.from_string(@pbi_id),
         @form.domain_objects[:description]
       )
-      redirect_to edit_pbi_path(@pbi_id), flash: flash_success('pbi.update')
+      redirect_to edit_pbi_path(@pbi_id), flash: flash_success([:pbi, :update])
     else
       render :edit
     end
@@ -48,7 +48,7 @@ class PbisController < ApplicationController
   def destroy
     pbi = PbiRepository::AR.find_by_id(Pbi::Id.from_string(params[:id]))
     DropPbiUsecase.perform(pbi.product_id, current_team_member_roles, pbi.id)
-    redirect_to product_backlog_path(product_id: pbi.product_id), flash: flash_success('pbi.destroy')
+    redirect_to product_backlog_path(product_id: pbi.product_id), flash: flash_success([:pbi, :destroy])
   end
 
   private

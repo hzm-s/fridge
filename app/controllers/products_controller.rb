@@ -23,7 +23,7 @@ class ProductsController < ApplicationController
         @form.domain_objects[:name],
         @form.domain_objects[:description],
       )
-      redirect_to products_path, flash: flash_success('product.create')
+      redirect_to products_path, flash: flash_success([:product, :create])
     else
       render :new
     end
