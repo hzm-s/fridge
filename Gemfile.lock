@@ -114,7 +114,7 @@ GEM
     listen (3.7.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    loofah (2.12.0)
+    loofah (2.19.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -122,15 +122,13 @@ GEM
     marcel (1.0.1)
     method_source (1.0.0)
     mini_mime (1.1.1)
-    mini_portile2 (2.6.1)
     minitest (5.14.4)
     msgpack (1.4.2)
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
     nio4r (2.5.8)
-    nokogiri (1.12.5)
-      mini_portile2 (~> 2.6.1)
+    nokogiri (1.12.5-x86_64-linux)
       racc (~> 1.4)
     oauth2 (1.4.7)
       faraday (>= 0.8, < 2.0)
@@ -164,7 +162,7 @@ GEM
       pry (>= 0.10.4)
     puma (5.5.1)
       nio4r (~> 2.0)
-    racc (1.5.2)
+    racc (1.6.1)
     rack (2.2.3)
     rack-protection (2.1.0)
       rack
@@ -190,8 +188,8 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.4.2)
-      loofah (~> 2.3)
+    rails-html-sanitizer (1.4.4)
+      loofah (~> 2.19, >= 2.19.1)
     railties (6.1.4.1)
       actionpack (= 6.1.4.1)
       activesupport (= 6.1.4.1)
@@ -234,14 +232,6 @@ GEM
     sorbet (0.5.9539)
       sorbet-static (= 0.5.9539)
     sorbet-runtime (0.5.9539)
-    sorbet-static (0.5.9539-universal-darwin-14)
-    sorbet-static (0.5.9539-universal-darwin-15)
-    sorbet-static (0.5.9539-universal-darwin-16)
-    sorbet-static (0.5.9539-universal-darwin-17)
-    sorbet-static (0.5.9539-universal-darwin-18)
-    sorbet-static (0.5.9539-universal-darwin-19)
-    sorbet-static (0.5.9539-universal-darwin-20)
-    sorbet-static (0.5.9539-universal-darwin-21)
     sorbet-static (0.5.9539-x86_64-linux)
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
@@ -277,7 +267,7 @@ GEM
     zeitwerk (2.4.2)
 
 PLATFORMS
-  ruby
+  x86_64-linux
 
 DEPENDENCIES
   bootsnap
